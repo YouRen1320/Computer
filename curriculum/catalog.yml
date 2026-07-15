@@ -1,0 +1,4619 @@
+---
+schema_version: 1
+catalog_id: factorycare-encyclopedia
+edition: 2026.1-draft
+canonical: true
+status: architecture
+chapter_count_target:
+- 140
+- 170
+dependency_semantics:
+  prerequisites: 'hard: chapter cannot be taught or waived safely without verified
+    outcomes from every referenced chapter'
+  recommended_after: 'soft: preferred reading order only; never grants or blocks capability'
+  capabilities: 'first-use contract: every uses_capabilities item must be taught by
+    an ancestor in the hard prerequisite graph'
+chapters:
+- id: v00.c01.learning-evidence
+  title: 学习系统、证据与间隔复习
+  volume: '00'
+  order: 1
+  level: L3
+  prerequisites: []
+  outcomes:
+  - 在 120 秒内区分接触、理解、证据与掌握的区别，并给出一个适用边界和一个反例
+  - 独立生成含 claim、evidence 与 retrieval-date 的学习记录；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别把“文档生成”误当“已经学会”的伪证据；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface: []
+  path: book/volume-00-computer-foundations/chapters/v00.c01.learning-evidence.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v00.c02.computer-model
+  title: CPU、内存、磁盘、程序与进程
+  volume: '00'
+  order: 2
+  level: L3
+  prerequisites: []
+  outcomes:
+  - 在 120 秒内区分程序、进程、CPU、内存与磁盘的职责边界，并给出一个适用边界和一个反例
+  - 独立画出进程资源模型并用系统工具核对 PID 和资源；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分高 CPU、内存压力与磁盘不足；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface: []
+  path: book/volume-00-computer-foundations/chapters/v00.c02.computer-model.md
+  recommended_after:
+  - v00.c01.learning-evidence
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v00.c03.files-paths-encoding
+  title: 文件、目录、路径、扩展名与编码
+  volume: '00'
+  order: 3
+  level: L3
+  prerequisites: []
+  outcomes:
+  - 在 120 秒内区分绝对/相对路径以及字节/字符/编码，并给出一个适用边界和一个反例
+  - 独立建立目录树并往返读取 UTF-8 文件；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误工作目录、扩展名或乱码；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - macos-26
+  path: book/volume-00-computer-foundations/chapters/v00.c03.files-paths-encoding.md
+  recommended_after:
+  - v00.c02.computer-model
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v00.c04.terminal-shell
+  title: 终端、Shell 与命令执行
+  volume: '00'
+  order: 4
+  level: L3
+  prerequisites:
+  - v00.c03.files-paths-encoding
+  outcomes:
+  - 在 120 秒内区分终端、Shell、命令与进程的边界，并给出一个适用边界和一个反例
+  - 独立正确引用含空格参数并执行一组命令；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位 command-not-found、权限或引用错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - macos-26
+  - zsh
+  path: book/volume-00-computer-foundations/chapters/v00.c04.terminal-shell.md
+  recommended_after:
+  - v00.c03.files-paths-encoding
+  teaches_capabilities:
+  - terminal
+  uses_capabilities: []
+- id: v00.c05.pipes-exit-codes
+  title: 标准流、管道、重定向与退出码
+  volume: '00'
+  order: 5
+  level: L3
+  prerequisites:
+  - v00.c04.terminal-shell
+  outcomes:
+  - 在 120 秒内区分stdin、stdout、stderr、管道与退出码，并给出一个适用边界和一个反例
+  - 独立建立可断言退出码的管道和重定向；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出被管道输出掩盖的上游失败；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - zsh
+  path: book/volume-00-computer-foundations/chapters/v00.c05.pipes-exit-codes.md
+  recommended_after:
+  - v00.c04.terminal-shell
+  teaches_capabilities: []
+  uses_capabilities:
+  - terminal
+- id: v00.c06.environment-path
+  title: 环境变量、PATH 与工具版本选择
+  volume: '00'
+  order: 6
+  level: L3
+  prerequisites:
+  - v00.c04.terminal-shell
+  outcomes:
+  - 在 120 秒内区分PATH 与 JAVA_HOME 各自影响的查找过程，并给出一个适用边界和一个反例
+  - 独立在子 Shell 中受控切换工具版本并记录证据；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够诊断 java 与 Maven 使用不同 JDK；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - macos-26
+  - zsh
+  - toolchains
+  path: book/volume-00-computer-foundations/chapters/v00.c06.environment-path.md
+  recommended_after:
+  - v00.c05.pipes-exit-codes
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v00.c07.editor-ide-debugger
+  title: 编辑器、IDE、断点与调试器
+  volume: '00'
+  order: 7
+  level: L3
+  prerequisites:
+  - v00.c03.files-paths-encoding
+  outcomes:
+  - 在 120 秒内区分编辑器、编译器、IDE 与调试器的职责，并给出一个适用边界和一个反例
+  - 独立用断点、步入和调用栈定位错误分支；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出“程序能运行但执行路径错误”；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - toolchains
+  path: book/volume-00-computer-foundations/chapters/v00.c07.editor-ide-debugger.md
+  recommended_after:
+  - v00.c06.environment-path
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v00.c08.git-security
+  title: Git、远程协作与凭据安全
+  volume: '00'
+  order: 8
+  level: L3
+  prerequisites:
+  - v00.c03.files-paths-encoding
+  - v00.c04.terminal-shell
+  outcomes:
+  - 在 120 秒内区分工作区、暂存区、提交、远程与凭据边界，并给出一个适用边界和一个反例
+  - 独立完成分支提交、冲突处理和安全回滚；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够处置已跟踪 Token 并说明轮换顺序；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - git
+  path: book/volume-00-computer-foundations/chapters/v00.c08.git-security.md
+  recommended_after:
+  - v00.c07.editor-ide-debugger
+  teaches_capabilities:
+  - git
+  uses_capabilities: []
+- id: v00.c09.network-http-curl
+  title: IP、DNS、端口、TCP 与 TLS
+  volume: '00'
+  order: 9
+  level: L3
+  prerequisites:
+  - v00.c03.files-paths-encoding
+  outcomes:
+  - 在 120 秒内区分DNS、IP、端口、TCP 与 TLS 的分层边界，并给出一个适用边界和一个反例
+  - 独立采集一次连接从解析到握手的可复现证据；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分 DNS 失败、连接拒绝与证书失败；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface: []
+  path: book/volume-00-computer-foundations/chapters/v00.c09.network-http-curl.md
+  recommended_after:
+  - v00.c08.git-security
+  teaches_capabilities:
+  - http
+  uses_capabilities: []
+- id: v00.c10.dependencies-build-ai
+  title: 依赖、构建与包管理
+  volume: '00'
+  order: 10
+  level: L3
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c06.environment-path
+  outcomes:
+  - 在 120 秒内区分运行时、构建工具、依赖解析与锁定的边界，并给出一个适用边界和一个反例
+  - 独立解释并验证一棵真实依赖树和缓存位置；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位锁文件、缓存或依赖范围错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - toolchains
+  path: book/volume-00-computer-foundations/chapters/v00.c10.dependencies-build-ai.md
+  recommended_after:
+  - v00.c09.network-http-curl
+  teaches_capabilities:
+  - build-tool-basics
+  uses_capabilities: []
+- id: v00.c11.docker-foundations
+  title: Docker 镜像、容器、卷、端口与网络基础
+  volume: '00'
+  order: 11
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-00-computer-foundations/chapters/v00.c11.docker-foundations.md
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c06.environment-path
+  - v00.c10.dependencies-build-ai
+  recommended_after:
+  - v00.c10.dependencies-build-ai
+  outcomes:
+  - 在 120 秒内区分镜像、容器、卷、端口映射与容器网络，并给出一个适用边界和一个反例
+  - 独立启动带持久卷、端口和健康检查的容器；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复端口冲突、错误挂载或容器网络失败；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities:
+  - docker
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - docker
+  - docker-compose
+- id: v00.c12.ai-collaboration-verification
+  title: AI 协作、隐私、代码审查与结果验证
+  volume: '00'
+  order: 12
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-00-computer-foundations/chapters/v00.c12.ai-collaboration-verification.md
+  prerequisites:
+  - v00.c05.pipes-exit-codes
+  - v00.c08.git-security
+  - v00.c10.dependencies-build-ai
+  recommended_after:
+  - v00.c11.docker-foundations
+  outcomes:
+  - 在 120 秒内区分AI 建议、事实、证据、隐私与授权边界，并给出一个适用边界和一个反例
+  - 独立审查 AI 补丁并用测试证伪至少一项假设；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别幻觉 API、密钥泄漏或越权修改；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities:
+  - git
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - model-api
+- id: v01.c01.java-platform
+  title: Java 平台、JDK、JVM、源码、编译与运行
+  volume: '01'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c06.environment-path
+  outcomes:
+  - 在 120 秒内区分JDK、JVM、javac、java 与字节码，并给出一个适用边界和一个反例
+  - 独立编译运行最小 Java 程序并检查 class 文件；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分编译、类加载与运行时失败；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c01.java-platform.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c02.program-structure
+  title: 程序结构、package、class、main 与命名
+  volume: '01'
+  order: 2
+  level: L3
+  prerequisites:
+  - v01.c01.java-platform
+  outcomes:
+  - 在 120 秒内区分package、class、main、文件名与目录的约束，并给出一个适用边界和一个反例
+  - 独立创建跨包调用且可从命令行运行的程序；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 package、路径或 classpath 不一致；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c02.program-structure.md
+  recommended_after:
+  - v01.c01.java-platform
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c03.console-io
+  title: 控制台输入输出与命令行参数
+  volume: '01'
+  order: 3
+  level: L3
+  prerequisites:
+  - v01.c02.program-structure
+  outcomes:
+  - 在 120 秒内区分标准输入、标准输出与命令行参数，并给出一个适用边界和一个反例
+  - 独立编写含输入校验和明确退出码的 CLI；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够处理缺参数、EOF 与非法输入；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c03.console-io.md
+  recommended_after:
+  - v01.c02.program-structure
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c04.variables-scope
+  title: 变量、常量、作用域与生命周期
+  volume: '01'
+  order: 4
+  level: L3
+  prerequisites:
+  - v01.c02.program-structure
+  outcomes:
+  - 在 120 秒内区分声明、赋值、作用域、遮蔽与生命周期，并给出一个适用边界和一个反例
+  - 独立跟踪嵌套作用域中的值变化并写断言；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位变量遮蔽或越界引用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c04.variables-scope.md
+  recommended_after:
+  - v01.c03.console-io
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c05.primitive-types
+  title: 基本类型、字符、布尔值与编码
+  volume: '01'
+  order: 5
+  level: L3
+  prerequisites:
+  - v01.c04.variables-scope
+  outcomes:
+  - 在 120 秒内区分整数、浮点、字符、布尔与编码边界，并给出一个适用边界和一个反例
+  - 独立为 FactoryCare 字段选择类型并验证边界值；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别字符编码或错误类型假设；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c05.primitive-types.md
+  recommended_after:
+  - v01.c04.variables-scope
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c06.operators-conversion
+  title: 运算符、类型转换、溢出与金额表示
+  volume: '01'
+  order: 6
+  level: L3
+  prerequisites:
+  - v01.c05.primitive-types
+  outcomes:
+  - 在 120 秒内区分类型转换、截断、溢出与金额单位，并给出一个适用边界和一个反例
+  - 独立实现订单金额计算并覆盖最大值和精度边界；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够复现并修复截断、溢出或浮点误差；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c06.operators-conversion.md
+  recommended_after:
+  - v01.c05.primitive-types
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c07.conditionals-switch
+  title: 条件判断、布尔逻辑与 switch
+  volume: '01'
+  order: 7
+  level: L3
+  prerequisites:
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  outcomes:
+  - 在 120 秒内区分短路逻辑、条件分支、switch 与穷尽性，并给出一个适用边界和一个反例
+  - 独立实现并测试完整优先级决策表；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出遗漏分支、短路副作用或边界反转；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c07.conditionals-switch.md
+  recommended_after:
+  - v01.c06.operators-conversion
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c08.loops-control
+  title: for、while、do-while、break 与 continue
+  volume: '01'
+  order: 8
+  level: L3
+  prerequisites:
+  - v01.c07.conditionals-switch
+  outcomes:
+  - 在 120 秒内区分for、while、do-while 与终止条件，并给出一个适用边界和一个反例
+  - 独立实现计数、查找和提前终止循环；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 off-by-one、死循环或错误 continue；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c08.loops-control.md
+  recommended_after:
+  - v01.c07.conditionals-switch
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c09.methods
+  title: 方法、参数、返回值、重载与递归边界
+  volume: '01'
+  order: 9
+  level: L3
+  prerequisites:
+  - v01.c04.variables-scope
+  - v01.c07.conditionals-switch
+  - v01.c08.loops-control
+  outcomes:
+  - 在 120 秒内区分参数、返回值、重载与递归边界，并给出一个适用边界和一个反例
+  - 独立抽取可测试方法并验证正确重载；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位错误重载选择或缺失递归基线；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c09.methods.md
+  recommended_after:
+  - v01.c08.loops-control
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v01.c10.arrays-debug-test
+  title: 数组、二维数组、调试与 JUnit 入门
+  volume: '01'
+  order: 10
+  level: L3
+  prerequisites:
+  - v01.c05.primitive-types
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v00.c10.dependencies-build-ai
+  outcomes:
+  - 在 120 秒内区分数组长度、索引、默认值与二维结构，并给出一个适用边界和一个反例
+  - 独立完成数组统计和矩阵遍历的可运行程序；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复越界、空数组或行列混淆；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-01-java-language/chapters/v01.c10.arrays-debug-test.md
+  recommended_after:
+  - v01.c09.methods
+  teaches_capabilities: []
+  uses_capabilities:
+  - build-tool-basics
+- id: v02.c01.references-null-memory
+  title: 对象、引用、null 与内存模型
+  volume: '02'
+  order: 1
+  level: L3
+  prerequisites:
+  - v01.c04.variables-scope
+  - v01.c05.primitive-types
+  - v01.c09.methods
+  outcomes:
+  - 在 120 秒内区分对象、引用、身份、别名与 null，并给出一个适用边界和一个反例
+  - 独立画引用图并用代码验证 == 与 equals；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够复现并从堆栈定位 NullPointerException；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c01.references-null-memory.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c02.classes-fields-methods
+  title: 类、对象、字段与实例方法
+  volume: '02'
+  order: 2
+  level: L3
+  prerequisites:
+  - v02.c01.references-null-memory
+  outcomes:
+  - 在 120 秒内区分类、实例、字段与实例方法的职责，并给出一个适用边界和一个反例
+  - 独立创建多个实例并用测试证明状态隔离；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出共享状态与实例状态混淆；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c02.classes-fields-methods.md
+  recommended_after:
+  - v02.c01.references-null-memory
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c03.constructors-encapsulation
+  title: 构造器、封装、访问控制与包边界
+  volume: '02'
+  order: 3
+  level: L3
+  prerequisites:
+  - v02.c02.classes-fields-methods
+  outcomes:
+  - 在 120 秒内区分构造器、访问控制、封装与对象不变量，并给出一个适用边界和一个反例
+  - 独立用构造器阻止创建非法工单；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复绕过校验或错误可见性；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c03.constructors-encapsulation.md
+  recommended_after:
+  - v02.c02.classes-fields-methods
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c04.static-final-immutability
+  title: static、final、常量与不可变对象
+  volume: '02'
+  order: 4
+  level: L3
+  prerequisites:
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  outcomes:
+  - 在 120 秒内区分static、final 与深层不可变的边界，并给出一个适用边界和一个反例
+  - 独立实现不可变值对象并验证防御性复制；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出集合引用泄漏造成的伪不可变；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c04.static-final-immutability.md
+  recommended_after:
+  - v02.c03.constructors-encapsulation
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c05.inheritance-composition
+  title: 继承、super、组合与依赖关系
+  volume: '02'
+  order: 5
+  level: L3
+  prerequisites:
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  outcomes:
+  - 在 120 秒内区分继承、组合、委托与依赖的选择边界，并给出一个适用边界和一个反例
+  - 独立将脆弱继承重构为组合并保持测试通过；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别错误 is-a 关系或脆弱基类；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c05.inheritance-composition.md
+  recommended_after:
+  - v02.c04.static-final-immutability
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c06.polymorphism-interfaces
+  title: 多态、抽象类、接口与动态分派
+  volume: '02'
+  order: 6
+  level: L3
+  prerequisites:
+  - v02.c05.inheritance-composition
+  outcomes:
+  - 在 120 秒内区分接口、抽象类、多态与动态分派，并给出一个适用边界和一个反例
+  - 独立通过接口替换实现且调用方测试不变；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够诊断错误强转或错误分派假设；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c06.polymorphism-interfaces.md
+  recommended_after:
+  - v02.c05.inheritance-composition
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c07.enum-record-sealed
+  title: enum、record、sealed 与嵌套类型
+  volume: '02'
+  order: 7
+  level: L3
+  prerequisites:
+  - v02.c04.static-final-immutability
+  - v02.c06.polymorphism-interfaces
+  outcomes:
+  - 在 120 秒内区分enum、record、sealed 与嵌套类型的适用范围，并给出一个适用边界和一个反例
+  - 独立建模有限状态和不可变传输值；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出非穷尽分支或非法状态；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c07.enum-record-sealed.md
+  recommended_after:
+  - v02.c06.polymorphism-interfaces
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c08.object-contract
+  title: Object、equals、hashCode 与 toString 契约
+  volume: '02'
+  order: 8
+  level: L3
+  prerequisites:
+  - v02.c02.classes-fields-methods
+  - v02.c04.static-final-immutability
+  outcomes:
+  - 在 120 秒内区分equals、hashCode 与 toString 契约，并给出一个适用边界和一个反例
+  - 独立验证对象在 Set 和 Map 中的行为；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够复现可变 key 或 hash 契约破坏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c08.object-contract.md
+  recommended_after:
+  - v02.c07.enum-record-sealed
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c09.core-value-types
+  title: String、正则、时间 API 与 BigDecimal
+  volume: '02'
+  order: 9
+  level: L3
+  prerequisites:
+  - v01.c05.primitive-types
+  outcomes:
+  - 在 120 秒内区分String、正则表达式与文本不变量，并给出一个适用边界和一个反例
+  - 独立实现名称解析、规范化和输入校验；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误转义、贪婪匹配或范围错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c09.core-value-types.md
+  recommended_after:
+  - v02.c08.object-contract
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v02.c10.exceptions-resources
+  title: 异常、资源关闭、契约与失败设计
+  volume: '02'
+  order: 10
+  level: L3
+  prerequisites:
+  - v01.c09.methods
+  outcomes:
+  - 在 120 秒内区分checked/unchecked 异常与资源所有权，并给出一个适用边界和一个反例
+  - 独立设计异常契约并使用 try-with-resources；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出吞异常、错误包装或资源泄漏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-02-java-objects/chapters/v02.c10.exceptions-resources.md
+  recommended_after:
+  - v02.c09.core-value-types
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c01.collections
+  title: List、Set、Map、Deque 与集合选择
+  volume: '03'
+  order: 1
+  level: L3
+  prerequisites:
+  - v01.c10.arrays-debug-test
+  - v02.c08.object-contract
+  outcomes:
+  - 在 120 秒内区分List、Set、Map 与 Deque 的语义差异，并给出一个适用边界和一个反例
+  - 独立为四个业务场景选择集合并用测试证明；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够诊断顺序、重复、null 或并发修改假设；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c01.collections.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c02.generics-comparator
+  title: 泛型、通配符、Comparator 与类型安全
+  volume: '03'
+  order: 2
+  level: L3
+  prerequisites:
+  - v03.c01.collections
+  - v02.c06.polymorphism-interfaces
+  outcomes:
+  - 在 120 秒内区分类型参数、边界、通配符与 Comparator，并给出一个适用边界和一个反例
+  - 独立设计类型安全的通用排序/转换 API；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 ClassCastException 或错误 PECS 使用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c02.generics-comparator.md
+  recommended_after:
+  - v03.c01.collections
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c03.complexity-data-structures
+  title: 复杂度、数据结构与算法基础
+  volume: '03'
+  order: 3
+  level: L3
+  prerequisites:
+  - v03.c01.collections
+  outcomes:
+  - 在 120 秒内区分时间/空间复杂度与数据规模关系，并给出一个适用边界和一个反例
+  - 独立对两种集合实现做增长曲线实验；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出数据结构选择造成的性能退化；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c03.complexity-data-structures.md
+  recommended_after:
+  - v03.c02.generics-comparator
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c04.lambdas-functions
+  title: Lambda、函数式接口与方法引用
+  volume: '03'
+  order: 4
+  level: L3
+  prerequisites:
+  - v01.c09.methods
+  - v02.c06.polymorphism-interfaces
+  outcomes:
+  - 在 120 秒内区分函数式接口、Lambda、方法引用与捕获，并给出一个适用边界和一个反例
+  - 独立实现可替换的工单排序策略；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位捕获变量、闭包状态或副作用问题；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c04.lambdas-functions.md
+  recommended_after:
+  - v03.c03.complexity-data-structures
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c05.streams-optional
+  title: Stream、Collector 与 Optional 边界
+  volume: '03'
+  order: 5
+  level: L3
+  prerequisites:
+  - v03.c01.collections
+  - v03.c04.lambdas-functions
+  outcomes:
+  - 在 120 秒内区分惰性 Stream、Collector 与 Optional 边界，并给出一个适用边界和一个反例
+  - 独立完成可重复验证的数据转换管道；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复流复用、并行副作用或 Optional 滥用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c05.streams-optional.md
+  recommended_after:
+  - v03.c04.lambdas-functions
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c06.io-nio-json
+  title: IO、NIO、文件与字符集
+  volume: '03'
+  order: 6
+  level: L3
+  prerequisites:
+  - v02.c10.exceptions-resources
+  - v00.c03.files-paths-encoding
+  outcomes:
+  - 在 120 秒内区分字节流、字符流、Path 与 Charset，并给出一个适用边界和一个反例
+  - 独立正确复制文本和二进制文件并校验哈希；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复乱码、截断、错误打开选项或未关闭资源；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c06.io-nio-json.md
+  recommended_after:
+  - v03.c05.streams-optional
+  teaches_capabilities:
+  - java-io
+  uses_capabilities: []
+- id: v03.c07.threads-jmm
+  title: 线程、Java 内存模型、同步与锁
+  volume: '03'
+  order: 7
+  level: L3
+  prerequisites:
+  - v02.c04.static-final-immutability
+  - v02.c10.exceptions-resources
+  outcomes:
+  - 在 120 秒内区分线程、共享状态、happens-before 与锁，并给出一个适用边界和一个反例
+  - 独立稳定复现并修复一个竞态条件；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够用线程证据识别可见性、活锁或死锁；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c07.threads-jmm.md
+  recommended_after:
+  - v03.c06.io-nio-json
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c08.executors-virtual-threads
+  title: 线程池、Future、异步与虚拟线程
+  volume: '03'
+  order: 8
+  level: L3
+  prerequisites:
+  - v03.c07.threads-jmm
+  outcomes:
+  - 在 120 秒内区分Executor、Future、虚拟线程与任务生命周期，并给出一个适用边界和一个反例
+  - 独立有界并发执行任务并收集所有失败；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复线程泄漏、饥饿或遗漏取消；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c08.executors-virtual-threads.md
+  recommended_after:
+  - v03.c07.threads-jmm
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c09.annotations-reflection-proxy
+  title: 注解、反射、类加载器与动态代理
+  volume: '03'
+  order: 9
+  level: L3
+  prerequisites:
+  - v02.c06.polymorphism-interfaces
+  - v02.c10.exceptions-resources
+  outcomes:
+  - 在 120 秒内区分注解、反射、类加载与动态代理，并给出一个适用边界和一个反例
+  - 独立实现小型注解扫描和代理调用；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复反射访问、类加载或代理调用错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  path: book/volume-03-java-engineering/chapters/v03.c09.annotations-reflection-proxy.md
+  recommended_after:
+  - v03.c08.executors-virtual-threads
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v03.c10.maven-testing-jvm
+  title: Maven 生命周期、依赖范围与可复现构建
+  volume: '03'
+  order: 10
+  level: L3
+  prerequisites:
+  - v00.c10.dependencies-build-ai
+  - v01.c02.program-structure
+  outcomes:
+  - 在 120 秒内区分Maven lifecycle、goal、scope 与传递依赖，并给出一个适用边界和一个反例
+  - 独立用 dependency:tree 解释真实构建并生成 jar；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误 scope、插件阶段或 JDK target；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - jdk-25
+  - maven-3
+  path: book/volume-03-java-engineering/chapters/v03.c10.maven-testing-jvm.md
+  recommended_after:
+  - v03.c09.annotations-reflection-proxy
+  teaches_capabilities: []
+  uses_capabilities:
+  - build-tool-basics
+- id: v03.c11.java-networking
+  title: Java 网络：InetAddress、TCP、UDP、Socket、ServerSocket、Datagram 与 URL
+  volume: '03'
+  order: 11
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-03-java-engineering/chapters/v03.c11.java-networking.md
+  prerequisites:
+  - v00.c09.network-http-curl
+  - v03.c06.io-nio-json
+  - v02.c10.exceptions-resources
+  recommended_after:
+  - v03.c10.maven-testing-jvm
+  outcomes:
+  - 在 120 秒内区分InetAddress、TCP/UDP、Socket、Datagram 与 URL 层次，并给出一个适用边界和一个反例
+  - 独立实现本地 TCP、UDP 与 URL 客户端/服务端烟雾实验；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分解析、bind、connect、read timeout 与报文丢失；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities:
+  - java-io
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  versioned_surface:
+  - jdk-25
+- id: v03.c12.java-testing-mocking
+  title: JUnit、参数化测试、Mockito 与测试设计
+  volume: '03'
+  order: 12
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-03-java-engineering/chapters/v03.c12.java-testing-mocking.md
+  prerequisites:
+  - v01.c10.arrays-debug-test
+  - v03.c10.maven-testing-jvm
+  - v02.c10.exceptions-resources
+  recommended_after:
+  - v03.c11.java-networking
+  outcomes:
+  - 在 120 秒内区分单元/集成测试、参数化与 Mock 边界，并给出一个适用边界和一个反例
+  - 独立用 JUnit 和 Mockito 覆盖状态规则及失败路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别过度 Mock、无断言或测试替身漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - jdk-25
+  - maven-3
+  - junit-6
+  - mockito
+- id: v03.c13.logging-jvm-diagnostics
+  title: 日志、线程转储、JFR 与 JVM 故障诊断
+  volume: '03'
+  order: 13
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-03-java-engineering/chapters/v03.c13.logging-jvm-diagnostics.md
+  prerequisites:
+  - v01.c01.java-platform
+  - v03.c07.threads-jmm
+  - v03.c10.maven-testing-jvm
+  recommended_after:
+  - v03.c12.java-testing-mocking
+  outcomes:
+  - 在 120 秒内区分结构化日志、线程转储、JFR 与 JVM 运行证据，并给出一个适用边界和一个反例
+  - 独立从 thread dump 或 JFR 定位死锁/热点；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复只有猜测、没有运行证据的诊断；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  versioned_surface:
+  - jdk-25
+  - observability
+- id: v04.c01.relational-model
+  title: PostgreSQL 环境、psql 与关系模型
+  volume: '04'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c11.docker-foundations
+  - v00.c04.terminal-shell
+  outcomes:
+  - 在 120 秒内区分表、行、键、关系与约束，并给出一个适用边界和一个反例
+  - 独立启动 PostgreSQL 并用 psql 验证关系模型；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复连接、主键或外键错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  - docker
+  - docker-compose
+  path: book/volume-04-data-postgresql/chapters/v04.c01.relational-model.md
+  recommended_after: []
+  teaches_capabilities:
+  - psql
+  uses_capabilities:
+  - docker
+- id: v04.c02.sql-query-basics
+  title: SELECT、过滤、NULL、排序与分页
+  volume: '04'
+  order: 2
+  level: L3
+  prerequisites:
+  - v04.c01.relational-model
+  outcomes:
+  - 在 120 秒内区分SELECT、NULL、排序与稳定分页，并给出一个适用边界和一个反例
+  - 独立写查询并用固定数据核对结果集；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 NULL 比较或不稳定排序；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c02.sql-query-basics.md
+  recommended_after:
+  - v04.c01.relational-model
+  teaches_capabilities: []
+  uses_capabilities:
+  - psql
+- id: v04.c03.sql-functions
+  title: 数值、文本、日期时间与条件函数
+  volume: '04'
+  order: 3
+  level: L3
+  prerequisites:
+  - v04.c02.sql-query-basics
+  outcomes:
+  - 在 120 秒内区分文本、日期、标量函数、CASE 与时区，并给出一个适用边界和一个反例
+  - 独立对含 NULL 和时区数据产生预期结果；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复隐式转换或时区假设；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c03.sql-functions.md
+  recommended_after:
+  - v04.c02.sql-query-basics
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v04.c04.aggregate-group-having
+  title: 聚合、GROUP BY 与 HAVING
+  volume: '04'
+  order: 4
+  level: L3
+  prerequisites:
+  - v04.c02.sql-query-basics
+  outcomes:
+  - 在 120 秒内区分聚合前后、GROUP BY 与 HAVING，并给出一个适用边界和一个反例
+  - 独立写分类统计并与手算结果一致；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 WHERE/HAVING 位置或分组列错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c04.aggregate-group-having.md
+  recommended_after:
+  - v04.c03.sql-functions
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v04.c05.joins-subquery-cte
+  title: JOIN、子查询、CTE 与窗口函数
+  volume: '04'
+  order: 5
+  level: L3
+  prerequisites:
+  - v04.c02.sql-query-basics
+  outcomes:
+  - 在 120 秒内区分JOIN、子查询、CTE 与窗口函数边界，并给出一个适用边界和一个反例
+  - 独立对同一统计问题给出两种正确查询；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复笛卡尔积、重复行或窗口分区错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c05.joins-subquery-cte.md
+  recommended_after:
+  - v04.c04.aggregate-group-having
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v04.c06.dml-ddl-normalization
+  title: DML、DDL、约束与规范化
+  volume: '04'
+  order: 6
+  level: L3
+  prerequisites:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  outcomes:
+  - 在 120 秒内区分DML、DDL、约束与范式的职责，并给出一个适用边界和一个反例
+  - 独立建立能主动阻止脏数据的 schema；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复更新异常、缺失约束或错误级联；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c06.dml-ddl-normalization.md
+  recommended_after:
+  - v04.c05.joins-subquery-cte
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v04.c07.postgres-types-psql
+  title: PostgreSQL 类型、UUID、JSONB 与高级交互
+  volume: '04'
+  order: 7
+  level: L3
+  prerequisites:
+  - v04.c01.relational-model
+  - v04.c06.dml-ddl-normalization
+  outcomes:
+  - 在 120 秒内区分UUID、JSONB、数组、时区类型与 psql 元命令，并给出一个适用边界和一个反例
+  - 独立为字段选型并验证写入读取往返；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误类型、时区或 JSON 查询假设；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c07.postgres-types-psql.md
+  recommended_after:
+  - v04.c06.dml-ddl-normalization
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v04.c08.indexes-explain
+  title: 索引、查询计划、EXPLAIN 与性能
+  volume: '04'
+  order: 8
+  level: L3
+  prerequisites:
+  - v04.c02.sql-query-basics
+  - v04.c06.dml-ddl-normalization
+  outcomes:
+  - 在 120 秒内区分B-tree、选择性、复合索引与 EXPLAIN，并给出一个适用边界和一个反例
+  - 独立比较建索引前后执行计划和实际缓冲；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别无效索引、错误列序或估算偏差；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c08.indexes-explain.md
+  recommended_after:
+  - v04.c07.postgres-types-psql
+  teaches_capabilities:
+  - db-indexing
+  uses_capabilities: []
+- id: v04.c09.transactions-locks
+  title: 事务、隔离级别、锁与死锁
+  volume: '04'
+  order: 9
+  level: L3
+  prerequisites:
+  - v04.c06.dml-ddl-normalization
+  outcomes:
+  - 在 120 秒内区分ACID、隔离级别、锁与死锁，并给出一个适用边界和一个反例
+  - 独立用双会话复现并修复并发异常；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分阻塞、死锁、幻读与丢失更新；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-04-data-postgresql/chapters/v04.c09.transactions-locks.md
+  recommended_after:
+  - v04.c08.indexes-explain
+  teaches_capabilities:
+  - database-transactions
+  uses_capabilities: []
+- id: v04.c10.migration-jdbc-mybatis
+  title: Flyway 版本迁移、回滚与数据演进
+  volume: '04'
+  order: 10
+  level: L3
+  prerequisites:
+  - v04.c06.dml-ddl-normalization
+  - v04.c09.transactions-locks
+  outcomes:
+  - 在 120 秒内区分版本迁移、expand/contract、回滚与数据兼容，并给出一个适用边界和一个反例
+  - 独立执行前向迁移、回滚演练和数据校验；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复迁移顺序、不可逆 DDL 或旧版本兼容失败；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  - flyway
+  path: book/volume-04-data-postgresql/chapters/v04.c10.migration-jdbc-mybatis.md
+  recommended_after:
+  - v04.c09.transactions-locks
+  teaches_capabilities:
+  - db-migrations
+  uses_capabilities: []
+- id: v04.c11.jdbc-pool-mybatis
+  title: JDBC、连接池与 MyBatis 持久化
+  volume: '04'
+  order: 11
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-04-data-postgresql/chapters/v04.c11.jdbc-pool-mybatis.md
+  prerequisites:
+  - v03.c10.maven-testing-jvm
+  - v02.c10.exceptions-resources
+  - v04.c02.sql-query-basics
+  - v04.c06.dml-ddl-normalization
+  - v04.c10.migration-jdbc-mybatis
+  recommended_after:
+  - v04.c10.migration-jdbc-mybatis
+  outcomes:
+  - 在 120 秒内区分JDBC 连接、事务、连接池与 MyBatis 映射边界，并给出一个适用边界和一个反例
+  - 独立实现参数化查询、连接池和结果映射测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复连接泄漏、SQL 注入、N+1 或空条件 SQL；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - postgresql-18
+  - jdbc
+  - mybatis
+- id: v05.c01.web-jakarta-lifecycle
+  title: Web 请求生命周期、Servlet 与 Jakarta
+  volume: '05'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c09.network-http-curl
+  - v03.c10.maven-testing-jvm
+  outcomes:
+  - 在 120 秒内区分HTTP 请求、Servlet/Jakarta 对象与线程生命周期，并给出一个适用边界和一个反例
+  - 独立跟踪一次请求从入口到响应的执行轨迹；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 javax/jakarta 混用或请求上下文越界；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - jakarta-ee
+  path: book/volume-05-spring-backend/chapters/v05.c01.web-jakarta-lifecycle.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities:
+  - http
+- id: v05.c02.ioc-di-beans
+  title: IoC、DI、Bean、作用域与生命周期
+  volume: '05'
+  order: 2
+  level: L3
+  prerequisites:
+  - v03.c09.annotations-reflection-proxy
+  outcomes:
+  - 在 120 秒内区分IoC、构造器注入、Bean 作用域与生命周期，并给出一个适用边界和一个反例
+  - 独立用构造器注入替换手工装配；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复循环依赖、隐藏全局状态或错误作用域；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  path: book/volume-05-spring-backend/chapters/v05.c02.ioc-di-beans.md
+  recommended_after:
+  - v05.c01.web-jakarta-lifecycle
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c03.configuration-profiles
+  title: 配置、Profile、类型安全属性与环境
+  volume: '05'
+  order: 3
+  level: L3
+  prerequisites:
+  - v05.c02.ioc-di-beans
+  outcomes:
+  - 在 120 秒内区分配置源、优先级、Profile 与类型安全属性，并给出一个适用边界和一个反例
+  - 独立验证两个环境配置且敏感值不入库；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复优先级覆盖、缺失配置或错误默认值；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - spring-boot-4.1
+  path: book/volume-05-spring-backend/chapters/v05.c03.configuration-profiles.md
+  recommended_after:
+  - v05.c02.ioc-di-beans
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c04.boot-autoconfiguration
+  title: Spring Boot、Starter 与自动配置
+  volume: '05'
+  order: 4
+  level: L3
+  prerequisites:
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v03.c10.maven-testing-jvm
+  outcomes:
+  - 在 120 秒内区分Starter、条件装配与自动配置决策，并给出一个适用边界和一个反例
+  - 独立解释并验证一个 ConditionEvaluationReport；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够排查 Bean 为何存在、缺失或重复；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - spring-boot-4.1
+  path: book/volume-05-spring-backend/chapters/v05.c04.boot-autoconfiguration.md
+  recommended_after:
+  - v05.c03.configuration-profiles
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c05.mvc-controllers
+  title: Spring MVC、Controller 与请求映射
+  volume: '05'
+  order: 5
+  level: L3
+  prerequisites:
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c04.boot-autoconfiguration
+  outcomes:
+  - 在 120 秒内区分路由、HTTP 方法、参数绑定与状态码，并给出一个适用边界和一个反例
+  - 独立实现 REST 端点及成功/失败测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 405、415、绑定或错误状态码；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - spring-boot-4.1
+  path: book/volume-05-spring-backend/chapters/v05.c05.mvc-controllers.md
+  recommended_after:
+  - v05.c04.boot-autoconfiguration
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c06.dto-serialization
+  title: DTO、JSON、序列化与内容协商
+  volume: '05'
+  order: 6
+  level: L3
+  prerequisites:
+  - v05.c05.mvc-controllers
+  - v02.c07.enum-record-sealed
+  outcomes:
+  - 在 120 秒内区分DTO、领域对象、JSON 与内容协商边界，并给出一个适用边界和一个反例
+  - 独立定义输入输出契约并完成 JSON 往返测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止实体泄漏、未知字段或序列化递归；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - spring-boot-4.1
+  path: book/volume-05-spring-backend/chapters/v05.c06.dto-serialization.md
+  recommended_after:
+  - v05.c05.mvc-controllers
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c07.validation-errors-files
+  title: 参数校验、统一错误、文件与分页
+  volume: '05'
+  order: 7
+  level: L3
+  prerequisites:
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  outcomes:
+  - 在 120 秒内区分Bean Validation、Problem Details、上传与分页，并给出一个适用边界和一个反例
+  - 独立统一错误契约并覆盖非法上传和分页；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复内存型上传、错误 code 或分页越界；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  path: book/volume-05-spring-backend/chapters/v05.c07.validation-errors-files.md
+  recommended_after:
+  - v05.c06.dto-serialization
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c08.services-transactions-aop
+  title: Service、事务边界与 AOP
+  volume: '05'
+  order: 8
+  level: L3
+  prerequisites:
+  - v05.c02.ioc-di-beans
+  - v05.c04.boot-autoconfiguration
+  - v04.c09.transactions-locks
+  - v03.c12.java-testing-mocking
+  outcomes:
+  - 在 120 秒内区分应用服务、事务边界、代理与 AOP，并给出一个适用边界和一个反例
+  - 独立用集成测试验证提交、回滚和并发规则；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复自调用导致事务失效或异常未回滚；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-framework-7
+  - spring-boot-4.1
+  - postgresql-18
+  path: book/volume-05-spring-backend/chapters/v05.c08.services-transactions-aop.md
+  recommended_after:
+  - v05.c07.validation-errors-files
+  teaches_capabilities: []
+  uses_capabilities:
+  - database-transactions
+- id: v05.c09.mybatis-integration
+  title: MyBatis 映射、动态 SQL 与数据访问
+  volume: '05'
+  order: 9
+  level: L3
+  prerequisites:
+  - v05.c04.boot-autoconfiguration
+  - v05.c08.services-transactions-aop
+  - v04.c11.jdbc-pool-mybatis
+  outcomes:
+  - 在 120 秒内区分Mapper、结果映射、动态 SQL 与分页，并给出一个适用边界和一个反例
+  - 独立实现安全动态查询和映射测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 N+1、SQL 注入或空条件更新；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - mybatis
+  - postgresql-18
+  path: book/volume-05-spring-backend/chapters/v05.c09.mybatis-integration.md
+  recommended_after:
+  - v05.c08.services-transactions-aop
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v05.c10.testing-openapi-actuator
+  title: 测试、Testcontainers、OpenAPI 与 Actuator
+  volume: '05'
+  order: 10
+  level: L3
+  prerequisites:
+  - v05.c05.mvc-controllers
+  - v05.c07.validation-errors-files
+  - v05.c09.mybatis-integration
+  - v03.c12.java-testing-mocking
+  - v00.c11.docker-foundations
+  outcomes:
+  - 在 120 秒内区分测试切片、Testcontainers、OpenAPI 与运行端点，并给出一个适用边界和一个反例
+  - 独立从空环境运行数据库集成测试并校验契约/健康；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复依赖本机数据库、文档漂移或假健康；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - junit-6
+  - testcontainers
+  - openapi
+  - docker
+  - observability
+  path: book/volume-05-spring-backend/chapters/v05.c10.testing-openapi-actuator.md
+  recommended_after:
+  - v05.c09.mybatis-integration
+  teaches_capabilities: []
+  uses_capabilities:
+  - docker
+- id: v06.c01.auth-session-password
+  title: 认证基础、Cookie、Session 与密码存储
+  volume: '06'
+  order: 1
+  level: L3
+  prerequisites:
+  - v05.c05.mvc-controllers
+  - v02.c09.core-value-types
+  outcomes:
+  - 在 120 秒内区分身份、认证、Cookie、Session 与密码哈希，并给出一个适用边界和一个反例
+  - 独立实现登录退出及会话固定攻击测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止明文/可逆密码或会话不轮换；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - spring-security
+  - postgresql-18
+  path: book/volume-06-enterprise-architecture/chapters/v06.c01.auth-session-password.md
+  recommended_after: []
+  teaches_capabilities:
+  - auth-foundations
+  uses_capabilities: []
+- id: v06.c02.web-security-threats
+  title: CORS、CSRF、XSS、SSRF 与输入边界
+  volume: '06'
+  order: 2
+  level: L3
+  prerequisites:
+  - v00.c09.network-http-curl
+  - v05.c05.mvc-controllers
+  outcomes:
+  - 在 120 秒内区分CORS、CSRF、XSS、SSRF 与信任边界，并给出一个适用边界和一个反例
+  - 独立为四类威胁各实现一条安全失败测试；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复全局关闭防护或不可信 URL/HTML；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-security
+  - browser
+  - html-living-standard
+  path: book/volume-06-enterprise-architecture/chapters/v06.c02.web-security-threats.md
+  recommended_after:
+  - v06.c01.auth-session-password
+  teaches_capabilities:
+  - web-threat-model
+  uses_capabilities: []
+- id: v06.c03.jwt-oauth-oidc
+  title: JWT、OAuth 2.0、OIDC 与会话选择
+  volume: '06'
+  order: 3
+  level: L3
+  prerequisites:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  outcomes:
+  - 在 120 秒内区分Session、JWT、OAuth2 与 OIDC 的适用边界，并给出一个适用边界和一个反例
+  - 独立画授权码流程并验证 token 关键约束；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止无签名/无受众校验 JWT 或错误 flow；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - oauth2-oidc
+  - spring-security
+  path: book/volume-06-enterprise-architecture/chapters/v06.c03.jwt-oauth-oidc.md
+  recommended_after:
+  - v06.c02.web-security-threats
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c04.spring-security
+  title: Spring Security 过滤链与授权规则
+  volume: '06'
+  order: 4
+  level: L3
+  prerequisites:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v05.c04.boot-autoconfiguration
+  outcomes:
+  - 在 120 秒内区分Security Filter Chain、认证与授权匹配，并给出一个适用边界和一个反例
+  - 独立覆盖 401、403 和成功访问路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复过宽 matcher、过滤器顺序或匿名放行；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - spring-security
+  path: book/volume-06-enterprise-architecture/chapters/v06.c04.spring-security.md
+  recommended_after:
+  - v06.c03.jwt-oauth-oidc
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c05.rbac-multitenancy-audit
+  title: RBAC、ABAC、多租户、数据权限与审计
+  volume: '06'
+  order: 5
+  level: L3
+  prerequisites:
+  - v06.c04.spring-security
+  - v04.c01.relational-model
+  outcomes:
+  - 在 120 秒内区分RBAC、ABAC、租户数据权限与审计，并给出一个适用边界和一个反例
+  - 独立用负向测试证明跨租户隔离；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复只隐藏菜单、不校验后端或越权日志泄漏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-security
+  - postgresql-18
+  path: book/volume-06-enterprise-architecture/chapters/v06.c05.rbac-multitenancy-audit.md
+  recommended_after:
+  - v06.c04.spring-security
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c06.domain-modeling
+  title: 领域建模、值对象、聚合与边界
+  volume: '06'
+  order: 6
+  level: L3
+  prerequisites:
+  - v02.c03.constructors-encapsulation
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  outcomes:
+  - 在 120 秒内区分Entity、Value Object、Aggregate 与边界，并给出一个适用边界和一个反例
+  - 独立建模工单聚合并通过方法保护不变量；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别贫血模型、万能服务或跨聚合事务；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface: []
+  path: book/volume-06-enterprise-architecture/chapters/v06.c06.domain-modeling.md
+  recommended_after:
+  - v06.c05.rbac-multitenancy-audit
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c07.state-sla-idempotency
+  title: 状态机、SLA、幂等与并发控制
+  volume: '06'
+  order: 7
+  level: L3
+  prerequisites:
+  - v06.c06.domain-modeling
+  - v04.c09.transactions-locks
+  outcomes:
+  - 在 120 秒内区分状态机、SLA、幂等键与乐观并发，并给出一个适用边界和一个反例
+  - 独立验证合法转换、超时和重复请求；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复重复执行、并发覆盖或非法跃迁；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - postgresql-18
+  path: book/volume-06-enterprise-architecture/chapters/v06.c07.state-sla-idempotency.md
+  recommended_after:
+  - v06.c06.domain-modeling
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c08.redis-cache-rate-limit
+  title: Redis、缓存、TTL、限流与一致性
+  volume: '06'
+  order: 8
+  level: L3
+  prerequisites:
+  - v06.c07.state-sla-idempotency
+  - v04.c09.transactions-locks
+  outcomes:
+  - 在 120 秒内区分cache-aside、TTL、限流与一致性边界，并给出一个适用边界和一个反例
+  - 独立证明缓存失效、穿透保护和降级行为；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复缓存成为唯一事实源或锁误删；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - postgresql-18
+  - redis
+  path: book/volume-06-enterprise-architecture/chapters/v06.c08.redis-cache-rate-limit.md
+  recommended_after:
+  - v06.c07.state-sla-idempotency
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c09.events-outbox-messaging
+  title: 领域事件、Outbox、消息与异步
+  volume: '06'
+  order: 9
+  level: L3
+  prerequisites:
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  - v05.c08.services-transactions-aop
+  outcomes:
+  - 在 120 秒内区分领域事件、Outbox、RabbitMQ 与投递语义，并给出一个适用边界和一个反例
+  - 独立模拟提交后崩溃并最终可靠投递；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复双写、消息丢失或重复消费；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-modulith
+  - postgresql-18
+  - rabbitmq
+  path: book/volume-06-enterprise-architecture/chapters/v06.c09.events-outbox-messaging.md
+  recommended_after:
+  - v06.c08.redis-cache-rate-limit
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v06.c10.modular-monolith-observability
+  title: 模块化单体、可观测性与微服务边界
+  volume: '06'
+  order: 10
+  level: L3
+  prerequisites:
+  - v06.c06.domain-modeling
+  - v06.c09.events-outbox-messaging
+  - v05.c10.testing-openapi-actuator
+  outcomes:
+  - 在 120 秒内区分模块边界、结构测试、可观测性与拆分信号，并给出一个适用边界和一个反例
+  - 独立用 Modulith 测试约束依赖并串联 traceId；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别非法依赖环或“先微服务后边界”；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - spring-boot-4.1
+  - spring-modulith
+  - observability
+  path: book/volume-06-enterprise-architecture/chapters/v06.c10.modular-monolith-observability.md
+  recommended_after:
+  - v06.c09.events-outbox-messaging
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c01.browser-render-devtools
+  title: 浏览器、请求、渲染流程与 DevTools
+  volume: '07'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分导航、请求、解析、布局与绘制流水线，并给出一个适用边界和一个反例
+  - 独立用 DevTools 记录并解释一次页面加载；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位网络慢、主线程阻塞或强制重排；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - html-living-standard
+  path: book/volume-07-web-platform/chapters/v07.c01.browser-render-devtools.md
+  recommended_after: []
+  teaches_capabilities:
+  - devtools
+  uses_capabilities:
+  - http
+- id: v07.c02.semantic-html
+  title: 语义 HTML、文档结构与元数据
+  volume: '07'
+  order: 2
+  level: L3
+  prerequisites:
+  - v07.c01.browser-render-devtools
+  outcomes:
+  - 在 120 秒内区分语义元素、标题结构与文档元数据，并给出一个适用边界和一个反例
+  - 独立建立可被浏览器和辅助技术理解的页面；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 div 堆砌、标题跳级或错误 landmark；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - html-living-standard
+  path: book/volume-07-web-platform/chapters/v07.c02.semantic-html.md
+  recommended_after:
+  - v07.c01.browser-render-devtools
+  teaches_capabilities: []
+  uses_capabilities:
+  - devtools
+- id: v07.c03.forms-media-validation
+  title: 表单、原生校验、图片、音视频
+  volume: '07'
+  order: 3
+  level: L3
+  prerequisites:
+  - v07.c02.semantic-html
+  outcomes:
+  - 在 120 秒内区分表单语义、原生校验、图片与响应式媒体，并给出一个适用边界和一个反例
+  - 独立提交并验证含 label 的可访问表单；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误 label、输入类型或媒体尺寸；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - html-living-standard
+  path: book/volume-07-web-platform/chapters/v07.c03.forms-media-validation.md
+  recommended_after:
+  - v07.c02.semantic-html
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c04.accessibility
+  title: 无障碍、键盘、焦点与屏幕阅读器
+  volume: '07'
+  order: 4
+  level: L3
+  prerequisites:
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  outcomes:
+  - 在 120 秒内区分键盘、焦点、可访问名称、角色与状态，并给出一个适用边界和一个反例
+  - 独立完成键盘和读屏检查并保存结果；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复焦点丢失、无可访问名或错误 ARIA；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - html-living-standard
+  path: book/volume-07-web-platform/chapters/v07.c04.accessibility.md
+  recommended_after:
+  - v07.c03.forms-media-validation
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c05.css-cascade
+  title: CSS 层叠、选择器、优先级与继承
+  volume: '07'
+  order: 5
+  level: L3
+  prerequisites:
+  - v07.c02.semantic-html
+  outcomes:
+  - 在 120 秒内区分来源、层叠、优先级、继承与 specificity，并给出一个适用边界和一个反例
+  - 独立预测并验证一组冲突规则的最终样式；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 !important 堆叠或来源顺序误判；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c05.css-cascade.md
+  recommended_after:
+  - v07.c04.accessibility
+  teaches_capabilities:
+  - css-cascade
+  uses_capabilities: []
+- id: v07.c06.box-position-stacking
+  title: 盒模型、display、定位与层叠上下文
+  volume: '07'
+  order: 6
+  level: L3
+  prerequisites:
+  - v07.c05.css-cascade
+  outcomes:
+  - 在 120 秒内区分盒模型、display、position 与 stacking context，并给出一个适用边界和一个反例
+  - 独立复现并修复遮挡、溢出和定位布局；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够定位 z-index 无效或 margin collapse；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c06.box-position-stacking.md
+  recommended_after:
+  - v07.c05.css-cascade
+  teaches_capabilities:
+  - css-box-model
+  uses_capabilities: []
+- id: v07.c07.flex-grid
+  title: Flexbox、Grid 与页面布局
+  volume: '07'
+  order: 7
+  level: L3
+  prerequisites:
+  - v07.c06.box-position-stacking
+  outcomes:
+  - 在 120 秒内区分Flex 主/交叉轴与 Grid 二维轨道，并给出一个适用边界和一个反例
+  - 独立重建响应式工单卡片和表格布局；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复溢出、错误对齐或隐式轨道；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c07.flex-grid.md
+  recommended_after:
+  - v07.c06.box-position-stacking
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c08.responsive-typography
+  title: 响应式、单位、图片与排版
+  volume: '07'
+  order: 8
+  level: L3
+  prerequisites:
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  outcomes:
+  - 在 120 秒内区分断点、相对单位、排版与响应式图片，并给出一个适用边界和一个反例
+  - 独立在三种宽度通过视觉和溢出检查；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复固定像素、布局跳动或图片变形；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c08.responsive-typography.md
+  recommended_after:
+  - v07.c07.flex-grid
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c09.color-theme-variables
+  title: 颜色、主题与 CSS 自定义属性
+  volume: '07'
+  order: 9
+  level: L3
+  prerequisites:
+  - v07.c05.css-cascade
+  outcomes:
+  - 在 120 秒内区分颜色语义、设计 token、自定义属性与主题，并给出一个适用边界和一个反例
+  - 独立实现明暗主题并验证对比度；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复仅靠颜色传达状态或 token 漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c09.color-theme-variables.md
+  recommended_after:
+  - v07.c08.responsive-typography
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v07.c10.motion-performance
+  title: 过渡、变换、动画、性能与减少动效
+  volume: '07'
+  order: 10
+  level: L3
+  prerequisites:
+  - v07.c05.css-cascade
+  - v07.c06.box-position-stacking
+  outcomes:
+  - 在 120 秒内区分transform、transition、animation 与渲染成本，并给出一个适用边界和一个反例
+  - 独立实现尊重 reduced-motion 的可测动效；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 layout thrashing 或眩晕动效；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - browser
+  - browser-devtools
+  - css
+  path: book/volume-07-web-platform/chapters/v07.c10.motion-performance.md
+  recommended_after:
+  - v07.c09.color-theme-variables
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c01.runtime-node-pnpm-esm
+  title: JavaScript 运行时、Node、pnpm 与 ESM
+  volume: '08'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c10.dependencies-build-ai
+  - v00.c06.environment-path
+  outcomes:
+  - 在 120 秒内区分浏览器/Node 运行时、pnpm 与 ESM，并给出一个适用边界和一个反例
+  - 独立创建锁定 Node/pnpm 的 ESM 工程；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 CJS/ESM、PATH 或锁文件冲突；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - node-24-lts
+  - pnpm
+  path: book/volume-08-javascript-typescript/chapters/v08.c01.runtime-node-pnpm-esm.md
+  recommended_after: []
+  teaches_capabilities:
+  - esm
+  - node
+  - pnpm
+  uses_capabilities:
+  - build-tool-basics
+- id: v08.c02.values-types-equality
+  title: 值、类型、转换、相等与空值
+  volume: '08'
+  order: 2
+  level: L3
+  prerequisites:
+  - v08.c01.runtime-node-pnpm-esm
+  outcomes:
+  - 在 120 秒内区分原始值、引用值、转换、相等与 nullish，并给出一个适用边界和一个反例
+  - 独立写边界真值表并由测试验证；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 truthy、NaN、Object.is 或 == 误判；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c02.values-types-equality.md
+  recommended_after:
+  - v08.c01.runtime-node-pnpm-esm
+  teaches_capabilities: []
+  uses_capabilities:
+  - esm
+  - node
+  - pnpm
+- id: v08.c03.scope-functions-closures
+  title: 作用域、控制流、函数与闭包
+  volume: '08'
+  order: 3
+  level: L3
+  prerequisites:
+  - v08.c02.values-types-equality
+  outcomes:
+  - 在 120 秒内区分词法作用域、函数、一等值与闭包，并给出一个适用边界和一个反例
+  - 独立实现有状态闭包并解释引用生命周期；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别错误捕获或把闭包等同内存泄漏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c03.scope-functions-closures.md
+  recommended_after:
+  - v08.c02.values-types-equality
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c04.arrays-objects-collections
+  title: 数组、对象、Map、Set 与不可变更新
+  volume: '08'
+  order: 4
+  level: L3
+  prerequisites:
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  outcomes:
+  - 在 120 秒内区分Array、Object、Map、Set 与不可变更新，并给出一个适用边界和一个反例
+  - 独立实现分组统计和无突变更新；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复共享引用污染或错误键语义；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c04.arrays-objects-collections.md
+  recommended_after:
+  - v08.c03.scope-functions-closures
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c05.this-prototype-class-module
+  title: this、原型、class 与模块
+  volume: '08'
+  order: 5
+  level: L3
+  prerequisites:
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  outcomes:
+  - 在 120 秒内区分this、prototype、class 与模块边界，并给出一个适用边界和一个反例
+  - 独立预测并验证四种调用方式的 this；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复丢失绑定、原型遮蔽或循环模块；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c05.this-prototype-class-module.md
+  recommended_after:
+  - v08.c04.arrays-objects-collections
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c06.dom-events-storage
+  title: DOM、事件、表单、URL 与存储
+  volume: '08'
+  order: 6
+  level: L3
+  prerequisites:
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v08.c03.scope-functions-closures
+  outcomes:
+  - 在 120 秒内区分DOM、事件传播、表单、URL 与浏览器存储，并给出一个适用边界和一个反例
+  - 独立实现事件委托和安全存储边界；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复监听器泄漏、不可信 HTML 或错误冒泡；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c06.dom-events-storage.md
+  recommended_after:
+  - v08.c05.this-prototype-class-module
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c07.event-loop-promises
+  title: 事件循环、任务、Promise 与 async/await
+  volume: '08'
+  order: 7
+  level: L3
+  prerequisites:
+  - v08.c03.scope-functions-closures
+  outcomes:
+  - 在 120 秒内区分task、microtask、Promise 与 async/await，并给出一个适用边界和一个反例
+  - 独立预测并用日志验证事件循环顺序；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复漏 await、未处理拒绝或串并行误用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c07.event-loop-promises.md
+  recommended_after:
+  - v08.c06.dom-events-storage
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v08.c08.fetch-abort-race
+  title: Fetch、AbortController、重试、竞态与错误
+  volume: '08'
+  order: 8
+  level: L3
+  prerequisites:
+  - v08.c07.event-loop-promises
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分Fetch、AbortController、请求世代与重试，并给出一个适用边界和一个反例
+  - 独立快速切换时只提交最新响应；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复旧请求覆盖、错误关闭 loading 或盲目重试；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - browser
+  - node-24-lts
+  path: book/volume-08-javascript-typescript/chapters/v08.c08.fetch-abort-race.md
+  recommended_after:
+  - v08.c07.event-loop-promises
+  teaches_capabilities: []
+  uses_capabilities:
+  - http
+- id: v08.c09.typescript-setup-strict
+  title: tsc、tsconfig、strict、联合与收窄
+  volume: '08'
+  order: 9
+  level: L3
+  prerequisites:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c05.this-prototype-class-module
+  outcomes:
+  - 在 120 秒内区分strict、union、narrowing、unknown 与 never，并给出一个适用边界和一个反例
+  - 独立为外部输入建立可编译的类型收窄；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 any 逃逸、错误断言或非空滥用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - typescript
+  - node-24-lts
+  - pnpm
+  path: book/volume-08-javascript-typescript/chapters/v08.c09.typescript-setup-strict.md
+  recommended_after:
+  - v08.c08.fetch-abort-race
+  teaches_capabilities:
+  - tsc
+  - tsconfig
+  uses_capabilities: []
+- id: v08.c10.typescript-advanced-tooling
+  title: 泛型、高级类型、运行时校验、测试与构建
+  volume: '08'
+  order: 10
+  level: L3
+  prerequisites:
+  - v08.c09.typescript-setup-strict
+  - v08.c08.fetch-abort-race
+  outcomes:
+  - 在 120 秒内区分泛型、映射/条件类型、tsconfig 与运行时 schema，并给出一个适用边界和一个反例
+  - 独立让类型检查和运行时校验对坏数据同时失败；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复只靠 TypeScript 信任网络数据；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - typescript
+  - node-24-lts
+  - pnpm
+  - vitest
+  path: book/volume-08-javascript-typescript/chapters/v08.c10.typescript-advanced-tooling.md
+  recommended_after:
+  - v08.c09.typescript-setup-strict
+  teaches_capabilities: []
+  uses_capabilities:
+  - tsc
+  - tsconfig
+- id: v09.c01.vite-sfc-app
+  title: Vite、Vue、SFC 与 TypeScript 应用
+  volume: '09'
+  order: 1
+  level: L3
+  prerequisites:
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  - v07.c05.css-cascade
+  - v07.c06.box-position-stacking
+  outcomes:
+  - 在 120 秒内区分Vite、SFC、模板/样式编译与 TypeScript 边界，并给出一个适用边界和一个反例
+  - 独立建立可 typecheck、build 且样式可追踪的 Vue 应用；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复环境变量、SFC 样式作用域或构建专属错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - vite
+  - typescript
+  - node-24-lts
+  - pnpm
+  - css
+  path: book/volume-09-vue-nuxt/chapters/v09.c01.vite-sfc-app.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities:
+  - css-box-model
+  - css-cascade
+  - esm
+  - node
+  - pnpm
+  - tsc
+  - tsconfig
+- id: v09.c02.reactivity
+  title: ref、reactive、computed 与响应式边界
+  volume: '09'
+  order: 2
+  level: L3
+  prerequisites:
+  - v09.c01.vite-sfc-app
+  outcomes:
+  - 在 120 秒内区分ref、reactive、computed 与依赖追踪，并给出一个适用边界和一个反例
+  - 独立预测并验证嵌套响应式更新；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复解构丢失响应式或 computed 副作用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - typescript
+  path: book/volume-09-vue-nuxt/chapters/v09.c02.reactivity.md
+  recommended_after:
+  - v09.c01.vite-sfc-app
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c03.watch-lifecycle-cleanup
+  title: watch、effect、生命周期与副作用清理
+  volume: '09'
+  order: 3
+  level: L3
+  prerequisites:
+  - v09.c02.reactivity
+  outcomes:
+  - 在 120 秒内区分watch、effect、生命周期与清理函数，并给出一个适用边界和一个反例
+  - 独立建立可取消副作用并验证卸载；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复重复监听、陈旧闭包或卸载后更新；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - typescript
+  path: book/volume-09-vue-nuxt/chapters/v09.c03.watch-lifecycle-cleanup.md
+  recommended_after:
+  - v09.c02.reactivity
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c04.components-contracts
+  title: 组件、Props、事件、Slot 与 v-model
+  volume: '09'
+  order: 4
+  level: L3
+  prerequisites:
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  outcomes:
+  - 在 120 秒内区分Props、Emit、Slot 与 v-model 契约，并给出一个适用边界和一个反例
+  - 独立实现受控组件并验证事件顺序；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复隐式突变、双向环或 slot 责任混乱；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - typescript
+  path: book/volume-09-vue-nuxt/chapters/v09.c04.components-contracts.md
+  recommended_after:
+  - v09.c03.watch-lifecycle-cleanup
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c05.composables-boundaries
+  title: Composable、依赖注入与模块边界
+  volume: '09'
+  order: 5
+  level: L3
+  prerequisites:
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  outcomes:
+  - 在 120 秒内区分Composable、provide/inject 与模块边界，并给出一个适用边界和一个反例
+  - 独立抽取可独立测试的资源 Composable；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复隐藏单例、未清理副作用或过度复用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - typescript
+  path: book/volume-09-vue-nuxt/chapters/v09.c05.composables-boundaries.md
+  recommended_after:
+  - v09.c04.components-contracts
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c06.router-navigation-auth
+  title: Router、导航、权限与页面边界
+  volume: '09'
+  order: 6
+  level: L3
+  prerequisites:
+  - v09.c04.components-contracts
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分Router、导航守卫、深链与页面权限边界，并给出一个适用边界和一个反例
+  - 独立验证深链、重定向、会话过期和拒绝路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复只在前端做授权或重定向循环；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  path: book/volume-09-vue-nuxt/chapters/v09.c06.router-navigation-auth.md
+  recommended_after:
+  - v09.c05.composables-boundaries
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c07.pinia-server-state-forms
+  title: Pinia、服务端状态与表单
+  volume: '09'
+  order: 7
+  level: L3
+  prerequisites:
+  - v09.c02.reactivity
+  - v09.c04.components-contracts
+  - v09.c06.router-navigation-auth
+  outcomes:
+  - 在 120 秒内区分Pinia、服务器状态、URL 与本地表单状态，并给出一个适用边界和一个反例
+  - 独立为三类状态选择归属并保存决策证据；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复把服务器缓存全塞进 store；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - pinia
+  path: book/volume-09-vue-nuxt/chapters/v09.c07.pinia-server-state-forms.md
+  recommended_after:
+  - v09.c06.router-navigation-auth
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c08.requests-race-errors
+  title: 请求取消、竞态、加载状态与错误恢复
+  volume: '09'
+  order: 8
+  level: L3
+  prerequisites:
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c07.pinia-server-state-forms
+  - v08.c08.fetch-abort-race
+  outcomes:
+  - 在 120 秒内区分loading、empty、error、stale 与请求世代，并给出一个适用边界和一个反例
+  - 独立用竞态测试证明最新结果胜出；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 finally 关闭新请求 loading 或旧错覆盖；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - typescript
+  path: book/volume-09-vue-nuxt/chapters/v09.c08.requests-race-errors.md
+  recommended_after:
+  - v09.c07.pinia-server-state-forms
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c09.testing-a11y-performance
+  title: 组件测试、无障碍、性能与错误边界
+  volume: '09'
+  order: 9
+  level: L3
+  prerequisites:
+  - v09.c04.components-contracts
+  - v09.c08.requests-race-errors
+  - v07.c04.accessibility
+  outcomes:
+  - 在 120 秒内区分组件测试、浏览器测试、a11y 与性能预算，并给出一个适用边界和一个反例
+  - 独立通过 Vitest 和 Playwright 的成功/失败场景；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复只测快照、脆弱选择器或无障碍回归；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - vue-3
+  - vitest
+  - playwright
+  path: book/volume-09-vue-nuxt/chapters/v09.c09.testing-a11y-performance.md
+  recommended_after:
+  - v09.c08.requests-race-errors
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v09.c10.nuxt-rendering-deployment
+  title: Nuxt SSR、SSG、水合、Nitro 与部署
+  volume: '09'
+  order: 10
+  level: L3
+  prerequisites:
+  - v09.c06.router-navigation-auth
+  - v09.c08.requests-race-errors
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分CSR、SSR、SSG、水合与 Nitro 边界，并给出一个适用边界和一个反例
+  - 独立证明服务端和客户端首屏输出一致；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 hydration mismatch 或客户端 API 越界；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - nuxt-4
+  - vue-3
+  - node-24-lts
+  path: book/volume-09-vue-nuxt/chapters/v09.c10.nuxt-rendering-deployment.md
+  recommended_after:
+  - v09.c09.testing-a11y-performance
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c01.miniprogram-runtime
+  title: 小程序运行模型、配置与生命周期
+  volume: '10'
+  order: 1
+  level: L2+
+  prerequisites:
+  - v09.c01.vite-sfc-app
+  outcomes:
+  - 在 120 秒内区分小程序双线程、页面/组件生命周期与通信，并给出一个适用边界和一个反例
+  - 独立记录并验证页面进入退出事件序列；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 Web 生命周期类比导致的状态错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c01.miniprogram-runtime.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c02.uniapp-vue-pages
+  title: uni-app、Vue 3、页面、组件与路由
+  volume: '10'
+  order: 2
+  level: L2+
+  prerequisites:
+  - v10.c01.miniprogram-runtime
+  - v09.c04.components-contracts
+  outcomes:
+  - 在 120 秒内区分uni-app 页面、组件、路由与 Vue 契约，并给出一个适用边界和一个反例
+  - 独立建立多页报修流程并验证返回栈；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复页面参数、组件通信或平台路由错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  - vue-3
+  - typescript
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c02.uniapp-vue-pages.md
+  recommended_after:
+  - v10.c01.miniprogram-runtime
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c03.network-auth-storage
+  title: 网络、认证、存储与多环境
+  volume: '10'
+  order: 3
+  level: L2+
+  prerequisites:
+  - v10.c02.uniapp-vue-pages
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分小程序请求、会话、存储与安全边界，并给出一个适用边界和一个反例
+  - 独立实现过期会话恢复且敏感数据不落日志；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 token 泄漏、跨环境配置或未认证重试；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c03.network-auth-storage.md
+  recommended_after:
+  - v10.c02.uniapp-vue-pages
+  teaches_capabilities: []
+  uses_capabilities:
+  - auth-foundations
+  - http
+  - web-threat-model
+- id: v10.c04.platform-api-conditional
+  title: 平台 API 与条件编译
+  volume: '10'
+  order: 4
+  level: L2+
+  prerequisites:
+  - v10.c02.uniapp-vue-pages
+  outcomes:
+  - 在 120 秒内区分平台 API、条件编译与能力探测，并给出一个适用边界和一个反例
+  - 独立让同一功能在两个目标成功编译；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复平台专属 API 泄漏或错误条件宏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c04.platform-api-conditional.md
+  recommended_after:
+  - v10.c03.network-auth-storage
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c05.upload-scan-location
+  title: 表单、上传、扫码、定位与权限
+  volume: '10'
+  order: 5
+  level: L2+
+  prerequisites:
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  outcomes:
+  - 在 120 秒内区分上传、扫码、定位与权限状态机，并给出一个适用边界和一个反例
+  - 独立覆盖允许、拒绝、撤回和设置恢复路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复拒绝权限后的死路或重复上传；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c05.upload-scan-location.md
+  recommended_after:
+  - v10.c04.platform-api-conditional
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c06.packages-performance-offline
+  title: 分包、性能、缓存与离线边界
+  volume: '10'
+  order: 6
+  level: L2+
+  prerequisites:
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  outcomes:
+  - 在 120 秒内区分分包、启动性能、缓存与离线队列，并给出一个适用边界和一个反例
+  - 独立实现离线提交和恢复网络后的重放；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复缓存过期、重复提交或包体超限；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c06.packages-performance-offline.md
+  recommended_after:
+  - v10.c05.upload-scan-location
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c07.testing-device-debug
+  title: 单元测试、Mock、真机与调试
+  volume: '10'
+  order: 7
+  level: L2+
+  prerequisites:
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  outcomes:
+  - 在 120 秒内区分单元测试、Mock、模拟器与真机证据边界，并给出一个适用边界和一个反例
+  - 独立为同一功能保存自动化和真机结果；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别模拟器通过但真机失败的差异；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c07.testing-device-debug.md
+  recommended_after:
+  - v10.c06.packages-performance-offline
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c08.privacy-security-review
+  title: 隐私、安全、平台能力与审核
+  volume: '10'
+  order: 8
+  level: L2+
+  prerequisites:
+  - v10.c03.network-auth-storage
+  - v10.c05.upload-scan-location
+  - v06.c02.web-security-threats
+  outcomes:
+  - 在 120 秒内区分隐私声明、最小权限、数据生命周期与审核，并给出一个适用边界和一个反例
+  - 独立建立权限用途清单和拒绝路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复先采集后授权或无删除机制；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c08.privacy-security-review.md
+  recommended_after:
+  - v10.c07.testing-device-debug
+  teaches_capabilities: []
+  uses_capabilities:
+  - web-threat-model
+- id: v10.c09.publish-monitoring
+  title: 构建、发布、版本和监控
+  volume: '10'
+  order: 9
+  level: L2+
+  prerequisites:
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  - v10.c08.privacy-security-review
+  outcomes:
+  - 在 120 秒内区分构建、版本、灰度、回滚与运行监控，并给出一个适用边界和一个反例
+  - 独立生成可回滚发布记录和监控检查表；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复版本号、基础库或渠道配置不兼容；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c09.publish-monitoring.md
+  recommended_after:
+  - v10.c08.privacy-security-review
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v10.c10.factorycare-reporter
+  title: FactoryCare 报修端集成与验收
+  volume: '10'
+  order: 10
+  level: L2+
+  prerequisites:
+  - v10.c03.network-auth-storage
+  - v10.c05.upload-scan-location
+  - v10.c09.publish-monitoring
+  - v09.c08.requests-race-errors
+  outcomes:
+  - 在 120 秒内区分FactoryCare 扫码、报修、上传与状态契约，并给出一个适用边界和一个反例
+  - 独立完成端到端报修并由后端契约测试验证；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复跨端字段、认证或状态漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - uni-app
+  - wechat-miniprogram
+  path: book/volume-10-uniapp-miniprogram/chapters/v10.c10.factorycare-reporter.md
+  recommended_after:
+  - v10.c09.publish-monitoring
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c01.dart-cli-types
+  title: Dart SDK、CLI、pubspec、类型与空安全
+  volume: '11'
+  order: 1
+  level: L2+
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c06.environment-path
+  outcomes:
+  - 在 120 秒内区分Dart SDK、pub、静态类型与空安全，并给出一个适用边界和一个反例
+  - 独立建立锁定 SDK 的纯 Dart 工程；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 nullable、PATH 或 pubspec 约束错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c01.dart-cli-types.md
+  recommended_after: []
+  teaches_capabilities:
+  - dart-cli
+  - pubspec
+  uses_capabilities: []
+- id: v11.c02.dart-control-functions
+  title: 运算符、控制流与函数
+  volume: '11'
+  order: 2
+  level: L2+
+  prerequisites:
+  - v11.c01.dart-cli-types
+  outcomes:
+  - 在 120 秒内区分Dart 表达式、分支、循环与函数，并给出一个适用边界和一个反例
+  - 独立实现并测试工单过滤规则；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复边界、空安全或返回类型错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c02.dart-control-functions.md
+  recommended_after:
+  - v11.c01.dart-cli-types
+  teaches_capabilities: []
+  uses_capabilities:
+  - dart-cli
+  - pubspec
+- id: v11.c03.dart-collections-patterns
+  title: 集合、模式、record 与解构
+  volume: '11'
+  order: 3
+  level: L2+
+  prerequisites:
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  outcomes:
+  - 在 120 秒内区分List、Set、Map、pattern 与 record，并给出一个适用边界和一个反例
+  - 独立解析异构数据并穷尽模式分支；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复非穷尽 pattern 或集合误用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c03.dart-collections-patterns.md
+  recommended_after:
+  - v11.c02.dart-control-functions
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c04.dart-oop-generics
+  title: 类、泛型、mixin 与 extension
+  volume: '11'
+  order: 4
+  level: L2+
+  prerequisites:
+  - v11.c01.dart-cli-types
+  - v11.c03.dart-collections-patterns
+  outcomes:
+  - 在 120 秒内区分class、generic、mixin、extension 与接口，并给出一个适用边界和一个反例
+  - 独立建立类型安全的仓库接口；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 mixin 约束或泛型协变误解；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c04.dart-oop-generics.md
+  recommended_after:
+  - v11.c03.dart-collections-patterns
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c05.dart-async-errors
+  title: 异常、Future、Stream、Isolate 与取消
+  volume: '11'
+  order: 5
+  level: L2+
+  prerequisites:
+  - v11.c02.dart-control-functions
+  - v11.c04.dart-oop-generics
+  outcomes:
+  - 在 120 秒内区分exception、Future、Stream、Isolate 与取消边界，并给出一个适用边界和一个反例
+  - 独立测试超时、取消、错误和流结束；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复未等待 Future、漏订阅清理或错误隔离；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c05.dart-async-errors.md
+  recommended_after:
+  - v11.c04.dart-oop-generics
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c06.flutter-runtime
+  title: Flutter、Widget、Element 与 RenderObject
+  volume: '11'
+  order: 6
+  level: L2+
+  prerequisites:
+  - v11.c04.dart-oop-generics
+  outcomes:
+  - 在 120 秒内区分Widget、Element、RenderObject 与重建，并给出一个适用边界和一个反例
+  - 独立观测并解释一次局部重建；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复把 Widget 当可变视图或无界重建；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c06.flutter-runtime.md
+  recommended_after:
+  - v11.c05.dart-async-errors
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c07.layout-render-accessibility
+  title: 布局、渲染、响应式与无障碍
+  volume: '11'
+  order: 7
+  level: L2+
+  prerequisites:
+  - v11.c06.flutter-runtime
+  outcomes:
+  - 在 120 秒内区分Flutter constraints、layout、paint 与 semantics，并给出一个适用边界和一个反例
+  - 独立在多尺寸无溢出且可访问；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 unbounded constraint 或语义缺失；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c07.layout-render-accessibility.md
+  recommended_after:
+  - v11.c06.flutter-runtime
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c08.state-lifecycle-mounted
+  title: 状态、生命周期、BuildContext、mounted 与 Key
+  volume: '11'
+  order: 8
+  level: L2+
+  prerequisites:
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  outcomes:
+  - 在 120 秒内区分State、lifecycle、BuildContext、mounted 与 key，并给出一个适用边界和一个反例
+  - 独立快速离页后不更新已销毁 UI；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够说明 mounted 不能取消请求并修复晚到更新；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c08.state-lifecycle-mounted.md
+  recommended_after:
+  - v11.c07.layout-render-accessibility
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c09.navigation-network-device
+  title: Flutter 导航、表单与页面契约
+  volume: '11'
+  order: 9
+  level: L2+
+  prerequisites:
+  - v11.c07.layout-render-accessibility
+  - v11.c08.state-lifecycle-mounted
+  outcomes:
+  - 在 120 秒内区分导航栈、路由参数、表单与验证契约，并给出一个适用边界和一个反例
+  - 独立完成技师接单表单及返回结果链路；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 context 越界、重复导航或表单状态丢失；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c09.navigation-network-device.md
+  recommended_after:
+  - v11.c08.state-lifecycle-mounted
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c10.architecture-testing-release
+  title: Flutter 架构、状态管理与模块边界
+  volume: '11'
+  order: 10
+  level: L2+
+  prerequisites:
+  - v11.c06.flutter-runtime
+  - v11.c08.state-lifecycle-mounted
+  outcomes:
+  - 在 120 秒内区分分层、状态管理、依赖方向与 feature 边界，并给出一个适用边界和一个反例
+  - 独立构建可替换仓库的 Flutter 垂直切片；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复全局可变状态、UI 直连数据源或循环依赖；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+  path: book/volume-11-dart-flutter/chapters/v11.c10.architecture-testing-release.md
+  recommended_after:
+  - v11.c09.navigation-network-device
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v11.c11.flutter-network-storage
+  title: Flutter 网络、取消、安全存储与离线队列
+  volume: '11'
+  order: 11
+  level: L2+
+  status: planned
+  stable_core: false
+  path: book/volume-11-dart-flutter/chapters/v11.c11.flutter-network-storage.md
+  prerequisites:
+  - v11.c05.dart-async-errors
+  - v11.c08.state-lifecycle-mounted
+  - v00.c09.network-http-curl
+  recommended_after:
+  - v11.c10.architecture-testing-release
+  outcomes:
+  - 在 120 秒内区分HTTP、取消、安全存储、缓存与离线同步队列，并给出一个适用边界和一个反例
+  - 独立实现可取消请求、离线入队和幂等重放；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复旧响应覆盖、明文 token 或重复同步；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities:
+  - http
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+- id: v11.c12.flutter-device-apis
+  title: Flutter 相机、扫码、定位、权限与平台 API
+  volume: '11'
+  order: 12
+  level: L2+
+  status: planned
+  stable_core: false
+  path: book/volume-11-dart-flutter/chapters/v11.c12.flutter-device-apis.md
+  prerequisites:
+  - v11.c08.state-lifecycle-mounted
+  - v11.c11.flutter-network-storage
+  recommended_after:
+  - v11.c11.flutter-network-storage
+  outcomes:
+  - 在 120 秒内区分相机、扫码、定位、权限与平台通道边界，并给出一个适用边界和一个反例
+  - 独立覆盖设备能力可用/拒绝/撤回三条路径；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复权限死路、资源未释放或平台差异；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+- id: v11.c13.flutter-testing-performance-release
+  title: Flutter 测试、性能、构建与发布
+  volume: '11'
+  order: 13
+  level: L2+
+  status: planned
+  stable_core: false
+  path: book/volume-11-dart-flutter/chapters/v11.c13.flutter-testing-performance-release.md
+  prerequisites:
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  recommended_after:
+  - v11.c12.flutter-device-apis
+  outcomes:
+  - 在 120 秒内区分单元/Widget/集成测试、性能与发布制品，并给出一个适用边界和一个反例
+  - 独立通过三层测试并生成可安装构建和性能记录；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复帧卡顿、不可复现构建或无回滚发布；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface:
+  - dart-stable
+  - flutter-stable
+- id: v12.c01.runtime-uv-env
+  title: Python 运行时、uv、虚拟环境与包
+  volume: '12'
+  order: 1
+  level: L2+
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c06.environment-path
+  outcomes:
+  - 在 120 秒内区分解释器、虚拟环境、包解析与锁文件，并给出一个适用边界和一个反例
+  - 独立用 uv 从空目录复现 Python 环境；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复解释器、PATH 或依赖漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - uv
+  path: book/volume-12-python-data/chapters/v12.c01.runtime-uv-env.md
+  recommended_after: []
+  teaches_capabilities:
+  - uv
+  uses_capabilities: []
+- id: v12.c02.types-io-control
+  title: 变量、类型、输入输出与控制流
+  volume: '12'
+  order: 2
+  level: L2+
+  prerequisites:
+  - v12.c01.runtime-uv-env
+  outcomes:
+  - 在 120 秒内区分Python 值、类型、I/O、分支与循环，并给出一个适用边界和一个反例
+  - 独立编写含输入校验的 CLI；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 truthiness、缩进或边界错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c02.types-io-control.md
+  recommended_after:
+  - v12.c01.runtime-uv-env
+  teaches_capabilities: []
+  uses_capabilities:
+  - uv
+- id: v12.c03.functions-collections
+  title: 函数、作用域、集合与推导式
+  volume: '12'
+  order: 3
+  level: L2+
+  prerequisites:
+  - v12.c02.types-io-control
+  outcomes:
+  - 在 120 秒内区分函数、作用域、集合与推导式，并给出一个适用边界和一个反例
+  - 独立实现并测试纯函数数据转换；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复可变默认参数或闭包捕获；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c03.functions-collections.md
+  recommended_after:
+  - v12.c02.types-io-control
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c04.modules-files-json
+  title: 模块、包、文件、JSON 与时间
+  volume: '12'
+  order: 4
+  level: L2+
+  prerequisites:
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  outcomes:
+  - 在 120 秒内区分module、package、路径、文件、JSON 与时间，并给出一个适用边界和一个反例
+  - 独立建立可导入包并安全读写 JSON；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复循环导入、当前目录依赖或编码错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c04.modules-files-json.md
+  recommended_after:
+  - v12.c03.functions-collections
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c05.classes-dataclass-protocol
+  title: 类、dataclass、Protocol 与对象模型
+  volume: '12'
+  order: 5
+  level: L2+
+  prerequisites:
+  - v12.c03.functions-collections
+  outcomes:
+  - 在 120 秒内区分class、dataclass、Protocol 与结构化类型，并给出一个适用边界和一个反例
+  - 独立设计可替换仓库并由类型检查验证；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复错误相等、可变默认字段或协议不匹配；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c05.classes-dataclass-protocol.md
+  recommended_after:
+  - v12.c04.modules-files-json
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c06.exceptions-iterators-decorators
+  title: 异常、上下文、迭代器、生成器与装饰器
+  volume: '12'
+  order: 6
+  level: L2+
+  prerequisites:
+  - v12.c03.functions-collections
+  - v12.c05.classes-dataclass-protocol
+  outcomes:
+  - 在 120 秒内区分异常、上下文管理器、迭代器、生成器与装饰器，并给出一个适用边界和一个反例
+  - 独立实现惰性数据流和资源上下文；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复生成器耗尽、吞异常或装饰器丢元数据；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c06.exceptions-iterators-decorators.md
+  recommended_after:
+  - v12.c05.classes-dataclass-protocol
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c07.typing-testing-logging
+  title: 类型标注、pytest、日志与调试
+  volume: '12'
+  order: 7
+  level: L2+
+  prerequisites:
+  - v12.c04.modules-files-json
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  outcomes:
+  - 在 120 秒内区分typing、pytest、结构化日志与调试证据，并给出一个适用边界和一个反例
+  - 独立让类型检查和 pytest 共同保护输入边界；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复无断言测试、脆弱 fixture 或敏感日志；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - pytest
+  path: book/volume-12-python-data/chapters/v12.c07.typing-testing-logging.md
+  recommended_after:
+  - v12.c06.exceptions-iterators-decorators
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c08.async-cancellation
+  title: asyncio、任务、超时与取消
+  volume: '12'
+  order: 8
+  level: L2+
+  prerequisites:
+  - v12.c03.functions-collections
+  - v12.c06.exceptions-iterators-decorators
+  outcomes:
+  - 在 120 秒内区分事件循环、TaskGroup、timeout 与取消传播，并给出一个适用边界和一个反例
+  - 独立并发调用并正确收集/取消子任务；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复孤儿任务、阻塞事件循环或漏取消；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-12-python-data/chapters/v12.c08.async-cancellation.md
+  recommended_after:
+  - v12.c07.typing-testing-logging
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v12.c09.fastapi-pydantic
+  title: FastAPI、Pydantic、依赖、安全与测试
+  volume: '12'
+  order: 9
+  level: L2+
+  prerequisites:
+  - v12.c05.classes-dataclass-protocol
+  - v12.c07.typing-testing-logging
+  - v12.c08.async-cancellation
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分FastAPI、Pydantic v2、依赖、安全与 OpenAPI，并给出一个适用边界和一个反例
+  - 独立对非法请求返回稳定错误并由 pytest 验证；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复模型绕过、同步阻塞或契约漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - fastapi
+  - pydantic-2
+  - pytest
+  - openapi
+  path: book/volume-12-python-data/chapters/v12.c09.fastapi-pydantic.md
+  recommended_after:
+  - v12.c08.async-cancellation
+  teaches_capabilities: []
+  uses_capabilities:
+  - http
+- id: v12.c10.numpy-pandas
+  title: NumPy 数组、广播与 Pandas 数据清洗
+  volume: '12'
+  order: 10
+  level: L2+
+  prerequisites:
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  outcomes:
+  - 在 120 秒内区分ndarray 形状/广播与 DataFrame 清洗，并给出一个适用边界和一个反例
+  - 独立清洗固定数据并断言 shape、dtype 和缺失值；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 silent broadcasting 或链式赋值；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  - pandas
+  path: book/volume-12-python-data/chapters/v12.c10.numpy-pandas.md
+  recommended_after:
+  - v12.c09.fastapi-pydantic
+  teaches_capabilities:
+  - numpy
+  - pandas
+  uses_capabilities: []
+- id: v13.c01.vectors-matrices-tensors
+  title: 向量、矩阵、张量、形状与运算
+  volume: '13'
+  order: 1
+  level: L1-L2
+  prerequisites:
+  - v12.c10.numpy-pandas
+  outcomes:
+  - 在 120 秒内区分标量、向量、矩阵、张量与 shape，并给出一个适用边界和一个反例
+  - 独立手算并用 NumPy 验证矩阵运算；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复维度、转置或广播错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c01.vectors-matrices-tensors.md
+  recommended_after: []
+  teaches_capabilities:
+  - linear-algebra
+  uses_capabilities:
+  - numpy
+- id: v13.c02.probability-statistics
+  title: 概率、统计、分布、期望与方差
+  volume: '13'
+  order: 2
+  level: L1-L2
+  prerequisites:
+  - v12.c10.numpy-pandas
+  outcomes:
+  - 在 120 秒内区分概率、分布、期望、方差与采样，并给出一个适用边界和一个反例
+  - 独立用模拟实验验证理论统计量；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别样本偏差、混淆相关与因果；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c02.probability-statistics.md
+  recommended_after:
+  - v13.c01.vectors-matrices-tensors
+  teaches_capabilities:
+  - probability-statistics
+  uses_capabilities:
+  - numpy
+- id: v13.c03.derivatives-gradients
+  title: 导数、梯度、链式法则与优化
+  volume: '13'
+  order: 3
+  level: L1-L2
+  prerequisites:
+  - v13.c01.vectors-matrices-tensors
+  outcomes:
+  - 在 120 秒内区分导数、梯度、链式法则与优化方向，并给出一个适用边界和一个反例
+  - 独立对简单函数做数值梯度检查；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复符号、步长或 shape 错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c03.derivatives-gradients.md
+  recommended_after:
+  - v13.c02.probability-statistics
+  teaches_capabilities:
+  - gradients
+  uses_capabilities:
+  - linear-algebra
+- id: v13.c04.problem-data-split
+  title: 问题定义、数据集、划分与数据泄漏
+  volume: '13'
+  order: 4
+  level: L1-L2
+  prerequisites:
+  - v13.c02.probability-statistics
+  - v12.c10.numpy-pandas
+  outcomes:
+  - 在 120 秒内区分业务目标、标签、数据划分与泄漏，并给出一个适用边界和一个反例
+  - 独立生成无泄漏训练/验证/测试集；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够找出未来信息、目标编码或重复样本泄漏；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c04.problem-data-split.md
+  recommended_after:
+  - v13.c03.derivatives-gradients
+  teaches_capabilities: []
+  uses_capabilities:
+  - numpy
+  - pandas
+  - probability-statistics
+- id: v13.c05.classical-ml
+  title: 预处理、回归、分类与聚类
+  volume: '13'
+  order: 5
+  level: L1-L2
+  prerequisites:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c04.problem-data-split
+  outcomes:
+  - 在 120 秒内区分预处理、回归、分类、聚类与流水线，并给出一个适用边界和一个反例
+  - 独立训练可复现基线并保存完整 pipeline；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复在全数据上 fit 预处理或错误特征；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c05.classical-ml.md
+  recommended_after:
+  - v13.c04.problem-data-split
+  teaches_capabilities: []
+  uses_capabilities:
+  - linear-algebra
+  - probability-statistics
+- id: v13.c06.metrics-validation
+  title: 指标、基线、验证与误差分析
+  volume: '13'
+  order: 6
+  level: L1-L2
+  prerequisites:
+  - v13.c02.probability-statistics
+  - v13.c04.problem-data-split
+  - v13.c05.classical-ml
+  outcomes:
+  - 在 120 秒内区分指标、阈值、基线、交叉验证与误差分析，并给出一个适用边界和一个反例
+  - 独立根据代价矩阵选择指标并分析错误样本；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别 accuracy 误导或验证集过拟合；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c06.metrics-validation.md
+  recommended_after:
+  - v13.c05.classical-ml
+  teaches_capabilities: []
+  uses_capabilities:
+  - probability-statistics
+- id: v13.c07.neural-networks
+  title: 神经网络、损失、反向传播与优化器
+  volume: '13'
+  order: 7
+  level: L1-L2
+  prerequisites:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c03.derivatives-gradients
+  - v13.c06.metrics-validation
+  outcomes:
+  - 在 120 秒内区分神经元、损失、反向传播与优化器，并给出一个适用边界和一个反例
+  - 独立手推一层网络并验证 loss 下降；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够诊断梯度消失、爆炸或学习率错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  path: book/volume-13-ml-pytorch/chapters/v13.c07.neural-networks.md
+  recommended_after:
+  - v13.c06.metrics-validation
+  teaches_capabilities: []
+  uses_capabilities:
+  - gradients
+  - linear-algebra
+  - probability-statistics
+- id: v13.c08.pytorch-foundations
+  title: PyTorch 张量、Dataset、Module 与 Autograd
+  volume: '13'
+  order: 8
+  level: L1-L2
+  prerequisites:
+  - v13.c01.vectors-matrices-tensors
+  - v12.c05.classes-dataclass-protocol
+  - v12.c10.numpy-pandas
+  outcomes:
+  - 在 120 秒内区分Tensor、Dataset、Module、autograd 与 device，并给出一个适用边界和一个反例
+  - 独立建立最小可训练 PyTorch 模型；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复 device、dtype、shape 或梯度未连接；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  - pytorch-stable
+  path: book/volume-13-ml-pytorch/chapters/v13.c08.pytorch-foundations.md
+  recommended_after:
+  - v13.c07.neural-networks
+  teaches_capabilities: []
+  uses_capabilities:
+  - linear-algebra
+- id: v13.c09.training-evaluation
+  title: 训练、评估、复现、过拟合与调参
+  volume: '13'
+  order: 9
+  level: L1-L2
+  prerequisites:
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  - v13.c08.pytorch-foundations
+  outcomes:
+  - 在 120 秒内区分train/eval、随机种子、过拟合与调参，并给出一个适用边界和一个反例
+  - 独立复现实验并绘制学习曲线；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复数据泄漏、忘记 eval 或不可复现；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - numpy
+  - pytorch-stable
+  path: book/volume-13-ml-pytorch/chapters/v13.c09.training-evaluation.md
+  recommended_after:
+  - v13.c08.pytorch-foundations
+  teaches_capabilities: []
+  uses_capabilities:
+  - gradients
+- id: v13.c10.inference-monitoring-ethics
+  title: 保存、推理、监控、漂移与伦理
+  volume: '13'
+  order: 10
+  level: L1-L2
+  prerequisites:
+  - v13.c06.metrics-validation
+  - v13.c09.training-evaluation
+  outcomes:
+  - 在 120 秒内区分模型保存加载、推理、漂移、公平与限制，并给出一个适用边界和一个反例
+  - 独立重载模型并验证等价预测和监控指标；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别漂移、偏差或无监控上线；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  - pytorch-stable
+  - observability
+  path: book/volume-13-ml-pytorch/chapters/v13.c10.inference-monitoring-ethics.md
+  recommended_after:
+  - v13.c09.training-evaluation
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c01.llm-model
+  title: Transformer、Token、上下文与 Embedding 心智模型
+  volume: '14'
+  order: 1
+  level: L2+
+  prerequisites:
+  - v13.c01.vectors-matrices-tensors
+  - v12.c03.functions-collections
+  outcomes:
+  - 在 120 秒内区分token、上下文、embedding 与生成模型边界，并给出一个适用边界和一个反例
+  - 独立观察同一文本的 token 与向量行为；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够纠正“模型等于数据库或确定性推理器”；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  path: book/volume-14-llm-rag-agents/chapters/v14.c01.llm-model.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities:
+  - linear-algebra
+- id: v14.c02.model-api-prompts
+  title: 模型 API、消息、提示词、Token 与成本
+  volume: '14'
+  order: 2
+  level: L2+
+  prerequisites:
+  - v14.c01.llm-model
+  - v12.c09.fastapi-pydantic
+  outcomes:
+  - 在 120 秒内区分system/user 消息、模型调用、成本与限制，并给出一个适用边界和一个反例
+  - 独立调用模型并记录请求、版本、token 和成本；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复硬编码模型、无限上下文或敏感提示；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  path: book/volume-14-llm-rag-agents/chapters/v14.c02.model-api-prompts.md
+  recommended_after:
+  - v14.c01.llm-model
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c03.structured-stream-retry
+  title: 结构化输出、流式、重试、超时与取消
+  volume: '14'
+  order: 3
+  level: L2+
+  prerequisites:
+  - v14.c02.model-api-prompts
+  - v12.c08.async-cancellation
+  outcomes:
+  - 在 120 秒内区分结构化输出、流式响应、重试、超时与取消，并给出一个适用边界和一个反例
+  - 独立输出经 schema 验证且可取消的流；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复盲重试、半截流或非幂等重复；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - pydantic-2
+  path: book/volume-14-llm-rag-agents/chapters/v14.c03.structured-stream-retry.md
+  recommended_after:
+  - v14.c02.model-api-prompts
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c04.tool-calling-boundaries
+  title: 工具调用、Schema、验证与信任边界
+  volume: '14'
+  order: 4
+  level: L2+
+  prerequisites:
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v06.c02.web-security-threats
+  outcomes:
+  - 在 120 秒内区分工具 schema、参数验证、授权与人类确认，并给出一个适用边界和一个反例
+  - 独立只允许白名单只读操作并审批写操作；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止模型参数未经校验直接执行；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - pydantic-2
+  path: book/volume-14-llm-rag-agents/chapters/v14.c04.tool-calling-boundaries.md
+  recommended_after:
+  - v14.c03.structured-stream-retry
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c05.ingestion-chunking
+  title: 文档解析、清洗、分块与元数据
+  volume: '14'
+  order: 5
+  level: L2+
+  prerequisites:
+  - v12.c04.modules-files-json
+  - v14.c02.model-api-prompts
+  outcomes:
+  - 在 120 秒内区分解析、清洗、chunk、metadata 与可追溯性，并给出一个适用边界和一个反例
+  - 独立建立保留页码、版本和租户的片段集；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复元数据丢失、重复 chunk 或越权来源；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - python-3.14
+  path: book/volume-14-llm-rag-agents/chapters/v14.c05.ingestion-chunking.md
+  recommended_after:
+  - v14.c04.tool-calling-boundaries
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c06.retrieval-rerank
+  title: Embedding、pgvector、混合检索与重排
+  volume: '14'
+  order: 6
+  level: L2+
+  prerequisites:
+  - v14.c01.llm-model
+  - v14.c05.ingestion-chunking
+  - v04.c01.relational-model
+  - v04.c08.indexes-explain
+  - v13.c01.vectors-matrices-tensors
+  outcomes:
+  - 在 120 秒内区分dense/sparse/hybrid、pgvector 索引与 rerank，并给出一个适用边界和一个反例
+  - 独立在固定查询集比较召回率、延迟和索引计划；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复向量维度、索引选择或租户过滤错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - postgresql-18
+  - pgvector
+  path: book/volume-14-llm-rag-agents/chapters/v14.c06.retrieval-rerank.md
+  recommended_after:
+  - v14.c05.ingestion-chunking
+  teaches_capabilities: []
+  uses_capabilities:
+  - db-indexing
+  - linear-algebra
+- id: v14.c07.rag-citations-evaluation
+  title: RAG、引用、测试集与评估
+  volume: '14'
+  order: 7
+  level: L2+
+  prerequisites:
+  - v14.c06.retrieval-rerank
+  - v14.c03.structured-stream-retry
+  outcomes:
+  - 在 120 秒内区分grounding、citation、gold set 与 RAG 评估，并给出一个适用边界和一个反例
+  - 独立对固定评估集输出可重复指标和引用；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复“看起来不错”的主观验收或错引；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - pgvector
+  path: book/volume-14-llm-rag-agents/chapters/v14.c07.rag-citations-evaluation.md
+  recommended_after:
+  - v14.c06.retrieval-rerank
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c08.rag-security-observability
+  title: 提示注入、ACL、PII、日志与可观测性
+  volume: '14'
+  order: 8
+  level: L2+
+  prerequisites:
+  - v14.c04.tool-calling-boundaries
+  - v14.c07.rag-citations-evaluation
+  - v06.c05.rbac-multitenancy-audit
+  outcomes:
+  - 在 120 秒内区分prompt injection、ACL、PII 与 trace，并给出一个适用边界和一个反例
+  - 独立用攻击样例证明隔离、拒绝和脱敏；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止跨租户召回、提示泄漏或追踪缺失；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - observability
+  path: book/volume-14-llm-rag-agents/chapters/v14.c08.rag-security-observability.md
+  recommended_after:
+  - v14.c07.rag-citations-evaluation
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c09.langchain-langgraph
+  title: LangChain、LangGraph、状态、检查点与人工审批
+  volume: '14'
+  order: 9
+  level: L2+
+  prerequisites:
+  - v14.c04.tool-calling-boundaries
+  - v14.c07.rag-citations-evaluation
+  - v12.c08.async-cancellation
+  outcomes:
+  - 在 120 秒内区分chain、graph、state、checkpoint 与 HITL，并给出一个适用边界和一个反例
+  - 独立中断后恢复工作流且不重复副作用；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复状态不可序列化、无限循环或重复执行；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - langchain
+  - langgraph
+  path: book/volume-14-llm-rag-agents/chapters/v14.c09.langchain-langgraph.md
+  recommended_after:
+  - v14.c08.rag-security-observability
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v14.c10.mcp-agent-boundary
+  title: MCP、Agent 模式、反模式与 Java/Python 边界
+  volume: '14'
+  order: 10
+  level: L2+
+  prerequisites:
+  - v14.c04.tool-calling-boundaries
+  - v14.c09.langchain-langgraph
+  - v06.c04.spring-security
+  outcomes:
+  - 在 120 秒内区分MCP、Agent 适用边界与 Java/Python 权威边界，并给出一个适用边界和一个反例
+  - 独立实现只读 MCP 工具和需审批的写操作；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别不需要 Agent 的确定性流程或越权调用；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - model-api
+  - langgraph
+  - mcp
+  - spring-ai-2
+  path: book/volume-14-llm-rag-agents/chapters/v14.c10.mcp-agent-boundary.md
+  recommended_after:
+  - v14.c09.langchain-langgraph
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c01.linux-operations
+  title: Linux 用户、文件、权限、进程与服务
+  volume: '15'
+  order: 1
+  level: L3
+  prerequisites:
+  - v00.c04.terminal-shell
+  - v00.c03.files-paths-encoding
+  outcomes:
+  - 在 120 秒内区分Linux 用户、权限、进程、信号与 service，并给出一个适用边界和一个反例
+  - 独立用非 root 服务账户运行并管理进程；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复权限过宽、僵尸进程或错误服务环境；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - linux
+  path: book/volume-15-production-factorycare/chapters/v15.c01.linux-operations.md
+  recommended_after: []
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c02.network-diagnostics
+  title: DNS、TLS、代理、端口与网络诊断
+  volume: '15'
+  order: 2
+  level: L3
+  prerequisites:
+  - v15.c01.linux-operations
+  - v00.c09.network-http-curl
+  outcomes:
+  - 在 120 秒内区分DNS、TLS、代理、路由与监听端口的诊断层次，并给出一个适用边界和一个反例
+  - 独立按层采集网络证据并形成诊断树；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够区分代理、证书、路由和监听错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - linux
+  path: book/volume-15-production-factorycare/chapters/v15.c02.network-diagnostics.md
+  recommended_after:
+  - v15.c01.linux-operations
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c03.docker-compose
+  title: Docker 镜像、容器、卷、网络与 Compose
+  volume: '15'
+  order: 3
+  level: L3
+  prerequisites:
+  - v15.c01.linux-operations
+  - v00.c11.docker-foundations
+  outcomes:
+  - 在 120 秒内区分image、container、volume、network 与 Compose，并给出一个适用边界和一个反例
+  - 独立一条命令恢复多服务依赖和健康状态；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复启动依赖、数据卷或容器 DNS 错误；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - linux
+  - docker
+  - docker-compose
+  path: book/volume-15-production-factorycare/chapters/v15.c03.docker-compose.md
+  recommended_after:
+  - v15.c02.network-diagnostics
+  teaches_capabilities: []
+  uses_capabilities:
+  - docker
+- id: v15.c04.nginx-tls-proxy
+  title: Nginx、TLS 与反向代理
+  volume: '15'
+  order: 4
+  level: L3
+  prerequisites:
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  outcomes:
+  - 在 120 秒内区分TLS 终止、反向代理与转发头，并给出一个适用边界和一个反例
+  - 独立通过 HTTPS 访问并保留客户端请求语义；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复代理循环、错误 Host 或证书链；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - linux
+  - docker
+  - nginx
+  path: book/volume-15-production-factorycare/chapters/v15.c04.nginx-tls-proxy.md
+  recommended_after:
+  - v15.c03.docker-compose
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c05.ci-quality-artifacts
+  title: CI、质量门禁、制品与环境晋级
+  volume: '15'
+  order: 5
+  level: L3
+  prerequisites:
+  - v00.c08.git-security
+  - v00.c10.dependencies-build-ai
+  outcomes:
+  - 在 120 秒内区分CI、质量门、制品、签名与环境晋级，并给出一个适用边界和一个反例
+  - 独立让同一制品通过测试后晋级两个环境；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够阻止重新构建、跳过测试或制品漂移；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - ci
+  - docker
+  path: book/volume-15-production-factorycare/chapters/v15.c05.ci-quality-artifacts.md
+  recommended_after:
+  - v15.c04.nginx-tls-proxy
+  teaches_capabilities: []
+  uses_capabilities:
+  - git
+- id: v15.c06.config-secrets-supply-chain
+  title: 配置、密钥、依赖、SBOM 与供应链
+  volume: '15'
+  order: 6
+  level: L3
+  prerequisites:
+  - v15.c03.docker-compose
+  - v15.c05.ci-quality-artifacts
+  - v06.c02.web-security-threats
+  outcomes:
+  - 在 120 秒内区分配置、Secret、SBOM 与依赖来源，并给出一个适用边界和一个反例
+  - 独立生成 SBOM 且仓库/镜像无明文密钥；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复依赖漏洞、密钥泄漏或不可信来源；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - ci
+  - docker
+  path: book/volume-15-production-factorycare/chapters/v15.c06.config-secrets-supply-chain.md
+  recommended_after:
+  - v15.c05.ci-quality-artifacts
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c07.logs-metrics-traces
+  title: 日志、指标、链路、健康检查与告警
+  volume: '15'
+  order: 7
+  level: L3
+  prerequisites:
+  - v15.c03.docker-compose
+  - v06.c10.modular-monolith-observability
+  outcomes:
+  - 在 120 秒内区分日志、指标、trace、健康与告警边界，并给出一个适用边界和一个反例
+  - 独立从 requestId/traceId 追踪跨服务失败；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复高基数、无上下文日志或无行动告警；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  stable_core: true
+  versioned_surface:
+  - observability
+  path: book/volume-15-production-factorycare/chapters/v15.c07.logs-metrics-traces.md
+  recommended_after:
+  - v15.c06.config-secrets-supply-chain
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c08.backup-capacity-performance
+  title: 备份恢复、容量规划与性能验证
+  volume: '15'
+  order: 8
+  level: L3
+  prerequisites:
+  - v15.c03.docker-compose
+  - v04.c08.indexes-explain
+  - v04.c09.transactions-locks
+  outcomes:
+  - 在 120 秒内区分备份恢复、RPO/RTO、负载与容量，并给出一个适用边界和一个反例
+  - 独立从备份恢复并做数据一致性和容量验证；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别“有备份未演练”或错误性能结论；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - linux
+  - postgresql-18
+  path: book/volume-15-production-factorycare/chapters/v15.c08.backup-capacity-performance.md
+  recommended_after:
+  - v15.c07.logs-metrics-traces
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c09.deployment-rollback-incident
+  title: 部署、迁移、回滚、事故与灾难恢复
+  volume: '15'
+  order: 9
+  level: L3
+  prerequisites:
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  - v15.c05.ci-quality-artifacts
+  - v15.c08.backup-capacity-performance
+  - v04.c10.migration-jdbc-mybatis
+  outcomes:
+  - 在 120 秒内区分部署、兼容迁移、回滚、事故与灾备，并给出一个适用边界和一个反例
+  - 独立完成含 Flyway 数据迁移的失败部署/回滚演练；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够修复不可逆迁移、前后版本不兼容或无时间线事故；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface:
+  - ci
+  - docker-compose
+  - flyway
+  path: book/volume-15-production-factorycare/chapters/v15.c09.deployment-rollback-incident.md
+  recommended_after:
+  - v15.c08.backup-capacity-performance
+  teaches_capabilities: []
+  uses_capabilities:
+  - database-transactions
+  - db-migrations
+- id: v15.c10.system-design-portfolio
+  title: 系统设计、FactoryCare 验收与端到端答辩
+  volume: '15'
+  order: 10
+  level: L3
+  prerequisites:
+  - v06.c10.modular-monolith-observability
+  - v09.c09.testing-a11y-performance
+  - v10.c10.factorycare-reporter
+  - v11.c13.flutter-testing-performance-release
+  - v14.c10.mcp-agent-boundary
+  - v15.c09.deployment-rollback-incident
+  outcomes:
+  - 在 120 秒内区分系统边界、权衡、FactoryCare 契约与验收证据，并给出一个适用边界和一个反例
+  - 独立完成端到端验收并限时讲解三项取舍；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够拒绝用生成文档代替运行证据或隐瞒限制；指出失败阶段、首个可信证据，修复后重跑原验证
+  status: planned
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  stable_core: true
+  versioned_surface: []
+  path: book/volume-15-production-factorycare/chapters/v15.c10.system-design-portfolio.md
+  recommended_after:
+  - v15.c09.deployment-rollback-incident
+  teaches_capabilities: []
+  uses_capabilities: []
+- id: v15.c11.portfolio-interview
+  title: 作品集、技术表达、岗位映射与面试复盘
+  volume: '15'
+  order: 11
+  level: L3
+  status: planned
+  stable_core: false
+  path: book/volume-15-production-factorycare/chapters/v15.c11.portfolio-interview.md
+  prerequisites:
+  - v15.c10.system-design-portfolio
+  - v00.c12.ai-collaboration-verification
+  recommended_after:
+  - v15.c10.system-design-portfolio
+  outcomes:
+  - 在 120 秒内区分真实经历、个人项目、能力证据与岗位映射边界，并给出一个适用边界和一个反例
+  - 独立建立可追溯作品索引并完成一次录屏模拟答辩；保存源码、命令和可重复验证输出
+  - 面对注入的故障，能够识别虚构经验、过期岗位结论或无法解释的 AI 代码；指出失败阶段、首个可信证据，修复后重跑原验证
+  teaches_capabilities: []
+  uses_capabilities: []
+  route_tags:
+  - zero-base
+  - accelerated-48
+  - reference
+  - factorycare-project
+  versioned_surface: []

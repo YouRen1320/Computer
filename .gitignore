@@ -49,3 +49,8 @@ __pycache__/
 *.tmp
 *.swp
 *~
+
+# Private source-audit ledger (contains verbatim unlicensed paths/headings)
+/sources/private/
+/.sources.stage-*/
+/.sources.backup-*/

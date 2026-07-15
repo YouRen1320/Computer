@@ -1,0 +1,130 @@
+---
+schema_version: 2
+scope: public-hashes-sanitized-metadata-and-unreviewed-canonical-mappings
+determinism: fixed commits, fixed canonical URLs, canonical catalog FKs, normalized paths, sorted rows, SHA-256, no timestamps
+catalog_id: factorycare-encyclopedia
+catalog_edition: 2026.1-draft
+repositories:
+  java-note:
+    canonical_url: https://github.com/YouRen1320/Java-Note.git
+    commit: 3c4928bf78b24d6550538ea388240fe3b4ce407e
+    file_count: 3077
+    size_bytes: 233392796
+    markdown_count: 370
+    pdf_count: 2
+    section_mapping_count: 6638
+    license_state: no-root-license-file-detected
+    default_use: coverage-inventory-only
+  note:
+    canonical_url: https://github.com/YouRen1320/Note.git
+    commit: 72b27e3bad732fa86d5fd9d9c990c6d5ecaf9f96
+    file_count: 347
+    size_bytes: 61944374
+    markdown_count: 73
+    pdf_count: 12
+    section_mapping_count: 2536
+    license_state: no-root-license-file-detected
+    default_use: coverage-inventory-only
+totals:
+  file_count: 3424
+  size_bytes: 295337170
+  markdown_count: 443
+  pdf_count: 14
+  section_mapping_count: 9174
+  unreviewed_mapping_count: 9174
+  broad_volume_mapping_count: 4891
+counts_by_domain:
+  data-visualization: 14
+  developer-tooling: 3
+  enterprise-project: 20
+  flutter: 4
+  generated-metadata: 57
+  harmonyos: 72
+  html-css: 10
+  interview-material: 566
+  java-engineering-runtime: 9
+  java-foundations: 5
+  java-object-model: 7
+  javascript: 31
+  legacy-java-web: 375
+  linux: 343
+  maven: 221
+  microservices: 462
+  mybatis: 152
+  node-backend: 1
+  node-tooling: 2
+  nuxt: 1
+  payment-project: 277
+  redis: 14
+  security-rbac: 63
+  source-governance: 1
+  spring: 412
+  sql-database: 101
+  typescript: 2
+  uni-app: 6
+  vue: 116
+  vue-project: 64
+  wechat-mini-program: 13
+counts_by_default_action:
+  appendix-concept-rewrite: 3
+  coverage-only-do-not-copy: 27
+  exclude-binary-asset: 2369
+  exclude-empty-file: 22
+  exclude-generated-build-output: 59
+  exclude-generated-metadata: 61
+  future-extension-only: 4
+  historical-problem-extraction: 106
+  rewrite-from-concepts: 678
+  verify-and-rewrite: 95
+file_counts_by_target:
+  appendix:data-visualization: 14
+  appendix:interview-evidence: 566
+  appendix:node-backends: 1
+  future-extension:harmonyos: 72
+  source-only:generated-metadata: 57
+  source-only:source-governance: 1
+  volume:volume-00-computer-foundations: 3
+  volume:volume-01-java-language: 5
+  volume:volume-02-java-objects: 7
+  volume:volume-03-java-engineering: 230
+  volume:volume-04-data-postgresql: 101
+  volume:volume-05-spring-backend: 939
+  volume:volume-06-enterprise-architecture: 816
+  volume:volume-07-web-platform: 10
+  volume:volume-08-javascript-typescript: 35
+  volume:volume-09-vue-nuxt: 181
+  volume:volume-10-uniapp-miniprogram: 19
+  volume:volume-11-dart-flutter: 4
+  volume:volume-15-production-factorycare: 363
+mapping_counts_by_target:
+  appendix:data-visualization: 93
+  appendix:interview-evidence: 529
+  appendix:node-backends: 19
+  future-extension:harmonyos: 156
+  source-only:source-governance: 16
+  volume:volume-00-computer-foundations: 114
+  volume:volume-01-java-language: 299
+  volume:volume-02-java-objects: 368
+  volume:volume-03-java-engineering: 849
+  volume:volume-05-spring-backend: 2374
+  volume:volume-06-enterprise-architecture: 1041
+  volume:volume-07-web-platform: 201
+  volume:volume-08-javascript-typescript: 975
+  volume:volume-09-vue-nuxt: 1025
+  volume:volume-10-uniapp-miniprogram: 42
+  volume:volume-11-dart-flutter: 9
+  volume:volume-15-production-factorycare: 1064
+mapping_counts_by_confidence:
+  heuristic-high: 1670
+  heuristic-low: 4891
+  heuristic-medium: 1800
+  policy: 813
+mapping_counts_by_review_status:
+  unreviewed: 9174
+public_artifacts:
+  ADVERSARIAL-REVIEW.md: fde90be9daee04f59d1d3edea6e883ee01fb65fa0812e915190d7c08f9bf3286
+  README.md: 2ca96461bc1265133297f3560b2eca1f8562a595ed509b734b3491a87fe62e8a
+  files.csv: a326a7b5808f8044a58e49597eefc1566bc02167116940444cba26435ef1799f
+  mappings.csv: 1bd81f3149501343bdc422faae36b5b503e38df92e0de4c3d5985d71cd8b5881
+  migration-policy.md: 99f3d1b892a0495b087e10e87a78ee561fb5d41ea4a60e37f61218ef0ec7c6c0
+private_raw_ledger: optional-local-only-gitignored-never-publish

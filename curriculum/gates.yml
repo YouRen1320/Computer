@@ -1,0 +1,858 @@
+---
+schema_version: 1
+gates_id: factorycare-stage-gates
+canonical_source: ASSESSMENTS.md and PROGRESS.md G0-G8
+policy:
+  progress_is_evidence_based: true
+  no_auto_pass_from_document_completion: true
+  critical_failure_cannot_be_offset_by_score: true
+gates:
+- id: G0
+  title: 环境与基线
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids: []
+  assessment:
+    id: assessment-g0
+    path: ASSESSMENTS.md#g0
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  - v00.c03.files-paths-encoding
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  - v00.c06.environment-path
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  - v00.c09.network-http-curl
+  - v00.c10.dependencies-build-ai
+  - v00.c12.ai-collaboration-verification
+  required_artifacts:
+  - id: g0-primary
+    path: evidence/gates/g0/primary/
+    acceptance: 版本冲突诊断与可回滚烟雾工程可从空环境复现，且成功与失败路径都有 oracle
+  - id: g0-diagnosis
+    path: evidence/gates/g0/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g0/commands.log
+  - evidence/gates/g0/tests/
+  - evidence/gates/g0/teach-back.md
+  - evidence/gates/g0/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g0-concept
+      weight: 25
+      critical: true
+      criterion: 区分 PATH/JAVA_HOME/IDE/Maven 证据
+    - id: g0-build
+      weight: 30
+      critical: true
+      criterion: 命令行重现 Java/JUnit 工程
+    - id: g0-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入 JDK 不一致并恢复
+    - id: g0-explain
+      weight: 20
+      critical: false
+      criterion: 说明 48 周边界和 AI 审查规则
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g0/remediation.md
+    evidence_path: evidence/gates/g0/retest/
+  evidence_store: evidence/gates/g0/index.yml
+- id: G1
+  title: Java 语言基础
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G0
+  assessment:
+    id: assessment-g1
+    path: ASSESSMENTS.md#g1
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  - v01.c07.conditionals-switch
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v01.c10.arrays-debug-test
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  - v02.c04.static-final-immutability
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  - v02.c07.enum-record-sealed
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  - v02.c10.exceptions-resources
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  - v03.c04.lambdas-functions
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  - v03.c07.threads-jmm
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  - v03.c10.maven-testing-jvm
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  - v03.c13.logging-jvm-diagnostics
+  required_artifacts:
+  - id: g1-primary
+    path: evidence/gates/g1/primary/
+    acceptance: 内存版维修工单服务可从空环境复现，且成功与失败路径都有 oracle
+  - id: g1-diagnosis
+    path: evidence/gates/g1/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g1/commands.log
+  - evidence/gates/g1/tests/
+  - evidence/gates/g1/teach-back.md
+  - evidence/gates/g1/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g1-concept
+      weight: 25
+      critical: true
+      criterion: 正确建模类、接口、集合与并发边界
+    - id: g1-build
+      weight: 30
+      critical: true
+      criterion: 实现 CLI、规则、异常和 JUnit
+    - id: g1-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入编译/测试/并发故障并定位
+    - id: g1-explain
+      weight: 20
+      critical: false
+      criterion: 无 AI 口述 Java/JVM 取舍
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g1/remediation.md
+    evidence_path: evidence/gates/g1/retest/
+  evidence_store: evidence/gates/g1/index.yml
+- id: G2
+  title: Spring 与数据
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G1
+  assessment:
+    id: assessment-g2
+    path: ASSESSMENTS.md#g2
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  - v04.c04.aggregate-group-having
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  - v04.c08.indexes-explain
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  - v04.c11.jdbc-pool-mybatis
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v05.c04.boot-autoconfiguration
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  - v05.c07.validation-errors-files
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  - v05.c10.testing-openapi-actuator
+  required_artifacts:
+  - id: g2-primary
+    path: evidence/gates/g2/primary/
+    acceptance: 设备停用 Spring/PostgreSQL 切片可从空环境复现，且成功与失败路径都有 oracle
+  - id: g2-diagnosis
+    path: evidence/gates/g2/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g2/commands.log
+  - evidence/gates/g2/tests/
+  - evidence/gates/g2/teach-back.md
+  - evidence/gates/g2/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g2-concept
+      weight: 25
+      critical: true
+      criterion: 解释 SQL、事务、DTO 与代理边界
+    - id: g2-build
+      weight: 30
+      critical: true
+      criterion: 完成 Flyway、API、MyBatis 和 Testcontainers
+    - id: g2-diagnose
+      weight: 25
+      critical: true
+      criterion: 复现锁、慢 SQL 或事务自调用
+    - id: g2-explain
+      weight: 20
+      critical: false
+      criterion: 用 OpenAPI 和日志讲解契约
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g2/remediation.md
+    evidence_path: evidence/gates/g2/retest/
+  evidence_store: evidence/gates/g2/index.yml
+- id: G3
+  title: 企业后端
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G2
+  assessment:
+    id: assessment-g3
+    path: ASSESSMENTS.md#g3
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v06.c04.spring-security
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  - v06.c10.modular-monolith-observability
+  required_artifacts:
+  - id: g3-primary
+    path: evidence/gates/g3/primary/
+    acceptance: 多租户工单并发与 Outbox可从空环境复现，且成功与失败路径都有 oracle
+  - id: g3-diagnosis
+    path: evidence/gates/g3/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g3/commands.log
+  - evidence/gates/g3/tests/
+  - evidence/gates/g3/teach-back.md
+  - evidence/gates/g3/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g3-concept
+      weight: 25
+      critical: true
+      criterion: 解释认证、授权、租户和聚合边界
+    - id: g3-build
+      weight: 30
+      critical: true
+      criterion: 实现幂等、缓存降级、消息与模块测试
+    - id: g3-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入越权、Redis 中断或重复投递
+    - id: g3-explain
+      weight: 20
+      critical: false
+      criterion: 答辩模块化单体取舍
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g3/remediation.md
+    evidence_path: evidence/gates/g3/retest/
+  evidence_store: evidence/gates/g3/index.yml
+- id: G4
+  title: Web、Vue 与 Nuxt
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G3
+  assessment:
+    id: assessment-g4
+    path: ASSESSMENTS.md#g4
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  - v07.c05.css-cascade
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  - v07.c10.motion-performance
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  - v08.c05.this-prototype-class-module
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  - v09.c05.composables-boundaries
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  - v09.c10.nuxt-rendering-deployment
+  required_artifacts:
+  - id: g4-primary
+    path: evidence/gates/g4/primary/
+    acceptance: 可访问的工单管理端切片可从空环境复现，且成功与失败路径都有 oracle
+  - id: g4-diagnosis
+    path: evidence/gates/g4/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g4/commands.log
+  - evidence/gates/g4/tests/
+  - evidence/gates/g4/teach-back.md
+  - evidence/gates/g4/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g4-concept
+      weight: 25
+      critical: true
+      criterion: 解释浏览器、CSS、事件循环和 Vue 状态边界
+    - id: g4-build
+      weight: 30
+      critical: true
+      criterion: 实现筛选、竞态取消、Vitest 与 Playwright
+    - id: g4-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入旧请求覆盖、水合或焦点故障
+    - id: g4-explain
+      weight: 20
+      critical: false
+      criterion: 用 DevTools 讲解修复证据
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g4/remediation.md
+    evidence_path: evidence/gates/g4/retest/
+  evidence_store: evidence/gates/g4/index.yml
+- id: G5
+  title: 多端
+  kind: stage-gate
+  level: L2+
+  prerequisite_gate_ids:
+  - G4
+  assessment:
+    id: assessment-g5
+    path: ASSESSMENTS.md#g5
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  - v10.c10.factorycare-reporter
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  - v11.c04.dart-oop-generics
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  - v11.c13.flutter-testing-performance-release
+  required_artifacts:
+  - id: g5-primary
+    path: evidence/gates/g5/primary/
+    acceptance: uni-app 报修端与 Flutter 技师端可从空环境复现，且成功与失败路径都有 oracle
+  - id: g5-diagnosis
+    path: evidence/gates/g5/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g5/commands.log
+  - evidence/gates/g5/tests/
+  - evidence/gates/g5/teach-back.md
+  - evidence/gates/g5/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 80
+      min_critical_dimension: 75
+    dimensions:
+    - id: g5-concept
+      weight: 25
+      critical: true
+      criterion: 解释小程序/Flutter 生命周期、权限与离线边界
+    - id: g5-build
+      weight: 30
+      critical: true
+      criterion: 完成扫码、离线同步和真机构建
+    - id: g5-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入拒权、弱网、冲突或晚到响应
+    - id: g5-explain
+      weight: 20
+      critical: false
+      criterion: 讲解共享 API 而非共享 UI 的理由
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g5/remediation.md
+    evidence_path: evidence/gates/g5/retest/
+  evidence_store: evidence/gates/g5/index.yml
+- id: G6
+  title: Python 与 AI
+  kind: stage-gate
+  level: L2+
+  prerequisite_gate_ids:
+  - G5
+  assessment:
+    id: assessment-g6
+    path: ASSESSMENTS.md#g6
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  - v12.c04.modules-files-json
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  - v12.c07.typing-testing-logging
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  - v12.c10.numpy-pandas
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  - v13.c04.problem-data-split
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  - v13.c10.inference-monitoring-ethics
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v14.c04.tool-calling-boundaries
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  - v14.c07.rag-citations-evaluation
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  - v14.c10.mcp-agent-boundary
+  required_artifacts:
+  - id: g6-primary
+    path: evidence/gates/g6/primary/
+    acceptance: FastAPI、RAG 评估与受控 Agent可从空环境复现，且成功与失败路径都有 oracle
+  - id: g6-diagnosis
+    path: evidence/gates/g6/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g6/commands.log
+  - evidence/gates/g6/tests/
+  - evidence/gates/g6/teach-back.md
+  - evidence/gates/g6/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 80
+      min_critical_dimension: 75
+    dimensions:
+    - id: g6-concept
+      weight: 25
+      critical: true
+      criterion: 解释 Python 异步、向量检索和 Agent 边界
+    - id: g6-build
+      weight: 30
+      critical: true
+      criterion: 完成 pytest、80 条评估集、LangGraph 恢复与 MCP
+    - id: g6-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入阻塞、错引、提示注入或工具失败
+    - id: g6-explain
+      weight: 20
+      critical: false
+      criterion: 讲解 Java/Python 权威边界
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g6/remediation.md
+    evidence_path: evidence/gates/g6/retest/
+  evidence_store: evidence/gates/g6/index.yml
+- id: G7
+  title: 生产化
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G6
+  assessment:
+    id: assessment-g7
+    path: ASSESSMENTS.md#g7
+    mode: mixed-no-ai-and-reviewed
+  required_chapter_ids:
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  - v15.c08.backup-capacity-performance
+  - v15.c09.deployment-rollback-incident
+  required_artifacts:
+  - id: g7-primary
+    path: evidence/gates/g7/primary/
+    acceptance: 可恢复的 FactoryCare 部署可从空环境复现，且成功与失败路径都有 oracle
+  - id: g7-diagnosis
+    path: evidence/gates/g7/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g7/commands.log
+  - evidence/gates/g7/tests/
+  - evidence/gates/g7/teach-back.md
+  - evidence/gates/g7/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g7-concept
+      weight: 25
+      critical: true
+      criterion: 解释制品、迁移、观测、RPO/RTO 与回滚边界
+    - id: g7-build
+      weight: 30
+      critical: true
+      criterion: 完成 Compose/TLS/CI/备份恢复和故障演练
+    - id: g7-diagnose
+      weight: 25
+      critical: true
+      criterion: 注入慢 SQL、密钥缺失或不可用依赖
+    - id: g7-explain
+      weight: 20
+      critical: false
+      criterion: 用时间线复盘而非只说重启
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g7/remediation.md
+    evidence_path: evidence/gates/g7/retest/
+  evidence_store: evidence/gates/g7/index.yml
+- id: G8
+  title: 最终考核
+  kind: stage-gate
+  level: L3
+  prerequisite_gate_ids:
+  - G7
+  assessment:
+    id: assessment-g8
+    path: ASSESSMENTS.md#g8
+    mode: no-ai-randomized
+  required_chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  - v00.c03.files-paths-encoding
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  - v00.c06.environment-path
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  - v00.c09.network-http-curl
+  - v00.c10.dependencies-build-ai
+  - v00.c11.docker-foundations
+  - v00.c12.ai-collaboration-verification
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  - v01.c07.conditionals-switch
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v01.c10.arrays-debug-test
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  - v02.c04.static-final-immutability
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  - v02.c07.enum-record-sealed
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  - v02.c10.exceptions-resources
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  - v03.c04.lambdas-functions
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  - v03.c07.threads-jmm
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  - v03.c10.maven-testing-jvm
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  - v03.c13.logging-jvm-diagnostics
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  - v04.c04.aggregate-group-having
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  - v04.c08.indexes-explain
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  - v04.c11.jdbc-pool-mybatis
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v05.c04.boot-autoconfiguration
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  - v05.c07.validation-errors-files
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  - v05.c10.testing-openapi-actuator
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v06.c04.spring-security
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  - v06.c10.modular-monolith-observability
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  - v07.c05.css-cascade
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  - v07.c10.motion-performance
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  - v08.c05.this-prototype-class-module
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  - v09.c05.composables-boundaries
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  - v09.c10.nuxt-rendering-deployment
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  - v10.c10.factorycare-reporter
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  - v11.c04.dart-oop-generics
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  - v11.c13.flutter-testing-performance-release
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  - v12.c04.modules-files-json
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  - v12.c07.typing-testing-logging
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  - v12.c10.numpy-pandas
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  - v13.c04.problem-data-split
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  - v13.c10.inference-monitoring-ethics
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v14.c04.tool-calling-boundaries
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  - v14.c07.rag-citations-evaluation
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  - v14.c10.mcp-agent-boundary
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  - v15.c08.backup-capacity-performance
+  - v15.c09.deployment-rollback-incident
+  - v15.c10.system-design-portfolio
+  - v15.c11.portfolio-interview
+  required_artifacts:
+  - id: g8-primary
+    path: evidence/gates/g8/primary/
+    acceptance: FactoryCare 随机需求与端到端答辩可从空环境复现，且成功与失败路径都有 oracle
+  - id: g8-diagnosis
+    path: evidence/gates/g8/diagnosis.md
+    acceptance: 记录故障注入、首个可信证据、修复、原验证重跑和残余风险
+  mandatory_evidence_paths:
+  - evidence/gates/g8/commands.log
+  - evidence/gates/g8/tests/
+  - evidence/gates/g8/teach-back.md
+  - evidence/gates/g8/ai-review.md
+  critical_failures:
+  - fabricated-evidence
+  - secret-exposure
+  - cross-tenant-access
+  - data-loss-without-recovery
+  rubric:
+    thresholds:
+      min_total: 85
+      min_critical_dimension: 80
+    dimensions:
+    - id: g8-concept
+      weight: 25
+      critical: true
+      criterion: 跨栈解释边界、取舍和已知限制
+    - id: g8-build
+      weight: 30
+      critical: true
+      criterion: 无 AI 完成迁移、规则、API、测试和最小客户端
+    - id: g8-diagnose
+      weight: 25
+      critical: true
+      criterion: 随机定位慢 SQL、越权、竞态、离线或 RAG 错引
+    - id: g8-explain
+      weight: 20
+      critical: false
+      criterion: 区分真实经历、个人项目和未验证声明
+  retest:
+    scope: failed-claims-only
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    remediation_path: evidence/gates/g8/remediation.md
+    evidence_path: evidence/gates/g8/retest/
+  evidence_store: evidence/gates/g8/index.yml

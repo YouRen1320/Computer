@@ -1,0 +1,2274 @@
+---
+schema_version: 1
+route_id: accelerated-48
+route_kind: accelerated
+title: 有前端经验学习者的 48 模块加速路线
+audience: 通过诊断证据缩短讲解，但不得跳过验证、修改与故障诊断
+coverage: complete-with-diagnostics
+navigation_semantics: ordered-with-evidence-waivers
+module_count: 48
+modules:
+- id: a01
+  title: 加速模块 A01
+  chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  - v00.c03.files-paths-encoding
+  teach_chapter_ids:
+  - v00.c03.files-paths-encoding
+  diagnostic_chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  refresh_chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  - v00.c03.files-paths-encoding
+  diagnostic:
+    assessment_id: diag-a01
+    assessment_path: assessments/accelerated/a01/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a01/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a01/artifact/
+  - evidence/accelerated/a01/verification.log
+  - evidence/accelerated/a01/teach-back.md
+  remediation:
+    chapter_ids:
+    - v00.c01.learning-evidence
+    - v00.c02.computer-model
+    - v00.c03.files-paths-encoding
+    plan_path: assessments/accelerated/a01/remediation.md
+  retest:
+    assessment_id: retest-a01
+    assessment_path: assessments/accelerated/a01/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a01/retest/
+- id: a02
+  title: 加速模块 A02
+  chapter_ids:
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  - v00.c06.environment-path
+  teach_chapter_ids:
+  - v00.c06.environment-path
+  diagnostic_chapter_ids:
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  refresh_chapter_ids:
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  - v00.c06.environment-path
+  diagnostic:
+    assessment_id: diag-a02
+    assessment_path: assessments/accelerated/a02/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a02/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a02/artifact/
+  - evidence/accelerated/a02/verification.log
+  - evidence/accelerated/a02/teach-back.md
+  remediation:
+    chapter_ids:
+    - v00.c04.terminal-shell
+    - v00.c05.pipes-exit-codes
+    - v00.c06.environment-path
+    plan_path: assessments/accelerated/a02/remediation.md
+  retest:
+    assessment_id: retest-a02
+    assessment_path: assessments/accelerated/a02/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a02/retest/
+- id: a03
+  title: 加速模块 A03
+  chapter_ids:
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  - v00.c09.network-http-curl
+  teach_chapter_ids:
+  - v00.c09.network-http-curl
+  diagnostic_chapter_ids:
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  refresh_chapter_ids:
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  - v00.c09.network-http-curl
+  diagnostic:
+    assessment_id: diag-a03
+    assessment_path: assessments/accelerated/a03/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a03/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a03/artifact/
+  - evidence/accelerated/a03/verification.log
+  - evidence/accelerated/a03/teach-back.md
+  remediation:
+    chapter_ids:
+    - v00.c07.editor-ide-debugger
+    - v00.c08.git-security
+    - v00.c09.network-http-curl
+    plan_path: assessments/accelerated/a03/remediation.md
+  retest:
+    assessment_id: retest-a03
+    assessment_path: assessments/accelerated/a03/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a03/retest/
+- id: a04
+  title: 加速模块 A04
+  chapter_ids:
+  - v00.c10.dependencies-build-ai
+  - v00.c11.docker-foundations
+  - v00.c12.ai-collaboration-verification
+  teach_chapter_ids:
+  - v00.c12.ai-collaboration-verification
+  diagnostic_chapter_ids:
+  - v00.c10.dependencies-build-ai
+  - v00.c11.docker-foundations
+  refresh_chapter_ids:
+  - v00.c10.dependencies-build-ai
+  - v00.c11.docker-foundations
+  - v00.c12.ai-collaboration-verification
+  diagnostic:
+    assessment_id: diag-a04
+    assessment_path: assessments/accelerated/a04/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a04/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a04/artifact/
+  - evidence/accelerated/a04/verification.log
+  - evidence/accelerated/a04/teach-back.md
+  remediation:
+    chapter_ids:
+    - v00.c10.dependencies-build-ai
+    - v00.c11.docker-foundations
+    - v00.c12.ai-collaboration-verification
+    plan_path: assessments/accelerated/a04/remediation.md
+  retest:
+    assessment_id: retest-a04
+    assessment_path: assessments/accelerated/a04/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a04/retest/
+- id: a05
+  title: 加速模块 A05
+  chapter_ids:
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  teach_chapter_ids:
+  - v01.c04.variables-scope
+  diagnostic_chapter_ids:
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  refresh_chapter_ids:
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  diagnostic:
+    assessment_id: diag-a05
+    assessment_path: assessments/accelerated/a05/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a05/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a05/artifact/
+  - evidence/accelerated/a05/verification.log
+  - evidence/accelerated/a05/teach-back.md
+  remediation:
+    chapter_ids:
+    - v01.c01.java-platform
+    - v01.c02.program-structure
+    - v01.c03.console-io
+    - v01.c04.variables-scope
+    plan_path: assessments/accelerated/a05/remediation.md
+  retest:
+    assessment_id: retest-a05
+    assessment_path: assessments/accelerated/a05/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a05/retest/
+- id: a06
+  title: 加速模块 A06
+  chapter_ids:
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  - v01.c07.conditionals-switch
+  teach_chapter_ids:
+  - v01.c07.conditionals-switch
+  diagnostic_chapter_ids:
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  refresh_chapter_ids:
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  - v01.c07.conditionals-switch
+  diagnostic:
+    assessment_id: diag-a06
+    assessment_path: assessments/accelerated/a06/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a06/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a06/artifact/
+  - evidence/accelerated/a06/verification.log
+  - evidence/accelerated/a06/teach-back.md
+  remediation:
+    chapter_ids:
+    - v01.c05.primitive-types
+    - v01.c06.operators-conversion
+    - v01.c07.conditionals-switch
+    plan_path: assessments/accelerated/a06/remediation.md
+  retest:
+    assessment_id: retest-a06
+    assessment_path: assessments/accelerated/a06/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a06/retest/
+- id: a07
+  title: 加速模块 A07
+  chapter_ids:
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v01.c10.arrays-debug-test
+  teach_chapter_ids:
+  - v01.c10.arrays-debug-test
+  diagnostic_chapter_ids:
+  - v01.c08.loops-control
+  - v01.c09.methods
+  refresh_chapter_ids:
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v01.c10.arrays-debug-test
+  diagnostic:
+    assessment_id: diag-a07
+    assessment_path: assessments/accelerated/a07/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a07/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a07/artifact/
+  - evidence/accelerated/a07/verification.log
+  - evidence/accelerated/a07/teach-back.md
+  remediation:
+    chapter_ids:
+    - v01.c08.loops-control
+    - v01.c09.methods
+    - v01.c10.arrays-debug-test
+    plan_path: assessments/accelerated/a07/remediation.md
+  retest:
+    assessment_id: retest-a07
+    assessment_path: assessments/accelerated/a07/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a07/retest/
+- id: a08
+  title: 加速模块 A08
+  chapter_ids:
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  - v02.c04.static-final-immutability
+  teach_chapter_ids:
+  - v02.c04.static-final-immutability
+  diagnostic_chapter_ids:
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  refresh_chapter_ids:
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  - v02.c04.static-final-immutability
+  diagnostic:
+    assessment_id: diag-a08
+    assessment_path: assessments/accelerated/a08/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a08/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a08/artifact/
+  - evidence/accelerated/a08/verification.log
+  - evidence/accelerated/a08/teach-back.md
+  remediation:
+    chapter_ids:
+    - v02.c01.references-null-memory
+    - v02.c02.classes-fields-methods
+    - v02.c03.constructors-encapsulation
+    - v02.c04.static-final-immutability
+    plan_path: assessments/accelerated/a08/remediation.md
+  retest:
+    assessment_id: retest-a08
+    assessment_path: assessments/accelerated/a08/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a08/retest/
+- id: a09
+  title: 加速模块 A09
+  chapter_ids:
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  - v02.c07.enum-record-sealed
+  teach_chapter_ids:
+  - v02.c07.enum-record-sealed
+  diagnostic_chapter_ids:
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  refresh_chapter_ids:
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  - v02.c07.enum-record-sealed
+  diagnostic:
+    assessment_id: diag-a09
+    assessment_path: assessments/accelerated/a09/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a09/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a09/artifact/
+  - evidence/accelerated/a09/verification.log
+  - evidence/accelerated/a09/teach-back.md
+  remediation:
+    chapter_ids:
+    - v02.c05.inheritance-composition
+    - v02.c06.polymorphism-interfaces
+    - v02.c07.enum-record-sealed
+    plan_path: assessments/accelerated/a09/remediation.md
+  retest:
+    assessment_id: retest-a09
+    assessment_path: assessments/accelerated/a09/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a09/retest/
+- id: a10
+  title: 加速模块 A10
+  chapter_ids:
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  - v02.c10.exceptions-resources
+  teach_chapter_ids:
+  - v02.c10.exceptions-resources
+  diagnostic_chapter_ids:
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  refresh_chapter_ids:
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  - v02.c10.exceptions-resources
+  diagnostic:
+    assessment_id: diag-a10
+    assessment_path: assessments/accelerated/a10/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a10/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a10/artifact/
+  - evidence/accelerated/a10/verification.log
+  - evidence/accelerated/a10/teach-back.md
+  remediation:
+    chapter_ids:
+    - v02.c08.object-contract
+    - v02.c09.core-value-types
+    - v02.c10.exceptions-resources
+    plan_path: assessments/accelerated/a10/remediation.md
+  retest:
+    assessment_id: retest-a10
+    assessment_path: assessments/accelerated/a10/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a10/retest/
+- id: a11
+  title: 加速模块 A11
+  chapter_ids:
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  - v03.c04.lambdas-functions
+  teach_chapter_ids:
+  - v03.c04.lambdas-functions
+  diagnostic_chapter_ids:
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  refresh_chapter_ids:
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  - v03.c04.lambdas-functions
+  diagnostic:
+    assessment_id: diag-a11
+    assessment_path: assessments/accelerated/a11/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a11/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a11/artifact/
+  - evidence/accelerated/a11/verification.log
+  - evidence/accelerated/a11/teach-back.md
+  remediation:
+    chapter_ids:
+    - v03.c01.collections
+    - v03.c02.generics-comparator
+    - v03.c03.complexity-data-structures
+    - v03.c04.lambdas-functions
+    plan_path: assessments/accelerated/a11/remediation.md
+  retest:
+    assessment_id: retest-a11
+    assessment_path: assessments/accelerated/a11/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a11/retest/
+- id: a12
+  title: 加速模块 A12
+  chapter_ids:
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  - v03.c07.threads-jmm
+  teach_chapter_ids:
+  - v03.c07.threads-jmm
+  diagnostic_chapter_ids:
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  refresh_chapter_ids:
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  - v03.c07.threads-jmm
+  diagnostic:
+    assessment_id: diag-a12
+    assessment_path: assessments/accelerated/a12/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a12/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a12/artifact/
+  - evidence/accelerated/a12/verification.log
+  - evidence/accelerated/a12/teach-back.md
+  remediation:
+    chapter_ids:
+    - v03.c05.streams-optional
+    - v03.c06.io-nio-json
+    - v03.c07.threads-jmm
+    plan_path: assessments/accelerated/a12/remediation.md
+  retest:
+    assessment_id: retest-a12
+    assessment_path: assessments/accelerated/a12/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a12/retest/
+- id: a13
+  title: 加速模块 A13
+  chapter_ids:
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  - v03.c10.maven-testing-jvm
+  teach_chapter_ids:
+  - v03.c10.maven-testing-jvm
+  diagnostic_chapter_ids:
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  refresh_chapter_ids:
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  - v03.c10.maven-testing-jvm
+  diagnostic:
+    assessment_id: diag-a13
+    assessment_path: assessments/accelerated/a13/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a13/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a13/artifact/
+  - evidence/accelerated/a13/verification.log
+  - evidence/accelerated/a13/teach-back.md
+  remediation:
+    chapter_ids:
+    - v03.c08.executors-virtual-threads
+    - v03.c09.annotations-reflection-proxy
+    - v03.c10.maven-testing-jvm
+    plan_path: assessments/accelerated/a13/remediation.md
+  retest:
+    assessment_id: retest-a13
+    assessment_path: assessments/accelerated/a13/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a13/retest/
+- id: a14
+  title: 加速模块 A14
+  chapter_ids:
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  - v03.c13.logging-jvm-diagnostics
+  teach_chapter_ids:
+  - v03.c13.logging-jvm-diagnostics
+  diagnostic_chapter_ids:
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  refresh_chapter_ids:
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  - v03.c13.logging-jvm-diagnostics
+  diagnostic:
+    assessment_id: diag-a14
+    assessment_path: assessments/accelerated/a14/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a14/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a14/artifact/
+  - evidence/accelerated/a14/verification.log
+  - evidence/accelerated/a14/teach-back.md
+  remediation:
+    chapter_ids:
+    - v03.c11.java-networking
+    - v03.c12.java-testing-mocking
+    - v03.c13.logging-jvm-diagnostics
+    plan_path: assessments/accelerated/a14/remediation.md
+  retest:
+    assessment_id: retest-a14
+    assessment_path: assessments/accelerated/a14/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a14/retest/
+- id: a15
+  title: 加速模块 A15
+  chapter_ids:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  - v04.c04.aggregate-group-having
+  teach_chapter_ids:
+  - v04.c04.aggregate-group-having
+  diagnostic_chapter_ids:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  refresh_chapter_ids:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  - v04.c04.aggregate-group-having
+  diagnostic:
+    assessment_id: diag-a15
+    assessment_path: assessments/accelerated/a15/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a15/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a15/artifact/
+  - evidence/accelerated/a15/verification.log
+  - evidence/accelerated/a15/teach-back.md
+  remediation:
+    chapter_ids:
+    - v04.c01.relational-model
+    - v04.c02.sql-query-basics
+    - v04.c03.sql-functions
+    - v04.c04.aggregate-group-having
+    plan_path: assessments/accelerated/a15/remediation.md
+  retest:
+    assessment_id: retest-a15
+    assessment_path: assessments/accelerated/a15/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a15/retest/
+- id: a16
+  title: 加速模块 A16
+  chapter_ids:
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  - v04.c08.indexes-explain
+  teach_chapter_ids:
+  - v04.c08.indexes-explain
+  diagnostic_chapter_ids:
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  refresh_chapter_ids:
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  - v04.c08.indexes-explain
+  diagnostic:
+    assessment_id: diag-a16
+    assessment_path: assessments/accelerated/a16/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a16/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a16/artifact/
+  - evidence/accelerated/a16/verification.log
+  - evidence/accelerated/a16/teach-back.md
+  remediation:
+    chapter_ids:
+    - v04.c05.joins-subquery-cte
+    - v04.c06.dml-ddl-normalization
+    - v04.c07.postgres-types-psql
+    - v04.c08.indexes-explain
+    plan_path: assessments/accelerated/a16/remediation.md
+  retest:
+    assessment_id: retest-a16
+    assessment_path: assessments/accelerated/a16/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a16/retest/
+- id: a17
+  title: 加速模块 A17
+  chapter_ids:
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  - v04.c11.jdbc-pool-mybatis
+  teach_chapter_ids:
+  - v04.c11.jdbc-pool-mybatis
+  diagnostic_chapter_ids:
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  refresh_chapter_ids:
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  - v04.c11.jdbc-pool-mybatis
+  diagnostic:
+    assessment_id: diag-a17
+    assessment_path: assessments/accelerated/a17/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a17/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a17/artifact/
+  - evidence/accelerated/a17/verification.log
+  - evidence/accelerated/a17/teach-back.md
+  remediation:
+    chapter_ids:
+    - v04.c09.transactions-locks
+    - v04.c10.migration-jdbc-mybatis
+    - v04.c11.jdbc-pool-mybatis
+    plan_path: assessments/accelerated/a17/remediation.md
+  retest:
+    assessment_id: retest-a17
+    assessment_path: assessments/accelerated/a17/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a17/retest/
+- id: a18
+  title: 加速模块 A18
+  chapter_ids:
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v05.c04.boot-autoconfiguration
+  teach_chapter_ids:
+  - v05.c04.boot-autoconfiguration
+  diagnostic_chapter_ids:
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  refresh_chapter_ids:
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v05.c04.boot-autoconfiguration
+  diagnostic:
+    assessment_id: diag-a18
+    assessment_path: assessments/accelerated/a18/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a18/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a18/artifact/
+  - evidence/accelerated/a18/verification.log
+  - evidence/accelerated/a18/teach-back.md
+  remediation:
+    chapter_ids:
+    - v05.c01.web-jakarta-lifecycle
+    - v05.c02.ioc-di-beans
+    - v05.c03.configuration-profiles
+    - v05.c04.boot-autoconfiguration
+    plan_path: assessments/accelerated/a18/remediation.md
+  retest:
+    assessment_id: retest-a18
+    assessment_path: assessments/accelerated/a18/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a18/retest/
+- id: a19
+  title: 加速模块 A19
+  chapter_ids:
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  - v05.c07.validation-errors-files
+  teach_chapter_ids:
+  - v05.c07.validation-errors-files
+  diagnostic_chapter_ids:
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  refresh_chapter_ids:
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  - v05.c07.validation-errors-files
+  diagnostic:
+    assessment_id: diag-a19
+    assessment_path: assessments/accelerated/a19/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a19/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a19/artifact/
+  - evidence/accelerated/a19/verification.log
+  - evidence/accelerated/a19/teach-back.md
+  remediation:
+    chapter_ids:
+    - v05.c05.mvc-controllers
+    - v05.c06.dto-serialization
+    - v05.c07.validation-errors-files
+    plan_path: assessments/accelerated/a19/remediation.md
+  retest:
+    assessment_id: retest-a19
+    assessment_path: assessments/accelerated/a19/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a19/retest/
+- id: a20
+  title: 加速模块 A20
+  chapter_ids:
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  - v05.c10.testing-openapi-actuator
+  teach_chapter_ids:
+  - v05.c10.testing-openapi-actuator
+  diagnostic_chapter_ids:
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  refresh_chapter_ids:
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  - v05.c10.testing-openapi-actuator
+  diagnostic:
+    assessment_id: diag-a20
+    assessment_path: assessments/accelerated/a20/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a20/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a20/artifact/
+  - evidence/accelerated/a20/verification.log
+  - evidence/accelerated/a20/teach-back.md
+  remediation:
+    chapter_ids:
+    - v05.c08.services-transactions-aop
+    - v05.c09.mybatis-integration
+    - v05.c10.testing-openapi-actuator
+    plan_path: assessments/accelerated/a20/remediation.md
+  retest:
+    assessment_id: retest-a20
+    assessment_path: assessments/accelerated/a20/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a20/retest/
+- id: a21
+  title: 加速模块 A21
+  chapter_ids:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v06.c04.spring-security
+  teach_chapter_ids:
+  - v06.c04.spring-security
+  diagnostic_chapter_ids:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  refresh_chapter_ids:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v06.c04.spring-security
+  diagnostic:
+    assessment_id: diag-a21
+    assessment_path: assessments/accelerated/a21/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a21/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a21/artifact/
+  - evidence/accelerated/a21/verification.log
+  - evidence/accelerated/a21/teach-back.md
+  remediation:
+    chapter_ids:
+    - v06.c01.auth-session-password
+    - v06.c02.web-security-threats
+    - v06.c03.jwt-oauth-oidc
+    - v06.c04.spring-security
+    plan_path: assessments/accelerated/a21/remediation.md
+  retest:
+    assessment_id: retest-a21
+    assessment_path: assessments/accelerated/a21/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a21/retest/
+- id: a22
+  title: 加速模块 A22
+  chapter_ids:
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  teach_chapter_ids:
+  - v06.c07.state-sla-idempotency
+  diagnostic_chapter_ids:
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  refresh_chapter_ids:
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  diagnostic:
+    assessment_id: diag-a22
+    assessment_path: assessments/accelerated/a22/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a22/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a22/artifact/
+  - evidence/accelerated/a22/verification.log
+  - evidence/accelerated/a22/teach-back.md
+  remediation:
+    chapter_ids:
+    - v06.c05.rbac-multitenancy-audit
+    - v06.c06.domain-modeling
+    - v06.c07.state-sla-idempotency
+    plan_path: assessments/accelerated/a22/remediation.md
+  retest:
+    assessment_id: retest-a22
+    assessment_path: assessments/accelerated/a22/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a22/retest/
+- id: a23
+  title: 加速模块 A23
+  chapter_ids:
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  - v06.c10.modular-monolith-observability
+  teach_chapter_ids:
+  - v06.c10.modular-monolith-observability
+  diagnostic_chapter_ids:
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  refresh_chapter_ids:
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  - v06.c10.modular-monolith-observability
+  diagnostic:
+    assessment_id: diag-a23
+    assessment_path: assessments/accelerated/a23/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a23/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a23/artifact/
+  - evidence/accelerated/a23/verification.log
+  - evidence/accelerated/a23/teach-back.md
+  remediation:
+    chapter_ids:
+    - v06.c08.redis-cache-rate-limit
+    - v06.c09.events-outbox-messaging
+    - v06.c10.modular-monolith-observability
+    plan_path: assessments/accelerated/a23/remediation.md
+  retest:
+    assessment_id: retest-a23
+    assessment_path: assessments/accelerated/a23/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a23/retest/
+- id: a24
+  title: 加速模块 A24
+  chapter_ids:
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  - v12.c04.modules-files-json
+  teach_chapter_ids:
+  - v12.c04.modules-files-json
+  diagnostic_chapter_ids:
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  refresh_chapter_ids:
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  - v12.c04.modules-files-json
+  diagnostic:
+    assessment_id: diag-a24
+    assessment_path: assessments/accelerated/a24/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a24/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a24/artifact/
+  - evidence/accelerated/a24/verification.log
+  - evidence/accelerated/a24/teach-back.md
+  remediation:
+    chapter_ids:
+    - v12.c01.runtime-uv-env
+    - v12.c02.types-io-control
+    - v12.c03.functions-collections
+    - v12.c04.modules-files-json
+    plan_path: assessments/accelerated/a24/remediation.md
+  retest:
+    assessment_id: retest-a24
+    assessment_path: assessments/accelerated/a24/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a24/retest/
+- id: a25
+  title: 加速模块 A25
+  chapter_ids:
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  - v12.c07.typing-testing-logging
+  teach_chapter_ids:
+  - v12.c07.typing-testing-logging
+  diagnostic_chapter_ids:
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  refresh_chapter_ids:
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  - v12.c07.typing-testing-logging
+  diagnostic:
+    assessment_id: diag-a25
+    assessment_path: assessments/accelerated/a25/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a25/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a25/artifact/
+  - evidence/accelerated/a25/verification.log
+  - evidence/accelerated/a25/teach-back.md
+  remediation:
+    chapter_ids:
+    - v12.c05.classes-dataclass-protocol
+    - v12.c06.exceptions-iterators-decorators
+    - v12.c07.typing-testing-logging
+    plan_path: assessments/accelerated/a25/remediation.md
+  retest:
+    assessment_id: retest-a25
+    assessment_path: assessments/accelerated/a25/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a25/retest/
+- id: a26
+  title: 加速模块 A26
+  chapter_ids:
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  - v12.c10.numpy-pandas
+  teach_chapter_ids:
+  - v12.c10.numpy-pandas
+  diagnostic_chapter_ids:
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  refresh_chapter_ids:
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  - v12.c10.numpy-pandas
+  diagnostic:
+    assessment_id: diag-a26
+    assessment_path: assessments/accelerated/a26/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a26/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a26/artifact/
+  - evidence/accelerated/a26/verification.log
+  - evidence/accelerated/a26/teach-back.md
+  remediation:
+    chapter_ids:
+    - v12.c08.async-cancellation
+    - v12.c09.fastapi-pydantic
+    - v12.c10.numpy-pandas
+    plan_path: assessments/accelerated/a26/remediation.md
+  retest:
+    assessment_id: retest-a26
+    assessment_path: assessments/accelerated/a26/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a26/retest/
+- id: a27
+  title: 加速模块 A27
+  chapter_ids:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  - v13.c04.problem-data-split
+  teach_chapter_ids:
+  - v13.c04.problem-data-split
+  diagnostic_chapter_ids:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  refresh_chapter_ids:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  - v13.c04.problem-data-split
+  diagnostic:
+    assessment_id: diag-a27
+    assessment_path: assessments/accelerated/a27/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a27/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a27/artifact/
+  - evidence/accelerated/a27/verification.log
+  - evidence/accelerated/a27/teach-back.md
+  remediation:
+    chapter_ids:
+    - v13.c01.vectors-matrices-tensors
+    - v13.c02.probability-statistics
+    - v13.c03.derivatives-gradients
+    - v13.c04.problem-data-split
+    plan_path: assessments/accelerated/a27/remediation.md
+  retest:
+    assessment_id: retest-a27
+    assessment_path: assessments/accelerated/a27/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a27/retest/
+- id: a28
+  title: 加速模块 A28
+  chapter_ids:
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  teach_chapter_ids:
+  - v13.c07.neural-networks
+  diagnostic_chapter_ids:
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  refresh_chapter_ids:
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  diagnostic:
+    assessment_id: diag-a28
+    assessment_path: assessments/accelerated/a28/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a28/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a28/artifact/
+  - evidence/accelerated/a28/verification.log
+  - evidence/accelerated/a28/teach-back.md
+  remediation:
+    chapter_ids:
+    - v13.c05.classical-ml
+    - v13.c06.metrics-validation
+    - v13.c07.neural-networks
+    plan_path: assessments/accelerated/a28/remediation.md
+  retest:
+    assessment_id: retest-a28
+    assessment_path: assessments/accelerated/a28/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a28/retest/
+- id: a29
+  title: 加速模块 A29
+  chapter_ids:
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  - v13.c10.inference-monitoring-ethics
+  teach_chapter_ids:
+  - v13.c10.inference-monitoring-ethics
+  diagnostic_chapter_ids:
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  refresh_chapter_ids:
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  - v13.c10.inference-monitoring-ethics
+  diagnostic:
+    assessment_id: diag-a29
+    assessment_path: assessments/accelerated/a29/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a29/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a29/artifact/
+  - evidence/accelerated/a29/verification.log
+  - evidence/accelerated/a29/teach-back.md
+  remediation:
+    chapter_ids:
+    - v13.c08.pytorch-foundations
+    - v13.c09.training-evaluation
+    - v13.c10.inference-monitoring-ethics
+    plan_path: assessments/accelerated/a29/remediation.md
+  retest:
+    assessment_id: retest-a29
+    assessment_path: assessments/accelerated/a29/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a29/retest/
+- id: a30
+  title: 加速模块 A30
+  chapter_ids:
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v14.c04.tool-calling-boundaries
+  teach_chapter_ids:
+  - v14.c04.tool-calling-boundaries
+  diagnostic_chapter_ids:
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  refresh_chapter_ids:
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v14.c04.tool-calling-boundaries
+  diagnostic:
+    assessment_id: diag-a30
+    assessment_path: assessments/accelerated/a30/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a30/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a30/artifact/
+  - evidence/accelerated/a30/verification.log
+  - evidence/accelerated/a30/teach-back.md
+  remediation:
+    chapter_ids:
+    - v14.c01.llm-model
+    - v14.c02.model-api-prompts
+    - v14.c03.structured-stream-retry
+    - v14.c04.tool-calling-boundaries
+    plan_path: assessments/accelerated/a30/remediation.md
+  retest:
+    assessment_id: retest-a30
+    assessment_path: assessments/accelerated/a30/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a30/retest/
+- id: a31
+  title: 加速模块 A31
+  chapter_ids:
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  - v14.c07.rag-citations-evaluation
+  teach_chapter_ids:
+  - v14.c07.rag-citations-evaluation
+  diagnostic_chapter_ids:
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  refresh_chapter_ids:
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  - v14.c07.rag-citations-evaluation
+  diagnostic:
+    assessment_id: diag-a31
+    assessment_path: assessments/accelerated/a31/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a31/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a31/artifact/
+  - evidence/accelerated/a31/verification.log
+  - evidence/accelerated/a31/teach-back.md
+  remediation:
+    chapter_ids:
+    - v14.c05.ingestion-chunking
+    - v14.c06.retrieval-rerank
+    - v14.c07.rag-citations-evaluation
+    plan_path: assessments/accelerated/a31/remediation.md
+  retest:
+    assessment_id: retest-a31
+    assessment_path: assessments/accelerated/a31/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a31/retest/
+- id: a32
+  title: 加速模块 A32
+  chapter_ids:
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  - v14.c10.mcp-agent-boundary
+  teach_chapter_ids:
+  - v14.c10.mcp-agent-boundary
+  diagnostic_chapter_ids:
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  refresh_chapter_ids:
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  - v14.c10.mcp-agent-boundary
+  diagnostic:
+    assessment_id: diag-a32
+    assessment_path: assessments/accelerated/a32/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a32/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a32/artifact/
+  - evidence/accelerated/a32/verification.log
+  - evidence/accelerated/a32/teach-back.md
+  remediation:
+    chapter_ids:
+    - v14.c08.rag-security-observability
+    - v14.c09.langchain-langgraph
+    - v14.c10.mcp-agent-boundary
+    plan_path: assessments/accelerated/a32/remediation.md
+  retest:
+    assessment_id: retest-a32
+    assessment_path: assessments/accelerated/a32/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a32/retest/
+- id: a33
+  title: 加速模块 A33
+  chapter_ids:
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  - v07.c05.css-cascade
+  teach_chapter_ids:
+  - v07.c05.css-cascade
+  diagnostic_chapter_ids:
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  refresh_chapter_ids:
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  - v07.c05.css-cascade
+  diagnostic:
+    assessment_id: diag-a33
+    assessment_path: assessments/accelerated/a33/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a33/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a33/artifact/
+  - evidence/accelerated/a33/verification.log
+  - evidence/accelerated/a33/teach-back.md
+  remediation:
+    chapter_ids:
+    - v07.c01.browser-render-devtools
+    - v07.c02.semantic-html
+    - v07.c03.forms-media-validation
+    - v07.c04.accessibility
+    - v07.c05.css-cascade
+    plan_path: assessments/accelerated/a33/remediation.md
+  retest:
+    assessment_id: retest-a33
+    assessment_path: assessments/accelerated/a33/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a33/retest/
+- id: a34
+  title: 加速模块 A34
+  chapter_ids:
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  - v07.c10.motion-performance
+  teach_chapter_ids:
+  - v07.c10.motion-performance
+  diagnostic_chapter_ids:
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  refresh_chapter_ids:
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  - v07.c10.motion-performance
+  diagnostic:
+    assessment_id: diag-a34
+    assessment_path: assessments/accelerated/a34/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a34/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a34/artifact/
+  - evidence/accelerated/a34/verification.log
+  - evidence/accelerated/a34/teach-back.md
+  remediation:
+    chapter_ids:
+    - v07.c06.box-position-stacking
+    - v07.c07.flex-grid
+    - v07.c08.responsive-typography
+    - v07.c09.color-theme-variables
+    - v07.c10.motion-performance
+    plan_path: assessments/accelerated/a34/remediation.md
+  retest:
+    assessment_id: retest-a34
+    assessment_path: assessments/accelerated/a34/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a34/retest/
+- id: a35
+  title: 加速模块 A35
+  chapter_ids:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  - v08.c05.this-prototype-class-module
+  teach_chapter_ids:
+  - v08.c05.this-prototype-class-module
+  diagnostic_chapter_ids:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  refresh_chapter_ids:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  - v08.c05.this-prototype-class-module
+  diagnostic:
+    assessment_id: diag-a35
+    assessment_path: assessments/accelerated/a35/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a35/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a35/artifact/
+  - evidence/accelerated/a35/verification.log
+  - evidence/accelerated/a35/teach-back.md
+  remediation:
+    chapter_ids:
+    - v08.c01.runtime-node-pnpm-esm
+    - v08.c02.values-types-equality
+    - v08.c03.scope-functions-closures
+    - v08.c04.arrays-objects-collections
+    - v08.c05.this-prototype-class-module
+    plan_path: assessments/accelerated/a35/remediation.md
+  retest:
+    assessment_id: retest-a35
+    assessment_path: assessments/accelerated/a35/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a35/retest/
+- id: a36
+  title: 加速模块 A36
+  chapter_ids:
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  teach_chapter_ids:
+  - v08.c10.typescript-advanced-tooling
+  diagnostic_chapter_ids:
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  refresh_chapter_ids:
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  diagnostic:
+    assessment_id: diag-a36
+    assessment_path: assessments/accelerated/a36/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a36/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a36/artifact/
+  - evidence/accelerated/a36/verification.log
+  - evidence/accelerated/a36/teach-back.md
+  remediation:
+    chapter_ids:
+    - v08.c06.dom-events-storage
+    - v08.c07.event-loop-promises
+    - v08.c08.fetch-abort-race
+    - v08.c09.typescript-setup-strict
+    - v08.c10.typescript-advanced-tooling
+    plan_path: assessments/accelerated/a36/remediation.md
+  retest:
+    assessment_id: retest-a36
+    assessment_path: assessments/accelerated/a36/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a36/retest/
+- id: a37
+  title: 加速模块 A37
+  chapter_ids:
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  - v09.c05.composables-boundaries
+  teach_chapter_ids:
+  - v09.c05.composables-boundaries
+  diagnostic_chapter_ids:
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  refresh_chapter_ids:
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  - v09.c05.composables-boundaries
+  diagnostic:
+    assessment_id: diag-a37
+    assessment_path: assessments/accelerated/a37/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a37/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a37/artifact/
+  - evidence/accelerated/a37/verification.log
+  - evidence/accelerated/a37/teach-back.md
+  remediation:
+    chapter_ids:
+    - v09.c01.vite-sfc-app
+    - v09.c02.reactivity
+    - v09.c03.watch-lifecycle-cleanup
+    - v09.c04.components-contracts
+    - v09.c05.composables-boundaries
+    plan_path: assessments/accelerated/a37/remediation.md
+  retest:
+    assessment_id: retest-a37
+    assessment_path: assessments/accelerated/a37/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a37/retest/
+- id: a38
+  title: 加速模块 A38
+  chapter_ids:
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  - v09.c10.nuxt-rendering-deployment
+  teach_chapter_ids:
+  - v09.c10.nuxt-rendering-deployment
+  diagnostic_chapter_ids:
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  refresh_chapter_ids:
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  - v09.c10.nuxt-rendering-deployment
+  diagnostic:
+    assessment_id: diag-a38
+    assessment_path: assessments/accelerated/a38/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a38/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a38/artifact/
+  - evidence/accelerated/a38/verification.log
+  - evidence/accelerated/a38/teach-back.md
+  remediation:
+    chapter_ids:
+    - v09.c06.router-navigation-auth
+    - v09.c07.pinia-server-state-forms
+    - v09.c08.requests-race-errors
+    - v09.c09.testing-a11y-performance
+    - v09.c10.nuxt-rendering-deployment
+    plan_path: assessments/accelerated/a38/remediation.md
+  retest:
+    assessment_id: retest-a38
+    assessment_path: assessments/accelerated/a38/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a38/retest/
+- id: a39
+  title: 加速模块 A39
+  chapter_ids:
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  teach_chapter_ids:
+  - v10.c04.platform-api-conditional
+  diagnostic_chapter_ids:
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  refresh_chapter_ids:
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  diagnostic:
+    assessment_id: diag-a39
+    assessment_path: assessments/accelerated/a39/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a39/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a39/artifact/
+  - evidence/accelerated/a39/verification.log
+  - evidence/accelerated/a39/teach-back.md
+  remediation:
+    chapter_ids:
+    - v10.c01.miniprogram-runtime
+    - v10.c02.uniapp-vue-pages
+    - v10.c03.network-auth-storage
+    - v10.c04.platform-api-conditional
+    plan_path: assessments/accelerated/a39/remediation.md
+  retest:
+    assessment_id: retest-a39
+    assessment_path: assessments/accelerated/a39/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a39/retest/
+- id: a40
+  title: 加速模块 A40
+  chapter_ids:
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  teach_chapter_ids:
+  - v10.c07.testing-device-debug
+  diagnostic_chapter_ids:
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  refresh_chapter_ids:
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  diagnostic:
+    assessment_id: diag-a40
+    assessment_path: assessments/accelerated/a40/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a40/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a40/artifact/
+  - evidence/accelerated/a40/verification.log
+  - evidence/accelerated/a40/teach-back.md
+  remediation:
+    chapter_ids:
+    - v10.c05.upload-scan-location
+    - v10.c06.packages-performance-offline
+    - v10.c07.testing-device-debug
+    plan_path: assessments/accelerated/a40/remediation.md
+  retest:
+    assessment_id: retest-a40
+    assessment_path: assessments/accelerated/a40/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a40/retest/
+- id: a41
+  title: 加速模块 A41
+  chapter_ids:
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  - v10.c10.factorycare-reporter
+  teach_chapter_ids:
+  - v10.c10.factorycare-reporter
+  diagnostic_chapter_ids:
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  refresh_chapter_ids:
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  - v10.c10.factorycare-reporter
+  diagnostic:
+    assessment_id: diag-a41
+    assessment_path: assessments/accelerated/a41/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a41/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a41/artifact/
+  - evidence/accelerated/a41/verification.log
+  - evidence/accelerated/a41/teach-back.md
+  remediation:
+    chapter_ids:
+    - v10.c08.privacy-security-review
+    - v10.c09.publish-monitoring
+    - v10.c10.factorycare-reporter
+    plan_path: assessments/accelerated/a41/remediation.md
+  retest:
+    assessment_id: retest-a41
+    assessment_path: assessments/accelerated/a41/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a41/retest/
+- id: a42
+  title: 加速模块 A42
+  chapter_ids:
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  - v11.c04.dart-oop-generics
+  teach_chapter_ids:
+  - v11.c04.dart-oop-generics
+  diagnostic_chapter_ids:
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  refresh_chapter_ids:
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  - v11.c04.dart-oop-generics
+  diagnostic:
+    assessment_id: diag-a42
+    assessment_path: assessments/accelerated/a42/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a42/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a42/artifact/
+  - evidence/accelerated/a42/verification.log
+  - evidence/accelerated/a42/teach-back.md
+  remediation:
+    chapter_ids:
+    - v11.c01.dart-cli-types
+    - v11.c02.dart-control-functions
+    - v11.c03.dart-collections-patterns
+    - v11.c04.dart-oop-generics
+    plan_path: assessments/accelerated/a42/remediation.md
+  retest:
+    assessment_id: retest-a42
+    assessment_path: assessments/accelerated/a42/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a42/retest/
+- id: a43
+  title: 加速模块 A43
+  chapter_ids:
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  teach_chapter_ids:
+  - v11.c07.layout-render-accessibility
+  diagnostic_chapter_ids:
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  refresh_chapter_ids:
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  diagnostic:
+    assessment_id: diag-a43
+    assessment_path: assessments/accelerated/a43/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a43/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a43/artifact/
+  - evidence/accelerated/a43/verification.log
+  - evidence/accelerated/a43/teach-back.md
+  remediation:
+    chapter_ids:
+    - v11.c05.dart-async-errors
+    - v11.c06.flutter-runtime
+    - v11.c07.layout-render-accessibility
+    plan_path: assessments/accelerated/a43/remediation.md
+  retest:
+    assessment_id: retest-a43
+    assessment_path: assessments/accelerated/a43/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a43/retest/
+- id: a44
+  title: 加速模块 A44
+  chapter_ids:
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  teach_chapter_ids:
+  - v11.c10.architecture-testing-release
+  diagnostic_chapter_ids:
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  refresh_chapter_ids:
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  diagnostic:
+    assessment_id: diag-a44
+    assessment_path: assessments/accelerated/a44/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a44/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a44/artifact/
+  - evidence/accelerated/a44/verification.log
+  - evidence/accelerated/a44/teach-back.md
+  remediation:
+    chapter_ids:
+    - v11.c08.state-lifecycle-mounted
+    - v11.c09.navigation-network-device
+    - v11.c10.architecture-testing-release
+    plan_path: assessments/accelerated/a44/remediation.md
+  retest:
+    assessment_id: retest-a44
+    assessment_path: assessments/accelerated/a44/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a44/retest/
+- id: a45
+  title: 加速模块 A45
+  chapter_ids:
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  - v11.c13.flutter-testing-performance-release
+  teach_chapter_ids:
+  - v11.c13.flutter-testing-performance-release
+  diagnostic_chapter_ids:
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  refresh_chapter_ids:
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  - v11.c13.flutter-testing-performance-release
+  diagnostic:
+    assessment_id: diag-a45
+    assessment_path: assessments/accelerated/a45/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a45/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a45/artifact/
+  - evidence/accelerated/a45/verification.log
+  - evidence/accelerated/a45/teach-back.md
+  remediation:
+    chapter_ids:
+    - v11.c11.flutter-network-storage
+    - v11.c12.flutter-device-apis
+    - v11.c13.flutter-testing-performance-release
+    plan_path: assessments/accelerated/a45/remediation.md
+  retest:
+    assessment_id: retest-a45
+    assessment_path: assessments/accelerated/a45/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a45/retest/
+- id: a46
+  title: 加速模块 A46
+  chapter_ids:
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  teach_chapter_ids:
+  - v15.c04.nginx-tls-proxy
+  diagnostic_chapter_ids:
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  refresh_chapter_ids:
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  diagnostic:
+    assessment_id: diag-a46
+    assessment_path: assessments/accelerated/a46/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a46/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a46/artifact/
+  - evidence/accelerated/a46/verification.log
+  - evidence/accelerated/a46/teach-back.md
+  remediation:
+    chapter_ids:
+    - v15.c01.linux-operations
+    - v15.c02.network-diagnostics
+    - v15.c03.docker-compose
+    - v15.c04.nginx-tls-proxy
+    plan_path: assessments/accelerated/a46/remediation.md
+  retest:
+    assessment_id: retest-a46
+    assessment_path: assessments/accelerated/a46/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a46/retest/
+- id: a47
+  title: 加速模块 A47
+  chapter_ids:
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  - v15.c08.backup-capacity-performance
+  teach_chapter_ids:
+  - v15.c08.backup-capacity-performance
+  diagnostic_chapter_ids:
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  refresh_chapter_ids:
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  - v15.c08.backup-capacity-performance
+  diagnostic:
+    assessment_id: diag-a47
+    assessment_path: assessments/accelerated/a47/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a47/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a47/artifact/
+  - evidence/accelerated/a47/verification.log
+  - evidence/accelerated/a47/teach-back.md
+  remediation:
+    chapter_ids:
+    - v15.c05.ci-quality-artifacts
+    - v15.c06.config-secrets-supply-chain
+    - v15.c07.logs-metrics-traces
+    - v15.c08.backup-capacity-performance
+    plan_path: assessments/accelerated/a47/remediation.md
+  retest:
+    assessment_id: retest-a47
+    assessment_path: assessments/accelerated/a47/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a47/retest/
+- id: a48
+  title: 加速模块 A48
+  chapter_ids:
+  - v15.c09.deployment-rollback-incident
+  - v15.c10.system-design-portfolio
+  - v15.c11.portfolio-interview
+  teach_chapter_ids:
+  - v15.c11.portfolio-interview
+  diagnostic_chapter_ids:
+  - v15.c09.deployment-rollback-incident
+  - v15.c10.system-design-portfolio
+  refresh_chapter_ids:
+  - v15.c09.deployment-rollback-incident
+  - v15.c10.system-design-portfolio
+  - v15.c11.portfolio-interview
+  diagnostic:
+    assessment_id: diag-a48
+    assessment_path: assessments/accelerated/a48/diagnostic.md
+    pass_threshold: 85
+    valid_for_days: 90
+  waiver:
+    allowed: true
+    scope: instruction-only
+    required_evidence:
+    - diagnostic-score
+    - runnable-artifact
+    - teach-back
+    evidence_path: evidence/accelerated/a48/waiver/
+  completion_evidence_paths:
+  - evidence/accelerated/a48/artifact/
+  - evidence/accelerated/a48/verification.log
+  - evidence/accelerated/a48/teach-back.md
+  remediation:
+    chapter_ids:
+    - v15.c09.deployment-rollback-incident
+    - v15.c10.system-design-portfolio
+    - v15.c11.portfolio-interview
+    plan_path: assessments/accelerated/a48/remediation.md
+  retest:
+    assessment_id: retest-a48
+    assessment_path: assessments/accelerated/a48/retest.md
+    delay_hours: 24
+    new_variant: true
+    max_attempts: 2
+    evidence_path: evidence/accelerated/a48/retest/

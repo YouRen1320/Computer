@@ -1,0 +1,269 @@
+---
+schema_version: 1
+route_id: zero-base
+route_kind: zero-base
+title: 零基础完整路线
+audience: 从计算机与语言基础开始、不能凭既有经验跳过证据的学习者
+coverage: complete
+navigation_semantics: ordered-learning
+waiver_policy: no-implicit-waiver
+units:
+- id: z-v00
+  title: 计算机、工具与 AI 协作基础
+  chapter_ids:
+  - v00.c01.learning-evidence
+  - v00.c02.computer-model
+  - v00.c03.files-paths-encoding
+  - v00.c04.terminal-shell
+  - v00.c05.pipes-exit-codes
+  - v00.c06.environment-path
+  - v00.c07.editor-ide-debugger
+  - v00.c08.git-security
+  - v00.c09.network-http-curl
+  - v00.c10.dependencies-build-ai
+  - v00.c11.docker-foundations
+  - v00.c12.ai-collaboration-verification
+  entry_check_path: assessments/zero-base/v00-entry.md
+  exit_check_id: review-v00
+  stage_gate_id: G0
+- id: z-v01
+  title: Java 语言基础
+  chapter_ids:
+  - v01.c01.java-platform
+  - v01.c02.program-structure
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  - v01.c05.primitive-types
+  - v01.c06.operators-conversion
+  - v01.c07.conditionals-switch
+  - v01.c08.loops-control
+  - v01.c09.methods
+  - v01.c10.arrays-debug-test
+  entry_check_path: assessments/zero-base/v01-entry.md
+  exit_check_id: review-v01
+- id: z-v02
+  title: Java 面向对象与核心类型
+  chapter_ids:
+  - v02.c01.references-null-memory
+  - v02.c02.classes-fields-methods
+  - v02.c03.constructors-encapsulation
+  - v02.c04.static-final-immutability
+  - v02.c05.inheritance-composition
+  - v02.c06.polymorphism-interfaces
+  - v02.c07.enum-record-sealed
+  - v02.c08.object-contract
+  - v02.c09.core-value-types
+  - v02.c10.exceptions-resources
+  entry_check_path: assessments/zero-base/v02-entry.md
+  exit_check_id: review-v02
+- id: z-v03
+  title: Java 工程、并发与运行时
+  chapter_ids:
+  - v03.c01.collections
+  - v03.c02.generics-comparator
+  - v03.c03.complexity-data-structures
+  - v03.c04.lambdas-functions
+  - v03.c05.streams-optional
+  - v03.c06.io-nio-json
+  - v03.c07.threads-jmm
+  - v03.c08.executors-virtual-threads
+  - v03.c09.annotations-reflection-proxy
+  - v03.c10.maven-testing-jvm
+  - v03.c11.java-networking
+  - v03.c12.java-testing-mocking
+  - v03.c13.logging-jvm-diagnostics
+  entry_check_path: assessments/zero-base/v03-entry.md
+  exit_check_id: review-v03
+  stage_gate_id: G1
+- id: z-v04
+  title: 关系数据、PostgreSQL 与持久化
+  chapter_ids:
+  - v04.c01.relational-model
+  - v04.c02.sql-query-basics
+  - v04.c03.sql-functions
+  - v04.c04.aggregate-group-having
+  - v04.c05.joins-subquery-cte
+  - v04.c06.dml-ddl-normalization
+  - v04.c07.postgres-types-psql
+  - v04.c08.indexes-explain
+  - v04.c09.transactions-locks
+  - v04.c10.migration-jdbc-mybatis
+  - v04.c11.jdbc-pool-mybatis
+  entry_check_path: assessments/zero-base/v04-entry.md
+  exit_check_id: review-v04
+- id: z-v05
+  title: Spring 与企业后端基础
+  chapter_ids:
+  - v05.c01.web-jakarta-lifecycle
+  - v05.c02.ioc-di-beans
+  - v05.c03.configuration-profiles
+  - v05.c04.boot-autoconfiguration
+  - v05.c05.mvc-controllers
+  - v05.c06.dto-serialization
+  - v05.c07.validation-errors-files
+  - v05.c08.services-transactions-aop
+  - v05.c09.mybatis-integration
+  - v05.c10.testing-openapi-actuator
+  entry_check_path: assessments/zero-base/v05-entry.md
+  exit_check_id: review-v05
+  stage_gate_id: G2
+- id: z-v06
+  title: 安全、领域与企业架构
+  chapter_ids:
+  - v06.c01.auth-session-password
+  - v06.c02.web-security-threats
+  - v06.c03.jwt-oauth-oidc
+  - v06.c04.spring-security
+  - v06.c05.rbac-multitenancy-audit
+  - v06.c06.domain-modeling
+  - v06.c07.state-sla-idempotency
+  - v06.c08.redis-cache-rate-limit
+  - v06.c09.events-outbox-messaging
+  - v06.c10.modular-monolith-observability
+  entry_check_path: assessments/zero-base/v06-entry.md
+  exit_check_id: review-v06
+  stage_gate_id: G3
+- id: z-v07
+  title: 浏览器、HTML 与 CSS
+  chapter_ids:
+  - v07.c01.browser-render-devtools
+  - v07.c02.semantic-html
+  - v07.c03.forms-media-validation
+  - v07.c04.accessibility
+  - v07.c05.css-cascade
+  - v07.c06.box-position-stacking
+  - v07.c07.flex-grid
+  - v07.c08.responsive-typography
+  - v07.c09.color-theme-variables
+  - v07.c10.motion-performance
+  entry_check_path: assessments/zero-base/v07-entry.md
+  exit_check_id: review-v07
+- id: z-v08
+  title: JavaScript 与 TypeScript
+  chapter_ids:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c02.values-types-equality
+  - v08.c03.scope-functions-closures
+  - v08.c04.arrays-objects-collections
+  - v08.c05.this-prototype-class-module
+  - v08.c06.dom-events-storage
+  - v08.c07.event-loop-promises
+  - v08.c08.fetch-abort-race
+  - v08.c09.typescript-setup-strict
+  - v08.c10.typescript-advanced-tooling
+  entry_check_path: assessments/zero-base/v08-entry.md
+  exit_check_id: review-v08
+- id: z-v09
+  title: Vue 3 与 Nuxt
+  chapter_ids:
+  - v09.c01.vite-sfc-app
+  - v09.c02.reactivity
+  - v09.c03.watch-lifecycle-cleanup
+  - v09.c04.components-contracts
+  - v09.c05.composables-boundaries
+  - v09.c06.router-navigation-auth
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  - v09.c09.testing-a11y-performance
+  - v09.c10.nuxt-rendering-deployment
+  entry_check_path: assessments/zero-base/v09-entry.md
+  exit_check_id: review-v09
+  stage_gate_id: G4
+- id: z-v10
+  title: uni-app 与小程序
+  chapter_ids:
+  - v10.c01.miniprogram-runtime
+  - v10.c02.uniapp-vue-pages
+  - v10.c03.network-auth-storage
+  - v10.c04.platform-api-conditional
+  - v10.c05.upload-scan-location
+  - v10.c06.packages-performance-offline
+  - v10.c07.testing-device-debug
+  - v10.c08.privacy-security-review
+  - v10.c09.publish-monitoring
+  - v10.c10.factorycare-reporter
+  entry_check_path: assessments/zero-base/v10-entry.md
+  exit_check_id: review-v10
+- id: z-v11
+  title: Dart 与 Flutter
+  chapter_ids:
+  - v11.c01.dart-cli-types
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  - v11.c04.dart-oop-generics
+  - v11.c05.dart-async-errors
+  - v11.c06.flutter-runtime
+  - v11.c07.layout-render-accessibility
+  - v11.c08.state-lifecycle-mounted
+  - v11.c09.navigation-network-device
+  - v11.c10.architecture-testing-release
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  - v11.c13.flutter-testing-performance-release
+  entry_check_path: assessments/zero-base/v11-entry.md
+  exit_check_id: review-v11
+  stage_gate_id: G5
+- id: z-v12
+  title: Python、FastAPI 与数据工具
+  chapter_ids:
+  - v12.c01.runtime-uv-env
+  - v12.c02.types-io-control
+  - v12.c03.functions-collections
+  - v12.c04.modules-files-json
+  - v12.c05.classes-dataclass-protocol
+  - v12.c06.exceptions-iterators-decorators
+  - v12.c07.typing-testing-logging
+  - v12.c08.async-cancellation
+  - v12.c09.fastapi-pydantic
+  - v12.c10.numpy-pandas
+  entry_check_path: assessments/zero-base/v12-entry.md
+  exit_check_id: review-v12
+- id: z-v13
+  title: 机器学习、深度学习与 PyTorch
+  chapter_ids:
+  - v13.c01.vectors-matrices-tensors
+  - v13.c02.probability-statistics
+  - v13.c03.derivatives-gradients
+  - v13.c04.problem-data-split
+  - v13.c05.classical-ml
+  - v13.c06.metrics-validation
+  - v13.c07.neural-networks
+  - v13.c08.pytorch-foundations
+  - v13.c09.training-evaluation
+  - v13.c10.inference-monitoring-ethics
+  entry_check_path: assessments/zero-base/v13-entry.md
+  exit_check_id: review-v13
+- id: z-v14
+  title: LLM、RAG、LangGraph 与 Agent
+  chapter_ids:
+  - v14.c01.llm-model
+  - v14.c02.model-api-prompts
+  - v14.c03.structured-stream-retry
+  - v14.c04.tool-calling-boundaries
+  - v14.c05.ingestion-chunking
+  - v14.c06.retrieval-rerank
+  - v14.c07.rag-citations-evaluation
+  - v14.c08.rag-security-observability
+  - v14.c09.langchain-langgraph
+  - v14.c10.mcp-agent-boundary
+  entry_check_path: assessments/zero-base/v14-entry.md
+  exit_check_id: review-v14
+  stage_gate_id: G6
+- id: z-v15
+  title: 生产化、FactoryCare 与作品表达
+  chapter_ids:
+  - v15.c01.linux-operations
+  - v15.c02.network-diagnostics
+  - v15.c03.docker-compose
+  - v15.c04.nginx-tls-proxy
+  - v15.c05.ci-quality-artifacts
+  - v15.c06.config-secrets-supply-chain
+  - v15.c07.logs-metrics-traces
+  - v15.c08.backup-capacity-performance
+  - v15.c09.deployment-rollback-incident
+  - v15.c10.system-design-portfolio
+  - v15.c11.portfolio-interview
+  entry_check_path: assessments/zero-base/v15-entry.md
+  exit_check_id: review-v15
+  stage_gate_id: G7
+  final_gate_id: G8

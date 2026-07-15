@@ -1,0 +1,560 @@
+schema_version: 1
+registry_id: factorycare-version-registry
+edition: 2026.1-draft
+verified_at: "2026-07-15"
+policy:
+  stable_only: true
+  patch_resolution: at-chapter-verification
+  recheck_before_use: true
+entries:
+  - id: browser
+    name: Web browser
+    kind: platform
+    constraint: "current stable, evergreen"
+    channel: stable
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://chromereleases.googleblog.com/
+    notes: "浏览器自动更新；每个可复现实验记录产品、完整版本和操作系统。"
+  - id: browser-devtools
+    name: Browser DevTools
+    kind: tool
+    constraint: "bundled with the selected stable browser"
+    channel: stable
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://developer.chrome.com/docs/devtools/
+    notes: "功能随浏览器发布；章节不得假定所有浏览器的面板名称完全相同。"
+  - id: ci
+    name: Continuous integration runner
+    kind: service
+    constraint: "GitHub Actions current supported runner images"
+    channel: stable
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://docs.github.com/actions/using-github-hosted-runners/about-github-hosted-runners
+    notes: "工作流需固定 action 主版本，并在运行日志中记录镜像与工具版本。"
+  - id: css
+    name: Cascading Style Sheets
+    kind: standard
+    constraint: "current interoperable CSS modules"
+    channel: living standards
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://www.w3.org/Style/CSS/current-work
+    notes: "CSS 不存在单一整体版本；按特性核对规范状态和浏览器兼容性。"
+  - id: dart-stable
+    name: Dart SDK
+    kind: language
+    constraint: "3.12.x with Flutter 3.44.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.flutter.dev/install/archive
+    notes: "以 Flutter stable 自带 Dart 为准；独立 Dart 实验仍记录实际 SDK patch。"
+  - id: docker
+    name: Docker Engine
+    kind: tool
+    constraint: "current stable engine compatible with Docker Compose v2"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.docker.com/engine/release-notes/
+    notes: "进入容器章节再固定引擎 patch；镜像使用明确版本或 digest。"
+  - id: fastapi
+    name: FastAPI
+    kind: framework
+    constraint: "current stable compatible with CPython 3.14 and Pydantic 2"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://fastapi.tiangolo.com/release-notes/
+    notes: "通过 uv 锁文件固定；章节验证请求校验、OpenAPI 和异步行为。"
+  - id: flutter-stable
+    name: Flutter SDK
+    kind: framework
+    constraint: "3.44.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.flutter.dev/install/archive
+    notes: "只采用 stable channel；进入移动阶段时重新解析最新 patch 和平台工具要求。"
+  - id: flyway
+    name: Flyway
+    kind: tool
+    constraint: "Spring Boot 4.1 BOM-compatible release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://documentation.red-gate.com/flyway/reference/release-notes
+    notes: "让 Boot 依赖管理决定默认版本；迁移行为必须用真实数据库验证。"
+  - id: git
+    name: Git
+    kind: tool
+    constraint: "current supported stable"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://git-scm.com/docs
+    notes: "核心对象模型稳定；平台凭据和签名流程按本机版本单独验证。"
+  - id: html-living-standard
+    name: HTML Living Standard
+    kind: standard
+    constraint: "current living standard"
+    channel: living standard
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://html.spec.whatwg.org/
+    notes: "不使用过时的 HTML5 快照作为唯一规范来源。"
+  - id: jakarta-ee
+    name: Jakarta EE
+    kind: standard
+    constraint: "Jakarta EE level used by Spring Framework 7 / Boot 4.1"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://jakarta.ee/release/
+    notes: "章节按实际依赖的 Jakarta API 版本解释，不把整个规范平台当作项目依赖。"
+  - id: jdbc
+    name: Java Database Connectivity
+    kind: standard
+    constraint: "JDBC API bundled with JDK 25 plus PostgreSQL 18-compatible driver"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.oracle.com/en/java/javase/25/docs/api/java.sql/java/sql/package-summary.html
+    notes: "API 与驱动分开记录；数据库实验必须锁定 PostgreSQL JDBC driver。"
+  - id: jdk-25
+    name: Java Development Kit
+    kind: runtime
+    constraint: "25.x LTS"
+    channel: LTS
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://www.oracle.com/java/technologies/java-se-support-roadmap.html
+    notes: "主线使用 Temurin 等 OpenJDK 发行版；preview 特性不进入必修项目路径。"
+  - id: junit-6
+    name: JUnit
+    kind: library
+    constraint: "6.x, Spring Boot 4.1 BOM-managed when used with Boot"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.junit.org/current/user-guide/
+    notes: "纯 Maven 练习显式固定版本，Boot 项目优先接受 BOM 组合。"
+  - id: langchain
+    name: LangChain
+    kind: framework
+    constraint: "1.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.langchain.com/oss/python/releases-v1
+    notes: "先学模型官方 SDK；只在需要集成抽象时引入 LangChain。"
+  - id: langgraph
+    name: LangGraph
+    kind: framework
+    constraint: "1.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.langchain.com/oss/python/langgraph/overview
+    notes: "只用于确有 checkpoint、恢复或人工审批需求的有状态工作流。"
+  - id: linux
+    name: Linux
+    kind: platform
+    constraint: "current supported LTS server distribution"
+    channel: LTS
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://www.kernel.org/category/releases.html
+    notes: "内核、发行版和用户空间分开记录；部署章节固定实际镜像。"
+  - id: macos-26
+    name: macOS
+    kind: platform
+    constraint: "26.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://support.apple.com/en-us/109033
+    notes: "本机学习环境基线；跨平台命令需标出 Linux 和 Windows 差异。"
+  - id: maven-3
+    name: Apache Maven
+    kind: tool
+    constraint: "3.9.16"
+    channel: GA
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://maven.apache.org/docs/history.html
+    notes: "Maven 4 未 GA 时不作为主线；wrapper 或 CI 中固定实际版本。"
+  - id: mcp
+    name: Model Context Protocol
+    kind: protocol
+    constraint: "current published specification"
+    channel: stable specification
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://modelcontextprotocol.io/specification/
+    notes: "协议按发布日期演进；实现实验同时记录 SDK 与规范日期。"
+  - id: model-api
+    name: Model provider API and official SDK
+    kind: service
+    constraint: "provider-supported stable API and official SDK"
+    channel: stable
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://platform.openai.com/docs/
+    notes: "模型、端点和 SDK 必须逐实验记录；不得把某一家提供方行为写成通用协议。"
+  - id: mybatis
+    name: MyBatis
+    kind: framework
+    constraint: "Core 3.5.x plus Spring Boot Starter 4.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+    notes: "Starter 4.x 不等于 MyBatis Core 4；文档和简历必须保持这个边界。"
+  - id: nginx
+    name: NGINX
+    kind: service
+    constraint: "current stable branch"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://nginx.org/en/download.html
+    notes: "部署阶段锁定镜像版本或 digest，并验证配置测试和回滚。"
+  - id: node-24-lts
+    name: Node.js
+    kind: runtime
+    constraint: "24.x LTS"
+    channel: LTS
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://nodejs.org/en/about/previous-releases
+    notes: "生产与教材主线使用 LTS；项目通过版本文件和 CI 固定 patch。"
+  - id: numpy
+    name: NumPy
+    kind: library
+    constraint: "current stable compatible with CPython 3.14"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://numpy.org/news/
+    notes: "通过 uv 锁文件固定，数值行为和 dtype 示例记录实际版本。"
+  - id: nuxt-4
+    name: Nuxt
+    kind: framework
+    constraint: "4.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://nuxt.com/docs/4.x/getting-started/installation
+    notes: "使用 Node 24 LTS；SSR、hydration 和部署适配器分别验证。"
+  - id: oauth2-oidc
+    name: OAuth 2.0 and OpenID Connect
+    kind: protocol
+    constraint: "current OAuth security best practice plus OIDC Core"
+    channel: standards
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://www.rfc-editor.org/rfc/rfc9700.html
+    notes: "按授权场景选择流程；禁止用过时 implicit flow 作为默认实现。"
+  - id: observability
+    name: OpenTelemetry observability stack
+    kind: standard
+    constraint: "current stable semantic conventions and compatible SDKs"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://opentelemetry.io/docs/specs/status/
+    notes: "Java、Python、Collector 和后端版本分别锁定，trace 语义通过端到端实验验证。"
+  - id: pandas
+    name: pandas
+    kind: library
+    constraint: "current stable compatible with CPython 3.14"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://pandas.pydata.org/docs/whatsnew/index.html
+    notes: "通过 uv 锁文件固定；避免依赖未说明的 dtype 和复制语义。"
+  - id: pinia
+    name: Pinia
+    kind: library
+    constraint: "current Vue 3-compatible stable"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://pinia.vuejs.org/
+    notes: "只承载明确的客户端状态；服务端状态不能全部塞入全局 store。"
+  - id: pnpm
+    name: pnpm
+    kind: tool
+    constraint: "11.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://pnpm.io/installation
+    notes: "通过 packageManager 字段和 Corepack/CI 固定实际版本。"
+  - id: postgresql-18
+    name: PostgreSQL
+    kind: service
+    constraint: "18.x current minor"
+    channel: supported major
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://www.postgresql.org/support/versioning/
+    notes: "始终采用当前 minor；教材 SQL 明确标记 PostgreSQL 方言。"
+  - id: python-3.14
+    name: CPython
+    kind: runtime
+    constraint: "3.14.x default GIL build"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://www.python.org/downloads/
+    notes: "不把 free-threaded 变体作为主线；第三方扩展兼容性按锁文件验证。"
+  - id: pytorch-stable
+    name: PyTorch
+    kind: framework
+    constraint: "current stable supporting Python 3.14"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://pytorch.org/get-started/locally/
+    notes: "根据 CPU/Apple Silicon 环境生成安装方案；训练例子记录设备和随机种子。"
+  - id: redis
+    name: Redis Open Source
+    kind: service
+    constraint: "8.x"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://redis.io/docs/latest/operate/oss_and_stack/
+    notes: "只用于缓存、限流、幂等短期状态和受控实验，不作为唯一业务事实源。"
+  - id: spring-boot-4.1
+    name: Spring Boot
+    kind: framework
+    constraint: "4.1.x"
+    channel: GA
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.spring.io/spring-boot/system-requirements.html
+    notes: "第三方 starter 逐个做启动和集成测试；依赖组合优先由 Boot BOM 管理。"
+  - id: spring-framework-7
+    name: Spring Framework
+    kind: framework
+    constraint: "7.x as managed by Spring Boot 4.1"
+    channel: GA
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.spring.io/spring-framework/reference/overview.html
+    notes: "Boot 项目不独立覆盖 Framework 版本；Core 实验显式锁定。"
+  - id: spring-modulith
+    name: Spring Modulith
+    kind: framework
+    constraint: "release train compatible with Spring Boot 4.1"
+    channel: GA
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.spring.io/spring-modulith/reference/
+    notes: "进入模块化章节后依据官方兼容矩阵固定版本并运行结构测试。"
+  - id: spring-security
+    name: Spring Security
+    kind: framework
+    constraint: "version managed by Spring Boot 4.1"
+    channel: GA
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.spring.io/spring-security/reference/index.html
+    notes: "安全默认值和 DSL 会演进；所有授权结论用测试验证。"
+  - id: toolchains
+    name: Language and build toolchains
+    kind: tool
+    constraint: "chapter-specific pinned toolchain"
+    channel: stable
+    status: conceptual
+    verified_at: "2026-07-15"
+    source_url: https://asdf-vm.com/manage/versions.html
+    notes: "这是跨语言概念 ID；章节必须落到具体 JDK、Node、Python 或 Flutter 条目。"
+  - id: typescript
+    name: TypeScript
+    kind: language
+    constraint: "current stable compatible with Vue 3 and Vite"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://www.typescriptlang.org/docs/handbook/release-notes/overview.html
+    notes: "项目通过 package.json 和锁文件固定；启用 strict 并运行独立类型检查。"
+  - id: uni-app
+    name: uni-app Vue 3 line
+    kind: framework
+    constraint: "current stable Vue 3 release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://uniapp.dcloud.net.cn/
+    notes: "微信小程序为主验证目标；CLI、HBuilderX 和平台编译器版本分别记录。"
+  - id: uv
+    name: uv
+    kind: tool
+    constraint: "current stable"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.astral.sh/uv/reference/policies/versioning/
+    notes: "用 pyproject.toml、uv.lock 和 Python 版本文件共同保证可复现。"
+  - id: vite
+    name: Vite
+    kind: tool
+    constraint: "current stable compatible with Node 24 LTS and Vue 3"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://vite.dev/releases
+    notes: "项目锁定实际主版本；开发服务器行为不能代替生产构建验证。"
+  - id: vue-3
+    name: Vue
+    kind: framework
+    constraint: "3.x current stable"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://vuejs.org/about/releases.html
+    notes: "主线使用 Composition API 与 script setup；项目锁定 patch。"
+  - id: wechat-miniprogram
+    name: WeChat Mini Program platform
+    kind: platform
+    constraint: "current stable base library and developer tools"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://developers.weixin.qq.com/miniprogram/dev/framework/
+    notes: "基础库、开发者工具和客户端版本都可能影响行为，真机结果优先。"
+  - id: zsh
+    name: Z shell
+    kind: tool
+    constraint: "macOS 26 bundled version"
+    channel: OS managed
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://zsh.sourceforge.io/Doc/
+    notes: "命令示例以 zsh 为学习环境，并明确 POSIX shell 差异。"
+
+  # 技术栈中已选定、但当前目录尚未直接引用的补充条目。
+  - id: spring-ai-2
+    name: Spring AI
+    kind: framework
+    constraint: "2.0.x compatible with Spring Boot 4.1"
+    channel: GA
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.spring.io/spring-ai/reference/getting-started.html
+    notes: "用于 Java 侧模型集成对照；不替代先学习模型官方 SDK。"
+  - id: mysql-8.4
+    name: MySQL
+    kind: service
+    constraint: "8.4.x LTS"
+    channel: LTS
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://dev.mysql.com/doc/refman/8.4/en/mysql-releases.html
+    notes: "仅用于求职对照实验，不维护 FactoryCare 的第二套生产实现。"
+  - id: pgvector
+    name: pgvector
+    kind: library
+    constraint: "current stable compatible with PostgreSQL 18"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://github.com/pgvector/pgvector/releases
+    notes: "索引和运算符行为在真实 PostgreSQL 容器中验证并锁定扩展版本。"
+  - id: pydantic-2
+    name: Pydantic
+    kind: library
+    constraint: "2.x compatible with selected FastAPI release"
+    channel: stable
+    status: verified
+    verified_at: "2026-07-15"
+    source_url: https://docs.pydantic.dev/latest/
+    notes: "FastAPI 项目由 uv 锁文件固定，输入与输出模型都要有失败测试。"
+  - id: pytest
+    name: pytest
+    kind: tool
+    constraint: "current stable compatible with CPython 3.14"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.pytest.org/en/stable/changelog.html
+    notes: "通过 uv 锁文件固定；测试发现规则和异步插件版本需显式记录。"
+  - id: vitest
+    name: Vitest
+    kind: tool
+    constraint: "current stable compatible with selected Vite release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://vitest.dev/guide/
+    notes: "前端项目锁定实际版本，并区分 DOM 模拟测试和真实浏览器 E2E。"
+  - id: playwright
+    name: Playwright
+    kind: tool
+    constraint: "current stable"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://playwright.dev/docs/release-notes
+    notes: "库版本与浏览器二进制必须成套安装并由 CI 缓存策略保护。"
+  - id: docker-compose
+    name: Docker Compose
+    kind: tool
+    constraint: "Compose v2 bundled plugin"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://docs.docker.com/compose/releases/release-notes/
+    notes: "使用 compose.yaml 规范；部署前运行配置解析和健康检查。"
+  - id: minio
+    name: MinIO
+    kind: service
+    constraint: "current stable S3-compatible local release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://github.com/minio/minio/releases
+    notes: "只作本地对象存储实现；业务代码依赖 S3 契约并验证权限边界。"
+  - id: rabbitmq
+    name: RabbitMQ
+    kind: service
+    constraint: "current supported stable"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://www.rabbitmq.com/release-information
+    notes: "只在跨进程外发实验加入；先用模块内事件和 outbox 解释可靠性。"
+  - id: testcontainers
+    name: Testcontainers for Java
+    kind: library
+    constraint: "Spring Boot 4.1 BOM-compatible release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://java.testcontainers.org/
+    notes: "与 Docker Engine 和 JUnit 组合验证；集成测试记录容器镜像版本。"
+  - id: mockito
+    name: Mockito
+    kind: library
+    constraint: "Spring Boot 4.1 BOM-managed release"
+    channel: stable
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://site.mockito.org/
+    notes: "只模拟明确边界；核心业务尽量用状态和返回值断言。"
+  - id: openapi
+    name: OpenAPI Specification
+    kind: standard
+    constraint: "highest version fully supported by the selected toolchain"
+    channel: stable specification
+    status: provisional
+    verified_at: "2026-07-15"
+    source_url: https://spec.openapis.org/oas/latest.html
+    notes: "了解最新规范，但项目输出以 springdoc、UI 和生成器实际回归通过的版本为准。"

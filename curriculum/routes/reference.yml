@@ -1,0 +1,1284 @@
+---
+schema_version: 1
+route_id: reference
+route_kind: reference
+title: 非线性百科查询入口
+audience: 按概念、错误、命令、API、版本或 FactoryCare 场景回查
+coverage: generated-complete
+navigation_semantics: non-linear-index
+facets:
+- id: concept
+  query_fields:
+  - title
+  - outcomes
+  - teaches_capabilities
+  - uses_capabilities
+  result_sort: relevance
+- id: error
+  query_fields:
+  - outcomes[2]
+  result_sort: failure-stage-then-id
+- id: command
+  query_fields:
+  - outcomes
+  - path
+  result_sort: tool-then-id
+- id: api
+  query_fields:
+  - title
+  - outcomes
+  result_sort: platform-then-id
+- id: version
+  query_fields:
+  - versioned_surface
+  result_sort: version-id-then-chapter
+- id: factorycare
+  query_fields:
+  - route_tags
+  - outcomes
+  result_sort: business-stage-then-id
+chapter_index:
+  v00.c01.learning-evidence:
+    title: 学习系统、证据与间隔复习
+    path: book/volume-00-computer-foundations/chapters/v00.c01.learning-evidence.md
+    concepts: []
+    versions: []
+  v00.c02.computer-model:
+    title: CPU、内存、磁盘、程序与进程
+    path: book/volume-00-computer-foundations/chapters/v00.c02.computer-model.md
+    concepts: []
+    versions: []
+  v00.c03.files-paths-encoding:
+    title: 文件、目录、路径、扩展名与编码
+    path: book/volume-00-computer-foundations/chapters/v00.c03.files-paths-encoding.md
+    concepts: []
+    versions:
+    - macos-26
+  v00.c04.terminal-shell:
+    title: 终端、Shell 与命令执行
+    path: book/volume-00-computer-foundations/chapters/v00.c04.terminal-shell.md
+    concepts:
+    - terminal
+    versions:
+    - macos-26
+    - zsh
+  v00.c05.pipes-exit-codes:
+    title: 标准流、管道、重定向与退出码
+    path: book/volume-00-computer-foundations/chapters/v00.c05.pipes-exit-codes.md
+    concepts:
+    - terminal
+    versions:
+    - zsh
+  v00.c06.environment-path:
+    title: 环境变量、PATH 与工具版本选择
+    path: book/volume-00-computer-foundations/chapters/v00.c06.environment-path.md
+    concepts: []
+    versions:
+    - macos-26
+    - zsh
+    - toolchains
+  v00.c07.editor-ide-debugger:
+    title: 编辑器、IDE、断点与调试器
+    path: book/volume-00-computer-foundations/chapters/v00.c07.editor-ide-debugger.md
+    concepts: []
+    versions:
+    - toolchains
+  v00.c08.git-security:
+    title: Git、远程协作与凭据安全
+    path: book/volume-00-computer-foundations/chapters/v00.c08.git-security.md
+    concepts:
+    - git
+    versions:
+    - git
+  v00.c09.network-http-curl:
+    title: IP、DNS、端口、TCP 与 TLS
+    path: book/volume-00-computer-foundations/chapters/v00.c09.network-http-curl.md
+    concepts:
+    - http
+    versions: []
+  v00.c10.dependencies-build-ai:
+    title: 依赖、构建与包管理
+    path: book/volume-00-computer-foundations/chapters/v00.c10.dependencies-build-ai.md
+    concepts:
+    - build-tool-basics
+    versions:
+    - toolchains
+  v00.c11.docker-foundations:
+    title: Docker 镜像、容器、卷、端口与网络基础
+    path: book/volume-00-computer-foundations/chapters/v00.c11.docker-foundations.md
+    concepts:
+    - docker
+    versions:
+    - docker
+    - docker-compose
+  v00.c12.ai-collaboration-verification:
+    title: AI 协作、隐私、代码审查与结果验证
+    path: book/volume-00-computer-foundations/chapters/v00.c12.ai-collaboration-verification.md
+    concepts:
+    - git
+    versions:
+    - model-api
+  v01.c01.java-platform:
+    title: Java 平台、JDK、JVM、源码、编译与运行
+    path: book/volume-01-java-language/chapters/v01.c01.java-platform.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c02.program-structure:
+    title: 程序结构、package、class、main 与命名
+    path: book/volume-01-java-language/chapters/v01.c02.program-structure.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c03.console-io:
+    title: 控制台输入输出与命令行参数
+    path: book/volume-01-java-language/chapters/v01.c03.console-io.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c04.variables-scope:
+    title: 变量、常量、作用域与生命周期
+    path: book/volume-01-java-language/chapters/v01.c04.variables-scope.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c05.primitive-types:
+    title: 基本类型、字符、布尔值与编码
+    path: book/volume-01-java-language/chapters/v01.c05.primitive-types.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c06.operators-conversion:
+    title: 运算符、类型转换、溢出与金额表示
+    path: book/volume-01-java-language/chapters/v01.c06.operators-conversion.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c07.conditionals-switch:
+    title: 条件判断、布尔逻辑与 switch
+    path: book/volume-01-java-language/chapters/v01.c07.conditionals-switch.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c08.loops-control:
+    title: for、while、do-while、break 与 continue
+    path: book/volume-01-java-language/chapters/v01.c08.loops-control.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c09.methods:
+    title: 方法、参数、返回值、重载与递归边界
+    path: book/volume-01-java-language/chapters/v01.c09.methods.md
+    concepts: []
+    versions:
+    - jdk-25
+  v01.c10.arrays-debug-test:
+    title: 数组、二维数组、调试与 JUnit 入门
+    path: book/volume-01-java-language/chapters/v01.c10.arrays-debug-test.md
+    concepts:
+    - build-tool-basics
+    versions:
+    - jdk-25
+  v02.c01.references-null-memory:
+    title: 对象、引用、null 与内存模型
+    path: book/volume-02-java-objects/chapters/v02.c01.references-null-memory.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c02.classes-fields-methods:
+    title: 类、对象、字段与实例方法
+    path: book/volume-02-java-objects/chapters/v02.c02.classes-fields-methods.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c03.constructors-encapsulation:
+    title: 构造器、封装、访问控制与包边界
+    path: book/volume-02-java-objects/chapters/v02.c03.constructors-encapsulation.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c04.static-final-immutability:
+    title: static、final、常量与不可变对象
+    path: book/volume-02-java-objects/chapters/v02.c04.static-final-immutability.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c05.inheritance-composition:
+    title: 继承、super、组合与依赖关系
+    path: book/volume-02-java-objects/chapters/v02.c05.inheritance-composition.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c06.polymorphism-interfaces:
+    title: 多态、抽象类、接口与动态分派
+    path: book/volume-02-java-objects/chapters/v02.c06.polymorphism-interfaces.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c07.enum-record-sealed:
+    title: enum、record、sealed 与嵌套类型
+    path: book/volume-02-java-objects/chapters/v02.c07.enum-record-sealed.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c08.object-contract:
+    title: Object、equals、hashCode 与 toString 契约
+    path: book/volume-02-java-objects/chapters/v02.c08.object-contract.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c09.core-value-types:
+    title: String、正则、时间 API 与 BigDecimal
+    path: book/volume-02-java-objects/chapters/v02.c09.core-value-types.md
+    concepts: []
+    versions:
+    - jdk-25
+  v02.c10.exceptions-resources:
+    title: 异常、资源关闭、契约与失败设计
+    path: book/volume-02-java-objects/chapters/v02.c10.exceptions-resources.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c01.collections:
+    title: List、Set、Map、Deque 与集合选择
+    path: book/volume-03-java-engineering/chapters/v03.c01.collections.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c02.generics-comparator:
+    title: 泛型、通配符、Comparator 与类型安全
+    path: book/volume-03-java-engineering/chapters/v03.c02.generics-comparator.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c03.complexity-data-structures:
+    title: 复杂度、数据结构与算法基础
+    path: book/volume-03-java-engineering/chapters/v03.c03.complexity-data-structures.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c04.lambdas-functions:
+    title: Lambda、函数式接口与方法引用
+    path: book/volume-03-java-engineering/chapters/v03.c04.lambdas-functions.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c05.streams-optional:
+    title: Stream、Collector 与 Optional 边界
+    path: book/volume-03-java-engineering/chapters/v03.c05.streams-optional.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c06.io-nio-json:
+    title: IO、NIO、文件与字符集
+    path: book/volume-03-java-engineering/chapters/v03.c06.io-nio-json.md
+    concepts:
+    - java-io
+    versions:
+    - jdk-25
+  v03.c07.threads-jmm:
+    title: 线程、Java 内存模型、同步与锁
+    path: book/volume-03-java-engineering/chapters/v03.c07.threads-jmm.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c08.executors-virtual-threads:
+    title: 线程池、Future、异步与虚拟线程
+    path: book/volume-03-java-engineering/chapters/v03.c08.executors-virtual-threads.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c09.annotations-reflection-proxy:
+    title: 注解、反射、类加载器与动态代理
+    path: book/volume-03-java-engineering/chapters/v03.c09.annotations-reflection-proxy.md
+    concepts: []
+    versions:
+    - jdk-25
+  v03.c10.maven-testing-jvm:
+    title: Maven 生命周期、依赖范围与可复现构建
+    path: book/volume-03-java-engineering/chapters/v03.c10.maven-testing-jvm.md
+    concepts:
+    - build-tool-basics
+    versions:
+    - jdk-25
+    - maven-3
+  v03.c11.java-networking:
+    title: Java 网络：InetAddress、TCP、UDP、Socket、ServerSocket、Datagram 与 URL
+    path: book/volume-03-java-engineering/chapters/v03.c11.java-networking.md
+    concepts:
+    - java-io
+    versions:
+    - jdk-25
+  v03.c12.java-testing-mocking:
+    title: JUnit、参数化测试、Mockito 与测试设计
+    path: book/volume-03-java-engineering/chapters/v03.c12.java-testing-mocking.md
+    concepts: []
+    versions:
+    - jdk-25
+    - maven-3
+    - junit-6
+    - mockito
+  v03.c13.logging-jvm-diagnostics:
+    title: 日志、线程转储、JFR 与 JVM 故障诊断
+    path: book/volume-03-java-engineering/chapters/v03.c13.logging-jvm-diagnostics.md
+    concepts: []
+    versions:
+    - jdk-25
+    - observability
+  v04.c01.relational-model:
+    title: PostgreSQL 环境、psql 与关系模型
+    path: book/volume-04-data-postgresql/chapters/v04.c01.relational-model.md
+    concepts:
+    - psql
+    - docker
+    versions:
+    - postgresql-18
+    - docker
+    - docker-compose
+  v04.c02.sql-query-basics:
+    title: SELECT、过滤、NULL、排序与分页
+    path: book/volume-04-data-postgresql/chapters/v04.c02.sql-query-basics.md
+    concepts:
+    - psql
+    versions:
+    - postgresql-18
+  v04.c03.sql-functions:
+    title: 数值、文本、日期时间与条件函数
+    path: book/volume-04-data-postgresql/chapters/v04.c03.sql-functions.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v04.c04.aggregate-group-having:
+    title: 聚合、GROUP BY 与 HAVING
+    path: book/volume-04-data-postgresql/chapters/v04.c04.aggregate-group-having.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v04.c05.joins-subquery-cte:
+    title: JOIN、子查询、CTE 与窗口函数
+    path: book/volume-04-data-postgresql/chapters/v04.c05.joins-subquery-cte.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v04.c06.dml-ddl-normalization:
+    title: DML、DDL、约束与规范化
+    path: book/volume-04-data-postgresql/chapters/v04.c06.dml-ddl-normalization.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v04.c07.postgres-types-psql:
+    title: PostgreSQL 类型、UUID、JSONB 与高级交互
+    path: book/volume-04-data-postgresql/chapters/v04.c07.postgres-types-psql.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v04.c08.indexes-explain:
+    title: 索引、查询计划、EXPLAIN 与性能
+    path: book/volume-04-data-postgresql/chapters/v04.c08.indexes-explain.md
+    concepts:
+    - db-indexing
+    versions:
+    - postgresql-18
+  v04.c09.transactions-locks:
+    title: 事务、隔离级别、锁与死锁
+    path: book/volume-04-data-postgresql/chapters/v04.c09.transactions-locks.md
+    concepts:
+    - database-transactions
+    versions:
+    - postgresql-18
+  v04.c10.migration-jdbc-mybatis:
+    title: Flyway 版本迁移、回滚与数据演进
+    path: book/volume-04-data-postgresql/chapters/v04.c10.migration-jdbc-mybatis.md
+    concepts:
+    - db-migrations
+    versions:
+    - postgresql-18
+    - flyway
+  v04.c11.jdbc-pool-mybatis:
+    title: JDBC、连接池与 MyBatis 持久化
+    path: book/volume-04-data-postgresql/chapters/v04.c11.jdbc-pool-mybatis.md
+    concepts: []
+    versions:
+    - postgresql-18
+    - jdbc
+    - mybatis
+  v05.c01.web-jakarta-lifecycle:
+    title: Web 请求生命周期、Servlet 与 Jakarta
+    path: book/volume-05-spring-backend/chapters/v05.c01.web-jakarta-lifecycle.md
+    concepts:
+    - http
+    versions:
+    - spring-framework-7
+    - jakarta-ee
+  v05.c02.ioc-di-beans:
+    title: IoC、DI、Bean、作用域与生命周期
+    path: book/volume-05-spring-backend/chapters/v05.c02.ioc-di-beans.md
+    concepts: []
+    versions:
+    - spring-framework-7
+  v05.c03.configuration-profiles:
+    title: 配置、Profile、类型安全属性与环境
+    path: book/volume-05-spring-backend/chapters/v05.c03.configuration-profiles.md
+    concepts: []
+    versions:
+    - spring-framework-7
+    - spring-boot-4.1
+  v05.c04.boot-autoconfiguration:
+    title: Spring Boot、Starter 与自动配置
+    path: book/volume-05-spring-backend/chapters/v05.c04.boot-autoconfiguration.md
+    concepts: []
+    versions:
+    - spring-framework-7
+    - spring-boot-4.1
+  v05.c05.mvc-controllers:
+    title: Spring MVC、Controller 与请求映射
+    path: book/volume-05-spring-backend/chapters/v05.c05.mvc-controllers.md
+    concepts: []
+    versions:
+    - spring-framework-7
+    - spring-boot-4.1
+  v05.c06.dto-serialization:
+    title: DTO、JSON、序列化与内容协商
+    path: book/volume-05-spring-backend/chapters/v05.c06.dto-serialization.md
+    concepts: []
+    versions:
+    - spring-framework-7
+    - spring-boot-4.1
+  v05.c07.validation-errors-files:
+    title: 参数校验、统一错误、文件与分页
+    path: book/volume-05-spring-backend/chapters/v05.c07.validation-errors-files.md
+    concepts: []
+    versions:
+    - spring-boot-4.1
+  v05.c08.services-transactions-aop:
+    title: Service、事务边界与 AOP
+    path: book/volume-05-spring-backend/chapters/v05.c08.services-transactions-aop.md
+    concepts:
+    - database-transactions
+    versions:
+    - spring-framework-7
+    - spring-boot-4.1
+    - postgresql-18
+  v05.c09.mybatis-integration:
+    title: MyBatis 映射、动态 SQL 与数据访问
+    path: book/volume-05-spring-backend/chapters/v05.c09.mybatis-integration.md
+    concepts: []
+    versions:
+    - spring-boot-4.1
+    - mybatis
+    - postgresql-18
+  v05.c10.testing-openapi-actuator:
+    title: 测试、Testcontainers、OpenAPI 与 Actuator
+    path: book/volume-05-spring-backend/chapters/v05.c10.testing-openapi-actuator.md
+    concepts:
+    - docker
+    versions:
+    - spring-boot-4.1
+    - junit-6
+    - testcontainers
+    - openapi
+    - docker
+    - observability
+  v06.c01.auth-session-password:
+    title: 认证基础、Cookie、Session 与密码存储
+    path: book/volume-06-enterprise-architecture/chapters/v06.c01.auth-session-password.md
+    concepts:
+    - auth-foundations
+    versions:
+    - spring-boot-4.1
+    - spring-security
+    - postgresql-18
+  v06.c02.web-security-threats:
+    title: CORS、CSRF、XSS、SSRF 与输入边界
+    path: book/volume-06-enterprise-architecture/chapters/v06.c02.web-security-threats.md
+    concepts:
+    - web-threat-model
+    versions:
+    - spring-security
+    - browser
+    - html-living-standard
+  v06.c03.jwt-oauth-oidc:
+    title: JWT、OAuth 2.0、OIDC 与会话选择
+    path: book/volume-06-enterprise-architecture/chapters/v06.c03.jwt-oauth-oidc.md
+    concepts: []
+    versions:
+    - oauth2-oidc
+    - spring-security
+  v06.c04.spring-security:
+    title: Spring Security 过滤链与授权规则
+    path: book/volume-06-enterprise-architecture/chapters/v06.c04.spring-security.md
+    concepts: []
+    versions:
+    - spring-boot-4.1
+    - spring-security
+  v06.c05.rbac-multitenancy-audit:
+    title: RBAC、ABAC、多租户、数据权限与审计
+    path: book/volume-06-enterprise-architecture/chapters/v06.c05.rbac-multitenancy-audit.md
+    concepts: []
+    versions:
+    - spring-security
+    - postgresql-18
+  v06.c06.domain-modeling:
+    title: 领域建模、值对象、聚合与边界
+    path: book/volume-06-enterprise-architecture/chapters/v06.c06.domain-modeling.md
+    concepts: []
+    versions: []
+  v06.c07.state-sla-idempotency:
+    title: 状态机、SLA、幂等与并发控制
+    path: book/volume-06-enterprise-architecture/chapters/v06.c07.state-sla-idempotency.md
+    concepts: []
+    versions:
+    - postgresql-18
+  v06.c08.redis-cache-rate-limit:
+    title: Redis、缓存、TTL、限流与一致性
+    path: book/volume-06-enterprise-architecture/chapters/v06.c08.redis-cache-rate-limit.md
+    concepts: []
+    versions:
+    - spring-boot-4.1
+    - postgresql-18
+    - redis
+  v06.c09.events-outbox-messaging:
+    title: 领域事件、Outbox、消息与异步
+    path: book/volume-06-enterprise-architecture/chapters/v06.c09.events-outbox-messaging.md
+    concepts: []
+    versions:
+    - spring-modulith
+    - postgresql-18
+    - rabbitmq
+  v06.c10.modular-monolith-observability:
+    title: 模块化单体、可观测性与微服务边界
+    path: book/volume-06-enterprise-architecture/chapters/v06.c10.modular-monolith-observability.md
+    concepts: []
+    versions:
+    - spring-boot-4.1
+    - spring-modulith
+    - observability
+  v07.c01.browser-render-devtools:
+    title: 浏览器、请求、渲染流程与 DevTools
+    path: book/volume-07-web-platform/chapters/v07.c01.browser-render-devtools.md
+    concepts:
+    - devtools
+    - http
+    versions:
+    - browser
+    - browser-devtools
+    - html-living-standard
+  v07.c02.semantic-html:
+    title: 语义 HTML、文档结构与元数据
+    path: book/volume-07-web-platform/chapters/v07.c02.semantic-html.md
+    concepts:
+    - devtools
+    versions:
+    - browser
+    - html-living-standard
+  v07.c03.forms-media-validation:
+    title: 表单、原生校验、图片、音视频
+    path: book/volume-07-web-platform/chapters/v07.c03.forms-media-validation.md
+    concepts: []
+    versions:
+    - browser
+    - html-living-standard
+  v07.c04.accessibility:
+    title: 无障碍、键盘、焦点与屏幕阅读器
+    path: book/volume-07-web-platform/chapters/v07.c04.accessibility.md
+    concepts: []
+    versions:
+    - browser
+    - html-living-standard
+  v07.c05.css-cascade:
+    title: CSS 层叠、选择器、优先级与继承
+    path: book/volume-07-web-platform/chapters/v07.c05.css-cascade.md
+    concepts:
+    - css-cascade
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v07.c06.box-position-stacking:
+    title: 盒模型、display、定位与层叠上下文
+    path: book/volume-07-web-platform/chapters/v07.c06.box-position-stacking.md
+    concepts:
+    - css-box-model
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v07.c07.flex-grid:
+    title: Flexbox、Grid 与页面布局
+    path: book/volume-07-web-platform/chapters/v07.c07.flex-grid.md
+    concepts: []
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v07.c08.responsive-typography:
+    title: 响应式、单位、图片与排版
+    path: book/volume-07-web-platform/chapters/v07.c08.responsive-typography.md
+    concepts: []
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v07.c09.color-theme-variables:
+    title: 颜色、主题与 CSS 自定义属性
+    path: book/volume-07-web-platform/chapters/v07.c09.color-theme-variables.md
+    concepts: []
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v07.c10.motion-performance:
+    title: 过渡、变换、动画、性能与减少动效
+    path: book/volume-07-web-platform/chapters/v07.c10.motion-performance.md
+    concepts: []
+    versions:
+    - browser
+    - browser-devtools
+    - css
+  v08.c01.runtime-node-pnpm-esm:
+    title: JavaScript 运行时、Node、pnpm 与 ESM
+    path: book/volume-08-javascript-typescript/chapters/v08.c01.runtime-node-pnpm-esm.md
+    concepts:
+    - esm
+    - node
+    - pnpm
+    - build-tool-basics
+    versions:
+    - node-24-lts
+    - pnpm
+  v08.c02.values-types-equality:
+    title: 值、类型、转换、相等与空值
+    path: book/volume-08-javascript-typescript/chapters/v08.c02.values-types-equality.md
+    concepts:
+    - esm
+    - node
+    - pnpm
+    versions:
+    - browser
+    - node-24-lts
+  v08.c03.scope-functions-closures:
+    title: 作用域、控制流、函数与闭包
+    path: book/volume-08-javascript-typescript/chapters/v08.c03.scope-functions-closures.md
+    concepts: []
+    versions:
+    - browser
+    - node-24-lts
+  v08.c04.arrays-objects-collections:
+    title: 数组、对象、Map、Set 与不可变更新
+    path: book/volume-08-javascript-typescript/chapters/v08.c04.arrays-objects-collections.md
+    concepts: []
+    versions:
+    - browser
+    - node-24-lts
+  v08.c05.this-prototype-class-module:
+    title: this、原型、class 与模块
+    path: book/volume-08-javascript-typescript/chapters/v08.c05.this-prototype-class-module.md
+    concepts: []
+    versions:
+    - browser
+    - node-24-lts
+  v08.c06.dom-events-storage:
+    title: DOM、事件、表单、URL 与存储
+    path: book/volume-08-javascript-typescript/chapters/v08.c06.dom-events-storage.md
+    concepts: []
+    versions:
+    - browser
+    - node-24-lts
+  v08.c07.event-loop-promises:
+    title: 事件循环、任务、Promise 与 async/await
+    path: book/volume-08-javascript-typescript/chapters/v08.c07.event-loop-promises.md
+    concepts: []
+    versions:
+    - browser
+    - node-24-lts
+  v08.c08.fetch-abort-race:
+    title: Fetch、AbortController、重试、竞态与错误
+    path: book/volume-08-javascript-typescript/chapters/v08.c08.fetch-abort-race.md
+    concepts:
+    - http
+    versions:
+    - browser
+    - node-24-lts
+  v08.c09.typescript-setup-strict:
+    title: tsc、tsconfig、strict、联合与收窄
+    path: book/volume-08-javascript-typescript/chapters/v08.c09.typescript-setup-strict.md
+    concepts:
+    - tsc
+    - tsconfig
+    versions:
+    - typescript
+    - node-24-lts
+    - pnpm
+  v08.c10.typescript-advanced-tooling:
+    title: 泛型、高级类型、运行时校验、测试与构建
+    path: book/volume-08-javascript-typescript/chapters/v08.c10.typescript-advanced-tooling.md
+    concepts:
+    - tsc
+    - tsconfig
+    versions:
+    - typescript
+    - node-24-lts
+    - pnpm
+    - vitest
+  v09.c01.vite-sfc-app:
+    title: Vite、Vue、SFC 与 TypeScript 应用
+    path: book/volume-09-vue-nuxt/chapters/v09.c01.vite-sfc-app.md
+    concepts:
+    - css-box-model
+    - css-cascade
+    - esm
+    - node
+    - pnpm
+    - tsc
+    - tsconfig
+    versions:
+    - vue-3
+    - vite
+    - typescript
+    - node-24-lts
+    - pnpm
+    - css
+  v09.c02.reactivity:
+    title: ref、reactive、computed 与响应式边界
+    path: book/volume-09-vue-nuxt/chapters/v09.c02.reactivity.md
+    concepts: []
+    versions:
+    - vue-3
+    - typescript
+  v09.c03.watch-lifecycle-cleanup:
+    title: watch、effect、生命周期与副作用清理
+    path: book/volume-09-vue-nuxt/chapters/v09.c03.watch-lifecycle-cleanup.md
+    concepts: []
+    versions:
+    - vue-3
+    - typescript
+  v09.c04.components-contracts:
+    title: 组件、Props、事件、Slot 与 v-model
+    path: book/volume-09-vue-nuxt/chapters/v09.c04.components-contracts.md
+    concepts: []
+    versions:
+    - vue-3
+    - typescript
+  v09.c05.composables-boundaries:
+    title: Composable、依赖注入与模块边界
+    path: book/volume-09-vue-nuxt/chapters/v09.c05.composables-boundaries.md
+    concepts: []
+    versions:
+    - vue-3
+    - typescript
+  v09.c06.router-navigation-auth:
+    title: Router、导航、权限与页面边界
+    path: book/volume-09-vue-nuxt/chapters/v09.c06.router-navigation-auth.md
+    concepts: []
+    versions:
+    - vue-3
+  v09.c07.pinia-server-state-forms:
+    title: Pinia、服务端状态与表单
+    path: book/volume-09-vue-nuxt/chapters/v09.c07.pinia-server-state-forms.md
+    concepts: []
+    versions:
+    - vue-3
+    - pinia
+  v09.c08.requests-race-errors:
+    title: 请求取消、竞态、加载状态与错误恢复
+    path: book/volume-09-vue-nuxt/chapters/v09.c08.requests-race-errors.md
+    concepts: []
+    versions:
+    - vue-3
+    - typescript
+  v09.c09.testing-a11y-performance:
+    title: 组件测试、无障碍、性能与错误边界
+    path: book/volume-09-vue-nuxt/chapters/v09.c09.testing-a11y-performance.md
+    concepts: []
+    versions:
+    - vue-3
+    - vitest
+    - playwright
+  v09.c10.nuxt-rendering-deployment:
+    title: Nuxt SSR、SSG、水合、Nitro 与部署
+    path: book/volume-09-vue-nuxt/chapters/v09.c10.nuxt-rendering-deployment.md
+    concepts: []
+    versions:
+    - nuxt-4
+    - vue-3
+    - node-24-lts
+  v10.c01.miniprogram-runtime:
+    title: 小程序运行模型、配置与生命周期
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c01.miniprogram-runtime.md
+    concepts: []
+    versions:
+    - wechat-miniprogram
+  v10.c02.uniapp-vue-pages:
+    title: uni-app、Vue 3、页面、组件与路由
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c02.uniapp-vue-pages.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+    - vue-3
+    - typescript
+  v10.c03.network-auth-storage:
+    title: 网络、认证、存储与多环境
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c03.network-auth-storage.md
+    concepts:
+    - auth-foundations
+    - http
+    - web-threat-model
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c04.platform-api-conditional:
+    title: 平台 API 与条件编译
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c04.platform-api-conditional.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c05.upload-scan-location:
+    title: 表单、上传、扫码、定位与权限
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c05.upload-scan-location.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c06.packages-performance-offline:
+    title: 分包、性能、缓存与离线边界
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c06.packages-performance-offline.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c07.testing-device-debug:
+    title: 单元测试、Mock、真机与调试
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c07.testing-device-debug.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c08.privacy-security-review:
+    title: 隐私、安全、平台能力与审核
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c08.privacy-security-review.md
+    concepts:
+    - web-threat-model
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c09.publish-monitoring:
+    title: 构建、发布、版本和监控
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c09.publish-monitoring.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v10.c10.factorycare-reporter:
+    title: FactoryCare 报修端集成与验收
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c10.factorycare-reporter.md
+    concepts: []
+    versions:
+    - uni-app
+    - wechat-miniprogram
+  v11.c01.dart-cli-types:
+    title: Dart SDK、CLI、pubspec、类型与空安全
+    path: book/volume-11-dart-flutter/chapters/v11.c01.dart-cli-types.md
+    concepts:
+    - dart-cli
+    - pubspec
+    versions:
+    - dart-stable
+  v11.c02.dart-control-functions:
+    title: 运算符、控制流与函数
+    path: book/volume-11-dart-flutter/chapters/v11.c02.dart-control-functions.md
+    concepts:
+    - dart-cli
+    - pubspec
+    versions:
+    - dart-stable
+  v11.c03.dart-collections-patterns:
+    title: 集合、模式、record 与解构
+    path: book/volume-11-dart-flutter/chapters/v11.c03.dart-collections-patterns.md
+    concepts: []
+    versions:
+    - dart-stable
+  v11.c04.dart-oop-generics:
+    title: 类、泛型、mixin 与 extension
+    path: book/volume-11-dart-flutter/chapters/v11.c04.dart-oop-generics.md
+    concepts: []
+    versions:
+    - dart-stable
+  v11.c05.dart-async-errors:
+    title: 异常、Future、Stream、Isolate 与取消
+    path: book/volume-11-dart-flutter/chapters/v11.c05.dart-async-errors.md
+    concepts: []
+    versions:
+    - dart-stable
+  v11.c06.flutter-runtime:
+    title: Flutter、Widget、Element 与 RenderObject
+    path: book/volume-11-dart-flutter/chapters/v11.c06.flutter-runtime.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c07.layout-render-accessibility:
+    title: 布局、渲染、响应式与无障碍
+    path: book/volume-11-dart-flutter/chapters/v11.c07.layout-render-accessibility.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c08.state-lifecycle-mounted:
+    title: 状态、生命周期、BuildContext、mounted 与 Key
+    path: book/volume-11-dart-flutter/chapters/v11.c08.state-lifecycle-mounted.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c09.navigation-network-device:
+    title: Flutter 导航、表单与页面契约
+    path: book/volume-11-dart-flutter/chapters/v11.c09.navigation-network-device.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c10.architecture-testing-release:
+    title: Flutter 架构、状态管理与模块边界
+    path: book/volume-11-dart-flutter/chapters/v11.c10.architecture-testing-release.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c11.flutter-network-storage:
+    title: Flutter 网络、取消、安全存储与离线队列
+    path: book/volume-11-dart-flutter/chapters/v11.c11.flutter-network-storage.md
+    concepts:
+    - http
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c12.flutter-device-apis:
+    title: Flutter 相机、扫码、定位、权限与平台 API
+    path: book/volume-11-dart-flutter/chapters/v11.c12.flutter-device-apis.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v11.c13.flutter-testing-performance-release:
+    title: Flutter 测试、性能、构建与发布
+    path: book/volume-11-dart-flutter/chapters/v11.c13.flutter-testing-performance-release.md
+    concepts: []
+    versions:
+    - dart-stable
+    - flutter-stable
+  v12.c01.runtime-uv-env:
+    title: Python 运行时、uv、虚拟环境与包
+    path: book/volume-12-python-data/chapters/v12.c01.runtime-uv-env.md
+    concepts:
+    - uv
+    versions:
+    - python-3.14
+    - uv
+  v12.c02.types-io-control:
+    title: 变量、类型、输入输出与控制流
+    path: book/volume-12-python-data/chapters/v12.c02.types-io-control.md
+    concepts:
+    - uv
+    versions:
+    - python-3.14
+  v12.c03.functions-collections:
+    title: 函数、作用域、集合与推导式
+    path: book/volume-12-python-data/chapters/v12.c03.functions-collections.md
+    concepts: []
+    versions:
+    - python-3.14
+  v12.c04.modules-files-json:
+    title: 模块、包、文件、JSON 与时间
+    path: book/volume-12-python-data/chapters/v12.c04.modules-files-json.md
+    concepts: []
+    versions:
+    - python-3.14
+  v12.c05.classes-dataclass-protocol:
+    title: 类、dataclass、Protocol 与对象模型
+    path: book/volume-12-python-data/chapters/v12.c05.classes-dataclass-protocol.md
+    concepts: []
+    versions:
+    - python-3.14
+  v12.c06.exceptions-iterators-decorators:
+    title: 异常、上下文、迭代器、生成器与装饰器
+    path: book/volume-12-python-data/chapters/v12.c06.exceptions-iterators-decorators.md
+    concepts: []
+    versions:
+    - python-3.14
+  v12.c07.typing-testing-logging:
+    title: 类型标注、pytest、日志与调试
+    path: book/volume-12-python-data/chapters/v12.c07.typing-testing-logging.md
+    concepts: []
+    versions:
+    - python-3.14
+    - pytest
+  v12.c08.async-cancellation:
+    title: asyncio、任务、超时与取消
+    path: book/volume-12-python-data/chapters/v12.c08.async-cancellation.md
+    concepts: []
+    versions:
+    - python-3.14
+  v12.c09.fastapi-pydantic:
+    title: FastAPI、Pydantic、依赖、安全与测试
+    path: book/volume-12-python-data/chapters/v12.c09.fastapi-pydantic.md
+    concepts:
+    - http
+    versions:
+    - python-3.14
+    - fastapi
+    - pydantic-2
+    - pytest
+    - openapi
+  v12.c10.numpy-pandas:
+    title: NumPy 数组、广播与 Pandas 数据清洗
+    path: book/volume-12-python-data/chapters/v12.c10.numpy-pandas.md
+    concepts:
+    - numpy
+    - pandas
+    versions:
+    - python-3.14
+    - numpy
+    - pandas
+  v13.c01.vectors-matrices-tensors:
+    title: 向量、矩阵、张量、形状与运算
+    path: book/volume-13-ml-pytorch/chapters/v13.c01.vectors-matrices-tensors.md
+    concepts:
+    - linear-algebra
+    - numpy
+    versions:
+    - python-3.14
+    - numpy
+  v13.c02.probability-statistics:
+    title: 概率、统计、分布、期望与方差
+    path: book/volume-13-ml-pytorch/chapters/v13.c02.probability-statistics.md
+    concepts:
+    - probability-statistics
+    - numpy
+    versions:
+    - python-3.14
+    - numpy
+  v13.c03.derivatives-gradients:
+    title: 导数、梯度、链式法则与优化
+    path: book/volume-13-ml-pytorch/chapters/v13.c03.derivatives-gradients.md
+    concepts:
+    - gradients
+    - linear-algebra
+    versions:
+    - python-3.14
+    - numpy
+  v13.c04.problem-data-split:
+    title: 问题定义、数据集、划分与数据泄漏
+    path: book/volume-13-ml-pytorch/chapters/v13.c04.problem-data-split.md
+    concepts:
+    - numpy
+    - pandas
+    - probability-statistics
+    versions:
+    - python-3.14
+    - numpy
+  v13.c05.classical-ml:
+    title: 预处理、回归、分类与聚类
+    path: book/volume-13-ml-pytorch/chapters/v13.c05.classical-ml.md
+    concepts:
+    - linear-algebra
+    - probability-statistics
+    versions:
+    - python-3.14
+    - numpy
+  v13.c06.metrics-validation:
+    title: 指标、基线、验证与误差分析
+    path: book/volume-13-ml-pytorch/chapters/v13.c06.metrics-validation.md
+    concepts:
+    - probability-statistics
+    versions:
+    - python-3.14
+    - numpy
+  v13.c07.neural-networks:
+    title: 神经网络、损失、反向传播与优化器
+    path: book/volume-13-ml-pytorch/chapters/v13.c07.neural-networks.md
+    concepts:
+    - gradients
+    - linear-algebra
+    - probability-statistics
+    versions:
+    - python-3.14
+    - numpy
+  v13.c08.pytorch-foundations:
+    title: PyTorch 张量、Dataset、Module 与 Autograd
+    path: book/volume-13-ml-pytorch/chapters/v13.c08.pytorch-foundations.md
+    concepts:
+    - linear-algebra
+    versions:
+    - python-3.14
+    - numpy
+    - pytorch-stable
+  v13.c09.training-evaluation:
+    title: 训练、评估、复现、过拟合与调参
+    path: book/volume-13-ml-pytorch/chapters/v13.c09.training-evaluation.md
+    concepts:
+    - gradients
+    versions:
+    - python-3.14
+    - numpy
+    - pytorch-stable
+  v13.c10.inference-monitoring-ethics:
+    title: 保存、推理、监控、漂移与伦理
+    path: book/volume-13-ml-pytorch/chapters/v13.c10.inference-monitoring-ethics.md
+    concepts: []
+    versions:
+    - python-3.14
+    - pytorch-stable
+    - observability
+  v14.c01.llm-model:
+    title: Transformer、Token、上下文与 Embedding 心智模型
+    path: book/volume-14-llm-rag-agents/chapters/v14.c01.llm-model.md
+    concepts:
+    - linear-algebra
+    versions:
+    - model-api
+  v14.c02.model-api-prompts:
+    title: 模型 API、消息、提示词、Token 与成本
+    path: book/volume-14-llm-rag-agents/chapters/v14.c02.model-api-prompts.md
+    concepts: []
+    versions:
+    - model-api
+  v14.c03.structured-stream-retry:
+    title: 结构化输出、流式、重试、超时与取消
+    path: book/volume-14-llm-rag-agents/chapters/v14.c03.structured-stream-retry.md
+    concepts: []
+    versions:
+    - model-api
+    - pydantic-2
+  v14.c04.tool-calling-boundaries:
+    title: 工具调用、Schema、验证与信任边界
+    path: book/volume-14-llm-rag-agents/chapters/v14.c04.tool-calling-boundaries.md
+    concepts: []
+    versions:
+    - model-api
+    - pydantic-2
+  v14.c05.ingestion-chunking:
+    title: 文档解析、清洗、分块与元数据
+    path: book/volume-14-llm-rag-agents/chapters/v14.c05.ingestion-chunking.md
+    concepts: []
+    versions:
+    - python-3.14
+  v14.c06.retrieval-rerank:
+    title: Embedding、pgvector、混合检索与重排
+    path: book/volume-14-llm-rag-agents/chapters/v14.c06.retrieval-rerank.md
+    concepts:
+    - db-indexing
+    - linear-algebra
+    versions:
+    - model-api
+    - postgresql-18
+    - pgvector
+  v14.c07.rag-citations-evaluation:
+    title: RAG、引用、测试集与评估
+    path: book/volume-14-llm-rag-agents/chapters/v14.c07.rag-citations-evaluation.md
+    concepts: []
+    versions:
+    - model-api
+    - pgvector
+  v14.c08.rag-security-observability:
+    title: 提示注入、ACL、PII、日志与可观测性
+    path: book/volume-14-llm-rag-agents/chapters/v14.c08.rag-security-observability.md
+    concepts: []
+    versions:
+    - model-api
+    - observability
+  v14.c09.langchain-langgraph:
+    title: LangChain、LangGraph、状态、检查点与人工审批
+    path: book/volume-14-llm-rag-agents/chapters/v14.c09.langchain-langgraph.md
+    concepts: []
+    versions:
+    - model-api
+    - langchain
+    - langgraph
+  v14.c10.mcp-agent-boundary:
+    title: MCP、Agent 模式、反模式与 Java/Python 边界
+    path: book/volume-14-llm-rag-agents/chapters/v14.c10.mcp-agent-boundary.md
+    concepts: []
+    versions:
+    - model-api
+    - langgraph
+    - mcp
+    - spring-ai-2
+  v15.c01.linux-operations:
+    title: Linux 用户、文件、权限、进程与服务
+    path: book/volume-15-production-factorycare/chapters/v15.c01.linux-operations.md
+    concepts: []
+    versions:
+    - linux
+  v15.c02.network-diagnostics:
+    title: DNS、TLS、代理、端口与网络诊断
+    path: book/volume-15-production-factorycare/chapters/v15.c02.network-diagnostics.md
+    concepts: []
+    versions:
+    - linux
+  v15.c03.docker-compose:
+    title: Docker 镜像、容器、卷、网络与 Compose
+    path: book/volume-15-production-factorycare/chapters/v15.c03.docker-compose.md
+    concepts:
+    - docker
+    versions:
+    - linux
+    - docker
+    - docker-compose
+  v15.c04.nginx-tls-proxy:
+    title: Nginx、TLS 与反向代理
+    path: book/volume-15-production-factorycare/chapters/v15.c04.nginx-tls-proxy.md
+    concepts: []
+    versions:
+    - linux
+    - docker
+    - nginx
+  v15.c05.ci-quality-artifacts:
+    title: CI、质量门禁、制品与环境晋级
+    path: book/volume-15-production-factorycare/chapters/v15.c05.ci-quality-artifacts.md
+    concepts:
+    - git
+    versions:
+    - ci
+    - docker
+  v15.c06.config-secrets-supply-chain:
+    title: 配置、密钥、依赖、SBOM 与供应链
+    path: book/volume-15-production-factorycare/chapters/v15.c06.config-secrets-supply-chain.md
+    concepts: []
+    versions:
+    - ci
+    - docker
+  v15.c07.logs-metrics-traces:
+    title: 日志、指标、链路、健康检查与告警
+    path: book/volume-15-production-factorycare/chapters/v15.c07.logs-metrics-traces.md
+    concepts: []
+    versions:
+    - observability
+  v15.c08.backup-capacity-performance:
+    title: 备份恢复、容量规划与性能验证
+    path: book/volume-15-production-factorycare/chapters/v15.c08.backup-capacity-performance.md
+    concepts: []
+    versions:
+    - linux
+    - postgresql-18
+  v15.c09.deployment-rollback-incident:
+    title: 部署、迁移、回滚、事故与灾难恢复
+    path: book/volume-15-production-factorycare/chapters/v15.c09.deployment-rollback-incident.md
+    concepts:
+    - database-transactions
+    - db-migrations
+    versions:
+    - ci
+    - docker-compose
+    - flyway
+  v15.c10.system-design-portfolio:
+    title: 系统设计、FactoryCare 验收与端到端答辩
+    path: book/volume-15-production-factorycare/chapters/v15.c10.system-design-portfolio.md
+    concepts: []
+    versions: []
+  v15.c11.portfolio-interview:
+    title: 作品集、技术表达、岗位映射与面试复盘
+    path: book/volume-15-production-factorycare/chapters/v15.c11.portfolio-interview.md
+    concepts: []
+    versions: []
