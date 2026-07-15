@@ -24,6 +24,24 @@
 - 能根据完整代码判断一次类型不匹配；
 - 恢复后`mvn test`通过。
 
+## Lab 0B：控制台输入输出（45分钟）
+
+创建一个独立的`ConsoleIoDemo`，使用经典`public static void main(String[] args)`：
+
+1. 用`System.out.print`提示输入设备名称；
+2. 用`Scanner(System.in)`和`nextLine()`读取一行；
+3. 用`System.out.println`输出规范化后的展示文本；
+4. 通过命令行参数额外输出一次启动模式；
+5. 指出哪些是外部I/O，哪些只是局部变量和方法调用。
+
+本实验只处理一行正常文本，不提前混入数字解析、异常恢复或资源管理。核心业务方法不得依赖`Scanner`，以便后续直接用JUnit测试。
+
+### 验收
+
+- 能解释`System.in/out/err`、`Scanner`和`String[] args`各自职责；
+- 能区分控制台I/O与方法参数/返回值；
+- 能从IDEA和终端各运行一次并看到相同业务结果。
+
 ## Lab 1：编译—运行—测试反馈分类（45 分钟）
 
 依次制造并恢复：

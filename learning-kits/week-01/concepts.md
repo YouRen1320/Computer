@@ -36,7 +36,48 @@ package/import 可粗略类比 TypeScript module/import，都是组织和引用�
 
 类比失效：Java package 与目录、编译、访问控制、类全限定名有自己的规则；它不等同于 npm package，也没有 TypeScript 那套路径别名/运行时模块解析语义。
 
-## 3. 八种基本类型
+## 3. 控制台输入输出与方法输入输出
+
+Java程序常见的经典入口是：
+
+```java
+public static void main(String[] args) {
+    System.out.println("FactoryCare");
+}
+```
+
+- `String[] args`接收启动程序时传入的命令行参数；
+- `System.out`是标准输出，`print/println/printf`负责写出文本；
+- `System.err`是标准错误输出，适合与正常结果区分；
+- `System.in`是标准输入流；入门阶段可用`Scanner`把文本解析成字符串或数字。
+
+最小控制台输入示例：
+
+```java
+import java.util.Scanner;
+
+public class ConsoleIoDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("请输入设备名称：");
+        String equipmentName = scanner.nextLine();
+
+        System.out.println("设备：" + equipmentName);
+    }
+}
+```
+
+这里存在两种不同的“输入输出”：
+
+- 控制台I/O从程序外部读取或写出数据，可能失败、阻塞或包含不可信输入；
+- 方法的参数和返回值只是代码内部调用契约，本身不代表访问了控制台、文件或网络。
+
+例如`calculateTotalCents(int unitPriceCents, int quantity)`有方法输入和返回值，但它没有外部I/O，是容易测试的纯计算。后续会把控制台读取与业务计算分开，避免在核心规则中直接调用`Scanner`。
+
+JDK 25也支持更简化的启动形式和`IO.println`。现有IDEA示例使用了这类新语法；本阶段先掌握企业代码、旧项目和主流文档中更常见的经典`main`与`System.out`，再认识简化形式。`Scanner.nextInt()`后紧接`nextLine()`的换行问题、字符编码和资源关闭会在相应实验及Week 04 I/O中继续处理。
+
+## 4. 八种基本类型
 
 | 类型 | 用途直觉 | 关键风险 |
 | --- | --- | --- |
@@ -61,7 +102,7 @@ JavaScript/TypeScript 的 `number` 通常是双精度浮点；Java 把多种数�
 
 示例思考：`5 / 2` 是 `2`；`5 / 2.0` 才是浮点结果。先问业务要整数商、四舍五入还是精确比例，不要只“修成能过”。
 
-## 4. 基本类型、引用类型与 null
+## 5. 基本类型、引用类型与 null
 
 基本类型变量直接保存该基本值。对象/数组/String 变量保存一个**引用值**；`null` 表示没有引用目标。基本类型不能为 `null`。
 
@@ -78,7 +119,7 @@ TS 开启 strict null checks 后也能约束 `null/undefined`，这有助于理�
 
 失效处：Java 没有与 JS `undefined` 完全相同的普通引用值；Java 数组和对象字段有默认值，而局部变量必须先赋值；TypeScript 类型通常在编译后擦除，Java 类型与 JVM 运行模型不同。
 
-## 5. `var` 不是动态类型
+## 6. `var` 不是动态类型
 
 `var` 只允许编译器从局部初始化表达式推断静态类型：
 
@@ -89,7 +130,7 @@ var code = "HIGH";     // 静态类型仍是 String
 
 它不能用于字段、没有初始化器的局部变量或让变量稍后随意变类型。只有当右侧使类型一眼可见且不损害业务语义时使用。
 
-## 6. String：不可变、内容与身份
+## 7. String：不可变、内容与身份
 
 `String` 对象不可变：所谓拼接、替换、trim 都产生或返回一个字符串结果，不会原地修改原字符串。
 
@@ -105,7 +146,7 @@ JS 中字符串是 primitive，`===` 按字符串值比较；Java `String` 是�
 
 `char` 也不能被理解为“任意一个字符”。某些 Unicode 字符需要两个 UTF-16 code unit。Week 02 字符串算法只做受控 ASCII 设备编码时，要写明这个输入约束。
 
-## 7. 数组：固定长度与边界
+## 8. 数组：固定长度与边界
 
 Java 一维数组：
 
@@ -119,7 +160,7 @@ Java 一维数组：
 
 遍历的循环不变量示例：在处理下标 `i` 之前，区间 `[0, i)` 的元素已经按规则检查完成。写出不变量能帮助发现 `<= length` 之类边界错误。
 
-## 8. 运算符与短路
+## 9. 运算符与短路
 
 - `&&` 和 `||` 短路：左侧足以决定结果时不执行右侧；
 - `&`、`|` 对 boolean 也可运算，但不短路，本周业务条件优先 `&&/||`；
@@ -130,7 +171,7 @@ Java 一维数组：
 
 短路可用于安全守卫：先检查引用非 null，再访问它。但更好的第一步是明确参数是否允许 null。
 
-## 9. 控制流：让业务优先级可见
+## 10. 控制流：让业务优先级可见
 
 ### `if/else` 与早返回
 
@@ -164,7 +205,7 @@ String label = switch (severity) {
 
 每个循环都应说明终止条件和边界。不要为“代码短”嵌套三元表达式或把规则压成一行。
 
-## 10. 方法与按值传递
+## 11. 方法与按值传递
 
 方法签名包含名称和参数类型等；返回类型不是重载判定的唯一差异，不能仅凭返回类型重载。
 
@@ -188,7 +229,7 @@ JavaScript 对 primitive 和 object reference value 的调用语义可作为直�
 - 一个方法只承担一个清楚的变化原因；
 - 不通过 `boolean, boolean, boolean` 无限扩张接口，Week 02 会用对象建模。
 
-## 11. JUnit：把规则变成可重复事实
+## 12. JUnit：把规则变成可重复事实
 
 推荐 Arrange–Act–Assert：准备输入、执行行为、验证可观察结果。测试名应包含“条件—行为—结果”。
 
@@ -215,7 +256,7 @@ JavaScript 对 primitive 和 object reference value 的调用语义可作为直�
 
 AAA、断言、参数化、测试隔离等原则相通。失效处在于 Java 编译期类型、JUnit 生命周期、Maven/Surefire发现规则和异常断言 API 不同；不要凭前端测试 API 猜 Java 注解或 runner 行为。
 
-## 12. 算法基础：复杂度与数组
+## 13. 算法基础：复杂度与数组
 
 Big-O 描述输入规模增长时操作数量或额外空间的增长级别，忽略常数不代表常数永远无关。
 

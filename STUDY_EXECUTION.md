@@ -101,7 +101,7 @@ AI可以：
 
 | 课次 | 时间 | 内容与产出 |
 | --- | ---: | --- |
-| 1 | 1.5—2h | 逐词读懂`OrderAmountCalculator`：package、class、public、static、返回类型、参数和return；运行现有两条测试 |
+| 1 | 1.5—2h | 逐词读懂`OrderAmountCalculator`；认识经典`main`、`System.in/out/err`、`Scanner`及方法输入输出与外部I/O的区别；运行现有两条测试 |
 | 2 | 2—2.5h | `int/long/double/boolean/String/null`、整数除法和类型不匹配；完整代码下观察编译错误 |
 | 3 | 2—2.5h | `if/else`、早返回、`switch`、循环和数组；每个概念只做一个最小实验 |
 | 4 | 2—2.5h | JUnit的AAA、边界、`assertThrows`；区分编译错误、运行时异常和测试失败 |
