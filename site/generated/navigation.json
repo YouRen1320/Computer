@@ -1,0 +1,1633 @@
+{
+  "schema_version": 1,
+  "edition": "2026.1-draft",
+  "input_digest": "ed59f7b395873d867b79a6b31144e3cde64ebe5eccecda3e572c10656c759618",
+  "volumes": [
+    {
+      "id": "00",
+      "title": "计算机、工具与 AI 协作基础",
+      "chapters": [
+        {
+          "id": "v00.c01.learning-evidence",
+          "title": "学习系统、证据与间隔复习",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c01.learning-evidence.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c02.computer-model",
+          "title": "CPU、内存、磁盘、程序与进程",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c02.computer-model.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c03.files-paths-encoding",
+          "title": "文件、目录、路径、扩展名与编码",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c03.files-paths-encoding.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c04.terminal-shell",
+          "title": "终端、Shell 与命令执行",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c04.terminal-shell.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c05.pipes-exit-codes",
+          "title": "标准流、管道、重定向与退出码",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c05.pipes-exit-codes.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c06.environment-path",
+          "title": "环境变量、PATH 与工具版本选择",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c06.environment-path.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c07.editor-ide-debugger",
+          "title": "编辑器、IDE、断点与调试器",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c07.editor-ide-debugger.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c08.git-security",
+          "title": "Git、远程协作与凭据安全",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c08.git-security.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c09.network-http-curl",
+          "title": "IP、DNS、端口、TCP 与 TLS",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c09.network-http-curl.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c10.dependencies-build-ai",
+          "title": "依赖、构建与包管理",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c10.dependencies-build-ai.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c11.docker-foundations",
+          "title": "Docker 镜像、容器、卷、端口与网络基础",
+          "order": 11,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c11.docker-foundations.md",
+          "publishable": false
+        },
+        {
+          "id": "v00.c12.ai-collaboration-verification",
+          "title": "AI 协作、隐私、代码审查与结果验证",
+          "order": 12,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-00-computer-foundations/chapters/v00.c12.ai-collaboration-verification.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "01",
+      "title": "Java 语言基础",
+      "chapters": [
+        {
+          "id": "v01.c01.java-platform",
+          "title": "Java 平台、JDK、JVM、源码、编译与运行",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c01.java-platform.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c02.program-structure",
+          "title": "程序结构、package、class、main 与命名",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c02.program-structure.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c03.console-io",
+          "title": "控制台输入输出与命令行参数",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c03.console-io.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c04.variables-scope",
+          "title": "变量、常量、作用域与生命周期",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c04.variables-scope.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c05.primitive-types",
+          "title": "基本类型、字符、布尔值与编码",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c05.primitive-types.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c06.operators-conversion",
+          "title": "运算符、类型转换、溢出与金额表示",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c06.operators-conversion.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c07.conditionals-switch",
+          "title": "条件判断、布尔逻辑与 switch",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c07.conditionals-switch.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c08.loops-control",
+          "title": "for、while、do-while、break 与 continue",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c08.loops-control.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c09.methods",
+          "title": "方法、参数、返回值、重载与递归边界",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c09.methods.md",
+          "publishable": false
+        },
+        {
+          "id": "v01.c10.arrays-debug-test",
+          "title": "数组、二维数组、调试与 JUnit 入门",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-01-java-language/chapters/v01.c10.arrays-debug-test.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "title": "Java 面向对象与核心类型",
+      "chapters": [
+        {
+          "id": "v02.c01.references-null-memory",
+          "title": "对象、引用、null 与内存模型",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c01.references-null-memory.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c02.classes-fields-methods",
+          "title": "类、对象、字段与实例方法",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c02.classes-fields-methods.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c03.constructors-encapsulation",
+          "title": "构造器、封装、访问控制与包边界",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c03.constructors-encapsulation.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c04.static-final-immutability",
+          "title": "static、final、常量与不可变对象",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c04.static-final-immutability.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c05.inheritance-composition",
+          "title": "继承、super、组合与依赖关系",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c05.inheritance-composition.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c06.polymorphism-interfaces",
+          "title": "多态、抽象类、接口与动态分派",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c06.polymorphism-interfaces.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c07.enum-record-sealed",
+          "title": "enum、record、sealed 与嵌套类型",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c07.enum-record-sealed.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c08.object-contract",
+          "title": "Object、equals、hashCode 与 toString 契约",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c08.object-contract.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c09.core-value-types",
+          "title": "String、正则、时间 API 与 BigDecimal",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c09.core-value-types.md",
+          "publishable": false
+        },
+        {
+          "id": "v02.c10.exceptions-resources",
+          "title": "异常、资源关闭、契约与失败设计",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-02-java-objects/chapters/v02.c10.exceptions-resources.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "title": "Java 工程、并发与运行时",
+      "chapters": [
+        {
+          "id": "v03.c01.collections",
+          "title": "List、Set、Map、Deque 与集合选择",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c01.collections.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c02.generics-comparator",
+          "title": "泛型、通配符、Comparator 与类型安全",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c02.generics-comparator.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c03.complexity-data-structures",
+          "title": "复杂度、数据结构与算法基础",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c03.complexity-data-structures.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c04.lambdas-functions",
+          "title": "Lambda、函数式接口与方法引用",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c04.lambdas-functions.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c05.streams-optional",
+          "title": "Stream、Collector 与 Optional 边界",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c05.streams-optional.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c06.io-nio-json",
+          "title": "IO、NIO、文件与字符集",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c06.io-nio-json.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c07.threads-jmm",
+          "title": "线程、Java 内存模型、同步与锁",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c07.threads-jmm.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c08.executors-virtual-threads",
+          "title": "线程池、Future、异步与虚拟线程",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c08.executors-virtual-threads.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c09.annotations-reflection-proxy",
+          "title": "注解、反射、类加载器与动态代理",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c09.annotations-reflection-proxy.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c10.maven-testing-jvm",
+          "title": "Maven 生命周期、依赖范围与可复现构建",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c10.maven-testing-jvm.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c11.java-networking",
+          "title": "Java 网络：InetAddress、TCP、UDP、Socket、ServerSocket、Datagram 与 URL",
+          "order": 11,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c11.java-networking.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c12.java-testing-mocking",
+          "title": "JUnit、参数化测试、Mockito 与测试设计",
+          "order": 12,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c12.java-testing-mocking.md",
+          "publishable": false
+        },
+        {
+          "id": "v03.c13.logging-jvm-diagnostics",
+          "title": "日志、线程转储、JFR 与 JVM 故障诊断",
+          "order": 13,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-03-java-engineering/chapters/v03.c13.logging-jvm-diagnostics.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "title": "关系数据、PostgreSQL 与持久化",
+      "chapters": [
+        {
+          "id": "v04.c01.relational-model",
+          "title": "PostgreSQL 环境、psql 与关系模型",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c01.relational-model.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c02.sql-query-basics",
+          "title": "SELECT、过滤、NULL、排序与分页",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c02.sql-query-basics.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c03.sql-functions",
+          "title": "数值、文本、日期时间与条件函数",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c03.sql-functions.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c04.aggregate-group-having",
+          "title": "聚合、GROUP BY 与 HAVING",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c04.aggregate-group-having.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c05.joins-subquery-cte",
+          "title": "JOIN、子查询、CTE 与窗口函数",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c05.joins-subquery-cte.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c06.dml-ddl-normalization",
+          "title": "DML、DDL、约束与规范化",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c06.dml-ddl-normalization.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c07.postgres-types-psql",
+          "title": "PostgreSQL 类型、UUID、JSONB 与高级交互",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c07.postgres-types-psql.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c08.indexes-explain",
+          "title": "索引、查询计划、EXPLAIN 与性能",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c08.indexes-explain.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c09.transactions-locks",
+          "title": "事务、隔离级别、锁与死锁",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c09.transactions-locks.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c10.migration-jdbc-mybatis",
+          "title": "Flyway 版本迁移、回滚与数据演进",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c10.migration-jdbc-mybatis.md",
+          "publishable": false
+        },
+        {
+          "id": "v04.c11.jdbc-pool-mybatis",
+          "title": "JDBC、连接池与 MyBatis 持久化",
+          "order": 11,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-04-data-postgresql/chapters/v04.c11.jdbc-pool-mybatis.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "title": "Spring 与企业后端基础",
+      "chapters": [
+        {
+          "id": "v05.c01.web-jakarta-lifecycle",
+          "title": "Web 请求生命周期、Servlet 与 Jakarta",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c01.web-jakarta-lifecycle.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c02.ioc-di-beans",
+          "title": "IoC、DI、Bean、作用域与生命周期",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c02.ioc-di-beans.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c03.configuration-profiles",
+          "title": "配置、Profile、类型安全属性与环境",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c03.configuration-profiles.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c04.boot-autoconfiguration",
+          "title": "Spring Boot、Starter 与自动配置",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c04.boot-autoconfiguration.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c05.mvc-controllers",
+          "title": "Spring MVC、Controller 与请求映射",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c05.mvc-controllers.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c06.dto-serialization",
+          "title": "DTO、JSON、序列化与内容协商",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c06.dto-serialization.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c07.validation-errors-files",
+          "title": "参数校验、统一错误、文件与分页",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c07.validation-errors-files.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c08.services-transactions-aop",
+          "title": "Service、事务边界与 AOP",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c08.services-transactions-aop.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c09.mybatis-integration",
+          "title": "MyBatis 映射、动态 SQL 与数据访问",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c09.mybatis-integration.md",
+          "publishable": false
+        },
+        {
+          "id": "v05.c10.testing-openapi-actuator",
+          "title": "测试、Testcontainers、OpenAPI 与 Actuator",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-05-spring-backend/chapters/v05.c10.testing-openapi-actuator.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "title": "安全、领域与企业架构",
+      "chapters": [
+        {
+          "id": "v06.c01.auth-session-password",
+          "title": "认证基础、Cookie、Session 与密码存储",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c01.auth-session-password.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c02.web-security-threats",
+          "title": "CORS、CSRF、XSS、SSRF 与输入边界",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c02.web-security-threats.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c03.jwt-oauth-oidc",
+          "title": "JWT、OAuth 2.0、OIDC 与会话选择",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c03.jwt-oauth-oidc.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c04.spring-security",
+          "title": "Spring Security 过滤链与授权规则",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c04.spring-security.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c05.rbac-multitenancy-audit",
+          "title": "RBAC、ABAC、多租户、数据权限与审计",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c05.rbac-multitenancy-audit.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c06.domain-modeling",
+          "title": "领域建模、值对象、聚合与边界",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c06.domain-modeling.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c07.state-sla-idempotency",
+          "title": "状态机、SLA、幂等与并发控制",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c07.state-sla-idempotency.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c08.redis-cache-rate-limit",
+          "title": "Redis、缓存、TTL、限流与一致性",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c08.redis-cache-rate-limit.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c09.events-outbox-messaging",
+          "title": "领域事件、Outbox、消息与异步",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c09.events-outbox-messaging.md",
+          "publishable": false
+        },
+        {
+          "id": "v06.c10.modular-monolith-observability",
+          "title": "模块化单体、可观测性与微服务边界",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-06-enterprise-architecture/chapters/v06.c10.modular-monolith-observability.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "title": "浏览器、HTML 与 CSS",
+      "chapters": [
+        {
+          "id": "v07.c01.browser-render-devtools",
+          "title": "浏览器、请求、渲染流程与 DevTools",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c01.browser-render-devtools.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c02.semantic-html",
+          "title": "语义 HTML、文档结构与元数据",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c02.semantic-html.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c03.forms-media-validation",
+          "title": "表单、原生校验、图片、音视频",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c03.forms-media-validation.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c04.accessibility",
+          "title": "无障碍、键盘、焦点与屏幕阅读器",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c04.accessibility.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c05.css-cascade",
+          "title": "CSS 层叠、选择器、优先级与继承",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c05.css-cascade.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c06.box-position-stacking",
+          "title": "盒模型、display、定位与层叠上下文",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c06.box-position-stacking.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c07.flex-grid",
+          "title": "Flexbox、Grid 与页面布局",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c07.flex-grid.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c08.responsive-typography",
+          "title": "响应式、单位、图片与排版",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c08.responsive-typography.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c09.color-theme-variables",
+          "title": "颜色、主题与 CSS 自定义属性",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c09.color-theme-variables.md",
+          "publishable": false
+        },
+        {
+          "id": "v07.c10.motion-performance",
+          "title": "过渡、变换、动画、性能与减少动效",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-07-web-platform/chapters/v07.c10.motion-performance.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "title": "JavaScript 与 TypeScript",
+      "chapters": [
+        {
+          "id": "v08.c01.runtime-node-pnpm-esm",
+          "title": "JavaScript 运行时、Node、pnpm 与 ESM",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c01.runtime-node-pnpm-esm.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c02.values-types-equality",
+          "title": "值、类型、转换、相等与空值",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c02.values-types-equality.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c03.scope-functions-closures",
+          "title": "作用域、控制流、函数与闭包",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c03.scope-functions-closures.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c04.arrays-objects-collections",
+          "title": "数组、对象、Map、Set 与不可变更新",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c04.arrays-objects-collections.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c05.this-prototype-class-module",
+          "title": "this、原型、class 与模块",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c05.this-prototype-class-module.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c06.dom-events-storage",
+          "title": "DOM、事件、表单、URL 与存储",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c06.dom-events-storage.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c07.event-loop-promises",
+          "title": "事件循环、任务、Promise 与 async/await",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c07.event-loop-promises.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c08.fetch-abort-race",
+          "title": "Fetch、AbortController、重试、竞态与错误",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c08.fetch-abort-race.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c09.typescript-setup-strict",
+          "title": "tsc、tsconfig、strict、联合与收窄",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c09.typescript-setup-strict.md",
+          "publishable": false
+        },
+        {
+          "id": "v08.c10.typescript-advanced-tooling",
+          "title": "泛型、高级类型、运行时校验、测试与构建",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-08-javascript-typescript/chapters/v08.c10.typescript-advanced-tooling.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "title": "Vue 3 与 Nuxt",
+      "chapters": [
+        {
+          "id": "v09.c01.vite-sfc-app",
+          "title": "Vite、Vue、SFC 与 TypeScript 应用",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c01.vite-sfc-app.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c02.reactivity",
+          "title": "ref、reactive、computed 与响应式边界",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c02.reactivity.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c03.watch-lifecycle-cleanup",
+          "title": "watch、effect、生命周期与副作用清理",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c03.watch-lifecycle-cleanup.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c04.components-contracts",
+          "title": "组件、Props、事件、Slot 与 v-model",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c04.components-contracts.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c05.composables-boundaries",
+          "title": "Composable、依赖注入与模块边界",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c05.composables-boundaries.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c06.router-navigation-auth",
+          "title": "Router、导航、权限与页面边界",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c06.router-navigation-auth.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c07.pinia-server-state-forms",
+          "title": "Pinia、服务端状态与表单",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c07.pinia-server-state-forms.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c08.requests-race-errors",
+          "title": "请求取消、竞态、加载状态与错误恢复",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c08.requests-race-errors.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c09.testing-a11y-performance",
+          "title": "组件测试、无障碍、性能与错误边界",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c09.testing-a11y-performance.md",
+          "publishable": false
+        },
+        {
+          "id": "v09.c10.nuxt-rendering-deployment",
+          "title": "Nuxt SSR、SSG、水合、Nitro 与部署",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-09-vue-nuxt/chapters/v09.c10.nuxt-rendering-deployment.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "title": "uni-app 与小程序",
+      "chapters": [
+        {
+          "id": "v10.c01.miniprogram-runtime",
+          "title": "小程序运行模型、配置与生命周期",
+          "order": 1,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c01.miniprogram-runtime.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c02.uniapp-vue-pages",
+          "title": "uni-app、Vue 3、页面、组件与路由",
+          "order": 2,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c02.uniapp-vue-pages.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c03.network-auth-storage",
+          "title": "网络、认证、存储与多环境",
+          "order": 3,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c03.network-auth-storage.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c04.platform-api-conditional",
+          "title": "平台 API 与条件编译",
+          "order": 4,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c04.platform-api-conditional.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c05.upload-scan-location",
+          "title": "表单、上传、扫码、定位与权限",
+          "order": 5,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c05.upload-scan-location.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c06.packages-performance-offline",
+          "title": "分包、性能、缓存与离线边界",
+          "order": 6,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c06.packages-performance-offline.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c07.testing-device-debug",
+          "title": "单元测试、Mock、真机与调试",
+          "order": 7,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c07.testing-device-debug.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c08.privacy-security-review",
+          "title": "隐私、安全、平台能力与审核",
+          "order": 8,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c08.privacy-security-review.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c09.publish-monitoring",
+          "title": "构建、发布、版本和监控",
+          "order": 9,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c09.publish-monitoring.md",
+          "publishable": false
+        },
+        {
+          "id": "v10.c10.factorycare-reporter",
+          "title": "FactoryCare 报修端集成与验收",
+          "order": 10,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-10-uniapp-miniprogram/chapters/v10.c10.factorycare-reporter.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Dart 与 Flutter",
+      "chapters": [
+        {
+          "id": "v11.c01.dart-cli-types",
+          "title": "Dart SDK、CLI、pubspec、类型与空安全",
+          "order": 1,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c01.dart-cli-types.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c02.dart-control-functions",
+          "title": "运算符、控制流与函数",
+          "order": 2,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c02.dart-control-functions.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c03.dart-collections-patterns",
+          "title": "集合、模式、record 与解构",
+          "order": 3,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c03.dart-collections-patterns.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c04.dart-oop-generics",
+          "title": "类、泛型、mixin 与 extension",
+          "order": 4,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c04.dart-oop-generics.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c05.dart-async-errors",
+          "title": "异常、Future、Stream、Isolate 与取消",
+          "order": 5,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c05.dart-async-errors.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c06.flutter-runtime",
+          "title": "Flutter、Widget、Element 与 RenderObject",
+          "order": 6,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c06.flutter-runtime.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c07.layout-render-accessibility",
+          "title": "布局、渲染、响应式与无障碍",
+          "order": 7,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c07.layout-render-accessibility.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c08.state-lifecycle-mounted",
+          "title": "状态、生命周期、BuildContext、mounted 与 Key",
+          "order": 8,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c08.state-lifecycle-mounted.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c09.navigation-network-device",
+          "title": "Flutter 导航、表单与页面契约",
+          "order": 9,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c09.navigation-network-device.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c10.architecture-testing-release",
+          "title": "Flutter 架构、状态管理与模块边界",
+          "order": 10,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c10.architecture-testing-release.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c11.flutter-network-storage",
+          "title": "Flutter 网络、取消、安全存储与离线队列",
+          "order": 11,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c11.flutter-network-storage.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c12.flutter-device-apis",
+          "title": "Flutter 相机、扫码、定位、权限与平台 API",
+          "order": 12,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c12.flutter-device-apis.md",
+          "publishable": false
+        },
+        {
+          "id": "v11.c13.flutter-testing-performance-release",
+          "title": "Flutter 测试、性能、构建与发布",
+          "order": 13,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-11-dart-flutter/chapters/v11.c13.flutter-testing-performance-release.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "title": "Python、FastAPI 与数据工具",
+      "chapters": [
+        {
+          "id": "v12.c01.runtime-uv-env",
+          "title": "Python 运行时、uv、虚拟环境与包",
+          "order": 1,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c01.runtime-uv-env.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c02.types-io-control",
+          "title": "变量、类型、输入输出与控制流",
+          "order": 2,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c02.types-io-control.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c03.functions-collections",
+          "title": "函数、作用域、集合与推导式",
+          "order": 3,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c03.functions-collections.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c04.modules-files-json",
+          "title": "模块、包、文件、JSON 与时间",
+          "order": 4,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c04.modules-files-json.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c05.classes-dataclass-protocol",
+          "title": "类、dataclass、Protocol 与对象模型",
+          "order": 5,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c05.classes-dataclass-protocol.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c06.exceptions-iterators-decorators",
+          "title": "异常、上下文、迭代器、生成器与装饰器",
+          "order": 6,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c06.exceptions-iterators-decorators.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c07.typing-testing-logging",
+          "title": "类型标注、pytest、日志与调试",
+          "order": 7,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c07.typing-testing-logging.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c08.async-cancellation",
+          "title": "asyncio、任务、超时与取消",
+          "order": 8,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c08.async-cancellation.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c09.fastapi-pydantic",
+          "title": "FastAPI、Pydantic、依赖、安全与测试",
+          "order": 9,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c09.fastapi-pydantic.md",
+          "publishable": false
+        },
+        {
+          "id": "v12.c10.numpy-pandas",
+          "title": "NumPy 数组、广播与 Pandas 数据清洗",
+          "order": 10,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-12-python-data/chapters/v12.c10.numpy-pandas.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "title": "机器学习、深度学习与 PyTorch",
+      "chapters": [
+        {
+          "id": "v13.c01.vectors-matrices-tensors",
+          "title": "向量、矩阵、张量、形状与运算",
+          "order": 1,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c01.vectors-matrices-tensors.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c02.probability-statistics",
+          "title": "概率、统计、分布、期望与方差",
+          "order": 2,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c02.probability-statistics.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c03.derivatives-gradients",
+          "title": "导数、梯度、链式法则与优化",
+          "order": 3,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c03.derivatives-gradients.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c04.problem-data-split",
+          "title": "问题定义、数据集、划分与数据泄漏",
+          "order": 4,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c04.problem-data-split.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c05.classical-ml",
+          "title": "预处理、回归、分类与聚类",
+          "order": 5,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c05.classical-ml.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c06.metrics-validation",
+          "title": "指标、基线、验证与误差分析",
+          "order": 6,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c06.metrics-validation.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c07.neural-networks",
+          "title": "神经网络、损失、反向传播与优化器",
+          "order": 7,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c07.neural-networks.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c08.pytorch-foundations",
+          "title": "PyTorch 张量、Dataset、Module 与 Autograd",
+          "order": 8,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c08.pytorch-foundations.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c09.training-evaluation",
+          "title": "训练、评估、复现、过拟合与调参",
+          "order": 9,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c09.training-evaluation.md",
+          "publishable": false
+        },
+        {
+          "id": "v13.c10.inference-monitoring-ethics",
+          "title": "保存、推理、监控、漂移与伦理",
+          "order": 10,
+          "level": "L1-L2",
+          "status": "planned",
+          "path": "book/volume-13-ml-pytorch/chapters/v13.c10.inference-monitoring-ethics.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "title": "LLM、RAG、LangGraph 与 Agent",
+      "chapters": [
+        {
+          "id": "v14.c01.llm-model",
+          "title": "Transformer、Token、上下文与 Embedding 心智模型",
+          "order": 1,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c01.llm-model.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c02.model-api-prompts",
+          "title": "模型 API、消息、提示词、Token 与成本",
+          "order": 2,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c02.model-api-prompts.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c03.structured-stream-retry",
+          "title": "结构化输出、流式、重试、超时与取消",
+          "order": 3,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c03.structured-stream-retry.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c04.tool-calling-boundaries",
+          "title": "工具调用、Schema、验证与信任边界",
+          "order": 4,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c04.tool-calling-boundaries.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c05.ingestion-chunking",
+          "title": "文档解析、清洗、分块与元数据",
+          "order": 5,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c05.ingestion-chunking.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c06.retrieval-rerank",
+          "title": "Embedding、pgvector、混合检索与重排",
+          "order": 6,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c06.retrieval-rerank.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c07.rag-citations-evaluation",
+          "title": "RAG、引用、测试集与评估",
+          "order": 7,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c07.rag-citations-evaluation.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c08.rag-security-observability",
+          "title": "提示注入、ACL、PII、日志与可观测性",
+          "order": 8,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c08.rag-security-observability.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c09.langchain-langgraph",
+          "title": "LangChain、LangGraph、状态、检查点与人工审批",
+          "order": 9,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c09.langchain-langgraph.md",
+          "publishable": false
+        },
+        {
+          "id": "v14.c10.mcp-agent-boundary",
+          "title": "MCP、Agent 模式、反模式与 Java/Python 边界",
+          "order": 10,
+          "level": "L2+",
+          "status": "planned",
+          "path": "book/volume-14-llm-rag-agents/chapters/v14.c10.mcp-agent-boundary.md",
+          "publishable": false
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "title": "生产化、FactoryCare 与作品表达",
+      "chapters": [
+        {
+          "id": "v15.c01.linux-operations",
+          "title": "Linux 用户、文件、权限、进程与服务",
+          "order": 1,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c01.linux-operations.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c02.network-diagnostics",
+          "title": "DNS、TLS、代理、端口与网络诊断",
+          "order": 2,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c02.network-diagnostics.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c03.docker-compose",
+          "title": "Docker 镜像、容器、卷、网络与 Compose",
+          "order": 3,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c03.docker-compose.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c04.nginx-tls-proxy",
+          "title": "Nginx、TLS 与反向代理",
+          "order": 4,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c04.nginx-tls-proxy.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c05.ci-quality-artifacts",
+          "title": "CI、质量门禁、制品与环境晋级",
+          "order": 5,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c05.ci-quality-artifacts.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c06.config-secrets-supply-chain",
+          "title": "配置、密钥、依赖、SBOM 与供应链",
+          "order": 6,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c06.config-secrets-supply-chain.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c07.logs-metrics-traces",
+          "title": "日志、指标、链路、健康检查与告警",
+          "order": 7,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c07.logs-metrics-traces.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c08.backup-capacity-performance",
+          "title": "备份恢复、容量规划与性能验证",
+          "order": 8,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c08.backup-capacity-performance.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c09.deployment-rollback-incident",
+          "title": "部署、迁移、回滚、事故与灾难恢复",
+          "order": 9,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c09.deployment-rollback-incident.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c10.system-design-portfolio",
+          "title": "系统设计、FactoryCare 验收与端到端答辩",
+          "order": 10,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c10.system-design-portfolio.md",
+          "publishable": false
+        },
+        {
+          "id": "v15.c11.portfolio-interview",
+          "title": "作品集、技术表达、岗位映射与面试复盘",
+          "order": 11,
+          "level": "L3",
+          "status": "planned",
+          "path": "book/volume-15-production-factorycare/chapters/v15.c11.portfolio-interview.md",
+          "publishable": false
+        }
+      ]
+    }
+  ]
+}

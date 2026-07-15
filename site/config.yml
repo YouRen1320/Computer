@@ -1,0 +1,11 @@
+schema_version: 1
+site_id: factorycare-encyclopedia
+title: FactoryCare 编程百科全书
+edition: 2026.1-draft
+language: zh-CN
+catalog: curriculum/catalog.yml
+version_registry: versions/registry.yml
+output: site/generated
+publish_statuses: [verified]
+preview_statuses: [review]
+formats: [static-json, static-html-shell]

@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/chapter.schema.json",
+  "title": "FactoryCare encyclopedia chapter front matter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "volume",
+    "order",
+    "level",
+    "status",
+    "catalog"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "volume": { "type": "string", "pattern": "^[0-9]{2}$" },
+    "order": { "type": "integer", "minimum": 1 },
+    "level": { "enum": ["L1", "L2", "L2+", "L3", "L1-L2"] },
+    "status": { "enum": ["planned", "drafting", "review", "verified"] },
+    "catalog": { "const": "../../../curriculum/catalog.yml" },
+    "prerequisites": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+$" }
+    },
+    "outcomes": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "route_tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "stable_core": { "type": "boolean" },
+    "versioned_surface": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" }
+    },
+    "verified_versions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "constraint", "verified_at", "evidence"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "constraint": { "type": "string", "minLength": 1 },
+          "verified_at": { "type": "string", "format": "date" },
+          "evidence": {
+            "type": "string",
+            "pattern": "^records/encyclopedia/evidence/[a-zA-Z0-9._/-]+$"
+          }
+        }
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "url", "kind", "checked_at", "supports"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+          "title": { "type": "string", "minLength": 1 },
+          "url": {
+            "type": "string",
+            "pattern": "^https://[^/?#@\\s]+(?:[/?#][^\\s]*)?$"
+          },
+          "kind": {
+            "enum": ["official-doc", "specification", "standard", "research", "book", "source-repository", "other"]
+          },
+          "checked_at": { "type": "string", "format": "date" },
+          "supports": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^examples/encyclopedia/v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+(?:/[a-zA-Z0-9._/-]+)?$"
+      }
+    },
+    "labs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^labs/encyclopedia/v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+(?:/[a-zA-Z0-9._/-]+)?$"
+      }
+    },
+    "exercises": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^exercises/encyclopedia/v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+(?:/[a-zA-Z0-9._/-]+)?$"
+      }
+    },
+    "solutions_private": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^solutions-private/encyclopedia/v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+(?:/[a-zA-Z0-9._/-]+)?$"
+      }
+    },
+    "author": { "type": "string", "minLength": 2 },
+    "last_reviewed": { "type": "string", "format": "date" },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "technical",
+        "pedagogical",
+        "code",
+        "security",
+        "accessibility",
+        "version_sources",
+        "publication_navigation"
+      ],
+      "properties": {
+        "technical": { "$ref": "#/$defs/gate" },
+        "pedagogical": { "$ref": "#/$defs/gate" },
+        "code": { "$ref": "#/$defs/gate" },
+        "security": { "$ref": "#/$defs/gate" },
+        "accessibility": { "$ref": "#/$defs/gate" },
+        "version_sources": { "$ref": "#/$defs/gate" },
+        "publication_navigation": { "$ref": "#/$defs/publication_gate" }
+      }
+    }
+  },
+  "$defs": {
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence", "checked_at", "reviewer"],
+      "properties": {
+        "status": { "enum": ["pending", "passed", "not-applicable"] },
+        "evidence": { "$ref": "#/$defs/evidence_list" },
+        "checked_at": { "type": "string", "format": "date" },
+        "reviewer": { "type": "string", "minLength": 2 },
+        "applicability_reason": { "type": "string", "minLength": 10 }
+      }
+    },
+    "publication_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence", "checked_at", "reviewer", "coverage"],
+      "properties": {
+        "status": { "enum": ["pending", "passed", "not-applicable"] },
+        "evidence": { "$ref": "#/$defs/evidence_list" },
+        "checked_at": { "type": "string", "format": "date" },
+        "reviewer": { "type": "string", "minLength": 2 },
+        "applicability_reason": { "type": "string", "minLength": 10 },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["links", "keyboard_semantics", "rendering"],
+          "properties": {
+            "links": { "$ref": "#/$defs/publication_check" },
+            "keyboard_semantics": { "$ref": "#/$defs/publication_check" },
+            "rendering": { "$ref": "#/$defs/publication_check" }
+          }
+        }
+      }
+    },
+    "publication_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": { "enum": ["pending", "passed", "not-applicable"] },
+        "evidence": { "$ref": "#/$defs/evidence_list" },
+        "applicability_reason": { "type": "string", "minLength": 10 }
+      }
+    },
+    "evidence_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^records/encyclopedia/evidence/[a-zA-Z0-9._/-]+$"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["drafting", "review", "verified"] } } },
+      "then": {
+        "required": ["schema_version", "prerequisites", "outcomes", "route_tags", "stable_core", "versioned_surface"]
+      }
+    },
+    {
+      "if": { "properties": { "status": { "enum": ["review", "verified"] } } },
+      "then": {
+        "required": [
+          "verified_versions",
+          "source_refs",
+          "examples",
+          "labs",
+          "exercises",
+          "solutions_private",
+          "author",
+          "last_reviewed",
+          "verification"
+        ]
+      }
+    }
+  ]
+}
