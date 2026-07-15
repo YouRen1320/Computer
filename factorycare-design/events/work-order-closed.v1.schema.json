@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.example.test/schemas/events/work-order-closed.v1.schema.json",
+  "title": "WorkOrderClosed.v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["eventId", "eventType", "version", "occurredAt", "tenantId", "aggregateId", "traceId", "payload"],
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid" },
+    "eventType": { "const": "WorkOrderClosed.v1" },
+    "version": { "const": 1 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "tenantId": { "type": "string", "format": "uuid" },
+    "aggregateId": { "type": "string", "format": "uuid" },
+    "traceId": { "type": "string", "minLength": 16, "maxLength": 64 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["assetId", "equipmentModelId", "verifiedByMembershipId", "closedByMembershipId", "resolutionSummary", "workLogIds", "partUsageIds", "aggregateVersion", "closedAt"],
+      "properties": {
+        "assetId": { "type": "string", "format": "uuid" },
+        "equipmentModelId": { "type": "string", "format": "uuid" },
+        "verifiedByMembershipId": { "type": "string", "format": "uuid" },
+        "closedByMembershipId": { "type": "string", "format": "uuid" },
+        "resolutionSummary": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "workLogIds": { "type": "array", "maxItems": 100, "items": { "type": "string", "format": "uuid" } },
+        "partUsageIds": { "type": "array", "maxItems": 100, "items": { "type": "string", "format": "uuid" } },
+        "aggregateVersion": { "type": "integer", "minimum": 1 },
+        "closedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

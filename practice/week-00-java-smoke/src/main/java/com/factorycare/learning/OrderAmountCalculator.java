@@ -1,0 +1,7 @@
+package com.factorycare.learning;
+
+public class OrderAmountCalculator {
+    public static int calculateTotalCents(int unitPriceCents,int quantity){
+        return unitPriceCents * quantity;
+    }
+}

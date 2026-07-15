@@ -1,0 +1,236 @@
+{
+  "sample_rows": 84,
+  "cluster_counts": {
+    "Vue3/uni-app前端": 15,
+    "Python/AI应用": 23,
+    "Java后端": 22,
+    "Java+Vue全栈": 24
+  },
+  "education_counts": {
+    "本科": 64,
+    "大专": 14,
+    "硕士": 5,
+    "学历不限": 1
+  },
+  "experience_counts": {
+    "3-5年": 30,
+    "1-3年": 26,
+    "经验不限": 14,
+    "5-10年": 12,
+    "1年以下": 2
+  },
+  "industry_counts": {
+    "软件/IT服务": 49,
+    "产业互联网平台": 4,
+    "人工智能": 4,
+    "学术/科研": 3,
+    "医药批发/零售": 3,
+    "财务/审计/税务": 2,
+    "学校/学历教育": 2,
+    "货运物流": 2,
+    "互联网电商": 1,
+    "人力资源": 1,
+    "建筑/土木/市政设计": 1,
+    "金融科技/数字金融": 1,
+    "工程专业服务": 1,
+    "动力电池": 1,
+    "教育科技/教育软件": 1,
+    "船舶/航空/航天/军工": 1,
+    "综合商贸": 1,
+    "计算机硬件": 1,
+    "医院/诊所服务": 1,
+    "电力/水利/热力/燃气": 1,
+    "保险": 1,
+    "畜牧业": 1,
+    "互联网医疗": 1
+  },
+  "salary_by_cluster": {
+    "Java后端": {
+      "cluster_rows": 22,
+      "parseable_monthly_rows": 22,
+      "min_k_range": [
+        5.0,
+        15.0
+      ],
+      "max_k_range": [
+        6.0,
+        30.0
+      ],
+      "midpoint_p25_k": 9.5,
+      "midpoint_median_k": 11.0,
+      "midpoint_p75_k": 12.375
+    },
+    "Java+Vue全栈": {
+      "cluster_rows": 24,
+      "parseable_monthly_rows": 24,
+      "min_k_range": [
+        5.0,
+        20.0
+      ],
+      "max_k_range": [
+        7.0,
+        40.0
+      ],
+      "midpoint_p25_k": 8.875,
+      "midpoint_median_k": 11.0,
+      "midpoint_p75_k": 12.25
+    },
+    "Vue3/uni-app前端": {
+      "cluster_rows": 15,
+      "parseable_monthly_rows": 14,
+      "min_k_range": [
+        5.0,
+        13.0
+      ],
+      "max_k_range": [
+        9.0,
+        26.0
+      ],
+      "midpoint_p25_k": 8.0,
+      "midpoint_median_k": 8.75,
+      "midpoint_p75_k": 10.0
+    },
+    "Python/AI应用": {
+      "cluster_rows": 23,
+      "parseable_monthly_rows": 21,
+      "min_k_range": [
+        6.0,
+        20.0
+      ],
+      "max_k_range": [
+        10.0,
+        40.0
+      ],
+      "midpoint_p25_k": 13.0,
+      "midpoint_median_k": 14.5,
+      "midpoint_p75_k": 18.0
+    }
+  },
+  "top_skills": [
+    [
+      "JavaScript",
+      29
+    ],
+    [
+      "MySQL",
+      28
+    ],
+    [
+      "Spring",
+      23
+    ],
+    [
+      "Java",
+      20
+    ],
+    [
+      "Python",
+      17
+    ],
+    [
+      "Oracle",
+      12
+    ],
+    [
+      "Vue",
+      11
+    ],
+    [
+      "CSS",
+      9
+    ],
+    [
+      "MyBatis",
+      9
+    ],
+    [
+      "React",
+      8
+    ],
+    [
+      "LLM/大模型",
+      8
+    ],
+    [
+      "Redis",
+      8
+    ],
+    [
+      "HTML5",
+      7
+    ],
+    [
+      "Computer Vision",
+      6
+    ],
+    [
+      "Deep Learning",
+      5
+    ],
+    [
+      "TensorFlow",
+      4
+    ],
+    [
+      "PyTorch",
+      4
+    ],
+    [
+      "PostgreSQL",
+      4
+    ],
+    [
+      "Spring Cloud",
+      4
+    ],
+    [
+      "SQL Server",
+      4
+    ],
+    [
+      "Angular",
+      3
+    ],
+    [
+      "C/C++",
+      3
+    ],
+    [
+      "Machine Learning",
+      3
+    ],
+    [
+      "Spring Boot",
+      3
+    ],
+    [
+      "ECharts",
+      2
+    ],
+    [
+      "Three.js",
+      2
+    ],
+    [
+      "TypeScript",
+      2
+    ],
+    [
+      "RAG",
+      2
+    ],
+    [
+      "AI Agent/智能体",
+      2
+    ],
+    [
+      "NLP",
+      2
+    ]
+  ],
+  "method_notes": [
+    "Skill counts use only explicit Zhaopin search-card tags; no title/JD inference.",
+    "Salary summaries include only unambiguously parsed monthly CNY ranges.",
+    "This is a stratified convenience sample, not a market-share estimate."
+  ]
+}

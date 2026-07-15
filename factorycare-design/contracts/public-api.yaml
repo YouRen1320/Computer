@@ -1,0 +1,4331 @@
+openapi: 3.1.0
+info:
+  title: FactoryCare Public API Design Baseline
+  version: 0.1.0-design
+  description: >-
+    Java-owned public contract for Vue, Nuxt, uni-app, and Flutter. This is a
+    design baseline, not proof of implementation. All tenant and actor context
+    comes from authenticated server-side context.
+servers:
+  - url: https://factorycare.example.test
+    description: Placeholder only; no public deployment is claimed.
+tags:
+  - name: Auth
+  - name: Organizations
+  - name: Teams
+  - name: Assets
+  - name: Reports
+  - name: WorkOrders
+  - name: Attachments
+  - name: Knowledge
+  - name: Reporting
+  - name: Audit
+  - name: AI
+paths:
+  /api/v1/auth/login:
+    post:
+      tags: [Auth]
+      operationId: loginWithSession
+      summary: Create a browser session for a controlled local identity provider.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '204':
+          description: Session created; secure cookie is set.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+            X-CSRF-Token:
+              description: Initial browser CSRF token; refresh through /api/v1/auth/csrf-token.
+              schema:
+                type: string
+                minLength: 32
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+  /api/v1/auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logoutCurrentSession
+      responses:
+        '204':
+          description: Session invalidated.
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+  /api/v1/auth/me:
+    get:
+      tags: [Auth]
+      operationId: getCurrentActor
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Current trusted actor context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentActor'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+  /api/v1/auth/csrf-token:
+    get:
+      tags: [Auth]
+      operationId: getCsrfToken
+      summary: Issue or refresh a CSRF token for an authenticated browser session.
+      security:
+        - browserSession: []
+      responses:
+        '200':
+          description: Token that must be sent as X-CSRF-Token on browser state changes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsrfTokenResponse'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+
+  /api/v1/organizations:
+    get:
+      tags: [Organizations]
+      operationId: listOrganizations
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Organizations inside the current actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Organizations]
+      operationId: createOrganization
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationRequest'
+      responses:
+        '201':
+          description: Organization created in the trusted tenant context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/organizations/{organizationId}:
+    parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+    patch:
+      tags: [Organizations]
+      operationId: updateOrganization
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationRequest'
+      responses:
+        '200':
+          description: Organization updated with optimistic version checking.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/memberships:
+    get:
+      tags: [Organizations]
+      operationId: listMemberships
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: organizationId
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Memberships inside the trusted actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Organizations]
+      operationId: inviteMembership
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteMembershipRequest'
+      responses:
+        '201':
+          description: Membership invitation or mapping created without granting a role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/memberships/{membershipId}:
+    parameters:
+      - $ref: '#/components/parameters/MembershipId'
+    patch:
+      tags: [Organizations]
+      operationId: updateMembership
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMembershipRequest'
+      responses:
+        '200':
+          description: Membership organization, scope, or enabled state updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/memberships/{membershipId}/role-assignments:
+    parameters:
+      - $ref: '#/components/parameters/MembershipId'
+    post:
+      tags: [Organizations]
+      operationId: assignMembershipRole
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignMembershipRoleRequest'
+      responses:
+        '204':
+          description: Role assigned after tenant and privilege-escalation checks.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/memberships/{membershipId}/role-assignments/{roleId}/revocations:
+    parameters:
+      - $ref: '#/components/parameters/MembershipId'
+      - $ref: '#/components/parameters/RoleId'
+    post:
+      tags: [Organizations]
+      operationId: revokeMembershipRole
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+      responses:
+        '204':
+          description: Role revoked and authorization caches invalidated.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/roles:
+    get:
+      tags: [Organizations]
+      operationId: listRoles
+      summary: List the fixed role catalog available for explicit assignment.
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Stable role catalog; roles are not tenant-created resources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+
+  /api/v1/teams:
+    get:
+      tags: [Teams]
+      operationId: listTeams
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: organizationId
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Teams inside the current actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Teams]
+      operationId: createTeam
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRequest'
+      responses:
+        '201':
+          description: Team created inside the trusted tenant and organization context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/teams/{teamId}:
+    parameters:
+      - $ref: '#/components/parameters/TeamId'
+    get:
+      tags: [Teams]
+      operationId: getTeam
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized team detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+    patch:
+      tags: [Teams]
+      operationId: updateTeam
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamRequest'
+      responses:
+        '200':
+          description: Team updated with optimistic version checking.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/equipment-models:
+    get:
+      tags: [Assets]
+      operationId: listEquipmentModels
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Tenant-scoped equipment model catalog.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModelPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Assets]
+      operationId: createEquipmentModel
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEquipmentModelRequest'
+      responses:
+        '201':
+          description: Equipment model created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/equipment-models/{equipmentModelId}:
+    parameters:
+      - $ref: '#/components/parameters/EquipmentModelId'
+    get:
+      tags: [Assets]
+      operationId: getEquipmentModel
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized equipment model detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+    patch:
+      tags: [Assets]
+      operationId: updateEquipmentModel
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEquipmentModelRequest'
+      responses:
+        '200':
+          description: Equipment model updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/locations:
+    get:
+      tags: [Assets]
+      operationId: listLocations
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Tenant-scoped location catalog.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Assets]
+      operationId: createLocation
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLocationRequest'
+      responses:
+        '201':
+          description: Location created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/locations/{locationId}:
+    parameters:
+      - $ref: '#/components/parameters/LocationId'
+    get:
+      tags: [Assets]
+      operationId: getLocation
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized location detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+    patch:
+      tags: [Assets]
+      operationId: updateLocation
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLocationRequest'
+      responses:
+        '200':
+          description: Location updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/assets:
+    get:
+      tags: [Assets]
+      operationId: listAssets
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: query
+          in: query
+          schema:
+            type: string
+            maxLength: 100
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/AssetStatus'
+      responses:
+        '200':
+          description: Tenant-scoped asset page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Assets]
+      operationId: createAsset
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssetRequest'
+      responses:
+        '201':
+          description: Asset created.
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetDetail'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/assets/{assetId}:
+    parameters:
+      - $ref: '#/components/parameters/AssetId'
+    get:
+      tags: [Assets]
+      operationId: getAsset
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized asset detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetDetail'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+    patch:
+      tags: [Assets]
+      operationId: updateAsset
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssetRequest'
+      responses:
+        '200':
+          description: Updated asset.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetDetail'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/assets/{assetId}/code-rotations:
+    parameters:
+      - $ref: '#/components/parameters/AssetId'
+    post:
+      tags: [Assets]
+      operationId: rotateAssetPublicCode
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RotateAssetCodeRequest'
+      responses:
+        '201':
+          description: New opaque code returned once; the previous code is revoked.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetCodeIssue'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/asset-codes:resolve:
+    post:
+      tags: [Assets]
+      operationId: resolveAssetPublicCode
+      summary: Resolve an opaque QR value from the request body without placing it in access-log URLs.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveAssetCodeRequest'
+      responses:
+        '200':
+          description: Anonymous minimal asset identity needed to start a report; no operational status or protected detail is disclosed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnonymousResolvableAsset'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '410':
+          description: Code expired or revoked.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          $ref: '#/components/responses/RateLimitProblem'
+
+  /api/v1/reports:
+    post:
+      tags: [Reports]
+      operationId: createReport
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportRequest'
+      responses:
+        '201':
+          description: Report and initial work order created exactly once for this request key.
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDetail'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/IdempotencyConflictProblem'
+  /api/v1/reports/mine:
+    get:
+      tags: [Reports]
+      operationId: listMyReports
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Reports visible to the current reporter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+  /api/v1/reports/{reportId}:
+    parameters:
+      - $ref: '#/components/parameters/ReportId'
+    get:
+      tags: [Reports]
+      operationId: getReport
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized report detail and public work-order progress.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDetail'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+  /api/v1/reports/{reportId}/supplements:
+    parameters:
+      - $ref: '#/components/parameters/ReportId'
+    post:
+      tags: [Reports]
+      operationId: addReportSupplement
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSupplementRequest'
+      responses:
+        '201':
+          description: Supplemental information added by the owning reporter.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/reports/{reportId}/resolution-verifications:
+    parameters:
+      - $ref: '#/components/parameters/ReportId'
+    post:
+      tags: [Reports]
+      operationId: verifyOrRejectResolution
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolutionVerificationRequest'
+      responses:
+        '200':
+          description: Resolution verified or rejected under the work-order state machine.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/reports/{reportId}/feedback:
+    parameters:
+      - $ref: '#/components/parameters/ReportId'
+    post:
+      tags: [Reports]
+      operationId: createReportFeedback
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFeedbackRequest'
+      responses:
+        '201':
+          description: One feedback record created after closure.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/work-orders:
+    get:
+      tags: [WorkOrders]
+      operationId: listWorkOrders
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/WorkOrderStatus'
+        - name: priority
+          in: query
+          schema:
+            $ref: '#/components/schemas/Priority'
+        - name: overdueOnly
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Work orders filtered by trusted actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+  /api/v1/work-orders/{workOrderId}:
+    parameters:
+      - $ref: '#/components/parameters/WorkOrderId'
+    get:
+      tags: [WorkOrders]
+      operationId: getWorkOrder
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Authorized work-order detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderDetail'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+  /api/v1/work-orders/{workOrderId}/triage:
+    post:
+      tags: [WorkOrders]
+      operationId: triageWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriageWorkOrderRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/assignments:
+    post:
+      tags: [WorkOrders]
+      operationId: assignWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignWorkOrderRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/reassignments:
+    post:
+      tags: [WorkOrders]
+      operationId: reassignWorkOrder
+      summary: Replace the active assignment record without inventing a REASSIGNED work-order status.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReassignWorkOrderRequest'
+      responses:
+        '200':
+          description: >-
+            Prior assignment superseded and a new team/technician assignment recorded;
+            the aggregate remains in its existing valid WorkOrderStatus.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderDetail'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/acceptance:
+    post:
+      tags: [WorkOrders]
+      operationId: acceptWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/work-start:
+    post:
+      tags: [WorkOrders]
+      operationId: startWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/parts-waits:
+    post:
+      tags: [WorkOrders]
+      operationId: waitForParts
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonedVersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/approval-requests:
+    post:
+      tags: [WorkOrders]
+      operationId: requestWorkOrderApproval
+      summary: Move an in-progress work order to PENDING_APPROVAL with a bounded approval request.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestWorkOrderApprovalRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/approval-decisions:
+    post:
+      tags: [WorkOrders]
+      operationId: decideWorkOrderApproval
+      summary: Approve or request changes and return PENDING_APPROVAL to IN_PROGRESS.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecideWorkOrderApprovalRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/work-resumptions:
+    post:
+      tags: [WorkOrders]
+      operationId: resumeWorkOrder
+      summary: Resume from PENDING_PARTS or REOPENED to IN_PROGRESS.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonedVersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/resolution:
+    post:
+      tags: [WorkOrders]
+      operationId: resolveWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveWorkOrderRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/closure:
+    post:
+      tags: [WorkOrders]
+      operationId: closeWorkOrder
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/cancellations:
+    post:
+      tags: [WorkOrders]
+      operationId: cancelWorkOrder
+      summary: Cancel only from CREATED or TRIAGED.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonedVersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/reopenings:
+    post:
+      tags: [WorkOrders]
+      operationId: reopenWorkOrder
+      summary: Move CLOSED to REOPENED; a separate resumption moves it to IN_PROGRESS.
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonedVersionedCommandRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/WorkOrderCommandSuccess'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/work-logs:
+    get:
+      tags: [WorkOrders]
+      operationId: listWorkOrderLogs
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+      responses:
+        '200':
+          description: Authorized work logs ordered by start time and ID.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkLog'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+    post:
+      tags: [WorkOrders]
+      operationId: createWorkOrderLog
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkLogRequest'
+      responses:
+        '201':
+          description: Work log appended to the assigned work order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkLog'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/check-item-results:
+    post:
+      tags: [WorkOrders]
+      operationId: recordCheckItemResult
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordCheckItemResultRequest'
+      responses:
+        '201':
+          description: Check result appended or idempotently replayed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckItemResult'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/part-usages:
+    post:
+      tags: [WorkOrders]
+      operationId: recordPartUsage
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordPartUsageRequest'
+      responses:
+        '201':
+          description: Exact-decimal part usage appended or idempotently replayed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartUsage'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/work-orders/{workOrderId}/events:
+    get:
+      tags: [WorkOrders]
+      operationId: streamWorkOrderEvents
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - name: Last-Event-ID
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Authorized server-sent event stream; each event is minimal and tenant-scoped.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+
+  /api/v1/attachments/upload-intents:
+    post:
+      tags: [Attachments]
+      operationId: createAttachmentUploadIntent
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttachmentUploadIntentRequest'
+      responses:
+        '201':
+          description: Pending attachment and a short-lived constrained upload instruction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadIntent'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/attachments/{attachmentId}/completion:
+    parameters:
+      - $ref: '#/components/parameters/AttachmentId'
+    post:
+      tags: [Attachments]
+      operationId: completeAttachmentUpload
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteAttachmentUploadRequest'
+      responses:
+        '200':
+          description: >-
+            Object metadata verified; scanning may remain pending. A
+            REPORT_CREATION upload may still be unbound until report creation;
+            every bound attachment ultimately belongs to REPORT or WORK_ORDER.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentMetadata'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/attachments/{attachmentId}/download-intents:
+    parameters:
+      - $ref: '#/components/parameters/AttachmentId'
+    post:
+      tags: [Attachments]
+      operationId: createAttachmentDownloadIntent
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Short-lived private download after parent-resource authorization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadIntent'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/knowledge/documents:
+    get:
+      tags: [Knowledge]
+      operationId: listKnowledgeDocuments
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: Authorized knowledge document page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeDocumentPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+    post:
+      tags: [Knowledge]
+      operationId: createKnowledgeDocument
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKnowledgeDocumentRequest'
+      responses:
+        '201':
+          description: Knowledge document identity created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeDocument'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/documents/{documentId}/upload-intents:
+    parameters:
+      - $ref: '#/components/parameters/DocumentId'
+    post:
+      tags: [Knowledge]
+      operationId: createKnowledgeUploadIntent
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUploadIntentRequest'
+      responses:
+        '201':
+          description: Short-lived tenant-bound upload instruction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadIntent'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/documents/{documentId}/versions:
+    parameters:
+      - $ref: '#/components/parameters/DocumentId'
+    post:
+      tags: [Knowledge]
+      operationId: bindUploadedKnowledgeVersion
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BindKnowledgeVersionRequest'
+      responses:
+        '201':
+          description: Immutable version bound after server validates object ownership and metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeVersion'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/versions/{versionId}/review-submissions:
+    parameters:
+      - $ref: '#/components/parameters/VersionId'
+    post:
+      tags: [Knowledge]
+      operationId: submitKnowledgeVersionForReview
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionLockRequest'
+      responses:
+        '200':
+          description: Draft moved to IN_REVIEW.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeVersion'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/versions/{versionId}/reviews:
+    parameters:
+      - $ref: '#/components/parameters/VersionId'
+    post:
+      tags: [Knowledge]
+      operationId: decideKnowledgeVersionReview
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeReviewDecisionRequest'
+      responses:
+        '201':
+          description: Immutable human review decision recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeReview'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/versions/{versionId}/publication:
+    parameters:
+      - $ref: '#/components/parameters/VersionId'
+    post:
+      tags: [Knowledge]
+      operationId: publishKnowledgeVersion
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishKnowledgeVersionRequest'
+      responses:
+        '200':
+          description: Version published and KnowledgeDocumentPublished.v1 emitted.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/versions/{versionId}/revocations:
+    parameters:
+      - $ref: '#/components/parameters/VersionId'
+    post:
+      tags: [Knowledge]
+      operationId: revokeKnowledgeVersion
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeKnowledgeVersionRequest'
+      responses:
+        '204':
+          description: Version revoked and KnowledgeDocumentRevoked.v1 emitted.
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+  /api/v1/knowledge/versions/{versionId}/download-intents:
+    parameters:
+      - $ref: '#/components/parameters/VersionId'
+    post:
+      tags: [Knowledge]
+      operationId: createKnowledgeDownloadIntent
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '201':
+          description: Short-lived private download URL after authorization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadIntent'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+
+  /api/v1/work-orders/{workOrderId}/triage-suggestions:
+    post:
+      tags: [AI]
+      operationId: requestWorkOrderTriageSuggestion
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestTriageSuggestionRequest'
+      responses:
+        '200':
+          description: Untrusted AI suggestion for explicit human disposition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicTriageSuggestion'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/RateLimitProblem'
+        '503':
+          $ref: '#/components/responses/DependencyProblem'
+  /api/v1/work-orders/{workOrderId}/diagnostic-answers:stream:
+    post:
+      tags: [AI]
+      operationId: streamWorkOrderDiagnosticAnswer
+      parameters:
+        - $ref: '#/components/parameters/WorkOrderId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicAnswerRequest'
+      responses:
+        '200':
+          description: Every NDJSON line validates against PublicAnswerStreamEvent.
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/PublicAnswerStreamEvent'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/RateLimitProblem'
+        '503':
+          $ref: '#/components/responses/DependencyProblem'
+  /api/v1/ai/evaluations:
+    post:
+      tags: [AI]
+      operationId: startPublicEvaluationRun
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicEvaluationRequest'
+      responses:
+        '202':
+          description: Bounded evaluation accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationRunSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/RateLimitProblem'
+        '503':
+          $ref: '#/components/responses/DependencyProblem'
+  /api/v1/ai/evaluations/{evaluationRunId}:
+    parameters:
+      - $ref: '#/components/parameters/EvaluationRunId'
+    get:
+      tags: [AI]
+      operationId: getPublicEvaluationRun
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Evaluation status and bounded aggregate metrics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationRunSummary'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+
+  /api/v1/audit-logs:
+    get:
+      tags: [Audit]
+      operationId: listAuditLogs
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: objectType
+          in: query
+          schema:
+            type: string
+            maxLength: 100
+        - name: objectId
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Masked append-only audit entries in actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogPage'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+  /api/v1/audit-exports:
+    post:
+      tags: [Audit]
+      operationId: startAuditExport
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditExportRequest'
+      responses:
+        '202':
+          description: Export accepted after explicit reason and data-scope checks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditExportJob'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '409':
+          $ref: '#/components/responses/ConflictProblem'
+        '429':
+          $ref: '#/components/responses/RateLimitProblem'
+  /api/v1/audit-exports/{auditExportId}:
+    parameters:
+      - $ref: '#/components/parameters/AuditExportId'
+    get:
+      tags: [Audit]
+      operationId: getAuditExport
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      responses:
+        '200':
+          description: Export status; a completed job contains a short-lived download intent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditExportJob'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+        '404':
+          $ref: '#/components/responses/NotFoundProblem'
+
+  /api/v1/reporting/operations-summary:
+    get:
+      tags: [Reporting]
+      operationId: getOperationsSummary
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: SLA, resolution, repeat-failure, knowledge-hit, and AI-adoption metrics with denominators.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationsSummary'
+        '400':
+          $ref: '#/components/responses/ValidationProblem'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+  /api/v1/reporting/sla-summary:
+    get:
+      tags: [Reporting]
+      operationId: getSlaSummary
+      security:
+        - browserSession: []
+        - mobileBearer: []
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Rebuildable read-model metrics within actor data scope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlaSummary'
+        '401':
+          $ref: '#/components/responses/AuthenticationProblem'
+        '403':
+          $ref: '#/components/responses/AuthorizationProblem'
+
+components:
+  securitySchemes:
+    browserSession:
+      type: apiKey
+      in: cookie
+      name: FACTORYCARE_SESSION
+    mobileBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque-or-OIDC-access-token
+    csrfHeader:
+      type: apiKey
+      in: header
+      name: X-CSRF-Token
+      description: >-
+        Required together with browserSession. Native and mobile bearer clients
+        use mobileBearer instead and do not send this browser CSRF credential.
+  parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    PageSize:
+      name: size
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 16
+        maxLength: 128
+    AssetId:
+      name: assetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ReportId:
+      name: reportId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    WorkOrderId:
+      name: workOrderId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    DocumentId:
+      name: documentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    VersionId:
+      name: versionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    MembershipId:
+      name: membershipId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TeamId:
+      name: teamId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    RoleId:
+      name: roleId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    EquipmentModelId:
+      name: equipmentModelId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    LocationId:
+      name: locationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AttachmentId:
+      name: attachmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    EvaluationRunId:
+      name: evaluationRunId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    AuditExportId:
+      name: auditExportId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    WorkOrderCommandSuccess:
+      description: Command accepted and current aggregate returned.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WorkOrderDetail'
+    ValidationProblem:
+      description: Request syntax or field validation failed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    AuthenticationProblem:
+      description: Authentication is missing, invalid, or expired.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    AuthorizationProblem:
+      description: Actor lacks permission or data scope.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFoundProblem:
+      description: Resource is absent or intentionally hidden from this actor.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ConflictProblem:
+      description: State, version, uniqueness, or business-rule conflict.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    IdempotencyConflictProblem:
+      description: The same idempotency key was reused with a different request fingerprint.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    RateLimitProblem:
+      description: Request quota or enumeration protection rejected the request.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    DependencyProblem:
+      description: A bounded dependency is unavailable; the core manual workflow remains available.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    CsrfTokenResponse:
+      type: object
+      additionalProperties: false
+      required: [token, headerName]
+      properties:
+        token:
+          type: string
+          minLength: 32
+          maxLength: 512
+        headerName:
+          const: X-CSRF-Token
+    ReasonRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+    OrganizationStatus:
+      type: string
+      enum: [ACTIVE, DISABLED]
+    OrganizationSummary:
+      type: object
+      additionalProperties: false
+      required: [id, name, status, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrganizationStatus'
+        version:
+          type: integer
+          minimum: 0
+    OrganizationPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationSummary'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    CreateOrganizationRequest:
+      type: object
+      additionalProperties: false
+      required: [name]
+      properties:
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+    UpdateOrganizationRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/OrganizationStatus'
+        version:
+          type: integer
+          minimum: 0
+    TeamStatus:
+      type: string
+      enum: [ACTIVE, DISABLED]
+    Team:
+      type: object
+      additionalProperties: false
+      required: [id, organizationId, name, status, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        organizationId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/TeamStatus'
+        version:
+          type: integer
+          minimum: 0
+    TeamPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    CreateTeamRequest:
+      type: object
+      additionalProperties: false
+      required: [organizationId, name]
+      properties:
+        organizationId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+    UpdateTeamRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/TeamStatus'
+        version:
+          type: integer
+          minimum: 0
+    Role:
+      type: object
+      additionalProperties: false
+      required: [id, code, displayName]
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Stable fixed-catalog code used by authorization policy.
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: [string, 'null']
+          maxLength: 1000
+    MembershipStatus:
+      type: string
+      enum: [INVITED, ACTIVE, DISABLED]
+    MembershipSummary:
+      type: object
+      additionalProperties: false
+      required: [id, userId, organizationId, teamId, displayName, status, dataScope, roleCodes, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        organizationId:
+          type: string
+          format: uuid
+        teamId:
+          type: [string, 'null']
+          format: uuid
+        displayName:
+          type: string
+        status:
+          $ref: '#/components/schemas/MembershipStatus'
+        dataScope:
+          type: string
+          enum: [SELF, TEAM, ORGANIZATION, TENANT]
+        roleCodes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        version:
+          type: integer
+          minimum: 0
+      allOf:
+        - if:
+            properties:
+              dataScope:
+                const: TEAM
+          then:
+            properties:
+              teamId:
+                type: string
+                format: uuid
+          else:
+            properties:
+              teamId:
+                type: 'null'
+    MembershipPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipSummary'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    InviteMembershipRequest:
+      type: object
+      additionalProperties: false
+      required: [oidcSubjectHint, organizationId, teamId, displayName, dataScope]
+      properties:
+        oidcSubjectHint:
+          type: string
+          minLength: 1
+          maxLength: 300
+          description: Provider-scoped mapping hint; never treated as an authenticated subject by itself.
+        organizationId:
+          type: string
+          format: uuid
+        teamId:
+          type: [string, 'null']
+          format: uuid
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 200
+        dataScope:
+          type: string
+          enum: [SELF, TEAM, ORGANIZATION, TENANT]
+      allOf:
+        - if:
+            properties:
+              dataScope:
+                const: TEAM
+          then:
+            properties:
+              teamId:
+                type: string
+                format: uuid
+          else:
+            properties:
+              teamId:
+                type: 'null'
+    UpdateMembershipRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        organizationId:
+          type: string
+          format: uuid
+        teamId:
+          type: [string, 'null']
+          format: uuid
+        status:
+          $ref: '#/components/schemas/MembershipStatus'
+        dataScope:
+          type: string
+          enum: [SELF, TEAM, ORGANIZATION, TENANT]
+        version:
+          type: integer
+          minimum: 0
+      allOf:
+        - if:
+            required: [dataScope]
+            properties:
+              dataScope:
+                const: TEAM
+          then:
+            required: [teamId]
+            properties:
+              teamId:
+                type: string
+                format: uuid
+        - if:
+            required: [dataScope]
+            properties:
+              dataScope:
+                enum: [SELF, ORGANIZATION, TENANT]
+          then:
+            properties:
+              teamId:
+                type: 'null'
+    AssignMembershipRoleRequest:
+      type: object
+      additionalProperties: false
+      required: [roleId, membershipVersion, reason]
+      properties:
+        roleId:
+          type: string
+          format: uuid
+        membershipVersion:
+          type: integer
+          minimum: 0
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 100
+        password:
+          type: string
+          minLength: 8
+          maxLength: 256
+    CurrentActor:
+      type: object
+      additionalProperties: false
+      required: [userId, tenantId, membershipId, displayName, permissions, dataScope]
+      properties:
+        userId:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        membershipId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        permissions:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        dataScope:
+          type: string
+          enum: [SELF, TEAM, ORGANIZATION, TENANT]
+    CatalogStatus:
+      type: string
+      enum: [ACTIVE, DISABLED]
+    EquipmentModel:
+      type: object
+      additionalProperties: false
+      required: [id, manufacturer, modelCode, name, status, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        manufacturer:
+          type: string
+          minLength: 1
+          maxLength: 200
+        modelCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/CatalogStatus'
+        version:
+          type: integer
+          minimum: 0
+    EquipmentModelPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentModel'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    CreateEquipmentModelRequest:
+      type: object
+      additionalProperties: false
+      required: [manufacturer, modelCode, name]
+      properties:
+        manufacturer:
+          type: string
+          minLength: 1
+          maxLength: 200
+        modelCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+    UpdateEquipmentModelRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        manufacturer:
+          type: string
+          minLength: 1
+          maxLength: 200
+        modelCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/CatalogStatus'
+        version:
+          type: integer
+          minimum: 0
+    Location:
+      type: object
+      additionalProperties: false
+      required: [id, organizationId, parentId, name, status, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        organizationId:
+          type: string
+          format: uuid
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/CatalogStatus'
+        version:
+          type: integer
+          minimum: 0
+    LocationPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    CreateLocationRequest:
+      type: object
+      additionalProperties: false
+      required: [organizationId, name]
+      properties:
+        organizationId:
+          type: string
+          format: uuid
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+    UpdateLocationRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        parentId:
+          type: [string, 'null']
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/CatalogStatus'
+        version:
+          type: integer
+          minimum: 0
+    AssetStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, RETIRED]
+    ResolveAssetCodeRequest:
+      type: object
+      additionalProperties: false
+      required: [publicCode]
+      properties:
+        publicCode:
+          type: string
+          minLength: 16
+          maxLength: 256
+          pattern: '^[A-Za-z0-9_-]+$'
+          description: Opaque high-entropy value; servers must redact it from logs and traces.
+    RotateAssetCodeRequest:
+      type: object
+      additionalProperties: false
+      required: [version, reason]
+      properties:
+        version:
+          type: integer
+          minimum: 0
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+    AssetCodeIssue:
+      type: object
+      additionalProperties: false
+      required: [assetId, publicCode, issuedAt]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        publicCode:
+          type: string
+          minLength: 16
+          maxLength: 256
+          readOnly: true
+          description: Returned once for QR rendering; never log or persist in plaintext.
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: [string, 'null']
+          format: date-time
+    CreateAssetRequest:
+      type: object
+      additionalProperties: false
+      required: [assetCode, name, equipmentModelId, locationId]
+      properties:
+        assetCode:
+          type: string
+          minLength: 1
+          maxLength: 64
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        equipmentModelId:
+          type: string
+          format: uuid
+        locationId:
+          type: string
+          format: uuid
+        serialNumber:
+          type: [string, 'null']
+          maxLength: 120
+    UpdateAssetRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        locationId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/AssetStatus'
+        version:
+          type: integer
+          minimum: 0
+    AssetSummary:
+      type: object
+      additionalProperties: false
+      required: [id, assetCode, name, status, version]
+      properties:
+        id:
+          type: string
+          format: uuid
+        assetCode:
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/AssetStatus'
+        version:
+          type: integer
+    AssetDetail:
+      type: object
+      additionalProperties: false
+      required: [id, assetCode, name, status, version, equipmentModelId, locationId]
+      properties:
+        id:
+          type: string
+          format: uuid
+        assetCode:
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/AssetStatus'
+        version:
+          type: integer
+          minimum: 0
+        equipmentModelId:
+          type: string
+          format: uuid
+        locationId:
+          type: string
+          format: uuid
+        serialNumber:
+          type: [string, 'null']
+    AnonymousResolvableAsset:
+      type: object
+      additionalProperties: false
+      required: [assetId, displayName]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          description: Minimal human-readable confirmation text safe for the anonymous QR flow.
+    AssetPage:
+      type: object
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetSummary'
+        page:
+          type: integer
+        size:
+          type: integer
+        total:
+          type: integer
+    Priority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
+    WorkOrderStatus:
+      type: string
+      enum:
+        - CREATED
+        - TRIAGED
+        - ASSIGNED
+        - ACCEPTED
+        - IN_PROGRESS
+        - PENDING_PARTS
+        - PENDING_APPROVAL
+        - RESOLVED
+        - VERIFIED
+        - CLOSED
+        - REOPENED
+        - CANCELLED
+    CreateReportRequest:
+      type: object
+      additionalProperties: false
+      required: [assetId, category, description, priority]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        category:
+          type: string
+          minLength: 1
+          maxLength: 64
+        description:
+          type: string
+          minLength: 10
+          maxLength: 5000
+        priority:
+          $ref: '#/components/schemas/Priority'
+        contact:
+          type: [string, 'null']
+          maxLength: 200
+        attachmentIds:
+          type: array
+          maxItems: 3
+          description: >-
+            Completed REPORT_CREATION uploads that this command atomically binds
+            to the newly created Report as their final business owner.
+          items:
+            type: string
+            format: uuid
+    AddSupplementRequest:
+      type: object
+      additionalProperties: false
+      required: [text]
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        attachmentIds:
+          type: array
+          maxItems: 3
+          description: >-
+            Completed REPORT_SUPPLEMENT uploads already scoped to this Report;
+            the final business owner remains the Report, not a supplement row.
+          items:
+            type: string
+            format: uuid
+    ResolutionVerificationRequest:
+      type: object
+      additionalProperties: false
+      required: [decision, version]
+      properties:
+        decision:
+          type: string
+          enum: [VERIFY, REJECT]
+        reason:
+          type: [string, 'null']
+          maxLength: 1000
+        version:
+          type: integer
+          minimum: 0
+      allOf:
+        - if:
+            properties:
+              decision:
+                const: REJECT
+          then:
+            required: [reason]
+            properties:
+              reason:
+                type: string
+                minLength: 3
+                maxLength: 1000
+    CreateFeedbackRequest:
+      type: object
+      additionalProperties: false
+      required: [rating]
+      properties:
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: [string, 'null']
+          maxLength: 1000
+    ReportSummary:
+      type: object
+      required: [id, workOrderId, assetId, status, priority, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workOrderId:
+          type: string
+          format: uuid
+        assetId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/WorkOrderStatus'
+        priority:
+          $ref: '#/components/schemas/Priority'
+        createdAt:
+          type: string
+          format: date-time
+    ReportDetail:
+      allOf:
+        - $ref: '#/components/schemas/ReportSummary'
+        - type: object
+          required: [description]
+          properties:
+            description:
+              type: string
+            supplements:
+              type: array
+              items:
+                type: object
+                required: [text, createdAt]
+                properties:
+                  text:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+    ReportPage:
+      type: object
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportSummary'
+        page:
+          type: integer
+        size:
+          type: integer
+        total:
+          type: integer
+    VersionedCommandRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        version:
+          type: integer
+          minimum: 0
+    ReasonedVersionedCommandRequest:
+      type: object
+      additionalProperties: false
+      required: [version, reason]
+      properties:
+        version:
+          type: integer
+          minimum: 0
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+    RequestWorkOrderApprovalRequest:
+      type: object
+      additionalProperties: false
+      required: [kind, reason, version]
+      properties:
+        kind:
+          type: string
+          enum: [SAFETY, OVERTIME, PART_COST, OTHER]
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 2000
+        version:
+          type: integer
+          minimum: 0
+    DecideWorkOrderApprovalRequest:
+      type: object
+      additionalProperties: false
+      required: [approvalId, decision, reason, version]
+      properties:
+        approvalId:
+          type: string
+          format: uuid
+        decision:
+          type: string
+          enum: [APPROVE, REQUEST_CHANGES]
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 2000
+        version:
+          type: integer
+          minimum: 0
+    TriageWorkOrderRequest:
+      type: object
+      additionalProperties: false
+      required: [category, priority, version, suggestionDisposition]
+      properties:
+        category:
+          type: string
+          minLength: 1
+          maxLength: 64
+        priority:
+          $ref: '#/components/schemas/Priority'
+        note:
+          type: [string, 'null']
+          maxLength: 1000
+        suggestionId:
+          type: [string, 'null']
+          format: uuid
+          description: Stable suggestion identifier used to audit human adoption or modification.
+        suggestionDisposition:
+          type: string
+          enum: [NOT_REQUESTED, ACCEPTED, MODIFIED, REJECTED]
+        version:
+          type: integer
+          minimum: 0
+      allOf:
+        - if:
+            properties:
+              suggestionDisposition:
+                enum: [ACCEPTED, MODIFIED, REJECTED]
+          then:
+            required: [suggestionId]
+    AssignWorkOrderRequest:
+      type: object
+      additionalProperties: false
+      required: [teamId, technicianMembershipId, version]
+      properties:
+        teamId:
+          type: string
+          format: uuid
+        technicianMembershipId:
+          type: string
+          format: uuid
+        note:
+          type: [string, 'null']
+          maxLength: 1000
+        version:
+          type: integer
+          minimum: 0
+    ReassignWorkOrderRequest:
+      type: object
+      additionalProperties: false
+      required: [teamId, technicianMembershipId, reason, version]
+      properties:
+        teamId:
+          type: string
+          format: uuid
+        technicianMembershipId:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+        version:
+          type: integer
+          minimum: 0
+      description: >-
+        Supersedes the active assignment record with an auditable reason. It does
+        not create a REASSIGNED status or otherwise bypass the 12-state workflow.
+    ResolveWorkOrderRequest:
+      type: object
+      additionalProperties: false
+      required: [resolution, checkItemResultIds, version]
+      properties:
+        resolution:
+          type: string
+          minLength: 10
+          maxLength: 10000
+        workLogIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        checkItemResultIds:
+          type: array
+          minItems: 1
+          maxItems: 200
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        partUsageIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        attachmentIds:
+          type: array
+          maxItems: 20
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        version:
+          type: integer
+          minimum: 0
+    CreateWorkLogRequest:
+      type: object
+      additionalProperties: false
+      required: [startedAt, endedAt, description, version]
+      properties:
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        description:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        version:
+          type: integer
+          minimum: 0
+    WorkLog:
+      type: object
+      additionalProperties: false
+      required: [id, workOrderId, technicianMembershipId, startedAt, endedAt, durationMinutes, description]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workOrderId:
+          type: string
+          format: uuid
+        technicianMembershipId:
+          type: string
+          format: uuid
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        durationMinutes:
+          type: integer
+          minimum: 0
+        description:
+          type: string
+    RecordCheckItemResultRequest:
+      type: object
+      additionalProperties: false
+      required: [templateItemCode, result, version]
+      properties:
+        templateItemCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+        result:
+          type: string
+          enum: [PASS, FAIL, NOT_APPLICABLE]
+        note:
+          type: [string, 'null']
+          maxLength: 2000
+        attachmentIds:
+          type: array
+          maxItems: 10
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        version:
+          type: integer
+          minimum: 0
+    CheckItemResult:
+      type: object
+      additionalProperties: false
+      required: [id, workOrderId, templateItemCode, result, recordedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workOrderId:
+          type: string
+          format: uuid
+        templateItemCode:
+          type: string
+        result:
+          type: string
+          enum: [PASS, FAIL, NOT_APPLICABLE]
+        note:
+          type: [string, 'null']
+        recordedAt:
+          type: string
+          format: date-time
+    RecordPartUsageRequest:
+      type: object
+      additionalProperties: false
+      required: [partCode, quantity, unit, version]
+      properties:
+        partCode:
+          type: string
+          minLength: 1
+          maxLength: 100
+        quantity:
+          type: string
+          pattern: '^(0\.[0-9]{0,2}[1-9]|[1-9][0-9]*(\.[0-9]{1,3})?)$'
+          description: Canonical positive exact decimal with at most three fractional digits.
+        unit:
+          type: string
+          minLength: 1
+          maxLength: 30
+        version:
+          type: integer
+          minimum: 0
+    PartUsage:
+      type: object
+      additionalProperties: false
+      required: [id, workOrderId, partCode, quantity, unit, recordedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workOrderId:
+          type: string
+          format: uuid
+        partCode:
+          type: string
+        quantity:
+          type: string
+          pattern: '^(0\.[0-9]{0,2}[1-9]|[1-9][0-9]*(\.[0-9]{1,3})?)$'
+        unit:
+          type: string
+        recordedAt:
+          type: string
+          format: date-time
+    WorkOrderSummary:
+      type: object
+      required: [id, number, assetId, status, priority, version, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: string
+        assetId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/WorkOrderStatus'
+        priority:
+          $ref: '#/components/schemas/Priority'
+        version:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        slaDueAt:
+          type: [string, 'null']
+          format: date-time
+    WorkOrderDetail:
+      allOf:
+        - $ref: '#/components/schemas/WorkOrderSummary'
+        - type: object
+          required: [assignedTeamId, assignedTechnicianMembershipId, transitions]
+          properties:
+            assignedTeamId:
+              type: [string, 'null']
+              format: uuid
+            assignedTechnicianMembershipId:
+              type: [string, 'null']
+              format: uuid
+            transitions:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkOrderTransition'
+    WorkOrderTransition:
+      type: object
+      required: [fromStatus, toStatus, occurredAt, actorDisplayName]
+      properties:
+        fromStatus:
+          type: [string, 'null']
+        toStatus:
+          $ref: '#/components/schemas/WorkOrderStatus'
+        reason:
+          type: [string, 'null']
+        actorDisplayName:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+    WorkOrderPage:
+      type: object
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderSummary'
+        page:
+          type: integer
+        size:
+          type: integer
+        total:
+          type: integer
+    AttachmentPurpose:
+      type: string
+      enum: [REPORT_CREATION, REPORT_SUPPLEMENT, WORK_ORDER]
+      description: Upload workflow intent; it is not the final business owner type.
+    AttachmentBusinessOwnerType:
+      type: string
+      enum: [REPORT, WORK_ORDER]
+      description: Final business aggregate that authorizes and owns an attachment after binding.
+    CreateAttachmentUploadIntentRequest:
+      type: object
+      additionalProperties: false
+      required: [purpose, fileName, size, mime, sha256]
+      properties:
+        purpose:
+          $ref: '#/components/schemas/AttachmentPurpose'
+        ownerId:
+          type: [string, 'null']
+          format: uuid
+          description: >-
+            May be null only for REPORT_CREATION before a report exists. For
+            REPORT_SUPPLEMENT this is a Report id; for WORK_ORDER it is a WorkOrder id.
+        fileName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        size:
+          type: integer
+          minimum: 1
+          maximum: 52428800
+        mime:
+          type: string
+          maxLength: 200
+        sha256:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+      allOf:
+        - if:
+            properties:
+              purpose:
+                enum: [REPORT_SUPPLEMENT, WORK_ORDER]
+          then:
+            required: [ownerId]
+            properties:
+              ownerId:
+                type: string
+                format: uuid
+    AttachmentUploadIntent:
+      type: object
+      additionalProperties: false
+      required: [attachmentId, intentId, method, uploadUrl, expiresAt, requiredHeaders]
+      properties:
+        attachmentId:
+          type: string
+          format: uuid
+        intentId:
+          type: string
+          format: uuid
+        method:
+          const: PUT
+        uploadUrl:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+        requiredHeaders:
+          type: object
+          additionalProperties:
+            type: string
+    CompleteAttachmentUploadRequest:
+      type: object
+      additionalProperties: false
+      required: [intentId, sha256]
+      properties:
+        intentId:
+          type: string
+          format: uuid
+        sha256:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+    AttachmentMetadata:
+      type: object
+      additionalProperties: false
+      required: [id, purpose, businessOwnerType, businessOwnerId, fileName, size, mime, sha256, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        purpose:
+          $ref: '#/components/schemas/AttachmentPurpose'
+        businessOwnerType:
+          oneOf:
+            - $ref: '#/components/schemas/AttachmentBusinessOwnerType'
+            - type: 'null'
+          description: >-
+            Null only while a REPORT_CREATION upload awaits atomic report binding;
+            once bound, the final owner is REPORT or WORK_ORDER.
+        businessOwnerId:
+          type: [string, 'null']
+          format: uuid
+        fileName:
+          type: string
+        size:
+          type: integer
+          minimum: 1
+        mime:
+          type: string
+        sha256:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+        status:
+          type: string
+          enum: [PENDING_UPLOAD, SCANNING, AVAILABLE, QUARANTINED, REJECTED]
+      allOf:
+        - if:
+            properties:
+              purpose:
+                const: REPORT_SUPPLEMENT
+          then:
+            properties:
+              businessOwnerType:
+                const: REPORT
+              businessOwnerId:
+                type: string
+                format: uuid
+        - if:
+            properties:
+              purpose:
+                const: WORK_ORDER
+          then:
+            properties:
+              businessOwnerType:
+                const: WORK_ORDER
+              businessOwnerId:
+                type: string
+                format: uuid
+        - if:
+            properties:
+              purpose:
+                const: REPORT_CREATION
+          then:
+            oneOf:
+              - properties:
+                  businessOwnerType:
+                    const: REPORT
+                  businessOwnerId:
+                    type: string
+                    format: uuid
+              - properties:
+                  businessOwnerType:
+                    type: 'null'
+                  businessOwnerId:
+                    type: 'null'
+    CreateKnowledgeDocumentRequest:
+      type: object
+      additionalProperties: false
+      required: [title, visibility]
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 300
+        equipmentModelId:
+          type: [string, 'null']
+          format: uuid
+        visibility:
+          type: string
+          enum: [TENANT, ORGANIZATION, TEAM]
+    KnowledgeDocument:
+      type: object
+      required: [id, title, visibility, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        visibility:
+          type: string
+        status:
+          type: string
+          enum: [DRAFT, ACTIVE, ARCHIVED]
+    KnowledgeDocumentPage:
+      type: object
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeDocument'
+        page:
+          type: integer
+        size:
+          type: integer
+        total:
+          type: integer
+    CreateUploadIntentRequest:
+      type: object
+      additionalProperties: false
+      required: [fileName, size, mime, sha256]
+      properties:
+        fileName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        size:
+          type: integer
+          minimum: 1
+          maximum: 52428800
+        mime:
+          type: string
+          enum: [application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain, text/csv]
+        sha256:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+    UploadIntent:
+      type: object
+      required: [intentId, method, uploadUrl, expiresAt, requiredHeaders]
+      properties:
+        intentId:
+          type: string
+          format: uuid
+        method:
+          type: string
+          enum: [PUT]
+        uploadUrl:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+        requiredHeaders:
+          type: object
+          additionalProperties:
+            type: string
+    BindKnowledgeVersionRequest:
+      type: object
+      additionalProperties: false
+      required: [uploadIntentId, sha256]
+      properties:
+        uploadIntentId:
+          type: string
+          format: uuid
+        sha256:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+    KnowledgeVersionLockRequest:
+      type: object
+      additionalProperties: false
+      required: [lockVersion]
+      properties:
+        lockVersion:
+          type: integer
+          minimum: 0
+    KnowledgeReviewDecisionRequest:
+      type: object
+      additionalProperties: false
+      required: [decision, reason, lockVersion]
+      properties:
+        decision:
+          type: string
+          enum: [APPROVE, REQUEST_CHANGES, REJECT]
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 2000
+        lockVersion:
+          type: integer
+          minimum: 0
+    KnowledgeReview:
+      type: object
+      additionalProperties: false
+      required: [id, versionId, reviewerMembershipId, decision, reason, decidedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        versionId:
+          type: string
+          format: uuid
+        reviewerMembershipId:
+          type: string
+          format: uuid
+        decision:
+          type: string
+          enum: [APPROVE, REQUEST_CHANGES, REJECT]
+        reason:
+          type: string
+        decidedAt:
+          type: string
+          format: date-time
+    PublishKnowledgeVersionRequest:
+      type: object
+      additionalProperties: false
+      required: [reviewId, lockVersion]
+      properties:
+        reviewId:
+          type: string
+          format: uuid
+        lockVersion:
+          type: integer
+          minimum: 0
+    RevokeKnowledgeVersionRequest:
+      type: object
+      additionalProperties: false
+      required: [reason, lockVersion]
+      properties:
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+        lockVersion:
+          type: integer
+          minimum: 0
+    KnowledgeVersion:
+      type: object
+      additionalProperties: false
+      required: [id, documentId, version, lockVersion, sha256, size, mime, publicationStatus, scanStatus]
+      properties:
+        id:
+          type: string
+          format: uuid
+        documentId:
+          type: string
+          format: uuid
+        version:
+          type: integer
+          minimum: 1
+          description: Immutable content version number.
+        lockVersion:
+          type: integer
+          minimum: 0
+          description: Optimistic concurrency token for review, publication, and revocation commands.
+        sha256:
+          type: string
+        size:
+          type: integer
+        mime:
+          type: string
+        publicationStatus:
+          type: string
+          enum: [DRAFT, IN_REVIEW, PUBLISHED, REVOKED]
+        scanStatus:
+          type: string
+          enum: [PENDING, CLEAN, QUARANTINED, FAILED]
+    DownloadIntent:
+      type: object
+      required: [downloadUrl, expiresAt]
+      properties:
+        downloadUrl:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+    RequestTriageSuggestionRequest:
+      type: object
+      additionalProperties: false
+      required: [version]
+      properties:
+        version:
+          type: integer
+          minimum: 0
+        additionalFacts:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 1000
+    PublicModelMetadata:
+      type: object
+      additionalProperties: false
+      required: [model, promptVersion, startedAt, latencyMs]
+      properties:
+        model:
+          type: string
+          maxLength: 200
+        promptVersion:
+          type: string
+          maxLength: 100
+        indexVersion:
+          type: [string, 'null']
+          maxLength: 100
+        startedAt:
+          type: string
+          format: date-time
+        latencyMs:
+          type: integer
+          minimum: 0
+    PublicTriageSuggestion:
+      type: object
+      additionalProperties: false
+      required: [suggestionId, modelCallId, category, priority, possibleFaultCodes, confidence, evidenceSummary, missingInformationQuestions, metadata]
+      properties:
+        suggestionId:
+          type: string
+          format: uuid
+        modelCallId:
+          type: string
+          format: uuid
+        category:
+          type: string
+          maxLength: 100
+        priority:
+          $ref: '#/components/schemas/Priority'
+        possibleFaultCodes:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+            maxLength: 100
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        evidenceSummary:
+          type: string
+          maxLength: 3000
+        missingInformationQuestions:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+            maxLength: 1000
+        metadata:
+          $ref: '#/components/schemas/PublicModelMetadata'
+    PublicAnswerRequest:
+      type: object
+      additionalProperties: false
+      required: [question, maxCitations]
+      properties:
+        question:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        maxCitations:
+          type: integer
+          minimum: 1
+          maximum: 10
+    PublicAnswerStreamEvent:
+      oneOf:
+        - $ref: '#/components/schemas/PublicAnswerStartEvent'
+        - $ref: '#/components/schemas/PublicAnswerTextEvent'
+        - $ref: '#/components/schemas/PublicAnswerCitationEvent'
+        - $ref: '#/components/schemas/PublicAnswerNoAnswerEvent'
+        - $ref: '#/components/schemas/PublicAnswerErrorEvent'
+        - $ref: '#/components/schemas/PublicAnswerEndEvent'
+      discriminator:
+        propertyName: event
+    PublicAnswerStartEvent:
+      type: object
+      additionalProperties: false
+      required: [event, answerId, traceId]
+      properties:
+        event:
+          const: start
+        answerId:
+          type: string
+          format: uuid
+        traceId:
+          type: string
+          minLength: 16
+          maxLength: 64
+    PublicAnswerTextEvent:
+      type: object
+      additionalProperties: false
+      required: [event, sequence, delta]
+      properties:
+        event:
+          const: text
+        sequence:
+          type: integer
+          minimum: 0
+        delta:
+          type: string
+          maxLength: 4000
+    PublicAnswerCitationEvent:
+      type: object
+      additionalProperties: false
+      required: [event, citationId, sourceVersionId, title, locator]
+      properties:
+        event:
+          const: citation
+        citationId:
+          type: string
+          format: uuid
+        sourceVersionId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          maxLength: 300
+        locator:
+          type: string
+          maxLength: 500
+    PublicAnswerNoAnswerEvent:
+      type: object
+      additionalProperties: false
+      required: [event, reason, followUpQuestions]
+      properties:
+        event:
+          const: no_answer
+        reason:
+          type: string
+          maxLength: 2000
+        followUpQuestions:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+            maxLength: 1000
+    PublicAnswerErrorEvent:
+      type: object
+      additionalProperties: false
+      required: [event, code, message, retryable]
+      properties:
+        event:
+          const: error
+        code:
+          type: string
+          maxLength: 100
+        message:
+          type: string
+          maxLength: 1000
+        retryable:
+          type: boolean
+    PublicAnswerEndEvent:
+      type: object
+      additionalProperties: false
+      required: [event, citationIds, metadata]
+      properties:
+        event:
+          const: end
+        citationIds:
+          type: array
+          uniqueItems: true
+          maxItems: 10
+          items:
+            type: string
+            format: uuid
+        metadata:
+          $ref: '#/components/schemas/PublicModelMetadata'
+    PublicEvaluationRequest:
+      type: object
+      additionalProperties: false
+      required: [datasetId, modelAlias, promptVersion, indexVersion, maxCases]
+      properties:
+        datasetId:
+          type: string
+          format: uuid
+        modelAlias:
+          type: string
+          minLength: 1
+          maxLength: 200
+        promptVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        indexVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        maxCases:
+          type: integer
+          minimum: 1
+          maximum: 500
+    EvaluationRunSummary:
+      type: object
+      additionalProperties: false
+      required: [runId, status, datasetId, caseCount]
+      properties:
+        runId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, COMPLETED, FAILED, CANCELLED]
+        datasetId:
+          type: string
+          format: uuid
+        caseCount:
+          type: integer
+          minimum: 0
+        completedCount:
+          type: integer
+          minimum: 0
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+        hardFailureCodes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    AuditLogEntry:
+      type: object
+      additionalProperties: false
+      required: [id, occurredAt, actorDisplay, action, objectType, objectId, traceId]
+      properties:
+        id:
+          type: string
+          format: uuid
+        occurredAt:
+          type: string
+          format: date-time
+        actorDisplay:
+          type: string
+        action:
+          type: string
+        objectType:
+          type: string
+        objectId:
+          type: string
+          format: uuid
+        beforeSummary:
+          type: [string, 'null']
+        afterSummary:
+          type: [string, 'null']
+        traceId:
+          type: string
+    AuditLogPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    AuditExportRequest:
+      type: object
+      additionalProperties: false
+      required: [from, to, reason, format]
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 1000
+        format:
+          type: string
+          enum: [CSV, JSON]
+    AuditExportJob:
+      type: object
+      additionalProperties: false
+      required: [id, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, COMPLETED, FAILED, EXPIRED]
+        createdAt:
+          type: string
+          format: date-time
+        download:
+          oneOf:
+            - $ref: '#/components/schemas/DownloadIntent'
+            - type: 'null'
+    OperationsSummary:
+      type: object
+      additionalProperties: false
+      required:
+        - from
+        - to
+        - totalWorkOrders
+        - overdueWorkOrders
+        - firstTimeResolved
+        - firstTimeResolutionRate
+        - repeatFailures
+        - repeatFailureRate
+        - knowledgeQueries
+        - knowledgeHits
+        - knowledgeHitRate
+        - aiSuggestionsReviewed
+        - aiSuggestionsAdopted
+        - aiSuggestionAdoptionRate
+        - byStatus
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        totalWorkOrders:
+          type: integer
+          minimum: 0
+        overdueWorkOrders:
+          type: integer
+          minimum: 0
+        firstTimeResolved:
+          type: integer
+          minimum: 0
+        firstTimeResolutionRate:
+          type: number
+          minimum: 0
+          maximum: 1
+        repeatFailures:
+          type: integer
+          minimum: 0
+        repeatFailureRate:
+          type: number
+          minimum: 0
+          maximum: 1
+        knowledgeQueries:
+          type: integer
+          minimum: 0
+        knowledgeHits:
+          type: integer
+          minimum: 0
+        knowledgeHitRate:
+          type: number
+          minimum: 0
+          maximum: 1
+        aiSuggestionsReviewed:
+          type: integer
+          minimum: 0
+        aiSuggestionsAdopted:
+          type: integer
+          minimum: 0
+        aiSuggestionAdoptionRate:
+          type: number
+          minimum: 0
+          maximum: 1
+        byStatus:
+          type: object
+          propertyNames:
+            enum: [CREATED, TRIAGED, ASSIGNED, ACCEPTED, IN_PROGRESS, PENDING_PARTS, PENDING_APPROVAL, RESOLVED, VERIFIED, CLOSED, REOPENED, CANCELLED]
+          additionalProperties:
+            type: integer
+            minimum: 0
+    SlaSummary:
+      type: object
+      required: [from, to, total, overdue, unaccepted, byStatus]
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        total:
+          type: integer
+        overdue:
+          type: integer
+        unaccepted:
+          type: integer
+        byStatus:
+          type: object
+          additionalProperties:
+            type: integer
+    FieldError:
+      type: object
+      required: [field, code, message]
+      properties:
+        field:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+    Problem:
+      type: object
+      required: [type, title, status, code, message, traceId]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
+        fieldErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldError'
+security:
+  - browserSession: []
+    csrfHeader: []
+  - mobileBearer: []

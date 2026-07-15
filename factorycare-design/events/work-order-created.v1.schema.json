@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.example.test/schemas/events/work-order-created.v1.schema.json",
+  "title": "WorkOrderCreated.v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["eventId", "eventType", "version", "occurredAt", "tenantId", "aggregateId", "traceId", "payload"],
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid" },
+    "eventType": { "const": "WorkOrderCreated.v1" },
+    "version": { "const": 1 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "tenantId": { "type": "string", "format": "uuid" },
+    "aggregateId": { "type": "string", "format": "uuid" },
+    "traceId": { "type": "string", "minLength": 16, "maxLength": 64 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["reportId", "assetId", "reporterMembershipId", "priority", "aggregateVersion", "createdAt"],
+      "properties": {
+        "reportId": { "type": "string", "format": "uuid" },
+        "assetId": { "type": "string", "format": "uuid" },
+        "reporterMembershipId": { "type": "string", "format": "uuid" },
+        "priority": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "aggregateVersion": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

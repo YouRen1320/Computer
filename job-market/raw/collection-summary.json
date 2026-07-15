@@ -1,0 +1,228 @@
+{
+  "retrieved_at": "2026-07-11T12:53:49+08:00",
+  "endpoint": "https://fe-api.zhaopin.com/c/i/search/positions",
+  "city_code": "691",
+  "city_name": "南昌",
+  "query_pages": {
+    "Java": 5,
+    "Java Vue": 3,
+    "全栈开发": 2,
+    "Vue": 2,
+    "前端开发": 3,
+    "uni-app": 1,
+    "小程序开发": 1,
+    "Python": 4,
+    "人工智能": 2,
+    "大模型": 2,
+    "RAG": 1,
+    "AI应用": 1
+  },
+  "page_log": [
+    {
+      "keyword": "Java",
+      "page": 1,
+      "reported_count": 91,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java",
+      "page": 2,
+      "reported_count": 91,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java",
+      "page": 3,
+      "reported_count": 91,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java",
+      "page": 4,
+      "reported_count": 91,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java",
+      "page": 5,
+      "reported_count": 91,
+      "returned": 11,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "Java Vue",
+      "page": 1,
+      "reported_count": 44,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java Vue",
+      "page": 2,
+      "reported_count": 44,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Java Vue",
+      "page": 3,
+      "reported_count": 44,
+      "returned": 4,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "全栈开发",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 8,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "全栈开发",
+      "page": 2,
+      "reported_count": 20,
+      "returned": 0,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "Vue",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 19,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "Vue",
+      "page": 2,
+      "reported_count": 20,
+      "returned": 0,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "前端开发",
+      "page": 1,
+      "reported_count": 39,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "前端开发",
+      "page": 2,
+      "reported_count": 39,
+      "returned": 19,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "前端开发",
+      "page": 3,
+      "reported_count": 39,
+      "returned": 0,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "uni-app",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 1,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "小程序开发",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 2,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "Python",
+      "page": 1,
+      "reported_count": 63,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Python",
+      "page": 2,
+      "reported_count": 63,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Python",
+      "page": 3,
+      "reported_count": 63,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "Python",
+      "page": 4,
+      "reported_count": 63,
+      "returned": 3,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "人工智能",
+      "page": 1,
+      "reported_count": 29,
+      "returned": 20,
+      "is_end_page": 0
+    },
+    {
+      "keyword": "人工智能",
+      "page": 2,
+      "reported_count": 29,
+      "returned": 9,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "大模型",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 8,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "大模型",
+      "page": 2,
+      "reported_count": 20,
+      "returned": 0,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "RAG",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 1,
+      "is_end_page": 1
+    },
+    {
+      "keyword": "AI应用",
+      "page": 1,
+      "reported_count": 20,
+      "returned": 8,
+      "is_end_page": 1
+    }
+  ],
+  "unique_source_urls_before_relevance_filter": 170,
+  "selected_rows": 84,
+  "cluster_counts": {
+    "Java+Vue全栈": 24,
+    "Java后端": 22,
+    "Python/AI应用": 23,
+    "Vue3/uni-app前端": 15
+  },
+  "evidence_quality_counts": {
+    "official_structured_search_listing": 84
+  },
+  "dated_rows": 84,
+  "dated_rows_within_90_days": 84,
+  "rejected": {
+    "not_target_role": 76,
+    "older_than_90_days": 10
+  }
+}

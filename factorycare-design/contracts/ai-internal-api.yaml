@@ -1,0 +1,799 @@
+openapi: 3.1.0
+info:
+  title: FactoryCare Java-Python Internal API Design Baseline
+  version: 0.1.0-design
+  description: >-
+    Bidirectional internal contract. Java calls Python for bounded AI
+    capabilities; Python calls Java only through allowlisted read-only tools.
+    This document does not grant database access or business write authority.
+servers:
+  - url: https://factorycare-ai.internal.test
+    description: Python AI service placeholder.
+  - url: https://factorycare-java.internal.test
+    description: Java internal tool provider placeholder.
+tags:
+  - name: JavaToPython
+  - name: PythonToJava
+paths:
+  /internal/v1/triage:
+    post:
+      tags: [JavaToPython]
+      operationId: suggestWorkOrderTriage
+      summary: Return a validated suggestion; never mutate a work order.
+      servers:
+        - url: https://factorycare-ai.internal.test
+      x-service-audience: factorycare-ai
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriageRequest'
+      responses:
+        '200':
+          description: Structured suggestion for human confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriageSuggestion'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+  /internal/v1/answers:stream:
+    post:
+      tags: [JavaToPython]
+      operationId: streamGroundedAnswer
+      servers:
+        - url: https://factorycare-ai.internal.test
+      x-service-audience: factorycare-ai
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnswerRequest'
+      responses:
+        '200':
+          description: >-
+            NDJSON design stream. Event types are start, text, citation,
+            no_answer, error, and end. Java translates the validated stream to
+            its public client protocol.
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/AnswerStreamEvent'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+  /internal/v1/report-drafts:
+    post:
+      tags: [JavaToPython]
+      operationId: createResolutionReportDraft
+      summary: Draft from structured facts without inventing work, time, or parts.
+      servers:
+        - url: https://factorycare-ai.internal.test
+      x-service-audience: factorycare-ai
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportDraftRequest'
+      responses:
+        '200':
+          description: Draft requiring human review before publication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDraft'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+  /internal/v1/evaluations:
+    post:
+      tags: [JavaToPython]
+      operationId: startEvaluationRun
+      servers:
+        - url: https://factorycare-ai.internal.test
+      x-service-audience: factorycare-ai
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartEvaluationRequest'
+      responses:
+        '202':
+          description: Evaluation accepted within an explicit case and cost limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationAccepted'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '409':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+  /internal/v1/evaluations/{runId}:
+    parameters:
+      - name: runId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [JavaToPython]
+      operationId: getEvaluationRun
+      servers:
+        - url: https://factorycare-ai.internal.test
+      x-service-audience: factorycare-ai
+      responses:
+        '200':
+          description: Current bounded evaluation state and aggregate metrics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationRun'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '404':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+
+  /internal/v1/ai-tools/asset-summary:invoke:
+    post:
+      tags: [PythonToJava]
+      operationId: invokeAssetSummaryTool
+      summary: >-
+        Read minimal asset context. Java re-authorizes service identity,
+        original actor, tenant, data scope, resource, and tool scope on every call.
+      servers:
+        - url: https://factorycare-java.internal.test
+      x-service-audience: factorycare-java
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetSummaryToolRequest'
+      responses:
+        '200':
+          description: Minimal authorized asset summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetSummaryToolResult'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '404':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '410':
+          description: Original actor context expired or was revoked.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+  /internal/v1/ai-tools/work-order-history:invoke:
+    post:
+      tags: [PythonToJava]
+      operationId: invokeWorkOrderHistoryTool
+      summary: Read bounded, sanitized, tenant-scoped closed work-order history.
+      servers:
+        - url: https://factorycare-java.internal.test
+      x-service-audience: factorycare-java
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrderHistoryToolRequest'
+      responses:
+        '200':
+          description: Bounded work-order summaries after Java authorization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderHistoryToolResult'
+        '400':
+          $ref: '#/components/responses/InternalProblem'
+        '401':
+          $ref: '#/components/responses/InternalProblem'
+        '403':
+          $ref: '#/components/responses/InternalProblem'
+        '429':
+          $ref: '#/components/responses/InternalProblem'
+        '410':
+          $ref: '#/components/responses/InternalProblem'
+        '503':
+          $ref: '#/components/responses/InternalProblem'
+
+components:
+  securitySchemes:
+    serviceBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: short-lived-service-token
+      description: >-
+        Receiver validates signature, expiry, scope, nonce, and the operation-level
+        x-service-audience. factorycare-ai is used for Python operations and
+        factorycare-java for Java read-only tool operations.
+  responses:
+    InternalProblem:
+      description: Auth, validation, quota, timeout, or dependency failure.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/InternalProblem'
+  schemas:
+    RequestContext:
+      type: object
+      additionalProperties: false
+      required: [requestId, traceId, tenantId, actorContextToken, scopes, deadline]
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        traceId:
+          type: string
+          minLength: 16
+          maxLength: 64
+        tenantId:
+          type: string
+          format: uuid
+        actorContextToken:
+          type: string
+          description: Opaque short-lived token; never log the value.
+        scopes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        deadline:
+          type: string
+          format: date-time
+    TriageRequest:
+      type: object
+      additionalProperties: false
+      required: [context, workOrderId, asset, report, allowedCategories, allowedPriorities]
+      properties:
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        workOrderId:
+          type: string
+          format: uuid
+        asset:
+          $ref: '#/components/schemas/AssetContext'
+        report:
+          $ref: '#/components/schemas/ReportContext'
+        allowedCategories:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: string
+        allowedPriorities:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [LOW, MEDIUM, HIGH, CRITICAL]
+    TriageSuggestion:
+      type: object
+      additionalProperties: false
+      required: [category, priority, possibleFaultCodes, confidence, evidenceSummary, missingInformationQuestions, metadata]
+      properties:
+        category:
+          type: string
+        priority:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        possibleFaultCodes:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        evidenceSummary:
+          type: string
+          maxLength: 3000
+        missingInformationQuestions:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/ModelMetadata'
+    AssetContext:
+      type: object
+      additionalProperties: false
+      required: [assetId, modelName, status]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        modelName:
+          type: string
+          maxLength: 200
+        status:
+          type: string
+        sanitizedAttributes:
+          type: object
+          additionalProperties:
+            type: string
+    ReportContext:
+      type: object
+      additionalProperties: false
+      required: [description, reportedPriority]
+      properties:
+        description:
+          type: string
+          maxLength: 5000
+        reportedPriority:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        supplementalFacts:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+    AnswerRequest:
+      type: object
+      additionalProperties: false
+      required: [context, question, assetId, workOrderId, maxCitations]
+      properties:
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        question:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        assetId:
+          type: string
+          format: uuid
+        workOrderId:
+          type: string
+          format: uuid
+        maxCitations:
+          type: integer
+          minimum: 1
+          maximum: 10
+    ReportDraftRequest:
+      type: object
+      additionalProperties: false
+      required: [context, workOrderId, resolutionFacts, workLogs, partUsages]
+      properties:
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        workOrderId:
+          type: string
+          format: uuid
+        resolutionFacts:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: string
+        workLogs:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/WorkLogFact'
+        partUsages:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/PartUsageFact'
+    ReportDraft:
+      type: object
+      additionalProperties: false
+      required: [summary, stepsPerformed, partsUsed, warnings, unsupportedClaims, metadata]
+      properties:
+        summary:
+          type: string
+          maxLength: 5000
+        stepsPerformed:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+        partsUsed:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+        warnings:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+        unsupportedClaims:
+          type: array
+          description: Claims excluded because structured facts did not support them.
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/ModelMetadata'
+    WorkLogFact:
+      type: object
+      additionalProperties: false
+      required: [startedAt, endedAt, description]
+      properties:
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        description:
+          type: string
+          maxLength: 2000
+    PartUsageFact:
+      type: object
+      additionalProperties: false
+      required: [partCode, quantity, unit]
+      properties:
+        partCode:
+          type: string
+          maxLength: 100
+        quantity:
+          type: number
+          exclusiveMinimum: 0
+        unit:
+          type: string
+          maxLength: 30
+    ModelMetadata:
+      type: object
+      additionalProperties: false
+      required: [provider, model, promptVersion, startedAt, latencyMs, inputTokens, outputTokens]
+      properties:
+        provider:
+          type: string
+        model:
+          type: string
+        promptVersion:
+          type: string
+        indexVersion:
+          type: [string, 'null']
+        startedAt:
+          type: string
+          format: date-time
+        latencyMs:
+          type: integer
+          minimum: 0
+        inputTokens:
+          type: integer
+          minimum: 0
+        outputTokens:
+          type: integer
+          minimum: 0
+    AnswerStreamEvent:
+      oneOf:
+        - $ref: '#/components/schemas/AnswerStartEvent'
+        - $ref: '#/components/schemas/AnswerTextEvent'
+        - $ref: '#/components/schemas/AnswerCitationEvent'
+        - $ref: '#/components/schemas/AnswerNoAnswerEvent'
+        - $ref: '#/components/schemas/AnswerErrorEvent'
+        - $ref: '#/components/schemas/AnswerEndEvent'
+      discriminator:
+        propertyName: event
+    AnswerStartEvent:
+      type: object
+      additionalProperties: false
+      required: [event, answerId, requestId, traceId]
+      properties:
+        event:
+          const: start
+        answerId:
+          type: string
+          format: uuid
+        requestId:
+          type: string
+          format: uuid
+        traceId:
+          type: string
+          minLength: 16
+          maxLength: 64
+    AnswerTextEvent:
+      type: object
+      additionalProperties: false
+      required: [event, sequence, delta]
+      properties:
+        event:
+          const: text
+        sequence:
+          type: integer
+          minimum: 0
+        delta:
+          type: string
+          maxLength: 4000
+    AnswerCitationEvent:
+      type: object
+      additionalProperties: false
+      required: [event, citationId, sourceVersionId, title, locator]
+      properties:
+        event:
+          const: citation
+        citationId:
+          type: string
+          format: uuid
+        sourceVersionId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          maxLength: 300
+        locator:
+          type: string
+          maxLength: 500
+    AnswerNoAnswerEvent:
+      type: object
+      additionalProperties: false
+      required: [event, reason, followUpQuestions]
+      properties:
+        event:
+          const: no_answer
+        reason:
+          type: string
+          maxLength: 2000
+        followUpQuestions:
+          type: array
+          maxItems: 5
+          items:
+            type: string
+            maxLength: 1000
+    AnswerErrorEvent:
+      type: object
+      additionalProperties: false
+      required: [event, code, message, retryable]
+      properties:
+        event:
+          const: error
+        code:
+          type: string
+          maxLength: 100
+        message:
+          type: string
+          maxLength: 1000
+        retryable:
+          type: boolean
+    AnswerEndEvent:
+      type: object
+      additionalProperties: false
+      required: [event, citationIds, metadata]
+      properties:
+        event:
+          const: end
+        citationIds:
+          type: array
+          uniqueItems: true
+          maxItems: 10
+          items:
+            type: string
+            format: uuid
+        metadata:
+          $ref: '#/components/schemas/ModelMetadata'
+    StartEvaluationRequest:
+      type: object
+      additionalProperties: false
+      required: [context, datasetId, modelAlias, promptVersion, indexVersion, maxCases]
+      properties:
+        context:
+          $ref: '#/components/schemas/RequestContext'
+        datasetId:
+          type: string
+          format: uuid
+        modelAlias:
+          type: string
+        promptVersion:
+          type: string
+        indexVersion:
+          type: string
+        maxCases:
+          type: integer
+          minimum: 1
+          maximum: 500
+    EvaluationAccepted:
+      type: object
+      required: [runId, status]
+      properties:
+        runId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED]
+    EvaluationRun:
+      type: object
+      additionalProperties: false
+      required: [runId, status, datasetId, caseCount, completedCount, hardFailureCodes]
+      properties:
+        runId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, COMPLETED, FAILED, CANCELLED]
+        datasetId:
+          type: string
+          format: uuid
+        caseCount:
+          type: integer
+          minimum: 0
+        completedCount:
+          type: integer
+          minimum: 0
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+        hardFailureCodes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    ToolContext:
+      type: object
+      additionalProperties: false
+      required: [requestId, traceId, tenantId, actorContextToken, scopes, deadline, toolCallId]
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        traceId:
+          type: string
+          minLength: 16
+          maxLength: 64
+        tenantId:
+          type: string
+          format: uuid
+        actorContextToken:
+          type: string
+          description: Opaque short-lived token; never log the value.
+        scopes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        deadline:
+          type: string
+          format: date-time
+        toolCallId:
+          type: string
+          format: uuid
+    AssetSummaryToolRequest:
+      type: object
+      additionalProperties: false
+      required: [context, assetId]
+      properties:
+        context:
+          $ref: '#/components/schemas/ToolContext'
+        assetId:
+          type: string
+          format: uuid
+    AssetSummaryToolResult:
+      type: object
+      additionalProperties: false
+      required: [assetId, displayName, modelName, status, safeAttributes]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        modelName:
+          type: string
+        status:
+          type: string
+        safeAttributes:
+          type: object
+          additionalProperties:
+            type: string
+    WorkOrderHistoryToolRequest:
+      type: object
+      additionalProperties: false
+      required: [context, assetId, limit]
+      properties:
+        context:
+          $ref: '#/components/schemas/ToolContext'
+        assetId:
+          type: string
+          format: uuid
+        faultCode:
+          type: [string, 'null']
+          maxLength: 100
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 20
+    WorkOrderHistoryToolResult:
+      type: object
+      additionalProperties: false
+      required: [items, truncated]
+      properties:
+        items:
+          type: array
+          maxItems: 20
+          items:
+            type: object
+            additionalProperties: false
+            required: [workOrderId, closedAt, sanitizedSymptom, sanitizedResolution]
+            properties:
+              workOrderId:
+                type: string
+                format: uuid
+              closedAt:
+                type: string
+                format: date-time
+              sanitizedSymptom:
+                type: string
+                maxLength: 2000
+              sanitizedResolution:
+                type: string
+                maxLength: 4000
+        truncated:
+          type: boolean
+    InternalProblem:
+      type: object
+      required: [status, code, message, traceId, retryable]
+      properties:
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
+        retryable:
+          type: boolean
+security:
+  - serviceBearer: []

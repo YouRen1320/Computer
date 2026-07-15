@@ -1,0 +1,38 @@
+﻿skill,postings_count,postings_share_pct,java_backend_count,java_vue_fullstack_count,vue_uniapp_frontend_count,python_ai_app_count,evidence_basis
+JavaScript,29,34.5,2,19,8,0,explicit platform skill tags only
+MySQL,28,33.3,8,19,0,1,explicit platform skill tags only
+Spring,23,27.4,7,15,0,1,explicit platform skill tags only
+Java,20,23.8,10,7,0,3,explicit platform skill tags only
+Python,17,20.2,3,3,0,11,explicit platform skill tags only
+Oracle,12,14.3,3,9,0,0,explicit platform skill tags only
+Vue,11,13.1,0,4,7,0,explicit platform skill tags only
+CSS,9,10.7,0,1,8,0,explicit platform skill tags only
+MyBatis,9,10.7,3,6,0,0,explicit platform skill tags only
+LLM/大模型,8,9.5,0,0,0,8,explicit platform skill tags only
+React,8,9.5,0,2,6,0,explicit platform skill tags only
+Redis,8,9.5,2,6,0,0,explicit platform skill tags only
+HTML5,7,8.3,0,0,7,0,explicit platform skill tags only
+Computer Vision,6,7.1,0,0,0,6,explicit platform skill tags only
+Deep Learning,5,6.0,0,0,0,5,explicit platform skill tags only
+PostgreSQL,4,4.8,3,1,0,0,explicit platform skill tags only
+PyTorch,4,4.8,0,0,0,4,explicit platform skill tags only
+Spring Cloud,4,4.8,2,2,0,0,explicit platform skill tags only
+SQL Server,4,4.8,0,4,0,0,explicit platform skill tags only
+TensorFlow,4,4.8,0,0,0,4,explicit platform skill tags only
+Angular,3,3.6,0,0,3,0,explicit platform skill tags only
+C/C++,3,3.6,2,0,0,1,explicit platform skill tags only
+Machine Learning,3,3.6,0,0,0,3,explicit platform skill tags only
+Spring Boot,3,3.6,2,1,0,0,explicit platform skill tags only
+AI Agent/智能体,2,2.4,0,0,0,2,explicit platform skill tags only
+ECharts,2,2.4,0,0,2,0,explicit platform skill tags only
+Linux,2,2.4,1,0,0,1,explicit platform skill tags only
+NLP,2,2.4,0,0,0,2,explicit platform skill tags only
+RAG,2,2.4,0,0,0,2,explicit platform skill tags only
+Three.js,2,2.4,0,0,2,0,explicit platform skill tags only
+TypeScript,2,2.4,0,0,1,1,explicit platform skill tags only
+Caffe,1,1.2,0,0,0,1,explicit platform skill tags only
+Kafka,1,1.2,1,0,0,0,explicit platform skill tags only
+RabbitMQ,1,1.2,1,0,0,0,explicit platform skill tags only
+Spring MVC,1,1.2,0,1,0,0,explicit platform skill tags only
+SQL,1,1.2,0,1,0,0,explicit platform skill tags only
+uni-app,1,1.2,0,0,1,0,explicit platform skill tags only
