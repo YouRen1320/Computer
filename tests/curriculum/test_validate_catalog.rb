@@ -303,7 +303,7 @@ class CurriculumCompilerTest < Minitest::Test
   end
 
   def test_ready_migration_rejects_catalog_projection_tampering
-    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec = ready_spec_fixture
     spec.chapters.first["status"] = "verified"
 
     error = assert_raises(Curriculum::DiagnosticError) do
@@ -315,7 +315,7 @@ class CurriculumCompilerTest < Minitest::Test
   end
 
   def test_changing_only_migration_status_to_applied_fails_without_receipt
-    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec = ready_spec_fixture
     spec.migration["status"] = "applied"
 
     errors = application_receipt_errors(spec)
@@ -407,8 +407,23 @@ class CurriculumCompilerTest < Minitest::Test
 
   private
 
-  def ready_application_receipt_fixture
+  # Lifecycle tests must construct the state they exercise instead of
+  # inheriting whether the real repository is currently ready or applied.
+  def ready_spec_fixture
     spec = Curriculum::SpecSet.new(ROOT).load!
+    receipt_path = spec.migration.delete("application_receipt_path")
+    spec.migration.delete("application_receipt_digest")
+    spec.migration["status"] = "ready"
+    if receipt_path
+      spec.input_paths.delete(receipt_path)
+      spec.input_contents.delete(receipt_path)
+    end
+    spec.instance_variable_set(:@application_receipt, nil)
+    spec
+  end
+
+  def ready_application_receipt_fixture
+    spec = ready_spec_fixture
     outputs = Curriculum::Compiler.new(spec).render_outputs
     plan = Curriculum::MigrationReceipt.expected_ready_plan(spec, outputs)
     receipt = Curriculum::MigrationReceipt.build(
@@ -467,6 +482,15 @@ class CurriculumCompilerTest < Minitest::Test
     migration = "curriculum/migrations/2026.1-to-2026.2.yml"
     FileUtils.mkdir_p(File.dirname(File.join(workspace, migration)))
     FileUtils.cp(File.join(ROOT, migration), File.join(workspace, migration))
+    migration_document = Curriculum::StrictYaml.load(
+      File.read(File.join(ROOT, migration), encoding: "UTF-8"),
+      display_path: migration
+    )
+    receipt = migration_document["application_receipt_path"]
+    if receipt
+      FileUtils.mkdir_p(File.dirname(File.join(workspace, receipt)))
+      FileUtils.cp(File.join(ROOT, receipt), File.join(workspace, receipt))
+    end
     legacy_manifest = "curriculum/migrations/legacy-2026.1-manifest.yml"
     FileUtils.cp(File.join(ROOT, legacy_manifest), File.join(workspace, legacy_manifest))
     migration_schema = "curriculum/migrations/migration.schema.json"

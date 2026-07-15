@@ -32,8 +32,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       begin
         FIXTURE_PATHS.each { |relative| FileUtils.cp_r(ROOT.join(relative), temporary_root.join(relative)) }
         attach_git_object_database!(temporary_root)
-        restore_frozen_ready_tree!(temporary_root)
-        apply_ready_migration_with_receipt!(temporary_root)
+        prepare_applied_fixture!(temporary_root)
       rescue StandardError
         FileUtils.remove_entry(temporary_parent) if temporary_parent.exist?
         raise
@@ -81,6 +80,25 @@ class EncyclopediaSecurityTest < Minitest::Test
         path = root.join(relative)
         FileUtils.mkdir_p(path.dirname)
         File.binwrite(path, bytes)
+      end
+    end
+
+    def prepare_applied_fixture!(root)
+      ledger_path = root.join("curriculum/migrations/2026.1-to-2026.2.yml")
+      ledger = YAML.safe_load(File.read(ledger_path, encoding: "UTF-8"), aliases: false)
+      case ledger["status"]
+      when "ready"
+        restore_frozen_ready_tree!(root)
+        apply_ready_migration_with_receipt!(root)
+      when "applied"
+        # The production repository has already completed the audited
+        # migration. Re-render only inside the isolated fixture so its bytes
+        # also reflect any later compiler-only maintenance.
+        run_required!(root, RbConfig.ruby, "scripts/generate-curriculum.rb", "--write")
+        run_required!(root, RbConfig.ruby, "scripts/generate-curriculum.rb", "--check")
+        run_required!(root, RbConfig.ruby, "scripts/validate-encyclopedia.rb", "--quiet")
+      else
+        raise "security fixture requires a ready or applied migration ledger"
       end
     end
 

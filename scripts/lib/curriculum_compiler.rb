@@ -2157,6 +2157,7 @@ module Curriculum
         end
         lines << ""
       end
+      lines.pop while lines.last == ""
       lines.join("\n") + "\n"
     end
 
@@ -2194,8 +2195,7 @@ module Curriculum
         "ruby scripts/generate-curriculum.rb --check",
         "ruby scripts/generate-curriculum.rb --write",
         "ruby curriculum/validate_catalog.rb",
-        "```",
-        ""
+        "```"
       ]
       lines.join("\n") + "\n"
     end
