@@ -90,7 +90,7 @@ ch.ai.rag-evaluation
 建议 schema regex：
 
 ```regex
-^ch\.(foundation|java|sql|spring|security|web|js|ts|vue|mini|dart|flutter|python|math|ml|ai|ops|project)\.[a-z0-9]+(?:-[a-z0-9]+)*$
+^ch\.[a-z0-9]+(?:-[a-z0-9]+)*\.[a-z0-9]+(?:-[a-z0-9]+)*$
 ```
 
 ### 3.2 ID 治理规则
@@ -100,7 +100,7 @@ ch.ai.rag-evaluation
 - 标题改名、卷内重排、跨卷移动都不改 ID。
 - 语义拆分、合并或实质改写必须创建新 ID。
 - 已退休 ID 永不复用。
-- `id-registry.yml` 记录 `created_in`、`status: active|retired`、退休迁移项。
+- `id-registry.yml` 记录 `introduced_in`、`status: active|retired`、退休迁移项。
 - 迁移完成后不提供旧 ID alias、redirect、shadow placeholder 或双写路线。
 - 历史 ID 只允许出现在 migration ledger 和冻结历史审计记录中。
 
@@ -110,12 +110,12 @@ ch.ai.rag-evaluation
 
 capability 表示“读者已经能独立使用、修改、测试和诊断的一组稳定能力”，不是标题关键词。更细的术语由 `topics.yml` 管理。
 
-- capability：跨章节复用的可验证能力，数量控制在约 80 项。
+- capability：跨章节复用的可验证能力；初稿估计约 80 项，语义拆分审计后由 `capabilities.yml` 冻结为 94 项，后续不得在验证器中硬编码。
 - topic：标题和正文中的细粒度知识点，例如 `while`、`EOF`、`BigDecimal`、`watchEffect`，数量可以明显多于 capability。
 - capability 负责跨章先教后用。
 - topic 负责标题/outcome 覆盖、单一职责和章节内先后关系。
 
-## 5. Capability taxonomy：80 项
+## 5. Capability taxonomy：当前 edition 冻结为 94 项
 
 ### 5.1 基础能力 10 项
 
@@ -244,18 +244,18 @@ evidence_kinds:
   - prediction
   - runnable-code
   - failure-diagnosis
-terms:
-  - if
-  - switch
-  - for
-  - while
+required_topic_ids:
+  - java.if
+  - java.switch
+  - java.for
+  - java.while
 ```
 
 教师和使用规则：
 
 1. 每项 capability 恰好一个教师章。
 2. 教师章最多正式教授 2 项新 capability。
-3. `uses_capabilities` 中每项能力的教师章必须在硬前置闭包内。
+3. `capabilities.uses` 中每项能力的教师章必须在硬前置闭包内。
 4. 教师章可以在本章内使用自己刚教授的能力。
 5. 仅提及术语不需要能力；要求独立修改、解释、测试或诊断时必须登记使用。
 6. 教师章之前允许暂借样板，但必须显式声明 `borrowed_scaffolds`。
@@ -268,7 +268,7 @@ terms:
 ```yaml
 borrowed_scaffolds:
   - topic: java.main-signature
-    later_teacher: ch.java.program-structure
+    later_teacher_chapter_id: ch.java.program-structure
     allowed_action: copy-run-only
 ```
 
@@ -282,7 +282,7 @@ topics_taught: [...]
 topics_used: [...]
 ```
 
-这样可以保持 capability 总量约 80，同时避免“一个大能力包住十个尚未教授概念”。
+这样把 capability 总量控制在当前 edition 的 94 项，同时避免“一个大能力包住十个尚未教授概念”。数量由注册表声明并与实际条目交叉校验，而不是作为跨 edition 常量。
 
 ## 7. Chapter schema v2
 
@@ -293,20 +293,21 @@ id: ch.java.console-input-validation
 title: 控制台输入、EOF 与合法性校验
 volume: "01"
 order: 9
-kind: concept
+role: concept
 topic_groups:
   - input-validation
 prerequisites:
   - ch.java.control-flow
   - ch.java.arrays-arguments
-prerequisite_reasons:
+prerequisite_rationales:
   ch.java.control-flow:
     capabilities: [java.control-flow]
     outcome_ids: [build, diagnose]
-teaches_capabilities: []
-uses_capabilities:
-  - java.control-flow
-  - java.arrays
+capabilities:
+  teaches: []
+  uses:
+    - java.control-flow
+    - java.arrays
 outcomes:
   - id: explain
     kind: concept
@@ -326,11 +327,11 @@ outcomes:
 
 新增字段：
 
-- `kind`: `foundation|concept|practice|synthesis|review|project|reference`
+- `role`: `foundation|concept|practice|synthesis|review|project|reference`
 - `topic_groups`
 - `topics_taught`
 - `topics_used`
-- `prerequisite_reasons`
+- `prerequisite_rationales`
 - `borrowed_scaffolds`
 - 结构化 `outcomes`
 
@@ -351,7 +352,7 @@ outcomes:
 
 - 标题中的规范 topic 必须出现在 `topic_groups`。
 - 每个 `topic_group` 至少由一个 outcome 覆盖。
-- `teaches_capabilities` 必须至少由一个独立 build/diagnose outcome 证明。
+- `capabilities.teaches` 必须同时由独立 build 与 diagnose outcome 证明。
 - ID/标题声称的主题不能只存在于 slug。
 - “标题含 JUnit，outcomes 只写数组”必须报错。
 - 术语别名来自 `topics.yml`，不靠临时字符串特判。
@@ -388,7 +389,7 @@ outcomes:
 `synthesis|review|project`：
 
 - 最多 4 个 topic group。
-- 不得再教授新 capability。
+- 可以作为集成 capability 的唯一教师章，但仍受“每章最多 2 项新 capability”和唯一教师约束；这避免为跨域综合能力制造永久例外。
 - 必须声明为何属于综合章节。
 
 合法例外必须有：
@@ -404,7 +405,7 @@ scope_exception:
 
 ### 8.5 硬依赖充分性和最小性
 
-- 每条硬边必须在 `prerequisite_reasons` 中说明支撑哪个 capability、topic 或 outcome。
+- 每条硬边必须在 `prerequisite_rationales` 中说明支撑哪个 capability、topic 或 outcome。
 - 如果一条直接边的全部能力已由另一前置的祖先提供，报 redundant-edge warning。
 - 如果 outcome 使用的能力没有任何硬边提供，报 missing-semantic-prerequisite error。
 - 不再维护 `critical_edges` Ruby 哈希。
@@ -484,7 +485,7 @@ ruby scripts/generate-curriculum.rb --write
 - 卷标题来自 `volumes.yml`。
 - 章节列表、顺序、状态和链接完全生成。
 - 不允许手工插入章节列表。
-- 手写卷导言放独立 `book/volume-*/INTRO.md`，生成 README 时嵌入，避免覆盖人工内容。
+- 当前 edition 不读取或嵌入 `INTRO.md`；需要卷导言时，必须先把它加入 canonical input 快照、严格校验和确定性渲染契约。
 
 ### 10.2 Placeholder
 
@@ -637,7 +638,7 @@ entries:
 
 - 170 个旧 ID 每个恰好出现一次。
 - 每个新 ID要么由迁移项产生，要么有 `action: new`。
-- split/repartition 必须给 source section override。
+- split/repartition 必须使用真实逐 section 人工 override，或引用冻结来源全量重建证据；章节级迁移边不能冒充 section 已复核。
 - merge target 不得被其他非 merge 项占用。
 - 无环、无孤儿、无 ID 复用。
 - active canonical 文件中不能残留旧 ID。
@@ -646,7 +647,7 @@ entries:
 ## 15. 无兼容迁移执行顺序
 
 1. 创建迁移前 tag 和完整生成快照。
-2. 冻结新章节清单和 80 项 capability registry。
+2. 冻结新章节清单和 edition 声明的 94 项 capability registry。
 3. 完成全部 170 ID 的迁移账本。
 4. `--plan` 输出新增、删除、移动、split/merge 和 source mapping 影响。
 5. 先验证账本覆盖，不写文件。
@@ -666,7 +667,7 @@ entries:
 治理改造只有同时满足以下条件才算完成：
 
 1. 所有 active 章节使用语义稳定 ID。
-2. 80 项 capability 均有唯一教师章和证据阈值。
+2. edition 声明的 94 项 capability 均有唯一教师章和证据阈值。
 3. 零基础路线不存在教师章之前的独立使用。
 4. 标题、topic groups、outcomes 和 capability 之间完全可追溯。
 5. 普通章节通过单一职责和最大主题数断言。

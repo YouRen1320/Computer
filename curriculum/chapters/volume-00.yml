@@ -1,0 +1,1922 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: '00'
+chapters:
+- id: ch.foundations.learning-evidence
+  title: 学习证据、掌握标准与间隔复习
+  role: foundation
+  responsibility: 建立可证伪的掌握标准与复习节奏，不把阅读时长、文件存在或 AI 生成等同于能力
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: learning-evidence
+    title: 主张与证据
+    topics:
+    - learning.claim-evidence
+    - learning.mastery-criteria
+    - learning.false-confidence
+  - id: learning-retrieval
+    title: 检索与复习
+    topics:
+    - learning.retrieval-practice
+    - learning.spaced-review
+    - learning.teach-back
+  topics_taught:
+  - learning.claim-evidence
+  - learning.mastery-criteria
+  - learning.false-confidence
+  - learning.retrieval-practice
+  - learning.spaced-review
+  - learning.teach-back
+  topics_used:
+  - learning.claim-evidence
+  - learning.mastery-criteria
+  - learning.false-confidence
+  - learning.retrieval-practice
+  - learning.spaced-review
+  - learning.teach-back
+  prerequisites: []
+  prerequisite_rationales: {}
+  capabilities:
+    teaches:
+    - foundation.learning-evidence
+    uses: []
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.learning-evidence/
+    acceptance:
+    - 每项主张都有可重放证据；边界项明确标为未验证；伪造、仅存在文件和模型自述会被判失败
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-learning-evidence/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释学习证据、掌握标准与间隔复习的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - learning-evidence
+    - learning-retrieval
+    covers_topics:
+    - learning.claim-evidence
+    - learning.mastery-criteria
+    - learning.false-confidence
+    - learning.retrieval-practice
+    - learning.spaced-review
+    - learning.teach-back
+    uses_capabilities:
+    - foundation.learning-evidence
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：为一个待学概念建立 claim→evidence→next-review 学习账本，写出 explain/build/diagnose
+      三类证据和 1/3/7 天检索计划
+    covers_topic_groups:
+    - learning-evidence
+    - learning-retrieval
+    covers_topics:
+    - learning.claim-evidence
+    - learning.mastery-criteria
+    - learning.false-confidence
+    - learning.retrieval-practice
+    - learning.spaced-review
+    - learning.teach-back
+    uses_capabilities:
+    - foundation.learning-evidence
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 从一份把阅读时长和 AI 生成文件误记为掌握的样例账本中找出无效证据，改写后说明为何可证伪，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - learning-evidence
+    - learning-retrieval
+    covers_topics:
+    - learning.claim-evidence
+    - learning.mastery-criteria
+    - learning.false-confidence
+    - learning.retrieval-practice
+    - learning.spaced-review
+    - learning.teach-back
+    uses_capabilities:
+    - foundation.learning-evidence
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.files-paths-encoding
+  title: 文件、路径、字符与编码
+  role: foundation
+  responsibility: 建立文件系统与文本编码心智模型，只用图示和编辑器观察，不提前要求 Shell 文件操作
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: files-paths
+    title: 文件与路径
+    topics:
+    - fs.file-directory
+    - fs.absolute-relative-path
+    - fs.extension-hidden-file
+  - id: text-encoding
+    title: 字符与编码
+    topics:
+    - text.character-byte
+    - text.utf8
+    - text.line-ending
+  topics_taught:
+  - fs.file-directory
+  - fs.absolute-relative-path
+  - fs.extension-hidden-file
+  - text.character-byte
+  - text.utf8
+  - text.line-ending
+  topics_used:
+  - fs.file-directory
+  - fs.absolute-relative-path
+  - fs.extension-hidden-file
+  - text.character-byte
+  - text.utf8
+  - text.line-ending
+  prerequisites: []
+  prerequisite_rationales: {}
+  capabilities:
+    teaches:
+    - foundation.files-path-encoding
+    uses: []
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.files-paths-encoding/
+    acceptance:
+    - 绝对与相对路径均指向预期文件；中文往返无损；路径越界、错误编码和换行差异都有可观察反例
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-files-paths-encoding/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释文件、路径、字符与编码的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - files-paths
+    - text-encoding
+    covers_topics:
+    - fs.file-directory
+    - fs.absolute-relative-path
+    - fs.extension-hidden-file
+    - text.character-byte
+    - text.utf8
+    - text.line-ending
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：绘制含绝对/相对路径、隐藏文件、扩展名、UTF-8 中文和两种换行符的项目树，并逐项标注字符与字节边界
+    covers_topic_groups:
+    - files-paths
+    - text-encoding
+    covers_topics:
+    - fs.file-directory
+    - fs.absolute-relative-path
+    - fs.extension-hidden-file
+    - text.character-byte
+    - text.utf8
+    - text.line-ending
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 定位一份因工作目录错误、同名文件和错误编码产生的“文件不存在/中文乱码”，修复后重新打开原文件
+    covers_topic_groups:
+    - files-paths
+    - text-encoding
+    covers_topics:
+    - fs.file-directory
+    - fs.absolute-relative-path
+    - fs.extension-hidden-file
+    - text.character-byte
+    - text.utf8
+    - text.line-ending
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.terminal-shell
+  title: 终端、Shell、命令与引用规则
+  role: foundation
+  responsibility: 教会读者安全输入和组合基础命令并理解引用边界，不在本章教授管道、标准流或退出码
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: terminal-shell
+    title: 终端与 Shell
+    topics:
+    - shell.terminal-shell
+    - shell.prompt-command
+    - shell.working-directory
+  - id: shell-quoting
+    title: 参数与引用
+    topics:
+    - shell.argument-token
+    - shell.single-double-quote
+    - shell.escape-glob
+  topics_taught:
+  - shell.terminal-shell
+  - shell.prompt-command
+  - shell.working-directory
+  - shell.argument-token
+  - shell.single-double-quote
+  - shell.escape-glob
+  topics_used:
+  - shell.terminal-shell
+  - shell.prompt-command
+  - shell.working-directory
+  - shell.argument-token
+  - shell.single-double-quote
+  - shell.escape-glob
+  prerequisites:
+  - ch.foundations.files-paths-encoding
+  prerequisite_rationales:
+    ch.foundations.files-paths-encoding:
+      reason: 独立完成终端与 Shell、参数与引用前，必须先具备「文件、路径、字符与编码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.files-path-encoding
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.files-path-encoding
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.terminal-shell/
+    acceptance:
+    - 普通参数、空格参数和字面 * 均按预期传入；错误引用能稳定复现；修复命令不依赖偶然目录内容
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释终端、Shell、命令与引用规则的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - terminal-shell
+    - shell-quoting
+    covers_topics:
+    - shell.terminal-shell
+    - shell.prompt-command
+    - shell.working-directory
+    - shell.argument-token
+    - shell.single-double-quote
+    - shell.escape-glob
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：在含空格与通配符字符的练习目录中执行 pwd、cd、ls 和参数打印命令，保存每种引用方式对应的 argv 结果
+    covers_topic_groups:
+    - terminal-shell
+    - shell-quoting
+    covers_topics:
+    - shell.terminal-shell
+    - shell.prompt-command
+    - shell.working-directory
+    - shell.argument-token
+    - shell.single-double-quote
+    - shell.escape-glob
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入未加引号的空格路径或意外 glob 展开，指出 token 化阶段并修复为不会误展开的命令
+    covers_topic_groups:
+    - terminal-shell
+    - shell-quoting
+    covers_topics:
+    - shell.terminal-shell
+    - shell.prompt-command
+    - shell.working-directory
+    - shell.argument-token
+    - shell.single-double-quote
+    - shell.escape-glob
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.computer-process-model
+  title: CPU、内存、磁盘、程序与进程
+  role: foundation
+  responsibility: 建立程序运行和资源归属模型，使用已学终端观察进程但不提前教授标准流与进程间管道
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: computer-resources
+    title: 计算机资源
+    topics:
+    - os.cpu-memory-disk
+    - os.volatile-persistent
+    - os.resource-limit
+  - id: program-process
+    title: 程序与进程
+    topics:
+    - os.program-process
+    - os.pid-lifecycle
+    - os.parent-child-process
+  topics_taught:
+  - os.cpu-memory-disk
+  - os.volatile-persistent
+  - os.resource-limit
+  - os.program-process
+  - os.pid-lifecycle
+  - os.parent-child-process
+  topics_used:
+  - os.cpu-memory-disk
+  - os.volatile-persistent
+  - os.resource-limit
+  - os.program-process
+  - os.pid-lifecycle
+  - os.parent-child-process
+  prerequisites:
+  - ch.foundations.terminal-shell
+  prerequisite_rationales:
+    ch.foundations.terminal-shell:
+      reason: 独立完成计算机资源、程序与进程前，必须先具备「终端、Shell、命令与引用规则」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - shell.terminal-shell
+      - shell.prompt-command
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.os-process-memory
+    uses:
+    - foundation.files-path-encoding
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.computer-process-model/
+    acceptance:
+    - 进程启动/退出前后证据一致；父子关系可复查；CPU、内存、磁盘三类症状不会被互相替代
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-computer-process-model/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释CPU、内存、磁盘、程序与进程的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - computer-resources
+    - program-process
+    covers_topics:
+    - os.cpu-memory-disk
+    - os.volatile-persistent
+    - os.resource-limit
+    - os.program-process
+    - os.pid-lifecycle
+    - os.parent-child-process
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.os-process-memory
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：启动并观察一个短进程和一个持续进程，记录 PID、父进程、CPU/内存变化、可执行文件与磁盘文件之间的关系
+    covers_topic_groups:
+    - computer-resources
+    - program-process
+    covers_topics:
+    - os.cpu-memory-disk
+    - os.volatile-persistent
+    - os.resource-limit
+    - os.program-process
+    - os.pid-lifecycle
+    - os.parent-child-process
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.os-process-memory
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 纠正一份把程序文件、运行进程、内存占用和磁盘容量混为一谈的资源故障报告
+    covers_topic_groups:
+    - computer-resources
+    - program-process
+    covers_topics:
+    - os.cpu-memory-disk
+    - os.volatile-persistent
+    - os.resource-limit
+    - os.program-process
+    - os.pid-lifecycle
+    - os.parent-child-process
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.os-process-memory
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.cli-streams-exit-codes
+  title: stdin、stdout、stderr、管道与退出码
+  role: foundation
+  responsibility: 教授命令行进程的数据通道和成功失败协议，不扩展到网络套接字或应用日志框架
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: cli-streams
+    title: 标准流与重定向
+    topics:
+    - shell.stdin-stdout-stderr
+    - shell.redirect
+    - shell.pipeline
+  - id: process-result
+    title: 退出与失败
+    topics:
+    - shell.exit-code
+    - shell.short-circuit
+    - shell.failure-propagation
+  topics_taught:
+  - shell.stdin-stdout-stderr
+  - shell.redirect
+  - shell.pipeline
+  - shell.exit-code
+  - shell.short-circuit
+  - shell.failure-propagation
+  topics_used:
+  - shell.stdin-stdout-stderr
+  - shell.redirect
+  - shell.pipeline
+  - shell.exit-code
+  - shell.short-circuit
+  - shell.failure-propagation
+  prerequisites:
+  - ch.foundations.computer-process-model
+  prerequisite_rationales:
+    ch.foundations.computer-process-model:
+      reason: 独立完成标准流与重定向、退出与失败前，必须先具备「CPU、内存、磁盘、程序与进程」已经验证的知识与失败边界
+      capabilities:
+      - foundation.os-process-memory
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.shell-command-stream
+    uses:
+    - foundation.os-process-memory
+    - foundation.files-path-encoding
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.cli-streams-exit-codes/
+    acceptance:
+    - 空格参数不拆分；正常输入得到预期 stdout/0；非法输入只在 stderr 且非0；管道任一失败不被误判成功
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-cli-streams-exit-codes/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释stdin、stdout、stderr、管道与退出码的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - cli-streams
+    - process-result
+    covers_topics:
+    - shell.stdin-stdout-stderr
+    - shell.redirect
+    - shell.pipeline
+    - shell.exit-code
+    - shell.short-circuit
+    - shell.failure-propagation
+    uses_capabilities:
+    - foundation.os-process-memory
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：在含空格参数的 shell 命令中正确引用输入，组合读取 stdin、分别写 stdout/stderr、经管道传递并返回成功/失败退出码的三段实验
+    covers_topic_groups:
+    - cli-streams
+    - process-result
+    covers_topics:
+    - shell.stdin-stdout-stderr
+    - shell.redirect
+    - shell.pipeline
+    - shell.exit-code
+    - shell.short-circuit
+    - shell.failure-propagation
+    uses_capabilities:
+    - foundation.os-process-memory
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入参数未引用、stderr 被重定向丢失、管道前段失败却被末段 0 掩盖，定位 token/stream/exit 三类边界并修复
+    covers_topic_groups:
+    - cli-streams
+    - process-result
+    covers_topics:
+    - shell.stdin-stdout-stderr
+    - shell.redirect
+    - shell.pipeline
+    - shell.exit-code
+    - shell.short-circuit
+    - shell.failure-propagation
+    uses_capabilities:
+    - foundation.os-process-memory
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.environment-tool-resolution
+  title: 环境变量、PATH 与工具版本解析
+  role: foundation
+  responsibility: 解释进程如何继承环境并解析同名工具，聚焦可观察的版本选择，不进入具体语言构建系统
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: environment
+    title: 环境与继承
+    topics:
+    - env.variable
+    - env.process-inheritance
+    - env.session-scope
+  - id: tool-resolution
+    title: 工具解析
+    topics:
+    - env.path-order
+    - env.command-resolution
+    - env.version-provenance
+  topics_taught:
+  - env.variable
+  - env.process-inheritance
+  - env.session-scope
+  - env.path-order
+  - env.command-resolution
+  - env.version-provenance
+  topics_used:
+  - env.variable
+  - env.process-inheritance
+  - env.session-scope
+  - env.path-order
+  - env.command-resolution
+  - env.version-provenance
+  prerequisites:
+  - ch.foundations.cli-streams-exit-codes
+  prerequisite_rationales:
+    ch.foundations.cli-streams-exit-codes:
+      reason: 独立完成环境与继承、工具解析前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.shell-command-stream
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.environment-tool-resolution/
+    acceptance:
+    - 父子环境继承结论由命令证明；同名工具解析顺序可复现；新终端和临时子进程边界均被验证
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - zsh
+  - macos-26
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释环境变量、PATH 与工具版本解析的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - environment
+    - tool-resolution
+    covers_topics:
+    - env.variable
+    - env.process-inheritance
+    - env.session-scope
+    - env.path-order
+    - env.command-resolution
+    - env.version-provenance
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 生成一份当前 shell 与子 shell 的环境快照，比较 PATH 顺序、type -a、实际可执行路径和工具版本来源，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - environment
+    - tool-resolution
+    covers_topics:
+    - env.variable
+    - env.process-inheritance
+    - env.session-scope
+    - env.path-order
+    - env.command-resolution
+    - env.version-provenance
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 PATH 与 JAVA_HOME 指向不同 JDK 的冲突，解释为何 java 与 Maven 可选中不同运行时并给出会话内修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - environment
+    - tool-resolution
+    covers_topics:
+    - env.variable
+    - env.process-inheritance
+    - env.session-scope
+    - env.path-order
+    - env.command-resolution
+    - env.version-provenance
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.editor-project-navigation
+  title: 编辑器、IDE、项目导航与源码定位
+  role: practice
+  responsibility: 训练从项目树、符号和引用定位源码的能力，不提前教授语言断点、调用栈或框架调试
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: editor-project
+    title: 项目与文件导航
+    topics:
+    - editor.project-root
+    - editor.file-search
+    - editor.source-generated-boundary
+  - id: editor-symbol
+    title: 符号与引用导航
+    topics:
+    - editor.symbol-search
+    - editor.definition-reference
+    - editor.problem-panel
+  topics_taught:
+  - editor.project-root
+  - editor.file-search
+  - editor.source-generated-boundary
+  - editor.symbol-search
+  - editor.definition-reference
+  - editor.problem-panel
+  topics_used:
+  - editor.project-root
+  - editor.file-search
+  - editor.source-generated-boundary
+  - editor.symbol-search
+  - editor.definition-reference
+  - editor.problem-panel
+  prerequisites:
+  - ch.foundations.files-paths-encoding
+  prerequisite_rationales:
+    ch.foundations.files-paths-encoding:
+      reason: 独立完成项目与文件导航、符号与引用导航前，必须先具备「文件、路径、字符与编码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.files-path-encoding
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.files-path-encoding
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.editor-project-navigation/
+    acceptance:
+    - 文件搜索、符号定义和引用三条路径均可复现；不会修改生成物；错误根目录能被证据识别；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - toolchains
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释编辑器、IDE、项目导航与源码定位的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - editor-project
+    - editor-symbol
+    covers_topics:
+    - editor.project-root
+    - editor.file-search
+    - editor.source-generated-boundary
+    - editor.symbol-search
+    - editor.definition-reference
+    - editor.problem-panel
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 在一个含源码、测试、依赖缓存和生成目录的样例工程中，从报错文件跳到定义、引用和项目根并记录导航路径
+    covers_topic_groups:
+    - editor-project
+    - editor-symbol
+    covers_topics:
+    - editor.project-root
+    - editor.file-search
+    - editor.source-generated-boundary
+    - editor.symbol-search
+    - editor.definition-reference
+    - editor.problem-panel
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 从打开了错误工作区或误入 generated/target 文件的场景中定位真正规范源码，修复后让问题面板指向正确文件，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - editor-project
+    - editor-symbol
+    covers_topics:
+    - editor.project-root
+    - editor.file-search
+    - editor.source-generated-boundary
+    - editor.symbol-search
+    - editor.definition-reference
+    - editor.problem-panel
+    uses_capabilities:
+    - foundation.files-path-encoding
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.git-collaboration-security
+  title: Git 状态模型、远程协作、冲突与凭据处置
+  role: foundation
+  responsibility: 教授可回滚的版本协作与泄露凭据处置，不把忽略文件误当成删除历史或撤销泄露
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: git-state
+    title: Git 状态与协作
+    topics:
+    - git.working-index-commit
+    - git.branch-remote
+    - git.merge-conflict
+  - id: git-security
+    title: 历史与凭据安全
+    topics:
+    - git.ignore-tracking
+    - git.secret-rotation
+    - git.history-rewrite-risk
+  topics_taught:
+  - git.working-index-commit
+  - git.branch-remote
+  - git.merge-conflict
+  - git.ignore-tracking
+  - git.secret-rotation
+  - git.history-rewrite-risk
+  topics_used:
+  - git.working-index-commit
+  - git.branch-remote
+  - git.merge-conflict
+  - git.ignore-tracking
+  - git.secret-rotation
+  - git.history-rewrite-risk
+  prerequisites:
+  - ch.foundations.cli-streams-exit-codes
+  prerequisite_rationales:
+    ch.foundations.cli-streams-exit-codes:
+      reason: 独立完成Git 状态与协作、历史与凭据安全前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.shell-command-stream
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.git-security
+    uses:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.git-collaboration-security/
+    acceptance:
+    - 状态转换与提交内容一致；冲突无静默丢失；假凭据被移除并记录轮换动作，真实秘密从未写入仓库；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-git-collaboration-security/
+    critical_failure_modes:
+    - secret-exposure
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - git
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Git 状态模型、远程协作、冲突与凭据处置的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - git-state
+    - git-security
+    covers_topics:
+    - git.working-index-commit
+    - git.branch-remote
+    - git.merge-conflict
+    - git.ignore-tracking
+    - git.secret-rotation
+    - git.history-rewrite-risk
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.git-security
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 在一次性仓库演示 working tree→index→commit→branch→merge，并模拟先跟踪后忽略配置文件及假 Token 轮换处置
+    covers_topic_groups:
+    - git-state
+    - git-security
+    covers_topics:
+    - git.working-index-commit
+    - git.branch-remote
+    - git.merge-conflict
+    - git.ignore-tracking
+    - git.secret-rotation
+    - git.history-rewrite-risk
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.git-security
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 .gitignore 不能取消已跟踪文件和合并冲突误覆盖两类故障，分别用状态/历史证据恢复
+    covers_topic_groups:
+    - git-state
+    - git-security
+    covers_topics:
+    - git.working-index-commit
+    - git.branch-remote
+    - git.merge-conflict
+    - git.ignore-tracking
+    - git.secret-rotation
+    - git.history-rewrite-risk
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.git-security
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.network-layers
+  title: IP、DNS、端口、TCP 与 TLS 分层
+  role: foundation
+  responsibility: 建立从名称解析到加密传输的分层诊断模型，不在本章教授 HTTP 语义
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: network-addressing
+    title: 地址与名称
+    topics:
+    - network.ip-address
+    - network.dns-resolution
+    - network.port-listener
+  - id: network-transport
+    title: 传输与加密
+    topics:
+    - network.tcp-connection
+    - network.timeout-refusal
+    - network.tls-handshake
+  topics_taught:
+  - network.ip-address
+  - network.dns-resolution
+  - network.port-listener
+  - network.tcp-connection
+  - network.timeout-refusal
+  - network.tls-handshake
+  topics_used:
+  - network.ip-address
+  - network.dns-resolution
+  - network.port-listener
+  - network.tcp-connection
+  - network.timeout-refusal
+  - network.tls-handshake
+  prerequisites:
+  - ch.foundations.cli-streams-exit-codes
+  prerequisite_rationales:
+    ch.foundations.cli-streams-exit-codes:
+      reason: 独立完成地址与名称、传输与加密前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.shell-command-stream
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.network-transport
+    uses:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.network-layers/
+    acceptance:
+    - DNS、TCP、TLS 正常链均有证据；三种故障定位到不同层；上层未执行时不会伪造成功结论；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-network-layers/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释IP、DNS、端口、TCP 与 TLS 分层的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - network-addressing
+    - network-transport
+    covers_topics:
+    - network.ip-address
+    - network.dns-resolution
+    - network.port-listener
+    - network.tcp-connection
+    - network.timeout-refusal
+    - network.tls-handshake
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    - foundation.network-transport
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：对一个可达服务记录 DNS 结果、目标 IP、监听端口、TCP 建连和 TLS 证书证据，并画出逐层诊断顺序
+    covers_topic_groups:
+    - network-addressing
+    - network-transport
+    covers_topics:
+    - network.ip-address
+    - network.dns-resolution
+    - network.port-listener
+    - network.tcp-connection
+    - network.timeout-refusal
+    - network.tls-handshake
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    - foundation.network-transport
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 分别注入错误域名、关闭端口和证书主机名不匹配，按首个失败层判断而不是笼统归因“网络坏了”
+    covers_topic_groups:
+    - network-addressing
+    - network-transport
+    covers_topics:
+    - network.ip-address
+    - network.dns-resolution
+    - network.port-listener
+    - network.tcp-connection
+    - network.timeout-refusal
+    - network.tls-handshake
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.os-process-memory
+    - foundation.network-transport
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.http-curl
+  title: HTTP 报文、方法、状态码、Header、Body 与 curl
+  role: foundation
+  responsibility: 教授 HTTP 请求响应契约和 curl 取证，不提前引入具体后端或浏览器框架
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: http-message
+    title: HTTP 报文
+    topics:
+    - http.request-response
+    - http.method-status
+    - http.header-body
+  - id: http-curl
+    title: curl 验证
+    topics:
+    - http.curl-request
+    - http.content-type
+    - http.timeout-evidence
+  topics_taught:
+  - http.request-response
+  - http.method-status
+  - http.header-body
+  - http.curl-request
+  - http.content-type
+  - http.timeout-evidence
+  topics_used:
+  - http.request-response
+  - http.method-status
+  - http.header-body
+  - http.curl-request
+  - http.content-type
+  - http.timeout-evidence
+  prerequisites:
+  - ch.foundations.network-layers
+  prerequisite_rationales:
+    ch.foundations.network-layers:
+      reason: 独立完成HTTP 报文、curl 验证前，必须先具备「IP、DNS、端口、TCP 与 TLS 分层」已经验证的知识与失败边界
+      capabilities:
+      - foundation.network-transport
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.http-message
+    uses:
+    - foundation.network-transport
+    - foundation.shell-command-stream
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.http-curl/
+    acceptance:
+    - 2xx/4xx/5xx 按 status 判定；JSON 与非 JSON body 不混读；超时能从 curl 退出码和 stderr 复现
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-http-curl/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释HTTP 报文、方法、状态码、Header、Body 与 curl的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - http-message
+    - http-curl
+    covers_topics:
+    - http.request-response
+    - http.method-status
+    - http.header-body
+    - http.curl-request
+    - http.content-type
+    - http.timeout-evidence
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.shell-command-stream
+    - foundation.http-message
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：用 curl 保存 GET/POST 请求的 method、status、headers、body、Content-Type
+      和计时信息，形成成功/客户端错/服务端错矩阵
+    covers_topic_groups:
+    - http-message
+    - http-curl
+    covers_topics:
+    - http.request-response
+    - http.method-status
+    - http.header-body
+    - http.curl-request
+    - http.content-type
+    - http.timeout-evidence
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.shell-command-stream
+    - foundation.http-message
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入错误 Content-Type、404 与连接超时，区分 HTTP 错误响应和没有收到 HTTP 响应的传输失败
+    covers_topic_groups:
+    - http-message
+    - http-curl
+    covers_topics:
+    - http.request-response
+    - http.method-status
+    - http.header-body
+    - http.curl-request
+    - http.content-type
+    - http.timeout-evidence
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.shell-command-stream
+    - foundation.http-message
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.api-contract-basics
+  title: API 资源、错误、版本、分页、缓存与幂等语义
+  role: concept
+  responsibility: 用协议无关的契约语言描述 API 行为，不实现框架路由、鉴权或数据库事务
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: api-resource-error
+    title: 资源与错误
+    topics:
+    - api.resource-representation
+    - api.error-contract
+    - api.compatible-versioning
+  - id: api-delivery-semantics
+    title: 交付语义
+    topics:
+    - api.pagination
+    - api.cache-validator
+    - api.idempotency-semantics
+  topics_taught:
+  - api.resource-representation
+  - api.error-contract
+  - api.compatible-versioning
+  - api.pagination
+  - api.cache-validator
+  - api.idempotency-semantics
+  topics_used:
+  - api.resource-representation
+  - api.error-contract
+  - api.compatible-versioning
+  - api.pagination
+  - api.cache-validator
+  - api.idempotency-semantics
+  prerequisites:
+  - ch.foundations.http-curl
+  prerequisite_rationales:
+    ch.foundations.http-curl:
+      reason: 独立完成资源与错误、交付语义前，必须先具备「HTTP 报文、方法、状态码、Header、Body 与 curl」已经验证的知识与失败边界
+      capabilities:
+      - foundation.http-message
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.http-message
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.api-contract-basics/
+    acceptance:
+    - 空页/末页、重复请求、缓存命中和版本兼容均有明确预期；未知内部错误仍保持稳定外部格式
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释API 资源、错误、版本、分页、缓存与幂等语义的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - api-resource-error
+    - api-delivery-semantics
+    covers_topics:
+    - api.resource-representation
+    - api.error-contract
+    - api.compatible-versioning
+    - api.pagination
+    - api.cache-validator
+    - api.idempotency-semantics
+    uses_capabilities:
+    - foundation.http-message
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：为设备列表 API 写资源、成功响应、Problem 错误、游标分页、ETag 缓存和幂等写入的契约示例表
+    covers_topic_groups:
+    - api-resource-error
+    - api-delivery-semantics
+    covers_topics:
+    - api.resource-representation
+    - api.error-contract
+    - api.compatible-versioning
+    - api.pagination
+    - api.cache-validator
+    - api.idempotency-semantics
+    uses_capabilities:
+    - foundation.http-message
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 识别页码漂移导致重复项、重试创建两条记录和错误响应随实现泄露字段三种契约缺陷并修订
+    covers_topic_groups:
+    - api-resource-error
+    - api-delivery-semantics
+    covers_topics:
+    - api.resource-representation
+    - api.error-contract
+    - api.compatible-versioning
+    - api.pagination
+    - api.cache-validator
+    - api.idempotency-semantics
+    uses_capabilities:
+    - foundation.http-message
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.foundations.testing-oracles
+  title: 预期值、测试预言、断言、AAA 与测试层级
+  role: foundation
+  responsibility: 建立从需求到可复现预言的验证方法，不绑定某一语言测试框架
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: test-oracle
+    title: 预言与断言
+    topics:
+    - test.expected-actual
+    - test.oracle
+    - test.assertion-aaa
+  - id: test-evidence
+    title: 测试层级与失败证据
+    topics:
+    - test.positive-negative-boundary
+    - test.levels-t0-t4
+    - test.first-trustworthy-evidence
+  topics_taught:
+  - test.expected-actual
+  - test.oracle
+  - test.assertion-aaa
+  - test.positive-negative-boundary
+  - test.levels-t0-t4
+  - test.first-trustworthy-evidence
+  topics_used:
+  - test.expected-actual
+  - test.oracle
+  - test.assertion-aaa
+  - test.positive-negative-boundary
+  - test.levels-t0-t4
+  - test.first-trustworthy-evidence
+  prerequisites:
+  - ch.foundations.cli-streams-exit-codes
+  prerequisite_rationales:
+    ch.foundations.cli-streams-exit-codes:
+      reason: 独立完成预言与断言、测试层级与失败证据前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+      capabilities:
+      - foundation.shell-command-stream
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.verification-debug-test
+    uses:
+    - foundation.shell-command-stream
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.testing-oracles/
+    acceptance:
+    - 每个 case 的 expected 在执行前确定；故意改错会红；恢复后 Tests run、Failures/Errors 与业务预期一致
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-testing-oracles/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释预期值、测试预言、断言、AAA 与测试层级的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - test-oracle
+    - test-evidence
+    covers_topics:
+    - test.expected-actual
+    - test.oracle
+    - test.assertion-aaa
+    - test.positive-negative-boundary
+    - test.levels-t0-t4
+    - test.first-trustworthy-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：把一个金额规则拆为 AAA 测试表，覆盖正常、零值、边界与非法输入，并标明 T0–T4 中当前所用层级
+    covers_topic_groups:
+    - test-oracle
+    - test-evidence
+    covers_topics:
+    - test.expected-actual
+    - test.oracle
+    - test.assertion-aaa
+    - test.positive-negative-boundary
+    - test.levels-t0-t4
+    - test.first-trustworthy-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 从一组只有 BUILD SUCCESS、期望值写错和未执行测试的日志中定位无效 oracle，修正后制造一次真实失败再恢复
+    covers_topic_groups:
+    - test-oracle
+    - test-evidence
+    covers_topics:
+    - test.expected-actual
+    - test.oracle
+    - test.assertion-aaa
+    - test.positive-negative-boundary
+    - test.levels-t0-t4
+    - test.first-trustworthy-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.foundations.dependencies-build-packages
+  title: 依赖、包管理、构建生命周期与可重复性
+  role: foundation
+  responsibility: 教授依赖解析和构建阶段的通用模型，不替代 Maven、pnpm 或 uv 的专门章节
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: dependency-resolution
+    title: 依赖与包
+    topics:
+    - build.direct-transitive-dependency
+    - build.version-constraint-lock
+    - build.repository-cache
+  - id: build-lifecycle
+    title: 构建与复现
+    topics:
+    - build.phase-lifecycle
+    - build.input-output
+    - build.reproducible-environment
+  topics_taught:
+  - build.direct-transitive-dependency
+  - build.version-constraint-lock
+  - build.repository-cache
+  - build.phase-lifecycle
+  - build.input-output
+  - build.reproducible-environment
+  topics_used:
+  - build.direct-transitive-dependency
+  - build.version-constraint-lock
+  - build.repository-cache
+  - build.phase-lifecycle
+  - build.input-output
+  - build.reproducible-environment
+  prerequisites:
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.testing-oracles
+  prerequisite_rationales:
+    ch.foundations.environment-tool-resolution:
+      reason: 独立完成依赖与包、构建与复现前，必须先具备「环境变量、PATH 与工具版本解析」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - env.variable
+      - env.process-inheritance
+      outcome_ids:
+      - build
+      - diagnose
+    ch.foundations.testing-oracles:
+      reason: 独立完成依赖与包、构建与复现前，必须先具备「预期值、测试预言、断言、AAA 与测试层级」已经验证的知识与失败边界
+      capabilities:
+      - foundation.verification-debug-test
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.toolchain-env-build
+    uses:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.dependencies-build-packages/
+    acceptance:
+    - 工具和环境来源可追溯；冷/热缓存产物摘要一致；依赖版本固定；编译或测试失败不会误报已打包
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-dependencies-build-packages/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - toolchains
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释依赖、包管理、构建生命周期与可重复性的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - dependency-resolution
+    - build-lifecycle
+    covers_topics:
+    - build.direct-transitive-dependency
+    - build.version-constraint-lock
+    - build.repository-cache
+    - build.phase-lifecycle
+    - build.input-output
+    - build.reproducible-environment
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：记录 PATH/环境覆盖后实际工具来源，为含直接/传递依赖的工程画解析树、锁定版本并追踪 clean→compile→test→package
+      输入输出，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - dependency-resolution
+    - build-lifecycle
+    covers_topics:
+    - build.direct-transitive-dependency
+    - build.version-constraint-lock
+    - build.repository-cache
+    - build.phase-lifecycle
+    - build.input-output
+    - build.reproducible-environment
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 PATH 选错工具、环境未传入子进程、缓存掩盖缺依赖和未锁版本漂移，按解析/构建阶段恢复可重复性
+    covers_topic_groups:
+    - dependency-resolution
+    - build-lifecycle
+    covers_topics:
+    - build.direct-transitive-dependency
+    - build.version-constraint-lock
+    - build.repository-cache
+    - build.phase-lifecycle
+    - build.input-output
+    - build.reproducible-environment
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.foundations.docker-basics
+  title: 镜像、容器、卷、端口与容器网络
+  role: practice
+  responsibility: 教授容器运行时和持久化边界，不进入生产镜像加固、Compose 编排或 Kubernetes
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: docker-image-container
+    title: 镜像与容器
+    topics:
+    - docker.image-layer
+    - docker.container-process
+    - docker.port-publish
+  - id: docker-storage-network
+    title: 存储与网络
+    topics:
+    - docker.volume-bind-mount
+    - docker.container-network
+    - docker.cleanup
+  topics_taught:
+  - docker.image-layer
+  - docker.container-process
+  - docker.port-publish
+  - docker.volume-bind-mount
+  - docker.container-network
+  - docker.cleanup
+  topics_used:
+  - docker.image-layer
+  - docker.container-process
+  - docker.port-publish
+  - docker.volume-bind-mount
+  - docker.container-network
+  - docker.cleanup
+  prerequisites:
+  - ch.foundations.network-layers
+  - ch.foundations.testing-oracles
+  prerequisite_rationales:
+    ch.foundations.network-layers:
+      reason: 独立完成镜像与容器、存储与网络前，必须先具备「IP、DNS、端口、TCP 与 TLS 分层」已经验证的知识与失败边界
+      capabilities:
+      - foundation.network-transport
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.foundations.testing-oracles:
+      reason: 独立完成镜像与容器、存储与网络前，必须先具备「预期值、测试预言、断言、AAA 与测试层级」已经验证的知识与失败边界
+      capabilities:
+      - foundation.verification-debug-test
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - foundation.docker-runtime
+    uses:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.network-transport
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.docker-basics/
+    acceptance:
+    - 服务经预期主机端口可达；持久数据跨容器重建仍存在；无卷数据按预期消失且边界被明确记录
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-docker-basics/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - docker
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释镜像、容器、卷、端口与容器网络的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - docker-image-container
+    - docker-storage-network
+    covers_topics:
+    - docker.image-layer
+    - docker.container-process
+    - docker.port-publish
+    - docker.volume-bind-mount
+    - docker.container-network
+    - docker.cleanup
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.network-transport
+    - foundation.docker-runtime
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 运行一个写入数据并暴露端口的容器，对比镜像层、容器可写层、bind mount、named volume 和容器网络行为
+    covers_topic_groups:
+    - docker-image-container
+    - docker-storage-network
+    covers_topics:
+    - docker.image-layer
+    - docker.container-process
+    - docker.port-publish
+    - docker.volume-bind-mount
+    - docker.container-network
+    - docker.cleanup
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.network-transport
+    - foundation.docker-runtime
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入端口未发布、卷挂错路径和删除容器后数据丢失，分别用 inspect/log/文件证据定位并修复
+    covers_topic_groups:
+    - docker-image-container
+    - docker-storage-network
+    covers_topics:
+    - docker.image-layer
+    - docker.container-process
+    - docker.port-publish
+    - docker.volume-bind-mount
+    - docker.container-network
+    - docker.cleanup
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - foundation.shell-command-stream
+    - foundation.network-transport
+    - foundation.docker-runtime
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.foundations.ai-assisted-verification
+  title: AI 协作、隐私、补丁审查与可证伪验证
+  role: synthesis
+  responsibility: 建立 AI 辅助开发的安全审查闭环，不把模型自述、一次成功或未审补丁当作事实
+  level: L1-L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: ai-collaboration
+    title: 任务与隐私边界
+    topics:
+    - ai.prompt-scope
+    - ai.secret-private-data
+    - ai.authority-boundary
+  - id: ai-verification
+    title: 补丁与证据
+    topics:
+    - ai.diff-review
+    - ai.claim-falsification
+    - ai.test-and-rollback
+  topics_taught:
+  - ai.prompt-scope
+  - ai.secret-private-data
+  - ai.authority-boundary
+  - ai.diff-review
+  - ai.claim-falsification
+  - ai.test-and-rollback
+  topics_used:
+  - ai.prompt-scope
+  - ai.secret-private-data
+  - ai.authority-boundary
+  - ai.diff-review
+  - ai.claim-falsification
+  - ai.test-and-rollback
+  prerequisites:
+  - ch.foundations.git-collaboration-security
+  - ch.foundations.dependencies-build-packages
+  prerequisite_rationales:
+    ch.foundations.git-collaboration-security:
+      reason: 独立完成任务与隐私边界、补丁与证据前，必须先具备「Git 状态模型、远程协作、冲突与凭据处置」已经验证的知识与失败边界
+      capabilities:
+      - foundation.git-security
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.foundations.dependencies-build-packages:
+      reason: 独立完成任务与隐私边界、补丁与证据前，必须先具备「依赖、包管理、构建生命周期与可重复性」已经验证的知识与失败边界
+      capabilities:
+      - foundation.toolchain-env-build
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.git-security
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.foundations.ai-assisted-verification/
+    acceptance:
+    - 提示中无真实秘密；每项 AI 主张有独立证据；拒绝项不进入工作树；回滚后基线验证仍通过
+  gate_requirements:
+    gate_ids:
+    - G0
+    evidence_paths:
+    - evidence/gates/g0/foundations-ai-assisted-verification/
+    critical_failure_modes:
+    - fabricated-evidence
+    - secret-exposure
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces: []
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释AI 协作、隐私、补丁审查与可证伪验证的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - ai-collaboration
+    - ai-verification
+    covers_topics:
+    - ai.prompt-scope
+    - ai.secret-private-data
+    - ai.authority-boundary
+    - ai.diff-review
+    - ai.claim-falsification
+    - ai.test-and-rollback
+    uses_capabilities:
+    - foundation.git-security
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 让 AI 为一个已写 oracle 的小改动生成补丁，逐 hunk 审查权限/隐私/依赖/测试影响并保存接受与拒绝理由
+    covers_topic_groups:
+    - ai-collaboration
+    - ai-verification
+    covers_topics:
+    - ai.prompt-scope
+    - ai.secret-private-data
+    - ai.authority-boundary
+    - ai.diff-review
+    - ai.claim-falsification
+    - ai.test-and-rollback
+    uses_capabilities:
+    - foundation.git-security
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 在候选补丁中注入隐藏网络请求、删除负测或伪造成功日志，独立发现后回滚并用原 oracle 重验
+    covers_topic_groups:
+    - ai-collaboration
+    - ai-verification
+    covers_topics:
+    - ai.prompt-scope
+    - ai.secret-private-data
+    - ai.authority-boundary
+    - ai.diff-review
+    - ai.claim-falsification
+    - ai.test-and-rollback
+    uses_capabilities:
+    - foundation.git-security
+    - foundation.verification-debug-test
+    - foundation.toolchain-env-build
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun

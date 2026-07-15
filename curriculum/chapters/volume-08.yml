@@ -1,0 +1,1274 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: "08"
+chapters:
+  - id: ch.js.runtime-esm
+    title: "JavaScript 运行时、Node、pnpm 与 ESM"
+    role: foundation
+    responsibility: "建立浏览器与 Node 运行时、包管理器、package.json 和 ESM 模块解析的最小运行链，不在本章教授语言控制流。"
+    level: L1
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: js-runtime-hosts
+        title: "运行时与宿主"
+        topics: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output"]
+      - id: js-package-esm
+        title: "包管理与 ESM"
+        topics: ["js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+    topics_taught: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output", "js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+    topics_used: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output", "js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+    prerequisites: ["ch.foundations.dependencies-build-packages"]
+    prerequisite_rationales:
+      ch.foundations.dependencies-build-packages:
+        reason: "package、依赖、锁文件和构建生命周期复用通用依赖与可重复构建模型。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.runtime-esm/
+      acceptance:
+        - "从空目录创建可重复安装和运行的 ESM 小项目；命令、输入、环境与结果可从空目录复现；验收判据：从空目录安装锁定依赖并运行两个 ESM 模块，实际 node/pnpm 路径、版本、输出和退出码与记录一致。"
+        - "注入“Node/pnpm 解析到错误版本、包类型错误或模块路径错误”后能指出首个可信证据，修复并重跑同一验证；修复后判据：从空目录安装锁定依赖并运行两个 ESM 模块，实际 node/pnpm 路径、版本、输出和退出码与记录一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.runtime-esm/"]
+      critical_failure_modes: ["toolchain-version-drift", "module-resolution-failure"]
+    verification_mode:
+      test_level: T0
+      methods: ["version-evidence", "module-run", "exit-code"]
+      oracle: "从空目录安装锁定依赖并运行两个 ESM 模块，实际 node/pnpm 路径、版本、输出和退出码与记录一致。"
+    version_surfaces: ["node-24-lts", "pnpm"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“JavaScript 运行时、Node、pnpm 与 ESM”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-runtime-hosts", "js-package-esm"]
+        covers_topics: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output", "js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "从空目录创建可重复安装和运行的 ESM 小项目；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-runtime-hosts", "js-package-esm"]
+        covers_topics: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output", "js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "version-evidence-module-run-exit-code"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“Node/pnpm 解析到错误版本、包类型错误或模块路径错误”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-runtime-hosts", "js-package-esm"]
+        covers_topics: ["js.ecmascript-host-boundary", "js.browser-runtime", "js.node-runtime", "js.console-output", "js.package-json", "js.pnpm-workflow", "js.esm-import-export", "js.module-resolution"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.statements-variables
+    title: "源码、语句、变量、表达式、输出与最小预言"
+    role: foundation
+    responsibility: "教会读者从上到下阅读 JavaScript 源码，用声明、赋值、表达式和输出验证状态变化，不提前使用分支、循环或函数抽象。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-source-statements
+        title: "源码与语句"
+        topics: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon"]
+      - id: js-bindings-output
+        title: "绑定与可观察输出"
+        topics: ["js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+    topics_taught: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon", "js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+    topics_used: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon", "js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+    prerequisites: ["ch.js.runtime-esm"]
+    prerequisite_rationales:
+      ch.js.runtime-esm:
+        reason: "语言实验必须先有可复现的运行时、模块入口和命令退出证据。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.statements-variables/
+      acceptance:
+        - "编写并逐行预测一个只含声明、赋值和输出的状态变化脚本；命令、输入、环境与结果可从空目录复现"
+        - "注入“未声明标识符、const 重赋值或执行顺序误判”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.statements-variables/"]
+      critical_failure_modes: ["reference-error", "state-prediction-mismatch"]
+    verification_mode:
+      test_level: T1
+      methods: ["prediction", "stdout-oracle", "exit-code"]
+      oracle: "给定顺序执行的声明和赋值，运行前预测的每一步绑定值与 stdout 完全一致。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“源码、语句、变量、表达式、输出与最小预言”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-source-statements", "js-bindings-output"]
+        covers_topics: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon", "js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "编写并逐行预测一个只含声明、赋值和输出的状态变化脚本；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-source-statements", "js-bindings-output"]
+        covers_topics: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon", "js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "prediction-stdout-oracle-exit-code"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“未声明标识符、const 重赋值或执行顺序误判”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-source-statements", "js-bindings-output"]
+        covers_topics: ["js.source-file", "js.statement", "js.expression-statement", "js.comment-semicolon", "js.let-binding", "js.const-binding", "js.assignment", "js.console-log", "js.execution-order"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.values-operators
+    title: "值、类型、转换、运算符、相等与空值"
+    role: foundation
+    responsibility: "建立 JavaScript 原始值、对象引用、显式/隐式转换、运算优先级和相等规则，不在本章用控制流掩盖类型问题。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-values-types
+        title: "值与类型"
+        topics: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity"]
+      - id: js-conversion-operators
+        title: "转换、运算与相等"
+        topics: ["js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+    topics_taught: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity", "js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+    topics_used: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity", "js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+    prerequisites: ["ch.js.statements-variables"]
+    prerequisite_rationales:
+      ch.js.statements-variables:
+        reason: "类型与运算实验需要先能声明绑定、按顺序求值并保存输出预言。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.values-operators/
+      acceptance:
+        - "建立覆盖数字、字符串、布尔、null、undefined 和 NaN 的值与转换矩阵；命令、输入、环境与结果可从空目录复现；验收判据：类型、转换、相等和空值表达式的预期表与实际值及 typeof 结果逐项一致。"
+        - "注入“宽松相等、隐式转换或空值回退造成的条件误判”后能指出首个可信证据，修复并重跑同一验证；修复后判据：类型、转换、相等和空值表达式的预期表与实际值及 typeof 结果逐项一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.values-operators/"]
+      critical_failure_modes: ["coercion-bug", "nullish-value-loss"]
+    verification_mode:
+      test_level: T1
+      methods: ["value-table", "prediction", "assertion-script"]
+      oracle: "类型、转换、相等和空值表达式的预期表与实际值及 typeof 结果逐项一致。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“值、类型、转换、运算符、相等与空值”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-values-types", "js-conversion-operators"]
+        covers_topics: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity", "js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“值、类型、转换、运算符、相等与空值”构建可运行程序与测试：建立覆盖数字、字符串、布尔、null、undefined 和 NaN 的值与转换矩阵；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-values-types", "js-conversion-operators"]
+        covers_topics: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity", "js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "value-table-prediction-assertion-script"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“宽松相等、隐式转换或空值回退造成的条件误判”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-values-types", "js-conversion-operators"]
+        covers_topics: ["js.primitive-values", "js.object-reference-intro", "js.typeof", "js.null-undefined", "js.nan-infinity", "js.explicit-conversion", "js.coercion", "js.operator-precedence", "js.strict-equality", "js.nullish-coalescing"]
+        uses_capabilities: ["foundation.toolchain-env-build"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.control-flow
+    title: "条件、switch、循环与控制转移"
+    role: foundation
+    responsibility: "用布尔条件、互斥分支和有界循环表达选择与重复，明确 break/continue 的局部控制边界，不引入函数或集合抽象。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-branching
+        title: "条件与分支"
+        topics: ["js.truthiness","js.boolean-expression","js.if-else","js.switch"]
+      - id: js-loops-control
+        title: "循环与控制转移"
+        topics: ["js.for-loop", "js.while-loop", "js.for-of-intro", "js.break-continue"]
+    topics_taught: ["js.truthiness","js.boolean-expression","js.if-else","js.switch","js.for-loop","js.while-loop","js.for-of-intro","js.break-continue"]
+    topics_used: ["js.truthiness","js.boolean-expression","js.if-else","js.switch","js.for-loop","js.while-loop","js.for-of-intro","js.break-continue"]
+    prerequisites: ["ch.js.values-operators"]
+    prerequisite_rationales:
+      ch.js.values-operators:
+        reason: "条件真假、比较、空值和计数表达式依赖已验证的值、转换与运算规则。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-language"]
+      uses: ["foundation.toolchain-env-build", "foundation.verification-debug-test"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.control-flow/
+      acceptance:
+        - "实现含边界校验、互斥分支和有界循环的工单优先级脚本；命令、输入、环境与结果可从空目录复现；验收判据：零次、一次、多次和非法边界输入的分支与循环输出均与预先声明的结果表一致。"
+        - "注入“truthiness 误用、遗漏分支或循环边界偏一”后能指出首个可信证据，修复并重跑同一验证；修复后判据：零次、一次、多次和非法边界输入的分支与循环输出均与预先声明的结果表一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.control-flow/"]
+      critical_failure_modes: ["branch-coverage-gap", "infinite-loop", "off-by-one"]
+    verification_mode:
+      test_level: T1
+      methods: ["prediction", "boundary-table", "assertion-script"]
+      oracle: "零次、一次、多次和非法边界输入的分支与循环输出均与预先声明的结果表一致。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“条件、switch、循环与控制转移”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-branching", "js-loops-control"]
+        covers_topics: ["js.truthiness","js.boolean-expression","js.if-else","js.switch","js.for-loop","js.while-loop","js.for-of-intro","js.break-continue"]
+        uses_capabilities: ["foundation.toolchain-env-build", "foundation.verification-debug-test", "web.javascript-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现含边界校验、互斥分支和有界循环的工单优先级脚本；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-branching", "js-loops-control"]
+        covers_topics: ["js.truthiness","js.boolean-expression","js.if-else","js.switch","js.for-loop","js.while-loop","js.for-of-intro","js.break-continue"]
+        uses_capabilities: ["foundation.toolchain-env-build", "foundation.verification-debug-test", "web.javascript-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "prediction-boundary-table-assertion-script"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“truthiness 误用、遗漏分支或循环边界偏一”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-branching", "js-loops-control"]
+        covers_topics: ["js.truthiness","js.boolean-expression","js.if-else","js.switch","js.for-loop","js.while-loop","js.for-of-intro","js.break-continue"]
+        uses_capabilities: ["foundation.toolchain-env-build", "foundation.verification-debug-test", "web.javascript-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.functions
+    title: "函数、参数、返回值与回调入口"
+    role: foundation
+    responsibility: "用函数声明/表达式、参数、返回值和函数值封装单一计算，首次认识回调入口但不在本章教授闭包状态。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-function-contract
+        title: "函数契约"
+        topics: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter"]
+      - id: js-function-values
+        title: "函数值与回调入口"
+        topics: ["js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+    topics_taught: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter", "js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+    topics_used: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter", "js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+    prerequisites: ["ch.js.control-flow"]
+    prerequisite_rationales:
+      ch.js.control-flow:
+        reason: "函数体中的分支、循环和提前返回需要已验证的控制流边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.functions/
+      acceptance:
+        - "把一段工单统计脚本拆成可独立调用和验证的小函数；命令、输入、环境与结果可从空目录复现；验收判据：每个函数的输入、返回值、副作用和调用次数与合同表一致，缺失 return 可被断言定位。"
+        - "注入“参数顺序、缺失 return 或意外共享副作用造成的结果错误”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.functions/"]
+      critical_failure_modes: ["function-contract-violation", "unexpected-side-effect"]
+    verification_mode:
+      test_level: T1
+      methods: ["input-output-table", "assertion-script", "call-trace"]
+      oracle: "每个函数的输入、返回值、副作用和调用次数与合同表一致，缺失 return 可被断言定位。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“函数、参数、返回值与回调入口”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-function-contract", "js-function-values"]
+        covers_topics: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter", "js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“函数、参数、返回值与回调入口”构建可运行程序与测试：把一段工单统计脚本拆成可独立调用和验证的小函数；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-function-contract", "js-function-values"]
+        covers_topics: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter", "js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "input-output-table-assertion-script-call-trace"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“参数顺序、缺失 return 或意外共享副作用造成的结果错误”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-function-contract", "js-function-values"]
+        covers_topics: ["js.function-declaration-expression", "js.parameter-argument", "js.return-value", "js.default-rest-parameter", "js.arrow-function", "js.function-as-value", "js.callback-entry", "js.pure-function-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.scope-closures
+    title: "词法作用域、闭包与函数状态"
+    role: concept
+    responsibility: "解释词法环境、遮蔽、生命周期和闭包捕获，用受控闭包封装状态，不把全局可变状态伪装成闭包。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-lexical-scope
+        title: "词法作用域"
+        topics: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone"]
+      - id: js-closure-state
+        title: "闭包与状态"
+        topics: ["js.closure-capture", "js.closure-lifetime", "js.factory-function", "js.private-state-closure", "js.callback-entry"]
+    topics_taught: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone","js.closure-capture","js.closure-lifetime","js.factory-function","js.private-state-closure"]
+    topics_used: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone","js.closure-capture","js.closure-lifetime","js.factory-function","js.private-state-closure","js.callback-entry"]
+    prerequisites: ["ch.js.functions"]
+    prerequisite_rationales:
+      ch.js.functions:
+        reason: "闭包是函数值与其词法环境的组合，必须先能独立追踪参数、返回和回调调用。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-functions-closures"]
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.scope-closures/
+      acceptance:
+        - "实现两个相互隔离的闭包计数器并保存作用域追踪表；命令、输入、环境与结果可从空目录复现"
+        - "注入“循环变量捕获、遮蔽或意外共享闭包状态造成的错误”后能指出首个可信证据，修复并重跑同一验证；修复后判据：不同调用时刻与捕获位置下的绑定值、共享/独立状态和垃圾可达性预测与实际输出一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.scope-closures/"]
+      critical_failure_modes: ["stale-closure", "shared-state-leak"]
+    verification_mode:
+      test_level: T1
+      methods: ["scope-trace", "prediction", "assertion-script"]
+      oracle: "不同调用时刻与捕获位置下的绑定值、共享/独立状态和垃圾可达性预测与实际输出一致。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“词法作用域、闭包与函数状态”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-lexical-scope", "js-closure-state"]
+        covers_topics: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone","js.closure-capture","js.closure-lifetime","js.factory-function","js.private-state-closure","js.callback-entry"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“词法作用域、闭包与函数状态”构建可运行程序与测试：实现两个相互隔离的闭包计数器并保存作用域追踪表；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-lexical-scope", "js-closure-state"]
+        covers_topics: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone","js.closure-capture","js.closure-lifetime","js.factory-function","js.private-state-closure","js.callback-entry"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "scope-trace-prediction-assertion-script"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“循环变量捕获、遮蔽或意外共享闭包状态造成的错误”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-lexical-scope", "js-closure-state"]
+        covers_topics: ["js.lexical-environment","js.block-function-scope","js.shadowing","js.temporal-dead-zone","js.closure-capture","js.closure-lifetime","js.factory-function","js.private-state-closure","js.callback-entry"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.collections
+    title: "数组、对象、Map、Set 与不可变更新"
+    role: foundation
+    responsibility: "选择数组、普通对象、Map 和 Set 表达顺序、键值和唯一性，并用复制更新保护调用边界，不在本章教授原型继承。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-array-object-data
+        title: "数组与对象数据"
+        topics: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread"]
+      - id: js-map-set-immutability
+        title: "Map、Set 与不可变更新"
+        topics: ["js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+    topics_taught: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread", "js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+    topics_used: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread", "js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+    prerequisites: ["ch.js.functions"]
+    prerequisite_rationales:
+      ch.js.functions:
+        reason: "数组回调、转换函数和数据更新边界依赖参数与返回值合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.collections/
+      acceptance:
+        - "实现按状态分组和去重的工单数据转换且不修改输入集合；命令、输入、环境与结果可从空目录复现；验收判据：空、重复、缺失键和更新场景的长度、顺序、唯一性与引用身份均符合预先声明的表格。"
+        - "注入“误选集合结构、浅拷贝遗漏或原地修改导致的数据污染”后能指出首个可信证据，修复并重跑同一验证；修复后判据：空、重复、缺失键和更新场景的长度、顺序、唯一性与引用身份均符合预先声明的表格。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.collections/"]
+      critical_failure_modes: ["input-mutation", "duplicate-key-loss", "reference-aliasing"]
+    verification_mode:
+      test_level: T1
+      methods: ["data-case-table", "assertion-script", "reference-check"]
+      oracle: "空、重复、缺失键和更新场景的长度、顺序、唯一性与引用身份均符合预先声明的表格。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“数组、对象、Map、Set 与不可变更新”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-array-object-data", "js-map-set-immutability"]
+        covers_topics: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread", "js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现按状态分组和去重的工单数据转换且不修改输入集合；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-array-object-data", "js-map-set-immutability"]
+        covers_topics: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread", "js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "data-case-table-assertion-script-reference-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“误选集合结构、浅拷贝遗漏或原地修改导致的数据污染”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-array-object-data", "js-map-set-immutability"]
+        covers_topics: ["js.array-index-iteration", "js.array-methods", "js.object-literal", "js.property-access", "js.destructuring-spread", "js.map-contract", "js.set-contract", "js.key-identity", "js.shallow-copy-update", "js.mutation-boundary"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.object-model
+    title: "this、原型、class 与对象模型"
+    role: concept
+    responsibility: "解释属性查找、this 绑定、原型链和 class 语法糖，能在组合与共享方法之间选择，不把 class 等同于 Java 类。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-this-prototype
+        title: "this 与原型链"
+        topics: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited"]
+      - id: js-class-composition
+        title: "class 与对象组合"
+        topics: ["js.class-syntax", "js.constructor-new", "js.private-field", "js.composition-object", "js.array-index-iteration"]
+    topics_taught: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited","js.class-syntax","js.constructor-new","js.private-field","js.composition-object"]
+    topics_used: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited","js.class-syntax","js.constructor-new","js.private-field","js.composition-object","js.array-index-iteration"]
+    prerequisites: ["ch.js.collections"]
+    prerequisite_rationales:
+      ch.js.collections:
+        reason: "对象属性、键身份和数据集合提供验证原型与实例边界的基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-objects"]
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.object-model/
+      acceptance:
+        - "实现组合式工单对象和共享原型方法并证明实例状态隔离；命令、输入、环境与结果可从空目录复现；验收判据：不同调用方式、实例和原型修改下的 this、属性来源和引用身份与追踪表一致。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“方法脱离调用者、原型污染或共享可变字段造成的行为漂移”后能指出首个可信证据，修复并重跑同一验证；修复后判据：不同调用方式、实例和原型修改下的 this、属性来源和引用身份与追踪表一致。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.object-model/"]
+      critical_failure_modes: ["this-binding-loss", "prototype-pollution", "shared-instance-state"]
+    verification_mode:
+      test_level: T1
+      methods: ["property-lookup-trace", "identity-assertions", "call-site-matrix"]
+      oracle: "不同调用方式、实例和原型修改下的 this、属性来源和引用身份与追踪表一致。"
+    version_surfaces: ["node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“this、原型、class 与对象模型”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-this-prototype", "js-class-composition"]
+        covers_topics: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited","js.class-syntax","js.constructor-new","js.private-field","js.composition-object","js.array-index-iteration"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现组合式工单对象和共享原型方法并证明实例状态隔离；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-this-prototype", "js-class-composition"]
+        covers_topics: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited","js.class-syntax","js.constructor-new","js.private-field","js.composition-object","js.array-index-iteration"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "property-lookup-trace-identity-assertions-call-site-matrix"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“方法脱离调用者、原型污染或共享可变字段造成的行为漂移”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-this-prototype", "js-class-composition"]
+        covers_topics: ["js.this-call-site","js.prototype-chain","js.property-lookup","js.own-vs-inherited","js.class-syntax","js.constructor-new","js.private-field","js.composition-object","js.array-index-iteration"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.testing-debugging
+    title: "异常、调试、测试预言与 Vitest"
+    role: practice
+    responsibility: "在 JavaScript 中落实异常边界、调试器、AAA、Vitest 断言和可隔离替身，只覆盖语言单元测试，不声称已掌握 Vue 组件或浏览器端到端测试。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: js-errors-debugging
+        title: "异常与调试证据"
+        topics: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence"]
+      - id: js-vitest-unit
+        title: "Vitest 单元测试"
+        topics: ["js.vitest-test-suite", "js.aaa-test-structure", "js.assertion-oracle", "js.test-double-boundary", "js.test-isolation"]
+    topics_taught: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence","js.vitest-test-suite","js.aaa-test-structure","js.assertion-oracle","js.test-double-boundary","js.test-isolation"]
+    topics_used: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence","js.vitest-test-suite","js.aaa-test-structure","js.assertion-oracle","js.test-double-boundary","js.test-isolation"]
+    prerequisites: ["ch.js.collections"]
+    prerequisite_rationales:
+      ch.js.collections:
+        reason: "夹具、输入案例和结果断言需要能独立处理集合与对象。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-testing-debugging"]
+      uses: ["web.javascript-language", "foundation.verification-debug-test"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.testing-debugging/
+      acceptance:
+        - "为工单纯函数建立 Vitest 正常、边界和异常测试并保存一次红绿重构证据；命令、输入、环境与结果可从空目录复现；验收判据：正常、边界和故障用例均由独立预言验证；故意改坏实现后 Vitest 在预期断言处失败，修复后原测试恢复。"
+        - "注入“错误预期、未等待异步、共享夹具或捕获异常后静默通过”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.testing-debugging/"]
+      critical_failure_modes: ["false-positive-test", "untrusted-oracle", "test-isolation-leak"]
+    verification_mode:
+      test_level: T2
+      methods: ["vitest-unit", "debugger", "injected-fault"]
+      oracle: "正常、边界和故障用例均由独立预言验证；故意改坏实现后 Vitest 在预期断言处失败，修复后原测试恢复。"
+    version_surfaces: ["node-24-lts", "pnpm", "vitest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“异常、调试、测试预言与 Vitest”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-errors-debugging", "js-vitest-unit"]
+        covers_topics: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence","js.vitest-test-suite","js.aaa-test-structure","js.assertion-oracle","js.test-double-boundary","js.test-isolation"]
+        uses_capabilities: ["web.javascript-language", "foundation.verification-debug-test", "web.javascript-testing-debugging"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "为工单纯函数建立 Vitest 正常、边界和异常测试并保存一次红绿重构证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-errors-debugging", "js-vitest-unit"]
+        covers_topics: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence","js.vitest-test-suite","js.aaa-test-structure","js.assertion-oracle","js.test-double-boundary","js.test-isolation"]
+        uses_capabilities: ["web.javascript-language", "foundation.verification-debug-test", "web.javascript-testing-debugging"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "vitest-unit-debugger-injected-fault"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误预期、未等待异步、共享夹具或捕获异常后静默通过”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-errors-debugging", "js-vitest-unit"]
+        covers_topics: ["js.error-throw-catch","js.error-cause-stack","js.debugger-breakpoint","js.failure-stage-evidence","js.vitest-test-suite","js.aaa-test-structure","js.assertion-oracle","js.test-double-boundary","js.test-isolation"]
+        uses_capabilities: ["web.javascript-language", "foundation.verification-debug-test", "web.javascript-testing-debugging"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.dom-mutation
+    title: "DOM 树、查询、创建、更新与删除"
+    role: practice
+    responsibility: "把已知 HTML 结构映射为 DOM 节点查询和最小变更，区分属性、property、文本与 HTML 注入边界，不在本章处理事件传播。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-dom-tree-query
+        title: "DOM 树与查询"
+        topics: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection"]
+      - id: js-dom-safe-mutation
+        title: "DOM 安全变更"
+        topics: ["dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk", "html.landmark-elements"]
+    topics_taught: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection", "dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk"]
+    topics_used: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection", "dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk", "html.landmark-elements"]
+    prerequisites: ["ch.js.collections", "ch.web.semantic-html"]
+    prerequisite_rationales:
+      ch.js.collections:
+        reason: "节点列表、数据映射和批量更新需要集合迭代与不可变输入边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.semantic-html:
+        reason: "DOM 变更必须保持正确的文档结构和原生元素语义。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.dom-mutation/
+      acceptance:
+        - "从结构化数据安全创建、更新和删除一组语义工单节点；命令、输入、环境与结果可从空目录复现；验收判据：给定初始 DOM 和操作序列，节点数量、顺序、文本、属性和语义结构与预期快照一致。"
+        - "注入“错误选择器、attribute/property 混淆或 innerHTML 注入造成的状态错误”后能指出首个可信证据，修复并重跑同一验证；修复后判据：给定初始 DOM 和操作序列，节点数量、顺序、文本、属性和语义结构与预期快照一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.dom-mutation/"]
+      critical_failure_modes: ["dom-selection-drift", "unsafe-html-injection", "semantic-dom-breakage"]
+    verification_mode:
+      test_level: T1
+      methods: ["dom-state-table", "browser-inspection", "mutation-assertions"]
+      oracle: "给定初始 DOM 和操作序列，节点数量、顺序、文本、属性和语义结构与预期快照一致。"
+    version_surfaces: ["browser", "browser-devtools", "html-living-standard"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“DOM 树、查询、创建、更新与删除”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-dom-tree-query", "js-dom-safe-mutation"]
+        covers_topics: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection", "dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk", "html.landmark-elements"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "从结构化数据安全创建、更新和删除一组语义工单节点；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-dom-tree-query", "js-dom-safe-mutation"]
+        covers_topics: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection", "dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk", "html.landmark-elements"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "dom-state-table-browser-inspection-mutation-assertions"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误选择器、attribute/property 混淆或 innerHTML 注入造成的状态错误”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-dom-tree-query", "js-dom-safe-mutation"]
+        covers_topics: ["dom.node-element-tree", "dom.query-selector", "dom.traversal", "dom.live-static-collection", "dom.create-append-remove", "dom.attribute-property", "dom.text-content", "dom.innerhtml-risk", "html.landmark-elements"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.events-forms
+    title: "事件传播、监听器、表单与默认行为"
+    role: practice
+    responsibility: "解释捕获、目标、冒泡、默认行为和事件委托，用监听器增强原生表单且保留提交与无障碍语义。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-event-flow
+        title: "事件流与监听器"
+        topics: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal"]
+      - id: js-form-events-default
+        title: "表单事件与默认行为"
+        topics: ["dom.form-submit-event", "dom.input-change-event", "dom.prevent-default", "dom.formdata", "html.control-name-value"]
+    topics_taught: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal","dom.form-submit-event","dom.input-change-event","dom.prevent-default","dom.formdata"]
+    topics_used: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal","dom.form-submit-event","dom.input-change-event","dom.prevent-default","dom.formdata","html.control-name-value"]
+    prerequisites: ["ch.js.dom-mutation", "ch.js.object-model", "ch.web.forms-validation"]
+    prerequisite_rationales:
+      ch.js.dom-mutation:
+        reason: "监听器绑定、委托目标和事件后的 DOM 更新需要可验证的节点模型。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.js.object-model:
+        reason: "Event、Element 与监听器选项都是具有属性查找和身份语义的对象，必须能区分自有状态、原型行为与引用身份。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.forms-validation:
+        reason: "JavaScript 增强必须建立在正确的原生提交与校验语义上。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-dom"]
+      uses: ["web.javascript-language", "web.html-semantic-form", "web.javascript-objects"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.events-forms/
+      acceptance:
+        - "为动态工单列表实现事件委托和渐进增强表单并记录事件顺序；命令、输入、环境与结果可从空目录复现"
+        - "注入“重复监听、错误 preventDefault 或 target/currentTarget 混淆”后能指出首个可信证据，修复并重跑同一验证；修复后判据：捕获/冒泡顺序、委托目标、默认提交和取消行为与固定事件追踪表及请求负载一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.events-forms/"]
+      critical_failure_modes: ["duplicate-event-handler", "default-action-loss", "event-target-confusion"]
+    verification_mode:
+      test_level: T1
+      methods: ["event-order-trace", "form-request-check", "dom-assertions"]
+      oracle: "捕获/冒泡顺序、委托目标、默认提交和取消行为与固定事件追踪表及请求负载一致。"
+    version_surfaces: ["browser", "browser-devtools", "html-living-standard"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“事件传播、监听器、表单与默认行为”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-event-flow", "js-form-events-default"]
+        covers_topics: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal","dom.form-submit-event","dom.input-change-event","dom.prevent-default","dom.formdata","html.control-name-value"]
+        uses_capabilities: ["web.javascript-language", "web.html-semantic-form", "web.javascript-objects", "web.javascript-dom"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "为动态工单列表实现事件委托和渐进增强表单并记录事件顺序；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-event-flow", "js-form-events-default"]
+        covers_topics: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal","dom.form-submit-event","dom.input-change-event","dom.prevent-default","dom.formdata","html.control-name-value"]
+        uses_capabilities: ["web.javascript-language", "web.html-semantic-form", "web.javascript-objects", "web.javascript-dom"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "event-order-trace-form-request-check-dom-assertions"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“重复监听、错误 preventDefault 或 target/currentTarget 混淆”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-event-flow", "js-form-events-default"]
+        covers_topics: ["dom.event-capture-target-bubble","dom.event-listener-options","dom.event-delegation","dom.listener-removal","dom.form-submit-event","dom.input-change-event","dom.prevent-default","dom.formdata","html.control-name-value"]
+        uses_capabilities: ["web.javascript-language", "web.html-semantic-form", "web.javascript-objects", "web.javascript-dom"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.event-loop
+    title: "事件循环、任务、Promise 与 async/await"
+    role: concept
+    responsibility: "建立调用栈、任务、微任务、Promise 状态和 async/await 恢复顺序的运行模型，不在本章发起网络请求或设计重试。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: js-event-loop-queues
+        title: "事件循环与队列"
+        topics: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion"]
+      - id: js-promise-async
+        title: "Promise 与 async/await"
+        topics: ["js.promise-state", "js.promise-chaining", "js.async-await", "js.async-error-propagation"]
+    topics_taught: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion","js.promise-state","js.promise-chaining","js.async-await","js.async-error-propagation"]
+    topics_used: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion","js.promise-state","js.promise-chaining","js.async-await","js.async-error-propagation"]
+    prerequisites: ["ch.js.scope-closures"]
+    prerequisite_rationales:
+      ch.js.scope-closures:
+        reason: "延迟执行会捕获词法环境，必须先能判断闭包状态的生命周期。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-async-runtime"]
+      uses: ["web.javascript-language", "web.javascript-functions-closures"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.event-loop/
+      acceptance:
+        - "构造同步、Promise、queueMicrotask 和 timer 的最小顺序实验并画出队列轨迹；命令、输入、环境与结果可从空目录复现"
+        - "注入“把 Promise 当同步值、遗漏 await 或错误捕获边界造成的顺序与异常丢失”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.event-loop/"]
+      critical_failure_modes: ["async-order-misread", "unhandled-rejection"]
+    verification_mode:
+      test_level: T1
+      methods: ["queue-trace", "prediction", "async-assertion-script"]
+      oracle: "同步、任务、微任务和 await 的输出顺序与手工队列追踪逐项一致，异常传播路径可重复。"
+    version_surfaces: ["node-24-lts", "browser"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“事件循环、任务、Promise 与 async/await”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-event-loop-queues", "js-promise-async"]
+        covers_topics: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion","js.promise-state","js.promise-chaining","js.async-await","js.async-error-propagation"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures", "web.javascript-async-runtime"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“事件循环、任务、Promise 与 async/await”构建可运行程序与测试：构造同步、Promise、queueMicrotask 和 timer 的最小顺序实验并画出队列轨迹；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-event-loop-queues", "js-promise-async"]
+        covers_topics: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion","js.promise-state","js.promise-chaining","js.async-await","js.async-error-propagation"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures", "web.javascript-async-runtime"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "queue-trace-prediction-async-assertion-script"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“把 Promise 当同步值、遗漏 await 或错误捕获边界造成的顺序与异常丢失”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-event-loop-queues", "js-promise-async"]
+        covers_topics: ["js.call-stack","js.task-queue","js.microtask-queue","js.run-to-completion","js.promise-state","js.promise-chaining","js.async-await","js.async-error-propagation"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-functions-closures", "web.javascript-async-runtime"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.fetch-cancellation-race
+    title: "Fetch、AbortController、超时、重试与竞态"
+    role: practice
+    responsibility: "用 Fetch 和 AbortController 建立请求、响应、超时、有限重试和“最新请求胜出”合同，区分取消 UI 更新与真正取消网络工作。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: js-fetch-http-boundary
+        title: "Fetch 与 HTTP 边界"
+        topics: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy"]
+      - id: js-cancel-retry-race
+        title: "取消、重试与竞态"
+        topics: ["js.abort-controller-signal", "js.abort-error", "js.retry-backoff-boundary", "js.latest-request-wins", "js.stale-response-guard"]
+    topics_taught: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy","js.abort-controller-signal","js.abort-error","js.retry-backoff-boundary","js.latest-request-wins","js.stale-response-guard"]
+    topics_used: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy","js.abort-controller-signal","js.abort-error","js.retry-backoff-boundary","js.latest-request-wins","js.stale-response-guard"]
+    prerequisites: ["ch.js.testing-debugging", "ch.js.event-loop", "ch.web.origin-cookie-cache"]
+    prerequisite_rationales:
+      ch.js.testing-debugging:
+        reason: "请求竞态和错误路径必须用可信预言、替身与故障注入证明，而非目测。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.js.event-loop:
+        reason: "响应、取消和 timeout handler 的先后由任务与 Promise 调度决定。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.origin-cookie-cache:
+        reason: "凭据、跨源和缓存行为属于浏览器边界，不能误诊为异步逻辑。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.javascript-network-race"]
+      uses: ["web.javascript-async-runtime", "web.javascript-testing-debugging", "web.browser-origin-state", "foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.fetch-cancellation-race/
+      acceptance:
+        - "实现可取消且防陈旧响应的工单查询函数并用可控延迟验证竞态；命令、输入、环境与结果可从空目录复现"
+        - "注入“只清 loading 未校验请求身份、无限重试或把 404 当成功响应”后能指出首个可信证据，修复并重跑同一验证；修复后判据：成功、HTTP 错误、解析错误、超时、取消、重试上限和乱序响应均由确定性测试证明，旧响应不会覆盖新状态。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.fetch-cancellation-race/"]
+      critical_failure_modes: ["stale-response-overwrite", "retry-storm", "uncancelled-request"]
+    verification_mode:
+      test_level: T2
+      methods: ["vitest-fake-server", "request-race-matrix", "injected-delay"]
+      oracle: "成功、HTTP 错误、解析错误、超时、取消、重试上限和乱序响应均由确定性测试证明，旧响应不会覆盖新状态。"
+    version_surfaces: ["browser", "browser-devtools", "node-24-lts", "vitest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Fetch、AbortController、超时、重试与竞态”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-fetch-http-boundary", "js-cancel-retry-race"]
+        covers_topics: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy","js.abort-controller-signal","js.abort-error","js.retry-backoff-boundary","js.latest-request-wins","js.stale-response-guard"]
+        uses_capabilities: ["web.javascript-async-runtime", "web.javascript-testing-debugging", "web.browser-origin-state", "foundation.http-message", "web.javascript-network-race"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现可取消且防陈旧响应的工单查询函数并用可控延迟验证竞态；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-fetch-http-boundary", "js-cancel-retry-race"]
+        covers_topics: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy","js.abort-controller-signal","js.abort-error","js.retry-backoff-boundary","js.latest-request-wins","js.stale-response-guard"]
+        uses_capabilities: ["web.javascript-async-runtime", "web.javascript-testing-debugging", "web.browser-origin-state", "foundation.http-message", "web.javascript-network-race"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "vitest-fake-server-request-race-matrix-injected-delay"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“只清 loading 未校验请求身份、无限重试或把 404 当成功响应”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-fetch-http-boundary", "js-cancel-retry-race"]
+        covers_topics: ["js.fetch-request-response","js.fetch-http-error-check","js.response-body-once","js.request-timeout-policy","js.abort-controller-signal","js.abort-error","js.retry-backoff-boundary","js.latest-request-wins","js.stale-response-guard"]
+        uses_capabilities: ["web.javascript-async-runtime", "web.javascript-testing-debugging", "web.browser-origin-state", "foundation.http-message", "web.javascript-network-race"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.js.browser-performance
+    title: "强制重排、任务阻塞、监听清理与内存边界"
+    role: practice
+    responsibility: "用浏览器时间线定位 DOM 读写抖动、长任务、重复监听和不可达对象保留，实施最小修复，不把所有慢响应归因于前端。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: js-render-performance
+        title: "渲染与主线程性能"
+        topics: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "css.compositor-friendly-property"]
+      - id: js-listener-memory
+        title: "监听与内存边界"
+        topics: ["dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+    topics_taught: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+    topics_used: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "css.compositor-friendly-property", "dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+    prerequisites: ["ch.js.events-forms", "ch.js.event-loop", "ch.css.motion-compositing"]
+    prerequisite_rationales:
+      ch.js.events-forms:
+        reason: "重复监听与清理问题需要能追踪监听器注册和事件流。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.js.event-loop:
+        reason: "长任务和定时器阻塞必须放在任务调度模型中解释。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.css.motion-compositing:
+        reason: "需区分合成友好动画和触发布局/绘制的属性。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-dom", "web.javascript-functions-closures", "web.accessibility"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.js.browser-performance/
+      acceptance:
+        - "为一个会抖动和泄漏监听器的列表页建立性能基线并完成可证修复；命令、输入、环境与结果可从空目录复现；验收判据：同一交互负载的优化前后 trace 显示长任务、layout 次数或保留对象按预算下降，功能与无障碍行为不回退。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“交错 DOM 读写、忘记移除监听器或 timer 捕获节点导致的卡顿与保留”后能指出首个可信证据，修复并重跑同一验证；修复后判据：同一交互负载的优化前后 trace 显示长任务、layout 次数或保留对象按预算下降，功能与无障碍行为不回退。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.js.browser-performance/"]
+      critical_failure_modes: ["layout-thrashing", "listener-leak", "performance-regression"]
+    verification_mode:
+      test_level: T1
+      methods: ["performance-trace", "heap-snapshot", "before-after-budget"]
+      oracle: "同一交互负载的优化前后 trace 显示长任务、layout 次数或保留对象按预算下降，功能与无障碍行为不回退。"
+    version_surfaces: ["browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“强制重排、任务阻塞、监听清理与内存边界”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["js-render-performance", "js-listener-memory"]
+        covers_topics: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "css.compositor-friendly-property", "dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+        uses_capabilities: ["web.javascript-dom", "web.javascript-functions-closures", "web.accessibility"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“强制重排、任务阻塞、监听清理与内存边界”构建可运行程序与测试：为一个会抖动和泄漏监听器的列表页建立性能基线并完成可证修复；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["js-render-performance", "js-listener-memory"]
+        covers_topics: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "css.compositor-friendly-property", "dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+        uses_capabilities: ["web.javascript-dom", "web.javascript-functions-closures", "web.accessibility"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "performance-trace-heap-snapshot-before-after-budget"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“交错 DOM 读写、忘记移除监听器或 timer 捕获节点导致的卡顿与保留”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["js-render-performance", "js-listener-memory"]
+        covers_topics: ["web.forced-layout", "web.layout-thrashing", "web.long-task", "web.frame-budget", "css.compositor-friendly-property", "dom.listener-cleanup", "js.timer-cleanup", "js.detached-dom", "js.memory-retention-path"]
+        uses_capabilities: ["web.javascript-dom", "web.javascript-functions-closures", "web.accessibility"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.ts.foundations
+    title: "类型标注、推断、数组、对象、元组与函数类型"
+    role: foundation
+    responsibility: "建立 TypeScript 编译时类型、推断、基础标注和函数签名的最小模型，明确类型在运行时会被擦除，不提前教授联合收窄或高级泛型。"
+    level: L1-L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: ts-basic-types-inference
+        title: "基础类型与推断"
+        topics: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure"]
+      - id: ts-function-object-shape
+        title: "函数与对象形状"
+        topics: ["ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+    topics_taught: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure", "ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+    topics_used: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure", "ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+    prerequisites: ["ch.js.collections"]
+    prerequisite_rationales:
+      ch.js.collections:
+        reason: "数组和对象形状的类型描述必须基于已理解的运行时数据结构。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ts.foundations/
+      acceptance:
+        - "把一组 JavaScript 工单函数迁为严格 TypeScript 并保存正负编译证据；命令、输入、环境与结果可从空目录复现；验收判据：合法样例通过 tsc --noEmit，故意的形状与函数签名错误在预期位置失败，移除类型后运行时行为对照明确。"
+        - "注入“把类型当运行时校验、错误推断或可选属性未处理导致的编译/运行偏差”后能指出首个可信证据，修复并重跑同一验证；修复后判据：合法样例通过 tsc --noEmit，故意的形状与函数签名错误在预期位置失败，移除类型后运行时行为对照明确。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.ts.foundations/"]
+      critical_failure_modes: ["type-runtime-confusion", "unsafe-optional-access"]
+    verification_mode:
+      test_level: T1
+      methods: ["tsc-noemit", "type-error-fixture", "runtime-contrast"]
+      oracle: "合法样例通过 tsc --noEmit，故意的形状与函数签名错误在预期位置失败，移除类型后运行时行为对照明确。"
+    version_surfaces: ["typescript", "node-24-lts", "pnpm"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“类型标注、推断、数组、对象、元组与函数类型”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["ts-basic-types-inference", "ts-function-object-shape"]
+        covers_topics: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure", "ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“类型标注、推断、数组、对象、元组与函数类型”构建可运行程序与测试：把一组 JavaScript 工单函数迁为严格 TypeScript 并保存正负编译证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["ts-basic-types-inference", "ts-function-object-shape"]
+        covers_topics: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure", "ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "tsc-noemit-type-error-fixture-runtime-contrast"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“把类型当运行时校验、错误推断或可选属性未处理导致的编译/运行偏差”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ts-basic-types-inference", "ts-function-object-shape"]
+        covers_topics: ["ts.type-annotation", "ts.type-inference", "ts.primitive-array-object", "ts.tuple", "ts.type-erasure", "ts.function-type", "ts.optional-readonly-property", "ts.structural-typing-intro", "ts.compiler-diagnostic"]
+        uses_capabilities: ["web.javascript-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.ts.modeling-narrowing
+    title: "interface、type、联合、unknown、never 与收窄"
+    role: concept
+    responsibility: "用 interface/type、判别联合和控制流收窄表达业务状态与不可信输入，禁止用 any 跳过模型缺口。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: ts-modeling-unions
+        title: "接口、别名与联合建模"
+        topics: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never"]
+      - id: ts-unknown-narrowing
+        title: "unknown 与收窄"
+        topics: ["ts.unknown-any", "ts.typeof-in-guard", "ts.user-defined-type-guard", "ts.control-flow-narrowing", "js.prototype-chain"]
+    topics_taught: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never","ts.unknown-any","ts.typeof-in-guard","ts.user-defined-type-guard","ts.control-flow-narrowing"]
+    topics_used: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never","ts.unknown-any","ts.typeof-in-guard","ts.user-defined-type-guard","ts.control-flow-narrowing","js.prototype-chain"]
+    prerequisites: ["ch.ts.foundations", "ch.js.object-model"]
+    prerequisite_rationales:
+      ch.ts.foundations:
+        reason: "接口、联合和收窄复用基础标注、推断与结构类型模型。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.js.object-model:
+        reason: "运行时收窄必须基于真实对象属性、原型与身份边界，而不是只相信编译时形状。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.typescript-types"]
+      uses: ["web.javascript-language", "web.javascript-objects"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ts.modeling-narrowing/
+      acceptance:
+        - "用判别联合建模工单加载状态并为 unknown API 数据实现运行时守卫；命令、输入、环境与结果可从空目录复现；验收判据：所有状态分支被 never 穷尽，不可信值只有通过运行时 guard 后才能使用；新增变体会在预期编译点失败。"
+        - "注入“any 逃逸、遗漏联合分支或错误 guard 导致的未处理状态”后能指出首个可信证据，修复并重跑同一验证；修复后判据：所有状态分支被 never 穷尽，不可信值只有通过运行时 guard 后才能使用；新增变体会在预期编译点失败。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.ts.modeling-narrowing/"]
+      critical_failure_modes: ["unsafe-any", "nonexhaustive-state", "invalid-type-guard"]
+    verification_mode:
+      test_level: T1
+      methods: ["tsc-noemit", "exhaustiveness-fixture", "runtime-guard-cases"]
+      oracle: "所有状态分支被 never 穷尽，不可信值只有通过运行时 guard 后才能使用；新增变体会在预期编译点失败。"
+    version_surfaces: ["typescript", "node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“interface、type、联合、unknown、never 与收窄”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["ts-modeling-unions", "ts-unknown-narrowing"]
+        covers_topics: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never","ts.unknown-any","ts.typeof-in-guard","ts.user-defined-type-guard","ts.control-flow-narrowing","js.prototype-chain"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects", "web.typescript-types"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "用判别联合建模工单加载状态并为 unknown API 数据实现运行时守卫；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["ts-modeling-unions", "ts-unknown-narrowing"]
+        covers_topics: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never","ts.unknown-any","ts.typeof-in-guard","ts.user-defined-type-guard","ts.control-flow-narrowing","js.prototype-chain"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects", "web.typescript-types"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "tsc-noemit-exhaustiveness-fixture-runtime-guard-cases"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“any 逃逸、遗漏联合分支或错误 guard 导致的未处理状态”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ts-modeling-unions", "ts-unknown-narrowing"]
+        covers_topics: ["ts.interface","ts.type-alias","ts.union-intersection","ts.discriminated-union","ts.exhaustive-never","ts.unknown-any","ts.typeof-in-guard","ts.user-defined-type-guard","ts.control-flow-narrowing","js.prototype-chain"]
+        uses_capabilities: ["web.javascript-language", "web.javascript-objects", "web.typescript-types"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.ts.generics-utilities
+    title: "泛型、约束、工具类型、映射与条件类型"
+    role: concept
+    responsibility: "用泛型约束表达跨类型关系，并在有明确收益时使用工具、映射和条件类型，不追求难以诊断的类型体操。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: ts-generics-constraints
+        title: "泛型与约束"
+        topics: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference"]
+      - id: ts-utility-mapped-conditional
+        title: "工具、映射与条件类型"
+        topics: ["ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+    topics_taught: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference", "ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+    topics_used: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference", "ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+    prerequisites: ["ch.ts.modeling-narrowing"]
+    prerequisite_rationales:
+      ch.ts.modeling-narrowing:
+        reason: "高级类型必须建立在稳定的联合、收窄和业务模型上，否则只会隐藏边界错误。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.typescript-types"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ts.generics-utilities/
+      acceptance:
+        - "实现类型安全的字段选择与补丁工具并对复杂度设定可审查上限；命令、输入、环境与结果可从空目录复现；验收判据：泛型 API 保持输入输出关系，非法键和不满足约束的类型在预期位置失败，简化前后运行时行为不变。"
+        - "注入“无约束泛型、分布式条件类型或过度断言造成的类型失真”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.ts.generics-utilities/"]
+      critical_failure_modes: ["generic-constraint-gap", "unmaintainable-type-complexity"]
+    verification_mode:
+      test_level: T1
+      methods: ["tsc-type-fixture", "positive-negative-cases", "type-simplification-review"]
+      oracle: "泛型 API 保持输入输出关系，非法键和不满足约束的类型在预期位置失败，简化前后运行时行为不变。"
+    version_surfaces: ["typescript", "node-24-lts"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“泛型、约束、工具类型、映射与条件类型”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["ts-generics-constraints", "ts-utility-mapped-conditional"]
+        covers_topics: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference", "ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+        uses_capabilities: ["web.typescript-types"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现类型安全的字段选择与补丁工具并对复杂度设定可审查上限；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["ts-generics-constraints", "ts-utility-mapped-conditional"]
+        covers_topics: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference", "ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+        uses_capabilities: ["web.typescript-types"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "tsc-type-fixture-positive-negative-cases-type-simplification-review"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“无约束泛型、分布式条件类型或过度断言造成的类型失真”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ts-generics-constraints", "ts-utility-mapped-conditional"]
+        covers_topics: ["ts.generic-parameter", "ts.generic-constraint", "ts.keyof-indexed-access", "ts.generic-inference", "ts.utility-types", "ts.mapped-type", "ts.conditional-type", "ts.infer-keyword", "ts.type-complexity-budget"]
+        uses_capabilities: ["web.typescript-types"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.ts.runtime-boundaries
+    title: "运行时 Schema、类型边界与 TypeScript 质量工具链"
+    role: practice
+    responsibility: "在网络、存储和环境变量边界执行运行时 Schema 校验，并组合严格编译、lint、格式与测试门禁，不把类型声明当外部数据证据。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: ts-runtime-schema
+        title: "运行时 Schema 边界"
+        topics: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary"]
+      - id: ts-quality-toolchain
+        title: "TypeScript 质量工具链"
+        topics: ["ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+    topics_taught: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary", "ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+    topics_used: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary", "ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+    prerequisites: ["ch.ts.modeling-narrowing", "ch.js.fetch-cancellation-race"]
+    prerequisite_rationales:
+      ch.ts.modeling-narrowing:
+        reason: "Schema 解析结果需要以 unknown 收窄和判别联合表达成功/失败。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.js.fetch-cancellation-race:
+        reason: "网络响应是典型不可信边界，需能区分传输、状态、解析和 Schema 失败。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.typescript-types", "web.javascript-testing-debugging", "web.javascript-network-race"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ts.runtime-boundaries/
+      acceptance:
+        - "为工单 API 建立运行时 Schema、严格类型和可失败质量脚本；命令、输入、环境与结果可从空目录复现"
+        - "注入“直接断言响应类型、忽略 parse 失败或质量脚本顺序错误造成的假通过”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.ts.runtime-boundaries/"]
+      critical_failure_modes: ["unvalidated-runtime-data", "quality-gate-bypass"]
+    verification_mode:
+      test_level: T2
+      methods: ["typecheck", "vitest-unit", "invalid-payload-fixture"]
+      oracle: "合法负载被解析为已收窄类型，缺失/额外/错误类型负载产生稳定错误；typecheck、lint 与测试任一失败都会阻断构建。"
+    version_surfaces: ["typescript", "node-24-lts", "pnpm", "vitest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“运行时 Schema、类型边界与 TypeScript 质量工具链”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["ts-runtime-schema", "ts-quality-toolchain"]
+        covers_topics: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary", "ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+        uses_capabilities: ["web.typescript-types", "web.javascript-testing-debugging", "web.javascript-network-race"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "为工单 API 建立运行时 Schema、严格类型和可失败质量脚本；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["ts-runtime-schema", "ts-quality-toolchain"]
+        covers_topics: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary", "ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+        uses_capabilities: ["web.typescript-types", "web.javascript-testing-debugging", "web.javascript-network-race"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "typecheck-vitest-unit-invalid-payload-fixture"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“直接断言响应类型、忽略 parse 失败或质量脚本顺序错误造成的假通过”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ts-runtime-schema", "ts-quality-toolchain"]
+        covers_topics: ["ts.runtime-schema", "ts.parse-safeparse", "ts.schema-inferred-type", "ts.untrusted-boundary", "ts.strict-compiler-options", "ts.lint-format-boundary", "ts.typecheck-test-build-order", "ts.generated-type-review"]
+        uses_capabilities: ["web.typescript-types", "web.javascript-testing-debugging", "web.javascript-network-race"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun

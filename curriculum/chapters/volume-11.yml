@@ -1,0 +1,1322 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: "11"
+chapters:
+  - id: ch.dart.toolchain
+    title: "Dart SDK、CLI、pubspec 与包工具"
+    role: foundation
+    responsibility: "建立 Dart SDK、dart CLI、pubspec、依赖锁定和源码入口的可重复运行链，不在本章教授语言类型或 Flutter。"
+    level: L1
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: dart-sdk-cli
+        title: "SDK 与命令链"
+        topics: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format"]
+      - id: dart-pub-package
+        title: "包与项目"
+        topics: ["dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+    topics_taught: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format", "dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+    topics_used: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format", "dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+    prerequisites: ["ch.foundations.dependencies-build-packages"]
+    prerequisite_rationales:
+      ch.foundations.dependencies-build-packages:
+        reason: "pubspec、锁文件与包解析必须建立在可复现依赖和构建制品合同上。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.shell-command-stream"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.toolchain/
+      acceptance:
+        - "从空目录建立可重复 analyze/run 的 Dart 包并记录 SDK 与锁文件证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“PATH 解析到错误 SDK、pubspec 缩进或包导入路径错误”后定位首个可信证据，修复并重跑原验证；修复后判据：从空目录解析依赖、格式化、分析并运行入口；实际 SDK 路径、版本、锁文件和输出与记录一致。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.toolchain/"]
+      critical_failure_modes: ["dart-sdk-drift", "package-resolution-failure"]
+    verification_mode:
+      test_level: T0
+      methods: ["version-evidence", "dart-run", "exit-code"]
+      oracle: "从空目录解析依赖、格式化、分析并运行入口；实际 SDK 路径、版本、锁文件和输出与记录一致。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Dart SDK、CLI、pubspec 与包工具”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-sdk-cli", "dart-pub-package"]
+        covers_topics: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format", "dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“Dart SDK、CLI、pubspec 与包工具”构建可运行程序与测试：从空目录建立可重复 analyze/run 的 Dart 包并记录 SDK 与锁文件证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-sdk-cli", "dart-pub-package"]
+        covers_topics: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format", "dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "version-evidence-dart-run-exit-code"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“PATH 解析到错误 SDK、pubspec 缩进或包导入路径错误”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-sdk-cli", "dart-pub-package"]
+        covers_topics: ["dart.sdk-resolution", "dart.cli-run", "dart.cli-analyze", "dart.cli-format", "dart.pubspec", "dart.pub-dependency", "dart.package-layout", "dart.lockfile"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.types-null-safety
+    title: "变量、类型、运算符与空安全"
+    role: foundation
+    responsibility: "建立 Dart 值、变量、静态类型、类型推断、运算和 sound null safety 模型，不提前使用集合、类或异步。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-values-types
+        title: "值、变量与类型"
+        topics: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type"]
+      - id: dart-null-operators
+        title: "运算与空安全"
+        topics: ["dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+    topics_taught: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type", "dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+    topics_used: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type", "dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+    prerequisites: ["ch.dart.toolchain"]
+    prerequisite_rationales:
+      ch.dart.toolchain:
+        reason: "类型实验必须在已锁定 SDK、分析器和可运行入口中得到可复现诊断。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.shell-command-stream"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.types-null-safety/
+      acceptance:
+        - "建立覆盖推断、显式类型、nullable、late 与类型检查的正负样例矩阵；成功、边界和失败输入均保存可复现证据"
+        - "注入“滥用 !、late 未初始化或错误类型转换造成的编译/运行失败”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.types-null-safety/"]
+      critical_failure_modes: ["null-safety-bypass", "late-initialization-error"]
+    verification_mode:
+      test_level: T1
+      methods: ["analyzer-fixture", "value-table", "runtime-contrast"]
+      oracle: "合法值通过 analyzer 并输出预期；空值赋给非空类型、错误 late 或 cast 在明确的编译/运行阶段失败。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“变量、类型、运算符与空安全”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-values-types", "dart-null-operators"]
+        covers_topics: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type", "dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“变量、类型、运算符与空安全”构建可运行程序与测试：建立覆盖推断、显式类型、nullable、late 与类型检查的正负样例矩阵；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-values-types", "dart-null-operators"]
+        covers_topics: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type", "dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "analyzer-fixture-value-table-runtime-contrast"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“滥用 !、late 未初始化或错误类型转换造成的编译/运行失败”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-values-types", "dart-null-operators"]
+        covers_topics: ["dart.var-final-const", "dart.builtin-types", "dart.type-inference", "dart.runtime-type", "dart.nullable-nonnullable", "dart.null-aware-operator", "dart.late-boundary", "dart.type-cast-test", "dart.operator-precedence"]
+        uses_capabilities: ["foundation.shell-command-stream"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.control-functions
+    title: "条件、循环、函数、参数与返回值"
+    role: foundation
+    responsibility: "用分支、模式化 switch、有界循环和函数合同表达同步规则，不在本章引入集合高阶操作或类。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-control-flow
+        title: "控制流"
+        topics: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness"]
+      - id: dart-function-contract
+        title: "函数合同"
+        topics: ["dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+    topics_taught: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness", "dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+    topics_used: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness", "dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+    prerequisites: ["ch.dart.types-null-safety"]
+    prerequisite_rationales:
+      ch.dart.types-null-safety:
+        reason: "条件表达式、参数可空性、默认值和返回类型都依赖已验证的类型与空安全。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.control-functions/
+      acceptance:
+        - "实现含边界分支、循环统计和命名参数的维修优先级函数集；成功、边界和失败输入均保存可复现证据"
+        - "注入“非穷尽 switch、可空条件或命名参数误用导致的规则缺口”后定位首个可信证据，修复并重跑原验证；修复后判据：零次/一次/多次循环、所有 switch 分支和命名参数组合与预期表一致，遗漏分支或返回会被 analyzer 定位。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.control-functions/"]
+      critical_failure_modes: ["control-flow-gap", "function-contract-violation"]
+    verification_mode:
+      test_level: T1
+      methods: ["input-output-table", "analyzer-fixture", "boundary-cases"]
+      oracle: "零次/一次/多次循环、所有 switch 分支和命名参数组合与预期表一致，遗漏分支或返回会被 analyzer 定位。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“条件、循环、函数、参数与返回值”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-control-flow", "dart-function-contract"]
+        covers_topics: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness", "dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+        uses_capabilities: []
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现含边界分支、循环统计和命名参数的维修优先级函数集；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-control-flow", "dart-function-contract"]
+        covers_topics: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness", "dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+        uses_capabilities: []
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "input-output-table-analyzer-fixture-boundary-cases"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“非穷尽 switch、可空条件或命名参数误用导致的规则缺口”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-control-flow", "dart-function-contract"]
+        covers_topics: ["dart.if-switch", "dart.for-while", "dart.break-continue", "dart.switch-exhaustiveness", "dart.function-declaration", "dart.positional-named-parameter", "dart.default-required-parameter", "dart.return-value", "dart.arrow-function"]
+        uses_capabilities: []
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.collections-patterns
+    title: "List、Map、Set、record、模式与解构"
+    role: foundation
+    responsibility: "选择 List/Map/Set/record 表达顺序、映射、唯一性与多值结果，并用模式匹配安全解构，不引入类继承。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-collections
+        title: "集合合同"
+        topics: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform"]
+      - id: dart-record-pattern
+        title: "Record 与模式"
+        topics: ["dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+    topics_taught: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform", "dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+    topics_used: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform", "dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+    prerequisites: ["ch.dart.control-functions"]
+    prerequisite_rationales:
+      ch.dart.control-functions:
+        reason: "集合遍历、过滤、模式 guard 和空集合边界需要已验证的分支、循环与函数合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.collections-patterns/
+      acceptance:
+        - "实现按技师分组、去重并返回 record 汇总的工单转换函数；成功、边界和失败输入均保存可复现证据"
+        - "注入“集合类型选错、模式遗漏或浅复制后仍共享可变列表”后定位首个可信证据，修复并重跑原验证；修复后判据：空、重复、缺失键和不同 record 形状的结果与表格一致，非穷尽模式在 analyzer 或明确 fallback 中被处理。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.collections-patterns/"]
+      critical_failure_modes: ["collection-contract-mismatch", "pattern-exhaustiveness-gap"]
+    verification_mode:
+      test_level: T1
+      methods: ["collection-case-table", "pattern-match-fixture", "equality-check"]
+      oracle: "空、重复、缺失键和不同 record 形状的结果与表格一致，非穷尽模式在 analyzer 或明确 fallback 中被处理。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“List、Map、Set、record、模式与解构”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-collections", "dart-record-pattern"]
+        covers_topics: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform", "dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+        uses_capabilities: []
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现按技师分组、去重并返回 record 汇总的工单转换函数；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-collections", "dart-record-pattern"]
+        covers_topics: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform", "dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+        uses_capabilities: []
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "collection-case-table-pattern-match-fixture-equality-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“集合类型选错、模式遗漏或浅复制后仍共享可变列表”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-collections", "dart-record-pattern"]
+        covers_topics: ["dart.list", "dart.map", "dart.set", "dart.collection-literal-spread", "dart.collection-transform", "dart.record", "dart.destructuring-pattern", "dart.collection-pattern", "dart.guard-pattern", "dart.pattern-exhaustiveness"]
+        uses_capabilities: []
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.oop-generics
+    title: "类、泛型、mixin、extension 与对象边界"
+    role: concept
+    responsibility: "用类、构造器、封装、接口/组合、泛型、mixin 和 extension 建立对象边界，整合前置类型与集合能力但不教授异步。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-object-model
+        title: "类与对象模型"
+        topics: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension"]
+      - id: dart-generics-language-synthesis
+        title: "泛型与语言综合"
+        topics: ["dart.generic-type", "dart.generic-bound", "dart.nullable-nonnullable", "dart.list", "dart.map", "dart.record"]
+    topics_taught: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension","dart.generic-type","dart.generic-bound"]
+    topics_used: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension","dart.generic-type","dart.generic-bound","dart.nullable-nonnullable","dart.list","dart.map","dart.record"]
+    prerequisites: ["ch.dart.collections-patterns"]
+    prerequisite_rationales:
+      ch.dart.collections-patterns:
+        reason: "泛型容器、record 和集合输入为对象模型提供真实数据合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.dart-language"]
+      uses: ["foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.oop-generics/
+      acceptance:
+        - "用不可变值对象、repository 接口和泛型结果类型建模维修工单；成功、边界和失败输入均保存可复现证据"
+        - "注入“可空字段破坏不变量、共享静态状态或错误继承导致的对象污染”后定位首个可信证据，修复并重跑原验证；修复后判据：非法构造状态、错误泛型边界和不满足接口的实现会在预期处失败；两个实例状态隔离且替换实现保持合同。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.oop-generics/"]
+      critical_failure_modes: ["object-invariant-break", "generic-type-unsoundness"]
+    verification_mode:
+      test_level: T1
+      methods: ["analyzer-fixture", "object-contract-test", "substitution-case"]
+      oracle: "非法构造状态、错误泛型边界和不满足接口的实现会在预期处失败；两个实例状态隔离且替换实现保持合同。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“类、泛型、mixin、extension 与对象边界”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-object-model", "dart-generics-language-synthesis"]
+        covers_topics: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension","dart.generic-type","dart.generic-bound","dart.nullable-nonnullable","dart.list","dart.map","dart.record"]
+        uses_capabilities: ["foundation.toolchain-env-build", "mobile.dart-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“类、泛型、mixin、extension 与对象边界”构建可运行程序与测试：用不可变值对象、repository 接口和泛型结果类型建模维修工单；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-object-model", "dart-generics-language-synthesis"]
+        covers_topics: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension","dart.generic-type","dart.generic-bound","dart.nullable-nonnullable","dart.list","dart.map","dart.record"]
+        uses_capabilities: ["foundation.toolchain-env-build", "mobile.dart-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "analyzer-fixture-object-contract-test-substitution-case"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“可空字段破坏不变量、共享静态状态或错误继承导致的对象污染”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-object-model", "dart-generics-language-synthesis"]
+        covers_topics: ["dart.class-constructor","dart.encapsulation","dart.abstract-interface","dart.inheritance-composition","dart.mixin-extension","dart.generic-type","dart.generic-bound","dart.nullable-nonnullable","dart.list","dart.map","dart.record"]
+        uses_capabilities: ["foundation.toolchain-env-build", "mobile.dart-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.exceptions-resources
+    title: "异常、资源所有权与错误建模"
+    role: concept
+    responsibility: "区分可预期业务失败与异常，定义抛出/转换/捕获边界并用 finally 释放资源，不吞错、不在本章引入 Future。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-error-contract
+        title: "异常与错误合同"
+        topics: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation"]
+      - id: dart-resource-owner
+        title: "资源所有权"
+        topics: ["dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+    topics_taught: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation", "dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+    topics_used: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation", "dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+    prerequisites: ["ch.dart.oop-generics"]
+    prerequisite_rationales:
+      ch.dart.oop-generics:
+        reason: "自定义异常、结果类型和可替换资源接口需要已验证对象与泛型模型。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.dart-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.exceptions-resources/
+      acceptance:
+        - "为工单解析和临时资源定义错误模型、转换边界与确定清理；成功、边界和失败输入均保存可复现证据"
+        - "注入“catch 后静默、丢失 stack trace 或 finally 重复覆盖原异常”后定位首个可信证据，修复并重跑原验证；修复后判据：成功、业务失败、解析异常和清理异常场景的返回/抛出类型、堆栈与释放次数符合合同，资源只释放一次。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.exceptions-resources/"]
+      critical_failure_modes: ["swallowed-exception", "resource-leak", "failure-contract-drift"]
+    verification_mode:
+      test_level: T1
+      methods: ["failure-matrix", "stack-trace-check", "cleanup-counter"]
+      oracle: "成功、业务失败、解析异常和清理异常场景的返回/抛出类型、堆栈与释放次数符合合同，资源只释放一次。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“异常、资源所有权与错误建模”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-error-contract", "dart-resource-owner"]
+        covers_topics: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation", "dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+        uses_capabilities: ["mobile.dart-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“异常、资源所有权与错误建模”构建可运行程序与测试：为工单解析和临时资源定义错误模型、转换边界与确定清理；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-error-contract", "dart-resource-owner"]
+        covers_topics: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation", "dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+        uses_capabilities: ["mobile.dart-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "failure-matrix-stack-trace-check-cleanup-counter"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“catch 后静默、丢失 stack trace 或 finally 重复覆盖原异常”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-error-contract", "dart-resource-owner"]
+        covers_topics: ["dart.throw-catch", "dart.custom-exception", "dart.stack-trace", "dart.error-translation", "dart.try-finally", "dart.resource-owner", "dart.cleanup-order", "dart.result-error-model"]
+        uses_capabilities: ["mobile.dart-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.future-cancellation
+    title: "Future、async/await、超时与取消协议"
+    role: concept
+    responsibility: "解释 Future 完成/失败、async/await 恢复、超时和协作式取消，明确丢弃结果不等于取消底层工作，不教授 Stream。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-future-async
+        title: "Future 与 async/await"
+        topics: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition"]
+      - id: dart-timeout-cancellation
+        title: "超时与取消"
+        topics: ["dart.timeout", "dart.cancellation-token", "dart.cooperative-cancellation", "dart.stale-result-guard"]
+    topics_taught: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition","dart.timeout","dart.cancellation-token","dart.cooperative-cancellation","dart.stale-result-guard"]
+    topics_used: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition","dart.timeout","dart.cancellation-token","dart.cooperative-cancellation","dart.stale-result-guard"]
+    prerequisites: ["ch.dart.exceptions-resources"]
+    prerequisite_rationales:
+      ch.dart.exceptions-resources:
+        reason: "Future 失败传播和取消清理必须建立在异常转换与资源所有权上。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.dart-future-cancellation"]
+      uses: ["mobile.dart-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.future-cancellation/
+      acceptance:
+        - "实现可超时和协作取消的工单加载函数并用 Completer 控制完成顺序；成功、边界和失败输入均保存可复现证据"
+        - "注入“忘记 await、仅忽略结果未取消工作或超时后仍写状态”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.future-cancellation/"]
+      critical_failure_modes: ["uncancelled-async-work", "stale-future-result", "unhandled-future-error"]
+    verification_mode:
+      test_level: T2
+      methods: ["controlled-completer", "timeout-fixture", "cancellation-counter"]
+      oracle: "成功、失败、超时、取消和乱序完成场景均有确定结果；取消后底层任务按协议停止且陈旧结果不能提交。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Future、async/await、超时与取消协议”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-future-async", "dart-timeout-cancellation"]
+        covers_topics: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition","dart.timeout","dart.cancellation-token","dart.cooperative-cancellation","dart.stale-result-guard"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可超时和协作取消的工单加载函数并用 Completer 控制完成顺序；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-future-async", "dart-timeout-cancellation"]
+        covers_topics: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition","dart.timeout","dart.cancellation-token","dart.cooperative-cancellation","dart.stale-result-guard"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "controlled-completer-timeout-fixture-cancellation-counter"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“忘记 await、仅忽略结果未取消工作或超时后仍写状态”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-future-async", "dart-timeout-cancellation"]
+        covers_topics: ["dart.future-state","dart.async-await","dart.future-error-propagation","dart.future-composition","dart.timeout","dart.cancellation-token","dart.cooperative-cancellation","dart.stale-result-guard"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.streams-isolates
+    title: "Stream、背压边界、Isolate 与并发"
+    role: concept
+    responsibility: "处理单订阅/广播 Stream、订阅取消、事件速率和 Isolate 消息边界，区分并发事件流与 CPU 隔离，不承诺不存在的通用背压。"
+    level: L2+
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: dart-stream-lifecycle
+        title: "Stream 生命周期"
+        topics: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary"]
+      - id: dart-isolate-message
+        title: "Isolate 与消息"
+        topics: ["dart.isolate", "dart.sendable-message", "dart.isolate-error-exit", "dart.cpu-work-offload", "dart.future-state"]
+    topics_taught: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary","dart.isolate","dart.sendable-message","dart.isolate-error-exit","dart.cpu-work-offload"]
+    topics_used: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary","dart.isolate","dart.sendable-message","dart.isolate-error-exit","dart.cpu-work-offload","dart.future-state"]
+    prerequisites: ["ch.dart.future-cancellation"]
+    prerequisite_rationales:
+      ch.dart.future-cancellation:
+        reason: "Stream 订阅和 Isolate 生命周期延续异步完成、失败、超时与取消合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.dart-streams-isolates"]
+      uses: ["mobile.dart-language", "mobile.dart-future-cancellation"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.streams-isolates/
+      acceptance:
+        - "实现可取消的工单事件流和一个 Isolate CPU 统计任务并记录生命周期；成功、边界和失败输入均保存可复现证据"
+        - "注入“广播/单订阅误用、未取消订阅或发送不可传递对象”后定位首个可信证据，修复并重跑原验证；修复后判据：事件顺序、错误、完成、取消和高频输入策略与轨迹一致；Isolate 结果/错误可追踪且无残留订阅。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.streams-isolates/"]
+      critical_failure_modes: ["stream-subscription-leak", "event-loss", "isolate-message-failure"]
+    verification_mode:
+      test_level: T2
+      methods: ["stream-event-trace", "subscription-leak-check", "isolate-message-test"]
+      oracle: "事件顺序、错误、完成、取消和高频输入策略与轨迹一致；Isolate 结果/错误可追踪且无残留订阅。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Stream、背压边界、Isolate 与并发”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-stream-lifecycle", "dart-isolate-message"]
+        covers_topics: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary","dart.isolate","dart.sendable-message","dart.isolate-error-exit","dart.cpu-work-offload","dart.future-state"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation", "mobile.dart-streams-isolates"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可取消的工单事件流和一个 Isolate CPU 统计任务并记录生命周期；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-stream-lifecycle", "dart-isolate-message"]
+        covers_topics: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary","dart.isolate","dart.sendable-message","dart.isolate-error-exit","dart.cpu-work-offload","dart.future-state"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation", "mobile.dart-streams-isolates"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "stream-event-trace-subscription-leak-check-isolate-message-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“广播/单订阅误用、未取消订阅或发送不可传递对象”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-stream-lifecycle", "dart-isolate-message"]
+        covers_topics: ["dart.stream-subscription","dart.single-broadcast-stream","dart.stream-transform","dart.stream-cancel","dart.stream-rate-boundary","dart.isolate","dart.sendable-message","dart.isolate-error-exit","dart.cpu-work-offload","dart.future-state"]
+        uses_capabilities: ["mobile.dart-language", "mobile.dart-future-cancellation", "mobile.dart-streams-isolates"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.dart.testing-lints
+    title: "Dart test、断言、Mock、lint 与包质量"
+    role: practice
+    responsibility: "用 dart test、可信断言、可控替身和静态分析验证同步/异常合同，组合 format/analyze/test 门禁，不在本章测试 Flutter Widget。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: dart-unit-testing
+        title: "Dart 单元测试"
+        topics: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation"]
+      - id: dart-package-quality
+        title: "包质量门禁"
+        topics: ["dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+    topics_taught: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation", "dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+    topics_used: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation", "dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+    prerequisites: ["ch.dart.exceptions-resources"]
+    prerequisite_rationales:
+      ch.dart.exceptions-resources:
+        reason: "异常断言和清理验证需要稳定失败契约。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.dart-language", "foundation.verification-debug-test"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.dart.testing-lints/
+      acceptance:
+        - "为工单领域对象和错误转换编写 Dart 单元测试及一键质量门禁；成功、边界和失败输入均保存可复现证据"
+        - "注入“错误 matcher、过度 Mock、共享夹具或忽略 analyzer 警告导致假通过”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.dart.testing-lints/"]
+      critical_failure_modes: ["false-positive-test", "quality-gate-bypass"]
+    verification_mode:
+      test_level: T2
+      methods: ["dart-test", "lint-gate", "injected-fault"]
+      oracle: "format/analyze/test 对正常、边界和异常用例给出确定结果；故意破坏实现时测试在预期断言失败，修复后恢复。"
+    version_surfaces: ["dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Dart test、断言、Mock、lint 与包质量”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["dart-unit-testing", "dart-package-quality"]
+        covers_topics: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation", "dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+        uses_capabilities: ["mobile.dart-language", "foundation.verification-debug-test"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "为工单领域对象和错误转换编写 Dart 单元测试及一键质量门禁；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["dart-unit-testing", "dart-package-quality"]
+        covers_topics: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation", "dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+        uses_capabilities: ["mobile.dart-language", "foundation.verification-debug-test"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "dart-test-lint-gate-injected-fault"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误 matcher、过度 Mock、共享夹具或忽略 analyzer 警告导致假通过”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["dart-unit-testing", "dart-package-quality"]
+        covers_topics: ["dart.test-group-case", "dart.expect-matcher", "dart.throws-async", "dart.mock-fake-boundary", "dart.test-isolation", "dart.lint-rule", "dart.format-check", "dart.analyze-gate", "dart.test-gate", "dart.quality-command-order"]
+        uses_capabilities: ["mobile.dart-language", "foundation.verification-debug-test"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.toolchain-project
+    title: "Flutter SDK、项目结构、run、hot reload 与 DevTools"
+    role: practice
+    responsibility: "建立 Flutter SDK、项目目录、目标设备、run/build、hot reload/restart 与 DevTools 观察链，不在本章教授 Widget 组合。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-sdk-project
+        title: "SDK 与项目"
+        topics: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build"]
+      - id: flutter-dev-loop
+        title: "开发循环与工具"
+        topics: ["flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+    topics_taught: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build", "flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+    topics_used: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build", "flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+    prerequisites: ["ch.dart.oop-generics"]
+    prerequisite_rationales:
+      ch.dart.oop-generics:
+        reason: "Flutter 源码大量使用类、泛型、mixin 和 extension，需先能导航类型边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.dart-language", "foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.toolchain-project/
+      acceptance:
+        - "从空目录创建 Flutter 应用并保存 SDK、设备、run/build、reload/restart 对照证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“Flutter/Dart SDK 漂移、目标设备错误或误用 hot reload 掩盖初始化问题”后定位首个可信证据，修复并重跑原验证；修复后判据：目标设备可重复 run/build；代码、状态与原生配置变化分别触发预期的 reload/restart/rebuild 行为，DevTools 连接正确。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.toolchain-project/"]
+      critical_failure_modes: ["flutter-sdk-drift", "device-target-mismatch"]
+    verification_mode:
+      test_level: T1
+      methods: ["flutter-doctor-evidence", "device-run", "reload-restart-contrast"]
+      oracle: "目标设备可重复 run/build；代码、状态与原生配置变化分别触发预期的 reload/restart/rebuild 行为，DevTools 连接正确。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Flutter SDK、项目结构、run、hot reload 与 DevTools”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-sdk-project", "flutter-dev-loop"]
+        covers_topics: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build", "flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+        uses_capabilities: ["mobile.dart-language", "foundation.toolchain-env-build"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "从空目录创建 Flutter 应用并保存 SDK、设备、run/build、reload/restart 对照证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-sdk-project", "flutter-dev-loop"]
+        covers_topics: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build", "flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+        uses_capabilities: ["mobile.dart-language", "foundation.toolchain-env-build"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "flutter-doctor-evidence-device-run-reload-restart-contrast"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“Flutter/Dart SDK 漂移、目标设备错误或误用 hot reload 掩盖初始化问题”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-sdk-project", "flutter-dev-loop"]
+        covers_topics: ["flutter.sdk-resolution", "flutter.project-layout", "flutter.target-device", "flutter.run-build", "flutter.hot-reload-restart", "flutter.devtools-connect", "flutter.framework-log", "flutter.generated-platform-boundary"]
+        uses_capabilities: ["mobile.dart-language", "foundation.toolchain-env-build"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.widget-tree
+    title: "MaterialApp、基础 Widget、Widget 树与 BuildContext"
+    role: practice
+    responsibility: "用 MaterialApp、Stateless/Stateful Widget、组合和 BuildContext 构建可解释 Widget 树，整合工具链与 Dart 对象能力，不提前教授复杂布局或异步生命周期。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-widget-composition
+        title: "Widget 与组合"
+        topics: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold"]
+      - id: flutter-tree-context-runtime
+        title: "树、Context 与运行链"
+        topics: ["flutter.widget-element-render-intro", "flutter.build-context", "flutter.inherited-lookup", "flutter.hot-reload-restart", "dart.class-constructor"]
+    topics_taught: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold","flutter.widget-element-render-intro","flutter.build-context","flutter.inherited-lookup"]
+    topics_used: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold","flutter.widget-element-render-intro","flutter.build-context","flutter.inherited-lookup","flutter.hot-reload-restart","dart.class-constructor"]
+    prerequisites: ["ch.flutter.toolchain-project"]
+    prerequisite_rationales:
+      ch.flutter.toolchain-project:
+        reason: "Widget 树必须在稳定目标和 DevTools 中构建、重载与检查。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.flutter-tooling-widget"]
+      uses: ["mobile.dart-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.widget-tree/
+      acceptance:
+        - "实现由多个小 Widget 组合的工单详情骨架并画出 Widget/Element/Context 关系；成功、边界和失败输入均保存可复现证据"
+        - "注入“在错误 Context 查找祖先、在 build 中产生副作用或混淆 Widget 与状态身份”后定位首个可信证据，修复并重跑原验证；修复后判据：Widget 配置、Element 身份、Context 查找和 build 次数与树图及 DevTools 一致；错误 Context 可稳定复现。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.widget-tree/"]
+      critical_failure_modes: ["invalid-build-context", "build-side-effect", "widget-state-confusion"]
+    verification_mode:
+      test_level: T1
+      methods: ["widget-tree-inspection", "rebuild-counter", "device-smoke"]
+      oracle: "Widget 配置、Element 身份、Context 查找和 build 次数与树图及 DevTools 一致；错误 Context 可稳定复现。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“MaterialApp、基础 Widget、Widget 树与 BuildContext”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-widget-composition", "flutter-tree-context-runtime"]
+        covers_topics: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold","flutter.widget-element-render-intro","flutter.build-context","flutter.inherited-lookup","flutter.hot-reload-restart","dart.class-constructor"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-tooling-widget"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现由多个小 Widget 组合的工单详情骨架并画出 Widget/Element/Context 关系；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-widget-composition", "flutter-tree-context-runtime"]
+        covers_topics: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold","flutter.widget-element-render-intro","flutter.build-context","flutter.inherited-lookup","flutter.hot-reload-restart","dart.class-constructor"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-tooling-widget"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "widget-tree-inspection-rebuild-counter-device-smoke"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“在错误 Context 查找祖先、在 build 中产生副作用或混淆 Widget 与状态身份”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-widget-composition", "flutter-tree-context-runtime"]
+        covers_topics: ["flutter.widget-immutable-config","flutter.stateless-stateful-intro","flutter.widget-composition","flutter.material-app-scaffold","flutter.widget-element-render-intro","flutter.build-context","flutter.inherited-lookup","flutter.hot-reload-restart","dart.class-constructor"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-tooling-widget"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.layout-accessibility
+    title: "约束布局、响应式、渲染与无障碍"
+    role: practice
+    responsibility: "按 constraints-down/sizes-up 建立 Row/Column/Flex/Stack/滚动布局，适配尺寸和文本缩放，并落实语义、键盘/触控与减少动效。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-constraint-layout
+        title: "约束与布局"
+        topics: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow"]
+      - id: flutter-responsive-a11y
+        title: "响应式与无障碍"
+        topics: ["flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+    topics_taught: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow", "flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+    topics_used: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow", "flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+    prerequisites: ["ch.flutter.widget-tree", "ch.web.accessibility-interaction"]
+    prerequisite_rationales:
+      ch.flutter.widget-tree:
+        reason: "布局 Widget 和语义节点必须位于可解释的 Widget/Element/Context 树中。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.accessibility-interaction:
+        reason: "键盘、焦点、可访问名称和减少动效原则可迁移到 Flutter 平台实现。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.flutter-tooling-widget", "web.accessibility"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.layout-accessibility/
+      acceptance:
+        - "实现可适配窄屏、长文本和放大字体的可访问工单详情布局；成功、边界和失败输入均保存可复现证据"
+        - "注入“unbounded constraint、Row 溢出或缺失 Semantics 导致的布局与无障碍失败”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.layout-accessibility/"]
+      critical_failure_modes: ["constraint-overflow", "inaccessible-widget-tree"]
+    verification_mode:
+      test_level: T2
+      methods: ["constraint-case-matrix", "semantics-inspection", "golden-baseline-intro"]
+      oracle: "窄/宽、长文本、文本放大、RTL 和键盘导航场景无溢出，Semantics 树与预期名称、顺序和操作一致。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“约束布局、响应式、渲染与无障碍”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-constraint-layout", "flutter-responsive-a11y"]
+        covers_topics: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow", "flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "web.accessibility"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可适配窄屏、长文本和放大字体的可访问工单详情布局；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-constraint-layout", "flutter-responsive-a11y"]
+        covers_topics: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow", "flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "web.accessibility"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "constraint-case-matrix-semantics-inspection-golden-baseline-intro"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“unbounded constraint、Row 溢出或缺失 Semantics 导致的布局与无障碍失败”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-constraint-layout", "flutter-responsive-a11y"]
+        covers_topics: ["flutter.box-constraints", "flutter.row-column-flex", "flutter.stack-positioned", "flutter.scrollable-layout", "flutter.layout-overflow", "flutter.mediaquery-layoutbuilder", "flutter.text-scaling", "flutter.semantics", "flutter.focus-traversal", "flutter.touch-target"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "web.accessibility"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.state-lifecycle
+    title: "状态、生命周期、mounted、Key 与异步更新"
+    role: practice
+    responsibility: "管理 State 生命周期、本地状态、mounted、Key 和异步回调所有权，保证销毁后不更新 UI，并明确 mounted 不能取消请求。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-state-lifecycle
+        title: "State 生命周期"
+        topics: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner"]
+      - id: flutter-key-identity-layout
+        title: "Key 与状态身份"
+        topics: ["flutter.key-identity", "flutter.local-global-key", "flutter.list-state-reuse", "flutter.box-constraints", "dart.cancellation-token"]
+    topics_taught: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner","flutter.key-identity","flutter.local-global-key","flutter.list-state-reuse"]
+    topics_used: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner","flutter.key-identity","flutter.local-global-key","flutter.list-state-reuse","flutter.box-constraints","dart.cancellation-token"]
+    prerequisites: ["ch.flutter.layout-accessibility", "ch.dart.future-cancellation"]
+    prerequisite_rationales:
+      ch.flutter.layout-accessibility:
+        reason: "布局和可访问状态必须在 setState/Key 变化后保持一致。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.dart.future-cancellation:
+        reason: "mounted 只防止销毁后 UI 更新，真正取消 Future 工作需要正式取消协议。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.flutter-layout-lifecycle"]
+      uses: ["mobile.dart-future-cancellation", "mobile.flutter-tooling-widget", "web.accessibility"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.state-lifecycle/
+      acceptance:
+        - "实现可异步加载且可重排的工单列表，记录生命周期、Key 身份和取消证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“销毁后 setState、只检查 mounted 未取消工作或错误 Key 导致状态串项”后定位首个可信证据，修复并重跑原验证；修复后判据：创建、更新、重排、异步完成和销毁序列中的回调、状态身份和 UI 与轨迹一致；销毁后无 setState 且任务按协议取消。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.state-lifecycle/"]
+      critical_failure_modes: ["post-dispose-setstate", "uncancelled-request", "state-key-reuse"]
+    verification_mode:
+      test_level: T2
+      methods: ["lifecycle-trace", "controlled-future", "key-reorder-test"]
+      oracle: "创建、更新、重排、异步完成和销毁序列中的回调、状态身份和 UI 与轨迹一致；销毁后无 setState 且任务按协议取消。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“状态、生命周期、mounted、Key 与异步更新”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-state-lifecycle", "flutter-key-identity-layout"]
+        covers_topics: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner","flutter.key-identity","flutter.local-global-key","flutter.list-state-reuse","flutter.box-constraints","dart.cancellation-token"]
+        uses_capabilities: ["mobile.dart-future-cancellation", "mobile.flutter-tooling-widget", "web.accessibility", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可异步加载且可重排的工单列表，记录生命周期、Key 身份和取消证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-state-lifecycle", "flutter-key-identity-layout"]
+        covers_topics: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner","flutter.key-identity","flutter.local-global-key","flutter.list-state-reuse","flutter.box-constraints","dart.cancellation-token"]
+        uses_capabilities: ["mobile.dart-future-cancellation", "mobile.flutter-tooling-widget", "web.accessibility", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "lifecycle-trace-controlled-future-key-reorder-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“销毁后 setState、只检查 mounted 未取消工作或错误 Key 导致状态串项”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-state-lifecycle", "flutter-key-identity-layout"]
+        covers_topics: ["flutter.state-init-dispose","flutter.set-state-contract","flutter.mounted","flutter.did-update-dependencies","flutter.async-ui-owner","flutter.key-identity","flutter.local-global-key","flutter.list-state-reuse","flutter.box-constraints","dart.cancellation-token"]
+        uses_capabilities: ["mobile.dart-future-cancellation", "mobile.flutter-tooling-widget", "web.accessibility", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.navigation-forms
+    title: "导航、路由、表单与页面契约"
+    role: practice
+    responsibility: "建立页面路由、参数、返回结果、表单状态和校验合同，处理深链接与返回栈，不在本章选择全局状态库。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-navigation
+        title: "导航与页面"
+        topics: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration"]
+      - id: flutter-forms
+        title: "表单合同"
+        topics: ["flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+    topics_taught: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration", "flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+    topics_used: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration", "flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+    prerequisites: ["ch.flutter.state-lifecycle"]
+    prerequisite_rationales:
+      ch.flutter.state-lifecycle:
+        reason: "路由进入/退出、controller 清理和表单状态身份依赖生命周期与 Key。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.flutter-layout-lifecycle"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.navigation-forms/
+      acceptance:
+        - "实现工单列表到编辑页的参数/返回结果导航和可恢复表单；成功、边界和失败输入均保存可复现证据"
+        - "注入“错误 Context 导航、controller 未释放或路由参数/返回值漂移”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.navigation-forms/"]
+      critical_failure_modes: ["navigation-stack-error", "form-state-loss", "controller-leak"]
+    verification_mode:
+      test_level: T2
+      methods: ["navigation-matrix", "form-state-test", "back-stack-trace"]
+      oracle: "直接进入、带参导航、返回结果、非法表单、未保存退出和重建场景的页面栈与数据合同一致。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“导航、路由、表单与页面契约”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-navigation", "flutter-forms"]
+        covers_topics: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration", "flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现工单列表到编辑页的参数/返回结果导航和可恢复表单；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-navigation", "flutter-forms"]
+        covers_topics: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration", "flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "navigation-matrix-form-state-test-back-stack-trace"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误 Context 导航、controller 未释放或路由参数/返回值漂移”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-navigation", "flutter-forms"]
+        covers_topics: ["flutter.navigator-route", "flutter.route-arguments-result", "flutter.deep-link-intro", "flutter.back-stack", "flutter.route-restoration", "flutter.form-key", "flutter.text-form-field", "flutter.form-validation", "flutter.controller-focus-dispose", "flutter.unsaved-change"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.architecture-state
+    title: "状态管理、模块边界与依赖方向"
+    role: practice
+    responsibility: "按 presentation/application/domain/data 划分依赖方向，为本地、共享与服务端状态选择所有者和可替换接口，不绑定单一状态管理品牌。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-layer-boundary
+        title: "模块与依赖方向"
+        topics: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module"]
+      - id: flutter-state-ownership
+        title: "状态所有权"
+        topics: ["flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+    topics_taught: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module", "flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+    topics_used: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module", "flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+    prerequisites: ["ch.flutter.navigation-forms"]
+    prerequisite_rationales:
+      ch.flutter.navigation-forms:
+        reason: "页面参数、表单草稿和跨页结果提供真实状态所有权案例。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.flutter-layout-lifecycle", "mobile.dart-language"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.architecture-state/
+      acceptance:
+        - "把单文件工单应用拆成四层模块并用 Fake repository 验证依赖方向；成功、边界和失败输入均保存可复现证据"
+        - "注入“UI 直接访问存储、全局可变状态或双向层依赖导致的耦合”后定位首个可信证据，修复并重跑原验证；修复后判据：静态依赖只指向内层；本地/共享/服务端状态各有唯一所有者，替换 repository 后 UI 状态转换测试不变。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.architecture-state/"]
+      critical_failure_modes: ["architecture-dependency-cycle", "state-owner-ambiguity"]
+    verification_mode:
+      test_level: T2
+      methods: ["dependency-rule-test", "state-transition-test", "fake-repository"]
+      oracle: "静态依赖只指向内层；本地/共享/服务端状态各有唯一所有者，替换 repository 后 UI 状态转换测试不变。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“状态管理、模块边界与依赖方向”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-layer-boundary", "flutter-state-ownership"]
+        covers_topics: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module", "flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle", "mobile.dart-language"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“状态管理、模块边界与依赖方向”构建可运行程序与测试：把单文件工单应用拆成四层模块并用 Fake repository 验证依赖方向；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-layer-boundary", "flutter-state-ownership"]
+        covers_topics: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module", "flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle", "mobile.dart-language"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "dependency-rule-test-state-transition-test-fake-repository"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“UI 直接访问存储、全局可变状态或双向层依赖导致的耦合”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-layer-boundary", "flutter-state-ownership"]
+        covers_topics: ["flutter.presentation-domain-data", "flutter.dependency-inversion", "flutter.repository-boundary", "flutter.feature-module", "flutter.local-shared-server-state", "flutter.state-holder", "flutter.immutable-ui-state", "flutter.action-event", "flutter.error-state-model"]
+        uses_capabilities: ["mobile.flutter-layout-lifecycle", "mobile.dart-language"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.network-storage-offline
+    title: "网络取消、安全存储、缓存与离线队列"
+    role: practice
+    responsibility: "在 Flutter 中实现可取消 HTTP、认证安全存储、版本化缓存和幂等离线队列，复用服务端幂等合同而不依赖 uni-app 实现。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-network-storage
+        title: "网络与安全存储"
+        topics: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal"]
+      - id: flutter-offline-replay
+        title: "离线队列与幂等"
+        topics: ["flutter.offline-command-queue", "flutter.idempotency-key", "flutter.replay-backoff", "flutter.conflict-state", "flutter.poison-command"]
+    topics_taught: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal","flutter.offline-command-queue","flutter.idempotency-key","flutter.replay-backoff","flutter.conflict-state","flutter.poison-command"]
+    topics_used: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal","flutter.offline-command-queue","flutter.idempotency-key","flutter.replay-backoff","flutter.conflict-state","flutter.poison-command"]
+    prerequisites: ["ch.flutter.state-lifecycle", "ch.architecture.idempotency-concurrency"]
+    prerequisite_rationales:
+      ch.flutter.state-lifecycle:
+        reason: "请求和队列结果只能由仍存活的状态所有者提交到 UI。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.architecture.idempotency-concurrency:
+        reason: "离线重放的幂等键、重复响应和冲突由服务端一致性合同约束。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.flutter-network-offline"]
+      uses: ["mobile.dart-future-cancellation", "mobile.flutter-layout-lifecycle", "foundation.http-message", "architecture.idempotency-consistency"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.network-storage-offline/
+      acceptance:
+        - "实现带安全凭据、版本化缓存和持久离线队列的 Flutter 工单客户端；成功、边界和失败输入均保存可复现证据"
+        - "注入“仅用 mounted 防请求、明文凭据、缓存 schema 漂移或每次重放生成新幂等键”后定位首个可信证据，修复并重跑原验证；修复后判据：成功、超时、取消、凭据损坏、缓存升级、断网重启、重复重放和冲突场景中状态确定且业务命令至多生效一次。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.network-storage-offline/"]
+      critical_failure_modes: ["uncancelled-network-work", "credential-exposure", "duplicate-offline-command"]
+    verification_mode:
+      test_level: T4
+      methods: ["mock-server", "offline-restart-test", "duplicate-replay-test"]
+      oracle: "成功、超时、取消、凭据损坏、缓存升级、断网重启、重复重放和冲突场景中状态确定且业务命令至多生效一次。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“网络取消、安全存储、缓存与离线队列”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-network-storage", "flutter-offline-replay"]
+        covers_topics: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal","flutter.offline-command-queue","flutter.idempotency-key","flutter.replay-backoff","flutter.conflict-state","flutter.poison-command"]
+        uses_capabilities: ["mobile.flutter-network-offline", "mobile.dart-future-cancellation", "mobile.flutter-layout-lifecycle", "foundation.http-message", "architecture.idempotency-consistency"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现带安全凭据、版本化缓存和持久离线队列的 Flutter 工单客户端；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-network-storage", "flutter-offline-replay"]
+        covers_topics: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal","flutter.offline-command-queue","flutter.idempotency-key","flutter.replay-backoff","flutter.conflict-state","flutter.poison-command"]
+        uses_capabilities: ["mobile.flutter-network-offline", "mobile.dart-future-cancellation", "mobile.flutter-layout-lifecycle", "foundation.http-message", "architecture.idempotency-consistency"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "mock-server-offline-restart-test-duplicate-replay-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“仅用 mounted 防请求、明文凭据、缓存 schema 漂移或每次重放生成新幂等键”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-network-storage", "flutter-offline-replay"]
+        covers_topics: ["flutter.http-client-boundary","flutter.network-cancellation","flutter.secure-storage","flutter.cache-versioning","flutter.connectivity-signal","flutter.offline-command-queue","flutter.idempotency-key","flutter.replay-backoff","flutter.conflict-state","flutter.poison-command"]
+        uses_capabilities: ["mobile.flutter-network-offline", "mobile.dart-future-cancellation", "mobile.flutter-layout-lifecycle", "foundation.http-message", "architecture.idempotency-consistency"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.device-apis
+    title: "相机、扫码、定位、权限与平台通道"
+    role: practice
+    responsibility: "通过插件与平台通道使用相机、扫码和定位，显式建模授权、拒绝、取消和不可用路径，不把平台异常泄漏为任意字符串。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-device-permission
+        title: "设备与权限"
+        topics: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback"]
+      - id: flutter-platform-channel
+        title: "平台通道"
+        topics: ["flutter.method-channel", "flutter.platform-exception", "flutter.codec-boundary", "flutter.plugin-lifecycle", "flutter.native-thread-boundary"]
+    topics_taught: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback","flutter.method-channel","flutter.platform-exception","flutter.codec-boundary","flutter.plugin-lifecycle","flutter.native-thread-boundary"]
+    topics_used: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback","flutter.method-channel","flutter.platform-exception","flutter.codec-boundary","flutter.plugin-lifecycle","flutter.native-thread-boundary"]
+    prerequisites: ["ch.flutter.network-storage-offline", "ch.security.untrusted-input-xss-ssrf"]
+    prerequisite_rationales:
+      ch.flutter.network-storage-offline:
+        reason: "设备结果的上传、缓存和失败重试需要稳定网络与存储合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.security.untrusted-input-xss-ssrf:
+        reason: "相机、定位、原生通道和外部文件都会处理跨信任边界数据，必须沿用统一的不可信输入与泄露防护。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.flutter-device-permissions"]
+      uses: ["mobile.flutter-network-offline", "mobile.flutter-layout-lifecycle", "mobile.dart-future-cancellation", "security.web-threat"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.device-apis/
+      acceptance:
+        - "实现可替换平台接口的扫码、拍照和定位流程并保存权限矩阵及真机证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“权限结果当空值、插件回调在销毁后更新或平台异常未映射”后定位首个可信证据，修复并重跑原验证；修复后判据：首次允许、拒绝、永久拒绝、取消、设备不可用和成功场景进入确定 UI；Fake 与真机关键路径结果一致。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.device-apis/"]
+      critical_failure_modes: ["permission-loop", "post-dispose-platform-callback", "platform-error-leak"]
+    verification_mode:
+      test_level: T3
+      methods: ["platform-interface-fake", "permission-matrix", "device-smoke"]
+      oracle: "首次允许、拒绝、永久拒绝、取消、设备不可用和成功场景进入确定 UI；Fake 与真机关键路径结果一致。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“相机、扫码、定位、权限与平台通道”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-device-permission", "flutter-platform-channel"]
+        covers_topics: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback","flutter.method-channel","flutter.platform-exception","flutter.codec-boundary","flutter.plugin-lifecycle","flutter.native-thread-boundary"]
+        uses_capabilities: ["mobile.flutter-device-permissions", "mobile.flutter-network-offline", "mobile.flutter-layout-lifecycle", "mobile.dart-future-cancellation", "security.web-threat"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可替换平台接口的扫码、拍照和定位流程并保存权限矩阵及真机证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-device-permission", "flutter-platform-channel"]
+        covers_topics: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback","flutter.method-channel","flutter.platform-exception","flutter.codec-boundary","flutter.plugin-lifecycle","flutter.native-thread-boundary"]
+        uses_capabilities: ["mobile.flutter-device-permissions", "mobile.flutter-network-offline", "mobile.flutter-layout-lifecycle", "mobile.dart-future-cancellation", "security.web-threat"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "platform-interface-fake-permission-matrix-device-smoke"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“权限结果当空值、插件回调在销毁后更新或平台异常未映射”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-device-permission", "flutter-platform-channel"]
+        covers_topics: ["flutter.camera-scan","flutter.geolocation","flutter.permission-state","flutter.settings-recovery","flutter.device-capability-fallback","flutter.method-channel","flutter.platform-exception","flutter.codec-boundary","flutter.plugin-lifecycle","flutter.native-thread-boundary"]
+        uses_capabilities: ["mobile.flutter-device-permissions", "mobile.flutter-network-offline", "mobile.flutter-layout-lifecycle", "mobile.dart-future-cancellation", "security.web-threat"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.testing-performance
+    title: "Widget/集成/Golden 测试、性能与内存分析"
+    role: practice
+    responsibility: "组合 Dart 单元、Widget、集成和 Golden 测试保护行为，用 DevTools 定位重建、掉帧和内存保留，控制 Golden 与设备差异。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-test-levels
+        title: "Flutter 测试层级"
+        topics: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary"]
+      - id: flutter-performance-memory
+        title: "性能与内存"
+        topics: ["flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+    topics_taught: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary", "flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+    topics_used: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary", "flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+    prerequisites: ["ch.dart.testing-lints", "ch.flutter.architecture-state"]
+    prerequisite_rationales:
+      ch.dart.testing-lints:
+        reason: "Widget/集成测试仍依赖可信预言、断言、替身和质量门禁。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.flutter.architecture-state:
+        reason: "可替换依赖和确定状态转换使测试与性能诊断可控。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.dart-language", "mobile.flutter-layout-lifecycle", "web.accessibility"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.testing-performance/
+      acceptance:
+        - "为工单关键路径建立测试金字塔并修复一个可复现掉帧或内存保留问题；成功、边界和失败输入均保存可复现证据"
+        - "注入“pumpAndSettle 永不结束、Golden 环境漂移、无 Key 查找或 controller/图片缓存泄漏”后定位首个可信证据，修复并重跑原验证；修复后判据：单元/Widget/集成/Golden 分层结果稳定；优化后帧预算、重建次数或保留对象下降且语义/行为测试无回退。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.testing-performance/"]
+      critical_failure_modes: ["flaky-widget-test", "golden-environment-drift", "flutter-memory-leak"]
+    verification_mode:
+      test_level: T4
+      methods: ["widget-integration-golden", "frame-profile", "memory-leak-fixture"]
+      oracle: "单元/Widget/集成/Golden 分层结果稳定；优化后帧预算、重建次数或保留对象下降且语义/行为测试无回退。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Widget/集成/Golden 测试、性能与内存分析”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-test-levels", "flutter-performance-memory"]
+        covers_topics: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary", "flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-layout-lifecycle", "web.accessibility"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "为工单关键路径建立测试金字塔并修复一个可复现掉帧或内存保留问题；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-test-levels", "flutter-performance-memory"]
+        covers_topics: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary", "flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-layout-lifecycle", "web.accessibility"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "widget-integration-golden-frame-profile-memory-leak-fixture"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“pumpAndSettle 永不结束、Golden 环境漂移、无 Key 查找或 controller/图片缓存泄漏”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-test-levels", "flutter-performance-memory"]
+        covers_topics: ["flutter.widget-test", "flutter.integration-test", "flutter.golden-test", "flutter.finder-semantics", "flutter.pump-settle-boundary", "flutter.frame-timeline", "flutter.rebuild-profile", "flutter.memory-snapshot", "flutter.image-cache-budget", "flutter.performance-regression"]
+        uses_capabilities: ["mobile.dart-language", "mobile.flutter-layout-lifecycle", "web.accessibility"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.flutter.release-monitoring
+    title: "构建、签名、发布、符号与崩溃监控"
+    role: practice
+    responsibility: "生成可追溯 Android/iOS 制品，管理签名与环境配置，保存符号并验证崩溃监控和回退，不在本章教授通用 CI。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: flutter-build-sign-release
+        title: "构建、签名与发布"
+        topics: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout"]
+      - id: flutter-symbol-crash-monitor
+        title: "符号与崩溃监控"
+        topics: ["flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+    topics_taught: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout", "flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+    topics_used: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout", "flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+    prerequisites: ["ch.flutter.testing-performance"]
+    prerequisite_rationales:
+      ch.flutter.testing-performance:
+        reason: "发布前需要完整测试与性能证据，监控也需能重现并定位真实失败。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.flutter-tooling-widget", "mobile.flutter-layout-lifecycle"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.flutter.release-monitoring/
+      acceptance:
+        - "生成带版本、签名、符号和崩溃监控证据的 Flutter 发布候选包；成功、边界和失败输入均保存可复现证据"
+        - "注入“签名环境串线、符号未归档或崩溃事件无法关联版本”后定位首个可信证据，修复并重跑原验证；修复后判据：同一 commit 可生成带版本/签名证据的制品；注入测试崩溃能关联版本并符号化到源码，回退清单可执行。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.flutter.release-monitoring/"]
+      critical_failure_modes: ["release-signing-failure", "unsymbolicated-crash", "release-provenance-loss"]
+    verification_mode:
+      test_level: T4
+      methods: ["release-build", "signature-check", "symbolication-drill"]
+      oracle: "同一 commit 可生成带版本/签名证据的制品；注入测试崩溃能关联版本并符号化到源码，回退清单可执行。"
+    version_surfaces: ["flutter-stable", "dart-stable"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“构建、签名、发布、符号与崩溃监控”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["flutter-build-sign-release", "flutter-symbol-crash-monitor"]
+        covers_topics: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout", "flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "生成带版本、签名、符号和崩溃监控证据的 Flutter 发布候选包；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["flutter-build-sign-release", "flutter-symbol-crash-monitor"]
+        covers_topics: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout", "flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "release-build-signature-check-symbolication-drill"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“签名环境串线、符号未归档或崩溃事件无法关联版本”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["flutter-build-sign-release", "flutter-symbol-crash-monitor"]
+        covers_topics: ["flutter.build-flavor", "flutter.signing-secret", "flutter.version-metadata", "flutter.release-artifact", "flutter.store-rollout", "flutter.obfuscation-symbol", "flutter.crash-symbolication", "flutter.release-correlation", "flutter.monitoring-privacy", "flutter.rollback-plan"]
+        uses_capabilities: ["mobile.flutter-tooling-widget", "mobile.flutter-layout-lifecycle"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"

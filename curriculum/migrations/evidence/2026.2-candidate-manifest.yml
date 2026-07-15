@@ -1,0 +1,14 @@
+---
+schema_version: 1
+evidence_id: candidate-manifest-2026.2
+catalog_edition: 2026.2-draft
+mapping_count: 9174
+review_status_counts:
+  unreviewed: 9174
+  reviewed: 0
+broad_volume_mapping_count: 4979
+candidate_csv_sha256: 4a9e5aca39e66fbc4c954f1e1760553fd721e8cc7c12922d8be4ff8d3072fd92
+candidate_csv_size_bytes: 8892194
+automatic_promotion: false
+copyright_state: unlicensed-third-party-coverage-only
+rebuild_note: 候选明细可由冻结仓库、固定 catalog 与固定构建器逐字节重建；本摘要不代表人工采用或正文完成。

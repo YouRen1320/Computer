@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/curriculum/migrations/application-receipt.schema.json",
+  "title": "FactoryCare curriculum migration application receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "migration_id",
+    "ready_catalog_projection_digest",
+    "legacy_manifest_digest",
+    "mapping_audit_digest",
+    "plan",
+    "write",
+    "check",
+    "postconditions",
+    "applied_at",
+    "applied_by"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "receipt_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+    "migration_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+    "ready_catalog_projection_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "legacy_manifest_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "mapping_audit_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "plan": { "$ref": "#/$defs/plan" },
+    "write": { "$ref": "#/$defs/write" },
+    "check": { "$ref": "#/$defs/check" },
+    "postconditions": { "$ref": "#/$defs/postconditions" },
+    "applied_at": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$" },
+    "applied_by": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "actionCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["create", "update", "delete", "conflict", "unchanged"],
+      "properties": {
+        "create": { "type": "integer", "minimum": 0 },
+        "update": { "type": "integer", "minimum": 0 },
+        "delete": { "type": "integer", "minimum": 0 },
+        "conflict": { "type": "integer", "minimum": 0 },
+        "unchanged": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "planAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "path", "before", "after"],
+      "properties": {
+        "action": { "enum": ["create", "update", "delete", "conflict", "unchanged"] },
+        "path": { "type": "string", "minLength": 1 },
+        "before": { "type": "string", "pattern": "^(missing|sha256:[0-9a-f]{64})$" },
+        "after": { "type": "string", "pattern": "^(deleted|sha256:[0-9a-f]{64})$" }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_counts", "plan_digest", "actions"],
+      "properties": {
+        "action_counts": { "$ref": "#/$defs/actionCounts" },
+        "plan_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/planAction" }
+        }
+      }
+    },
+    "outputFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "write": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exit_code", "output_manifest_digest", "output_manifest"],
+      "properties": {
+        "exit_code": { "const": 0 },
+        "output_manifest_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "output_manifest": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/outputFile" }
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exit_code", "unchanged_count"],
+      "properties": {
+        "exit_code": { "const": 0 },
+        "unchanged_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "postconditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legacy_chapter_count", "semantic_chapter_count"],
+      "properties": {
+        "legacy_chapter_count": { "const": 0 },
+        "semantic_chapter_count": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

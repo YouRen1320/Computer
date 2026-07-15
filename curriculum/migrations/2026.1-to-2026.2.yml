@@ -1,0 +1,2127 @@
+---
+schema_version: 2
+migration_id: catalog-2026.1-to-2026.2-semantic-ids
+from_edition: 2026.1-draft
+to_edition: 2026.2-draft
+status: ready
+compatibility: none
+legacy_source_commit: 61d6f853481cf522a388904ad93ab449688d88b1
+legacy_manifest_path: curriculum/migrations/legacy-2026.1-manifest.yml
+legacy_manifest_digest: sha256:d06a4422292ae6a25bd110ecaea9e627089b62eeec430218b6e6f4c2306f9d7c
+mapping_audit_path: records/encyclopedia/reviews/P1R-migration-ledger-audit.md
+mapping_audit_digest: sha256:5122094ab93f7c00637b9c812a246d10e8118fb20d59fdb6cd86bf5ff030cd57
+expected_component_count: 151
+expected_edge_count: 275
+expected_legacy_id_count: 170
+expected_active_id_count: 255
+entries:
+- component_id: C001
+  action: preserve
+  from:
+  - v00.c01.learning-evidence
+  to:
+  - ch.foundations.learning-evidence
+  chapter_edges:
+  - from: v00.c01.learning-evidence
+    to: ch.foundations.learning-evidence
+  reason: 采用独立迁移审计 C001 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C002
+  action: preserve
+  from:
+  - v00.c02.computer-model
+  to:
+  - ch.foundations.computer-process-model
+  chapter_edges:
+  - from: v00.c02.computer-model
+    to: ch.foundations.computer-process-model
+  reason: 采用独立迁移审计 C002 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C003
+  action: preserve
+  from:
+  - v00.c03.files-paths-encoding
+  to:
+  - ch.foundations.files-paths-encoding
+  chapter_edges:
+  - from: v00.c03.files-paths-encoding
+    to: ch.foundations.files-paths-encoding
+  reason: 采用独立迁移审计 C003 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C004
+  action: preserve
+  from:
+  - v00.c04.terminal-shell
+  to:
+  - ch.foundations.terminal-shell
+  chapter_edges:
+  - from: v00.c04.terminal-shell
+    to: ch.foundations.terminal-shell
+  reason: 采用独立迁移审计 C004 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C005
+  action: preserve
+  from:
+  - v00.c05.pipes-exit-codes
+  to:
+  - ch.foundations.cli-streams-exit-codes
+  chapter_edges:
+  - from: v00.c05.pipes-exit-codes
+    to: ch.foundations.cli-streams-exit-codes
+  reason: 采用独立迁移审计 C005 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C006
+  action: preserve
+  from:
+  - v00.c06.environment-path
+  to:
+  - ch.foundations.environment-tool-resolution
+  chapter_edges:
+  - from: v00.c06.environment-path
+    to: ch.foundations.environment-tool-resolution
+  reason: 采用独立迁移审计 C006 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C007
+  action: repartition
+  from:
+  - v00.c07.editor-ide-debugger
+  - v01.c10.arrays-debug-test
+  - v01.c08.loops-control
+  - v03.c10.maven-testing-jvm
+  - v03.c12.java-testing-mocking
+  to:
+  - ch.foundations.editor-project-navigation
+  - ch.java.debugging-failures
+  - ch.java.arrays-command-args
+  - ch.java.maven-junit-smoke
+  - ch.java.loops
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.testing-test-doubles
+  chapter_edges:
+  - from: v00.c07.editor-ide-debugger
+    to: ch.foundations.editor-project-navigation
+  - from: v00.c07.editor-ide-debugger
+    to: ch.java.debugging-failures
+  - from: v01.c10.arrays-debug-test
+    to: ch.java.arrays-command-args
+  - from: v01.c10.arrays-debug-test
+    to: ch.java.maven-junit-smoke
+  - from: v01.c10.arrays-debug-test
+    to: ch.java.debugging-failures
+  - from: v01.c08.loops-control
+    to: ch.java.loops
+  - from: v01.c08.loops-control
+    to: ch.java.arrays-command-args
+  - from: v03.c10.maven-testing-jvm
+    to: ch.java-engineering.maven-reproducible-builds
+  - from: v03.c10.maven-testing-jvm
+    to: ch.java.maven-junit-smoke
+  - from: v03.c12.java-testing-mocking
+    to: ch.java-engineering.testing-test-doubles
+  - from: v03.c12.java-testing-mocking
+    to: ch.java.maven-junit-smoke
+  reason: 采用独立迁移审计 C007 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C008
+  action: preserve
+  from:
+  - v00.c08.git-security
+  to:
+  - ch.foundations.git-collaboration-security
+  chapter_edges:
+  - from: v00.c08.git-security
+    to: ch.foundations.git-collaboration-security
+  reason: 采用独立迁移审计 C008 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C009
+  action: split
+  from:
+  - v00.c09.network-http-curl
+  to:
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  chapter_edges:
+  - from: v00.c09.network-http-curl
+    to: ch.foundations.network-layers
+  - from: v00.c09.network-http-curl
+    to: ch.foundations.http-curl
+  reason: 采用独立迁移审计 C009 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C010
+  action: preserve
+  from:
+  - v00.c10.dependencies-build-ai
+  to:
+  - ch.foundations.dependencies-build-packages
+  chapter_edges:
+  - from: v00.c10.dependencies-build-ai
+    to: ch.foundations.dependencies-build-packages
+  reason: 采用独立迁移审计 C010 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C011
+  action: preserve
+  from:
+  - v00.c11.docker-foundations
+  to:
+  - ch.foundations.docker-basics
+  chapter_edges:
+  - from: v00.c11.docker-foundations
+    to: ch.foundations.docker-basics
+  reason: 采用独立迁移审计 C011 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C012
+  action: preserve
+  from:
+  - v00.c12.ai-collaboration-verification
+  to:
+  - ch.foundations.ai-assisted-verification
+  chapter_edges:
+  - from: v00.c12.ai-collaboration-verification
+    to: ch.foundations.ai-assisted-verification
+  reason: 采用独立迁移审计 C012 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C013
+  action: preserve
+  from:
+  - v01.c01.java-platform
+  to:
+  - ch.java.platform-toolchain
+  chapter_edges:
+  - from: v01.c01.java-platform
+    to: ch.java.platform-toolchain
+  reason: 采用独立迁移审计 C013 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C014
+  action: repartition
+  from:
+  - v01.c02.program-structure
+  - v02.c03.constructors-encapsulation
+  to:
+  - ch.java.program-structure
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.constructors-invariants
+  chapter_edges:
+  - from: v01.c02.program-structure
+    to: ch.java.program-structure
+  - from: v01.c02.program-structure
+    to: ch.java-oop.encapsulation-packages
+  - from: v02.c03.constructors-encapsulation
+    to: ch.java-oop.constructors-invariants
+  - from: v02.c03.constructors-encapsulation
+    to: ch.java-oop.encapsulation-packages
+  reason: 采用独立迁移审计 C014 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C015
+  action: repartition
+  from:
+  - v01.c03.console-io
+  - v01.c04.variables-scope
+  - v01.c05.primitive-types
+  - v02.c09.core-value-types
+  to:
+  - ch.java.console-input-validation
+  - ch.java.values-variables-types
+  - ch.java-oop.business-value-types
+  chapter_edges:
+  - from: v01.c03.console-io
+    to: ch.java.console-input-validation
+  - from: v01.c03.console-io
+    to: ch.java.values-variables-types
+  - from: v01.c04.variables-scope
+    to: ch.java.values-variables-types
+  - from: v01.c05.primitive-types
+    to: ch.java.values-variables-types
+  - from: v02.c09.core-value-types
+    to: ch.java-oop.business-value-types
+  - from: v02.c09.core-value-types
+    to: ch.java.values-variables-types
+  reason: 采用独立迁移审计 C015 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C016
+  action: preserve
+  from:
+  - v01.c06.operators-conversion
+  to:
+  - ch.java.expressions-conversions
+  chapter_edges:
+  - from: v01.c06.operators-conversion
+    to: ch.java.expressions-conversions
+  reason: 采用独立迁移审计 C016 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C017
+  action: preserve
+  from:
+  - v01.c07.conditionals-switch
+  to:
+  - ch.java.branching
+  chapter_edges:
+  - from: v01.c07.conditionals-switch
+    to: ch.java.branching
+  reason: 采用独立迁移审计 C017 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C018
+  action: preserve
+  from:
+  - v01.c09.methods
+  to:
+  - ch.java.methods
+  chapter_edges:
+  - from: v01.c09.methods
+    to: ch.java.methods
+  reason: 采用独立迁移审计 C018 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C019
+  action: preserve
+  from:
+  - v02.c01.references-null-memory
+  to:
+  - ch.java-oop.references-null-identity
+  chapter_edges:
+  - from: v02.c01.references-null-memory
+    to: ch.java-oop.references-null-identity
+  reason: 采用独立迁移审计 C019 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C020
+  action: preserve
+  from:
+  - v02.c02.classes-fields-methods
+  to:
+  - ch.java-oop.classes-objects
+  chapter_edges:
+  - from: v02.c02.classes-fields-methods
+    to: ch.java-oop.classes-objects
+  reason: 采用独立迁移审计 C020 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C021
+  action: repartition
+  from:
+  - v02.c04.static-final-immutability
+  - v03.c01.collections
+  - v02.c08.object-contract
+  to:
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-engineering.sequential-collections
+  - ch.java-engineering.associative-collections
+  - ch.java-oop.object-contracts
+  chapter_edges:
+  - from: v02.c04.static-final-immutability
+    to: ch.java-oop.static-class-state
+  - from: v02.c04.static-final-immutability
+    to: ch.java-oop.final-immutability
+  - from: v02.c04.static-final-immutability
+    to: ch.java-engineering.sequential-collections
+  - from: v03.c01.collections
+    to: ch.java-engineering.sequential-collections
+  - from: v03.c01.collections
+    to: ch.java-engineering.associative-collections
+  - from: v02.c08.object-contract
+    to: ch.java-oop.object-contracts
+  - from: v02.c08.object-contract
+    to: ch.java-engineering.associative-collections
+  reason: 采用独立迁移审计 C021 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C022
+  action: preserve
+  from:
+  - v02.c05.inheritance-composition
+  to:
+  - ch.java-oop.inheritance-composition
+  chapter_edges:
+  - from: v02.c05.inheritance-composition
+    to: ch.java-oop.inheritance-composition
+  reason: 采用独立迁移审计 C022 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C023
+  action: preserve
+  from:
+  - v02.c06.polymorphism-interfaces
+  to:
+  - ch.java-oop.interfaces-polymorphism
+  chapter_edges:
+  - from: v02.c06.polymorphism-interfaces
+    to: ch.java-oop.interfaces-polymorphism
+  reason: 采用独立迁移审计 C023 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C024
+  action: preserve
+  from:
+  - v02.c07.enum-record-sealed
+  to:
+  - ch.java-oop.enum-record-sealed
+  chapter_edges:
+  - from: v02.c07.enum-record-sealed
+    to: ch.java-oop.enum-record-sealed
+  reason: 采用独立迁移审计 C024 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C025
+  action: repartition
+  from:
+  - v02.c10.exceptions-resources
+  - v03.c06.io-nio-json
+  to:
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  chapter_edges:
+  - from: v02.c10.exceptions-resources
+    to: ch.java-oop.exceptions-failure-contracts
+  - from: v02.c10.exceptions-resources
+    to: ch.java-engineering.io-resource-lifecycle
+  - from: v03.c06.io-nio-json
+    to: ch.java-engineering.io-resource-lifecycle
+  - from: v03.c06.io-nio-json
+    to: ch.java-engineering.nio-files-charsets
+  - from: v03.c06.io-nio-json
+    to: ch.java-engineering.json-mapping
+  reason: 采用独立迁移审计 C025 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C026
+  action: split
+  from:
+  - v03.c02.generics-comparator
+  to:
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.sorting-comparators
+  chapter_edges:
+  - from: v03.c02.generics-comparator
+    to: ch.java-engineering.generics-type-safety
+  - from: v03.c02.generics-comparator
+    to: ch.java-engineering.sorting-comparators
+  reason: 采用独立迁移审计 C026 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C027
+  action: preserve
+  from:
+  - v03.c03.complexity-data-structures
+  to:
+  - ch.java-engineering.complexity-algorithms
+  chapter_edges:
+  - from: v03.c03.complexity-data-structures
+    to: ch.java-engineering.complexity-algorithms
+  reason: 采用独立迁移审计 C027 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C028
+  action: preserve
+  from:
+  - v03.c04.lambdas-functions
+  to:
+  - ch.java-engineering.lambdas-functional-interfaces
+  chapter_edges:
+  - from: v03.c04.lambdas-functions
+    to: ch.java-engineering.lambdas-functional-interfaces
+  reason: 采用独立迁移审计 C028 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C029
+  action: preserve
+  from:
+  - v03.c05.streams-optional
+  to:
+  - ch.java-engineering.functional-pipelines
+  chapter_edges:
+  - from: v03.c05.streams-optional
+    to: ch.java-engineering.functional-pipelines
+  reason: 采用独立迁移审计 C029 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C030
+  action: preserve
+  from:
+  - v03.c07.threads-jmm
+  to:
+  - ch.java-engineering.threads-jmm
+  chapter_edges:
+  - from: v03.c07.threads-jmm
+    to: ch.java-engineering.threads-jmm
+  reason: 采用独立迁移审计 C030 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C031
+  action: preserve
+  from:
+  - v03.c08.executors-virtual-threads
+  to:
+  - ch.java-engineering.executors-virtual-threads
+  chapter_edges:
+  - from: v03.c08.executors-virtual-threads
+    to: ch.java-engineering.executors-virtual-threads
+  reason: 采用独立迁移审计 C031 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C032
+  action: split
+  from:
+  - v03.c09.annotations-reflection-proxy
+  to:
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  chapter_edges:
+  - from: v03.c09.annotations-reflection-proxy
+    to: ch.java-engineering.annotations-metadata
+  - from: v03.c09.annotations-reflection-proxy
+    to: ch.java-engineering.reflection-classloading-proxies
+  reason: 采用独立迁移审计 C032 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C033
+  action: preserve
+  from:
+  - v03.c11.java-networking
+  to:
+  - ch.java-engineering.network-programming
+  chapter_edges:
+  - from: v03.c11.java-networking
+    to: ch.java-engineering.network-programming
+  reason: 采用独立迁移审计 C033 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C034
+  action: preserve
+  from:
+  - v03.c13.logging-jvm-diagnostics
+  to:
+  - ch.java-engineering.logging-jvm-diagnostics
+  chapter_edges:
+  - from: v03.c13.logging-jvm-diagnostics
+    to: ch.java-engineering.logging-jvm-diagnostics
+  reason: 采用独立迁移审计 C034 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C035
+  action: repartition
+  from:
+  - v04.c01.relational-model
+  - v04.c07.postgres-types-psql
+  - v04.c06.dml-ddl-normalization
+  to:
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.ddl-constraints
+  - ch.data.postgresql-types
+  - ch.data.dml
+  - ch.data.normalization-modeling
+  chapter_edges:
+  - from: v04.c01.relational-model
+    to: ch.data.relational-model
+  - from: v04.c01.relational-model
+    to: ch.data.postgresql-psql
+  - from: v04.c01.relational-model
+    to: ch.data.ddl-constraints
+  - from: v04.c07.postgres-types-psql
+    to: ch.data.postgresql-types
+  - from: v04.c07.postgres-types-psql
+    to: ch.data.postgresql-psql
+  - from: v04.c06.dml-ddl-normalization
+    to: ch.data.dml
+  - from: v04.c06.dml-ddl-normalization
+    to: ch.data.ddl-constraints
+  - from: v04.c06.dml-ddl-normalization
+    to: ch.data.normalization-modeling
+  reason: 采用独立迁移审计 C035 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C036
+  action: preserve
+  from:
+  - v04.c02.sql-query-basics
+  to:
+  - ch.data.select-rowsets
+  chapter_edges:
+  - from: v04.c02.sql-query-basics
+    to: ch.data.select-rowsets
+  reason: 采用独立迁移审计 C036 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C037
+  action: preserve
+  from:
+  - v04.c03.sql-functions
+  to:
+  - ch.data.scalar-functions
+  chapter_edges:
+  - from: v04.c03.sql-functions
+    to: ch.data.scalar-functions
+  reason: 采用独立迁移审计 C037 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C038
+  action: preserve
+  from:
+  - v04.c04.aggregate-group-having
+  to:
+  - ch.data.aggregates
+  chapter_edges:
+  - from: v04.c04.aggregate-group-having
+    to: ch.data.aggregates
+  reason: 采用独立迁移审计 C038 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C039
+  action: split
+  from:
+  - v04.c05.joins-subquery-cte
+  to:
+  - ch.data.joins
+  - ch.data.subqueries-cte
+  - ch.data.window-functions
+  chapter_edges:
+  - from: v04.c05.joins-subquery-cte
+    to: ch.data.joins
+  - from: v04.c05.joins-subquery-cte
+    to: ch.data.subqueries-cte
+  - from: v04.c05.joins-subquery-cte
+    to: ch.data.window-functions
+  reason: 采用独立迁移审计 C039 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C040
+  action: preserve
+  from:
+  - v04.c08.indexes-explain
+  to:
+  - ch.data.indexes-explain
+  chapter_edges:
+  - from: v04.c08.indexes-explain
+    to: ch.data.indexes-explain
+  reason: 采用独立迁移审计 C040 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C041
+  action: preserve
+  from:
+  - v04.c09.transactions-locks
+  to:
+  - ch.data.transactions-locking
+  chapter_edges:
+  - from: v04.c09.transactions-locks
+    to: ch.data.transactions-locking
+  reason: 采用独立迁移审计 C041 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C042
+  action: preserve
+  from:
+  - v04.c10.migration-jdbc-mybatis
+  to:
+  - ch.data.schema-migrations
+  chapter_edges:
+  - from: v04.c10.migration-jdbc-mybatis
+    to: ch.data.schema-migrations
+  reason: 采用独立迁移审计 C042 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C043
+  action: split
+  from:
+  - v04.c11.jdbc-pool-mybatis
+  to:
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  chapter_edges:
+  - from: v04.c11.jdbc-pool-mybatis
+    to: ch.data.jdbc
+  - from: v04.c11.jdbc-pool-mybatis
+    to: ch.data.mybatis-core
+  reason: 采用独立迁移审计 C043 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C044
+  action: preserve
+  from:
+  - v05.c01.web-jakarta-lifecycle
+  to:
+  - ch.spring.servlet-request-lifecycle
+  chapter_edges:
+  - from: v05.c01.web-jakarta-lifecycle
+    to: ch.spring.servlet-request-lifecycle
+  reason: 采用独立迁移审计 C044 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C045
+  action: split
+  from:
+  - v05.c02.ioc-di-beans
+  to:
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  chapter_edges:
+  - from: v05.c02.ioc-di-beans
+    to: ch.spring.ioc-di
+  - from: v05.c02.ioc-di-beans
+    to: ch.spring.beans-lifecycle-scopes
+  reason: 采用独立迁移审计 C045 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C046
+  action: preserve
+  from:
+  - v05.c03.configuration-profiles
+  to:
+  - ch.spring.configuration-profiles
+  chapter_edges:
+  - from: v05.c03.configuration-profiles
+    to: ch.spring.configuration-profiles
+  reason: 采用独立迁移审计 C046 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C047
+  action: preserve
+  from:
+  - v05.c04.boot-autoconfiguration
+  to:
+  - ch.spring.boot-autoconfiguration
+  chapter_edges:
+  - from: v05.c04.boot-autoconfiguration
+    to: ch.spring.boot-autoconfiguration
+  reason: 采用独立迁移审计 C047 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C048
+  action: repartition
+  from:
+  - v05.c05.mvc-controllers
+  - v05.c07.validation-errors-files
+  to:
+  - ch.spring.mvc-routing-binding
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  chapter_edges:
+  - from: v05.c05.mvc-controllers
+    to: ch.spring.mvc-routing-binding
+  - from: v05.c07.validation-errors-files
+    to: ch.spring.validation
+  - from: v05.c07.validation-errors-files
+    to: ch.spring.problem-details-errors
+  - from: v05.c07.validation-errors-files
+    to: ch.spring.mvc-routing-binding
+  reason: 采用独立迁移审计 C048 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C049
+  action: preserve
+  from:
+  - v05.c06.dto-serialization
+  to:
+  - ch.spring.dto-json-content-negotiation
+  chapter_edges:
+  - from: v05.c06.dto-serialization
+    to: ch.spring.dto-json-content-negotiation
+  reason: 采用独立迁移审计 C049 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C050
+  action: split
+  from:
+  - v05.c08.services-transactions-aop
+  to:
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.transactions
+  chapter_edges:
+  - from: v05.c08.services-transactions-aop
+    to: ch.spring.service-use-cases
+  - from: v05.c08.services-transactions-aop
+    to: ch.spring.aop-proxy-model
+  - from: v05.c08.services-transactions-aop
+    to: ch.spring.transactions
+  reason: 采用独立迁移审计 C050 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C051
+  action: split
+  from:
+  - v05.c09.mybatis-integration
+  to:
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  chapter_edges:
+  - from: v05.c09.mybatis-integration
+    to: ch.spring.datasource-pooling
+  - from: v05.c09.mybatis-integration
+    to: ch.spring.mybatis-repositories
+  reason: 采用独立迁移审计 C051 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C052
+  action: split
+  from:
+  - v05.c10.testing-openapi-actuator
+  to:
+  - ch.spring.testing-testcontainers
+  - ch.spring.openapi-contracts
+  - ch.spring.actuator-health-metrics
+  chapter_edges:
+  - from: v05.c10.testing-openapi-actuator
+    to: ch.spring.testing-testcontainers
+  - from: v05.c10.testing-openapi-actuator
+    to: ch.spring.openapi-contracts
+  - from: v05.c10.testing-openapi-actuator
+    to: ch.spring.actuator-health-metrics
+  reason: 采用独立迁移审计 C052 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C053
+  action: repartition
+  from:
+  - v06.c01.auth-session-password
+  - v06.c04.spring-security
+  - v06.c05.rbac-multitenancy-audit
+  to:
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.session-authentication
+  - ch.security.spring-security-architecture
+  - ch.security.authorization-rbac-abac
+  - ch.security.multitenancy-data-isolation
+  - ch.security.audit-events-privacy
+  chapter_edges:
+  - from: v06.c01.auth-session-password
+    to: ch.security.identity-password-lifecycle
+  - from: v06.c01.auth-session-password
+    to: ch.security.cookie-session-model
+  - from: v06.c01.auth-session-password
+    to: ch.security.session-authentication
+  - from: v06.c04.spring-security
+    to: ch.security.spring-security-architecture
+  - from: v06.c04.spring-security
+    to: ch.security.session-authentication
+  - from: v06.c04.spring-security
+    to: ch.security.authorization-rbac-abac
+  - from: v06.c05.rbac-multitenancy-audit
+    to: ch.security.authorization-rbac-abac
+  - from: v06.c05.rbac-multitenancy-audit
+    to: ch.security.multitenancy-data-isolation
+  - from: v06.c05.rbac-multitenancy-audit
+    to: ch.security.audit-events-privacy
+  reason: 采用独立迁移审计 C053 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C054
+  action: split
+  from:
+  - v06.c02.web-security-threats
+  to:
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  chapter_edges:
+  - from: v06.c02.web-security-threats
+    to: ch.security.threat-model-trust-boundaries
+  - from: v06.c02.web-security-threats
+    to: ch.security.origin-cors-csrf
+  - from: v06.c02.web-security-threats
+    to: ch.security.untrusted-input-xss-ssrf
+  reason: 采用独立迁移审计 C054 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C055
+  action: split
+  from:
+  - v06.c03.jwt-oauth-oidc
+  to:
+  - ch.security.jwt-resource-server
+  - ch.security.oauth2-oidc
+  chapter_edges:
+  - from: v06.c03.jwt-oauth-oidc
+    to: ch.security.jwt-resource-server
+  - from: v06.c03.jwt-oauth-oidc
+    to: ch.security.oauth2-oidc
+  reason: 采用独立迁移审计 C055 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C056
+  action: preserve
+  from:
+  - v06.c06.domain-modeling
+  to:
+  - ch.architecture.domain-modeling
+  chapter_edges:
+  - from: v06.c06.domain-modeling
+    to: ch.architecture.domain-modeling
+  reason: 采用独立迁移审计 C056 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C057
+  action: repartition
+  from:
+  - v06.c07.state-sla-idempotency
+  - v06.c10.modular-monolith-observability
+  to:
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.architecture.observability-slo
+  - ch.architecture.modular-monolith
+  chapter_edges:
+  - from: v06.c07.state-sla-idempotency
+    to: ch.architecture.workflow-state-sla
+  - from: v06.c07.state-sla-idempotency
+    to: ch.architecture.idempotency-concurrency
+  - from: v06.c07.state-sla-idempotency
+    to: ch.architecture.observability-slo
+  - from: v06.c10.modular-monolith-observability
+    to: ch.architecture.modular-monolith
+  - from: v06.c10.modular-monolith-observability
+    to: ch.architecture.observability-slo
+  reason: 采用独立迁移审计 C057 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C058
+  action: preserve
+  from:
+  - v06.c08.redis-cache-rate-limit
+  to:
+  - ch.distributed.redis-cache-rate-limit
+  chapter_edges:
+  - from: v06.c08.redis-cache-rate-limit
+    to: ch.distributed.redis-cache-rate-limit
+  reason: 采用独立迁移审计 C058 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C059
+  action: split
+  from:
+  - v06.c09.events-outbox-messaging
+  to:
+  - ch.architecture.domain-events-outbox
+  - ch.distributed.messaging-delivery
+  chapter_edges:
+  - from: v06.c09.events-outbox-messaging
+    to: ch.architecture.domain-events-outbox
+  - from: v06.c09.events-outbox-messaging
+    to: ch.distributed.messaging-delivery
+  reason: 采用独立迁移审计 C059 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C060
+  action: repartition
+  from:
+  - v07.c01.browser-render-devtools
+  - v07.c10.motion-performance
+  to:
+  - ch.web.browser-render-devtools
+  - ch.js.browser-performance
+  - ch.css.motion-compositing
+  chapter_edges:
+  - from: v07.c01.browser-render-devtools
+    to: ch.web.browser-render-devtools
+  - from: v07.c01.browser-render-devtools
+    to: ch.js.browser-performance
+  - from: v07.c10.motion-performance
+    to: ch.css.motion-compositing
+  - from: v07.c10.motion-performance
+    to: ch.js.browser-performance
+  reason: 采用独立迁移审计 C060 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C061
+  action: preserve
+  from:
+  - v07.c02.semantic-html
+  to:
+  - ch.web.semantic-html
+  chapter_edges:
+  - from: v07.c02.semantic-html
+    to: ch.web.semantic-html
+  reason: 采用独立迁移审计 C061 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C062
+  action: split
+  from:
+  - v07.c03.forms-media-validation
+  to:
+  - ch.web.forms-validation
+  - ch.web.media-assets
+  chapter_edges:
+  - from: v07.c03.forms-media-validation
+    to: ch.web.forms-validation
+  - from: v07.c03.forms-media-validation
+    to: ch.web.media-assets
+  reason: 采用独立迁移审计 C062 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C063
+  action: preserve
+  from:
+  - v07.c04.accessibility
+  to:
+  - ch.web.accessibility-interaction
+  chapter_edges:
+  - from: v07.c04.accessibility
+    to: ch.web.accessibility-interaction
+  reason: 采用独立迁移审计 C063 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C064
+  action: preserve
+  from:
+  - v07.c05.css-cascade
+  to:
+  - ch.css.cascade
+  chapter_edges:
+  - from: v07.c05.css-cascade
+    to: ch.css.cascade
+  reason: 采用独立迁移审计 C064 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C065
+  action: preserve
+  from:
+  - v07.c06.box-position-stacking
+  to:
+  - ch.css.box-position
+  chapter_edges:
+  - from: v07.c06.box-position-stacking
+    to: ch.css.box-position
+  reason: 采用独立迁移审计 C065 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C066
+  action: split
+  from:
+  - v07.c07.flex-grid
+  to:
+  - ch.css.flexbox
+  - ch.css.grid
+  chapter_edges:
+  - from: v07.c07.flex-grid
+    to: ch.css.flexbox
+  - from: v07.c07.flex-grid
+    to: ch.css.grid
+  reason: 采用独立迁移审计 C066 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C067
+  action: preserve
+  from:
+  - v07.c08.responsive-typography
+  to:
+  - ch.css.responsive-typography
+  chapter_edges:
+  - from: v07.c08.responsive-typography
+    to: ch.css.responsive-typography
+  reason: 采用独立迁移审计 C067 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C068
+  action: preserve
+  from:
+  - v07.c09.color-theme-variables
+  to:
+  - ch.css.theme-variables
+  chapter_edges:
+  - from: v07.c09.color-theme-variables
+    to: ch.css.theme-variables
+  reason: 采用独立迁移审计 C068 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C069
+  action: repartition
+  from:
+  - v08.c01.runtime-node-pnpm-esm
+  - v08.c05.this-prototype-class-module
+  to:
+  - ch.js.runtime-esm
+  - ch.js.object-model
+  chapter_edges:
+  - from: v08.c01.runtime-node-pnpm-esm
+    to: ch.js.runtime-esm
+  - from: v08.c05.this-prototype-class-module
+    to: ch.js.object-model
+  - from: v08.c05.this-prototype-class-module
+    to: ch.js.runtime-esm
+  reason: 采用独立迁移审计 C069 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C070
+  action: repartition
+  from:
+  - v08.c02.values-types-equality
+  - v08.c10.typescript-advanced-tooling
+  to:
+  - ch.js.statements-variables
+  - ch.js.values-operators
+  - ch.js.testing-debugging
+  - ch.ts.generics-utilities
+  - ch.ts.runtime-boundaries
+  chapter_edges:
+  - from: v08.c02.values-types-equality
+    to: ch.js.statements-variables
+  - from: v08.c02.values-types-equality
+    to: ch.js.values-operators
+  - from: v08.c02.values-types-equality
+    to: ch.js.testing-debugging
+  - from: v08.c10.typescript-advanced-tooling
+    to: ch.ts.generics-utilities
+  - from: v08.c10.typescript-advanced-tooling
+    to: ch.ts.runtime-boundaries
+  - from: v08.c10.typescript-advanced-tooling
+    to: ch.js.testing-debugging
+  reason: 采用独立迁移审计 C070 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C071
+  action: split
+  from:
+  - v08.c03.scope-functions-closures
+  to:
+  - ch.js.control-flow
+  - ch.js.functions
+  - ch.js.scope-closures
+  chapter_edges:
+  - from: v08.c03.scope-functions-closures
+    to: ch.js.control-flow
+  - from: v08.c03.scope-functions-closures
+    to: ch.js.functions
+  - from: v08.c03.scope-functions-closures
+    to: ch.js.scope-closures
+  reason: 采用独立迁移审计 C071 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C072
+  action: preserve
+  from:
+  - v08.c04.arrays-objects-collections
+  to:
+  - ch.js.collections
+  chapter_edges:
+  - from: v08.c04.arrays-objects-collections
+    to: ch.js.collections
+  reason: 采用独立迁移审计 C072 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C073
+  action: split
+  from:
+  - v08.c06.dom-events-storage
+  to:
+  - ch.js.dom-mutation
+  - ch.js.events-forms
+  - ch.web.origin-cookie-cache
+  chapter_edges:
+  - from: v08.c06.dom-events-storage
+    to: ch.js.dom-mutation
+  - from: v08.c06.dom-events-storage
+    to: ch.js.events-forms
+  - from: v08.c06.dom-events-storage
+    to: ch.web.origin-cookie-cache
+  reason: 采用独立迁移审计 C073 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C074
+  action: preserve
+  from:
+  - v08.c07.event-loop-promises
+  to:
+  - ch.js.event-loop
+  chapter_edges:
+  - from: v08.c07.event-loop-promises
+    to: ch.js.event-loop
+  reason: 采用独立迁移审计 C074 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C075
+  action: preserve
+  from:
+  - v08.c08.fetch-abort-race
+  to:
+  - ch.js.fetch-cancellation-race
+  chapter_edges:
+  - from: v08.c08.fetch-abort-race
+    to: ch.js.fetch-cancellation-race
+  reason: 采用独立迁移审计 C075 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C076
+  action: split
+  from:
+  - v08.c09.typescript-setup-strict
+  to:
+  - ch.ts.foundations
+  - ch.ts.modeling-narrowing
+  chapter_edges:
+  - from: v08.c09.typescript-setup-strict
+    to: ch.ts.foundations
+  - from: v08.c09.typescript-setup-strict
+    to: ch.ts.modeling-narrowing
+  reason: 采用独立迁移审计 C076 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C077
+  action: preserve
+  from:
+  - v09.c01.vite-sfc-app
+  to:
+  - ch.vue.vite-sfc
+  chapter_edges:
+  - from: v09.c01.vite-sfc-app
+    to: ch.vue.vite-sfc
+  reason: 采用独立迁移审计 C077 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C078
+  action: preserve
+  from:
+  - v09.c02.reactivity
+  to:
+  - ch.vue.reactivity
+  chapter_edges:
+  - from: v09.c02.reactivity
+    to: ch.vue.reactivity
+  reason: 采用独立迁移审计 C078 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C079
+  action: preserve
+  from:
+  - v09.c03.watch-lifecycle-cleanup
+  to:
+  - ch.vue.effects-lifecycle
+  chapter_edges:
+  - from: v09.c03.watch-lifecycle-cleanup
+    to: ch.vue.effects-lifecycle
+  reason: 采用独立迁移审计 C079 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C080
+  action: preserve
+  from:
+  - v09.c04.components-contracts
+  to:
+  - ch.vue.components-contracts
+  chapter_edges:
+  - from: v09.c04.components-contracts
+    to: ch.vue.components-contracts
+  reason: 采用独立迁移审计 C080 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C081
+  action: preserve
+  from:
+  - v09.c05.composables-boundaries
+  to:
+  - ch.vue.composables-di
+  chapter_edges:
+  - from: v09.c05.composables-boundaries
+    to: ch.vue.composables-di
+  reason: 采用独立迁移审计 C081 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C082
+  action: split
+  from:
+  - v09.c06.router-navigation-auth
+  to:
+  - ch.vue.router-navigation
+  - ch.vue.auth-permissions
+  chapter_edges:
+  - from: v09.c06.router-navigation-auth
+    to: ch.vue.router-navigation
+  - from: v09.c06.router-navigation-auth
+    to: ch.vue.auth-permissions
+  reason: 采用独立迁移审计 C082 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C083
+  action: repartition
+  from:
+  - v09.c07.pinia-server-state-forms
+  - v09.c08.requests-race-errors
+  to:
+  - ch.vue.forms-vmodel
+  - ch.vue.pinia-state
+  - ch.vue.server-state
+  chapter_edges:
+  - from: v09.c07.pinia-server-state-forms
+    to: ch.vue.forms-vmodel
+  - from: v09.c07.pinia-server-state-forms
+    to: ch.vue.pinia-state
+  - from: v09.c07.pinia-server-state-forms
+    to: ch.vue.server-state
+  - from: v09.c08.requests-race-errors
+    to: ch.vue.server-state
+  reason: 采用独立迁移审计 C083 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C084
+  action: split
+  from:
+  - v09.c09.testing-a11y-performance
+  to:
+  - ch.vue.component-testing
+  - ch.vue.accessibility
+  - ch.vue.performance
+  chapter_edges:
+  - from: v09.c09.testing-a11y-performance
+    to: ch.vue.component-testing
+  - from: v09.c09.testing-a11y-performance
+    to: ch.vue.accessibility
+  - from: v09.c09.testing-a11y-performance
+    to: ch.vue.performance
+  reason: 采用独立迁移审计 C084 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C085
+  action: repartition
+  from:
+  - v09.c10.nuxt-rendering-deployment
+  - v15.c09.deployment-rollback-incident
+  to:
+  - ch.nuxt.rendering-hydration
+  - ch.release.deployment-migrations
+  - ch.ops.incident-dr
+  chapter_edges:
+  - from: v09.c10.nuxt-rendering-deployment
+    to: ch.nuxt.rendering-hydration
+  - from: v09.c10.nuxt-rendering-deployment
+    to: ch.release.deployment-migrations
+  - from: v15.c09.deployment-rollback-incident
+    to: ch.release.deployment-migrations
+  - from: v15.c09.deployment-rollback-incident
+    to: ch.ops.incident-dr
+  reason: 采用独立迁移审计 C085 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C086
+  action: preserve
+  from:
+  - v10.c01.miniprogram-runtime
+  to:
+  - ch.miniapp.runtime
+  chapter_edges:
+  - from: v10.c01.miniprogram-runtime
+    to: ch.miniapp.runtime
+  reason: 采用独立迁移审计 C086 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C087
+  action: split
+  from:
+  - v10.c02.uniapp-vue-pages
+  to:
+  - ch.uniapp.toolchain-pages
+  - ch.uniapp.template-components
+  chapter_edges:
+  - from: v10.c02.uniapp-vue-pages
+    to: ch.uniapp.toolchain-pages
+  - from: v10.c02.uniapp-vue-pages
+    to: ch.uniapp.template-components
+  reason: 采用独立迁移审计 C087 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C088
+  action: preserve
+  from:
+  - v10.c03.network-auth-storage
+  to:
+  - ch.uniapp.network-auth-storage
+  chapter_edges:
+  - from: v10.c03.network-auth-storage
+    to: ch.uniapp.network-auth-storage
+  reason: 采用独立迁移审计 C088 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C089
+  action: preserve
+  from:
+  - v10.c04.platform-api-conditional
+  to:
+  - ch.uniapp.platform-conditional
+  chapter_edges:
+  - from: v10.c04.platform-api-conditional
+    to: ch.uniapp.platform-conditional
+  reason: 采用独立迁移审计 C089 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C090
+  action: preserve
+  from:
+  - v10.c05.upload-scan-location
+  to:
+  - ch.uniapp.device-capabilities
+  chapter_edges:
+  - from: v10.c05.upload-scan-location
+    to: ch.uniapp.device-capabilities
+  reason: 采用独立迁移审计 C090 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C091
+  action: split
+  from:
+  - v10.c06.packages-performance-offline
+  to:
+  - ch.uniapp.packages-performance
+  - ch.uniapp.offline-idempotency
+  chapter_edges:
+  - from: v10.c06.packages-performance-offline
+    to: ch.uniapp.packages-performance
+  - from: v10.c06.packages-performance-offline
+    to: ch.uniapp.offline-idempotency
+  reason: 采用独立迁移审计 C091 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C092
+  action: preserve
+  from:
+  - v10.c07.testing-device-debug
+  to:
+  - ch.uniapp.testing-debugging
+  chapter_edges:
+  - from: v10.c07.testing-device-debug
+    to: ch.uniapp.testing-debugging
+  reason: 采用独立迁移审计 C092 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C093
+  action: preserve
+  from:
+  - v10.c08.privacy-security-review
+  to:
+  - ch.uniapp.privacy-review
+  chapter_edges:
+  - from: v10.c08.privacy-security-review
+    to: ch.uniapp.privacy-review
+  reason: 采用独立迁移审计 C093 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C094
+  action: preserve
+  from:
+  - v10.c09.publish-monitoring
+  to:
+  - ch.uniapp.release-monitoring
+  chapter_edges:
+  - from: v10.c09.publish-monitoring
+    to: ch.uniapp.release-monitoring
+  reason: 采用独立迁移审计 C094 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C095
+  action: preserve
+  from:
+  - v10.c10.factorycare-reporter
+  to:
+  - ch.uniapp.factorycare-reporter
+  chapter_edges:
+  - from: v10.c10.factorycare-reporter
+    to: ch.uniapp.factorycare-reporter
+  reason: 采用独立迁移审计 C095 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C096
+  action: split
+  from:
+  - v11.c01.dart-cli-types
+  to:
+  - ch.dart.toolchain
+  - ch.dart.types-null-safety
+  chapter_edges:
+  - from: v11.c01.dart-cli-types
+    to: ch.dart.toolchain
+  - from: v11.c01.dart-cli-types
+    to: ch.dart.types-null-safety
+  reason: 采用独立迁移审计 C096 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C097
+  action: repartition
+  from:
+  - v11.c02.dart-control-functions
+  - v11.c03.dart-collections-patterns
+  to:
+  - ch.dart.control-functions
+  - ch.dart.collections-patterns
+  chapter_edges:
+  - from: v11.c02.dart-control-functions
+    to: ch.dart.control-functions
+  - from: v11.c02.dart-control-functions
+    to: ch.dart.collections-patterns
+  - from: v11.c03.dart-collections-patterns
+    to: ch.dart.collections-patterns
+  reason: 采用独立迁移审计 C097 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C098
+  action: preserve
+  from:
+  - v11.c04.dart-oop-generics
+  to:
+  - ch.dart.oop-generics
+  chapter_edges:
+  - from: v11.c04.dart-oop-generics
+    to: ch.dart.oop-generics
+  reason: 采用独立迁移审计 C098 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C099
+  action: split
+  from:
+  - v11.c05.dart-async-errors
+  to:
+  - ch.dart.exceptions-resources
+  - ch.dart.future-cancellation
+  - ch.dart.streams-isolates
+  chapter_edges:
+  - from: v11.c05.dart-async-errors
+    to: ch.dart.exceptions-resources
+  - from: v11.c05.dart-async-errors
+    to: ch.dart.future-cancellation
+  - from: v11.c05.dart-async-errors
+    to: ch.dart.streams-isolates
+  reason: 采用独立迁移审计 C099 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C100
+  action: split
+  from:
+  - v11.c06.flutter-runtime
+  to:
+  - ch.flutter.toolchain-project
+  - ch.flutter.widget-tree
+  chapter_edges:
+  - from: v11.c06.flutter-runtime
+    to: ch.flutter.toolchain-project
+  - from: v11.c06.flutter-runtime
+    to: ch.flutter.widget-tree
+  reason: 采用独立迁移审计 C100 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C101
+  action: preserve
+  from:
+  - v11.c07.layout-render-accessibility
+  to:
+  - ch.flutter.layout-accessibility
+  chapter_edges:
+  - from: v11.c07.layout-render-accessibility
+    to: ch.flutter.layout-accessibility
+  reason: 采用独立迁移审计 C101 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C102
+  action: preserve
+  from:
+  - v11.c08.state-lifecycle-mounted
+  to:
+  - ch.flutter.state-lifecycle
+  chapter_edges:
+  - from: v11.c08.state-lifecycle-mounted
+    to: ch.flutter.state-lifecycle
+  reason: 采用独立迁移审计 C102 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C103
+  action: repartition
+  from:
+  - v11.c09.navigation-network-device
+  - v11.c11.flutter-network-storage
+  - v11.c12.flutter-device-apis
+  to:
+  - ch.flutter.navigation-forms
+  - ch.flutter.network-storage-offline
+  - ch.flutter.device-apis
+  chapter_edges:
+  - from: v11.c09.navigation-network-device
+    to: ch.flutter.navigation-forms
+  - from: v11.c09.navigation-network-device
+    to: ch.flutter.network-storage-offline
+  - from: v11.c09.navigation-network-device
+    to: ch.flutter.device-apis
+  - from: v11.c11.flutter-network-storage
+    to: ch.flutter.network-storage-offline
+  - from: v11.c12.flutter-device-apis
+    to: ch.flutter.device-apis
+  reason: 采用独立迁移审计 C103 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C104
+  action: repartition
+  from:
+  - v11.c10.architecture-testing-release
+  - v11.c13.flutter-testing-performance-release
+  to:
+  - ch.flutter.architecture-state
+  - ch.flutter.testing-performance
+  - ch.flutter.release-monitoring
+  chapter_edges:
+  - from: v11.c10.architecture-testing-release
+    to: ch.flutter.architecture-state
+  - from: v11.c10.architecture-testing-release
+    to: ch.flutter.testing-performance
+  - from: v11.c10.architecture-testing-release
+    to: ch.flutter.release-monitoring
+  - from: v11.c13.flutter-testing-performance-release
+    to: ch.flutter.testing-performance
+  - from: v11.c13.flutter-testing-performance-release
+    to: ch.flutter.release-monitoring
+  reason: 采用独立迁移审计 C104 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C105
+  action: preserve
+  from:
+  - v12.c01.runtime-uv-env
+  to:
+  - ch.python.runtime-uv
+  chapter_edges:
+  - from: v12.c01.runtime-uv-env
+    to: ch.python.runtime-uv
+  reason: 采用独立迁移审计 C105 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C106
+  action: split
+  from:
+  - v12.c02.types-io-control
+  to:
+  - ch.python.syntax-values-io
+  - ch.python.control-flow
+  chapter_edges:
+  - from: v12.c02.types-io-control
+    to: ch.python.syntax-values-io
+  - from: v12.c02.types-io-control
+    to: ch.python.control-flow
+  reason: 采用独立迁移审计 C106 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C107
+  action: split
+  from:
+  - v12.c03.functions-collections
+  to:
+  - ch.python.functions-scope
+  - ch.python.collections
+  chapter_edges:
+  - from: v12.c03.functions-collections
+    to: ch.python.functions-scope
+  - from: v12.c03.functions-collections
+    to: ch.python.collections
+  reason: 采用独立迁移审计 C107 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C108
+  action: split
+  from:
+  - v12.c04.modules-files-json
+  to:
+  - ch.python.modules-packages
+  - ch.python.files-json-time
+  chapter_edges:
+  - from: v12.c04.modules-files-json
+    to: ch.python.modules-packages
+  - from: v12.c04.modules-files-json
+    to: ch.python.files-json-time
+  reason: 采用独立迁移审计 C108 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C109
+  action: split
+  from:
+  - v12.c05.classes-dataclass-protocol
+  to:
+  - ch.python.classes-dataclass
+  - ch.python.protocol-generics
+  chapter_edges:
+  - from: v12.c05.classes-dataclass-protocol
+    to: ch.python.classes-dataclass
+  - from: v12.c05.classes-dataclass-protocol
+    to: ch.python.protocol-generics
+  reason: 采用独立迁移审计 C109 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C110
+  action: split
+  from:
+  - v12.c06.exceptions-iterators-decorators
+  to:
+  - ch.python.exceptions-context
+  - ch.python.iterators-decorators
+  chapter_edges:
+  - from: v12.c06.exceptions-iterators-decorators
+    to: ch.python.exceptions-context
+  - from: v12.c06.exceptions-iterators-decorators
+    to: ch.python.iterators-decorators
+  reason: 采用独立迁移审计 C110 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C111
+  action: split
+  from:
+  - v12.c07.typing-testing-logging
+  to:
+  - ch.python.typing-foundations
+  - ch.python.testing-logging-debug
+  chapter_edges:
+  - from: v12.c07.typing-testing-logging
+    to: ch.python.typing-foundations
+  - from: v12.c07.typing-testing-logging
+    to: ch.python.testing-logging-debug
+  reason: 采用独立迁移审计 C111 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C112
+  action: preserve
+  from:
+  - v12.c08.async-cancellation
+  to:
+  - ch.python.asyncio-cancellation
+  chapter_edges:
+  - from: v12.c08.async-cancellation
+    to: ch.python.asyncio-cancellation
+  reason: 采用独立迁移审计 C112 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C113
+  action: split
+  from:
+  - v12.c09.fastapi-pydantic
+  to:
+  - ch.python.pydantic-validation
+  - ch.fastapi.web-foundations
+  - ch.fastapi.security-testing-openapi
+  chapter_edges:
+  - from: v12.c09.fastapi-pydantic
+    to: ch.python.pydantic-validation
+  - from: v12.c09.fastapi-pydantic
+    to: ch.fastapi.web-foundations
+  - from: v12.c09.fastapi-pydantic
+    to: ch.fastapi.security-testing-openapi
+  reason: 采用独立迁移审计 C113 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C114
+  action: split
+  from:
+  - v12.c10.numpy-pandas
+  to:
+  - ch.data.numpy
+  - ch.data.pandas
+  chapter_edges:
+  - from: v12.c10.numpy-pandas
+    to: ch.data.numpy
+  - from: v12.c10.numpy-pandas
+    to: ch.data.pandas
+  reason: 采用独立迁移审计 C114 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C115
+  action: preserve
+  from:
+  - v13.c01.vectors-matrices-tensors
+  to:
+  - ch.math.linear-algebra
+  chapter_edges:
+  - from: v13.c01.vectors-matrices-tensors
+    to: ch.math.linear-algebra
+  reason: 采用独立迁移审计 C115 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C116
+  action: preserve
+  from:
+  - v13.c02.probability-statistics
+  to:
+  - ch.math.probability-statistics
+  chapter_edges:
+  - from: v13.c02.probability-statistics
+    to: ch.math.probability-statistics
+  reason: 采用独立迁移审计 C116 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C117
+  action: preserve
+  from:
+  - v13.c03.derivatives-gradients
+  to:
+  - ch.math.gradients
+  chapter_edges:
+  - from: v13.c03.derivatives-gradients
+    to: ch.math.gradients
+  reason: 采用独立迁移审计 C117 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C118
+  action: preserve
+  from:
+  - v13.c04.problem-data-split
+  to:
+  - ch.ml.problem-data-split
+  chapter_edges:
+  - from: v13.c04.problem-data-split
+    to: ch.ml.problem-data-split
+  reason: 采用独立迁移审计 C118 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C119
+  action: split
+  from:
+  - v13.c05.classical-ml
+  to:
+  - ch.ml.preprocessing-features
+  - ch.ml.supervised-learning
+  - ch.ml.unsupervised-learning
+  chapter_edges:
+  - from: v13.c05.classical-ml
+    to: ch.ml.preprocessing-features
+  - from: v13.c05.classical-ml
+    to: ch.ml.supervised-learning
+  - from: v13.c05.classical-ml
+    to: ch.ml.unsupervised-learning
+  reason: 采用独立迁移审计 C119 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C120
+  action: preserve
+  from:
+  - v13.c06.metrics-validation
+  to:
+  - ch.ml.metrics-validation
+  chapter_edges:
+  - from: v13.c06.metrics-validation
+    to: ch.ml.metrics-validation
+  reason: 采用独立迁移审计 C120 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C121
+  action: preserve
+  from:
+  - v13.c07.neural-networks
+  to:
+  - ch.ml.neural-networks
+  chapter_edges:
+  - from: v13.c07.neural-networks
+    to: ch.ml.neural-networks
+  reason: 采用独立迁移审计 C121 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C122
+  action: preserve
+  from:
+  - v13.c08.pytorch-foundations
+  to:
+  - ch.pytorch.foundations
+  chapter_edges:
+  - from: v13.c08.pytorch-foundations
+    to: ch.pytorch.foundations
+  reason: 采用独立迁移审计 C122 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C123
+  action: preserve
+  from:
+  - v13.c09.training-evaluation
+  to:
+  - ch.pytorch.training
+  chapter_edges:
+  - from: v13.c09.training-evaluation
+    to: ch.pytorch.training
+  reason: 采用独立迁移审计 C123 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C124
+  action: split
+  from:
+  - v13.c10.inference-monitoring-ethics
+  to:
+  - ch.pytorch.inference
+  - ch.ml.monitoring-ethics
+  chapter_edges:
+  - from: v13.c10.inference-monitoring-ethics
+    to: ch.pytorch.inference
+  - from: v13.c10.inference-monitoring-ethics
+    to: ch.ml.monitoring-ethics
+  reason: 采用独立迁移审计 C124 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C125
+  action: preserve
+  from:
+  - v14.c01.llm-model
+  to:
+  - ch.llm.model-foundations
+  chapter_edges:
+  - from: v14.c01.llm-model
+    to: ch.llm.model-foundations
+  reason: 采用独立迁移审计 C125 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C126
+  action: preserve
+  from:
+  - v14.c02.model-api-prompts
+  to:
+  - ch.llm.api-prompts-cost
+  chapter_edges:
+  - from: v14.c02.model-api-prompts
+    to: ch.llm.api-prompts-cost
+  reason: 采用独立迁移审计 C126 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C127
+  action: split
+  from:
+  - v14.c03.structured-stream-retry
+  to:
+  - ch.llm.structured-output
+  - ch.llm.streaming-resilience
+  chapter_edges:
+  - from: v14.c03.structured-stream-retry
+    to: ch.llm.structured-output
+  - from: v14.c03.structured-stream-retry
+    to: ch.llm.streaming-resilience
+  reason: 采用独立迁移审计 C127 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C128
+  action: preserve
+  from:
+  - v14.c04.tool-calling-boundaries
+  to:
+  - ch.llm.tool-calling
+  chapter_edges:
+  - from: v14.c04.tool-calling-boundaries
+    to: ch.llm.tool-calling
+  reason: 采用独立迁移审计 C128 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C129
+  action: split
+  from:
+  - v14.c05.ingestion-chunking
+  to:
+  - ch.rag.ingestion-metadata
+  - ch.rag.chunking-embeddings
+  chapter_edges:
+  - from: v14.c05.ingestion-chunking
+    to: ch.rag.ingestion-metadata
+  - from: v14.c05.ingestion-chunking
+    to: ch.rag.chunking-embeddings
+  reason: 采用独立迁移审计 C129 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C130
+  action: split
+  from:
+  - v14.c06.retrieval-rerank
+  to:
+  - ch.ir.lexical-retrieval
+  - ch.ir.evaluation
+  - ch.ir.dense-pgvector
+  - ch.ir.hybrid-rerank
+  chapter_edges:
+  - from: v14.c06.retrieval-rerank
+    to: ch.ir.lexical-retrieval
+  - from: v14.c06.retrieval-rerank
+    to: ch.ir.evaluation
+  - from: v14.c06.retrieval-rerank
+    to: ch.ir.dense-pgvector
+  - from: v14.c06.retrieval-rerank
+    to: ch.ir.hybrid-rerank
+  reason: 采用独立迁移审计 C130 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C131
+  action: preserve
+  from:
+  - v14.c07.rag-citations-evaluation
+  to:
+  - ch.rag.citations-evaluation
+  chapter_edges:
+  - from: v14.c07.rag-citations-evaluation
+    to: ch.rag.citations-evaluation
+  reason: 采用独立迁移审计 C131 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C132
+  action: preserve
+  from:
+  - v14.c08.rag-security-observability
+  to:
+  - ch.rag.security-observability
+  chapter_edges:
+  - from: v14.c08.rag-security-observability
+    to: ch.rag.security-observability
+  reason: 采用独立迁移审计 C132 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C133
+  action: split
+  from:
+  - v14.c09.langchain-langgraph
+  to:
+  - ch.agent.langchain
+  - ch.agent.langgraph
+  chapter_edges:
+  - from: v14.c09.langchain-langgraph
+    to: ch.agent.langchain
+  - from: v14.c09.langchain-langgraph
+    to: ch.agent.langgraph
+  reason: 采用独立迁移审计 C133 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C134
+  action: preserve
+  from:
+  - v14.c10.mcp-agent-boundary
+  to:
+  - ch.agent.mcp-boundaries
+  chapter_edges:
+  - from: v14.c10.mcp-agent-boundary
+    to: ch.agent.mcp-boundaries
+  reason: 采用独立迁移审计 C134 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C135
+  action: preserve
+  from:
+  - v15.c01.linux-operations
+  to:
+  - ch.ops.linux-services
+  chapter_edges:
+  - from: v15.c01.linux-operations
+    to: ch.ops.linux-services
+  reason: 采用独立迁移审计 C135 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C136
+  action: preserve
+  from:
+  - v15.c02.network-diagnostics
+  to:
+  - ch.ops.network-diagnostics
+  chapter_edges:
+  - from: v15.c02.network-diagnostics
+    to: ch.ops.network-diagnostics
+  reason: 采用独立迁移审计 C136 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C137
+  action: split
+  from:
+  - v15.c03.docker-compose
+  to:
+  - ch.ops.docker-production
+  - ch.ops.compose-services
+  chapter_edges:
+  - from: v15.c03.docker-compose
+    to: ch.ops.docker-production
+  - from: v15.c03.docker-compose
+    to: ch.ops.compose-services
+  reason: 采用独立迁移审计 C137 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C138
+  action: preserve
+  from:
+  - v15.c04.nginx-tls-proxy
+  to:
+  - ch.ops.nginx-tls
+  chapter_edges:
+  - from: v15.c04.nginx-tls-proxy
+    to: ch.ops.nginx-tls
+  reason: 采用独立迁移审计 C138 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C139
+  action: split
+  from:
+  - v15.c05.ci-quality-artifacts
+  to:
+  - ch.release.ci-quality
+  - ch.release.artifacts-promotion
+  chapter_edges:
+  - from: v15.c05.ci-quality-artifacts
+    to: ch.release.ci-quality
+  - from: v15.c05.ci-quality-artifacts
+    to: ch.release.artifacts-promotion
+  reason: 采用独立迁移审计 C139 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C140
+  action: preserve
+  from:
+  - v15.c06.config-secrets-supply-chain
+  to:
+  - ch.ops.config-secrets-supply-chain
+  chapter_edges:
+  - from: v15.c06.config-secrets-supply-chain
+    to: ch.ops.config-secrets-supply-chain
+  reason: 采用独立迁移审计 C140 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C141
+  action: split
+  from:
+  - v15.c07.logs-metrics-traces
+  to:
+  - ch.ops.logs-health
+  - ch.ops.metrics-traces-slo
+  chapter_edges:
+  - from: v15.c07.logs-metrics-traces
+    to: ch.ops.logs-health
+  - from: v15.c07.logs-metrics-traces
+    to: ch.ops.metrics-traces-slo
+  reason: 采用独立迁移审计 C141 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C142
+  action: split
+  from:
+  - v15.c08.backup-capacity-performance
+  to:
+  - ch.ops.backup-recovery
+  - ch.ops.capacity-performance
+  chapter_edges:
+  - from: v15.c08.backup-capacity-performance
+    to: ch.ops.backup-recovery
+  - from: v15.c08.backup-capacity-performance
+    to: ch.ops.capacity-performance
+  reason: 采用独立迁移审计 C142 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C143
+  action: split
+  from:
+  - v15.c10.system-design-portfolio
+  to:
+  - ch.architecture.system-design
+  - ch.release.factorycare-acceptance
+  chapter_edges:
+  - from: v15.c10.system-design-portfolio
+    to: ch.architecture.system-design
+  - from: v15.c10.system-design-portfolio
+    to: ch.release.factorycare-acceptance
+  reason: 采用独立迁移审计 C143 的精确顶点与边
+  source_mapping_policy: regenerate-from-frozen-source-inventory
+  source_rebuild_id: frozen-notes-to-2026.2-candidates
+- component_id: C144
+  action: preserve
+  from:
+  - v15.c11.portfolio-interview
+  to:
+  - ch.portfolio.interview
+  chapter_edges:
+  - from: v15.c11.portfolio-interview
+    to: ch.portfolio.interview
+  reason: 采用独立迁移审计 C144 的精确顶点与边
+  source_mapping_policy: automatic-one-to-one
+- component_id: C145
+  action: new
+  from: []
+  to:
+  - ch.foundations.api-contract-basics
+  chapter_edges: []
+  reason: 采用独立迁移审计 C145 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C146
+  action: new
+  from: []
+  to:
+  - ch.foundations.testing-oracles
+  chapter_edges: []
+  reason: 采用独立迁移审计 C146 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C147
+  action: new
+  from: []
+  to:
+  - ch.vue.template-directives
+  chapter_edges: []
+  reason: 采用独立迁移审计 C147 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C148
+  action: new
+  from: []
+  to:
+  - ch.dart.testing-lints
+  chapter_edges: []
+  reason: 采用独立迁移审计 C148 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C149
+  action: new
+  from: []
+  to:
+  - ch.math.algebra-units
+  chapter_edges: []
+  reason: 采用独立迁移审计 C149 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C150
+  action: new
+  from: []
+  to:
+  - ch.math.functions-graphs
+  chapter_edges: []
+  reason: 采用独立迁移审计 C150 的精确顶点与边
+  source_mapping_policy: not-applicable
+- component_id: C151
+  action: new
+  from: []
+  to:
+  - ch.ml.attention-sequences
+  chapter_edges: []
+  reason: 采用独立迁移审计 C151 的精确顶点与边
+  source_mapping_policy: not-applicable
+section_overrides: []
+source_rebuilds:
+- id: frozen-notes-to-2026.2-candidates
+  source_commits:
+    note: 72b27e3bad732fa86d5fd9d9c990c6d5ecaf9f96
+    java-note: 3c4928bf78b24d6550538ea388240fe3b4ce407e
+  builder_path: scripts/build-source-inventory.rb
+  builder_digest: sha256:0dcbb64e53f8aadb05a1758787f1d7debc1370f162de81f5ae7183d7fb5015fa
+  rendered_catalog_projection_digest: sha256:2e78f80cd4dc4db6c5686464844843316911e0b3dff20df2271bd1d0db652102
+  source_inventory_path: curriculum/migrations/evidence/2026.2-source-inventory.yml
+  source_inventory_digest: sha256:f225886a7a2af177877898bfc6891e12eedf24178650389fc8f22a6c793fcd66
+  source_build_path: curriculum/migrations/evidence/2026.2-source-build.yml
+  source_build_digest: sha256:24ae196ff4e1ad73c8353c0bdc00674a0c8c3024a7275fdb2e8565bf4d009f88
+  candidate_manifest_path: curriculum/migrations/evidence/2026.2-candidate-manifest.yml
+  candidate_manifest_digest: sha256:1f3918c1baca077fa261ba2eccb9eb1d291d2d5c6cc64c6cc4a0b343cdc3430b
+  candidate_statuses:
+  - unreviewed
+  automatic_promotion: false

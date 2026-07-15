@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/curriculum/migrations/migration.schema.json",
+  "title": "FactoryCare curriculum edition migration ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "migration_id",
+    "from_edition",
+    "to_edition",
+    "status",
+    "compatibility",
+    "legacy_source_commit",
+    "legacy_manifest_path",
+    "legacy_manifest_digest",
+    "mapping_audit_path",
+    "mapping_audit_digest",
+    "expected_component_count",
+    "expected_edge_count",
+    "expected_legacy_id_count",
+    "expected_active_id_count",
+    "entries",
+    "section_overrides",
+    "source_rebuilds"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "migration_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+    "from_edition": { "type": "string", "minLength": 1 },
+    "to_edition": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["drafting", "ready", "applied"] },
+    "compatibility": { "const": "none" },
+    "legacy_source_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "legacy_manifest_path": { "type": "string", "pattern": "^curriculum/migrations/[a-z0-9.-]+\\.yml$" },
+    "legacy_manifest_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "mapping_audit_path": { "const": "records/encyclopedia/reviews/P1R-migration-ledger-audit.md" },
+    "mapping_audit_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "expected_component_count": { "type": "integer", "minimum": 1 },
+    "expected_edge_count": { "type": "integer", "minimum": 1 },
+    "expected_legacy_id_count": { "type": "integer", "minimum": 0 },
+    "expected_active_id_count": { "type": "integer", "minimum": 1 },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "section_overrides": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sectionOverride" }
+    },
+    "source_rebuilds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceRebuild" }
+    },
+    "application_receipt_path": { "type": "string", "pattern": "^curriculum/migrations/receipts/[a-z0-9.-]+\\.yml$" },
+    "application_receipt_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  },
+  "$defs": {
+    "legacyId": {
+      "type": "string",
+      "pattern": "^v[0-9]{2}\\.c[0-9]{2}\\.[a-z0-9-]+$"
+    },
+    "semanticId": {
+      "type": "string",
+      "pattern": "^ch\\.[a-z0-9]+(?:-[a-z0-9]+)*\\.[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component_id", "action", "from", "to", "chapter_edges", "reason", "source_mapping_policy"],
+      "properties": {
+        "component_id": { "type": "string", "pattern": "^C[0-9]{3}$" },
+        "action": { "enum": ["preserve", "replace", "split", "merge", "repartition", "remove", "new"] },
+        "from": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/legacyId" }
+        },
+        "to": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/semanticId" }
+        },
+        "chapter_edges": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/chapterEdge" }
+        },
+        "reason": { "type": "string", "minLength": 8 },
+        "source_mapping_policy": {
+          "enum": ["automatic-one-to-one", "automatic-merge-with-provenance", "manual-section-override", "regenerate-from-frozen-source-inventory", "not-applicable"]
+        },
+        "source_rebuild_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "action": { "const": "new" } }, "required": ["action"] },
+          "then": { "properties": { "from": { "maxItems": 0 }, "to": { "minItems": 1 } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "remove" } }, "required": ["action"] },
+          "then": { "properties": { "from": { "minItems": 1 }, "to": { "maxItems": 0 } } }
+        },
+        {
+          "if": { "properties": { "action": { "enum": ["split", "repartition"] } }, "required": ["action"] },
+          "then": {
+            "properties": {
+              "source_mapping_policy": {
+                "enum": ["manual-section-override", "regenerate-from-frozen-source-inventory"]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "source_mapping_policy": { "const": "regenerate-from-frozen-source-inventory" } },
+            "required": ["source_mapping_policy"]
+          },
+          "then": { "required": ["source_rebuild_id"] }
+        }
+      ]
+    },
+    "chapterEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": {
+        "from": { "$ref": "#/$defs/legacyId" },
+        "to": { "$ref": "#/$defs/semanticId" }
+      }
+    },
+    "sectionOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "section_selector", "from_chapter_id", "to_chapter_ids", "review_status"],
+      "properties": {
+        "source_id": { "type": "string", "minLength": 1 },
+        "section_selector": { "type": "string", "minLength": 1 },
+        "from_chapter_id": { "$ref": "#/$defs/legacyId" },
+        "to_chapter_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/semanticId" }
+        },
+        "review_status": { "enum": ["reviewed", "manual-review-required"] },
+        "reason": { "type": "string" }
+      }
+    },
+    "sourceRebuild": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_commits",
+        "builder_path",
+        "builder_digest",
+        "rendered_catalog_projection_digest",
+        "source_inventory_path",
+        "source_inventory_digest",
+        "source_build_path",
+        "source_build_digest",
+        "candidate_manifest_path",
+        "candidate_manifest_digest",
+        "candidate_statuses",
+        "automatic_promotion"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+        "source_commits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["note", "java-note"],
+          "properties": {
+            "note": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "java-note": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+          }
+        },
+        "builder_path": { "const": "scripts/build-source-inventory.rb" },
+        "builder_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "rendered_catalog_projection_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "source_inventory_path": { "type": "string", "minLength": 1 },
+        "source_inventory_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "source_build_path": { "type": "string", "minLength": 1 },
+        "source_build_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "candidate_manifest_path": { "type": "string", "minLength": 1 },
+        "candidate_manifest_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "candidate_statuses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["unreviewed", "manual-review-required"] }
+        },
+        "automatic_promotion": { "const": false }
+      }
+    }
+  }
+}

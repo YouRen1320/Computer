@@ -1,0 +1,22 @@
+---
+schema_version: 1
+evidence_id: source-inventory-2026.2
+catalog_edition: 2026.2-draft
+repositories:
+  java-note:
+    canonical_url: https://github.com/YouRen1320/Java-Note.git
+    commit: 3c4928bf78b24d6550538ea388240fe3b4ce407e
+    file_count: 3077
+    markdown_count: 370
+    pdf_count: 2
+  note:
+    canonical_url: https://github.com/YouRen1320/Note.git
+    commit: 72b27e3bad732fa86d5fd9d9c990c6d5ecaf9f96
+    file_count: 347
+    markdown_count: 73
+    pdf_count: 12
+totals:
+  file_count: 3424
+  markdown_count: 443
+  pdf_count: 14
+license_policy: coverage-inventory-only

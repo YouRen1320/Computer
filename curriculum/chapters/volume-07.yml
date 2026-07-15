@@ -1,0 +1,909 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: "07"
+chapters:
+  - id: ch.web.browser-render-devtools
+    title: "浏览器请求、解析、渲染与 DevTools 观察"
+    role: foundation
+    responsibility: "建立从导航请求到 DOM/CSSOM、布局、绘制和合成的可观察浏览器管线，只做测量与解释，不在本章优化 JavaScript 性能。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-browser-pipeline
+        title: "浏览器加载与渲染管线"
+        topics: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite"]
+      - id: web-devtools-observation
+        title: "DevTools 证据"
+        topics: ["web.devtools-network-panel", "web.devtools-elements-panel", "web.devtools-performance-baseline"]
+    topics_taught: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite","web.devtools-network-panel","web.devtools-elements-panel","web.devtools-performance-baseline"]
+    topics_used: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite","web.devtools-network-panel","web.devtools-elements-panel","web.devtools-performance-baseline"]
+    prerequisites: ["ch.foundations.http-curl"]
+    prerequisite_rationales:
+      ch.foundations.http-curl:
+        reason: "浏览器网络面板中的方法、状态码、Header 与 Body 必须先能用 HTTP 报文和 curl 独立验证。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.browser-rendering"]
+      uses: ["foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.browser-render-devtools/
+      acceptance:
+        - "制作一个最小页面并保存请求、解析和渲染阶段的 DevTools 证据；命令、输入、环境与结果可从空目录复现；验收判据：同一测试页面的请求瀑布、DOM 结构和渲染阶段能由保存的 HAR、截图与时间线重复核对。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“错误资源路径或阻塞资源导致的加载与渲染异常”后能指出首个可信证据，修复并重跑同一验证；修复后判据：同一测试页面的请求瀑布、DOM 结构和渲染阶段能由保存的 HAR、截图与时间线重复核对。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.browser-render-devtools/"]
+      critical_failure_modes: ["network-evidence-mismatch", "render-pipeline-misdiagnosis"]
+    verification_mode:
+      test_level: T0
+      methods: ["prediction", "devtools-observation", "command-exit"]
+      oracle: "同一测试页面的请求瀑布、DOM 结构和渲染阶段能由保存的 HAR、截图与时间线重复核对。"
+    version_surfaces: ["browser", "browser-devtools", "html-living-standard", "css"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“浏览器请求、解析、渲染与 DevTools 观察”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-browser-pipeline", "web-devtools-observation"]
+        covers_topics: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite","web.devtools-network-panel","web.devtools-elements-panel","web.devtools-performance-baseline"]
+        uses_capabilities: ["foundation.http-message", "web.browser-rendering"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“浏览器请求、解析、渲染与 DevTools 观察”构建可运行程序与测试：制作一个最小页面并保存请求、解析和渲染阶段的 DevTools 证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-browser-pipeline", "web-devtools-observation"]
+        covers_topics: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite","web.devtools-network-panel","web.devtools-elements-panel","web.devtools-performance-baseline"]
+        uses_capabilities: ["foundation.http-message", "web.browser-rendering"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "prediction-devtools-observation-command-exit"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误资源路径或阻塞资源导致的加载与渲染异常”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-browser-pipeline", "web-devtools-observation"]
+        covers_topics: ["web.navigation-request","web.html-parsing-dom","web.cssom-render-tree","web.layout-paint-composite","web.devtools-network-panel","web.devtools-elements-panel","web.devtools-performance-baseline"]
+        uses_capabilities: ["foundation.http-message", "web.browser-rendering"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.web.origin-cookie-cache
+    title: "Origin、同源、Cookie、缓存与 CORS 浏览器模型"
+    role: concept
+    responsibility: "解释浏览器如何按 Origin 隔离读取、携带 Cookie 并复用缓存，区分浏览器 CORS 执行与服务端授权，不进入登录业务实现。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-origin-browser-security
+        title: "Origin 与浏览器隔离"
+        topics: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment"]
+      - id: web-browser-cache-model
+        title: "缓存与渲染输入"
+        topics: ["web.http-cache-browser", "web.cache-validation", "web.navigation-cache-effect", "web.layout-paint-composite"]
+    topics_taught: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment","web.http-cache-browser","web.cache-validation","web.navigation-cache-effect"]
+    topics_used: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment","web.http-cache-browser","web.cache-validation","web.navigation-cache-effect","web.layout-paint-composite"]
+    prerequisites: ["ch.web.browser-render-devtools"]
+    prerequisite_rationales:
+      ch.web.browser-render-devtools:
+        reason: "Origin、Cookie 与缓存行为需要在已理解的导航和渲染管线中观察，避免把浏览器策略误当成服务器故障。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.browser-origin-state"]
+      uses: ["web.browser-rendering", "foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.origin-cookie-cache/
+      acceptance:
+        - "搭建两个 Origin 的最小请求矩阵并记录 Cookie、CORS 与缓存结果；命令、输入、环境与结果可从空目录复现；验收判据：固定的同源/跨源请求矩阵应得到确定的 Cookie、CORS 与缓存命中结果，并可由响应头和浏览器控制台复核。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“错误的 Origin、SameSite 或缓存头引起的请求阻断与陈旧响应”后能指出首个可信证据，修复并重跑同一验证；修复后判据：固定的同源/跨源请求矩阵应得到确定的 Cookie、CORS 与缓存命中结果，并可由响应头和浏览器控制台复核。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.origin-cookie-cache/"]
+      critical_failure_modes: ["cross-origin-policy-confusion", "credential-leakage", "stale-cache"]
+    verification_mode:
+      test_level: T1
+      methods: ["prediction", "request-matrix", "header-assertions"]
+      oracle: "固定的同源/跨源请求矩阵应得到确定的 Cookie、CORS 与缓存命中结果，并可由响应头和浏览器控制台复核。"
+    version_surfaces: ["browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Origin、同源、Cookie、缓存与 CORS 浏览器模型”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-origin-browser-security", "web-browser-cache-model"]
+        covers_topics: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment","web.http-cache-browser","web.cache-validation","web.navigation-cache-effect","web.layout-paint-composite"]
+        uses_capabilities: ["web.browser-rendering", "foundation.http-message", "web.browser-origin-state"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“Origin、同源、Cookie、缓存与 CORS 浏览器模型”构建可运行程序与测试：搭建两个 Origin 的最小请求矩阵并记录 Cookie、CORS 与缓存结果；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-origin-browser-security", "web-browser-cache-model"]
+        covers_topics: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment","web.http-cache-browser","web.cache-validation","web.navigation-cache-effect","web.layout-paint-composite"]
+        uses_capabilities: ["web.browser-rendering", "foundation.http-message", "web.browser-origin-state"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "prediction-request-matrix-header-assertions"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误的 Origin、SameSite 或缓存头引起的请求阻断与陈旧响应”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-origin-browser-security", "web-browser-cache-model"]
+        covers_topics: ["web.origin-tuple","web.same-origin-policy","web.cors-browser-enforcement","web.cookie-attachment","web.http-cache-browser","web.cache-validation","web.navigation-cache-effect","web.layout-paint-composite"]
+        uses_capabilities: ["web.browser-rendering", "foundation.http-message", "web.browser-origin-state"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.web.semantic-html
+    title: "语义 HTML、文档结构与元数据"
+    role: foundation
+    responsibility: "用原生元素表达页面结构、内容层级和机器可读元数据，不在本章引入表单交互、CSS 布局或 ARIA 补丁。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-semantic-document
+        title: "语义文档结构"
+        topics: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics"]
+      - id: web-document-metadata
+        title: "文档元数据"
+        topics: ["html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+    topics_taught: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics", "html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+    topics_used: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics", "html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+    prerequisites: ["ch.web.browser-render-devtools"]
+    prerequisite_rationales:
+      ch.web.browser-render-devtools:
+        reason: "语义元素最终形成 DOM 与可访问树，先理解解析和检查工具才能验证结构而不是只看视觉效果。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.semantic-html/
+      acceptance:
+        - "编写一页不依赖 CSS 的语义化工单详情并验证文档大纲与元数据；命令、输入、环境与结果可从空目录复现；验收判据：HTML 校验器无结构错误，DOM 检查与文档大纲能逐项对应预期的 landmark、标题层级和元数据。"
+        - "注入“滥用 div、标题跳级或缺失语言声明造成的结构语义丢失”后能指出首个可信证据，修复并重跑同一验证；修复后判据：HTML 校验器无结构错误，DOM 检查与文档大纲能逐项对应预期的 landmark、标题层级和元数据。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.semantic-html/"]
+      critical_failure_modes: ["invalid-document-structure", "missing-semantic-landmark"]
+    verification_mode:
+      test_level: T0
+      methods: ["markup-validation", "dom-inspection", "manual-outline"]
+      oracle: "HTML 校验器无结构错误，DOM 检查与文档大纲能逐项对应预期的 landmark、标题层级和元数据。"
+    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“语义 HTML、文档结构与元数据”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-semantic-document", "web-document-metadata"]
+        covers_topics: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics", "html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "编写一页不依赖 CSS 的语义化工单详情并验证文档大纲与元数据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-semantic-document", "web-document-metadata"]
+        covers_topics: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics", "html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "markup-validation-dom-inspection-manual-outline"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“滥用 div、标题跳级或缺失语言声明造成的结构语义丢失”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-semantic-document", "web-document-metadata"]
+        covers_topics: ["html.document-outline", "html.landmark-elements", "html.heading-hierarchy", "html.text-semantics", "html.document-language", "html.meta-viewport", "html.title-description", "html.link-metadata"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.web.forms-validation
+    title: "表单控件、提交语义与原生校验"
+    role: concept
+    responsibility: "建立 label、控件、提交编码和原生约束校验的端到端表单契约，不在本章实现 JavaScript 自定义校验或框架双向绑定。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-form-semantics
+        title: "表单结构与提交"
+        topics: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding"]
+      - id: web-native-validation
+        title: "原生约束校验"
+        topics: ["html.required-constraint", "html.input-type-semantics", "html.validity-state", "html.validation-message", "html.landmark-elements"]
+    topics_taught: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding","html.required-constraint","html.input-type-semantics","html.validity-state","html.validation-message"]
+    topics_used: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding","html.required-constraint","html.input-type-semantics","html.validity-state","html.validation-message","html.landmark-elements"]
+    prerequisites: ["ch.web.semantic-html", "ch.web.origin-cookie-cache"]
+    prerequisite_rationales:
+      ch.web.semantic-html:
+        reason: "表单必须嵌入正确的文档结构并复用原生元素语义。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.origin-cookie-cache:
+        reason: "提交目标、Origin、Cookie 和浏览器策略会影响表单请求，必须能区分客户端约束与网络边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.html-semantic-form"]
+      uses: ["web.browser-rendering", "web.browser-origin-state", "foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.forms-validation/
+      acceptance:
+        - "实现含文本、选择、日期和文件控件的原生表单并保存提交负载矩阵；命令、输入、环境与结果可从空目录复现；验收判据：合法、缺失、格式错误与重复提交输入在浏览器校验状态和实际请求负载中得到确定且可重复的结果。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“缺失 label、错误 name 或绕过客户端校验导致的契约不一致”后能指出首个可信证据，修复并重跑同一验证；修复后判据：合法、缺失、格式错误与重复提交输入在浏览器校验状态和实际请求负载中得到确定且可重复的结果。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.forms-validation/"]
+      critical_failure_modes: ["unlabeled-control", "validation-bypass-assumption", "request-payload-drift"]
+    verification_mode:
+      test_level: T1
+      methods: ["submission-matrix", "native-validity-check", "request-inspection"]
+      oracle: "合法、缺失、格式错误与重复提交输入在浏览器校验状态和实际请求负载中得到确定且可重复的结果。"
+    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“表单控件、提交语义与原生校验”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-form-semantics", "web-native-validation"]
+        covers_topics: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding","html.required-constraint","html.input-type-semantics","html.validity-state","html.validation-message","html.landmark-elements"]
+        uses_capabilities: ["web.browser-rendering", "web.browser-origin-state", "foundation.http-message", "web.html-semantic-form"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现含文本、选择、日期和文件控件的原生表单并保存提交负载矩阵；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-form-semantics", "web-native-validation"]
+        covers_topics: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding","html.required-constraint","html.input-type-semantics","html.validity-state","html.validation-message","html.landmark-elements"]
+        uses_capabilities: ["web.browser-rendering", "web.browser-origin-state", "foundation.http-message", "web.html-semantic-form"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "submission-matrix-native-validity-check-request-inspection"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“缺失 label、错误 name 或绕过客户端校验导致的契约不一致”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-form-semantics", "web-native-validation"]
+        covers_topics: ["html.form-owner","html.label-control","html.control-name-value","html.form-submit-encoding","html.required-constraint","html.input-type-semantics","html.validity-state","html.validation-message","html.landmark-elements"]
+        uses_capabilities: ["web.browser-rendering", "web.browser-origin-state", "foundation.http-message", "web.html-semantic-form"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.web.media-assets
+    title: "图片、响应式资源、音视频与资源边界"
+    role: concept
+    responsibility: "为图片、音视频和下载资源选择正确的语义元素、格式与替代内容，只处理资源声明和交付边界，不做 CSS 响应式布局。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-responsive-images
+        title: "图片与响应式候选"
+        topics: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection"]
+      - id: web-media-resource-boundary
+        title: "音视频与资源交付"
+        topics: ["html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+    topics_taught: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection", "html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+    topics_used: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection", "html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+    prerequisites: ["ch.web.semantic-html"]
+    prerequisite_rationales:
+      ch.web.semantic-html:
+        reason: "媒体元素的替代内容、figure 关系和文档语义依赖已验证的 HTML 结构。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["foundation.http-message"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.media-assets/
+      acceptance:
+        - "制作包含响应式图片、字幕视频和失败回退的媒体样例页；命令、输入、环境与结果可从空目录复现"
+        - "注入“错误 srcset、缺失替代文本或资源 MIME 不匹配造成的媒体失败”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.media-assets/"]
+      critical_failure_modes: ["inaccessible-media", "asset-selection-error"]
+    verification_mode:
+      test_level: T0
+      methods: ["browser-inspection", "network-observation", "fallback-check"]
+      oracle: "不同视口和资源可用性下，浏览器选择的候选、替代文本和失败回退与预先记录的矩阵一致。"
+    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“图片、响应式资源、音视频与资源边界”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-responsive-images", "web-media-resource-boundary"]
+        covers_topics: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection", "html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“图片、响应式资源、音视频与资源边界”构建可运行程序与测试：制作包含响应式图片、字幕视频和失败回退的媒体样例页；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-responsive-images", "web-media-resource-boundary"]
+        covers_topics: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection", "html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "browser-inspection-network-observation-fallback-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误 srcset、缺失替代文本或资源 MIME 不匹配造成的媒体失败”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-responsive-images", "web-media-resource-boundary"]
+        covers_topics: ["html.img-alt", "html.picture-source", "html.srcset-sizes", "web.image-format-selection", "html.audio-video-controls", "html.media-track", "web.asset-url", "web.asset-loading-failure"]
+        uses_capabilities: ["foundation.http-message"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.web.accessibility-interaction
+    title: "无障碍、键盘、焦点与屏幕阅读器"
+    role: concept
+    responsibility: "用原生语义、键盘顺序、焦点管理和必要的 ARIA 建立可操作界面，明确 ARIA 不能修复错误 HTML 或业务流程。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: web-keyboard-focus
+        title: "键盘与焦点"
+        topics: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration"]
+      - id: web-accessible-name-state
+        title: "可访问名称与状态"
+        topics: ["a11y.accessible-name", "a11y.screen-reader-announcement", "a11y.aria-state", "a11y.native-before-aria", "html.label-control"]
+    topics_taught: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration","a11y.accessible-name","a11y.screen-reader-announcement","a11y.aria-state","a11y.native-before-aria"]
+    topics_used: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration","a11y.accessible-name","a11y.screen-reader-announcement","a11y.aria-state","a11y.native-before-aria","html.label-control"]
+    prerequisites: ["ch.web.forms-validation"]
+    prerequisite_rationales:
+      ch.web.forms-validation:
+        reason: "键盘、名称和错误提示验证需要已有可提交、可校验的原生控件。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.accessibility"]
+      uses: ["web.html-semantic-form"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.web.accessibility-interaction/
+      acceptance:
+        - "将一份工单表单改造成键盘和屏幕阅读器可完成的交互并保存审计证据；命令、输入、环境与结果可从空目录复现；验收判据：仅用键盘即可完成任务，焦点顺序、可访问名称和动态错误提示与逐项检查表一致。"
+        - "注入“焦点陷阱、无名称控件或错误 ARIA 状态造成的不可操作路径”后能指出首个可信证据，修复并重跑同一验证；修复后判据：仅用键盘即可完成任务，焦点顺序、可访问名称和动态错误提示与逐项检查表一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.web.accessibility-interaction/"]
+      critical_failure_modes: ["keyboard-inaccessible", "focus-loss", "screen-reader-silence"]
+    verification_mode:
+      test_level: T1
+      methods: ["keyboard-walkthrough", "accessibility-tree-inspection", "screen-reader-check"]
+      oracle: "仅用键盘即可完成任务，焦点顺序、可访问名称和动态错误提示与逐项检查表一致。"
+    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“无障碍、键盘、焦点与屏幕阅读器”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["web-keyboard-focus", "web-accessible-name-state"]
+        covers_topics: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration","a11y.accessible-name","a11y.screen-reader-announcement","a11y.aria-state","a11y.native-before-aria","html.label-control"]
+        uses_capabilities: ["web.html-semantic-form", "web.accessibility"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "将一份工单表单改造成键盘和屏幕阅读器可完成的交互并保存审计证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["web-keyboard-focus", "web-accessible-name-state"]
+        covers_topics: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration","a11y.accessible-name","a11y.screen-reader-announcement","a11y.aria-state","a11y.native-before-aria","html.label-control"]
+        uses_capabilities: ["web.html-semantic-form", "web.accessibility"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "keyboard-walkthrough-accessibility-tree-inspection-screen-reader-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“焦点陷阱、无名称控件或错误 ARIA 状态造成的不可操作路径”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["web-keyboard-focus", "web-accessible-name-state"]
+        covers_topics: ["a11y.keyboard-navigation","a11y.focus-order","a11y.focus-visible","a11y.focus-restoration","a11y.accessible-name","a11y.screen-reader-announcement","a11y.aria-state","a11y.native-before-aria","html.label-control"]
+        uses_capabilities: ["web.html-semantic-form", "web.accessibility"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.cascade
+    title: "CSS 语法、选择器、层叠、优先级与继承"
+    role: foundation
+    responsibility: "建立声明、选择器、来源、层叠层、优先级和继承的可计算规则，不在本章教授具体布局算法。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-syntax-selectors
+        title: "CSS 语法与选择器"
+        topics: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element"]
+      - id: css-cascade-inheritance
+        title: "层叠与继承"
+        topics: ["css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+    topics_taught: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element", "css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+    topics_used: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element", "css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+    prerequisites: ["ch.web.semantic-html"]
+    prerequisite_rationales:
+      ch.web.semantic-html:
+        reason: "选择器必须作用于已能解释的 DOM 与语义结构，才能区分结构问题和样式问题。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.cascade/
+      acceptance:
+        - "为同一语义页面编写冲突样式矩阵并逐项证明最终计算值；命令、输入、环境与结果可从空目录复现；验收判据：给定冲突规则时，手算结果与浏览器 computed style 一致，移除规则后差异可预测。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“优先级、继承或源码顺序误判造成的样式覆盖失败”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.cascade/"]
+      critical_failure_modes: ["cascade-misdiagnosis", "selector-overreach"]
+    verification_mode:
+      test_level: T0
+      methods: ["specificity-calculation", "computed-style-inspection", "visual-diff"]
+      oracle: "给定冲突规则时，手算结果与浏览器 computed style 一致，移除规则后差异可预测。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“CSS 语法、选择器、层叠、优先级与继承”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-syntax-selectors", "css-cascade-inheritance"]
+        covers_topics: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element", "css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+        uses_capabilities: []
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "为同一语义页面编写冲突样式矩阵并逐项证明最终计算值；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-syntax-selectors", "css-cascade-inheritance"]
+        covers_topics: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element", "css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+        uses_capabilities: []
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "specificity-calculation-computed-style-inspection-visual-diff"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“优先级、继承或源码顺序误判造成的样式覆盖失败”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-syntax-selectors", "css-cascade-inheritance"]
+        covers_topics: ["css.rule-declaration", "css.selector-basic", "css.selector-combinator", "css.pseudo-class-element", "css.cascade-origin-layer", "css.specificity", "css.source-order", "css.inheritance-initial-unset"]
+        uses_capabilities: []
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.box-position
+    title: "盒模型、display、定位与层叠上下文"
+    role: concept
+    responsibility: "解释元素尺寸、正常流、display、定位包含块和层叠上下文，不在本章使用 Flexbox 或 Grid 解决整体布局。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-box-formatting
+        title: "盒模型与格式化"
+        topics: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse"]
+      - id: css-position-stacking
+        title: "定位与层叠上下文"
+        topics: ["css.containing-block", "css.position-schemes", "css.z-index", "css.stacking-context", "css.overflow-clipping"]
+    topics_taught: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse","css.containing-block","css.position-schemes","css.z-index","css.stacking-context","css.overflow-clipping"]
+    topics_used: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse","css.containing-block","css.position-schemes","css.z-index","css.stacking-context","css.overflow-clipping"]
+    prerequisites: ["ch.css.cascade"]
+    prerequisite_rationales:
+      ch.css.cascade:
+        reason: "盒模型和定位的最终值来自层叠后的 computed style，必须先能定位覆盖来源。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.css-foundations"]
+      uses: ["web.browser-rendering"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.box-position/
+      acceptance:
+        - "构造正常流、绝对定位和多个层叠上下文的可视化实验；命令、输入、环境与结果可从空目录复现；验收判据：给定尺寸与定位规则时，手算外部尺寸、包含块和遮挡顺序与 DevTools 盒模型及截图一致。"
+        - "注入“box-sizing、包含块或层叠上下文误判导致的溢出和遮挡”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.box-position/"]
+      critical_failure_modes: ["layout-overflow", "stacking-context-error"]
+    verification_mode:
+      test_level: T0
+      methods: ["box-model-calculation", "layout-inspection", "visual-diff"]
+      oracle: "给定尺寸与定位规则时，手算外部尺寸、包含块和遮挡顺序与 DevTools 盒模型及截图一致。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“盒模型、display、定位与层叠上下文”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-box-formatting", "css-position-stacking"]
+        covers_topics: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse","css.containing-block","css.position-schemes","css.z-index","css.stacking-context","css.overflow-clipping"]
+        uses_capabilities: ["web.browser-rendering", "web.css-foundations"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“盒模型、display、定位与层叠上下文”构建可运行程序与测试：构造正常流、绝对定位和多个层叠上下文的可视化实验；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-box-formatting", "css-position-stacking"]
+        covers_topics: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse","css.containing-block","css.position-schemes","css.z-index","css.stacking-context","css.overflow-clipping"]
+        uses_capabilities: ["web.browser-rendering", "web.css-foundations"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "box-model-calculation-layout-inspection-visual-diff"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“box-sizing、包含块或层叠上下文误判导致的溢出和遮挡”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-box-formatting", "css-position-stacking"]
+        covers_topics: ["css.content-padding-border-margin","css.box-sizing","css.display-formatting","css.margin-collapse","css.containing-block","css.position-schemes","css.z-index","css.stacking-context","css.overflow-clipping"]
+        uses_capabilities: ["web.browser-rendering", "web.css-foundations"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.flexbox
+    title: "Flexbox 一维布局"
+    role: concept
+    responsibility: "用主轴、交叉轴、伸缩、换行和对齐解决一维组件布局，不把二维页面网格强塞给 Flexbox。"
+    level: L1
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-flex-axis-sizing
+        title: "Flex 轴与伸缩"
+        topics: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping"]
+      - id: css-flex-alignment
+        title: "Flex 对齐与顺序"
+        topics: ["css.justify-content", "css.align-items-content", "css.flex-gap", "css.flex-visual-order", "css.content-padding-border-margin"]
+    topics_taught: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping","css.justify-content","css.align-items-content","css.flex-gap","css.flex-visual-order"]
+    topics_used: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping","css.justify-content","css.align-items-content","css.flex-gap","css.flex-visual-order","css.content-padding-border-margin"]
+    prerequisites: ["ch.css.box-position"]
+    prerequisite_rationales:
+      ch.css.box-position:
+        reason: "Flex 项尺寸、溢出和包含块仍遵循盒模型，必须先能解释元素外部尺寸。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.css-flex-layout"]
+      uses: ["web.css-foundations"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.flexbox/
+      acceptance:
+        - "实现能容纳长文本和窄视口的表单工具栏与卡片行布局；命令、输入、环境与结果可从空目录复现；验收判据：不同内容长度和容器宽度下，主轴尺寸、换行和对齐结果与预先声明的布局矩阵一致。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“min-size、shrink 或视觉 order 配置导致的溢出和键盘顺序错位”后能指出首个可信证据，修复并重跑同一验证"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.flexbox/"]
+      critical_failure_modes: ["flex-overflow", "visual-dom-order-mismatch"]
+    verification_mode:
+      test_level: T1
+      methods: ["layout-matrix", "computed-style-check", "responsive-visual-oracle"]
+      oracle: "不同内容长度和容器宽度下，主轴尺寸、换行和对齐结果与预先声明的布局矩阵一致。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Flexbox 一维布局”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-flex-axis-sizing", "css-flex-alignment"]
+        covers_topics: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping","css.justify-content","css.align-items-content","css.flex-gap","css.flex-visual-order","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-flex-layout"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现能容纳长文本和窄视口的表单工具栏与卡片行布局；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-flex-axis-sizing", "css-flex-alignment"]
+        covers_topics: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping","css.justify-content","css.align-items-content","css.flex-gap","css.flex-visual-order","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-flex-layout"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "layout-matrix-computed-style-check-responsive-visual-oracle"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“min-size、shrink 或视觉 order 配置导致的溢出和键盘顺序错位”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-flex-axis-sizing", "css-flex-alignment"]
+        covers_topics: ["css.flex-container","css.flex-main-cross-axis","css.flex-basis-grow-shrink","css.flex-wrapping","css.justify-content","css.align-items-content","css.flex-gap","css.flex-visual-order","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-flex-layout"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.grid
+    title: "Grid 二维布局"
+    role: concept
+    responsibility: "用轨道、网格线、区域和自动放置表达二维布局，区分 Grid 与 Flexbox 的责任边界。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-grid-tracks-placement
+        title: "Grid 轨道与放置"
+        topics: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement"]
+      - id: css-grid-areas-responsive
+        title: "Grid 区域与二维适配"
+        topics: ["css.grid-template-areas", "css.grid-gap", "css.minmax-fr", "css.subgrid-boundary", "css.content-padding-border-margin"]
+    topics_taught: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement","css.grid-template-areas","css.grid-gap","css.minmax-fr","css.subgrid-boundary"]
+    topics_used: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement","css.grid-template-areas","css.grid-gap","css.minmax-fr","css.subgrid-boundary","css.content-padding-border-margin"]
+    prerequisites: ["ch.css.box-position"]
+    prerequisite_rationales:
+      ch.css.box-position:
+        reason: "Grid 轨道最终分配的是盒模型尺寸，必须先能解释包含块、溢出和定位边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["web.css-grid-layout"]
+      uses: ["web.css-foundations"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.grid/
+      acceptance:
+        - "实现工单列表、筛选栏和详情区组成的二维响应式网格；命令、输入、环境与结果可从空目录复现；验收判据：固定内容与视口矩阵下，轨道尺寸、区域位置和自动放置顺序与截图基线及 DevTools 网格叠层一致。"
+        - "注入“隐式轨道、min-content 或区域命名错误导致的错位和横向滚动”后能指出首个可信证据，修复并重跑同一验证；修复后判据：固定内容与视口矩阵下，轨道尺寸、区域位置和自动放置顺序与截图基线及 DevTools 网格叠层一致。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.grid/"]
+      critical_failure_modes: ["grid-track-overflow", "grid-area-mismatch"]
+    verification_mode:
+      test_level: T1
+      methods: ["track-calculation", "layout-matrix", "visual-diff"]
+      oracle: "固定内容与视口矩阵下，轨道尺寸、区域位置和自动放置顺序与截图基线及 DevTools 网格叠层一致。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Grid 二维布局”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-grid-tracks-placement", "css-grid-areas-responsive"]
+        covers_topics: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement","css.grid-template-areas","css.grid-gap","css.minmax-fr","css.subgrid-boundary","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-grid-layout"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现工单列表、筛选栏和详情区组成的二维响应式网格；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-grid-tracks-placement", "css-grid-areas-responsive"]
+        covers_topics: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement","css.grid-template-areas","css.grid-gap","css.minmax-fr","css.subgrid-boundary","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-grid-layout"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "track-calculation-layout-matrix-visual-diff"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“隐式轨道、min-content 或区域命名错误导致的错位和横向滚动”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-grid-tracks-placement", "css-grid-areas-responsive"]
+        covers_topics: ["css.grid-container","css.grid-track-sizing","css.grid-lines","css.grid-auto-placement","css.grid-template-areas","css.grid-gap","css.minmax-fr","css.subgrid-boundary","css.content-padding-border-margin"]
+        uses_capabilities: ["web.css-foundations", "web.css-grid-layout"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.responsive-typography
+    title: "响应式单位、断点、排版与资源适配"
+    role: synthesis
+    responsibility: "组合流式尺寸、媒体/容器查询、可读排版和响应式资源形成内容驱动适配，不用设备型号堆砌断点。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-responsive-layout
+        title: "响应式布局策略"
+        topics: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.flex-container", "css.grid-container"]
+      - id: css-responsive-type-assets
+        title: "排版与资源适配"
+        topics: ["css.typographic-scale", "css.line-length-height", "css.fluid-type", "html.srcset-sizes", "web.image-format-selection"]
+    topics_taught: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.typographic-scale", "css.line-length-height", "css.fluid-type"]
+    topics_used: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.flex-container", "css.grid-container", "css.typographic-scale", "css.line-length-height", "css.fluid-type", "html.srcset-sizes", "web.image-format-selection"]
+    prerequisites: ["ch.web.media-assets", "ch.css.flexbox", "ch.css.grid"]
+    prerequisite_rationales:
+      ch.web.media-assets:
+        reason: "响应式页面必须能选择合适的图片候选和替代内容，而不是只缩放布局。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.css.flexbox:
+        reason: "一维组件在内容变化时的伸缩和换行是响应式组合的基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.css.grid:
+        reason: "二维区域和轨道适配是页面级断点策略的基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.css-flex-layout", "web.css-grid-layout"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.responsive-typography/
+      acceptance:
+        - "把同一工单工作台适配到窄屏、宽屏和放大文本场景并保存矩阵证据；命令、输入、环境与结果可从空目录复现；验收判据：预定义视口、字号偏好和网络资源矩阵下，无横向滚动，文本可读且浏览器选择的资源符合 sizes 规则。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“硬编码断点、固定字号或错误 sizes 引起的溢出与资源浪费”后能指出首个可信证据，修复并重跑同一验证；修复后判据：预定义视口、字号偏好和网络资源矩阵下，无横向滚动，文本可读且浏览器选择的资源符合 sizes 规则。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.responsive-typography/"]
+      critical_failure_modes: ["responsive-overflow", "text-clipping", "oversized-asset"]
+    verification_mode:
+      test_level: T1
+      methods: ["viewport-matrix", "visual-regression", "network-resource-check"]
+      oracle: "预定义视口、字号偏好和网络资源矩阵下，无横向滚动，文本可读且浏览器选择的资源符合 sizes 规则。"
+    version_surfaces: ["css", "html-living-standard", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“响应式单位、断点、排版与资源适配”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-responsive-layout", "css-responsive-type-assets"]
+        covers_topics: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.flex-container", "css.grid-container", "css.typographic-scale", "css.line-length-height", "css.fluid-type", "html.srcset-sizes", "web.image-format-selection"]
+        uses_capabilities: ["web.css-flex-layout", "web.css-grid-layout"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“响应式单位、断点、排版与资源适配”构建可运行程序与测试：把同一工单工作台适配到窄屏、宽屏和放大文本场景并保存矩阵证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-responsive-layout", "css-responsive-type-assets"]
+        covers_topics: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.flex-container", "css.grid-container", "css.typographic-scale", "css.line-length-height", "css.fluid-type", "html.srcset-sizes", "web.image-format-selection"]
+        uses_capabilities: ["web.css-flex-layout", "web.css-grid-layout"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "viewport-matrix-visual-regression-network-resource-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“硬编码断点、固定字号或错误 sizes 引起的溢出与资源浪费”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-responsive-layout", "css-responsive-type-assets"]
+        covers_topics: ["css.relative-viewport-units", "css.media-query", "css.container-query", "css.content-driven-breakpoint", "css.flex-container", "css.grid-container", "css.typographic-scale", "css.line-length-height", "css.fluid-type", "html.srcset-sizes", "web.image-format-selection"]
+        uses_capabilities: ["web.css-flex-layout", "web.css-grid-layout"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.theme-variables
+    title: "颜色、主题与 CSS 自定义属性"
+    role: concept
+    responsibility: "用设计 token、自定义属性、颜色对比和系统偏好表达主题，不在本章建立完整组件库。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-custom-properties
+        title: "自定义属性与 Token"
+        topics: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope"]
+      - id: css-color-theme
+        title: "颜色与主题"
+        topics: ["css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+    topics_taught: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope", "css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+    topics_used: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope", "css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+    prerequisites: ["ch.css.cascade"]
+    prerequisite_rationales:
+      ch.css.cascade:
+        reason: "自定义属性的继承、覆盖和回退完全依赖层叠计算，必须先能解释最终值来源。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.theme-variables/
+      acceptance:
+        - "为语义页面建立可回退的亮暗主题 token 并记录对比度证据；命令、输入、环境与结果可从空目录复现；验收判据：亮色、暗色、缺失 token 与局部覆盖场景中的计算值和对比度均符合预设表格。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“变量作用域、回退或对比度配置错误导致的不可读主题”后能指出首个可信证据，修复并重跑同一验证；修复后判据：亮色、暗色、缺失 token 与局部覆盖场景中的计算值和对比度均符合预设表格。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.theme-variables/"]
+      critical_failure_modes: ["token-scope-error", "insufficient-contrast"]
+    verification_mode:
+      test_level: T1
+      methods: ["computed-token-check", "contrast-check", "theme-matrix"]
+      oracle: "亮色、暗色、缺失 token 与局部覆盖场景中的计算值和对比度均符合预设表格。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“颜色、主题与 CSS 自定义属性”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-custom-properties", "css-color-theme"]
+        covers_topics: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope", "css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+        uses_capabilities: []
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "围绕“颜色、主题与 CSS 自定义属性”构建可运行程序与测试：为语义页面建立可回退的亮暗主题 token 并记录对比度证据；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-custom-properties", "css-color-theme"]
+        covers_topics: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope", "css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+        uses_capabilities: []
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "computed-token-check-contrast-check-theme-matrix"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“变量作用域、回退或对比度配置错误导致的不可读主题”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-custom-properties", "css-color-theme"]
+        covers_topics: ["css.custom-property", "css.var-fallback", "css.property-inheritance", "css.design-token-scope", "css.color-space", "css.contrast-ratio", "css.prefers-color-scheme", "css.theme-override"]
+        uses_capabilities: []
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun
+  - id: ch.css.motion-compositing
+    title: "过渡、变换、动画、合成与减少动效"
+    role: concept
+    responsibility: "用过渡、关键帧与 transform 表达有意义反馈，并依据合成成本和减少动效偏好限制动画，不处理 JavaScript 长任务优化。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: css-motion-primitives
+        title: "CSS 动效原语"
+        topics: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration"]
+      - id: css-motion-performance-a11y
+        title: "合成与减少动效"
+        topics: ["css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion", "a11y.focus-visible"]
+    topics_taught: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration", "css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion"]
+    topics_used: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration", "css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion", "a11y.focus-visible"]
+    prerequisites: ["ch.css.box-position", "ch.web.accessibility-interaction"]
+    prerequisite_rationales:
+      ch.css.box-position:
+        reason: "transform、定位与层叠上下文相互作用，必须先能判断包含块和遮挡关系。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.web.accessibility-interaction:
+        reason: "动效不能破坏焦点可见性或忽略减少动效偏好，需先掌握交互无障碍基线。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.accessibility"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.css.motion-compositing/
+      acceptance:
+        - "实现含进入、状态反馈和减少动效降级的可访问组件动画；命令、输入、环境与结果可从空目录复现；验收判据：普通与 prefers-reduced-motion 场景下，状态转换、焦点和合成时间线与声明的动效合同一致。；通过条件：关键断言与预期输出全部通过。"
+        - "注入“动画属性触发布局抖动或忽略减少动效导致的性能与可访问性故障”后能指出首个可信证据，修复并重跑同一验证；修复后判据：普通与 prefers-reduced-motion 场景下，状态转换、焦点和合成时间线与声明的动效合同一致。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G4"]
+      evidence_paths: ["evidence/gates/g4/ch.css.motion-compositing/"]
+      critical_failure_modes: ["motion-accessibility-violation", "layout-animation-jank"]
+    verification_mode:
+      test_level: T1
+      methods: ["motion-state-matrix", "reduced-motion-check", "performance-timeline-observation"]
+      oracle: "普通与 prefers-reduced-motion 场景下，状态转换、焦点和合成时间线与声明的动效合同一致。"
+    version_surfaces: ["css", "browser", "browser-devtools"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“过渡、变换、动画、合成与减少动效”的职责、边界与证据，并给出一个不应由本章方案解决的反例"
+        covers_topic_groups: ["css-motion-primitives", "css-motion-performance-a11y"]
+        covers_topics: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration", "css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion", "a11y.focus-visible"]
+        uses_capabilities: ["web.accessibility"]
+        evidence_kind: timed-teach-back
+        verification_mode: oral-explanation
+      - id: build
+        kind: independent-build
+        text: "实现含进入、状态反馈和减少动效降级的可访问组件动画；不复制成品，保存可复现输入、工件与验证结果"
+        covers_topic_groups: ["css-motion-primitives", "css-motion-performance-a11y"]
+        covers_topics: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration", "css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion", "a11y.focus-visible"]
+        uses_capabilities: ["web.accessibility"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "motion-state-matrix-reduced-motion-check-performance-timeline-observation"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“动画属性触发布局抖动或忽略减少动效导致的性能与可访问性故障”，定位失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["css-motion-primitives", "css-motion-performance-a11y"]
+        covers_topics: ["css.transition", "css.transform", "css.keyframes-animation", "css.animation-fill-iteration", "css.compositor-friendly-property", "css.layer-promotion-boundary", "css.prefers-reduced-motion", "a11y.focus-visible"]
+        uses_capabilities: ["web.accessibility"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: injected-fault-rerun

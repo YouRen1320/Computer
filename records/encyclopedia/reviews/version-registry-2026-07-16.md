@@ -17,6 +17,17 @@
 
 本报告中的 PASS 表示：当前约束没有被官方资料否定，来源是一手来源，并且动态版本存在正确的官方解析入口。PASS 不表示所有 patch 已永久冻结；注册表的 <code>patch_resolution: at-chapter-verification</code> 仍要求在章节验证时解析并记录实际 patch。
 
+## P1R 修正状态（同日追加）
+
+上面的 44/13/4 是修正前 2026.1 注册表的冻结审查结果，不得改写成“当时已通过”。P1R 已按推荐方案修改 `versions/registry.yml`：
+
+1. Flyway 的约束改为服从所选 Spring Boot 4.1.x dependency management；主证据改为 Spring Boot 官方 managed coordinates。Boot 4.1.0 当前列出的 Flyway 版本为 12.4.0。
+2. 泛型 `linux` 收窄为不声明发行版版本的 conceptual 项；新增 `ubuntu-server-26.04` 作为生产实验基线。Ubuntu 官方 26.04 LTS 发布说明声明标准安全维护到 2031 年 4 月。
+3. `oauth2-oidc` 拆为 `oauth2-security-bcp`（RFC 9700）和 `oidc-core`（OpenID Connect Core 1.0 errata set 2），分别证明授权安全与身份层规范。
+4. 删除未被课程引用且官方仓库已归档的 `minio` current-stable 声明；对象存储只保留实现无关的 S3 契约 topic，未来若选具体实现必须新建独立版本项。
+
+修正后注册表为 62 个唯一条目、edition `2026.2-draft`。四个原 FAIL 已在规范层关闭；13 个 WARN 继续作为章节验证前的显式跟进，不因这次修正自动升级为 PASS。最终结论仍须等待 P1R catalog、P2 schema、来源映射和确定性构建全部回归通过。
+
 ## 静态与机器校验结果
 
 实际执行：

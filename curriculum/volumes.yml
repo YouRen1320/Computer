@@ -1,0 +1,109 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volumes:
+  - id: "00"
+    slug: computer-foundations
+    title: 计算机、工具与验证基础
+    description: 从文件、终端、进程、网络和验证证据建立所有后续学习的共同底座。
+    expected_chapter_count: 15
+    zero_base_unit_id: z-v00
+    stage_gate_id: G0
+  - id: "01"
+    slug: java-language
+    title: Java 语言基础
+    description: 从平台、值和控制流学习可运行、可测试、可诊断的 Java 程序。
+    expected_chapter_count: 11
+    zero_base_unit_id: z-v01
+  - id: "02"
+    slug: java-objects
+    title: Java 对象模型
+    description: 建立引用、封装、继承、多态、不变性和失败契约。
+    expected_chapter_count: 12
+    zero_base_unit_id: z-v02
+  - id: "03"
+    slug: java-engineering
+    title: Java 工程能力
+    description: 覆盖集合、IO、并发、构建、测试和 JVM 诊断。
+    expected_chapter_count: 18
+    zero_base_unit_id: z-v03
+    stage_gate_id: G1
+  - id: "04"
+    slug: data-postgresql
+    title: 关系数据、SQL 与 PostgreSQL
+    description: 从关系模型到查询、事务、索引、迁移和 Java 持久化。
+    expected_chapter_count: 17
+    zero_base_unit_id: z-v04
+  - id: "05"
+    slug: spring-backend
+    title: Spring Web、数据与事务
+    description: 建立 Spring 请求、依赖注入、Web 契约、持久化和事务主线。
+    expected_chapter_count: 18
+    zero_base_unit_id: z-v05
+    stage_gate_id: G2
+  - id: "06"
+    slug: enterprise-architecture
+    title: 安全与企业架构
+    description: 覆盖认证授权、租户隔离、领域不变量、一致性、事件和可观测性。
+    expected_chapter_count: 19
+    zero_base_unit_id: z-v06
+    stage_gate_id: G3
+  - id: "07"
+    slug: web-platform
+    title: Web 平台、HTML 与 CSS
+    description: 从浏览器模型、语义 HTML、无障碍到响应式布局和动效。
+    expected_chapter_count: 13
+    zero_base_unit_id: z-v07
+  - id: "08"
+    slug: javascript-typescript
+    title: JavaScript 与 TypeScript
+    description: 从语言运行时和对象模型到异步网络、DOM、类型与运行时边界。
+    expected_chapter_count: 18
+    zero_base_unit_id: z-v08
+  - id: "09"
+    slug: vue-nuxt
+    title: Vue 3 与 Nuxt
+    description: 覆盖模板、响应式、副作用、组件、状态、测试和服务端渲染。
+    expected_chapter_count: 15
+    zero_base_unit_id: z-v09
+    stage_gate_id: G4
+  - id: "10"
+    slug: uniapp-miniprogram
+    title: 小程序与 uni-app
+    description: 从宿主运行模型到设备能力、离线、审核、发布和业务验收。
+    expected_chapter_count: 12
+    zero_base_unit_id: z-v10
+  - id: "11"
+    slug: dart-flutter
+    title: Dart 与 Flutter
+    description: 先完整学习 Dart，再进入 Flutter Widget、布局、状态、设备与发布。
+    expected_chapter_count: 19
+    zero_base_unit_id: z-v11
+    stage_gate_id: G5
+  - id: "12"
+    slug: python-data
+    title: Python、FastAPI 与数据工具
+    description: 从 Python 语言基础到类型、并发、测试、Web API、NumPy 和 Pandas。
+    expected_chapter_count: 19
+    zero_base_unit_id: z-v12
+  - id: "13"
+    slug: ml-pytorch
+    title: 数学、机器学习与 PyTorch
+    description: 补齐代数、统计和梯度，再学习经典模型、神经网络、训练与推理。
+    expected_chapter_count: 16
+    zero_base_unit_id: z-v13
+  - id: "14"
+    slug: llm-rag-agents
+    title: LLM、RAG 与 Agent
+    description: 从模型 API 到检索评估、安全、LangChain、LangGraph 和 MCP 边界。
+    expected_chapter_count: 16
+    zero_base_unit_id: z-v14
+    stage_gate_id: G6
+  - id: "15"
+    slug: production-factorycare
+    title: 生产化与 FactoryCare 验收
+    description: 覆盖 Linux、容器、代理、交付、可观测性、恢复、部署和作品表达。
+    expected_chapter_count: 17
+    zero_base_unit_id: z-v15
+    stage_gate_id: G7
+    final_gate_id: G8

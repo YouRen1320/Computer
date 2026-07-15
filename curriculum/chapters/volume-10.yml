@@ -1,0 +1,876 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: "10"
+chapters:
+  - id: ch.miniapp.runtime
+    title: "小程序运行模型、配置、生命周期与宿主边界"
+    role: foundation
+    responsibility: "解释小程序宿主、逻辑/视图层、全局与页面配置以及应用/页面生命周期，区分平台能力与普通浏览器能力，不引入 uni-app。"
+    level: L1-L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: miniapp-host-runtime
+        title: "宿主与运行边界"
+        topics: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary"]
+      - id: miniapp-config-lifecycle
+        title: "配置与生命周期"
+        topics: ["miniapp.app-page-config", "miniapp.app-lifecycle", "miniapp.page-lifecycle", "miniapp.navigation-stack"]
+    topics_taught: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary","miniapp.app-page-config","miniapp.app-lifecycle","miniapp.page-lifecycle","miniapp.navigation-stack"]
+    topics_used: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary","miniapp.app-page-config","miniapp.app-lifecycle","miniapp.page-lifecycle","miniapp.navigation-stack"]
+    prerequisites: ["ch.foundations.cli-streams-exit-codes"]
+    prerequisite_rationales:
+      ch.foundations.cli-streams-exit-codes:
+        reason: "小程序 CLI、构建和日志诊断需要先能区分命令、标准流与退出码。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.miniprogram-runtime"]
+      uses: ["foundation.shell-command-stream"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.miniapp.runtime/
+      acceptance:
+        - "创建原生最小小程序并记录应用与两个页面的配置和生命周期轨迹；成功、边界和失败输入均保存可复现证据"
+        - "注入“配置路径错误、生命周期归属混淆或把浏览器 API 当宿主 API”后定位首个可信证据，修复并重跑原验证；修复后判据：启动、前后台切换、页面进入/离开和配置错误时的回调顺序与宿主日志、页面栈和预期轨迹一致。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.miniapp.runtime/"]
+      critical_failure_modes: ["host-boundary-confusion", "lifecycle-order-error"]
+    verification_mode:
+      test_level: T0
+      methods: ["lifecycle-trace", "config-inspection", "host-log"]
+      oracle: "启动、前后台切换、页面进入/离开和配置错误时的回调顺序与宿主日志、页面栈和预期轨迹一致。"
+    version_surfaces: ["wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“小程序运行模型、配置、生命周期与宿主边界”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["miniapp-host-runtime", "miniapp-config-lifecycle"]
+        covers_topics: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary","miniapp.app-page-config","miniapp.app-lifecycle","miniapp.page-lifecycle","miniapp.navigation-stack"]
+        uses_capabilities: ["foundation.shell-command-stream", "mobile.miniprogram-runtime"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "创建原生最小小程序并记录应用与两个页面的配置和生命周期轨迹；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["miniapp-host-runtime", "miniapp-config-lifecycle"]
+        covers_topics: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary","miniapp.app-page-config","miniapp.app-lifecycle","miniapp.page-lifecycle","miniapp.navigation-stack"]
+        uses_capabilities: ["foundation.shell-command-stream", "mobile.miniprogram-runtime"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "lifecycle-trace-config-inspection-host-log"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“配置路径错误、生命周期归属混淆或把浏览器 API 当宿主 API”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["miniapp-host-runtime", "miniapp-config-lifecycle"]
+        covers_topics: ["miniapp.host-runtime","miniapp.logic-view-layer","miniapp.sandbox-boundary","miniapp.platform-api-boundary","miniapp.app-page-config","miniapp.app-lifecycle","miniapp.page-lifecycle","miniapp.navigation-stack"]
+        uses_capabilities: ["foundation.shell-command-stream", "mobile.miniprogram-runtime"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.toolchain-pages
+    title: "uni-app 工具链、页面、路由与项目结构"
+    role: practice
+    responsibility: "从空目录建立可编译到小程序的 uni-app 项目，解释页面清单、路由、入口和构建产物，不在本章教授组件差异或条件编译。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-toolchain-project
+        title: "工具链与项目结构"
+        topics: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target"]
+      - id: uniapp-pages-routing
+        title: "页面与路由"
+        topics: ["uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+    topics_taught: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target", "uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+    topics_used: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target", "uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+    prerequisites: ["ch.miniapp.runtime", "ch.vue.vite-sfc"]
+    prerequisite_rationales:
+      ch.miniapp.runtime:
+        reason: "uni-app 产物仍运行在小程序宿主中，配置和页面生命周期必须与宿主模型对照。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.vue.vite-sfc:
+        reason: "uni-app 页面使用 Vue SFC 和前端构建链，需先能定位入口、依赖和编译错误。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.miniprogram-runtime", "foundation.toolchain-env-build"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.toolchain-pages/
+      acceptance:
+        - "从空目录建立含列表和详情路由的 uni-app 小程序并保存构建与导航证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“pages 配置、入口路径或目标平台设置错误造成的编译和白屏”后定位首个可信证据，修复并重跑原验证；修复后判据：开发与生产构建均生成目标产物；首页、列表、详情的直接进入和参数导航与 pages 配置及页面栈矩阵一致。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.toolchain-pages/"]
+      critical_failure_modes: ["target-build-failure", "route-config-drift"]
+    verification_mode:
+      test_level: T1
+      methods: ["target-build", "emulator-smoke", "route-matrix"]
+      oracle: "开发与生产构建均生成目标产物；首页、列表、详情的直接进入和参数导航与 pages 配置及页面栈矩阵一致。"
+    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3", "vite", "node-24-lts", "pnpm"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“uni-app 工具链、页面、路由与项目结构”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-toolchain-project", "uniapp-pages-routing"]
+        covers_topics: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target", "uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.toolchain-env-build"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "从空目录建立含列表和详情路由的 uni-app 小程序并保存构建与导航证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-toolchain-project", "uniapp-pages-routing"]
+        covers_topics: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target", "uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.toolchain-env-build"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "target-build-emulator-smoke-route-matrix"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“pages 配置、入口路径或目标平台设置错误造成的编译和白屏”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-toolchain-project", "uniapp-pages-routing"]
+        covers_topics: ["uniapp.project-entry", "uniapp.manifest-config", "uniapp.pages-config", "uniapp.build-target", "uniapp.page-component", "uniapp.navigation-api", "uniapp.route-parameter", "uniapp.page-stack"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.toolchain-env-build"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.template-components
+    title: "uni-app 模板、组件、表单与 Vue 差异"
+    role: practice
+    responsibility: "把 Vue 模板、组件和表单合同迁移到 uni-app 的跨端组件集合，明确宿主事件、样式和 API 差异，不处理设备权限。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-template-component
+        title: "模板与组件差异"
+        topics: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract"]
+      - id: uniapp-form-style
+        title: "表单与样式边界"
+        topics: ["uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope", "vue.component-v-model"]
+    topics_taught: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract", "uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope"]
+    topics_used: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract", "uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope", "vue.component-v-model"]
+    prerequisites: ["ch.uniapp.toolchain-pages", "ch.vue.components-contracts"]
+    prerequisite_rationales:
+      ch.uniapp.toolchain-pages:
+        reason: "组件必须在已能构建、运行和导航的目标项目中验证。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.vue.components-contracts:
+        reason: "uni-app 的模板、表单、事件和 v-model 差异必须建立在已验证的 Vue Props、emit、Slot 与组件 v-model 合同上。"
+        capabilities: []
+        topics: ["vue.component-v-model"]
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.miniprogram-runtime", "web.vue-template"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.template-components/
+      acceptance:
+        - "实现跨端报修表单和工单卡片组件并记录 H5/小程序差异矩阵；成功、边界和失败输入均保存可复现证据"
+        - "注入“误用 DOM 元素、事件名、rpx 或 v-model 类型导致的目标端差异”后定位首个可信证据，修复并重跑原验证；修复后判据：同一组件在 H5 与小程序目标的文本、事件、表单值和关键样式与差异清单一致，非支持特性明确失败。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.template-components/"]
+      critical_failure_modes: ["platform-render-drift", "form-model-drift"]
+    verification_mode:
+      test_level: T1
+      methods: ["cross-target-render-matrix", "form-state-check", "host-event-log"]
+      oracle: "同一组件在 H5 与小程序目标的文本、事件、表单值和关键样式与差异清单一致，非支持特性明确失败。"
+    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“uni-app 模板、组件、表单与 Vue 差异”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-template-component", "uniapp-form-style"]
+        covers_topics: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract", "uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope", "vue.component-v-model"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现跨端报修表单和工单卡片组件并记录 H5/小程序差异矩阵；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-template-component", "uniapp-form-style"]
+        covers_topics: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract", "uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope", "vue.component-v-model"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "cross-target-render-matrix-form-state-check-host-event-log"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“误用 DOM 元素、事件名、rpx 或 v-model 类型导致的目标端差异”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-template-component", "uniapp-form-style"]
+        covers_topics: ["uniapp.built-in-component", "uniapp.template-binding", "uniapp.event-difference", "uniapp.component-contract", "uniapp.form-control", "uniapp.model-binding", "uniapp.unit-rpx", "uniapp.style-scope", "vue.component-v-model"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.network-auth-storage
+    title: "网络、认证、存储与多环境配置"
+    role: practice
+    responsibility: "用 uni.request、受控凭据存储和环境配置访问后端，区分 HTTP、宿主白名单、认证过期与本地存储失败，不实现离线重放。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-network-environment
+        title: "请求与环境"
+        topics: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping"]
+      - id: uniapp-auth-storage
+        title: "认证与存储"
+        topics: ["uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+    topics_taught: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping", "uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+    topics_used: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping", "uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+    prerequisites: ["ch.uniapp.toolchain-pages", "ch.security.session-authentication"]
+    prerequisite_rationales:
+      ch.uniapp.toolchain-pages:
+        reason: "请求与配置需要在可构建的小程序目标中验证。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.security.session-authentication:
+        reason: "客户端登录态、会话过期和未认证响应必须服从服务端已验证的认证合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.miniprogram-runtime", "foundation.http-message", "security.authentication", "security.web-threat"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.network-auth-storage/
+      acceptance:
+        - "实现带环境切换、认证过期处理和版本化存储的工单 API 客户端；成功、边界和失败输入均保存可复现证据"
+        - "注入“域名白名单、环境串线、明文凭据日志或损坏存储导致的网络/安全故障”后定位首个可信证据，修复并重跑原验证；修复后判据：开发/测试环境、成功、超时、HTTP 错误、过期凭据和损坏存储场景映射到确定状态，敏感值不出现在日志。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.network-auth-storage/"]
+      critical_failure_modes: ["environment-crosswire", "credential-exposure", "storage-corruption"]
+    verification_mode:
+      test_level: T2
+      methods: ["mock-server", "environment-matrix", "expired-credential-fixture"]
+      oracle: "开发/测试环境、成功、超时、HTTP 错误、过期凭据和损坏存储场景映射到确定状态，敏感值不出现在日志。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“网络、认证、存储与多环境配置”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-network-environment", "uniapp-auth-storage"]
+        covers_topics: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping", "uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.http-message", "security.authentication", "security.web-threat"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现带环境切换、认证过期处理和版本化存储的工单 API 客户端；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-network-environment", "uniapp-auth-storage"]
+        covers_topics: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping", "uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.http-message", "security.authentication", "security.web-threat"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "mock-server-environment-matrix-expired-credential-fixture"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“域名白名单、环境串线、明文凭据日志或损坏存储导致的网络/安全故障”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-network-environment", "uniapp-auth-storage"]
+        covers_topics: ["uniapp.request", "uniapp.request-domain-whitelist", "uniapp.environment-config", "uniapp.http-error-mapping", "uniapp.auth-session-state", "uniapp.secure-storage-boundary", "uniapp.credential-expiry", "uniapp.storage-versioning"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "foundation.http-message", "security.authentication", "security.web-threat"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.platform-conditional
+    title: "平台 API、条件编译与能力检测"
+    role: practice
+    responsibility: "在统一业务合同下用条件编译和运行时能力检测隔离平台差异，提供明确降级路径，不散布无法测试的平台分支。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-platform-adaptation
+        title: "平台适配机制"
+        topics: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary"]
+      - id: uniapp-fallback-contract
+        title: "降级与分支验证"
+        topics: ["uniapp.platform-fallback", "uniapp.unsupported-feature", "uniapp.platform-branch-test", "uniapp.dead-branch-risk", "uniapp.component-contract"]
+    topics_taught: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary","uniapp.platform-fallback","uniapp.unsupported-feature","uniapp.platform-branch-test","uniapp.dead-branch-risk"]
+    topics_used: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary","uniapp.platform-fallback","uniapp.unsupported-feature","uniapp.platform-branch-test","uniapp.dead-branch-risk","uniapp.component-contract"]
+    prerequisites: ["ch.uniapp.template-components"]
+    prerequisite_rationales:
+      ch.uniapp.template-components:
+        reason: "平台差异最终通过模板/组件适配呈现，需保持既有组件输入输出合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.uniapp-platform"]
+      uses: ["mobile.miniprogram-runtime", "web.vue-template"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.platform-conditional/
+      acceptance:
+        - "为平台选择、分享和文件能力建立适配器及两个目标的可验证降级；成功、边界和失败输入均保存可复现证据"
+        - "注入“错误条件宏、只编译未运行或无能力检测导致的目标端崩溃”后定位首个可信证据，修复并重跑原验证；修复后判据：至少两个目标分别编译并执行对应分支；支持、拒绝和无能力场景均命中预期适配器或降级 UI，不出现死分支。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.platform-conditional/"]
+      critical_failure_modes: ["dead-platform-branch", "missing-capability-fallback"]
+    verification_mode:
+      test_level: T2
+      methods: ["multi-target-build", "capability-fixture", "fallback-assertion"]
+      oracle: "至少两个目标分别编译并执行对应分支；支持、拒绝和无能力场景均命中预期适配器或降级 UI，不出现死分支。"
+    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“平台 API、条件编译与能力检测”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-platform-adaptation", "uniapp-fallback-contract"]
+        covers_topics: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary","uniapp.platform-fallback","uniapp.unsupported-feature","uniapp.platform-branch-test","uniapp.dead-branch-risk","uniapp.component-contract"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template", "mobile.uniapp-platform"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“平台 API、条件编译与能力检测”构建可运行程序与测试：为平台选择、分享和文件能力建立适配器及两个目标的可验证降级；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-platform-adaptation", "uniapp-fallback-contract"]
+        covers_topics: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary","uniapp.platform-fallback","uniapp.unsupported-feature","uniapp.platform-branch-test","uniapp.dead-branch-risk","uniapp.component-contract"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template", "mobile.uniapp-platform"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "multi-target-build-capability-fixture-fallback-assertion"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“错误条件宏、只编译未运行或无能力检测导致的目标端崩溃”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-platform-adaptation", "uniapp-fallback-contract"]
+        covers_topics: ["uniapp.conditional-compilation","uniapp.platform-api","uniapp.capability-detection","uniapp.adapter-boundary","uniapp.platform-fallback","uniapp.unsupported-feature","uniapp.platform-branch-test","uniapp.dead-branch-risk","uniapp.component-contract"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.vue-template", "mobile.uniapp-platform"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.device-capabilities
+    title: "上传、扫码、定位、权限与失败路径"
+    role: practice
+    responsibility: "把上传、扫码和定位封装为显式权限与取消合同，处理拒绝、永久拒绝、不可用和恢复，不把授权弹窗等同于业务同意。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-device-apis
+        title: "设备能力"
+        topics: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result"]
+      - id: uniapp-permission-state
+        title: "权限与恢复"
+        topics: ["mobile.permission-request", "mobile.permission-denied", "mobile.permission-permanent-denied", "mobile.settings-recovery", "mobile.capability-unavailable"]
+    topics_taught: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result","mobile.permission-request","mobile.permission-denied","mobile.permission-permanent-denied","mobile.settings-recovery","mobile.capability-unavailable"]
+    topics_used: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result","mobile.permission-request","mobile.permission-denied","mobile.permission-permanent-denied","mobile.settings-recovery","mobile.capability-unavailable"]
+    prerequisites: ["ch.uniapp.network-auth-storage", "ch.uniapp.platform-conditional"]
+    prerequisite_rationales:
+      ch.uniapp.network-auth-storage:
+        reason: "上传和定位上报同时涉及 HTTP、认证和敏感数据边界。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.platform-conditional:
+        reason: "设备 API 和权限模型存在平台差异，必须先有适配与降级机制。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.uniapp-device-permissions"]
+      uses: ["mobile.uniapp-platform", "security.authentication", "security.web-threat"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.device-capabilities/
+      acceptance:
+        - "实现扫码填单、图片上传和可选定位并保存权限状态机与真机/Mock 证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“把拒绝当空数据、重复请求权限或上传成功但业务提交失败”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.device-capabilities/"]
+      critical_failure_modes: ["permission-loop", "sensitive-location-misuse", "partial-upload-commit"]
+    verification_mode:
+      test_level: T3
+      methods: ["permission-state-matrix", "device-mock", "upload-fault-injection"]
+      oracle: "首次授权、拒绝、永久拒绝、取消、无设备能力和成功场景均进入确定状态；失败后可恢复且不重复弹窗。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“上传、扫码、定位、权限与失败路径”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-device-apis", "uniapp-permission-state"]
+        covers_topics: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result","mobile.permission-request","mobile.permission-denied","mobile.permission-permanent-denied","mobile.settings-recovery","mobile.capability-unavailable"]
+        uses_capabilities: ["mobile.uniapp-platform", "security.authentication", "security.web-threat", "mobile.uniapp-device-permissions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现扫码填单、图片上传和可选定位并保存权限状态机与真机/Mock 证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-device-apis", "uniapp-permission-state"]
+        covers_topics: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result","mobile.permission-request","mobile.permission-denied","mobile.permission-permanent-denied","mobile.settings-recovery","mobile.capability-unavailable"]
+        uses_capabilities: ["mobile.uniapp-platform", "security.authentication", "security.web-threat", "mobile.uniapp-device-permissions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "permission-state-matrix-device-mock-upload-fault-injection"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“把拒绝当空数据、重复请求权限或上传成功但业务提交失败”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-device-apis", "uniapp-permission-state"]
+        covers_topics: ["uniapp.file-upload","uniapp.scan-code","uniapp.geolocation","uniapp.device-api-result","mobile.permission-request","mobile.permission-denied","mobile.permission-permanent-denied","mobile.settings-recovery","mobile.capability-unavailable"]
+        uses_capabilities: ["mobile.uniapp-platform", "security.authentication", "security.web-threat", "mobile.uniapp-device-permissions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.testing-debugging
+    title: "单元/组件测试、Mock、真机和网络调试"
+    role: practice
+    responsibility: "在 uni-app 中选择纯函数、组件、宿主 Mock、真机和网络调试证据，明确模拟器通过不能代替目标真机验证。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-automated-testing
+        title: "自动化测试"
+        topics: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test"]
+      - id: uniapp-device-debugging
+        title: "真机与网络调试"
+        topics: ["uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+    topics_taught: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test", "uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+    topics_used: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test", "uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+    prerequisites: ["ch.uniapp.template-components", "ch.uniapp.network-auth-storage"]
+    prerequisite_rationales:
+      ch.uniapp.template-components:
+        reason: "组件测试需要明确模板、事件、表单和组件合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.network-auth-storage:
+        reason: "网络、认证和存储错误是宿主调试的核心负例。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["web.javascript-testing-debugging", "web.vue-template", "mobile.miniprogram-runtime"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.testing-debugging/
+      acceptance:
+        - "为报修表单和网络客户端建立单元/组件测试并制作一个真机最小复现包；成功、边界和失败输入均保存可复现证据"
+        - "注入“Mock 与宿主行为不一致、源码映射缺失或只在模拟器通过”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.testing-debugging/"]
+      critical_failure_modes: ["mock-reality-gap", "device-only-regression", "unreproducible-device-failure"]
+    verification_mode:
+      test_level: T3
+      methods: ["unit-component-test", "platform-mock", "device-repro"]
+      oracle: "同一故障能由自动化测试或最小真机复现包稳定重现；日志标明目标、版本、环境和首个可信失败证据。"
+    version_surfaces: ["uni-app", "wechat-miniprogram", "vitest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“单元/组件测试、Mock、真机和网络调试”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-automated-testing", "uniapp-device-debugging"]
+        covers_topics: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test", "uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+        uses_capabilities: ["web.javascript-testing-debugging", "web.vue-template", "mobile.miniprogram-runtime"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“单元/组件测试、Mock、真机和网络调试”构建可运行程序与测试：为报修表单和网络客户端建立单元/组件测试并制作一个真机最小复现包；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-automated-testing", "uniapp-device-debugging"]
+        covers_topics: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test", "uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+        uses_capabilities: ["web.javascript-testing-debugging", "web.vue-template", "mobile.miniprogram-runtime"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "unit-component-test-platform-mock-device-repro"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“Mock 与宿主行为不一致、源码映射缺失或只在模拟器通过”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-automated-testing", "uniapp-device-debugging"]
+        covers_topics: ["uniapp.unit-test", "uniapp.component-test", "uniapp.platform-api-mock", "uniapp.async-test", "uniapp.device-log", "uniapp.network-panel", "uniapp.source-map", "uniapp.emulator-device-gap", "uniapp.repro-bundle"]
+        uses_capabilities: ["web.javascript-testing-debugging", "web.vue-template", "mobile.miniprogram-runtime"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.packages-performance
+    title: "分包、启动性能、缓存与资源预算"
+    role: practice
+    responsibility: "用分包、懒加载、资源压缩和版本化缓存控制小程序启动与包体预算，以真实设备指标验证，不引入离线业务队列。"
+    level: L2+
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-package-loading
+        title: "分包与加载"
+        topics: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit"]
+      - id: uniapp-startup-cache-budget
+        title: "启动、缓存与预算"
+        topics: ["miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+    topics_taught: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit", "miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+    topics_used: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit", "miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+    prerequisites: ["ch.uniapp.testing-debugging"]
+    prerequisite_rationales:
+      ch.uniapp.testing-debugging:
+        reason: "优化前后需要自动化和真机证据保护行为并测量实际启动。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.miniprogram-runtime", "web.javascript-testing-debugging"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.packages-performance/
+      acceptance:
+        - "对超预算报修端实施分包与缓存版本化并保存冷启动和包体前后对比；成功、边界和失败输入均保存可复现证据"
+        - "注入“循环分包依赖、陈旧缓存或预加载过度导致的启动回退”后定位首个可信证据，修复并重跑原验证；修复后判据：主包/分包大小和冷启动指标达到预算；清缓存、缓存升级和弱网场景功能正确且回归测试不退化。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.packages-performance/"]
+      critical_failure_modes: ["package-budget-exceeded", "stale-cache", "cold-start-regression"]
+    verification_mode:
+      test_level: T4
+      methods: ["package-report", "cold-start-measurement", "regression-suite"]
+      oracle: "主包/分包大小和冷启动指标达到预算；清缓存、缓存升级和弱网场景功能正确且回归测试不退化。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“分包、启动性能、缓存与资源预算”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-package-loading", "uniapp-startup-cache-budget"]
+        covers_topics: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit", "miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.javascript-testing-debugging"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“分包、启动性能、缓存与资源预算”构建可运行程序与测试：对超预算报修端实施分包与缓存版本化并保存冷启动和包体前后对比；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-package-loading", "uniapp-startup-cache-budget"]
+        covers_topics: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit", "miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.javascript-testing-debugging"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "package-report-cold-start-measurement-regression-suite"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“循环分包依赖、陈旧缓存或预加载过度导致的启动回退”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-package-loading", "uniapp-startup-cache-budget"]
+        covers_topics: ["miniapp.main-subpackage", "miniapp.subpackage-preload", "uniapp.lazy-component", "miniapp.package-size-limit", "miniapp.startup-metric", "uniapp.asset-budget", "uniapp.cache-version", "uniapp.cache-eviction", "uniapp.performance-baseline"]
+        uses_capabilities: ["mobile.miniprogram-runtime", "web.javascript-testing-debugging"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.offline-idempotency
+    title: "离线队列、重试、冲突与幂等重放"
+    role: practice
+    responsibility: "为离线报修定义持久队列、幂等键、有限重试和冲突决策，保证重放不重复创建且失败可观察，不把缓存等同离线同步。"
+    level: L3
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: mobile-offline-queue
+        title: "离线队列与重放"
+        topics: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability"]
+      - id: mobile-idempotency-conflict
+        title: "幂等与冲突"
+        topics: ["mobile.idempotency-key", "mobile.duplicate-response", "mobile.conflict-detection", "mobile.conflict-resolution", "mobile.poison-command"]
+    topics_taught: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability","mobile.idempotency-key","mobile.duplicate-response","mobile.conflict-detection","mobile.conflict-resolution","mobile.poison-command"]
+    topics_used: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability","mobile.idempotency-key","mobile.duplicate-response","mobile.conflict-detection","mobile.conflict-resolution","mobile.poison-command"]
+    prerequisites: ["ch.uniapp.platform-conditional", "ch.uniapp.packages-performance", "ch.architecture.idempotency-concurrency"]
+    prerequisite_rationales:
+      ch.uniapp.platform-conditional:
+        reason: "队列持久化、网络状态和后台执行在不同宿主存在差异，必须先具备平台适配和降级能力。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.packages-performance:
+        reason: "需要区分静态缓存版本与业务命令队列，复用可靠的本地存储预算。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.architecture.idempotency-concurrency:
+        reason: "客户端重放必须遵守服务端幂等键、并发控制和重复响应语义。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["mobile.uniapp-offline-idempotency"]
+      uses: ["mobile.uniapp-platform", "architecture.idempotency-consistency"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.offline-idempotency/
+      acceptance:
+        - "实现可持久化报修命令队列并用断网、重启和重复响应验证幂等重放；成功、边界和失败输入均保存可复现证据"
+        - "注入“随机幂等键重建、无限重试或队头毒消息阻塞全队列”后定位首个可信证据，修复并重跑原验证；修复后判据：断网创建、进程重启、重复重放、401、409 和毒消息场景中，每个业务命令至多生效一次，队列状态和人工处置可追踪。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.offline-idempotency/"]
+      critical_failure_modes: ["duplicate-work-order", "retry-storm", "offline-queue-deadlock"]
+    verification_mode:
+      test_level: T4
+      methods: ["offline-online-simulation", "duplicate-replay-test", "conflict-fixture"]
+      oracle: "断网创建、进程重启、重复重放、401、409 和毒消息场景中，每个业务命令至多生效一次，队列状态和人工处置可追踪。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“离线队列、重试、冲突与幂等重放”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["mobile-offline-queue", "mobile-idempotency-conflict"]
+        covers_topics: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability","mobile.idempotency-key","mobile.duplicate-response","mobile.conflict-detection","mobile.conflict-resolution","mobile.poison-command"]
+        uses_capabilities: ["mobile.uniapp-platform", "architecture.idempotency-consistency", "mobile.uniapp-offline-idempotency"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "实现可持久化报修命令队列并用断网、重启和重复响应验证幂等重放；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["mobile-offline-queue", "mobile-idempotency-conflict"]
+        covers_topics: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability","mobile.idempotency-key","mobile.duplicate-response","mobile.conflict-detection","mobile.conflict-resolution","mobile.poison-command"]
+        uses_capabilities: ["mobile.uniapp-platform", "architecture.idempotency-consistency", "mobile.uniapp-offline-idempotency"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "offline-online-simulation-duplicate-replay-test-conflict-fixture"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“随机幂等键重建、无限重试或队头毒消息阻塞全队列”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["mobile-offline-queue", "mobile-idempotency-conflict"]
+        covers_topics: ["mobile.offline-command","mobile.durable-queue","mobile.replay-order","mobile.retry-backoff","mobile.queue-observability","mobile.idempotency-key","mobile.duplicate-response","mobile.conflict-detection","mobile.conflict-resolution","mobile.poison-command"]
+        uses_capabilities: ["mobile.uniapp-platform", "architecture.idempotency-consistency", "mobile.uniapp-offline-idempotency"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.privacy-review
+    title: "隐私、安全、平台声明与审核证据"
+    role: practice
+    responsibility: "把权限使用、最小数据、告知同意、日志脱敏和平台隐私声明映射到可审查证据，区分合规材料与真实运行时保护。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: uniapp-privacy-data
+        title: "数据最小化与告知"
+        topics: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction"]
+      - id: miniapp-review-evidence
+        title: "平台声明与审核"
+        topics: ["miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+    topics_taught: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction", "miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+    topics_used: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction", "miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+    prerequisites: ["ch.uniapp.device-capabilities", "ch.uniapp.testing-debugging"]
+    prerequisite_rationales:
+      ch.uniapp.device-capabilities:
+        reason: "隐私声明必须与实际扫码、相机、位置和上传权限路径逐项一致。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.testing-debugging:
+        reason: "审核材料需要可复现真机路径、日志和失败截图，而非文字声明。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.uniapp-device-permissions", "web.javascript-testing-debugging", "security.web-threat"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.privacy-review/
+      acceptance:
+        - "制作报修端数据流、权限用途、隐私声明和真机审核证据包；成功、边界和失败输入均保存可复现证据"
+        - "注入“声明与代码不一致、日志泄露位置或拒绝权限后无降级”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.privacy-review/"]
+      critical_failure_modes: ["privacy-declaration-drift", "sensitive-data-exposure", "permission-denial-blocks-core"]
+    verification_mode:
+      test_level: T4
+      methods: ["data-flow-audit", "permission-review-matrix", "negative-device-test"]
+      oracle: "每项敏感数据和权限都有目的、来源、保留、删除和审核页面证据；拒绝权限后核心非敏感流程仍可使用。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“隐私、安全、平台声明与审核证据”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["uniapp-privacy-data", "miniapp-review-evidence"]
+        covers_topics: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction", "miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "web.javascript-testing-debugging", "security.web-threat"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“隐私、安全、平台声明与审核证据”构建可运行程序与测试：制作报修端数据流、权限用途、隐私声明和真机审核证据包；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["uniapp-privacy-data", "miniapp-review-evidence"]
+        covers_topics: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction", "miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "web.javascript-testing-debugging", "security.web-threat"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "data-flow-audit-permission-review-matrix-negative-device-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“声明与代码不一致、日志泄露位置或拒绝权限后无降级”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["uniapp-privacy-data", "miniapp-review-evidence"]
+        covers_topics: ["mobile.data-minimization", "mobile.purpose-limitation", "mobile.consent-record", "mobile.sensitive-log-redaction", "miniapp.privacy-declaration", "miniapp.permission-purpose", "miniapp.review-checklist", "miniapp.review-rejection-trace"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "web.javascript-testing-debugging", "security.web-threat"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.release-monitoring
+    title: "构建、版本、灰度、发布与监控"
+    role: practice
+    responsibility: "建立可追溯版本、环境构建、体验版验证、灰度发布、回退和客户端错误监控，不在本章设计通用 CI/CD 平台。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: miniapp-release-promotion
+        title: "版本与发布"
+        topics: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback"]
+      - id: miniapp-client-monitoring
+        title: "客户端监控"
+        topics: ["miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+    topics_taught: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback", "miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+    topics_used: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback", "miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+    prerequisites: ["ch.uniapp.packages-performance", "ch.uniapp.privacy-review"]
+    prerequisite_rationales:
+      ch.uniapp.packages-performance:
+        reason: "目标包体和启动预算是发布前的硬质量条件。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.privacy-review:
+        reason: "监控字段、上传和平台审核必须符合已审查隐私合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.uniapp-platform", "web.javascript-testing-debugging", "mobile.uniapp-device-permissions"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.release-monitoring/
+      acceptance:
+        - "生成一份可追溯体验版、灰度清单、监控事件和回退演练记录；成功、边界和失败输入均保存可复现证据"
+        - "注入“环境串包、版本不可追溯、灰度无停止条件或监控泄露敏感信息”后定位首个可信证据，修复并重跑原验证；修复后判据：同一 commit 可生成带版本证据的体验版；灰度错误可关联版本并在回退演练后恢复，监控不含敏感原值。"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.release-monitoring/"]
+      critical_failure_modes: ["release-provenance-loss", "unsafe-gray-release", "monitoring-privacy-leak"]
+    verification_mode:
+      test_level: T4
+      methods: ["release-checklist", "trial-build-smoke", "rollback-drill"]
+      oracle: "同一 commit 可生成带版本证据的体验版；灰度错误可关联版本并在回退演练后恢复，监控不含敏感原值。"
+    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“构建、版本、灰度、发布与监控”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["miniapp-release-promotion", "miniapp-client-monitoring"]
+        covers_topics: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback", "miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+        uses_capabilities: ["mobile.uniapp-platform", "web.javascript-testing-debugging", "mobile.uniapp-device-permissions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "生成一份可追溯体验版、灰度清单、监控事件和回退演练记录；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["miniapp-release-promotion", "miniapp-client-monitoring"]
+        covers_topics: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback", "miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+        uses_capabilities: ["mobile.uniapp-platform", "web.javascript-testing-debugging", "mobile.uniapp-device-permissions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "release-checklist-trial-build-smoke-rollback-drill"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“环境串包、版本不可追溯、灰度无停止条件或监控泄露敏感信息”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["miniapp-release-promotion", "miniapp-client-monitoring"]
+        covers_topics: ["miniapp.version-metadata", "miniapp.preview-trial-release", "miniapp.gray-release", "miniapp.release-rollback", "miniapp.error-monitoring", "miniapp.release-correlation", "miniapp.user-feedback-loop", "miniapp.monitoring-privacy"]
+        uses_capabilities: ["mobile.uniapp-platform", "web.javascript-testing-debugging", "mobile.uniapp-device-permissions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.uniapp.factorycare-reporter
+    title: "FactoryCare 报修端集成与验收"
+    role: project
+    responsibility: "把扫码、上传、位置、服务端状态、离线幂等和发布证据集成为 FactoryCare 报修端切片，只验收既定合同，不在本章补教平台基础。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: factorycare-reporter-flow
+        title: "报修业务流"
+        topics: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status"]
+      - id: factorycare-reporter-resilience
+        title: "离线与失败恢复"
+        topics: ["factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+    topics_taught: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status", "factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+    topics_used: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status", "factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+    prerequisites: ["ch.uniapp.offline-idempotency", "ch.uniapp.release-monitoring", "ch.vue.server-state"]
+    prerequisite_rationales:
+      ch.uniapp.offline-idempotency:
+        reason: "弱网提交必须能重放且不重复创建工单。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.uniapp.release-monitoring:
+        reason: "验收必须对应可追溯目标版本、监控和回退证据。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.vue.server-state:
+        reason: "报修状态、加载、错误与竞态复用统一服务端状态合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["mobile.uniapp-device-permissions", "mobile.uniapp-offline-idempotency", "mobile.uniapp-platform", "web.javascript-network-race"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.uniapp.factorycare-reporter/
+      acceptance:
+        - "交付可安装的 FactoryCare 报修端切片、端到端脚本、离线重放记录和版本证据；成功、边界和失败输入均保存可复现证据"
+        - "注入“跨端字段漂移、重复工单、权限失败无降级或发布版本与证据不一致”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G5"]
+      evidence_paths: ["evidence/gates/g5/ch.uniapp.factorycare-reporter/"]
+      critical_failure_modes: ["cross-client-contract-drift", "duplicate-work-order", "unrecoverable-mobile-flow", "fabricated-evidence"]
+    verification_mode:
+      test_level: T4
+      methods: ["end-to-end-device-test", "offline-replay-test", "release-evidence-review"]
+      oracle: "扫码到提交、权限拒绝、上传失败、断网重放、重复点击、状态刷新和版本回退场景均满足 FactoryCare API 与 UI 合同。"
+    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“FactoryCare 报修端集成与验收”的职责、边界、失败模式与证据，并给出一个越界反例"
+        covers_topic_groups: ["factorycare-reporter-flow", "factorycare-reporter-resilience"]
+        covers_topics: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status", "factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "mobile.uniapp-offline-idempotency", "mobile.uniapp-platform", "web.javascript-network-race"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“FactoryCare 报修端集成与验收”构建可运行程序与测试：交付可安装的 FactoryCare 报修端切片、端到端脚本、离线重放记录和版本证据；独立保存输入、工件、命令与成功/边界/失败结果"
+        covers_topic_groups: ["factorycare-reporter-flow", "factorycare-reporter-resilience"]
+        covers_topics: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status", "factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "mobile.uniapp-offline-idempotency", "mobile.uniapp-platform", "web.javascript-network-race"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "end-to-end-device-test-offline-replay-test-release-evidence-review"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“跨端字段漂移、重复工单、权限失败无降级或发布版本与证据不一致”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["factorycare-reporter-flow", "factorycare-reporter-resilience"]
+        covers_topics: ["factorycare.reporter-identify-device", "factorycare.reporter-create-order", "factorycare.reporter-upload-evidence", "factorycare.reporter-track-status", "factorycare.reporter-offline-submit", "factorycare.reporter-duplicate-prevention", "factorycare.reporter-permission-fallback", "factorycare.reporter-release-evidence"]
+        uses_capabilities: ["mobile.uniapp-device-permissions", "mobile.uniapp-offline-idempotency", "mobile.uniapp-platform", "web.javascript-network-race"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"

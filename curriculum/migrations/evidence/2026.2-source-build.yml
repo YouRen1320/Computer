@@ -1,0 +1,19 @@
+---
+schema_version: 1
+evidence_id: source-build-2026.2
+catalog_edition: 2026.2-draft
+builder:
+  path: scripts/build-source-inventory.rb
+  sha256: 0dcbb64e53f8aadb05a1758787f1d7debc1370f162de81f5ae7183d7fb5015fa
+inputs:
+  rendered_catalog_projection_sha256: 2e78f80cd4dc4db6c5686464844843316911e0b3dff20df2271bd1d0db652102
+  java_note_commit: 3c4928bf78b24d6550538ea388240fe3b4ce407e
+  note_commit: 72b27e3bad732fa86d5fd9d9c990c6d5ecaf9f96
+outputs:
+  catalog_yml_sha256: 85fb9914877d6ac0f99419639a69a4e87bcbdf4adba2b5e16ccacd8c6e8cddd1
+  files_csv_sha256: a326a7b5808f8044a58e49597eefc1566bc02167116940444cba26435ef1799f
+  mappings_csv_sha256: 4a9e5aca39e66fbc4c954f1e1760553fd721e8cc7c12922d8be4ff8d3072fd92
+  readme_md_sha256: 2ca96461bc1265133297f3560b2eca1f8562a595ed509b734b3491a87fe62e8a
+  migration_policy_md_sha256: 99f3d1b892a0495b087e10e87a78ee561fb5d41ea4a60e37f61218ef0ec7c6c0
+  adversarial_review_md_sha256: 84f0a129ae3269636418f7f14e51c5d78a5c8b2c7756b346b26ad9de5505d06f
+determinism: fixed commits, canonical URLs, canonical catalog FKs, sorted rows, SHA-256, no timestamps

@@ -1,0 +1,2462 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: '03'
+chapters:
+- id: ch.java-engineering.maven-reproducible-builds
+  title: Maven 生命周期、依赖范围、插件与可重复构建
+  role: practice
+  responsibility: 深化 Maven 项目模型与可重复构建证据，不在本章教授框架 Starter 或发布流水线
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: maven-project-model
+    title: Maven 项目与依赖
+    topics:
+    - maven.pom-coordinates
+    - maven.scope-transitive
+    - maven.dependency-tree
+  - id: maven-reproducibility
+    title: 生命周期与复现
+    topics:
+    - maven.lifecycle-plugin
+    - maven.wrapper-toolchain
+    - maven.reproducible-build
+  topics_taught:
+  - maven.pom-coordinates
+  - maven.scope-transitive
+  - maven.dependency-tree
+  - maven.lifecycle-plugin
+  - maven.wrapper-toolchain
+  - maven.reproducible-build
+  topics_used:
+  - maven.pom-coordinates
+  - maven.scope-transitive
+  - maven.dependency-tree
+  - maven.lifecycle-plugin
+  - maven.wrapper-toolchain
+  - maven.reproducible-build
+  prerequisites:
+  - ch.java.maven-junit-smoke
+  prerequisite_rationales:
+    ch.java.maven-junit-smoke:
+      reason: 独立完成Maven 项目与依赖、生命周期与复现前，必须先具备「Maven 最小项目、JUnit、断言与失败日志」已经验证的知识与失败边界
+      capabilities:
+      - java.build-testing
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.build-testing
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.maven-reproducible-builds/
+    acceptance:
+    - 冷/热构建产物一致；test scope 不进入运行包；IDE 与 mvn 使用同一目标 JDK；clean test/package 都可重放；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T2
+    methods:
+    - prediction
+    - unit-test
+    - failure-rerun
+    oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
+  version_surfaces:
+  - jdk-25
+  - maven-3
+  - junit-6
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Maven 生命周期、依赖范围、插件与可重复构建的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - maven-project-model
+    - maven-reproducibility
+    covers_topics:
+    - maven.pom-coordinates
+    - maven.scope-transitive
+    - maven.dependency-tree
+    - maven.lifecycle-plugin
+    - maven.wrapper-toolchain
+    - maven.reproducible-build
+    uses_capabilities:
+    - java.build-testing
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 配置一个多依赖 Maven 工程的 scope、插件版本、Wrapper 与 JDK toolchain，保存 dependency:tree
+      和两次 clean package 摘要
+    covers_topic_groups:
+    - maven-project-model
+    - maven-reproducibility
+    covers_topics:
+    - maven.pom-coordinates
+    - maven.scope-transitive
+    - maven.dependency-tree
+    - maven.lifecycle-plugin
+    - maven.wrapper-toolchain
+    - maven.reproducible-build
+    uses_capabilities:
+    - java.build-testing
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    evidence_kind: runnable-code-and-unit-tests
+    verification_mode: language-unit-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入插件版本漂移、test 依赖进入运行时和 IDE/Maven JDK 不一致，按 lifecycle 与 toolchain 证据修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - maven-project-model
+    - maven-reproducibility
+    covers_topics:
+    - maven.pom-coordinates
+    - maven.scope-transitive
+    - maven.dependency-tree
+    - maven.lifecycle-plugin
+    - maven.wrapper-toolchain
+    - maven.reproducible-build
+    uses_capabilities:
+    - java.build-testing
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    evidence_kind: failing-test-fix-rerun
+    verification_mode: failing-test-rerun
+- id: ch.java-engineering.generics-type-safety
+  title: 泛型、类型参数、边界与通配符
+  role: concept
+  responsibility: 教授编译期类型参数和读写边界，不在本章引入具体集合性能或反射泛型信息
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-generic-types
+    title: 泛型声明
+    topics:
+    - java.generic-class-method
+    - java.type-parameter
+    - java.generic-invariance
+  - id: java-generic-bounds
+    title: 边界与通配符
+    topics:
+    - java.bounded-type
+    - java.wildcard-extends-super
+    - java.type-erasure-boundary
+  topics_taught:
+  - java.generic-class-method
+  - java.type-parameter
+  - java.generic-invariance
+  - java.bounded-type
+  - java.wildcard-extends-super
+  - java.type-erasure-boundary
+  topics_used:
+  - java.generic-class-method
+  - java.type-parameter
+  - java.generic-invariance
+  - java.bounded-type
+  - java.wildcard-extends-super
+  - java.type-erasure-boundary
+  prerequisites:
+  - ch.java-oop.interfaces-polymorphism
+  prerequisite_rationales:
+    ch.java-oop.interfaces-polymorphism:
+      reason: 独立完成泛型声明、边界与通配符前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+      capabilities:
+      - java.inheritance-polymorphism
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.inheritance-polymorphism
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.generics-type-safety/
+    acceptance:
+    - 合法生产者/消费者组合编译并返回正确类型；非法写入在编译期失败；构建无 raw/unchecked 警告
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释泛型、类型参数、边界与通配符的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-generic-types
+    - java-generic-bounds
+    covers_topics:
+    - java.generic-class-method
+    - java.type-parameter
+    - java.generic-invariance
+    - java.bounded-type
+    - java.wildcard-extends-super
+    - java.type-erasure-boundary
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现泛型 Result<T> 与 copy(List<? extends T>, List<? super T>)，用编译通过/失败片段证明读写边界，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - java-generic-types
+    - java-generic-bounds
+    covers_topics:
+    - java.generic-class-method
+    - java.type-parameter
+    - java.generic-invariance
+    - java.bounded-type
+    - java.wildcard-extends-super
+    - java.type-erasure-boundary
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 raw type、错误通配符方向和不安全强转，依据编译警告或 ClassCastException 消除类型漏洞
+    covers_topic_groups:
+    - java-generic-types
+    - java-generic-bounds
+    covers_topics:
+    - java.generic-class-method
+    - java.type-parameter
+    - java.generic-invariance
+    - java.bounded-type
+    - java.wildcard-extends-super
+    - java.type-erasure-boundary
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.sequential-collections
+  title: List、Queue、Deque 与迭代
+  role: concept
+  responsibility: 教授有序和队列型集合的契约与选择，不在本章讨论哈希键或并发集合
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-list
+    title: List 与迭代
+    topics:
+    - java.list-contract
+    - java.iterator
+    - java.mutable-unmodifiable-list
+  - id: java-queue-deque
+    title: Queue 与 Deque
+    topics:
+    - java.queue-fifo
+    - java.deque-stack
+    - java.collection-operation-choice
+  topics_taught:
+  - java.list-contract
+  - java.iterator
+  - java.mutable-unmodifiable-list
+  - java.queue-fifo
+  - java.deque-stack
+  - java.collection-operation-choice
+  topics_used:
+  - java.list-contract
+  - java.iterator
+  - java.mutable-unmodifiable-list
+  - java.queue-fifo
+  - java.deque-stack
+  - java.collection-operation-choice
+  prerequisites:
+  - ch.java-engineering.generics-type-safety
+  prerequisite_rationales:
+    ch.java-engineering.generics-type-safety:
+      reason: 独立完成List 与迭代、Queue 与 Deque前，必须先具备「泛型、类型参数、边界与通配符」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.generic-class-method
+      - java.type-parameter
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.inheritance-polymorphism
+    - java.arrays
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.sequential-collections/
+    acceptance:
+    - 插入与迭代顺序确定；FIFO/LIFO 分别符合预言；空集合边界不抛意外异常；只读视图拒绝修改
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释List、Queue、Deque 与迭代的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-list
+    - java-queue-deque
+    covers_topics:
+    - java.list-contract
+    - java.iterator
+    - java.mutable-unmodifiable-list
+    - java.queue-fifo
+    - java.deque-stack
+    - java.collection-operation-choice
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.arrays
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 用 List 保存工单顺序、Queue 调度待处理项、Deque 实现撤销栈，并比较可变与不可修改视图
+    covers_topic_groups:
+    - java-list
+    - java-queue-deque
+    covers_topics:
+    - java.list-contract
+    - java.iterator
+    - java.mutable-unmodifiable-list
+    - java.queue-fifo
+    - java.deque-stack
+    - java.collection-operation-choice
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.arrays
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入遍历时结构修改、空队列错误读取和把 Queue 当随机访问列表，定位异常/复杂度后修复
+    covers_topic_groups:
+    - java-list
+    - java-queue-deque
+    covers_topics:
+    - java.list-contract
+    - java.iterator
+    - java.mutable-unmodifiable-list
+    - java.queue-fifo
+    - java.deque-stack
+    - java.collection-operation-choice
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.arrays
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.associative-collections
+  title: Set、Map、键相等性与哈希契约
+  role: concept
+  responsibility: 教授去重和键值索引及其相等性要求，不在本章展开缓存或数据库索引
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-set
+    title: Set 去重契约
+    topics:
+    - java.set-contract
+    - java.hashset-equality
+    - java.duplicate-element
+  - id: java-map
+    title: Map 键值契约
+    topics:
+    - java.map-contract
+    - java.hash-key-stability
+    - java.missing-key
+  topics_taught:
+  - java.set-contract
+  - java.hashset-equality
+  - java.duplicate-element
+  - java.map-contract
+  - java.hash-key-stability
+  - java.missing-key
+  topics_used:
+  - java.set-contract
+  - java.hashset-equality
+  - java.duplicate-element
+  - java.map-contract
+  - java.hash-key-stability
+  - java.missing-key
+  prerequisites:
+  - ch.java-engineering.sequential-collections
+  - ch.java-oop.object-contracts
+  prerequisite_rationales:
+    ch.java-engineering.sequential-collections:
+      reason: 独立完成Set 去重契约、Map 键值契约前，必须先具备「List、Queue、Deque 与迭代」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.list-contract
+      - java.iterator
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-oop.object-contracts:
+      reason: 独立完成Set 去重契约、Map 键值契约前，必须先具备「equals、hashCode 与 toString 直接契约」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.equals-contract
+      - java.hashcode-contract
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.collections-generics
+    uses:
+    - java.inheritance-polymorphism
+    - java.references-objects
+    - java.encapsulation-immutability
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.associative-collections/
+    acceptance:
+    - List保留顺序/重复；Set去重；Map按稳定键命中；相等键结果一致；缺失分支显式处理
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-associative-collections/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Set、Map、键相等性与哈希契约的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-set
+    - java-map
+    covers_topics:
+    - java.set-contract
+    - java.hashset-equality
+    - java.duplicate-element
+    - java.map-contract
+    - java.hash-key-stability
+    - java.missing-key
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.references-objects
+    - java.encapsulation-immutability
+    - java.collections-generics
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：从保序 List 输入构造 Set 去重 DeviceId、Map 统计类别数量，比较三者顺序/重复/键语义并证明 equals/hashCode
+      契约
+    covers_topic_groups:
+    - java-set
+    - java-map
+    covers_topics:
+    - java.set-contract
+    - java.hashset-equality
+    - java.duplicate-element
+    - java.map-contract
+    - java.hash-key-stability
+    - java.missing-key
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.references-objects
+    - java.encapsulation-immutability
+    - java.collections-generics
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入误用 List 查重、可变字段参与 hash、只覆写 equals 和把 null/缺失混同，复现成本或查找失败后修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-set
+    - java-map
+    covers_topics:
+    - java.set-contract
+    - java.hashset-equality
+    - java.duplicate-element
+    - java.map-contract
+    - java.hash-key-stability
+    - java.missing-key
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.references-objects
+    - java.encapsulation-immutability
+    - java.collections-generics
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.sorting-comparators
+  title: Comparable、Comparator 与稳定排序
+  role: concept
+  responsibility: 教授自然顺序和外部排序策略，不在本章实现通用排序算法或数据库 ORDER BY
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-order-contract
+    title: 顺序契约
+    topics:
+    - java.comparable
+    - java.comparator
+    - java.order-equality-consistency
+  - id: java-sorting
+    title: 排序组合
+    topics:
+    - java.stable-sort
+    - java.comparator-chain
+    - java.null-ordering
+  topics_taught:
+  - java.comparable
+  - java.comparator
+  - java.order-equality-consistency
+  - java.stable-sort
+  - java.comparator-chain
+  - java.null-ordering
+  topics_used:
+  - java.comparable
+  - java.comparator
+  - java.order-equality-consistency
+  - java.stable-sort
+  - java.comparator-chain
+  - java.null-ordering
+  prerequisites:
+  - ch.java-engineering.sequential-collections
+  prerequisite_rationales:
+    ch.java-engineering.sequential-collections:
+      reason: 独立完成顺序契约、排序组合前，必须先具备「List、Queue、Deque 与迭代」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.list-contract
+      - java.iterator
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.inheritance-polymorphism
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.sorting-comparators/
+    acceptance:
+    - 相等主键保持原顺序；多字段结果可手算；null 行为明确；随机三元组不违反比较器契约
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Comparable、Comparator 与稳定排序的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-order-contract
+    - java-sorting
+    covers_topics:
+    - java.comparable
+    - java.comparator
+    - java.order-equality-consistency
+    - java.stable-sort
+    - java.comparator-chain
+    - java.null-ordering
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 为工单定义优先级降序、创建时间升序、ID 兜底的 Comparator 链，并验证稳定排序与 null 策略
+    covers_topic_groups:
+    - java-order-contract
+    - java-sorting
+    covers_topics:
+    - java.comparable
+    - java.comparator
+    - java.order-equality-consistency
+    - java.stable-sort
+    - java.comparator-chain
+    - java.null-ordering
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入比较器不满足反对称/传递或用减法溢出，构造三元素反例并改用安全比较方法，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-order-contract
+    - java-sorting
+    covers_topics:
+    - java.comparable
+    - java.comparator
+    - java.order-equality-consistency
+    - java.stable-sort
+    - java.comparator-chain
+    - java.null-ordering
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.complexity-algorithms
+  title: 复杂度、搜索、排序与基础数据结构选择
+  role: concept
+  responsibility: 用可测规模解释时间空间成本并选择基础结构，不追求算法竞赛技巧或严格数学证明
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: algorithm-complexity
+    title: 复杂度与规模
+    topics:
+    - algorithm.big-o
+    - algorithm.time-space-tradeoff
+    - algorithm.input-size
+  - id: algorithm-choice
+    title: 搜索排序与结构
+    topics:
+    - algorithm.linear-binary-search
+    - algorithm.sorting-cost
+    - algorithm.list-set-map-choice
+  topics_taught:
+  - algorithm.big-o
+  - algorithm.time-space-tradeoff
+  - algorithm.input-size
+  - algorithm.linear-binary-search
+  - algorithm.sorting-cost
+  - algorithm.list-set-map-choice
+  topics_used:
+  - algorithm.big-o
+  - algorithm.time-space-tradeoff
+  - algorithm.input-size
+  - algorithm.linear-binary-search
+  - algorithm.sorting-cost
+  - algorithm.list-set-map-choice
+  prerequisites:
+  - ch.java-engineering.associative-collections
+  - ch.java-engineering.sorting-comparators
+  prerequisite_rationales:
+    ch.java-engineering.associative-collections:
+      reason: 独立完成复杂度与规模、搜索排序与结构前，必须先具备「Set、Map、键相等性与哈希契约」已经验证的知识与失败边界
+      capabilities:
+      - java.collections-generics
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.sorting-comparators:
+      reason: 独立完成复杂度与规模、搜索排序与结构前，必须先具备「Comparable、Comparator 与稳定排序」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.comparable
+      - java.comparator
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.collections-generics
+    - java.arrays
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.complexity-algorithms/
+    acceptance:
+    - 不同 N 的趋势符合复杂度预期；优化前后结果相同；性能结论含输入规模且不以单次耗时下结论
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释复杂度、搜索、排序与基础数据结构选择的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - algorithm-complexity
+    - algorithm-choice
+    covers_topics:
+    - algorithm.big-o
+    - algorithm.time-space-tradeoff
+    - algorithm.input-size
+    - algorithm.linear-binary-search
+    - algorithm.sorting-cost
+    - algorithm.list-set-map-choice
+    uses_capabilities:
+    - java.collections-generics
+    - java.arrays
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：为 10²/10⁴/10⁶ 条工单比较线性查找、排序后二分、HashMap 查找的操作次数与内存取舍
+    covers_topic_groups:
+    - algorithm-complexity
+    - algorithm-choice
+    covers_topics:
+    - algorithm.big-o
+    - algorithm.time-space-tradeoff
+    - algorithm.input-size
+    - algorithm.linear-binary-search
+    - algorithm.sorting-cost
+    - algorithm.list-set-map-choice
+    uses_capabilities:
+    - java.collections-generics
+    - java.arrays
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 从嵌套扫描和每次查询重复排序的实现中定位复杂度热点，替换结构后用规模曲线复核
+    covers_topic_groups:
+    - algorithm-complexity
+    - algorithm-choice
+    covers_topics:
+    - algorithm.big-o
+    - algorithm.time-space-tradeoff
+    - algorithm.input-size
+    - algorithm.linear-binary-search
+    - algorithm.sorting-cost
+    - algorithm.list-set-map-choice
+    uses_capabilities:
+    - java.collections-generics
+    - java.arrays
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.lambdas-functional-interfaces
+  title: Lambda、函数式接口与方法引用
+  role: concept
+  responsibility: 教授行为作为值传递的语言机制，不在本章引入 Stream 管道或响应式框架
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-functional-interface
+    title: 函数式接口
+    topics:
+    - java.sam-interface
+    - java.function-consumer-predicate
+    - java.behavior-contract
+  - id: java-lambda
+    title: Lambda 与方法引用
+    topics:
+    - java.lambda-expression
+    - java.method-reference
+    - java.effectively-final-capture
+  topics_taught:
+  - java.sam-interface
+  - java.function-consumer-predicate
+  - java.behavior-contract
+  - java.lambda-expression
+  - java.method-reference
+  - java.effectively-final-capture
+  topics_used:
+  - java.sam-interface
+  - java.function-consumer-predicate
+  - java.behavior-contract
+  - java.lambda-expression
+  - java.method-reference
+  - java.effectively-final-capture
+  prerequisites:
+  - ch.java-oop.interfaces-polymorphism
+  prerequisite_rationales:
+    ch.java-oop.interfaces-polymorphism:
+      reason: 独立完成函数式接口、Lambda 与方法引用前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+      capabilities:
+      - java.inheritance-polymorphism
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.inheritance-polymorphism
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.lambdas-functional-interfaces/
+    acceptance:
+    - 每个 SAM 职责单一；相同输入产生预期结果；方法引用与 Lambda 行为一致；捕获值边界可解释
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Lambda、函数式接口与方法引用的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-functional-interface
+    - java-lambda
+    covers_topics:
+    - java.sam-interface
+    - java.function-consumer-predicate
+    - java.behavior-contract
+    - java.lambda-expression
+    - java.method-reference
+    - java.effectively-final-capture
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 定义工单过滤 Predicate、优先级 Function 和通知 Consumer，用 Lambda 与方法引用互换实现
+    covers_topic_groups:
+    - java-functional-interface
+    - java-lambda
+    covers_topics:
+    - java.sam-interface
+    - java.function-consumer-predicate
+    - java.behavior-contract
+    - java.lambda-expression
+    - java.method-reference
+    - java.effectively-final-capture
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入捕获后修改局部变量、接口有两个抽象方法和 Lambda 内隐藏副作用，读取编译/行为证据修复
+    covers_topic_groups:
+    - java-functional-interface
+    - java-lambda
+    covers_topics:
+    - java.sam-interface
+    - java.function-consumer-predicate
+    - java.behavior-contract
+    - java.lambda-expression
+    - java.method-reference
+    - java.effectively-final-capture
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.functional-pipelines
+  title: Stream、Collector 与 Optional 边界
+  role: practice
+  responsibility: 教授惰性数据管道和缺失值表达边界，不把 Stream 用于所有循环或副作用编排
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-stream
+    title: Stream 管道
+    topics:
+    - java.stream-lazy-pipeline
+    - java.stream-map-filter-reduce
+    - java.stream-side-effect
+  - id: java-collector-optional
+    title: 收集与缺失值
+    topics:
+    - java.collector
+    - java.optional-boundary
+    - java.optional-anti-pattern
+  topics_taught:
+  - java.stream-lazy-pipeline
+  - java.stream-map-filter-reduce
+  - java.stream-side-effect
+  - java.collector
+  - java.optional-boundary
+  - java.optional-anti-pattern
+  topics_used:
+  - java.stream-lazy-pipeline
+  - java.stream-map-filter-reduce
+  - java.stream-side-effect
+  - java.collector
+  - java.optional-boundary
+  - java.optional-anti-pattern
+  prerequisites:
+  - ch.java-engineering.associative-collections
+  - ch.java-engineering.lambdas-functional-interfaces
+  prerequisite_rationales:
+    ch.java-engineering.associative-collections:
+      reason: 独立完成Stream 管道、收集与缺失值前，必须先具备「Set、Map、键相等性与哈希契约」已经验证的知识与失败边界
+      capabilities:
+      - java.collections-generics
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.lambdas-functional-interfaces:
+      reason: 独立完成Stream 管道、收集与缺失值前，必须先具备「Lambda、函数式接口与方法引用」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.sam-interface
+      - java.function-consumer-predicate
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.collections-generics
+    - java.inheritance-polymorphism
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.functional-pipelines/
+    acceptance:
+    - 空/单项/多项汇总与循环基准一致；流只消费一次；缺失值不抛 NoSuchElementException；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Stream、Collector 与 Optional 边界的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-stream
+    - java-collector-optional
+    covers_topics:
+    - java.stream-lazy-pipeline
+    - java.stream-map-filter-reduce
+    - java.stream-side-effect
+    - java.collector
+    - java.optional-boundary
+    - java.optional-anti-pattern
+    uses_capabilities:
+    - java.collections-generics
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 把工单列表经 filter→map→groupingBy/reduce 生成类别汇总，并用 Optional 显式表达可能缺失的最大值
+    covers_topic_groups:
+    - java-stream
+    - java-collector-optional
+    covers_topics:
+    - java.stream-lazy-pipeline
+    - java.stream-map-filter-reduce
+    - java.stream-side-effect
+    - java.collector
+    - java.optional-boundary
+    - java.optional-anti-pattern
+    uses_capabilities:
+    - java.collections-generics
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 Stream 重复消费、peek 修改状态和 Optional.get 空值，依据异常/重复结果改为无副作用管道
+    covers_topic_groups:
+    - java-stream
+    - java-collector-optional
+    covers_topics:
+    - java.stream-lazy-pipeline
+    - java.stream-map-filter-reduce
+    - java.stream-side-effect
+    - java.collector
+    - java.optional-boundary
+    - java.optional-anti-pattern
+    uses_capabilities:
+    - java.collections-generics
+    - java.inheritance-polymorphism
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.io-resource-lifecycle
+  title: 字节流、字符流、资源所有权与 try-with-resources
+  role: concept
+  responsibility: 教授具体 IO 资源的所有权和确定性关闭，不在本章处理 NIO 原子移动或 JSON 映射
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-io-streams
+    title: 字节流与字符流
+    topics:
+    - java.input-output-stream
+    - java.reader-writer
+    - java.buffering
+  - id: java-resource-lifecycle
+    title: 资源所有权
+    topics:
+    - java.closeable-owner
+    - java.try-with-resources
+    - java.suppressed-exception
+  topics_taught:
+  - java.input-output-stream
+  - java.reader-writer
+  - java.buffering
+  - java.closeable-owner
+  - java.try-with-resources
+  - java.suppressed-exception
+  topics_used:
+  - java.input-output-stream
+  - java.reader-writer
+  - java.buffering
+  - java.closeable-owner
+  - java.try-with-resources
+  - java.suppressed-exception
+  prerequisites:
+  - ch.java-oop.exceptions-failure-contracts
+  prerequisite_rationales:
+    ch.java-oop.exceptions-failure-contracts:
+      reason: 独立完成字节流与字符流、资源所有权前，必须先具备「异常分类、传播、捕获、转换与失败契约」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.checked-unchecked-exception
+      - java.throw-propagation
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.exceptions-resources
+    uses:
+    - foundation.files-path-encoding
+    - java.inheritance-polymorphism
+    - java.methods
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.io-resource-lifecycle/
+    acceptance:
+    - 正常/空文件复制一致；已知失败映射稳定；中途失败仍关闭双方资源且保留原始cause与suppressed异常
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-io-resource-lifecycle/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释字节流、字符流、资源所有权与 try-with-resources的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-io-streams
+    - java-resource-lifecycle
+    covers_topics:
+    - java.input-output-stream
+    - java.reader-writer
+    - java.buffering
+    - java.closeable-owner
+    - java.try-with-resources
+    - java.suppressed-exception
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - java.inheritance-polymorphism
+    - java.methods
+    - java.exceptions-resources
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现UTF-8文本复制：声明checked/unchecked失败契约、保留cause，明确输入/输出流所有者并用try-with-resources关闭
+    covers_topic_groups:
+    - java-io-streams
+    - java-resource-lifecycle
+    covers_topics:
+    - java.input-output-stream
+    - java.reader-writer
+    - java.buffering
+    - java.closeable-owner
+    - java.try-with-resources
+    - java.suppressed-exception
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - java.inheritance-polymorphism
+    - java.methods
+    - java.exceptions-resources
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入catch吞错、cause丢失、流未关闭、关闭异常覆盖读取异常，检查堆栈/句柄/suppressed后修复
+    covers_topic_groups:
+    - java-io-streams
+    - java-resource-lifecycle
+    covers_topics:
+    - java.input-output-stream
+    - java.reader-writer
+    - java.buffering
+    - java.closeable-owner
+    - java.try-with-resources
+    - java.suppressed-exception
+    uses_capabilities:
+    - foundation.files-path-encoding
+    - java.inheritance-polymorphism
+    - java.methods
+    - java.exceptions-resources
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.nio-files-charsets
+  title: Path、Files、缓冲、字符集与原子文件操作
+  role: practice
+  responsibility: 教授现代文件 API 和编码显式性，不在本章解析业务 JSON 或实现分布式文件锁
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-nio-path-files
+    title: Path 与 Files
+    topics:
+    - java.nio-path
+    - java.files-read-write
+    - java.directory-walk
+  - id: java-file-safety
+    title: 编码与原子性
+    topics:
+    - java.charset-explicit
+    - java.atomic-move
+    - java.temp-file-replace
+  topics_taught:
+  - java.nio-path
+  - java.files-read-write
+  - java.directory-walk
+  - java.charset-explicit
+  - java.atomic-move
+  - java.temp-file-replace
+  topics_used:
+  - java.nio-path
+  - java.files-read-write
+  - java.directory-walk
+  - java.charset-explicit
+  - java.atomic-move
+  - java.temp-file-replace
+  prerequisites:
+  - ch.java-engineering.io-resource-lifecycle
+  prerequisite_rationales:
+    ch.java-engineering.io-resource-lifecycle:
+      reason: 独立完成Path 与 Files、编码与原子性前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+      capabilities:
+      - java.exceptions-resources
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.nio-files-charsets/
+    acceptance:
+    - 中文往返一致；失败前原文件仍完整；替换成功后无临时残留；路径解析以明确 base 为准
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Path、Files、缓冲、字符集与原子文件操作的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-nio-path-files
+    - java-file-safety
+    covers_topics:
+    - java.nio-path
+    - java.files-read-write
+    - java.directory-walk
+    - java.charset-explicit
+    - java.atomic-move
+    - java.temp-file-replace
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 用 Path/Files 读取 UTF-8 配置，写入临时文件后原子替换目标，并遍历目录时过滤符号链接边界
+    covers_topic_groups:
+    - java-nio-path-files
+    - java-file-safety
+    covers_topics:
+    - java.nio-path
+    - java.files-read-write
+    - java.directory-walk
+    - java.charset-explicit
+    - java.atomic-move
+    - java.temp-file-replace
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入默认字符集乱码、直接覆盖中断留下半文件和相对路径基准错误，逐项修复
+    covers_topic_groups:
+    - java-nio-path-files
+    - java-file-safety
+    covers_topics:
+    - java.nio-path
+    - java.files-read-write
+    - java.directory-walk
+    - java.charset-explicit
+    - java.atomic-move
+    - java.temp-file-replace
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.json-mapping
+  title: JSON 数据边界、对象映射与未知字段处理
+  role: practice
+  responsibility: 教授外部 JSON 与内部类型之间的显式映射和兼容策略，不把 JSON 当作领域模型或数据库 schema
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: json-shape-mapping
+    title: JSON 形状与映射
+    topics:
+    - json.object-array-scalar
+    - java.json-object-mapping
+    - java.json-null-missing
+  - id: json-compatibility
+    title: 边界与兼容
+    topics:
+    - java.json-unknown-field
+    - java.json-invalid-input
+    - java.json-version-compatibility
+  topics_taught:
+  - json.object-array-scalar
+  - java.json-object-mapping
+  - java.json-null-missing
+  - java.json-unknown-field
+  - java.json-invalid-input
+  - java.json-version-compatibility
+  topics_used:
+  - json.object-array-scalar
+  - java.json-object-mapping
+  - java.json-null-missing
+  - java.json-unknown-field
+  - java.json-invalid-input
+  - java.json-version-compatibility
+  prerequisites:
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-oop.enum-record-sealed
+  - ch.java-engineering.maven-reproducible-builds
+  prerequisite_rationales:
+    ch.java-engineering.nio-files-charsets:
+      reason: 独立完成JSON 形状与映射、边界与兼容前，必须先具备「Path、Files、缓冲、字符集与原子文件操作」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.nio-path
+      - java.files-read-write
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-oop.enum-record-sealed:
+      reason: 独立完成JSON 形状与映射、边界与兼容前，必须先具备「enum、record、sealed 与受限类型建模」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.enum
+      - java.record
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.maven-reproducible-builds:
+      reason: 独立完成JSON 形状与映射、边界与兼容前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - maven.pom-coordinates
+      - maven.scope-transitive
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.io-json
+    uses:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    - java.build-testing
+    - java.encapsulation-immutability
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.json-mapping/
+    acceptance:
+    - UTF-8文件安全关闭且往返语义一致；缺失/null区分；IO与形状错误证据不同；兼容新增字段策略可验证；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-json-mapping/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T2
+    methods:
+    - prediction
+    - unit-test
+    - failure-rerun
+    oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
+  version_surfaces:
+  - jdk-25
+  - maven-3
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释JSON 数据边界、对象映射与未知字段处理的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - json-shape-mapping
+    - json-compatibility
+    covers_topics:
+    - json.object-array-scalar
+    - java.json-object-mapping
+    - java.json-null-missing
+    - java.json-unknown-field
+    - java.json-invalid-input
+    - java.json-version-compatibility
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    - java.build-testing
+    - java.encapsulation-immutability
+    - java.io-json
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：用 Path/Files 以 UTF-8 和安全资源边界读取 JSON，把 WorkOrder record 双向映射并定义缺失/null、枚举、未知字段和版本策略
+    covers_topic_groups:
+    - json-shape-mapping
+    - json-compatibility
+    covers_topics:
+    - json.object-array-scalar
+    - java.json-object-mapping
+    - java.json-null-missing
+    - java.json-unknown-field
+    - java.json-invalid-input
+    - java.json-version-compatibility
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    - java.build-testing
+    - java.encapsulation-immutability
+    - java.io-json
+    evidence_kind: runnable-code-and-unit-tests
+    verification_mode: language-unit-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入错误字符集、文件资源失败、字段漂移、非法枚举和未知字段静默吞噬，按IO或映射阶段分别修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - json-shape-mapping
+    - json-compatibility
+    covers_topics:
+    - json.object-array-scalar
+    - java.json-object-mapping
+    - java.json-null-missing
+    - java.json-unknown-field
+    - java.json-invalid-input
+    - java.json-version-compatibility
+    uses_capabilities:
+    - java.exceptions-resources
+    - foundation.files-path-encoding
+    - java.build-testing
+    - java.encapsulation-immutability
+    - java.io-json
+    evidence_kind: failing-test-fix-rerun
+    verification_mode: failing-test-rerun
+- id: ch.java-engineering.threads-jmm
+  title: 线程、Java 内存模型、同步与锁
+  role: concept
+  responsibility: 教授线程间可见性、原子性和互斥，不在本章引入 Executor 调度或分布式锁
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-thread-jmm
+    title: 线程与内存模型
+    topics:
+    - java.thread-lifecycle
+    - java.jmm-visibility
+    - java.happens-before
+  - id: java-synchronization
+    title: 同步与锁
+    topics:
+    - java.race-condition
+    - java.synchronized-lock
+    - java.atomicity
+  topics_taught:
+  - java.thread-lifecycle
+  - java.jmm-visibility
+  - java.happens-before
+  - java.race-condition
+  - java.synchronized-lock
+  - java.atomicity
+  topics_used:
+  - java.thread-lifecycle
+  - java.jmm-visibility
+  - java.happens-before
+  - java.race-condition
+  - java.synchronized-lock
+  - java.atomicity
+  prerequisites:
+  - ch.java-oop.static-class-state
+  - ch.java-engineering.io-resource-lifecycle
+  prerequisite_rationales:
+    ch.java-oop.static-class-state:
+      reason: 独立完成线程与内存模型、同步与锁前，必须先具备「static、类成员与共享状态」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.static-field-method
+      - java.class-vs-instance-member
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.io-resource-lifecycle:
+      reason: 独立完成线程与内存模型、同步与锁前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+      capabilities:
+      - java.exceptions-resources
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.concurrency-runtime
+    uses:
+    - java.encapsulation-immutability
+    - java.exceptions-resources
+    - java.references-objects
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.threads-jmm/
+    acceptance:
+    - 正确版高频重跑计数恒定；错误版能被受控放大；无死锁；共享状态所有访问遵循同一同步策略
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-threads-jmm/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释线程、Java 内存模型、同步与锁的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-thread-jmm
+    - java-synchronization
+    covers_topics:
+    - java.thread-lifecycle
+    - java.jmm-visibility
+    - java.happens-before
+    - java.race-condition
+    - java.synchronized-lock
+    - java.atomicity
+    uses_capabilities:
+    - java.encapsulation-immutability
+    - java.exceptions-resources
+    - java.references-objects
+    - java.concurrency-runtime
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现两个线程累加工单计数的错误版与 synchronized/Lock 正确版，用重复运行展示竞态和 happens-before
+    covers_topic_groups:
+    - java-thread-jmm
+    - java-synchronization
+    covers_topics:
+    - java.thread-lifecycle
+    - java.jmm-visibility
+    - java.happens-before
+    - java.race-condition
+    - java.synchronized-lock
+    - java.atomicity
+    uses_capabilities:
+    - java.encapsulation-immutability
+    - java.exceptions-resources
+    - java.references-objects
+    - java.concurrency-runtime
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入可见性标志不终止、check-then-act 丢更新和错误锁对象，抓线程状态后建立正确同步边
+    covers_topic_groups:
+    - java-thread-jmm
+    - java-synchronization
+    covers_topics:
+    - java.thread-lifecycle
+    - java.jmm-visibility
+    - java.happens-before
+    - java.race-condition
+    - java.synchronized-lock
+    - java.atomicity
+    uses_capabilities:
+    - java.encapsulation-immutability
+    - java.exceptions-resources
+    - java.references-objects
+    - java.concurrency-runtime
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.executors-virtual-threads
+  title: Executor、Future、取消与虚拟线程
+  role: practice
+  responsibility: 教授任务调度、等待和协作式取消，不把虚拟线程当作消除共享状态问题的工具
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-executor-future
+    title: 任务与结果
+    topics:
+    - java.executor
+    - java.future-result
+    - java.task-failure
+  - id: java-cancellation-virtual-thread
+    title: 取消与虚拟线程
+    topics:
+    - java.interruption-cancellation
+    - java.timeout
+    - java.virtual-thread-boundary
+  topics_taught:
+  - java.executor
+  - java.future-result
+  - java.task-failure
+  - java.interruption-cancellation
+  - java.timeout
+  - java.virtual-thread-boundary
+  topics_used:
+  - java.executor
+  - java.future-result
+  - java.task-failure
+  - java.interruption-cancellation
+  - java.timeout
+  - java.virtual-thread-boundary
+  prerequisites:
+  - ch.java-engineering.threads-jmm
+  prerequisite_rationales:
+    ch.java-engineering.threads-jmm:
+      reason: 独立完成任务与结果、取消与虚拟线程前，必须先具备「线程、Java 内存模型、同步与锁」已经验证的知识与失败边界
+      capabilities:
+      - java.concurrency-runtime
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.concurrency-runtime
+    - java.exceptions-resources
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.executors-virtual-threads/
+    acceptance:
+    - 成功任务返回值；异常 cause 可见；超时任务在上限内结束；执行器关闭后无遗留工作线程
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Executor、Future、取消与虚拟线程的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-executor-future
+    - java-cancellation-virtual-thread
+    covers_topics:
+    - java.executor
+    - java.future-result
+    - java.task-failure
+    - java.interruption-cancellation
+    - java.timeout
+    - java.virtual-thread-boundary
+    uses_capabilities:
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：用 Executor 提交带超时的独立维修查询任务，收集 Future 成功/异常/取消结果并对比虚拟线程版本
+    covers_topic_groups:
+    - java-executor-future
+    - java-cancellation-virtual-thread
+    covers_topics:
+    - java.executor
+    - java.future-result
+    - java.task-failure
+    - java.interruption-cancellation
+    - java.timeout
+    - java.virtual-thread-boundary
+    uses_capabilities:
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入任务吞中断、Future 永久等待和 Executor 未关闭，利用线程/超时证据实现协作式取消
+    covers_topic_groups:
+    - java-executor-future
+    - java-cancellation-virtual-thread
+    covers_topics:
+    - java.executor
+    - java.future-result
+    - java.task-failure
+    - java.interruption-cancellation
+    - java.timeout
+    - java.virtual-thread-boundary
+    uses_capabilities:
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.annotations-metadata
+  title: 注解声明、目标、保留策略与元数据
+  role: concept
+  responsibility: 教授注解作为结构化元数据的声明和可见性，不在本章读取反射或实现框架扫描
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-annotation-declaration
+    title: 注解声明
+    topics:
+    - java.annotation-type
+    - java.annotation-element
+    - java.meta-annotation
+    - java.junit-test-annotation-mechanics
+  - id: java-annotation-visibility
+    title: 目标与保留
+    topics:
+    - java.annotation-target
+    - java.annotation-retention
+    - java.annotation-repeatable
+  topics_taught:
+  - java.annotation-type
+  - java.annotation-element
+  - java.meta-annotation
+  - java.junit-test-annotation-mechanics
+  - java.annotation-target
+  - java.annotation-retention
+  - java.annotation-repeatable
+  topics_used:
+  - java.annotation-type
+  - java.annotation-element
+  - java.meta-annotation
+  - java.junit-test-annotation-mechanics
+  - java.annotation-target
+  - java.annotation-retention
+  - java.annotation-repeatable
+  prerequisites:
+  - ch.java-oop.classes-objects
+  prerequisite_rationales:
+    ch.java-oop.classes-objects:
+      reason: 独立完成注解声明、目标与保留前，必须先具备「类、实例、字段与实例方法」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.class-instance
+      - java.field
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.platform-entry
+    - java.references-objects
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.annotations-metadata/
+    acceptance:
+    - 合法目标可编译；非法目标编译失败；RUNTIME 元数据可读；SOURCE/CLASS 边界结果与预言一致
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释注解声明、目标、保留策略与元数据的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-annotation-declaration
+    - java-annotation-visibility
+    covers_topics:
+    - java.annotation-type
+    - java.annotation-element
+    - java.meta-annotation
+    - java.junit-test-annotation-mechanics
+    - java.annotation-target
+    - java.annotation-retention
+    - java.annotation-repeatable
+    uses_capabilities:
+    - java.platform-entry
+    - java.references-objects
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 声明 @RequiresRole 注解并设置 Target/Retention/可重复策略，同时解释此前 @Test 标记在运行时被发现的条件
+    covers_topic_groups:
+    - java-annotation-declaration
+    - java-annotation-visibility
+    covers_topics:
+    - java.annotation-type
+    - java.annotation-element
+    - java.meta-annotation
+    - java.junit-test-annotation-mechanics
+    - java.annotation-target
+    - java.annotation-retention
+    - java.annotation-repeatable
+    uses_capabilities:
+    - java.platform-entry
+    - java.references-objects
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 Retention=SOURCE、Target 错误和缺元注解导致运行时不可见，读取 class/反射观察后修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-annotation-declaration
+    - java-annotation-visibility
+    covers_topics:
+    - java.annotation-type
+    - java.annotation-element
+    - java.meta-annotation
+    - java.junit-test-annotation-mechanics
+    - java.annotation-target
+    - java.annotation-retention
+    - java.annotation-repeatable
+    uses_capabilities:
+    - java.platform-entry
+    - java.references-objects
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java-engineering.reflection-classloading-proxies
+  title: 反射、类加载边界与动态代理
+  role: practice
+  responsibility: 教授运行时类型检查和接口代理的边界与风险，不构建通用 DI 容器或修改字节码
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-reflection-classloading
+    title: 反射与类加载
+    topics:
+    - java.class-object
+    - java.reflect-member-access
+    - java.classloader-boundary
+  - id: java-dynamic-proxy
+    title: 动态代理
+    topics:
+    - java.proxy-invocation-handler
+    - java.interface-proxy
+    - java.reflection-risk
+  topics_taught:
+  - java.class-object
+  - java.reflect-member-access
+  - java.classloader-boundary
+  - java.proxy-invocation-handler
+  - java.interface-proxy
+  - java.reflection-risk
+  topics_used:
+  - java.class-object
+  - java.reflect-member-access
+  - java.classloader-boundary
+  - java.proxy-invocation-handler
+  - java.interface-proxy
+  - java.reflection-risk
+  prerequisites:
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.io-resource-lifecycle
+  prerequisite_rationales:
+    ch.java-engineering.annotations-metadata:
+      reason: 独立完成反射与类加载、动态代理前，必须先具备「注解声明、目标、保留策略与元数据」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.annotation-type
+      - java.annotation-element
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.io-resource-lifecycle:
+      reason: 独立完成反射与类加载、动态代理前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+      capabilities:
+      - java.exceptions-resources
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.inheritance-polymorphism
+    - java.exceptions-resources
+    - java.references-objects
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.reflection-classloading-proxies/
+    acceptance:
+    - 代理前后业务返回一致且横切记录可观察；不可代理类型明确失败；异常保留被调用方法 cause
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释反射、类加载边界与动态代理的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-reflection-classloading
+    - java-dynamic-proxy
+    covers_topics:
+    - java.class-object
+    - java.reflect-member-access
+    - java.classloader-boundary
+    - java.proxy-invocation-handler
+    - java.interface-proxy
+    - java.reflection-risk
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.exceptions-resources
+    - java.references-objects
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：反射读取带 @RequiresRole 的方法并用 JDK Proxy 包装接口调用，记录类加载器、方法和委托链
+    covers_topic_groups:
+    - java-reflection-classloading
+    - java-dynamic-proxy
+    covers_topics:
+    - java.class-object
+    - java.reflect-member-access
+    - java.classloader-boundary
+    - java.proxy-invocation-handler
+    - java.interface-proxy
+    - java.reflection-risk
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.exceptions-resources
+    - java.references-objects
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入代理目标无接口、反射成员不可访问和上下文 ClassLoader 错误，定位边界后改为显式契约，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-reflection-classloading
+    - java-dynamic-proxy
+    covers_topics:
+    - java.class-object
+    - java.reflect-member-access
+    - java.classloader-boundary
+    - java.proxy-invocation-handler
+    - java.interface-proxy
+    - java.reflection-risk
+    uses_capabilities:
+    - java.inheritance-polymorphism
+    - java.exceptions-resources
+    - java.references-objects
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.network-programming
+  title: Socket、Datagram、URL/HttpClient 与超时
+  role: practice
+  responsibility: 把网络分层落实为 Java 客户端与套接字边界，不在本章实现应用协议服务器或重试框架
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-socket-datagram
+    title: Socket 与 Datagram
+    topics:
+    - java.tcp-socket
+    - java.udp-datagram
+    - java.network-resource-owner
+  - id: java-http-client
+    title: URL 与 HttpClient
+    topics:
+    - java.uri-url
+    - java.http-client
+    - java.connect-read-timeout
+  topics_taught:
+  - java.tcp-socket
+  - java.udp-datagram
+  - java.network-resource-owner
+  - java.uri-url
+  - java.http-client
+  - java.connect-read-timeout
+  topics_used:
+  - java.tcp-socket
+  - java.udp-datagram
+  - java.network-resource-owner
+  - java.uri-url
+  - java.http-client
+  - java.connect-read-timeout
+  prerequisites:
+  - ch.foundations.http-curl
+  - ch.java-engineering.io-resource-lifecycle
+  prerequisite_rationales:
+    ch.foundations.http-curl:
+      reason: 独立完成Socket 与 Datagram、URL 与 HttpClient前，必须先具备「HTTP 报文、方法、状态码、Header、Body
+        与 curl」已经验证的知识与失败边界
+      capabilities:
+      - foundation.http-message
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.io-resource-lifecycle:
+      reason: 独立完成Socket 与 Datagram、URL 与 HttpClient前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+      capabilities:
+      - java.exceptions-resources
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - foundation.network-transport
+    - foundation.http-message
+    - java.exceptions-resources
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.network-programming/
+    acceptance:
+    - echo 往返字节一致；HTTP 状态/body 可取证；三种网络故障在时间上限内返回不同可信证据；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Socket、Datagram、URL/HttpClient 与超时的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-socket-datagram
+    - java-http-client
+    covers_topics:
+    - java.tcp-socket
+    - java.udp-datagram
+    - java.network-resource-owner
+    - java.uri-url
+    - java.http-client
+    - java.connect-read-timeout
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.http-message
+    - java.exceptions-resources
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现带 connect/read timeout 的 HttpClient 请求和本地 TCP echo 客户端，明确 URI、编码与资源关闭
+    covers_topic_groups:
+    - java-socket-datagram
+    - java-http-client
+    covers_topics:
+    - java.tcp-socket
+    - java.udp-datagram
+    - java.network-resource-owner
+    - java.uri-url
+    - java.http-client
+    - java.connect-read-timeout
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.http-message
+    - java.exceptions-resources
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 DNS 错、连接拒绝、读超时和未关闭 Socket，按网络层与异常类型分别处理
+    covers_topic_groups:
+    - java-socket-datagram
+    - java-http-client
+    covers_topics:
+    - java.tcp-socket
+    - java.udp-datagram
+    - java.network-resource-owner
+    - java.uri-url
+    - java.http-client
+    - java.connect-read-timeout
+    uses_capabilities:
+    - foundation.network-transport
+    - foundation.http-message
+    - java.exceptions-resources
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java-engineering.testing-test-doubles
+  title: JUnit 参数化、测试设计、测试替身与 Mockito
+  role: synthesis
+  responsibility: 深化可维护测试和协作边界替身，不用 Mock 证明真实数据库、网络或框架集成行为
+  level: L2
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-test-design
+    title: 测试设计
+    topics:
+    - junit.parameterized-test
+    - test.fixture-boundary
+    - test.behavior-vs-implementation
+  - id: java-test-doubles
+    title: 测试替身
+    topics:
+    - test.fake-stub-mock
+    - mockito.interaction-verification
+    - test.mock-boundary
+  topics_taught:
+  - junit.parameterized-test
+  - test.fixture-boundary
+  - test.behavior-vs-implementation
+  - test.fake-stub-mock
+  - mockito.interaction-verification
+  - test.mock-boundary
+  topics_used:
+  - junit.parameterized-test
+  - test.fixture-boundary
+  - test.behavior-vs-implementation
+  - test.fake-stub-mock
+  - mockito.interaction-verification
+  - test.mock-boundary
+  prerequisites:
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-oop.exceptions-failure-contracts
+  prerequisite_rationales:
+    ch.java-engineering.maven-reproducible-builds:
+      reason: 独立完成测试设计、测试替身前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - maven.pom-coordinates
+      - maven.scope-transitive
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-oop.exceptions-failure-contracts:
+      reason: 独立完成测试设计、测试替身前，必须先具备「异常分类、传播、捕获、转换与失败契约」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.checked-unchecked-exception
+      - java.throw-propagation
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.build-testing
+    - java.inheritance-polymorphism
+    - foundation.verification-debug-test
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.testing-test-doubles/
+    acceptance:
+    - 参数组合覆盖边界；替身只隔离外部协作者；实现重构不破坏行为测试；无测试顺序依赖
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-testing-test-doubles/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T3
+    methods:
+    - integration-test
+    - negative-case
+    - failure-rerun
+    oracle: 真实框架或依赖边界由可重复集成测试验证，负向用例能定位首个失败层
+  version_surfaces:
+  - jdk-25
+  - maven-3
+  - junit-6
+  - mockito
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释JUnit 参数化、测试设计、测试替身与 Mockito的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-test-design
+    - java-test-doubles
+    covers_topics:
+    - junit.parameterized-test
+    - test.fixture-boundary
+    - test.behavior-vs-implementation
+    - test.fake-stub-mock
+    - mockito.interaction-verification
+    - test.mock-boundary
+    uses_capabilities:
+    - java.build-testing
+    - java.inheritance-polymorphism
+    - foundation.verification-debug-test
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：为依赖 NotificationSender 的服务写参数化测试、手写 fake 和 Mockito stub/verify，并说明每种替身边界
+    covers_topic_groups:
+    - java-test-design
+    - java-test-doubles
+    covers_topics:
+    - junit.parameterized-test
+    - test.fixture-boundary
+    - test.behavior-vs-implementation
+    - test.fake-stub-mock
+    - mockito.interaction-verification
+    - test.mock-boundary
+    uses_capabilities:
+    - java.build-testing
+    - java.inheritance-polymorphism
+    - foundation.verification-debug-test
+    evidence_kind: integration-artifact-and-tests
+    verification_mode: framework-or-container-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入过度 verify 调用顺序、Mock 数据库当集成证明和共享 fixture 污染，重构后保留行为 oracle，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-test-design
+    - java-test-doubles
+    covers_topics:
+    - junit.parameterized-test
+    - test.fixture-boundary
+    - test.behavior-vs-implementation
+    - test.fake-stub-mock
+    - mockito.interaction-verification
+    - test.mock-boundary
+    uses_capabilities:
+    - java.build-testing
+    - java.inheritance-polymorphism
+    - foundation.verification-debug-test
+    evidence_kind: integration-failure-fix-rerun
+    verification_mode: integration-fault-rerun
+- id: ch.java-engineering.logging-jvm-diagnostics
+  title: 结构化日志、线程转储、JFR 与 JVM 故障诊断
+  role: synthesis
+  responsibility: 教授从日志和 JVM 运行时证据定位故障，不在本章建立分布式追踪或 SLO 告警体系
+  level: L2+
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-structured-logging
+    title: 结构化日志
+    topics:
+    - java.logging-level-context
+    - java.structured-log
+    - java.sensitive-log-redaction
+  - id: java-jvm-diagnostics
+    title: JVM 诊断
+    topics:
+    - java.thread-dump
+    - java.jfr
+    - java.gc-memory-symptom
+  topics_taught:
+  - java.logging-level-context
+  - java.structured-log
+  - java.sensitive-log-redaction
+  - java.thread-dump
+  - java.jfr
+  - java.gc-memory-symptom
+  topics_used:
+  - java.logging-level-context
+  - java.structured-log
+  - java.sensitive-log-redaction
+  - java.thread-dump
+  - java.jfr
+  - java.gc-memory-symptom
+  prerequisites:
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.threads-jmm
+  prerequisite_rationales:
+    ch.java-engineering.maven-reproducible-builds:
+      reason: 独立完成结构化日志、JVM 诊断前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - maven.pom-coordinates
+      - maven.scope-transitive
+      outcome_ids:
+      - build
+      - diagnose
+    ch.java-engineering.threads-jmm:
+      reason: 独立完成结构化日志、JVM 诊断前，必须先具备「线程、Java 内存模型、同步与锁」已经验证的知识与失败边界
+      capabilities:
+      - java.concurrency-runtime
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.build-testing
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    - foundation.verification-debug-test
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java-engineering.logging-jvm-diagnostics/
+    acceptance:
+    - 同一请求日志可关联；敏感值不出现；阻塞线程与锁拥有者可从 dump 定位；修复后基线吞吐恢复
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-engineering-logging-jvm-diagnostics/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T2
+    methods:
+    - prediction
+    - unit-test
+    - failure-rerun
+    oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
+  version_surfaces:
+  - jdk-25
+  - maven-3
+  - observability
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释结构化日志、线程转储、JFR 与 JVM 故障诊断的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-structured-logging
+    - java-jvm-diagnostics
+    covers_topics:
+    - java.logging-level-context
+    - java.structured-log
+    - java.sensitive-log-redaction
+    - java.thread-dump
+    - java.jfr
+    - java.gc-memory-symptom
+    uses_capabilities:
+    - java.build-testing
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    - foundation.verification-debug-test
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：为并发工单任务输出含 trace/order/thread 的结构化日志，并采集一次线程转储和短 JFR 记录关联症状
+    covers_topic_groups:
+    - java-structured-logging
+    - java-jvm-diagnostics
+    covers_topics:
+    - java.logging-level-context
+    - java.structured-log
+    - java.sensitive-log-redaction
+    - java.thread-dump
+    - java.jfr
+    - java.gc-memory-symptom
+    uses_capabilities:
+    - java.build-testing
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    - foundation.verification-debug-test
+    evidence_kind: runnable-code-and-unit-tests
+    verification_mode: language-unit-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入线程阻塞、日志缺关联 ID 和敏感字段泄露，使用 dump/JFR/日志定位并加脱敏与上下文
+    covers_topic_groups:
+    - java-structured-logging
+    - java-jvm-diagnostics
+    covers_topics:
+    - java.logging-level-context
+    - java.structured-log
+    - java.sensitive-log-redaction
+    - java.thread-dump
+    - java.jfr
+    - java.gc-memory-symptom
+    uses_capabilities:
+    - java.build-testing
+    - java.concurrency-runtime
+    - java.exceptions-resources
+    - foundation.verification-debug-test
+    evidence_kind: failing-test-fix-rerun
+    verification_mode: failing-test-rerun

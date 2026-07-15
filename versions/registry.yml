@@ -1,7 +1,7 @@
 schema_version: 1
 registry_id: factorycare-version-registry
-edition: 2026.1-draft
-verified_at: "2026-07-15"
+edition: 2026.2-draft
+verified_at: "2026-07-16"
 policy:
   stable_only: true
   patch_resolution: at-chapter-verification
@@ -82,12 +82,12 @@ entries:
   - id: flyway
     name: Flyway
     kind: tool
-    constraint: "Spring Boot 4.1 BOM-compatible release"
+    constraint: "version managed by the selected Spring Boot 4.1.x dependency management; 12.4.0 at Boot 4.1.0"
     channel: stable
     status: provisional
-    verified_at: "2026-07-15"
-    source_url: https://documentation.red-gate.com/flyway/reference/release-notes
-    notes: "让 Boot 依赖管理决定默认版本；迁移行为必须用真实数据库验证。"
+    verified_at: "2026-07-16"
+    source_url: https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
+    notes: "默认版本必须取自实际选用的 Boot patch 依赖管理；Flyway 上游更新不能自动覆盖组合，迁移行为仍用真实 PostgreSQL 验证。"
   - id: git
     name: Git
     kind: tool
@@ -161,14 +161,23 @@ entries:
     source_url: https://docs.langchain.com/oss/python/langgraph/overview
     notes: "只用于确有 checkpoint、恢复或人工审批需求的有状态工作流。"
   - id: linux
-    name: Linux
+    name: Linux concepts
     kind: platform
-    constraint: "current supported LTS server distribution"
-    channel: LTS
+    constraint: "portable Linux kernel and user-space concepts; no distribution release claim"
+    channel: conceptual
     status: conceptual
-    verified_at: "2026-07-15"
-    source_url: https://www.kernel.org/category/releases.html
-    notes: "内核、发行版和用户空间分开记录；部署章节固定实际镜像。"
+    verified_at: "2026-07-16"
+    source_url: https://docs.kernel.org/
+    notes: "只承载可移植心智模型；不能用内核文档推断发行版生命周期、软件包版本或 systemd 行为，实验必须另引具体发行版基线。"
+  - id: ubuntu-server-26.04
+    name: Ubuntu Server
+    kind: platform
+    constraint: "26.04 LTS; standard security maintenance through April 2031"
+    channel: LTS
+    status: verified
+    verified_at: "2026-07-16"
+    source_url: https://documentation.ubuntu.com/release-notes/26.04/
+    notes: "生产化实验的具体 Linux 发行版基线；镜像必须固定 26.04 patch/digest，并在实验记录中保存架构和完整镜像标识。"
   - id: macos-26
     name: macOS
     kind: platform
@@ -250,15 +259,24 @@ entries:
     verified_at: "2026-07-15"
     source_url: https://nuxt.com/docs/4.x/getting-started/installation
     notes: "使用 Node 24 LTS；SSR、hydration 和部署适配器分别验证。"
-  - id: oauth2-oidc
-    name: OAuth 2.0 and OpenID Connect
+  - id: oauth2-security-bcp
+    name: OAuth 2.0 Security Best Current Practice
     kind: protocol
-    constraint: "current OAuth security best practice plus OIDC Core"
+    constraint: "RFC 9700"
     channel: standards
-    status: conceptual
-    verified_at: "2026-07-15"
+    status: verified
+    verified_at: "2026-07-16"
     source_url: https://www.rfc-editor.org/rfc/rfc9700.html
-    notes: "按授权场景选择流程；禁止用过时 implicit flow 作为默认实现。"
+    notes: "按授权场景选择流程；以授权码和适用的 PKCE 防护为主线，不把过时流程作为默认实现。"
+  - id: oidc-core
+    name: OpenID Connect Core
+    kind: protocol
+    constraint: "OpenID Connect Core 1.0 incorporating errata set 2"
+    channel: standards
+    status: verified
+    verified_at: "2026-07-16"
+    source_url: https://openid.net/specs/openid-connect-core-1_0-errata2.html
+    notes: "只用于身份层、ID Token、Claims 和 RP/OP 边界；不得把 OAuth 授权与 OIDC 身份认证混为一谈。"
   - id: observability
     name: OpenTelemetry observability stack
     kind: standard
@@ -513,15 +531,6 @@ entries:
     verified_at: "2026-07-15"
     source_url: https://docs.docker.com/compose/releases/release-notes/
     notes: "使用 compose.yaml 规范；部署前运行配置解析和健康检查。"
-  - id: minio
-    name: MinIO
-    kind: service
-    constraint: "current stable S3-compatible local release"
-    channel: stable
-    status: provisional
-    verified_at: "2026-07-15"
-    source_url: https://github.com/minio/minio/releases
-    notes: "只作本地对象存储实现；业务代码依赖 S3 契约并验证权限边界。"
   - id: rabbitmq
     name: RabbitMQ
     kind: service

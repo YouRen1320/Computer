@@ -1,0 +1,1454 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: '01'
+chapters:
+- id: ch.java.platform-toolchain
+  title: JDK、JVM、源码、class 文件、编译与运行
+  role: foundation
+  responsibility: 建立 Java 源码到 JVM 进程的运行链，不提前解释 main 声明内部语法或对象模型
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-platform
+    title: Java 平台组成
+    topics:
+    - java.jdk-jre-jvm
+    - java.source-class-bytecode
+    - java.classpath
+  - id: java-run-chain
+    title: 编译运行链
+    topics:
+    - java.javac-java-command
+    - java.compile-run-phase
+    - java.tool-version-evidence
+  topics_taught:
+  - java.jdk-jre-jvm
+  - java.source-class-bytecode
+  - java.classpath
+  - java.javac-java-command
+  - java.compile-run-phase
+  - java.tool-version-evidence
+  topics_used:
+  - java.jdk-jre-jvm
+  - java.source-class-bytecode
+  - java.classpath
+  - java.javac-java-command
+  - java.compile-run-phase
+  - java.tool-version-evidence
+  prerequisites:
+  - ch.foundations.dependencies-build-packages
+  prerequisite_rationales:
+    ch.foundations.dependencies-build-packages:
+      reason: 独立完成Java 平台组成、编译运行链前，必须先具备「依赖、包管理、构建生命周期与可重复性」已经验证的知识与失败边界
+      capabilities:
+      - foundation.toolchain-env-build
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.platform-entry
+    uses:
+    - foundation.shell-command-stream
+    - foundation.toolchain-env-build
+  borrowed_scaffolds:
+  - topic: java.main-signature
+    later_teacher_chapter_id: ch.java.program-structure
+    allowed_action: copy-run-only
+    rationale: 本章只复制固定入口外壳以观察源码到 JVM 的运行链
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.platform-toolchain/
+    acceptance:
+    - 源码修改会产生新 class；匹配工具链输出固定文本/0；错误版本或类路径有非 0 和可定位日志
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-platform-toolchain/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释JDK、JVM、源码、class 文件、编译与运行的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-platform
+    - java-run-chain
+    covers_topics:
+    - java.jdk-jre-jvm
+    - java.source-class-bytecode
+    - java.classpath
+    - java.javac-java-command
+    - java.compile-run-phase
+    - java.tool-version-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.toolchain-env-build
+    - java.platform-entry
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 用固定 main 外壳从 .java 编译出 .class 并运行，记录 javac/java 的实际路径、版本、classpath 与进程退出码，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - java-platform
+    - java-run-chain
+    covers_topics:
+    - java.jdk-jre-jvm
+    - java.source-class-bytecode
+    - java.classpath
+    - java.javac-java-command
+    - java.compile-run-phase
+    - java.tool-version-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.toolchain-env-build
+    - java.platform-entry
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 source/target 版本不兼容或 classpath 缺失，判断失败在编译还是 JVM 加载阶段并恢复运行
+    covers_topic_groups:
+    - java-platform
+    - java-run-chain
+    covers_topics:
+    - java.jdk-jre-jvm
+    - java.source-class-bytecode
+    - java.classpath
+    - java.javac-java-command
+    - java.compile-run-phase
+    - java.tool-version-evidence
+    uses_capabilities:
+    - foundation.shell-command-stream
+    - foundation.toolchain-env-build
+    - java.platform-entry
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.program-structure
+  title: 注释、标识符、字面量、语句、代码块、class、main 与 package
+  role: concept
+  responsibility: 教授最小 Java 程序的词法和结构规则，不提前要求跨包访问控制或对象实例化
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-lexical-structure
+    title: 词法与语句
+    topics:
+    - java.comment-identifier
+    - java.literal
+    - java.statement-block
+  - id: java-program-structure
+    title: 程序结构
+    topics:
+    - java.class-declaration
+    - java.main-signature
+    - java.package-declaration
+  topics_taught:
+  - java.comment-identifier
+  - java.literal
+  - java.statement-block
+  - java.class-declaration
+  - java.main-signature
+  - java.package-declaration
+  topics_used:
+  - java.comment-identifier
+  - java.literal
+  - java.statement-block
+  - java.class-declaration
+  - java.main-signature
+  - java.package-declaration
+  prerequisites:
+  - ch.java.platform-toolchain
+  prerequisite_rationales:
+    ch.java.platform-toolchain:
+      reason: 独立完成词法与语句、程序结构前，必须先具备「JDK、JVM、源码、class 文件、编译与运行」已经验证的知识与失败边界
+      capabilities:
+      - java.platform-entry
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.platform-entry
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.program-structure/
+    acceptance:
+    - 合法程序可编译运行；四类结构错误均在 compile 阶段失败；修复后不改变原定输出
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释注释、标识符、字面量、语句、代码块、class、main 与 package的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-lexical-structure
+    - java-program-structure
+    covers_topics:
+    - java.comment-identifier
+    - java.literal
+    - java.statement-block
+    - java.class-declaration
+    - java.main-signature
+    - java.package-declaration
+    uses_capabilities:
+    - java.platform-entry
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：独立写出含 package、class、main、注释、字面量、语句和嵌套代码块的最小程序并逐层标注结构
+    covers_topic_groups:
+    - java-lexical-structure
+    - java-program-structure
+    covers_topics:
+    - java.comment-identifier
+    - java.literal
+    - java.statement-block
+    - java.class-declaration
+    - java.main-signature
+    - java.package-declaration
+    uses_capabilities:
+    - java.platform-entry
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入非法标识符、缺分号、括号错位和 package/路径不一致，分别定位词法、语法与结构错误
+    covers_topic_groups:
+    - java-lexical-structure
+    - java-program-structure
+    covers_topics:
+    - java.comment-identifier
+    - java.literal
+    - java.statement-block
+    - java.class-declaration
+    - java.main-signature
+    - java.package-declaration
+    uses_capabilities:
+    - java.platform-entry
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.values-variables-types
+  title: 值、变量、基本类型、String、作用域与基本输出
+  role: concept
+  responsibility: 教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-values-types
+    title: 值与类型
+    topics:
+    - java.primitive-types
+    - java.string-value
+    - java.default-vs-local-initialization
+  - id: java-variables-scope
+    title: 变量与作用域
+    topics:
+    - java.variable-declaration
+    - java.assignment
+    - java.local-scope-output
+  topics_taught:
+  - java.primitive-types
+  - java.string-value
+  - java.default-vs-local-initialization
+  - java.variable-declaration
+  - java.assignment
+  - java.local-scope-output
+  topics_used:
+  - java.primitive-types
+  - java.string-value
+  - java.default-vs-local-initialization
+  - java.variable-declaration
+  - java.assignment
+  - java.local-scope-output
+  prerequisites:
+  - ch.java.program-structure
+  prerequisite_rationales:
+    ch.java.program-structure:
+      reason: 独立完成值与类型、变量与作用域前，必须先具备「注释、标识符、字面量、语句、代码块、class、main 与 package」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.comment-identifier
+      - java.literal
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.values-types-string
+    uses:
+    - java.platform-entry
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.values-variables-types/
+    acceptance:
+    - 各变量输出类型和值正确；内外层同名边界可解释；三种非法写法稳定编译失败
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-values-variables-types/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释值、变量、基本类型、String、作用域与基本输出的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-values-types
+    - java-variables-scope
+    covers_topics:
+    - java.primitive-types
+    - java.string-value
+    - java.default-vs-local-initialization
+    - java.variable-declaration
+    - java.assignment
+    - java.local-scope-output
+    uses_capabilities:
+    - java.platform-entry
+    - java.values-types-string
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 编写打印设备名称、数量、启用状态和局部作用域变量的程序，显式选择 primitive、String 与初始化时机
+    covers_topic_groups:
+    - java-values-types
+    - java-variables-scope
+    covers_topics:
+    - java.primitive-types
+    - java.string-value
+    - java.default-vs-local-initialization
+    - java.variable-declaration
+    - java.assignment
+    - java.local-scope-output
+    uses_capabilities:
+    - java.platform-entry
+    - java.values-types-string
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入局部变量未初始化、作用域外访问和错误类型赋值，读取编译位置后做最小修复
+    covers_topic_groups:
+    - java-values-types
+    - java-variables-scope
+    covers_topics:
+    - java.primitive-types
+    - java.string-value
+    - java.default-vs-local-initialization
+    - java.variable-declaration
+    - java.assignment
+    - java.local-scope-output
+    uses_capabilities:
+    - java.platform-entry
+    - java.values-types-string
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.expressions-conversions
+  title: 运算符、表达式、类型转换、溢出与整数分金额
+  role: concept
+  responsibility: 教授表达式求值和数值边界，使用最小货币例子但不引入 BigDecimal 或业务对象
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-expressions
+    title: 运算与表达式
+    topics:
+    - java.arithmetic-operator
+    - java.precedence
+    - java.comparison-boolean-expression
+  - id: java-conversions
+    title: 转换与数值边界
+    topics:
+    - java.numeric-promotion-cast
+    - java.integer-overflow
+    - java.integer-money
+  topics_taught:
+  - java.arithmetic-operator
+  - java.precedence
+  - java.comparison-boolean-expression
+  - java.numeric-promotion-cast
+  - java.integer-overflow
+  - java.integer-money
+  topics_used:
+  - java.arithmetic-operator
+  - java.precedence
+  - java.comparison-boolean-expression
+  - java.numeric-promotion-cast
+  - java.integer-overflow
+  - java.integer-money
+  prerequisites:
+  - ch.java.values-variables-types
+  prerequisite_rationales:
+    ch.java.values-variables-types:
+      reason: 独立完成运算与表达式、转换与数值边界前，必须先具备「值、变量、基本类型、String、作用域与基本输出」已经验证的知识与失败边界
+      capabilities:
+      - java.values-types-string
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.values-types-string
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.expressions-conversions/
+    acceptance:
+    - 正常金额手算一致；0 与上界有预言；溢出输入不会静默返回看似合法的负数；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释运算符、表达式、类型转换、溢出与整数分金额的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-expressions
+    - java-conversions
+    covers_topics:
+    - java.arithmetic-operator
+    - java.precedence
+    - java.comparison-boolean-expression
+    - java.numeric-promotion-cast
+    - java.integer-overflow
+    - java.integer-money
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现单价分×数量的金额计算器，展示优先级、整型提升、显式转换和接近 int 上限的输入，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - java-expressions
+    - java-conversions
+    covers_topics:
+    - java.arithmetic-operator
+    - java.precedence
+    - java.comparison-boolean-expression
+    - java.numeric-promotion-cast
+    - java.integer-overflow
+    - java.integer-money
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入整数除法截断、窄化转换丢值和乘法溢出，先预测错误结果再选择 long/校验修复，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-expressions
+    - java-conversions
+    covers_topics:
+    - java.arithmetic-operator
+    - java.precedence
+    - java.comparison-boolean-expression
+    - java.numeric-promotion-cast
+    - java.integer-overflow
+    - java.integer-money
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.branching
+  title: 布尔逻辑、if/else 与 switch
+  role: concept
+  responsibility: 教授互斥条件选择和穷尽分支，不在本章教授重复执行或异常流程
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-boolean-branch
+    title: 布尔与条件分支
+    topics:
+    - java.boolean-logic
+    - java.if-else
+    - java.guard-clause
+  - id: java-switch
+    title: 多分支选择
+    topics:
+    - java.switch-statement-expression
+    - java.exhaustive-branch
+    - java.fallthrough-boundary
+  topics_taught:
+  - java.boolean-logic
+  - java.if-else
+  - java.guard-clause
+  - java.switch-statement-expression
+  - java.exhaustive-branch
+  - java.fallthrough-boundary
+  topics_used:
+  - java.boolean-logic
+  - java.if-else
+  - java.guard-clause
+  - java.switch-statement-expression
+  - java.exhaustive-branch
+  - java.fallthrough-boundary
+  prerequisites:
+  - ch.java.expressions-conversions
+  prerequisite_rationales:
+    ch.java.expressions-conversions:
+      reason: 独立完成布尔与条件分支、多分支选择前，必须先具备「运算符、表达式、类型转换、溢出与整数分金额」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.arithmetic-operator
+      - java.precedence
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.values-types-string
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.branching/
+    acceptance:
+    - 最小/最大/区间边界和非法值均有预期；每次输入只命中一条规则；无隐式 fallthrough
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-branching/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释布尔逻辑、if/else 与 switch的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-boolean-branch
+    - java-switch
+    covers_topics:
+    - java.boolean-logic
+    - java.if-else
+    - java.guard-clause
+    - java.switch-statement-expression
+    - java.exhaustive-branch
+    - java.fallthrough-boundary
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现工单优先级规则：非法值拒绝、多个互斥区间用 if/else、有限状态用穷尽 switch 返回结果
+    covers_topic_groups:
+    - java-boolean-branch
+    - java-switch
+    covers_topics:
+    - java.boolean-logic
+    - java.if-else
+    - java.guard-clause
+    - java.switch-statement-expression
+    - java.exhaustive-branch
+    - java.fallthrough-boundary
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入遗漏边界、条件顺序遮蔽和 switch 漏分支，使用具体输入定位未覆盖路径并修复
+    covers_topic_groups:
+    - java-boolean-branch
+    - java-switch
+    covers_topics:
+    - java.boolean-logic
+    - java.if-else
+    - java.guard-clause
+    - java.switch-statement-expression
+    - java.exhaustive-branch
+    - java.fallthrough-boundary
+    uses_capabilities:
+    - java.values-types-string
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.loops
+  title: for、while、计数、累积与哨兵循环
+  role: concept
+  responsibility: 教授有界重复和循环不变量，不提前使用数组、集合或递归作为主要数据来源
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-loop-forms
+    title: 循环形式
+    topics:
+    - java.for-loop
+    - java.while-loop
+    - java.do-while-loop
+  - id: java-loop-control
+    title: 循环状态与退出
+    topics:
+    - java.counter-accumulator
+    - java.sentinel-loop
+    - java.break-continue
+  topics_taught:
+  - java.for-loop
+  - java.while-loop
+  - java.do-while-loop
+  - java.counter-accumulator
+  - java.sentinel-loop
+  - java.break-continue
+  topics_used:
+  - java.for-loop
+  - java.while-loop
+  - java.do-while-loop
+  - java.counter-accumulator
+  - java.sentinel-loop
+  - java.break-continue
+  prerequisites:
+  - ch.java.branching
+  prerequisite_rationales:
+    ch.java.branching:
+      reason: 独立完成循环形式、循环状态与退出前，必须先具备「布尔逻辑、if/else 与 switch」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - java.boolean-logic
+      - java.if-else
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.control-flow
+    uses:
+    - java.values-types-string
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.loops/
+    acceptance:
+    - 每类分支命中预期；N=0/1/多项可手算；循环必终止；遗漏、死循环和错误累计版本均被oracle发现
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-loops/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释for、while、计数、累积与哨兵循环的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-loop-forms
+    - java-loop-control
+    covers_topics:
+    - java.for-loop
+    - java.while-loop
+    - java.do-while-loop
+    - java.counter-accumulator
+    - java.sentinel-loop
+    - java.break-continue
+    uses_capabilities:
+    - java.values-types-string
+    - java.control-flow
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：综合 if/switch 与 for/while：按优先级分支处理1..N项、哨兵计数和可提前退出查找，并记录循环不变量，并生成记录输入、操作与结果的验证报告
+    covers_topic_groups:
+    - java-loop-forms
+    - java-loop-control
+    covers_topics:
+    - java.for-loop
+    - java.while-loop
+    - java.do-while-loop
+    - java.counter-accumulator
+    - java.sentinel-loop
+    - java.break-continue
+    uses_capabilities:
+    - java.values-types-string
+    - java.control-flow
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入分支边界遗漏、switch漏状态、off-by-one、哨兵不更新和break位置错误，借助路径/计数轨迹修复
+    covers_topic_groups:
+    - java-loop-forms
+    - java-loop-control
+    covers_topics:
+    - java.for-loop
+    - java.while-loop
+    - java.do-while-loop
+    - java.counter-accumulator
+    - java.sentinel-loop
+    - java.break-continue
+    uses_capabilities:
+    - java.values-types-string
+    - java.control-flow
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.arrays-command-args
+  title: 数组、二维数组、查找与命令行参数
+  role: concept
+  responsibility: 教授固定长度序列和索引边界，以命令行参数作为输入但不引入泛型集合
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-arrays
+    title: 数组与索引
+    topics:
+    - java.array-declaration
+    - java.index-length-boundary
+    - java.two-dimensional-array
+  - id: java-array-use
+    title: 遍历与参数
+    topics:
+    - java.array-traversal-search
+    - java.command-line-args
+    - java.empty-input-boundary
+  topics_taught:
+  - java.array-declaration
+  - java.index-length-boundary
+  - java.two-dimensional-array
+  - java.array-traversal-search
+  - java.command-line-args
+  - java.empty-input-boundary
+  topics_used:
+  - java.array-declaration
+  - java.index-length-boundary
+  - java.two-dimensional-array
+  - java.array-traversal-search
+  - java.command-line-args
+  - java.empty-input-boundary
+  prerequisites:
+  - ch.java.loops
+  prerequisite_rationales:
+    ch.java.loops:
+      reason: 独立完成数组与索引、遍历与参数前，必须先具备「for、while、计数、累积与哨兵循环」已经验证的知识与失败边界
+      capabilities:
+      - java.control-flow
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.arrays
+    uses:
+    - java.control-flow
+    - java.values-types-string
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.arrays-command-args/
+    acceptance:
+    - 空/单项/多项数组均有固定结果；每个索引满足 0<=i<length；越界版本稳定抛出并被定位；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-arrays-command-args/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释数组、二维数组、查找与命令行参数的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-arrays
+    - java-array-use
+    covers_topics:
+    - java.array-declaration
+    - java.index-length-boundary
+    - java.two-dimensional-array
+    - java.array-traversal-search
+    - java.command-line-args
+    - java.empty-input-boundary
+    uses_capabilities:
+    - java.control-flow
+    - java.values-types-string
+    - java.arrays
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 从命令行参数构造优先级数组，完成遍历、最大值查找和二维班次表访问，并显式处理空数组
+    covers_topic_groups:
+    - java-arrays
+    - java-array-use
+    covers_topics:
+    - java.array-declaration
+    - java.index-length-boundary
+    - java.two-dimensional-array
+    - java.array-traversal-search
+    - java.command-line-args
+    - java.empty-input-boundary
+    uses_capabilities:
+    - java.control-flow
+    - java.values-types-string
+    - java.arrays
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 length 当最后索引、空参数直接访问和二维行列颠倒，定位数组边界日志并修复
+    covers_topic_groups:
+    - java-arrays
+    - java-array-use
+    covers_topics:
+    - java.array-declaration
+    - java.index-length-boundary
+    - java.two-dimensional-array
+    - java.array-traversal-search
+    - java.command-line-args
+    - java.empty-input-boundary
+    uses_capabilities:
+    - java.control-flow
+    - java.values-types-string
+    - java.arrays
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.methods
+  title: 方法、参数传递、返回值、重载与递归边界
+  role: concept
+  responsibility: 教授用方法封装可复用行为和参数契约，不提前使用对象字段、泛型或异常作为主要抽象
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-method-contract
+    title: 方法契约
+    topics:
+    - java.method-declaration-call
+    - java.parameter-return
+    - java.pass-by-value
+  - id: java-method-variants
+    title: 重载与递归
+    topics:
+    - java.method-overload
+    - java.call-stack
+    - java.recursion-base-case
+  topics_taught:
+  - java.method-declaration-call
+  - java.parameter-return
+  - java.pass-by-value
+  - java.method-overload
+  - java.call-stack
+  - java.recursion-base-case
+  topics_used:
+  - java.method-declaration-call
+  - java.parameter-return
+  - java.pass-by-value
+  - java.method-overload
+  - java.call-stack
+  - java.recursion-base-case
+  prerequisites:
+  - ch.java.arrays-command-args
+  prerequisite_rationales:
+    ch.java.arrays-command-args:
+      reason: 独立完成方法契约、重载与递归前，必须先具备「数组、二维数组、查找与命令行参数」已经验证的知识与失败边界
+      capabilities:
+      - java.arrays
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.methods
+    uses:
+    - java.control-flow
+    - java.arrays
+    - java.values-types-string
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.methods/
+    acceptance:
+    - 方法对相同输入返回确定结果；参数改变只影响约定行为；递归在 0/1/多层均终止；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-methods/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T0
+    methods:
+    - prediction
+    - command-output
+    - manual-check
+    oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释方法、参数传递、返回值、重载与递归边界的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-method-contract
+    - java-method-variants
+    covers_topics:
+    - java.method-declaration-call
+    - java.parameter-return
+    - java.pass-by-value
+    - java.method-overload
+    - java.call-stack
+    - java.recursion-base-case
+    uses_capabilities:
+    - java.control-flow
+    - java.arrays
+    - java.values-types-string
+    - java.methods
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 完成该章的独立构建任务：把工单金额和优先级规则拆成有参数、返回值与重载的方法，并为递归倒计时写明确 base case
+    covers_topic_groups:
+    - java-method-contract
+    - java-method-variants
+    covers_topics:
+    - java.method-declaration-call
+    - java.parameter-return
+    - java.pass-by-value
+    - java.method-overload
+    - java.call-stack
+    - java.recursion-base-case
+    uses_capabilities:
+    - java.control-flow
+    - java.arrays
+    - java.values-types-string
+    - java.methods
+    evidence_kind: runnable-artifact-and-output
+    verification_mode: command-output-or-manual-calculation
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入参数顺序传错、分支漏 return、重载歧义和递归无基线，使用编译/调用栈证据修复
+    covers_topic_groups:
+    - java-method-contract
+    - java-method-variants
+    covers_topics:
+    - java.method-declaration-call
+    - java.parameter-return
+    - java.pass-by-value
+    - java.method-overload
+    - java.call-stack
+    - java.recursion-base-case
+    uses_capabilities:
+    - java.control-flow
+    - java.arrays
+    - java.values-types-string
+    - java.methods
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-observation-rerun
+- id: ch.java.console-input-validation
+  title: 控制台输入、缺参数、EOF、合法性校验与退出码
+  role: practice
+  responsibility: 综合基础语法实现可靠控制台边界，只复制 Scanner 构造外壳而不解释其对象模型
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-console-input
+    title: 控制台输入
+    topics:
+    - java.console-token-line
+    - java.command-argument-validation
+    - java.eof
+  - id: java-input-contract
+    title: 输入与退出契约
+    topics:
+    - java.parse-validation
+    - java.retry-or-fail
+    - java.process-exit-code
+  topics_taught:
+  - java.console-token-line
+  - java.command-argument-validation
+  - java.eof
+  - java.parse-validation
+  - java.retry-or-fail
+  - java.process-exit-code
+  topics_used:
+  - java.console-token-line
+  - java.command-argument-validation
+  - java.eof
+  - java.parse-validation
+  - java.retry-or-fail
+  - java.process-exit-code
+  prerequisites:
+  - ch.java.methods
+  prerequisite_rationales:
+    ch.java.methods:
+      reason: 独立完成控制台输入、输入与退出契约前，必须先具备「方法、参数传递、返回值、重载与递归边界」已经验证的知识与失败边界
+      capabilities:
+      - java.methods
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.methods
+    - java.arrays
+    - java.control-flow
+    - foundation.shell-command-stream
+  borrowed_scaffolds:
+  - topic: java.scanner-construction
+    later_teacher_chapter_id: ch.java-oop.classes-objects
+    allowed_action: copy-run-only
+    rationale: 只复制 Scanner 的创建与关闭外壳；本章独立任务只修改输入规则
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.console-input-validation/
+    acceptance:
+    - 合法输入得到金额/0；空输入与非法值只写 stderr/非0；EOF 不阻塞且重跑结果一致；上述条件均有可重放断言
+  gate_requirements:
+    gate_ids: []
+    evidence_paths: []
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T1
+    methods:
+    - prediction
+    - oracle-cases
+    - assertions
+    oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
+  version_surfaces:
+  - jdk-25
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释控制台输入、缺参数、EOF、合法性校验与退出码的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-console-input
+    - java-input-contract
+    covers_topics:
+    - java.console-token-line
+    - java.command-argument-validation
+    - java.eof
+    - java.parse-validation
+    - java.retry-or-fail
+    - java.process-exit-code
+    uses_capabilities:
+    - java.methods
+    - java.arrays
+    - java.control-flow
+    - foundation.shell-command-stream
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 实现读取工单数量与单价的 CLI：支持 args 或 stdin、检测缺参数/EOF/非法数字、成功打印总额并设置退出码
+    covers_topic_groups:
+    - java-console-input
+    - java-input-contract
+    covers_topics:
+    - java.console-token-line
+    - java.command-argument-validation
+    - java.eof
+    - java.parse-validation
+    - java.retry-or-fail
+    - java.process-exit-code
+    uses_capabilities:
+    - java.methods
+    - java.arrays
+    - java.control-flow
+    - foundation.shell-command-stream
+    evidence_kind: runnable-artifact-and-oracles
+    verification_mode: failing-and-passing-oracle-cases
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 注入 EOF 后无限重试、parse 前未校验和所有路径都返回 0，依据 stderr/退出码定位并修复
+    covers_topic_groups:
+    - java-console-input
+    - java-input-contract
+    covers_topics:
+    - java.console-token-line
+    - java.command-argument-validation
+    - java.eof
+    - java.parse-validation
+    - java.retry-or-fail
+    - java.process-exit-code
+    uses_capabilities:
+    - java.methods
+    - java.arrays
+    - java.control-flow
+    - foundation.shell-command-stream
+    evidence_kind: failure-log-fix-rerun
+    verification_mode: injected-fault-rerun
+- id: ch.java.maven-junit-smoke
+  title: Maven 最小项目、JUnit、断言与失败日志
+  role: practice
+  responsibility: 建立 Java 自动化测试最小闭环，不提前教授 Mock、参数化测试或 Spring 上下文
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-maven-smoke
+    title: Maven 最小项目
+    topics:
+    - maven.standard-layout
+    - maven.test-lifecycle
+    - maven.dependency-scope-test
+  - id: java-junit-smoke
+    title: JUnit 最小闭环
+    topics:
+    - junit.test-case
+    - junit.assert-equals
+    - junit.failure-report
+  topics_taught:
+  - maven.standard-layout
+  - maven.test-lifecycle
+  - maven.dependency-scope-test
+  - junit.test-case
+  - junit.assert-equals
+  - junit.failure-report
+  topics_used:
+  - maven.standard-layout
+  - maven.test-lifecycle
+  - maven.dependency-scope-test
+  - junit.test-case
+  - junit.assert-equals
+  - junit.failure-report
+  prerequisites:
+  - ch.java.methods
+  prerequisite_rationales:
+    ch.java.methods:
+      reason: 独立完成Maven 最小项目、JUnit 最小闭环前，必须先具备「方法、参数传递、返回值、重载与递归边界」已经验证的知识与失败边界
+      capabilities:
+      - java.methods
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches:
+    - java.build-testing
+    uses:
+    - java.methods
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+  borrowed_scaffolds:
+  - topic: java.junit-test-annotation-mechanics
+    later_teacher_chapter_id: ch.java-engineering.annotations-metadata
+    allowed_action: copy-run-only
+    rationale: 复制 @Test 标记并使用，不提前解释注解元数据机制
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.maven-junit-smoke/
+    acceptance:
+    - 正确版本 Tests run=2/Failures=0；三种故障各在预期阶段失败；恢复后 clean test 重新通过
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-maven-junit-smoke/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T2
+    methods:
+    - prediction
+    - unit-test
+    - failure-rerun
+    oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
+  version_surfaces:
+  - jdk-25
+  - maven-3
+  - junit-6
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释Maven 最小项目、JUnit、断言与失败日志的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-maven-smoke
+    - java-junit-smoke
+    covers_topics:
+    - maven.standard-layout
+    - maven.test-lifecycle
+    - maven.dependency-scope-test
+    - junit.test-case
+    - junit.assert-equals
+    - junit.failure-report
+    uses_capabilities:
+    - java.methods
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    - java.build-testing
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 创建标准 Maven 工程，为 OrderAmountCalculator 写正常和零数量两条 JUnit 测试并从命令行执行 mvn clean
+      test
+    covers_topic_groups:
+    - java-maven-smoke
+    - java-junit-smoke
+    covers_topics:
+    - maven.standard-layout
+    - maven.test-lifecycle
+    - maven.dependency-scope-test
+    - junit.test-case
+    - junit.assert-equals
+    - junit.failure-report
+    uses_capabilities:
+    - java.methods
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    - java.build-testing
+    evidence_kind: runnable-code-and-unit-tests
+    verification_mode: language-unit-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 分别注入 package 不一致、源码缺分号和错误 expected，区分 compile、testCompile、surefire:test
+      三个失败阶段，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-maven-smoke
+    - java-junit-smoke
+    covers_topics:
+    - maven.standard-layout
+    - maven.test-lifecycle
+    - maven.dependency-scope-test
+    - junit.test-case
+    - junit.assert-equals
+    - junit.failure-report
+    uses_capabilities:
+    - java.methods
+    - foundation.toolchain-env-build
+    - foundation.verification-debug-test
+    - java.build-testing
+    evidence_kind: failing-test-fix-rerun
+    verification_mode: failing-test-rerun
+- id: ch.java.debugging-failures
+  title: 编译错误、运行异常、断言失败、逻辑错误与断点调试
+  role: practice
+  responsibility: 训练按失败阶段定位首个可信证据，并使用断点与调用栈复核，不引入 JVM 性能诊断
+  level: L1
+  status: planned
+  stable_core: true
+  topic_groups:
+  - id: java-failure-stages
+    title: Java 失败阶段
+    topics:
+    - java.compile-error
+    - java.runtime-exception
+    - java.assertion-logic-failure
+  - id: java-debugger
+    title: 断点与调用栈
+    topics:
+    - debug.breakpoint-step
+    - debug.stack-frame-variable
+    - debug.reproduce-fix-rerun
+  topics_taught:
+  - java.compile-error
+  - java.runtime-exception
+  - java.assertion-logic-failure
+  - debug.breakpoint-step
+  - debug.stack-frame-variable
+  - debug.reproduce-fix-rerun
+  topics_used:
+  - java.compile-error
+  - java.runtime-exception
+  - java.assertion-logic-failure
+  - debug.breakpoint-step
+  - debug.stack-frame-variable
+  - debug.reproduce-fix-rerun
+  prerequisites:
+  - ch.java.maven-junit-smoke
+  - ch.foundations.editor-project-navigation
+  prerequisite_rationales:
+    ch.java.maven-junit-smoke:
+      reason: 独立完成Java 失败阶段、断点与调用栈前，必须先具备「Maven 最小项目、JUnit、断言与失败日志」已经验证的知识与失败边界
+      capabilities:
+      - java.build-testing
+      topics: []
+      outcome_ids:
+      - build
+      - diagnose
+    ch.foundations.editor-project-navigation:
+      reason: 独立完成Java 失败阶段、断点与调用栈前，必须先具备「编辑器、IDE、项目导航与源码定位」已经验证的知识与失败边界
+      capabilities: []
+      topics:
+      - editor.project-root
+      - editor.file-search
+      outcome_ids:
+      - build
+      - diagnose
+  capabilities:
+    teaches: []
+    uses:
+    - java.build-testing
+    - java.methods
+    - java.control-flow
+    - foundation.verification-debug-test
+  borrowed_scaffolds: []
+  lab_requirements:
+    required: true
+    artifact_paths:
+    - labs/encyclopedia/ch.java.debugging-failures/
+    acceptance:
+    - 四类故障分类正确；断点命中预期分支；修复后原失败输入和完整测试均通过
+  gate_requirements:
+    gate_ids:
+    - G1
+    evidence_paths:
+    - evidence/gates/g1/java-debugging-failures/
+    critical_failure_modes: []
+  verification_mode:
+    test_level: T2
+    methods:
+    - prediction
+    - unit-test
+    - failure-rerun
+    oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
+  version_surfaces:
+  - jdk-25
+  - junit-6
+  outcomes:
+  - id: explain
+    kind: concept
+    text: 在 120 秒内解释编译错误、运行异常、断言失败、逻辑错误与断点调试的职责、适用边界与一个会失败的反例
+    covers_topic_groups:
+    - java-failure-stages
+    - java-debugger
+    covers_topics:
+    - java.compile-error
+    - java.runtime-exception
+    - java.assertion-logic-failure
+    - debug.breakpoint-step
+    - debug.stack-frame-variable
+    - debug.reproduce-fix-rerun
+    uses_capabilities:
+    - java.build-testing
+    - java.methods
+    - java.control-flow
+    - foundation.verification-debug-test
+    evidence_kind: timed-teach-back
+    verification_mode: oral-explanation
+  - id: build
+    kind: independent-build
+    text: 为同一小程序制造编译、运行异常、断言和纯逻辑四类故障，保存断点、变量和调用栈定位记录
+    covers_topic_groups:
+    - java-failure-stages
+    - java-debugger
+    covers_topics:
+    - java.compile-error
+    - java.runtime-exception
+    - java.assertion-logic-failure
+    - debug.breakpoint-step
+    - debug.stack-frame-variable
+    - debug.reproduce-fix-rerun
+    uses_capabilities:
+    - java.build-testing
+    - java.methods
+    - java.control-flow
+    - foundation.verification-debug-test
+    evidence_kind: runnable-code-and-unit-tests
+    verification_mode: language-unit-test
+  - id: diagnose
+    kind: fault-diagnosis
+    text: 面对未知故障先判断阶段，再从第一条项目代码位置步入并修复，禁止从末尾 BUILD FAILURE 猜原因，并把异常定位到第一处可信证据
+    covers_topic_groups:
+    - java-failure-stages
+    - java-debugger
+    covers_topics:
+    - java.compile-error
+    - java.runtime-exception
+    - java.assertion-logic-failure
+    - debug.breakpoint-step
+    - debug.stack-frame-variable
+    - debug.reproduce-fix-rerun
+    uses_capabilities:
+    - java.build-testing
+    - java.methods
+    - java.control-flow
+    - foundation.verification-debug-test
+    evidence_kind: failing-test-fix-rerun
+    verification_mode: failing-test-rerun

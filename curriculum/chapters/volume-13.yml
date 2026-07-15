@@ -1,0 +1,1123 @@
+---
+schema_version: 2
+edition: 2026.2-draft
+volume: "13"
+chapters:
+  - id: ch.math.algebra-units
+    title: "算术、比例、单位、代数式与方程"
+    role: foundation
+    responsibility: "建立从数量、比例和单位到代数式与一元方程的可验证计算基础，只处理确定性标量关系，不提前引入函数图像或概率。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: math-quantities-units
+        title: "数量与单位"
+        topics: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check"]
+      - id: math-algebra-equations
+        title: "代数式与方程"
+        topics: ["math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+    topics_taught: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check","math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+    topics_used: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check","math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+    prerequisites: []
+    prerequisite_rationales:
+      {}
+    capabilities:
+      teaches: []
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.math.algebra-units/
+      acceptance:
+        - "制作一份维修工时、费率、折扣与单位换算计算表，逐题给出代数式、精确结果、量纲和估算复核；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“运算优先级、百分比基数、单位换算方向或移项等价性错误”后定位首个可信证据，修复并重跑原验证；修复后判据：每道题的单位一致，方程解回代后左右两边相等，估算数量级与精确结果相容。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.math.algebra-units/"]
+      critical_failure_modes: ["unit-mismatch","equation-transformation-error"]
+    verification_mode:
+      test_level: T0
+      methods: ["hand-calculation","dimension-check","inverse-substitution"]
+      oracle: "每道题的单位一致，方程解回代后左右两边相等，估算数量级与精确结果相容。"
+    version_surfaces: []
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“算术、比例、单位、代数式与方程”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["math-quantities-units","math-algebra-equations"]
+        covers_topics: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check","math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+        uses_capabilities: []
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“算术、比例、单位、代数式与方程”构建可运行程序与测试：制作一份维修工时、费率、折扣与单位换算计算表，逐题给出代数式、精确结果、量纲和估算复核；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["math-quantities-units","math-algebra-equations"]
+        covers_topics: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check","math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+        uses_capabilities: []
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "hand-calculation-dimension-check-inverse-substitution"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“运算优先级、百分比基数、单位换算方向或移项等价性错误”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["math-quantities-units","math-algebra-equations"]
+        covers_topics: ["math.arithmetic-precedence","math.ratio-percentage","math.unit-conversion","math.dimension-check","math.variable-expression","math.equation-equivalence","math.linear-equation","math.estimation-sanity-check"]
+        uses_capabilities: []
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.math.functions-graphs
+    title: "函数、坐标、图像、斜率、指数、对数与求和"
+    role: foundation
+    responsibility: "把输入输出关系表示为函数、表格、公式和图像，并用斜率、指数、对数与求和解释变化，不教授矩阵或导数。"
+    level: L1-L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: math-function-representations
+        title: "函数与图像"
+        topics: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function"]
+      - id: math-growth-summation
+        title: "增长与求和"
+        topics: ["math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+    topics_taught: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function","math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+    topics_used: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function","math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+    prerequisites: ["ch.math.algebra-units"]
+    prerequisite_rationales:
+      ch.math.algebra-units:
+        reason: "函数值、斜率与指数运算必须建立在代数式、比例和单位一致性之上。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["math.algebra-functions"]
+      uses: []
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.math.functions-graphs/
+      acceptance:
+        - "用公式、值表和图像表达设备折旧、复利增长与分段维修费函数，并验证关键点、斜率和反函数结果；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“定义域遗漏、坐标轴尺度误读、指数与对数互逆错误或求和上下界偏一”后定位首个可信证据，修复并重跑原验证；修复后判据：同一关系的公式、表格和图像在采样点一致；对数回代、分段边界和求和小样本均可手算复核。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.math.functions-graphs/"]
+      critical_failure_modes: ["domain-omission","graph-scale-misread"]
+    verification_mode:
+      test_level: T0
+      methods: ["value-table","graph-check","inverse-calculation"]
+      oracle: "同一关系的公式、表格和图像在采样点一致；对数回代、分段边界和求和小样本均可手算复核。"
+    version_surfaces: []
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“函数、坐标、图像、斜率、指数、对数与求和”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["math-function-representations","math-growth-summation"]
+        covers_topics: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function","math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“函数、坐标、图像、斜率、指数、对数与求和”构建可运行程序与测试：用公式、值表和图像表达设备折旧、复利增长与分段维修费函数，并验证关键点、斜率和反函数结果；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["math-function-representations","math-growth-summation"]
+        covers_topics: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function","math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "value-table-graph-check-inverse-calculation"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“定义域遗漏、坐标轴尺度误读、指数与对数互逆错误或求和上下界偏一”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["math-function-representations","math-growth-summation"]
+        covers_topics: ["math.function-domain-range","math.coordinate-graph","math.slope-rate","math.piecewise-function","math.exponent-power","math.logarithm-inverse","math.sigma-summation","math.graph-scale-interpretation"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.math.linear-algebra
+    title: "向量、矩阵、张量、形状与运算"
+    role: concept
+    responsibility: "用向量、矩阵和张量表达批量数值数据，验证形状、点积、矩阵乘法与线性变换，不引入梯度或框架自动求导。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: math-vector-matrix
+        title: "向量与矩阵"
+        topics: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation"]
+      - id: math-tensor-shape
+        title: "张量与形状"
+        topics: ["math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+    topics_taught: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation","math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+    topics_used: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation","math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+    prerequisites: ["ch.math.functions-graphs"]
+    prerequisite_rationales:
+      ch.math.functions-graphs:
+        reason: "线性变换和坐标表示需要已理解函数、坐标与斜率。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.algebra-functions"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.math.linear-algebra/
+      acceptance:
+        - "手算并用 NumPy 复核一批设备特征的点积、矩阵乘法、轴变换与广播结果，保存每步形状合同；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“矩阵乘法次序、轴含义、广播方向或行列形状不匹配”后定位首个可信证据，修复并重跑原验证；修复后判据：先写出的结果形状与实际一致，手算小矩阵和 NumPy 输出逐元素相等，非法形状产生预期失败。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.math.linear-algebra/"]
+      critical_failure_modes: ["shape-contract-violation","matrix-order-error"]
+    verification_mode:
+      test_level: T1
+      methods: ["shape-prediction","hand-vs-numpy","assertions"]
+      oracle: "先写出的结果形状与实际一致，手算小矩阵和 NumPy 输出逐元素相等，非法形状产生预期失败。"
+    version_surfaces: ["python-3.14","numpy"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“向量、矩阵、张量、形状与运算”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["math-vector-matrix","math-tensor-shape"]
+        covers_topics: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation","math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“向量、矩阵、张量、形状与运算”构建可运行程序与测试：手算并用 NumPy 复核一批设备特征的点积、矩阵乘法、轴变换与广播结果，保存每步形状合同；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["math-vector-matrix","math-tensor-shape"]
+        covers_topics: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation","math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "shape-prediction-hand-vs-numpy-assertions"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“矩阵乘法次序、轴含义、广播方向或行列形状不匹配”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["math-vector-matrix","math-tensor-shape"]
+        covers_topics: ["math.vector-component","math.dot-product","math.matrix-multiplication","math.linear-transformation","math.tensor-rank-shape","math.axis-index","math.broadcast-intuition","math.shape-invariant"]
+        uses_capabilities: ["math.algebra-functions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.math.probability-statistics
+    title: "概率、统计、分布、期望与方差"
+    role: concept
+    responsibility: "用概率空间、描述统计、条件概率和常见分布量化不确定性与样本差异，不把相关性解释为因果。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: math-probability-distribution
+        title: "概率与分布"
+        topics: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions"]
+      - id: math-statistics-estimation
+        title: "统计量与估计"
+        topics: ["math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+    topics_taught: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions","math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+    topics_used: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions","math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+    prerequisites: ["ch.math.functions-graphs"]
+    prerequisite_rationales:
+      ch.math.functions-graphs:
+        reason: "概率质量/密度与累积分布需要函数和图像解释能力。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["math.probability-statistics"]
+      uses: ["math.algebra-functions"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.math.probability-statistics/
+      acceptance:
+        - "对一组维修时长计算分位数、均值、方差与条件概率，绘制经验分布并比较有偏抽样结果；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“分母选错、总体与样本统计量混用、条件概率方向颠倒或把相关当因果”后定位首个可信证据，修复并重跑原验证；修复后判据：小样本统计量可逐项复算，概率总和为一，模拟频率在声明误差范围内接近理论值。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.math.probability-statistics/"]
+      critical_failure_modes: ["sampling-bias-hidden","conditional-probability-reversal"]
+    verification_mode:
+      test_level: T1
+      methods: ["hand-calculation","simulation","assertions"]
+      oracle: "小样本统计量可逐项复算，概率总和为一，模拟频率在声明误差范围内接近理论值。"
+    version_surfaces: ["python-3.14","numpy"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“概率、统计、分布、期望与方差”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["math-probability-distribution","math-statistics-estimation"]
+        covers_topics: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions","math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+        uses_capabilities: ["math.probability-statistics","math.algebra-functions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“概率、统计、分布、期望与方差”构建可运行程序与测试：对一组维修时长计算分位数、均值、方差与条件概率，绘制经验分布并比较有偏抽样结果；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["math-probability-distribution","math-statistics-estimation"]
+        covers_topics: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions","math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+        uses_capabilities: ["math.probability-statistics","math.algebra-functions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "hand-calculation-simulation-assertions"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“分母选错、总体与样本统计量混用、条件概率方向颠倒或把相关当因果”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["math-probability-distribution","math-statistics-estimation"]
+        covers_topics: ["math.sample-event","math.conditional-probability","math.random-variable","math.common-distributions","math.mean-median-quantile","math.variance-standard-deviation","math.expectation","math.sampling-bias"]
+        uses_capabilities: ["math.probability-statistics","math.algebra-functions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.math.gradients
+    title: "导数、梯度、链式法则与优化"
+    role: concept
+    responsibility: "把导数与梯度解释为局部变化率，用链式法则和有限差分验证优化方向，不教授具体深度学习框架。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: math-derivative-gradient
+        title: "导数与梯度"
+        topics: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule"]
+      - id: math-optimization
+        title: "优化与数值验证"
+        topics: ["math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+    topics_taught: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule","math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+    topics_used: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule","math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+    prerequisites: ["ch.math.linear-algebra"]
+    prerequisite_rationales:
+      ch.math.linear-algebra:
+        reason: "多变量梯度和参数更新需要向量、矩阵与形状合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["math.linear-calculus"]
+      uses: ["math.algebra-functions"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.math.gradients/
+      acceptance:
+        - "对二元损失函数手推梯度，使用有限差分核对每个分量，并比较三种学习率的下降轨迹；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“链式法则漏项、梯度符号反转、有限差分步长失真或学习率导致发散”后定位首个可信证据，修复并重跑原验证；修复后判据：解析梯度与中心差分在容差内一致；合理学习率使损失按预期下降，故障学习率产生可解释轨迹。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.math.gradients/"]
+      critical_failure_modes: ["incorrect-chain-rule","gradient-direction-reversal"]
+    verification_mode:
+      test_level: T1
+      methods: ["symbolic-derivation","finite-difference-check","loss-trajectory"]
+      oracle: "解析梯度与中心差分在容差内一致；合理学习率使损失按预期下降，故障学习率产生可解释轨迹。"
+    version_surfaces: ["python-3.14","numpy"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“导数、梯度、链式法则与优化”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["math-derivative-gradient","math-optimization"]
+        covers_topics: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule","math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+        uses_capabilities: ["math.linear-calculus","math.algebra-functions"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“导数、梯度、链式法则与优化”构建可运行程序与测试：对二元损失函数手推梯度，使用有限差分核对每个分量，并比较三种学习率的下降轨迹；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["math-derivative-gradient","math-optimization"]
+        covers_topics: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule","math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+        uses_capabilities: ["math.linear-calculus","math.algebra-functions"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "symbolic-derivation-finite-difference-check-loss-trajectory"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“链式法则漏项、梯度符号反转、有限差分步长失真或学习率导致发散”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["math-derivative-gradient","math-optimization"]
+        covers_topics: ["math.derivative-limit-intuition","math.partial-derivative","math.gradient-vector","math.chain-rule","math.gradient-descent","math.learning-rate-intuition","math.finite-difference","math.local-global-optimum"]
+        uses_capabilities: ["math.linear-calculus","math.algebra-functions"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.problem-data-split
+    title: "问题定义、数据集、划分与数据泄漏"
+    role: concept
+    responsibility: "把业务目标转换为监督信号、样本单位和离线实验合同，建立训练/验证/测试划分并识别泄漏，不选择具体模型。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-problem-contract
+        title: "问题与数据合同"
+        topics: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract"]
+      - id: ml-split-leakage
+        title: "划分与泄漏"
+        topics: ["ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+    topics_taught: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract","ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+    topics_used: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract","ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+    prerequisites: ["ch.math.probability-statistics","ch.data.pandas"]
+    prerequisite_rationales:
+      ch.math.probability-statistics:
+        reason: "抽样、分层和评估不确定性需要概率统计基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.data.pandas:
+        reason: "数据集检查、切片和分组划分需要可验证的 DataFrame 操作。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.probability-statistics","data.numpy-pandas"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.problem-data-split/
+      acceptance:
+        - "为工单超时预测编写问题卡并生成固定种子的训练/验证/测试清单，加入时间泄漏与重复实体检查；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“目标泄漏、同一实体跨集合、先全量预处理再划分或随机划分破坏时间顺序”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.problem-data-split/"]
+      critical_failure_modes: ["target-leakage","entity-split-leakage"]
+    verification_mode:
+      test_level: T2
+      methods: ["split-invariant-tests","duplicate-entity-check","temporal-boundary-test"]
+      oracle: "三组样本互斥且覆盖预期总体，同一实体和未来字段不会泄漏，固定种子可重现同一划分摘要。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“问题定义、数据集、划分与数据泄漏”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-problem-contract","ml-split-leakage"]
+        covers_topics: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract","ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+        uses_capabilities: ["math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "为工单超时预测编写问题卡并生成固定种子的训练/验证/测试清单，加入时间泄漏与重复实体检查；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-problem-contract","ml-split-leakage"]
+        covers_topics: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract","ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+        uses_capabilities: ["math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "split-invariant-tests-duplicate-entity-check-temporal-boundary-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“目标泄漏、同一实体跨集合、先全量预处理再划分或随机划分破坏时间顺序”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-problem-contract","ml-split-leakage"]
+        covers_topics: ["ml.task-target-feature","ml.sample-unit","ml.label-definition","ml.baseline-contract","ml.train-validation-test","ml.stratified-split","ml.temporal-split","ml.data-leakage"]
+        uses_capabilities: ["math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.preprocessing-features
+    title: "清洗、编码、缩放、特征与 Pipeline"
+    role: practice
+    responsibility: "在训练折内拟合清洗、编码、缩放和特征步骤并封装可复现 Pipeline，不在本章比较模型优劣。"
+    level: L2
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: ml-clean-encode
+        title: "清洗与编码"
+        topics: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema"]
+      - id: ml-scaling-pipeline
+        title: "缩放与管线"
+        topics: ["ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+    topics_taught: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema","ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+    topics_used: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema","ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+    prerequisites: ["ch.ml.problem-data-split"]
+    prerequisite_rationales:
+      ch.ml.problem-data-split:
+        reason: "所有可学习预处理必须服从已经确定的数据划分和防泄漏合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["data.numpy-pandas","math.probability-statistics"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.preprocessing-features/
+      acceptance:
+        - "为混合数值/类别工单数据实现只在训练折拟合的预处理管线，输出稳定特征模式和可追溯转换清单；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“在全量数据拟合缩放器、未知类别崩溃、列顺序漂移或缺失值策略不一致”后定位首个可信证据，修复并重跑原验证"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.preprocessing-features/"]
+      critical_failure_modes: ["preprocessing-leakage","feature-schema-drift"]
+    verification_mode:
+      test_level: T2
+      methods: ["pipeline-fit-test","heldout-transform-test","schema-snapshot"]
+      oracle: "训练折之外的数据不参与拟合；未知类别、缺失值和列重排均得到预期结果且输出形状稳定。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“清洗、编码、缩放、特征与 Pipeline”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-clean-encode","ml-scaling-pipeline"]
+        covers_topics: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema","ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+        uses_capabilities: ["data.numpy-pandas","math.probability-statistics"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "为混合数值/类别工单数据实现只在训练折拟合的预处理管线，输出稳定特征模式和可追溯转换清单；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-clean-encode","ml-scaling-pipeline"]
+        covers_topics: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema","ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+        uses_capabilities: ["data.numpy-pandas","math.probability-statistics"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "pipeline-fit-test-heldout-transform-test-schema-snapshot"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“在全量数据拟合缩放器、未知类别崩溃、列顺序漂移或缺失值策略不一致”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-clean-encode","ml-scaling-pipeline"]
+        covers_topics: ["ml.missing-value-strategy","ml.categorical-encoding","ml.outlier-policy","ml.feature-schema","ml.numeric-scaling","ml.fit-transform-boundary","ml.pipeline","ml.feature-lineage"]
+        uses_capabilities: ["data.numpy-pandas","math.probability-statistics"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.supervised-learning
+    title: "回归、分类与决策边界"
+    role: concept
+    responsibility: "用回归和分类模型学习有标签映射，解释损失、正则化与决策边界，不把训练分数当作泛化结论。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-regression
+        title: "回归"
+        topics: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis"]
+      - id: ml-classification
+        title: "分类"
+        topics: ["ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+    topics_taught: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis","ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+    topics_used: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis","ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+    prerequisites: ["ch.math.linear-algebra", "ch.ml.preprocessing-features"]
+    prerequisite_rationales:
+      ch.math.linear-algebra:
+        reason: "线性模型参数、点积和特征矩阵需要线性代数与形状能力。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.ml.preprocessing-features:
+        reason: "模型输入必须来自无泄漏且模式稳定的预处理管线。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.supervised-learning/
+      acceptance:
+        - "训练一个维修时长回归器和一个超时分类器，保存基线、系数/边界、残差与阈值样本证据；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“标签类型与任务不匹配、只报训练分数、概率阈值写死或正则化方向误解”后定位首个可信证据，修复并重跑原验证；修复后判据：模型在固定留出集上与朴素基线比较；回归残差、分类概率和阈值决策可由保存样本复算。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.supervised-learning/"]
+      critical_failure_modes: ["train-score-as-generalization","threshold-policy-hidden"]
+    verification_mode:
+      test_level: T2
+      methods: ["baseline-comparison","heldout-prediction","residual-and-boundary-check"]
+      oracle: "模型在固定留出集上与朴素基线比较；回归残差、分类概率和阈值决策可由保存样本复算。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“回归、分类与决策边界”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-regression","ml-classification"]
+        covers_topics: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis","ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“回归、分类与决策边界”构建可运行程序与测试：训练一个维修时长回归器和一个超时分类器，保存基线、系数/边界、残差与阈值样本证据；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-regression","ml-classification"]
+        covers_topics: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis","ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "baseline-comparison-heldout-prediction-residual-and-boundary-check"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“标签类型与任务不匹配、只报训练分数、概率阈值写死或正则化方向误解”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-regression","ml-classification"]
+        covers_topics: ["ml.linear-regression","ml.regression-loss","ml.regularization","ml.residual-analysis","ml.logistic-classification","ml.decision-boundary","ml.class-probability","ml.threshold-policy"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.unsupervised-learning
+    title: "聚类、降维与无监督结果边界"
+    role: concept
+    responsibility: "使用聚类与降维探索无标签结构，区分算法目标、可视化和业务解释，不把簇编号当真实类别。"
+    level: L2
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-clustering
+        title: "聚类"
+        topics: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary"]
+      - id: ml-dimensionality-reduction
+        title: "降维"
+        topics: ["ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+    topics_taught: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary","ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+    topics_used: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary","ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+    prerequisites: ["ch.math.linear-algebra", "ch.ml.preprocessing-features"]
+    prerequisite_rationales:
+      ch.math.linear-algebra:
+        reason: "距离、投影、主成分和低维表示依赖向量矩阵基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.ml.preprocessing-features:
+        reason: "距离敏感算法要求一致缩放和特征模式。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.unsupervised-learning/
+      acceptance:
+        - "对设备特征执行缩放、聚类和 PCA，比较随机种子稳定性、重构误差与二维可视化限制；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“未缩放距离特征、把簇编号解释为等级、只凭二维图下结论或数据变化导致簇漂移”后定位首个可信证据，修复并重跑原验证；修复后判据：缩放前后结果差异被记录，多次初始化的稳定性有量化证据，业务解释明确标记为待验证假设。；通过条件：关键断言与预期输出全部通过。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.unsupervised-learning/"]
+      critical_failure_modes: ["unscaled-distance","cluster-as-ground-truth"]
+    verification_mode:
+      test_level: T2
+      methods: ["seed-stability-test","reconstruction-error","projection-audit"]
+      oracle: "缩放前后结果差异被记录，多次初始化的稳定性有量化证据，业务解释明确标记为待验证假设。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“聚类、降维与无监督结果边界”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-clustering","ml-dimensionality-reduction"]
+        covers_topics: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary","ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "对设备特征执行缩放、聚类和 PCA，比较随机种子稳定性、重构误差与二维可视化限制；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-clustering","ml-dimensionality-reduction"]
+        covers_topics: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary","ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "seed-stability-test-reconstruction-error-projection-audit"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“未缩放距离特征、把簇编号解释为等级、只凭二维图下结论或数据变化导致簇漂移”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-clustering","ml-dimensionality-reduction"]
+        covers_topics: ["ml.distance-similarity","ml.kmeans-objective","ml.cluster-stability","ml.cluster-label-boundary","ml.pca-variance","ml.projection-reconstruction","ml.embedding-visualization","ml.unsupervised-validation"]
+        uses_capabilities: ["math.algebra-functions","math.probability-statistics","data.numpy-pandas"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.metrics-validation
+    title: "指标、基线、交叉验证与误差分析"
+    role: synthesis
+    responsibility: "根据业务代价选择回归/分类指标，用基线、交叉验证和分组误差分析形成可信模型结论，不教授神经网络。"
+    level: L2+
+    status: planned
+    stable_core: true
+    scope_exception:
+      reason: "本章是经典机器学习 capability 的唯一教师，必须把指标选择、验证设计与误差分析保持在同一可判定实验中。"
+      reviewer: "P1R curriculum governance"
+      expires_in_edition: "2026.3"
+    topic_groups:
+      - id: ml-metrics-baselines
+        title: "指标与基线"
+        topics: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix"]
+      - id: ml-validation-errors
+        title: "验证与误差分析"
+        topics: ["ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+    topics_taught: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix","ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+    topics_used: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix","ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+    prerequisites: ["ch.ml.supervised-learning"]
+    prerequisite_rationales:
+      ch.ml.supervised-learning:
+        reason: "指标必须作用于已经理解的回归、分类概率和阈值输出。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["ml.problem-classical-evaluation"]
+      uses: ["data.numpy-pandas","math.algebra-functions","math.probability-statistics"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.metrics-validation/
+      acceptance:
+        - "为工单预测建立可复现实验报告，含业务基线、交叉验证、阈值矩阵、置信区间和至少三类误差切片；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“指标与业务代价错配、交叉验证泄漏、类别不平衡只看准确率或挑选最好折”后定位首个可信证据，修复并重跑原验证；修复后判据：每个指标可由保存预测复算，折间划分无泄漏，模型只有在预先声明的业务门槛上超过基线才通过。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.metrics-validation/"]
+      critical_failure_modes: ["metric-business-mismatch","cross-validation-leakage"]
+    verification_mode:
+      test_level: T3
+      methods: ["cross-validation","baseline-gate","slice-analysis"]
+      oracle: "每个指标可由保存预测复算，折间划分无泄漏，模型只有在预先声明的业务门槛上超过基线才通过。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“指标、基线、交叉验证与误差分析”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-metrics-baselines","ml-validation-errors"]
+        covers_topics: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix","ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+        uses_capabilities: ["ml.problem-classical-evaluation","data.numpy-pandas","math.algebra-functions","math.probability-statistics"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“指标、基线、交叉验证与误差分析”构建可运行程序与测试：为工单预测建立可复现实验报告，含业务基线、交叉验证、阈值矩阵、置信区间和至少三类误差切片；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-metrics-baselines","ml-validation-errors"]
+        covers_topics: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix","ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+        uses_capabilities: ["ml.problem-classical-evaluation","data.numpy-pandas","math.algebra-functions","math.probability-statistics"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "cross-validation-baseline-gate-slice-analysis"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“指标与业务代价错配、交叉验证泄漏、类别不平衡只看准确率或挑选最好折”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-metrics-baselines","ml-validation-errors"]
+        covers_topics: ["ml.mae-rmse","ml.precision-recall-f1","ml.roc-pr-auc","ml.confusion-matrix","ml.cross-validation","ml.grouped-validation","ml.confidence-interval","ml.error-slice-analysis"]
+        uses_capabilities: ["ml.problem-classical-evaluation","data.numpy-pandas","math.algebra-functions","math.probability-statistics"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.neural-networks
+    title: "神经网络、损失、反向传播与优化器"
+    role: concept
+    responsibility: "从线性单元构造前馈神经网络，手算前向、损失和反向传播，解释优化器作用，不依赖 PyTorch API。"
+    level: L2+
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-neural-forward
+        title: "网络与前向"
+        topics: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function"]
+      - id: ml-neural-backward
+        title: "反向传播与优化"
+        topics: ["ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+    topics_taught: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function","ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+    topics_used: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function","ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+    prerequisites: ["ch.math.probability-statistics", "ch.math.gradients"]
+    prerequisite_rationales:
+      ch.math.probability-statistics:
+        reason: "损失、概率输出和初始化分布需要概率统计。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.math.gradients:
+        reason: "反向传播与参数更新建立在梯度和链式法则之上。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.linear-calculus","math.probability-statistics"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.neural-networks/
+      acceptance:
+        - "手算一个两层网络的前向、损失、每个参数梯度和一次更新，并用有限差分逐参数校验；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“激活函数导数漏乘、批次维度混淆、损失归约不一致或梯度符号反转”后定位首个可信证据，修复并重跑原验证；修复后判据：手算前向值、损失和更新与独立脚本一致；每个参数的解析梯度通过有限差分容差。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.neural-networks/"]
+      critical_failure_modes: ["backprop-chain-break","loss-reduction-mismatch"]
+    verification_mode:
+      test_level: T1
+      methods: ["manual-forward-backward","finite-difference","shape-ledger"]
+      oracle: "手算前向值、损失和更新与独立脚本一致；每个参数的解析梯度通过有限差分容差。"
+    version_surfaces: ["python-3.14","numpy"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“神经网络、损失、反向传播与优化器”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-neural-forward","ml-neural-backward"]
+        covers_topics: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function","ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+        uses_capabilities: ["math.linear-calculus","math.probability-statistics"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“神经网络、损失、反向传播与优化器”构建可运行程序与测试：手算一个两层网络的前向、损失、每个参数梯度和一次更新，并用有限差分逐参数校验；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-neural-forward","ml-neural-backward"]
+        covers_topics: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function","ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+        uses_capabilities: ["math.linear-calculus","math.probability-statistics"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "manual-forward-backward-finite-difference-shape-ledger"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“激活函数导数漏乘、批次维度混淆、损失归约不一致或梯度符号反转”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-neural-forward","ml-neural-backward"]
+        covers_topics: ["ml.neuron-layer","ml.activation-function","ml.forward-pass","ml.loss-function","ml.backpropagation","ml.parameter-gradient","ml.optimizer-update","ml.vanishing-exploding-gradient"]
+        uses_capabilities: ["math.linear-calculus","math.probability-statistics"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.attention-sequences
+    title: "Softmax、序列表示、注意力与 Transformer 桥接"
+    role: concept
+    responsibility: "用序列位置、Softmax 和 Q/K/V 矩阵解释自注意力与 Transformer 数据流，只建立模型心智桥，不训练大模型。"
+    level: L2+
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-sequence-attention
+        title: "序列与注意力"
+        topics: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention"]
+      - id: ml-transformer-bridge
+        title: "Transformer 桥接"
+        topics: ["ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+    topics_taught: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention","ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+    topics_used: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention","ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+    prerequisites: ["ch.ml.neural-networks"]
+    prerequisite_rationales:
+      ch.ml.neural-networks:
+        reason: "注意力块仍由参数化层、损失和梯度训练。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["math.algebra-functions","math.linear-calculus","math.probability-statistics"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.attention-sequences/
+      acceptance:
+        - "对三个 token 手算 Q/K/V、缩放分数、Softmax 权重和加权输出，并绘制残差块数据流与形状；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“Softmax 轴选错、缩放因子遗漏、序列/特征轴交换或把注意力权重当因果解释”后定位首个可信证据，修复并重跑原验证；修复后判据：每行注意力权重和为一，手算矩阵与 NumPy 输出在容差内一致，所有中间张量形状可追踪。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.attention-sequences/"]
+      critical_failure_modes: ["attention-axis-error","attention-as-causality"]
+    verification_mode:
+      test_level: T1
+      methods: ["matrix-hand-check","softmax-sum-check","shape-trace"]
+      oracle: "每行注意力权重和为一，手算矩阵与 NumPy 输出在容差内一致，所有中间张量形状可追踪。"
+    version_surfaces: ["python-3.14","numpy"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Softmax、序列表示、注意力与 Transformer 桥接”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-sequence-attention","ml-transformer-bridge"]
+        covers_topics: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention","ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+        uses_capabilities: ["math.algebra-functions","math.linear-calculus","math.probability-statistics"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“Softmax、序列表示、注意力与 Transformer 桥接”构建可运行程序与测试：对三个 token 手算 Q/K/V、缩放分数、Softmax 权重和加权输出，并绘制残差块数据流与形状；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-sequence-attention","ml-transformer-bridge"]
+        covers_topics: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention","ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+        uses_capabilities: ["math.algebra-functions","math.linear-calculus","math.probability-statistics"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "matrix-hand-check-softmax-sum-check-shape-trace"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“Softmax 轴选错、缩放因子遗漏、序列/特征轴交换或把注意力权重当因果解释”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-sequence-attention","ml-transformer-bridge"]
+        covers_topics: ["ml.sequence-representation","ml.softmax","ml.query-key-value","ml.scaled-dot-product-attention","ml.positional-information","ml.multihead-intuition","ml.residual-normalization","ml.transformer-block-flow"]
+        uses_capabilities: ["math.algebra-functions","math.linear-calculus","math.probability-statistics"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.pytorch.foundations
+    title: "Tensor、Dataset、Module 与 Autograd"
+    role: practice
+    responsibility: "把神经网络数学映射到 PyTorch Tensor、Dataset、Module 和 Autograd 合同，区分数据、参数、梯度和设备，不实现完整训练流程。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: pytorch-tensor-data
+        title: "Tensor 与数据"
+        topics: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation"]
+      - id: pytorch-module-autograd
+        title: "Module 与自动求导"
+        topics: ["pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+    topics_taught: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation","pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+    topics_used: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation","pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+    prerequisites: ["ch.ml.neural-networks", "ch.ml.metrics-validation", "ch.python.classes-dataclass"]
+    prerequisite_rationales:
+      ch.ml.neural-networks:
+        reason: "Module 与 Autograd 只有在已理解前向、损失和反向传播后才可安全使用。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.ml.metrics-validation:
+        reason: "框架实验仍需可靠数据划分、基线与评估合同。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+      ch.python.classes-dataclass:
+        reason: "Dataset 和 Module 的对象状态与继承依赖 Python 类基础。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["ml.neural-pytorch"]
+      uses: ["ml.problem-classical-evaluation","math.linear-calculus","python.language","data.numpy-pandas"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.pytorch.foundations/
+      acceptance:
+        - "实现自定义 Dataset 与两层 Module，预测每层形状，运行一次前向和反向并核对参数、梯度与设备；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“原地操作破坏计算图、忘记清梯度、dtype/设备混用或 Dataset 返回模式不稳定”后定位首个可信证据，修复并重跑原验证；修复后判据：批次与层形状符合声明，所有可训练参数得到有限梯度，CPU 路径重复运行结果在给定种子下相同。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.pytorch.foundations/"]
+      critical_failure_modes: ["autograd-graph-break","device-dtype-mismatch"]
+    verification_mode:
+      test_level: T2
+      methods: ["tensor-assertions","gradient-check","dataset-contract-test"]
+      oracle: "批次与层形状符合声明，所有可训练参数得到有限梯度，CPU 路径重复运行结果在给定种子下相同。"
+    version_surfaces: ["python-3.14","numpy","pytorch-stable","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“Tensor、Dataset、Module 与 Autograd”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["pytorch-tensor-data","pytorch-module-autograd"]
+        covers_topics: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation","pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation","math.linear-calculus","python.language","data.numpy-pandas"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "围绕“Tensor、Dataset、Module 与 Autograd”构建可运行程序与测试：实现自定义 Dataset 与两层 Module，预测每层形状，运行一次前向和反向并核对参数、梯度与设备；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["pytorch-tensor-data","pytorch-module-autograd"]
+        covers_topics: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation","pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation","math.linear-calculus","python.language","data.numpy-pandas"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "tensor-assertions-gradient-check-dataset-contract-test"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“原地操作破坏计算图、忘记清梯度、dtype/设备混用或 Dataset 返回模式不稳定”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["pytorch-tensor-data","pytorch-module-autograd"]
+        covers_topics: ["pytorch.tensor-dtype-device","pytorch.tensor-shape-view","pytorch.dataset-dataloader","pytorch.batch-collation","pytorch.module-parameter","pytorch.forward-contract","pytorch.autograd-graph","pytorch.grad-zeroing"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation","math.linear-calculus","python.language","data.numpy-pandas"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.pytorch.training
+    title: "训练循环、复现、过拟合、评估与调参"
+    role: practice
+    responsibility: "实现可复现的 PyTorch 训练与验证循环，识别欠拟合和过拟合并保存检查点，不把测试集用于调参。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: pytorch-training-loop
+        title: "训练与验证"
+        topics: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation"]
+      - id: pytorch-repro-tuning
+        title: "复现与调参"
+        topics: ["pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+    topics_taught: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation","pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+    topics_used: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation","pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+    prerequisites: ["ch.pytorch.foundations"]
+    prerequisite_rationales:
+      ch.pytorch.foundations:
+        reason: "必须能正确使用 Tensor、Dataset、Module 与 Autograd。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["ml.neural-pytorch","ml.problem-classical-evaluation"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.pytorch.training/
+      acceptance:
+        - "训练工单分类网络，保存配置、种子、曲线、最佳验证检查点和测试集一次性评估报告；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“遗漏 train/eval 切换、验证阶段累计梯度、测试集参与调参或检查点缺少配置”后定位首个可信证据，修复并重跑原验证；修复后判据：相同环境和种子复跑的关键指标在容差内一致；最佳检查点可恢复且测试集只在最终阶段读取一次。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.pytorch.training/"]
+      critical_failure_modes: ["test-set-tuning","train-eval-mode-leak"]
+    verification_mode:
+      test_level: T3
+      methods: ["reproducibility-run","curve-analysis","checkpoint-resume"]
+      oracle: "相同环境和种子复跑的关键指标在容差内一致；最佳检查点可恢复且测试集只在最终阶段读取一次。"
+    version_surfaces: ["python-3.14","pytorch-stable","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“训练循环、复现、过拟合、评估与调参”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["pytorch-training-loop","pytorch-repro-tuning"]
+        covers_topics: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation","pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "训练工单分类网络，保存配置、种子、曲线、最佳验证检查点和测试集一次性评估报告；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["pytorch-training-loop","pytorch-repro-tuning"]
+        covers_topics: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation","pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "reproducibility-run-curve-analysis-checkpoint-resume"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“遗漏 train/eval 切换、验证阶段累计梯度、测试集参与调参或检查点缺少配置”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["pytorch-training-loop","pytorch-repro-tuning"]
+        covers_topics: ["pytorch.train-eval-mode","pytorch.optimizer-step","pytorch.validation-loop","pytorch.metric-aggregation","pytorch.random-seed","pytorch.checkpoint","pytorch.early-stopping","pytorch.hyperparameter-search-boundary"]
+        uses_capabilities: ["ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.pytorch.inference
+    title: "保存、加载、推理、批处理与服务边界"
+    role: practice
+    responsibility: "把训练产物转换为版本化、可批处理和可服务的推理合同，验证预处理一致性、无梯度模式和错误输入，不部署生产服务。"
+    level: L3
+    status: planned
+    stable_core: false
+    topic_groups:
+      - id: pytorch-model-artifact
+        title: "模型制品"
+        topics: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity"]
+      - id: pytorch-inference-boundary
+        title: "推理边界"
+        topics: ["pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+    topics_taught: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity","pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+    topics_used: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity","pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+    prerequisites: ["ch.pytorch.training"]
+    prerequisite_rationales:
+      ch.pytorch.training:
+        reason: "推理制品来自已验证训练流程与可恢复检查点。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: ["ml.training-inference"]
+      uses: ["ml.neural-pytorch","ml.problem-classical-evaluation"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.pytorch.inference/
+      acceptance:
+        - "导出含模型配置、权重、预处理和标签映射的版本化制品，编写单条/批量推理入口并测量延迟与吞吐；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“只保存权重不保存结构、预处理训练/推理漂移、未启用推理模式或批次形状错误”后定位首个可信证据，修复并重跑原验证；修复后判据：全新进程加载制品后对黄金样本产生相同结果；单条与批量输出逐项一致，非法模式输入被明确拒绝。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.pytorch.inference/"]
+      critical_failure_modes: ["preprocessing-serving-skew","incomplete-model-artifact"]
+    verification_mode:
+      test_level: T3
+      methods: ["roundtrip-load-test","golden-prediction","batch-equivalence"]
+      oracle: "全新进程加载制品后对黄金样本产生相同结果；单条与批量输出逐项一致，非法模式输入被明确拒绝。"
+    version_surfaces: ["python-3.14","pytorch-stable","pytest"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“保存、加载、推理、批处理与服务边界”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["pytorch-model-artifact","pytorch-inference-boundary"]
+        covers_topics: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity","pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+        uses_capabilities: ["ml.training-inference","ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "导出含模型配置、权重、预处理和标签映射的版本化制品，编写单条/批量推理入口并测量延迟与吞吐；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["pytorch-model-artifact","pytorch-inference-boundary"]
+        covers_topics: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity","pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+        uses_capabilities: ["ml.training-inference","ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "roundtrip-load-test-golden-prediction-batch-equivalence"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“只保存权重不保存结构、预处理训练/推理漂移、未启用推理模式或批次形状错误”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["pytorch-model-artifact","pytorch-inference-boundary"]
+        covers_topics: ["pytorch.state-dict","pytorch.model-config-version","pytorch.preprocessing-bundle","pytorch.artifact-integrity","pytorch.inference-mode","pytorch.batch-inference","pytorch.input-output-schema","pytorch.latency-throughput"]
+        uses_capabilities: ["ml.training-inference","ml.neural-pytorch","ml.problem-classical-evaluation"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
+  - id: ch.ml.monitoring-ethics
+    title: "漂移、监控、公平性、伦理与使用边界"
+    role: synthesis
+    responsibility: "为上线模型定义输入、性能和公平性监控及人工兜底边界，区分漂移信号与真实质量，不在本章实施部署平台。"
+    level: L3
+    status: planned
+    stable_core: true
+    topic_groups:
+      - id: ml-monitoring-drift
+        title: "监控与漂移"
+        topics: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay"]
+      - id: ml-fairness-ethics
+        title: "公平与伦理"
+        topics: ["ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+    topics_taught: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay","ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+    topics_used: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay","ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+    prerequisites: ["ch.pytorch.inference"]
+    prerequisite_rationales:
+      ch.pytorch.inference:
+        reason: "监控必须围绕版本化推理输入、输出和制品身份建立。"
+        capabilities: []
+        topics: []
+        outcome_ids: [explain, build, diagnose]
+    capabilities:
+      teaches: []
+      uses: ["ml.problem-classical-evaluation","ml.training-inference"]
+    borrowed_scaffolds: []
+    lab_requirements:
+      required: true
+      artifact_paths:
+        - labs/encyclopedia/ch.ml.monitoring-ethics/
+      acceptance:
+        - "为工单优先级模型编写模型卡、输入漂移仪表、延迟标签性能回填和分组公平性告警演练；保存输入、推导/源码、命令与成功/边界/失败结果"
+        - "注入“只监控均值、无标签时宣称质量稳定、敏感分组被聚合隐藏或自动决策无人工申诉”后定位首个可信证据，修复并重跑原验证；修复后判据：合成分布变化触发预期信号但不被误称为精度下降；标签回填后可计算真实指标，受影响分组与人工处置可追踪。"
+    gate_requirements:
+      gate_ids: ["G6"]
+      evidence_paths: ["evidence/gates/g6/ch.ml.monitoring-ethics/"]
+      critical_failure_modes: ["drift-signal-as-quality-proof","subgroup-harm-hidden"]
+    verification_mode:
+      test_level: T4
+      methods: ["drift-simulation","delayed-label-backfill","fairness-slice-review"]
+      oracle: "合成分布变化触发预期信号但不被误称为精度下降；标签回填后可计算真实指标，受影响分组与人工处置可追踪。"
+    version_surfaces: ["python-3.14","numpy","pandas","pytorch-stable","observability"]
+    outcomes:
+      - id: explain
+        kind: concept
+        text: "在 120 秒内解释“漂移、监控、公平性、伦理与使用边界”的职责、边界、关键证据与一个越界反例"
+        covers_topic_groups: ["ml-monitoring-drift","ml-fairness-ethics"]
+        covers_topics: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay","ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+        uses_capabilities: ["ml.problem-classical-evaluation","ml.training-inference"]
+        evidence_kind: timed-teach-back
+        verification_mode: "oral-explanation"
+      - id: build
+        kind: independent-build
+        text: "为工单优先级模型编写模型卡、输入漂移仪表、延迟标签性能回填和分组公平性告警演练；独立保存可复现工件与判断结果"
+        covers_topic_groups: ["ml-monitoring-drift","ml-fairness-ethics"]
+        covers_topics: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay","ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+        uses_capabilities: ["ml.problem-classical-evaluation","ml.training-inference"]
+        evidence_kind: runnable-artifact-and-oracle
+        verification_mode: "drift-simulation-delayed-label-backfill-fairness-slice-review"
+      - id: diagnose
+        kind: fault-diagnosis
+        text: "面对“只监控均值、无标签时宣称质量稳定、敏感分组被聚合隐藏或自动决策无人工申诉”，指出失败阶段和首个可信证据，修复后重跑原验证并说明残余风险"
+        covers_topic_groups: ["ml-monitoring-drift","ml-fairness-ethics"]
+        covers_topics: ["ml.data-drift","ml.concept-drift","ml.performance-monitoring","ml.feedback-delay","ml.subgroup-performance","ml.fairness-tradeoff","ml.human-override","ml.model-card"]
+        uses_capabilities: ["ml.problem-classical-evaluation","ml.training-inference"]
+        evidence_kind: failure-log-fix-rerun
+        verification_mode: "injected-fault-rerun"
