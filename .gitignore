@@ -1,0 +1,51 @@
+# macOS
+.DS_Store
+
+# IntelliJ IDEA and other local editor state
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Java / Maven / Gradle build output
+target/
+.gradle/
+build/
+out/
+
+# Node.js / Vue / Nuxt
+node_modules/
+dist/
+.nuxt/
+.output/
+coverage/
+*.tsbuildinfo
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~
