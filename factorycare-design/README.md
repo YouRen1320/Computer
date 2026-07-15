@@ -15,17 +15,17 @@
 
 | 目录/文件 | 内容 | 使用时机 |
 | --- | --- | --- |
-| [architecture.md](./architecture.md) | 系统上下文、模块依赖、数据与调用方向 | Week 07、18、29、33 |
-| [data/data-model.md](./data/data-model.md) | 聚合、ER关系、状态与一致性规则 | Week 02、10、15 |
-| [data/data-dictionary.csv](./data/data-dictionary.csv) | 表级所有权、租户键、关键字段和敏感性 | Week 10、14、18、30 |
-| [contracts/public-api.yaml](./contracts/public-api.yaml) | Web/App/小程序只可调用的Java公共API草案 | Week 08、20、23、26、33 |
-| [contracts/ai-internal-api.yaml](./contracts/ai-internal-api.yaml) | Java↔Python内部API和只读工具回调 | Week 27—33 |
-| [events](./events/README.md) | 六个唯一版本化事件JSON Schema | Week 17、18、29、30 |
-| [security/threat-model.md](./security/threat-model.md) | STRIDE式威胁、边界和验证计划 | Week 13—14、24、31、34 |
-| [security/permission-matrix.csv](./security/permission-matrix.csv) | 角色、权限、数据范围和高风险确认 | Week 14、20 |
-| [testing/test-strategy.md](./testing/test-strategy.md) | 测试层、风险映射、故障与质量门 | Week 09、18、22、34 |
+| [architecture.md](./architecture.md) | 系统上下文、模块依赖、数据与调用方向 | Week 09、18、21、29、34、44 |
+| [data/data-model.md](./data/data-model.md) | 聚合、ER关系、状态与一致性规则 | Week 03—04、13、18 |
+| [data/data-dictionary.csv](./data/data-dictionary.csv) | 表级所有权、租户键、关键字段和敏感性 | Week 13、14、18、30 |
+| [contracts/public-api.yaml](./contracts/public-api.yaml) | Web/App/小程序只可调用的Java公共API草案 | Week 10、20、26、30、34、44 |
+| [contracts/ai-internal-api.yaml](./contracts/ai-internal-api.yaml) | Java↔Python内部API和只读工具回调 | Week 38、40—44 |
+| [events](./events/README.md) | 六个唯一版本化事件JSON Schema | Week 18、20—21、29—30、44 |
+| [security/threat-model.md](./security/threat-model.md) | STRIDE式威胁、边界和验证计划 | Week 16—17、24、29、31、35、42、46 |
+| [security/permission-matrix.csv](./security/permission-matrix.csv) | 角色、权限、数据范围和高风险确认 | Week 17、20 |
+| [testing/test-strategy.md](./testing/test-strategy.md) | 测试层、风险映射、故障与质量门 | Week 11、18、22、29、35、43、46 |
 | [testing/acceptance-catalog.md](./testing/acceptance-catalog.md) | 主链路与失败链路的稳定验收编号 | 全程 |
-| [seed/seed-data-plan.md](./seed/seed-data-plan.md) | 无隐私、可重置、可重复的演示数据 | Week 10、33 |
+| [seed/seed-data-plan.md](./seed/seed-data-plan.md) | 无隐私、可重置、可重复的演示数据 | Week 13、44 |
 | [adrs](./adrs/README.md) | 关键架构决策及备选方案 | 对应阶段 |
 | [scripts/validate-design.rb](./scripts/validate-design.rb) | 只读验证YAML、JSON、CSV和唯一事件目录 | 修改设计资产后 |
 

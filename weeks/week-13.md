@@ -1,159 +1,206 @@
-# 第 13 周：Spring Security 认证、Session、JWT 与 OIDC
+# 第 13 周：PostgreSQL 18 关系建模、约束与迁移
 
-> 建议投入：16 小时（可在 15—18 小时内调整）
+## 定位
 
-## 1. 本周定位
+第 11 周已首次启动真实 PostgreSQL 容器，Week 12 已系统学习 SQL 查询。本周正式把 FactoryCare 的业务事实、约束和查询需求转化为 PostgreSQL 18 关系模型与可验证迁移；不重复把 SELECT 语法当新知识。Java 持久化接入留到第 15 周，先让数据库设计独立正确。
 
-本周把 FactoryCare 从“能调用接口”升级为“能够证明调用者身份”。重点不是背注解或自制一套认证协议，而是理解 Spring Security 的请求链路、浏览器安全边界，以及 Session、JWT、OIDC 各自解决的问题。
+时间预算：15—18小时。复用第 11 周已验证的固定版本容器，从本周开始创建业务schema和种子数据，不在本机同时维护多个数据库安装来源。
 
-FactoryCare 本周采用 **服务端 Session + HttpOnly Cookie** 保护同源 Web 管理端；JWT 资源服务器和 OIDC 登录先做到能解释、能验证示例，不同时维护三套生产认证。移动端认证方式留到 uni-app 阶段根据客户端约束单独决策。
+## 前置
 
-## 2. 前置条件
+- FactoryCare API、领域模型和测试体系可用。
+- Testcontainers/Docker smoke test 已能启动 PostgreSQL 18.4。
+- 能描述设备、工单、组织和用户之间的业务关系。
+- 能区分 Java/JSON 类型与数据库类型，不假设自动一一对应。
 
-- FactoryCare 已有 Spring Boot Web、MyBatis、PostgreSQL 和统一错误响应。
-- 能使用 MockMvc/Testcontainers 验证接口成功与失败路径。
-- 已掌握 HTTP 方法、Cookie、Header、状态码和基本事务边界。
-- 开始前确认 Spring Boot 依赖由项目 BOM 统一管理，不手工混搭 Spring Security 小版本。
+## 目标
 
-## 3. 学习目标
+- 理解关系、行、列、键、约束、NULL 和规范化的实际价值。
+- 为 FactoryCare 建立组织、用户、设备、工单的 PostgreSQL 18 模型。
+- 正确选择 UUID、text、numeric、boolean、date/timestamptz、jsonb 等类型。
+- 使用 DDL/DML 和约束保证关键数据有效。
+- 复用 Week 12 的 SELECT、JOIN、聚合、CTE 和窗口查询验证模型粒度与关系正确性。
+- 使用种子数据验证常见查询与边界。
+- 建立 SQL 脚本和数据字典，为 Flyway 迁移做准备。
 
-- 能画出 `SecurityFilterChain → AuthenticationManager → AuthenticationProvider → SecurityContext` 的认证链路。
-- 能区分认证与授权，以及 401 与 403。
-- 能比较 Session、JWT Bearer Token、OAuth 2.0 和 OIDC，不再把它们当作同一概念。
-- 能实现安全的登录、退出、当前用户接口，并处理 CSRF、CORS、Session 固定攻击和 Cookie 属性。
-- 能用自动化测试证明匿名、已登录、错误凭据、过期会话和 CSRF 失败行为。
+## 完整概念清单
 
-## 4. 完整概念清单
+### 关系模型
 
-### 4.1 Spring Security 请求链路
+- database、schema、table、row、column、relation 的基本含义。
+- SQL 查询结果通常按 bag/multiset 处理，不能假设天然去重或有序。
+- 主键、候选键、自然键、业务 ID、代理键。
+- 外键表达引用完整性，应用层检查不能替代数据库约束。
+- 一对一、一对多、多对多及连接表。
+- 实体、关系和属性从业务语言映射到表结构。
+- 数据库 schema 与 Java package、JSON schema 不是一回事。
 
-- Servlet Filter、`DelegatingFilterProxy`、`FilterChainProxy` 与 `SecurityFilterChain`。
-- `Authentication` 在认证前后的含义，`principal`、`credentials`、`authorities`。
-- `SecurityContextHolder` 的请求生命周期与线程边界；为什么不能把用户信息放进全局变量。
-- `AuthenticationManager`、`ProviderManager`、`AuthenticationProvider`、`UserDetailsService` 的职责。
-- `PasswordEncoder` 与自适应哈希；密码不加密存储、不记录明文日志。
-- `ExceptionTranslationFilter`、`AuthenticationEntryPoint`、`AccessDeniedHandler`。
+### 规范化与边界
 
-### 4.2 Session 与浏览器安全
+- 第一、第二、第三范式的实用直觉：原子字段、完整依赖、减少传递依赖。
+- 重复字段带来更新、插入和删除异常。
+- 规范化是默认起点，反规范化必须有可测量查询理由。
+- 状态显示文案与稳定状态码分离。
+- 不为每个 enum 建表，也不把全部业务数据塞 JSONB。
+- 历史快照与当前事实的差异；本周只建当前核心模型。
 
-- 服务端 Session、Session ID Cookie、登录态续期与退出失效。
-- `HttpOnly`、`Secure`、`SameSite`、作用域、有效期和 HTTPS。
-- Session fixation 防护、并发会话、超时和服务重启后的会话策略。
-- Cookie 认证为什么需要 CSRF 防护；CSRF Token 与 XSS 是不同问题。
-- CORS 预检、允许来源白名单、携带凭据；CORS 不是授权机制。
-- 同源部署、反向代理和前后端分离开发环境的差异。
+### PostgreSQL 18 类型
 
-### 4.3 JWT、OAuth 2.0 与 OIDC
+- `uuid` 与 identity/bigint 的取舍；FactoryCare 使用应用可生成的 UUID 业务 ID。
+- `text` 与 `varchar(n)`；长度业务规则通过合适约束表达。
+- `integer/bigint`、`numeric`、浮点类型的精度边界。
+- `boolean` 不用 0/1/字符串替代。
+- `date`、`timestamp`、`timestamptz`；审计时刻优先 `timestamptz`。
+- `interval` 的用途；SLA 时长也可在应用配置中表达。
+- `jsonb` 只用于真正半结构化、查询需求明确的扩展数据。
+- array、range、PostgreSQL enum 了解存在；没有业务证据不引入。
+- collations 和大小写只了解对唯一性/排序的影响。
 
-- JWT 的 Header、Claims、Signature；签名不等于加密。
-- `iss`、`sub`、`aud`、`exp`、`nbf`、`jti` 的用途和校验责任。
-- 对称密钥与非对称密钥、JWKS、密钥轮换和时钟偏差。
-- Access Token 与 Refresh Token；短期令牌、撤销、重放和泄露风险。
-- OAuth 2.0 的 Resource Owner、Client、Authorization Server、Resource Server。
-- OIDC 在 OAuth 2.0 上增加身份层；ID Token 不能当作任意业务 API 的 Access Token。
-- Authorization Code + PKCE 的适用场景；不实现已淘汰的 Password Grant。
-- 浏览器本地存储 Token 的 XSS 风险；“用了 JWT”不等于“无状态且更安全”。
+### NULL 与三值逻辑
 
-### 4.4 测试与可观测性
+- NULL 表示未知/缺失，不等于空字符串、0 或 false。
+- 使用 `IS NULL/IS NOT NULL`，不能用 `= NULL`。
+- AND/OR/NOT 在 UNKNOWN 下的行为。
+- aggregate 通常忽略 NULL；`count(*)` 与 `count(column)` 不同。
+- `COALESCE` 只在明确后备语义时使用，不能掩盖错误数据。
+- 能用 NOT NULL 表达必需就不要允许 NULL。
 
-- 对登录成功、失败、退出、会话过期、匿名访问、CSRF 缺失分别断言。
-- 日志只记录用户标识、结果、来源和关联 ID，不记录密码、Cookie 或完整 Token。
-- 认证失败统一响应，但不泄露“账号存在/不存在”等可枚举信息。
+### 约束
 
-## 5. 任务分配
+- `PRIMARY KEY`、`FOREIGN KEY`、`UNIQUE`、`NOT NULL`、`CHECK`、`DEFAULT`。
+- 唯一约束的业务范围，例如 `(organization_id, equipment_code)`。
+- 外键更新/删除动作必须明确，不默认级联删除业务历史。
+- CHECK 适合行内可验证规则；跨行复杂规则留给事务/应用设计。
+- 约束名称应可读，便于错误映射和排查。
+- default 是插入默认，不是修复既有 NULL。
 
-| 任务 | 时间 | 结果 |
+### DDL 与 DML
+
+- `CREATE/ALTER/DROP` 与 schema 变更风险。
+- `INSERT/UPDATE/DELETE/RETURNING`。
+- `INSERT ... ON CONFLICT` 的高层用途；不滥用 upsert 掩盖业务冲突。
+- `UPDATE/DELETE` 必须先确认 WHERE；学习环境也养成事务和备份意识。
+- DDL 脚本可重复执行与正式版本迁移是两回事；Flyway 第 15 周处理。
+
+### SELECT 与查询
+
+- SQL 逻辑处理顺序：FROM/JOIN、WHERE、GROUP BY、HAVING、SELECT、ORDER BY、LIMIT 的直觉。
+- 明确列名，不用 `SELECT *` 作为稳定应用契约。
+- alias、表达式、CASE、字符串/时间函数适量使用。
+- INNER/LEFT JOIN；错误过滤条件如何把 LEFT JOIN 变成 INNER 效果。
+- CROSS/RIGHT/FULL JOIN 了解用途，不为使用而使用。
+- `DISTINCT` 不是修复错误 join 的默认手段。
+- `GROUP BY`、聚合、HAVING。
+- scalar/correlated subquery 与 `EXISTS/NOT EXISTS`。
+- CTE 提升可读性；不假设一定更快。
+- `UNION/UNION ALL` 的去重成本差异。
+- 窗口函数 `row_number/rank/count over` 的基本用途。
+- ORDER BY 必须稳定，分页追加唯一键排序。
+
+### 数据操作与工具
+
+- 使用 `psql` 执行脚本、查看表、描述结构和事务。
+- 容器卷、临时测试数据库和本地学习数据的区别。
+- SQL 文件使用 UTF-8，示例数据脱敏。
+- 不把生产 dump、真实客户信息和密码交给 AI。
+
+## 任务分配
+
+| 模块 | 时间 | 任务 |
 | --- | ---: | --- |
-| 阅读认证架构并手绘请求链路 | 3h | 一张认证链路图和概念卡片 |
-| Session、JWT、OIDC 对比实验 | 2.5h | 一份认证选型 ADR |
-| FactoryCare 登录与安全配置 | 5h | 可运行的 Session 认证闭环 |
-| 安全测试与故障排查 | 2.5h | 成功和错误路径测试 |
-| 无 AI 训练 | 2h | 认证排错记录 |
-| 南昌岗位采样与简历更新 | 1.5h | 岗位矩阵和项目表述 |
+| 关系建模 | 3h | 业务词汇、关系、键、规范化和数据字典 |
+| 类型与约束 | 2.5h | PostgreSQL 类型、NULL、PK/FK/UNIQUE/CHECK |
+| SQL 基础 | 3h | DDL、INSERT/UPDATE/DELETE/RETURNING、SELECT/JOIN |
+| 查询进阶 | 2.5h | 聚合、EXISTS、CTE、窗口函数和稳定分页 |
+| FactoryCare | 3—4h | 建表、种子数据和业务查询脚本 |
+| 无 AI 训练 | 2h | 从需求独立写SQL与修复约束 |
+| 求职动作 | 1h | SQL 面试题和投递 |
 
-总计 16.5 小时。若只有 15 小时，压缩资料整理；若有 18 小时，增加 JWT Resource Server 最小验证，不扩展为自建授权服务器。
+## FactoryCare项目增量
 
-## 6. FactoryCare 项目增量
+设计并创建至少以下表：
 
-完成以下最小闭环：
+- `organization`：组织业务 ID、名称、创建时间。
+- `user_account`：所属组织、登录标识、显示名、启用状态；认证细节第 16 周处理。
+- `equipment`：所属组织、设备业务 ID、组织内唯一编码、名称、状态、创建时间。
+- `work_order`：所属组织、设备、故障描述、优先级、状态、创建/更新时间、版本号。
 
-- `POST /api/v1/auth/login`：验证账号密码，建立 Session；失败信息不可用于枚举账号。
-- `POST /api/v1/auth/logout`：使当前 Session 失效。
-- `GET /api/v1/auth/me`：返回稳定的用户 DTO，不返回密码哈希和内部安全字段。
-- 设备、工单接口默认要求认证；健康检查等公开端点显式列入白名单。
-- 为状态修改接口启用 CSRF 防护；前端能够取得并回传 Token。
-- Cookie 在生产配置启用 `HttpOnly`、`Secure` 和合适的 `SameSite`。
-- 使用 Flyway 或当前迁移机制增加用户凭据字段，演示账号密码使用自适应哈希生成。
-- 新增 `ADR-013-authentication.md`：说明为何当前 Web 端选择 Session、何时才切换 OIDC/JWT、移动端仍待决策。
-- 至少覆盖 8 个安全测试：匿名、成功登录、错误密码、受保护资源、缺失 CSRF、有效 CSRF、退出、会话失效。
+约束要求：
 
-## 7. AI 协作边界
+- 所有权范围明确，设备编码在组织内唯一。
+- 工单必须引用同一组织的设备；可通过复合唯一键/外键或后续事务设计保证，需记录选型。
+- 优先级和状态只能取稳定业务码。
+- 关键字段 NOT NULL；版本号非负；更新时间不早于创建时间。
+- 删除组织/设备不能静默级联抹掉工单历史。
 
-AI 可以：
+编写不少于 12 个真实查询：工单详情、按状态筛选、设备未关闭数、组织工单统计、超期候选、重复故障设备、最近一单、无工单设备、按月趋势和稳定分页等。
 
-- 根据你画出的认证链路检查遗漏。
-- 生成测试场景清单和 MockMvc 测试骨架。
-- 对 `SecurityFilterChain` 做逐项解释，寻找过宽的匹配规则。
-- 比较 Session 与 JWT 方案，但必须列出威胁模型和运维成本。
+## AI协作边界
 
-AI 不可以替你决定：
+可以让 AI：
 
-- 哪些端点公开、Cookie/CORS 的生产域名和信任边界。
-- 密钥、密码、Token 和真实账号的生成或保存方式。
-- 关闭 CSRF、允许任意 Origin 或使用明文密码等“为了跑通”的捷径。
-- 认证方案最终选型和验收结论。
+- 根据你的业务规则提出候选 ER 模型和反例。
+- 审查字段类型、NULL、唯一性和外键删除行为。
+- 为你已写的查询生成边界数据。
+- 解释 SQL 错误，但不能用删除约束作为默认修复。
 
-每次接受 AI 修改后，必须逐行检查路径匹配顺序，并重新运行全部安全测试。
+必须由你完成：
 
-## 8. 无 AI 训练
+- 先写业务事实、唯一性和生命周期，再决定表。
+- 解释每个主键、外键、NOT NULL、UNIQUE 和 CHECK 的业务意义。
+- 独立写至少一半核心查询，并验证结果集。
+- 检查 AI SQL 是否存在错误 join、遗漏组织范围、`SELECT *` 或危险无 WHERE 修改。
 
-本周从求职/复盘时段预留45—60分钟完成并记录：贪心基础题；给出选择依据、反例与复杂度。
+## 无AI训练
 
-关闭 AI 120 分钟：给定一个故意损坏的安全配置，定位并修复三个问题——匿名端点误受保护、登录成功仍返回403、POST因CSRF失败。要求：
+本周从求职/复盘时段预留45—60分钟完成并记录：滑动窗口题；写出窗口不变量和收缩条件。
 
-- 先画过滤器链和请求状态，不靠反复删除配置试错。
-- 用日志与单个最小测试缩小范围。
-- 最后口述 401、403、CORS、CSRF 的区别，并说明为何不能简单 `csrf.disable()`。
+关闭 AI，限时 120 分钟：
 
-## 9. 求职动作
+1. 从空数据库创建简化 organization/equipment/work_order 三表。
+2. 插入能够暴露 NULL、重复编码、孤儿外键和跨组织引用问题的数据。
+3. 用约束拒绝非法数据，不在 SQL 脚本里静默清洗。
+4. 写“每个组织未关闭工单最多的三台设备”查询。
+5. 解释 JOIN、GROUP BY、HAVING、窗口函数和稳定排序。
 
-- 从南昌当周 Java、Java 全栈和信息化岗位中采样 8 个 JD，统计 Spring Security、JWT、RBAC、单点登录、OAuth2 的出现方式。
-- 把“熟悉 JWT”改写成可验证表述：`实现 Session 认证、CSRF 防护及 8 条安全集成测试；能说明 JWT/OIDC 适用边界`。
-- 准备 3 分钟回答：公司为什么可能选择 Session，而不是 JWT？
-- 对 Vue 岗继续投递，不等待后端路线学完；本周至少完成 5 次高匹配投递或跟进。
+## 求职动作（恢复求职后启用）
 
-## 10. 本周交付物
+- 准备主键/外键/唯一键、范式、NULL、JOIN、WHERE/HAVING、子查询/CTE、窗口函数的口述。
+- 每道题使用 FactoryCare schema 举例，并能现场写基础 SQL。
+- 完成至少 6 个 Java/全栈岗位定向投递，记录数据库是 MySQL 还是 PostgreSQL；语法差异后续补，不更换主库。
+- 简历可写“PostgreSQL 18 关系建模与 SQL 实践”，不写生产 DBA 或性能调优经验。
 
-- 认证链路图和 Session/JWT/OIDC 对比表。
-- `ADR-013-authentication.md`。
-- FactoryCare 登录、退出、当前用户接口与安全配置。
-- 不少于 8 条认证/CSRF 自动化测试。
-- 一份无 AI 排错记录和一条可写进简历的项目证据。
+## 交付物
 
-## 11. 验收标准
+- FactoryCare ER 图或关系说明、数据字典和约束清单。
+- PostgreSQL 18.4 建表、清理和种子数据脚本。
+- 不少于 12 个业务查询及预期结果说明。
+- 非法数据约束验证记录。
+- 无 AI SQL 训练和复盘。
 
-- 不看资料解释完整认证链路，并说清认证与授权的边界。
-- 匿名访问受保护接口返回 401，已认证但无权限的场景预留为 403，而不是一律返回 500。
-- Cookie 认证的状态修改请求不能绕过 CSRF；CORS 不使用通配符配合凭据。
-- 数据库没有明文密码，日志没有密码、Cookie 或完整 Token。
-- 8 条以上测试稳定通过，且至少一半覆盖失败路径。
-- 能说明 JWT 的签名、过期、撤销和密钥轮换问题，以及 OIDC 与 OAuth 2.0 的区别。
-- 本周代码、ADR、测试和岗位矩阵均可由他人复现或审阅。
+## 验收标准
 
-## 12. 明确不做
+- 能从业务规则推导键、关系、NULL 和约束，而不是只画表。
+- PostgreSQL 18.4 容器可从空环境建立 schema 和种子数据。
+- 重复设备编码、孤儿引用、非法状态、空关键字段等被数据库拒绝。
+- 能解释主要 PostgreSQL 类型选择和 JSONB 的限制。
+- 能独立写 JOIN、聚合、EXISTS、CTE、窗口函数和稳定分页查询。
+- 查询结果与手算样例一致，无依赖天然顺序和 `SELECT *` 的稳定契约。
+- 无 AI 完成简化建模、约束和复杂查询。
 
-- 不自研 OAuth 2.0/OIDC 授权服务器。
-- 不同时把 Session、JWT、OIDC 三套方案投入 FactoryCare 生产路径。
-- 不使用已淘汰的 Password Grant，不把 ID Token 当业务 Access Token。
-- 不为了前后端联调关闭 CSRF、允许所有 Origin 或把 Token 永久放在 `localStorage`。
-- 不在本周实现 RBAC、租户数据权限和完整审计；这些属于第 14 周。
+## 明确不做
 
-## 13. 官方资料
+- 不接 MyBatis/JPA/JDBC 应用代码；第 15 周再接。
+- 不深入索引、EXPLAIN、MVCC、隔离级别和锁；第 14 周专门处理。
+- 不设计完整认证、RBAC、多租户隔离和审计；后续周次处理。
+- 不使用触发器、存储过程、分区、复制、分库分表或数据库 enum。
+- 不同时安装 MySQL、Oracle、SQL Server 做横向比较。
 
-- [Spring Security Servlet 架构](https://docs.spring.io/spring-security/reference/servlet/architecture.html)
-- [Spring Security 认证](https://docs.spring.io/spring-security/reference/servlet/authentication/index.html)
-- [Spring Security Session 管理](https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html)
-- [Spring Security CSRF](https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html)
-- [OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
-- [OAuth 2.0 Login 与 OIDC](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html)
-- [Spring Security 测试支持](https://docs.spring.io/spring-security/reference/servlet/test/index.html)
+## 官方资料
+
+- [PostgreSQL 18.4 Documentation](https://www.postgresql.org/docs/18/)
+- [Data Definition](https://www.postgresql.org/docs/18/ddl.html)
+- [Data Types](https://www.postgresql.org/docs/18/datatype.html)
+- [Queries](https://www.postgresql.org/docs/18/queries.html)
+- [Functions and Operators](https://www.postgresql.org/docs/18/functions.html)
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/18/tutorial.html)

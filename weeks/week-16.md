@@ -1,161 +1,159 @@
-# 第 16 周：Redis 8 缓存、幂等、限流与一致性
+# 第 16 周：Spring Security 认证、Session、JWT 与 OIDC
 
 > 建议投入：16 小时（可在 15—18 小时内调整）
 
 ## 1. 本周定位
 
-本周学习的不是“把 Redis 加进技术栈”，而是识别哪些问题适合 Redis、哪些必须由数据库保证。FactoryCare 只在有明确读热点、重复请求或流量保护需求的位置使用 Redis 8，并为 Redis 不可用、缓存过期和并发竞争设计退路。
+本周把 FactoryCare 从“能调用接口”升级为“能够证明调用者身份”。重点不是背注解或自制一套认证协议，而是理解 Spring Security 的请求链路、浏览器安全边界，以及 Session、JWT、OIDC 各自解决的问题。
 
-核心原则：**数据库是业务事实来源，缓存允许短暂陈旧；幂等最终靠业务唯一性和数据库约束，Redis 只做加速或短期协调。**
+FactoryCare 本周采用 **服务端 Session + HttpOnly Cookie** 保护同源 Web 管理端；JWT 资源服务器和 OIDC 登录先做到能解释、能验证示例，不同时维护三套生产认证。移动端认证方式留到 uni-app 阶段根据客户端约束单独决策。
 
 ## 2. 前置条件
 
-- 工单状态机、SLA、乐观锁、租户隔离和事务测试已通过。
-- 能分析 SQL 与索引，确认性能问题不是先由错误查询造成。
-- Docker Compose 可启动 PostgreSQL；本周新增 Redis 8，并锁定兼容稳定版本。
-- 已有结构化日志和关联 ID，能够观察缓存命中与失败。
+- FactoryCare 已有 Spring Boot Web、MyBatis、PostgreSQL 和统一错误响应。
+- 能使用 MockMvc/Testcontainers 验证接口成功与失败路径。
+- 已掌握 HTTP 方法、Cookie、Header、状态码和基本事务边界。
+- 开始前确认 Spring Boot 依赖由项目 BOM 统一管理，不手工混搭 Spring Security 小版本。
 
 ## 3. 学习目标
 
-- 能比较 Cache-Aside、Read/Write-Through、Write-Behind，并为具体数据选择策略。
-- 能设计租户化、可版本化、可观测的 Redis Key 与 TTL。
-- 能处理穿透、击穿、雪崩、热点 Key 和序列化演进。
-- 能实现端到端幂等：请求键、业务指纹、并发占用、结果复用和数据库唯一约束。
-- 能实现原子限流并解释固定窗口、滑动窗口和令牌桶的取舍。
-- 能说明缓存一致性的时间窗口、失效顺序和 Redis 故障时的降级策略。
+- 能画出 `SecurityFilterChain → AuthenticationManager → AuthenticationProvider → SecurityContext` 的认证链路。
+- 能区分认证与授权，以及 401 与 403。
+- 能比较 Session、JWT Bearer Token、OAuth 2.0 和 OIDC，不再把它们当作同一概念。
+- 能实现安全的登录、退出、当前用户接口，并处理 CSRF、CORS、Session 固定攻击和 Cookie 属性。
+- 能用自动化测试证明匿名、已登录、错误凭据、过期会话和 CSRF 失败行为。
 
 ## 4. 完整概念清单
 
-### 4.1 Redis 基础与数据建模
+### 4.1 Spring Security 请求链路
 
-- String、Hash、Set、Sorted Set 的典型场景；不为使用数据结构而使用。
-- 单线程命令执行与网络/持久化线程的区别；“原子单命令”不等于多步业务原子。
-- Key 命名：环境、应用、租户、资源、ID、版本，例如 `factorycare:v1:{tenant}:asset:{id}`。
-- TTL、随机抖动、惰性/定期删除和内存淘汰策略。
-- JSON/二进制序列化、安全反序列化、Schema 演进和大 Key 风险。
-- Pipeline、事务、Lua/Functions 的作用和边界。
+- Servlet Filter、`DelegatingFilterProxy`、`FilterChainProxy` 与 `SecurityFilterChain`。
+- `Authentication` 在认证前后的含义，`principal`、`credentials`、`authorities`。
+- `SecurityContextHolder` 的请求生命周期与线程边界；为什么不能把用户信息放进全局变量。
+- `AuthenticationManager`、`ProviderManager`、`AuthenticationProvider`、`UserDetailsService` 的职责。
+- `PasswordEncoder` 与自适应哈希；密码不加密存储、不记录明文日志。
+- `ExceptionTranslationFilter`、`AuthenticationEntryPoint`、`AccessDeniedHandler`。
 
-### 4.2 缓存策略
+### 4.2 Session 与浏览器安全
 
-- Cache-Aside：读未命中查库后回填，写成功后失效缓存。
-- 空值/不存在短 TTL 防穿透；布隆过滤器只学习概念，不急于引入。
-- 热点 Key 失效导致击穿：互斥重建、逻辑过期、请求合并的取舍。
-- 大量 Key 同时过期导致雪崩：TTL 抖动、分批预热、限流和数据库保护。
-- 双删、延迟双删和消息失效的局限；先明确可接受陈旧窗口。
-- 事务提交后再删缓存；回滚事务不能提前污染缓存。
-- 缓存命中率、回源次数、加载耗时和错误率，而不是只打印“命中/未命中”。
+- 服务端 Session、Session ID Cookie、登录态续期与退出失效。
+- `HttpOnly`、`Secure`、`SameSite`、作用域、有效期和 HTTPS。
+- Session fixation 防护、并发会话、超时和服务重启后的会话策略。
+- Cookie 认证为什么需要 CSRF 防护；CSRF Token 与 XSS 是不同问题。
+- CORS 预检、允许来源白名单、携带凭据；CORS 不是授权机制。
+- 同源部署、反向代理和前后端分离开发环境的差异。
 
-### 4.3 幂等
+### 4.3 JWT、OAuth 2.0 与 OIDC
 
-- HTTP 安全/幂等语义与业务幂等不是完全相同的概念。
-- `Idempotency-Key`、用户/租户/端点作用域、请求体摘要、有效期和结果复用。
-- 状态：处理中、成功、失败可重试；并发相同键不能执行两次。
-- 不同请求体复用同一个键必须拒绝。
-- 数据库唯一约束/业务号是最终防线；Redis 锁或 `SET NX EX` 只是前置保护。
-- 进程崩溃、锁过期、超时未知结果和客户端重试的处理。
+- JWT 的 Header、Claims、Signature；签名不等于加密。
+- `iss`、`sub`、`aud`、`exp`、`nbf`、`jti` 的用途和校验责任。
+- 对称密钥与非对称密钥、JWKS、密钥轮换和时钟偏差。
+- Access Token 与 Refresh Token；短期令牌、撤销、重放和泄露风险。
+- OAuth 2.0 的 Resource Owner、Client、Authorization Server、Resource Server。
+- OIDC 在 OAuth 2.0 上增加身份层；ID Token 不能当作任意业务 API 的 Access Token。
+- Authorization Code + PKCE 的适用场景；不实现已淘汰的 Password Grant。
+- 浏览器本地存储 Token 的 XSS 风险；“用了 JWT”不等于“无状态且更安全”。
 
-### 4.4 限流与分布式协调
+### 4.4 测试与可观测性
 
-- 固定窗口、滑动日志/计数、漏桶、令牌桶的精度与成本。
-- 限流维度：租户、用户、IP、API、模型调用；先选择业务维度再写算法。
-- Redis 8 `HEXPIRE` 等字段级过期能力及其适用场景。
-- 使用 Lua 保证“读取—判断—扣减”的原子性；返回剩余额度与重试时间。
-- Redis 不可用时对登录、查询、写入和 AI 调用分别选择 fail-open/fail-closed。
-- 分布式锁的唯一值、过期、续期、释放校验和 fencing token；不拿锁解决所有并发问题。
+- 对登录成功、失败、退出、会话过期、匿名访问、CSRF 缺失分别断言。
+- 日志只记录用户标识、结果、来源和关联 ID，不记录密码、Cookie 或完整 Token。
+- 认证失败统一响应，但不泄露“账号存在/不存在”等可枚举信息。
 
 ## 5. 任务分配
 
 | 任务 | 时间 | 结果 |
 | --- | ---: | --- |
-| Redis 8 数据结构与故障实验 | 2.5h | 命令实验和故障记录 |
-| Cache-Aside 与一致性实现 | 4h | 设备详情缓存及指标 |
-| 幂等接口实现 | 3.5h | 防重复工单创建闭环 |
-| 原子限流与降级 | 2.5h | 限流脚本和策略说明 |
-| 无 AI 训练 | 2h | 缓存一致性排错 |
-| 求职采样与项目表达 | 2h | Redis 面试证据 |
+| 阅读认证架构并手绘请求链路 | 3h | 一张认证链路图和概念卡片 |
+| Session、JWT、OIDC 对比实验 | 2.5h | 一份认证选型 ADR |
+| FactoryCare 登录与安全配置 | 5h | 可运行的 Session 认证闭环 |
+| 安全测试与故障排查 | 2.5h | 成功和错误路径测试 |
+| 无 AI 训练 | 2h | 认证排错记录 |
+| 南昌岗位采样与简历更新 | 1.5h | 岗位矩阵和项目表述 |
 
-总计 16.5 小时。若有 18 小时，增加 Testcontainers Redis 故障测试；不要增加无业务依据的分布式锁。
+总计 16.5 小时。若只有 15 小时，压缩资料整理；若有 18 小时，增加 JWT Resource Server 最小验证，不扩展为自建授权服务器。
 
 ## 6. FactoryCare 项目增量
 
-- Docker Compose 增加 Redis 8，并通过 Spring Boot 配置管理连接、超时和连接池；不在仓库提交真实密码。
-- 仅缓存设备详情/设备字典等读多写少数据，Key 必须包含租户和版本前缀。
-- 写事务成功提交后失效缓存；添加 TTL 抖动、空值短缓存和命中/回源指标。
-- 为“扫码报修/创建工单”增加 `Idempotency-Key`：校验请求摘要、复用成功结果、拒绝键冲突。
-- 工单业务号增加数据库唯一约束，证明 Redis 清空或失效时仍不会生成重复工单。
-- 为登录失败尝试或公开查询增加一个原子限流实验；记录限流维度、算法、阈值和 429 响应。
-- 制造 Redis 停止、缓存过期、热点并发和事务回滚四种故障，记录系统行为。
-- 编写 `ADR-016-redis-reliability.md`：说明缓存对象、陈旧窗口、幂等最终防线、限流故障策略和回滚方式。
+完成以下最小闭环：
+
+- `POST /api/v1/auth/login`：验证账号密码，建立 Session；失败信息不可用于枚举账号。
+- `POST /api/v1/auth/logout`：使当前 Session 失效。
+- `GET /api/v1/auth/me`：返回稳定的用户 DTO，不返回密码哈希和内部安全字段。
+- 设备、工单接口默认要求认证；健康检查等公开端点显式列入白名单。
+- 为状态修改接口启用 CSRF 防护；前端能够取得并回传 Token。
+- Cookie 在生产配置启用 `HttpOnly`、`Secure` 和合适的 `SameSite`。
+- 使用 Flyway 或当前迁移机制增加用户凭据字段，演示账号密码使用自适应哈希生成。
+- 新增 `ADR-013-authentication.md`：说明为何当前 Web 端选择 Session、何时才切换 OIDC/JWT、移动端仍待决策。
+- 至少覆盖 8 个安全测试：匿名、成功登录、错误密码、受保护资源、缺失 CSRF、有效 CSRF、退出、会话失效。
 
 ## 7. AI 协作边界
 
 AI 可以：
 
-- 生成 Key/TTL 评审清单、Lua 脚本初稿和并发测试思路。
-- 对比缓存策略、限流算法与故障策略。
-- 根据日志帮助定位缓存击穿或重复执行，但结论必须由实验验证。
-- 检查序列化 DTO 是否包含不必要的敏感字段。
+- 根据你画出的认证链路检查遗漏。
+- 生成测试场景清单和 MockMvc 测试骨架。
+- 对 `SecurityFilterChain` 做逐项解释，寻找过宽的匹配规则。
+- 比较 Session 与 JWT 方案，但必须列出威胁模型和运维成本。
 
-AI 不可以：
+AI 不可以替你决定：
 
-- 未测量数据库负载就建议“所有查询都缓存”。
-- 用 Redis 锁替代事务、乐观锁、唯一约束和权限校验。
-- 自行确定生产 TTL、限流阈值、fail-open/fail-closed 或删除策略。
-- 把线上 Redis 数据、密钥或连接地址放入提示词。
+- 哪些端点公开、Cookie/CORS 的生产域名和信任边界。
+- 密钥、密码、Token 和真实账号的生成或保存方式。
+- 关闭 CSRF、允许任意 Origin 或使用明文密码等“为了跑通”的捷径。
+- 认证方案最终选型和验收结论。
 
-接受 AI 生成的 Lua/释放锁代码前，必须手工模拟并发、超时、崩溃和重复请求。
+每次接受 AI 修改后，必须逐行检查路径匹配顺序，并重新运行全部安全测试。
 
 ## 8. 无 AI 训练
 
-本周从求职/复盘时段预留45—60分钟完成并记录：一维动态规划基础题；写出状态、转移、初值和遍历顺序。
+本周从求职/复盘时段预留45—60分钟完成并记录：贪心基础题；给出选择依据、反例与复杂度。
 
-关闭 AI 120 分钟：排查“设备名称更新成功，但部分用户仍看到旧值”的问题。
+关闭 AI 120 分钟：给定一个故意损坏的安全配置，定位并修复三个问题——匿名端点误受保护、登录成功仍返回403、POST因CSRF失败。要求：
 
-- 画出数据库事务、缓存读取、缓存删除和并发请求时间线。
-- 写出至少两种修复方案及陈旧窗口。
-- 实现事务提交后失效，并补回滚事务与并发读取测试。
-- 口述为什么“先更新缓存再更新数据库”和“延迟双删”都不是无条件正确答案。
+- 先画过滤器链和请求状态，不靠反复删除配置试错。
+- 用日志与单个最小测试缩小范围。
+- 最后口述 401、403、CORS、CSRF 的区别，并说明为何不能简单 `csrf.disable()`。
 
-## 9. 求职动作
+## 9. 求职动作（恢复求职后启用）
 
-- 采样南昌 Java/工业软件岗位 8 个，记录 Redis、缓存、分布式锁、幂等、限流和高并发要求，并区分“关键词”与实际业务场景。
-- 准备两个面试故事：一次缓存陈旧故障实验、一次重复请求被数据库唯一约束兜底。
-- 简历使用证据化表述：`以租户化 Cache-Aside 缓存设备热点数据；通过 Idempotency-Key + 数据库唯一约束防重复报修，并验证 Redis 下线降级`。
-- 本周继续完成至少 5 次匹配投递；对只要求常规 Redis 使用的岗位，不夸大为高并发生产经验。
+- 从南昌当周 Java、Java 全栈和信息化岗位中采样 8 个 JD，统计 Spring Security、JWT、RBAC、单点登录、OAuth2 的出现方式。
+- 把“熟悉 JWT”改写成可验证表述：`实现 Session 认证、CSRF 防护及 8 条安全集成测试；能说明 JWT/OIDC 适用边界`。
+- 准备 3 分钟回答：公司为什么可能选择 Session，而不是 JWT？
+- 对 Vue 岗继续投递，不等待后端路线学完；本周至少完成 5 次高匹配投递或跟进。
 
 ## 10. 本周交付物
 
-- Redis 8 本地运行配置、Key 规范和缓存指标。
-- 设备缓存、幂等创建和原子限流实验。
-- `ADR-016-redis-reliability.md`。
-- Redis 停止、事务回滚、热点并发和重复请求故障报告。
-- 无 AI 一致性排错记录与两条面试故事。
+- 认证链路图和 Session/JWT/OIDC 对比表。
+- `ADR-013-authentication.md`。
+- FactoryCare 登录、退出、当前用户接口与安全配置。
+- 不少于 8 条认证/CSRF 自动化测试。
+- 一份无 AI 排错记录和一条可写进简历的项目证据。
 
 ## 11. 验收标准
 
-- 能说明为什么缓存对象值得缓存、允许陈旧多久、何时失效以及 Redis 下线怎样处理。
-- 缓存 Key 包含租户与版本，不泄露跨租户数据；缓存 DTO 不含敏感字段。
-- 相同幂等键和相同请求只产生一个工单；相同键不同请求被拒绝；清空 Redis 后数据库仍能兜底。
-- 限流脚本在并发下不会超发，429 响应包含稳定错误码和合理重试提示。
-- Redis 停止不会破坏工单事实数据，故障策略有测试和文档。
-- 能解释缓存穿透、击穿、雪崩、热点 Key、原子命令与多步业务原子的区别。
-- 所有测试、故障实验和简历描述均不把个人实验包装成生产高并发经验。
+- 不看资料解释完整认证链路，并说清认证与授权的边界。
+- 匿名访问受保护接口返回 401，已认证但无权限的场景预留为 403，而不是一律返回 500。
+- Cookie 认证的状态修改请求不能绕过 CSRF；CORS 不使用通配符配合凭据。
+- 数据库没有明文密码，日志没有密码、Cookie 或完整 Token。
+- 8 条以上测试稳定通过，且至少一半覆盖失败路径。
+- 能说明 JWT 的签名、过期、撤销和密钥轮换问题，以及 OIDC 与 OAuth 2.0 的区别。
+- 本周代码、ADR、测试和岗位矩阵均可由他人复现或审阅。
 
 ## 12. 明确不做
 
-- 不缓存所有表、分页结果和权限判断。
-- 不引入 Redis Cluster、哨兵、多地域复制或复杂容量规划。
-- 不以分布式锁替代数据库锁、版本列和唯一约束。
-- 不实现“绝对强一致缓存”；先定义并验证可接受陈旧窗口。
-- 不在本周引入消息队列或微服务；可靠异步属于第 17 周。
+- 不自研 OAuth 2.0/OIDC 授权服务器。
+- 不同时把 Session、JWT、OIDC 三套方案投入 FactoryCare 生产路径。
+- 不使用已淘汰的 Password Grant，不把 ID Token 当业务 Access Token。
+- 不为了前后端联调关闭 CSRF、允许所有 Origin 或把 Token 永久放在 `localStorage`。
+- 不在本周实现 RBAC、租户数据权限和完整审计；这些属于第 17 周。
 
 ## 13. 官方资料
 
-- [Redis 数据类型](https://redis.io/docs/latest/develop/data-types/)
-- [Redis 缓存与客户端侧缓存](https://redis.io/docs/latest/develop/clients/client-side-caching/)
-- [Redis Rate Limiter](https://redis.io/docs/latest/develop/use-cases/rate-limiter/)
-- [Redis Lua 脚本](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/)
-- [Redis 分布式锁模式](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)
-- [Redis 8 官方更新说明](https://redis.io/docs/latest/develop/whats-new/8-0/)
-- [Spring Data Redis Reference](https://docs.spring.io/spring-data/redis/reference/)
-- [HTTP Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods)
+- [Spring Security Servlet 架构](https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+- [Spring Security 认证](https://docs.spring.io/spring-security/reference/servlet/authentication/index.html)
+- [Spring Security Session 管理](https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html)
+- [Spring Security CSRF](https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html)
+- [OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
+- [OAuth 2.0 Login 与 OIDC](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html)
+- [Spring Security 测试支持](https://docs.spring.io/spring-security/reference/servlet/test/index.html)

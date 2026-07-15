@@ -1,164 +1,162 @@
-# 第 17 周：异步任务、领域事件、Outbox 与 RabbitMQ 概念
+# 第 17 周：RBAC、多租户、数据权限与审计
 
-> 建议投入：16 小时（可在 15—18 小时内调整）
+> 建议投入：16.5 小时（可在 15—18 小时内调整）
 
 ## 1. 本周定位
 
-本周解决“主事务已经成功，但通知、统计或外部调用失败怎么办”。目标是掌握异步边界和可靠交付，而不是为了简历把单体强行拆成微服务。
+登录只证明“你是谁”，企业系统还必须回答“你能对哪些数据做什么”。本周建立 FactoryCare 的授权纵深：接口权限、方法权限、租户隔离、组织数据范围和审计追踪同时存在，任何一层都不能只靠前端隐藏按钮。
 
-FactoryCare 实现 **数据库 Outbox + 可重试投递器 + 幂等消费者** 的最小可靠闭环；RabbitMQ 只完成概念、管理界面与可选适配实验。工单状态变更仍由数据库事务同步保证，通知等次要副作用才异步化。
+项目选择 **共享数据库、共享 Schema、业务表强制携带 `tenant_id`** 的轻量多租户方案，适合作品集和中小型企业应用；同时学习独立 Schema、独立数据库的取舍，但不实现三套方案。
 
 ## 2. 前置条件
 
-- 工单状态机、事务、审计、幂等与 Redis 故障策略已验收。
-- 能解释“事务提交前/后”与 `@TransactionalEventListener` 的差异。
-- Docker Compose、结构化日志、关联 ID 和数据库迁移可用。
-- 已列出工单流程中的核心事实与可延迟副作用，不把二者混在一起。
+- 第 16 周 Session 登录、当前用户接口与安全测试已通过。
+- 已有用户、设备、工单等表，并能编写 MyBatis 查询和集成测试。
+- 能解释数据库唯一约束、事务和索引的基本作用。
+- 已明确 FactoryCare 当前不是 SaaS 计费平台，多租户只验证隔离设计。
 
 ## 3. 学习目标
 
-- 能判断任务应同步、线程池异步、定时调度还是消息驱动。
-- 能区分领域事件、集成事件和普通方法调用。
-- 能解释数据库与消息代理“双写”为什么会丢消息或产生幽灵消息。
-- 能实现 Outbox 的同事务写入、领取、发送、重试、失败和清理。
-- 能实现至少一次投递下的幂等消费者，并接受“重复可能发生”。
-- 能说明 RabbitMQ 的 exchange、queue、binding、ack、confirm、prefetch 与 dead letter。
+- 能区分 RBAC、资源所有权、数据范围和 ABAC，并组合使用。
+- 能设计用户—角色—权限关系及稳定的权限编码。
+- 能从认证主体取得可信 `tenant_id`，而不是相信请求体或普通请求头。
+- 能让所有关键查询、更新、唯一约束和缓存键遵守租户边界。
+- 能实现可检索、可脱敏、不可被普通用户修改的审计记录。
+- 能用负向测试证明跨租户和越权访问失败。
 
 ## 4. 完整概念清单
 
-### 4.1 异步任务边界
+### 4.1 授权模型
 
-- 同步调用、`@Async`、调度任务、数据库队列和消息代理的成本。
-- 延迟、吞吐、顺序、可靠性、一致性、可观察性和运维复杂度。
-- 有界线程池、队列容量、拒绝策略、背压和上下文传播。
-- 超时、重试、指数退避、抖动、最大次数与不可重试错误。
-- 重试放大、副作用重复、超时后实际成功等常见问题。
-- 关联 ID、租户、操作者等上下文必须显式进入任务载荷，不能依赖原请求线程。
+- RBAC：租户成员、角色、权限、角色权限、成员角色；角色绑定到`membership`，避免全局用户角色越过租户边界。
+- 权限编码采用业务动作，如 `workorder:assign`、`asset:update`，不绑定页面路径。
+- 粗粒度 URL 授权与细粒度方法授权；默认拒绝、最小权限。
+- 资源所有权、组织层级和数据范围：本人、本班组、本部门及下级、全租户。
+- RBAC 与 ABAC 的边界；不要把所有条件都塞进角色数量爆炸的 RBAC。
+- 前端菜单/按钮权限只改善体验，后端才是安全判定源。
+- 401、403、404 的信息泄露权衡；敏感资源可对越权访问隐藏存在性。
 
-### 4.2 领域事件与事务
+### 4.2 多租户设计
 
-- 领域事件是已发生的业务事实，名称使用过去式，如 `WorkOrderAssigned`。
-- 事件应包含稳定 ID、聚合 ID、租户、发生时间、Schema 版本和必要快照。
-- 事件不携带密码、Token、完整实体或不必要隐私数据。
-- Spring `ApplicationEventPublisher` 默认同步；`@Async` 不自动提供可靠性。
-- `@TransactionalEventListener(AFTER_COMMIT)` 的使用场景与进程崩溃丢失窗口。
-- 核心状态与 Outbox 记录必须处于同一数据库事务。
+- 独立数据库、独立 Schema、共享表三种模式的隔离强度、成本和迁移难度。
+- `tenant_id` 的来源：登录主体或可信系统上下文；禁止由客户端任意指定。
+- Request/Thread Context 的创建、使用和清理；异步任务中上下文不能自动假定存在。
+- 查询、更新、删除必须同时限制业务主键与 `tenant_id`。
+- 唯一约束应包含租户维度，例如 `(tenant_id, asset_code)`。
+- 分页、聚合、导出、批量操作、缓存、搜索和审计也必须租户化。
+- MyBatis 拦截器可做辅助防护，但不能替代显式仓储契约和集成测试。
+- PostgreSQL Row-Level Security 的能力与运维复杂度；本周只做对照实验，不把它当作唯一防线。
 
-### 4.3 Transactional Outbox
+### 4.3 审计与追踪
 
-- Outbox 表：事件 ID、类型、聚合 ID、租户、载荷、版本、状态、尝试次数、下次时间、创建/完成时间。
-- 发布事务只写业务数据与 Outbox；投递器在事务外读取和发送。
-- 多实例领取：`FOR UPDATE SKIP LOCKED`、租约/状态更新或等价策略。
-- 至少一次交付意味着消费者必须幂等；“exactly once”通常只在限定边界成立。
-- 失败重试、死信状态、人工重放、载荷版本兼容和保留/清理策略。
-- 消费幂等表或业务唯一约束；先记录还是先执行要结合本地事务。
+- 安全审计与普通业务日志的差异。
+- 审计字段：租户、操作者、动作、对象类型与 ID、时间、结果、来源 IP、关联 ID。
+- 对关键变更保存必要的前后差异或摘要；密码、Token、隐私字段必须脱敏。
+- 登录成功/失败、角色变更、越权拒绝、工单分配与状态变更属于高价值审计事件。
+- 审计写入失败的策略、事务边界和性能取舍。
+- 审计表只追加，由受限接口查询；普通业务用户不能修改或删除。
+- 关联 ID 串联 HTTP 请求、业务日志和审计事件。
 
-### 4.4 RabbitMQ 核心概念
+### 4.4 常见攻击与缺陷
 
-- Producer、Exchange、Binding、Queue、Consumer、Virtual Host。
-- Direct、Topic、Fanout、Headers Exchange 的路由语义。
-- 持久队列、持久消息与真正可靠交付的前提。
-- Publisher Confirms 与 Mandatory Return；Consumer Ack/Nack、重入队和死循环。
-- Prefetch、消费者并发、消息顺序和公平分发。
-- Dead Letter Exchange、TTL、重试队列；失败不是无限 `requeue=true`。
-- Outbox 解决数据库—消息双写，RabbitMQ 解决跨进程传输；两者不是互相替代。
+- IDOR/BOLA：只校验“已登录”，却未校验资源归属。
+- Mass Assignment：DTO 接受 `tenantId`、`role` 等不该由用户修改的字段。
+- 批量接口、导出接口、统计接口最容易遗漏数据范围。
+- 超级管理员万能角色、硬编码角色名和散落的权限表达式导致维护失控。
 
 ## 5. 任务分配
 
 | 任务 | 时间 | 结果 |
 | --- | ---: | --- |
-| 异步边界与事件设计 | 2.5h | 事件目录和决策表 |
-| Outbox 写入与投递器 | 4.5h | 可靠投递最小闭环 |
-| 幂等消费者与失败恢复 | 3h | 重复/崩溃测试 |
-| RabbitMQ 概念和可选实验 | 2h | 路由、确认与 ACK 笔记 |
-| 无 AI 训练 | 2h | 双写故障分析 |
-| 求职与项目表达 | 2h | 可靠性面试材料 |
+| 授权与租户方案设计 | 3h | 权限矩阵、数据范围和 ADR |
+| RBAC 与方法授权实现 | 3.5h | 后端权限闭环 |
+| 租户隔离与审计实现 | 5h | 租户化查询和审计记录 |
+| 越权/跨租户集成测试 | 2h | 负向测试证据 |
+| 无 AI 训练 | 2h | 越权漏洞修复 |
+| 求职采样与项目表达 | 1.5h | JD 矩阵与面试答案 |
 
-总计 16 小时。若 RabbitMQ 环境占用过多时间，只保留官方教程实验；不得删减 Outbox 失败恢复测试。
+总计 17 小时。时间不足时减少 RLS 对照实验，不能删除跨租户测试。
 
 ## 6. FactoryCare 项目增量
 
-- 按[PROJECT_SPEC.md](../PROJECT_SPEC.md)的唯一目录，为`WorkOrderCreated.v1`、`WorkOrderAssigned.v1`、`WorkOrderResolved.v1`、`WorkOrderClosed.v1`建立版本化事件契约并写入可靠事件链；本轮不另造`SlaBreached.v1`。
-- 工单事务在成功变更状态/负责人时同时写入 `outbox_event`，两者任一失败则整体回滚。
-- 编写有界批量投递器：领取待处理事件、增加尝试次数、调用通知端口、记录成功或下次重试。
-- `engagement`模块先用本地通知适配器/测试替身，确保项目不依赖RabbitMQ也可启动。
-- `WorkOrderClosed.v1`先可靠发布并保留幂等消费契约；Week 29由`knowledge`通过`ai-integration`生成知识草稿，失败不得回滚已关闭工单。
-- 消费端按事件 ID 去重；同一事件重复投递不会创建两条通知或重复修改业务事实。
-- 增加人工重放命令或受限管理接口，只允许重放失败事件并留下审计。
-- 可选：Docker Compose 启动 RabbitMQ，将通知端口替换为 AMQP 适配器，验证 confirm、ack 和重复投递；不把它设为本周硬依赖。
-- 制造四种故障：业务回滚、提交后进程退出、消费者处理后未确认、永久失败；记录恢复结果。
-- 编写 `ADR-017-reliable-events.md`，比较直接异步、事务监听、Outbox、RabbitMQ 的成本与适用边界。
+- 建立 `permission`、`role`、`role_permission`、`membership_role` 等最小关系；`membership_role`在租户成员关系上绑定角色，避免把菜单表或全局用户角色直接当权限来源。
+- 为设备、工单、用户组织关系和审计表增加 `tenant_id`，并建立组合索引/唯一约束。
+- 当前用户上下文从认证主体读取 `userId`、`tenantId` 和权限集合。
+- 为工单查看、创建、分配、更新、关闭建立权限矩阵，并在方法边界执行授权。
+- 数据范围至少实现“本人/班组/全租户”三档；仓储方法显式接收租户和范围条件。
+- DTO 不接受客户端传入的 `tenantId`、审计操作者、系统角色等敏感字段。
+- 增加只读审计查询：支持按操作者、对象、动作、时间筛选；普通用户不可修改审计记录。
+- 编写 `ADR-014-authorization-and-tenancy.md`，记录共享表方案、失败模式、未来迁移条件和回滚方式。
+- 至少 10 条负向测试：跨租户读/写、无权限分配、越权批量查询、伪造 tenantId、审计不可改等。
 
 ## 7. AI 协作边界
 
 AI 可以：
 
-- 根据业务事实审查事件命名、最小载荷和版本字段。
-- 生成 Outbox 状态机、故障注入和重复消费测试清单。
-- 比较 RabbitMQ 路由与确认机制，帮助解释日志。
-- 审查重试策略是否可能无限循环或放大流量。
+- 根据业务动作生成权限矩阵初稿和威胁清单。
+- 审查 MyBatis SQL 是否漏掉租户条件，并生成负向测试骨架。
+- 比较三种多租户存储模式的成本、风险和迁移方式。
+- 帮助把散落的权限判断收敛到清晰的策略接口。
 
 AI 不可以：
 
-- 把任意 Service 调用自动改成事件，或擅自扩大最终一致范围。
-- 承诺“绝对不丢、不重、Exactly Once”而不给出限定条件和证据。
-- 决定哪些业务允许最终一致、失败后是否人工重放。
-- 访问真实 RabbitMQ 凭据或生产消息载荷。
+- 根据前端按钮或路由自动推断最终后端权限。
+- 将客户端传入的 `tenantId` 当可信来源。
+- 用一个全局 MyBatis 拦截器取代所有显式边界和测试。
+- 生成或接触真实用户、企业和审计数据。
 
-对 AI 生成的重试/确认代码，必须逐一验证崩溃发生在“提交前、提交后、发送前、发送后、确认前”时的结果。
+接受 AI 生成 SQL 前，必须手工检查 `SELECT/UPDATE/DELETE/COUNT/EXPORT` 五类路径的租户约束。
 
 ## 8. 无 AI 训练
 
-本周从求职/复盘时段预留45—60分钟完成并记录：一维动态规划变体；比较递归、记忆化和迭代。
+本周从求职/复盘时段预留45—60分钟完成并记录：Top K变体；比较排序、堆和桶思路。
 
-关闭 AI 120 分钟，分析并修复“工单已分配但通知永久丢失”的双写代码：
+关闭 AI 120 分钟：给定一个“按工单ID更新负责人”的接口，其中只校验了登录状态。完成：
 
-- 画出数据库提交和消息发送的两个失败顺序。
-- 将业务更新和 Outbox 写入同一事务。
-- 编写最小投递器和幂等消费者。
-- 通过故障注入证明提交后崩溃仍可恢复，重复投递不产生重复通知。
-- 口述为什么 `@Async`、`@TransactionalEventListener(AFTER_COMMIT)` 和 RabbitMQ 持久消息单独都不能解决数据库双写。
+1. 找出 IDOR、跨租户写入和 Mass Assignment 风险。
+2. 修改服务和 SQL，使更新同时校验租户、权限与版本条件。
+3. 补一条合法测试和三条越权测试。
+4. 口述为什么前端隐藏按钮、URL 拦截器和数据库主键都不足以单独保证数据权限。
 
-## 9. 求职动作
+## 9. 求职动作（恢复求职后启用）
 
-- 采样 8 个南昌 Java/企业应用/制造业岗位，记录 MQ、RabbitMQ、Kafka、异步任务、定时任务和最终一致要求；不要把“出现 MQ”自动理解为必须做微服务。
-- 准备 6 分钟故障故事：数据库已提交、进程崩溃、Outbox 如何恢复、为何消费者仍需幂等。
-- 简历写为：`以 Transactional Outbox 同事务记录工单事件，构建可重试投递与幂等消费，并通过崩溃/重复投递实验验证恢复`。
-- 对要求 MQ 但实际偏业务开发的岗位继续投递；坦诚 RabbitMQ 是项目实验，不伪造生产运维经验。
+- 采样 8 个南昌 Java/全栈/政企信息化岗位，记录“RBAC、数据权限、组织权限、审计、单点登录、多租户”等关键词。
+- 将项目简历描述更新为：`设计租户级 RBAC 与本人/班组/全租户数据范围，以负向集成测试验证跨租户隔离`。
+- 准备一张 A4 权限矩阵，在模拟面试中用 5 分钟解释接口权限和数据权限的区别。
+- 继续投递 Vue/Java 全栈岗位；对要求若依、Spring Security 或政企权限模型的 JD 做定制投递。
 
 ## 10. 本周交付物
 
-- 事件目录、事件 Schema 和异步边界决策表。
-- Outbox 表、投递器、幂等消费者及受控重放。
-- `ADR-017-reliable-events.md`。
-- 四类故障实验与自动化测试报告。
-- RabbitMQ 核心概念图和一段面试讲解。
+- 权限矩阵、租户数据模型图和 `ADR-014-authorization-and-tenancy.md`。
+- RBAC、数据范围、租户隔离与只读审计实现。
+- 不少于 10 条负向安全测试和测试报告。
+- 一份越权漏洞无 AI 修复记录。
+- 更新后的项目简历条目与岗位关键词矩阵。
 
 ## 11. 验收标准
 
-- 业务事务回滚时没有可投递事件；业务提交后即使进程退出，事件仍能恢复投递。
-- 同一事件投递两次，业务副作用至多发生一次，重复行为可观察。
-- 永久失败不会无限热循环，有最大次数、退避、失败状态和审计重放入口。
-- 能解释 `@Async`、事务事件、Outbox、RabbitMQ 各自解决的问题和新增成本。
-- 能画出 publisher confirm 与 consumer ack 的不同方向。
-- 关键状态变更仍保持同步事务一致，未为了技术展示扩大最终一致范围。
-- 无 AI 训练和故障实验结果可复现。
+- 能区分 RBAC、ABAC、资源所有权、数据范围和多租户。
+- 新建租户 A、B 后，A 无法通过详情、列表、统计、更新或批量接口观察或修改 B 的数据。
+- `tenant_id` 来自认证上下文，不从普通请求 DTO 读取。
+- 权限判断同时存在于后端方法/领域边界，前端显示控制不承担安全责任。
+- 审计记录包含谁、何时、对什么做了什么、结果如何和关联 ID，敏感字段已脱敏。
+- 关键越权路径有自动化测试，测试失败时能定位到授权、业务或 SQL 层。
+- 能在 5 分钟内向面试官说明共享表租户方案的风险、替代方案和迁移条件。
 
 ## 12. 明确不做
 
-- 不拆微服务，不同时引入 RabbitMQ、Kafka、Pulsar。
-- 不让消息队列成为 FactoryCare 本地启动的硬依赖。
-- 不承诺无条件 Exactly Once，不使用无限重试。
-- 不把核心权限校验、工单状态变更或扣减类操作随意异步化。
-- 不实现复杂 Schema Registry、跨地域复制和大规模消息压测。
+- 不实现完整 SaaS 计费、租户自助开通和跨区域数据驻留。
+- 不同时实现独立数据库、独立 Schema 和共享表三套方案。
+- 不把角色名硬编码到每个 Controller，不创建“万能管理员绕过一切”的隐式后门。
+- 不只依赖前端、MyBatis 插件或 PostgreSQL RLS 中的任意单层防护。
+- 不保存密码、Token、附件正文等不必要的审计数据。
 
 ## 13. 官方资料
 
-- [Spring Framework Application Events](https://docs.spring.io/spring-framework/reference/core/beans/context-introduction.html#context-functionality-events)
-- [Spring Framework Transaction-bound Events](https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html)
-- [Spring Modulith 事件发布注册表](https://docs.spring.io/spring-modulith/reference/events.html)
-- [RabbitMQ Tutorials](https://www.rabbitmq.com/tutorials)
-- [RabbitMQ Publisher Confirms 与 Consumer Acknowledgements](https://www.rabbitmq.com/docs/confirms)
-- [RabbitMQ Dead Letter Exchanges](https://www.rabbitmq.com/docs/dlx)
-- [RabbitMQ Consumer Prefetch](https://www.rabbitmq.com/docs/consumer-prefetch)
-- [PostgreSQL SKIP LOCKED](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE)
+- [Spring Security Authorization](https://docs.spring.io/spring-security/reference/servlet/authorization/index.html)
+- [Spring Security Method Security](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html)
+- [Spring Security 多租户 Resource Server 参考](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/multitenancy.html)
+- [Spring Boot Actuator Auditing](https://docs.spring.io/spring-boot/reference/actuator/auditing.html)
+- [PostgreSQL Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+- [OWASP API1: Broken Object Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/)

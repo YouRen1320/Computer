@@ -1,190 +1,167 @@
-# 第 7 周：Maven 与 Spring Core、DI、配置
+# 第 7 周：Lambda、Stream 与 Optional
 
 ## 定位
 
-本周把此前“能运行的 Maven 工程”升级为可解释、可诊断的构建，并用 Spring Core 接管应用对象的创建与装配。重点是依赖方向和构造器注入，不是背注解或依赖容器魔法。
+本周学习 Java 的声明式数据处理工具，但不把所有循环改成 Stream。目标是能判断什么时候 Lambda/Stream 更清晰、什么时候显式循环更可靠，并正确使用 Optional 表达“查询可能无结果”。
 
-时间预算：15—18 小时。先使用不带 Spring Boot 的 `ApplicationContext` 看清 IoC/DI，再进入第 8 周的自动配置。
+时间预算：15—18 小时。所有 Stream 管道都必须能用普通循环复述其输入、输出、复杂度和副作用。
 
 ## 前置
 
-- JDK 25、Maven 3.9.16 和 `JAVA_HOME` 一致。
-- FactoryCare 的纯 Java 领域、仓储接口、内存实现和应用服务测试通过。
-- 能解释接口依赖和手工构造对象的组合根。
-- 已完成并发阶段，知道容器管理对象不等于对象自动线程安全。
+- 熟练使用集合、泛型、Comparator 和 JUnit。
+- FactoryCare 内存仓储、JSON 导入导出和时间模型可用。
+- 能写清晰的 for 循环并处理空集合。
+- 了解方法应尽量职责单一，核心查询不应修改输入集合。
 
 ## 目标
 
-- 理解 Maven POM、坐标、生命周期、依赖、插件和版本管理。
-- 能使用 `dependency:tree`、`help:effective-pom` 定位依赖问题。
-- 固定 Java `release=25`，建立可重复的 Maven Wrapper 和验证命令。
-- 理解 IoC、DI、Bean、ApplicationContext 和配置元数据。
-- 使用构造器注入、`@Configuration/@Bean` 与组件扫描装配对象。
-- 使用环境/Profile 表达可替换配置，但不把 Profile 当密钥仓库。
-- 将 FactoryCare 的内存适配器装配迁入 Spring Core，领域模型保持普通 Java。
+- 理解函数式接口、Lambda 捕获和方法引用。
+- 使用 Stream 完成筛选、映射、扁平化、排序、聚合与分组。
+- 理解惰性、中间操作、终止操作和短路。
+- 控制副作用，不在管道中偷偷修改领域对象。
+- 正确使用 Optional，避免 `get()`、嵌套 Optional 和字段滥用。
+- 为 FactoryCare 实现工单查询与运维统计服务。
 
 ## 完整概念清单
 
-### Maven 项目模型
+### Lambda 与函数式接口
 
-- POM、`groupId/artifactId/version/packaging` 坐标。
-- 标准目录：`src/main/java`、`src/main/resources`、`src/test/java`。
-- Maven 约定优于配置，但目录约定不等于业务架构。
-- `validate`、`compile`、`test`、`package`、`verify`、`install`、`deploy` 生命周期阶段。
-- phase 与 plugin goal 的区别；执行后续阶段会包含前置阶段。
-- 本地仓库、远程仓库和缓存；不随意删除整个本地仓库解决问题。
+- 函数式接口只有一个抽象方法；`@FunctionalInterface` 的作用。
+- `Predicate`、`Function`、`Consumer`、`Supplier`、`UnaryOperator`、`BinaryOperator`。
+- Lambda 参数、表达式体、块体和类型推断。
+- 方法引用的四种常见形式，只在更易读时使用。
+- 捕获局部变量必须 effectively final。
+- Lambda 中的 `this` 与匿名类不同，只理解行为差异。
+- 不把复杂业务流程塞进超长 Lambda。
 
-### 依赖与版本
+### Stream 模型
 
-- compile、runtime、test、provided 等 scope 的传递影响。
-- 直接依赖、传递依赖、依赖冲突和 nearest definition 的高层规则。
-- `dependencyManagement` 管版本但不自动添加依赖。
-- BOM import、parent POM 与普通依赖的区别。
-- exclusions 只在理解冲突后使用，不作为清理依赖树的习惯动作。
-- 锁定稳定版本；不在同一 POM 为 Spring 管理的库随意覆盖版本。
-- `mvn dependency:tree` 和 `mvn help:effective-pom`。
+- Stream 不是集合，不保存数据，通常只能消费一次。
+- 数据源、中间操作、终止操作。
+- 惰性求值、操作融合和短路的直觉。
+- `filter`、`map`、`flatMap`、`distinct`、`sorted`、`limit/skip`。
+- `findFirst/findAny`、`anyMatch/allMatch/noneMatch`。
+- `count`、`reduce` 与单位元；数值聚合优先 primitive stream 或统计收集器。
+- `toList`、`Collectors.toSet/toMap/groupingBy/partitioningBy/joining`。
+- `toMap` 的重复 key 合并策略必须显式。
+- 多级 grouping 和 downstream collector 只做可读范围内的组合。
 
-### 插件与可复现构建
+### 副作用、性能与调试
 
-- build plugin 与普通库依赖职责不同。
-- compiler、Surefire、Failsafe 的高层职责。
-- `maven.compiler.release=25` 限定语言和 API 目标。
-- Maven Wrapper 让项目固定 Maven 版本；全局 Maven 仍用于理解和初始化。
-- `.mvn/maven.config` 每行参数规则和项目级配置。
-- Toolchains 能分离运行 Maven 的 JDK 与编译 JDK；当前只有 JDK 25 时不额外引入复杂度。
-- `mvn verify` 作为本地和 CI 的统一入口。
-- profile 只用于确有差异的构建环境，不复制整套依赖树。
+- 中间操作应尽量无状态、无副作用。
+- 不在 `map/peek` 中修改共享集合或领域实体。
+- `peek` 主要用于观察调试，不承担业务动作。
+- 一次清晰循环可能优于多次遍历和复杂 Collector。
+- 大 O、装箱、排序和多次扫描的基本成本意识。
+- `parallelStream` 并非“加一个 parallel 就更快”，本周禁止用于项目代码。
 
-### IoC 与 DI
+### Optional
 
-- IoC：对象不再自己查找/创建所有协作者。
-- DI：依赖通过构造器、工厂方法或属性提供。
-- `BeanFactory` 与 `ApplicationContext` 的高层关系。
-- Bean definition、Bean name、Bean instance、容器生命周期。
-- 领域对象通常由业务代码创建，不把每个 WorkOrder 注册为 Bean。
-- 构造器注入使必需依赖明确、可测试、可保持 final。
-- 字段注入隐藏依赖并妨碍测试，新代码不使用。
-- setter 注入只适用于真正可选或可重配置依赖。
+- Optional 是“可能无值的返回结果”容器，不是通用 null 替代品。
+- `of`、`ofNullable`、`empty`。
+- `map`、`flatMap`、`filter`、`orElse`、`orElseGet`、`orElseThrow`。
+- `orElse` 会立即计算参数，昂贵后备值使用 `orElseGet`。
+- 不直接 `get()`，不把 Optional 作为实体字段、方法参数或集合元素。
+- Optional 链过长时使用清晰分支。
+- 在应用边界把“无值”转换为明确业务结果或异常。
 
-### Java 配置与组件扫描
+### 查询设计
 
-- `@Configuration`、`@Bean`、`@Import`。
-- `@Component`、`@Service`、`@Repository` 是候选组件语义标记。
-- `@ComponentScan` 的包范围；启动类位置影响扫描。
-- 显式 `@Bean` 适合第三方类和基础设施适配器。
-- 组件扫描适合稳定应用组件，但不能让依赖来源不可见。
-- 同类型多个 Bean 时的歧义；优先调整接口和边界，再考虑 qualifier/primary。
-
-### Bean scope 与生命周期
-
-- singleton 是每个容器一个实例，不是 GoF 全局单例。
-- prototype、request、session scope 只了解边界；非 Web 阶段主要使用 singleton。
-- singleton Bean 中共享可变字段的并发风险。
-- 创建、依赖注入、初始化、销毁的高层顺序。
-- `@PostConstruct/@PreDestroy` 只用于资源生命周期，不执行复杂业务。
-- 循环依赖通常是设计信号，不通过字段注入绕过。
-
-### 配置与环境
-
-- `Environment`、property source、Profile 的用途。
-- 环境差异属于配置，业务规则不应由散落的 `if (profile)` 控制。
-- 本地、测试配置和生产配置的边界。
-- 配置默认值、必填校验和启动失败优于运行时晚失败。
-- 密钥不提交 Git，不写入测试快照或 AI 对话。
+- 查询条件对象与硬编码筛选的边界。
+- 排序、过滤、分页的稳定顺序。
+- 统计结果 DTO/record 与领域实体分离。
+- 空结果、重复 key、未知状态和 null 数据的策略。
 
 ## 任务分配
 
 | 模块 | 时间 | 任务 |
 | --- | ---: | --- |
-| Maven 模型 | 3h | 生命周期、scope、BOM、插件、依赖树和 effective POM |
-| 构建固定 | 1.5h | Wrapper、release 25、统一 verify 命令 |
-| Spring IoC/DI | 3h | 手工装配与容器装配对照、构造器注入 |
-| 配置方式 | 2h | `@Configuration/@Bean`、扫描、Profile、生命周期 |
-| FactoryCare | 3—4h | 将应用服务和内存适配器装配进 Spring Core |
-| 无 AI 训练 | 2h | 依赖冲突与Bean歧义排查 |
-| 求职动作 | 1h | Maven/Spring Core 口述与投递 |
+| Lambda | 2h | 函数式接口、捕获和方法引用练习 |
+| Stream | 4h | 筛选、映射、扁平化、聚合、分组和短路 |
+| Optional | 2h | 查询缺失、后备值和异常边界练习 |
+| 可读性比较 | 1.5h | 循环与 Stream 两版实现及性能直觉 |
+| FactoryCare | 3—4h | 查询与统计服务、测试和错误样例 |
+| 无 AI 训练 | 2h | 新报表与管道调试 |
+| 求职动作 | 1h | Stream/Optional 高频题与投递 |
 
 ## FactoryCare项目增量
 
-保留现有 domain/application/infrastructure 边界，用 Spring Core 只装配应用级对象：
+实现 `WorkOrderQueryService` 和 `MaintenanceDashboardService`：
 
-- `WorkOrderRepository` 仍是应用依赖的接口。
-- `InMemoryWorkOrderRepository` 通过显式 `@Bean` 或组件扫描注册。
-- `WorkOrderApplicationService` 使用构造器注入，不直接 `new` 仓储实现。
-- `Clock` 作为 Bean 注入，测试使用固定 Clock。
-- 建立 `LocalConfig` 与 `TestConfig`，仅替换边界依赖，不复制业务服务。
-- 编写容器启动测试：关键 Bean 存在、依赖可解析、无循环依赖。
+- 按状态、优先级、设备 ID 和时间范围组合筛选。
+- 按优先级、创建时间稳定排序。
+- 按设备统计未关闭工单数。
+- 按状态分组并计算占比；分母为零行为明确。
+- 找出重复故障最多的设备，处理并列与空数据。
+- 将仓储 `findById` 的缺失结果使用 Optional 表达，并在应用服务转换为明确异常。
 
-保留一份纯手工组合根测试，与 Spring 装配对照：Spring 降低装配成本，不应让领域和应用逻辑依赖容器 API。
+至少选择一个查询分别用循环和 Stream 实现，比较可读性、遍历次数、错误处理和测试难度；保留更适合团队维护的一版。
 
 ## AI协作边界
 
 可以让 AI：
 
-- 解释 Maven 依赖树、effective POM 和 Bean 创建失败日志。
-- 根据现有接口生成 `@Configuration/@Bean` 样板。
-- 审查字段注入、循环依赖、过宽扫描和共享可变 Bean。
-- 给出冲突排查步骤，但不直接随机升级/降级依赖。
+- 将你的自然语言查询拆成数据流步骤。
+- 为 Collector 的重复 key、空集合和并列结果生成反例。
+- 审查 Stream 是否包含副作用、重复遍历或难读嵌套。
+- 比较循环与 Stream 实现，但最终选择由你解释。
 
 必须由你完成：
 
-- 决定模块依赖方向、哪些对象由 Spring 管理。
-- 阅读 POM 中每个直接依赖，说明用途和 scope。
-- 用日志确定缺少/重复 Bean 或版本冲突根因。
-- 能移除 Spring 配置后手工装配核心用例，证明业务未与容器耦合。
+- 先写输入、输出、排序和空结果语义。
+- 对每个中间操作说清元素类型如何变化。
+- 检查 `orElse` 的提前计算、Optional.get 和 `parallelStream` 滥用。
+- 能把 AI 生成的 Stream 改写成正确循环以验证理解。
 
 ## 无AI训练
 
-本周从求职/复盘时段预留45—60分钟完成并记录：二叉树遍历题；比较递归与显式栈。
+本周从求职/复盘时段预留45—60分钟完成并记录：栈或队列题；说明所选结构、边界和复杂度。
 
 关闭 AI，限时120分钟：
 
-1. 新增 `NotificationPort` 和两个候选实现，故意制造同类型 Bean 歧义。
-2. 阅读启动错误，采用明确业务命名或配置选择解决，不使用字段注入。
-3. 使用 `dependency:tree` 找出一个测试依赖的来源。
-4. 解释 parent、BOM、dependencyManagement、直接依赖和插件的区别。
-5. 运行 `./mvnw verify` 并说明每个主要阶段做了什么。
+1. 实现“每种优先级中最早创建的未关闭工单”报表。
+2. 明确重复、空结果和并列规则。
+3. 先写普通循环，再写 Stream 版本，选择并说明保留哪一版。
+4. 补齐空仓储、单条、多状态和相同时间测试。
+5. 口述 `map/flatMap`、惰性、短路、`orElse/orElseGet`。
 
-## 求职动作
+## 求职动作（恢复求职后启用）
 
-- 准备 Maven 生命周期、scope、依赖冲突、BOM、IoC/DI、Bean scope、构造器注入、循环依赖的回答。
-- 用 FactoryCare 从“手工装配”到“Spring 装配”的变化解释 DI 价值。
-- 检查 10 个目标岗位使用 Spring Boot 2/3/4 的情况；只记录差异，不为旧版本重做项目。
-- 定向投递至少 5 个 Vue+Java 或 Java 应用岗位，记录对商业 Java 年限的真实要求。
+- 准备 Lambda、函数式接口、Stream 惰性、map/flatMap、reduce、parallelStream、Optional 的 90 秒回答。
+- 用 FactoryCare 报表代码作为示例，不背孤立 API。
+- 完成至少 5 个匹配岗位的定向投递或简历适配；记录 Java 基础反馈。
+- 若面试题要求手写 Stream，先写数据流再编码，不追求一行完成。
 
 ## 交付物
 
-- 固定 Maven 3.9.16 的 Wrapper 与可执行 `verify` 构建。
-- 清晰的 POM、依赖树和构建说明。
-- Spring Core 配置、应用服务和内存适配器装配。
-- 容器启动测试和手工组合根对照测试。
-- Maven/Bean 故障排查记录。
+- FactoryCare 查询服务与运维统计服务。
+- 至少一项循环/Stream 对比记录。
+- 空集合、重复 key、并列排序和 Optional 缺失测试。
+- Stream 管道类型变化图或文字说明。
+- 无 AI 报表实现和复盘。
 
 ## 验收标准
 
-- 能解释 Maven 生命周期、goal、scope、BOM、parent、plugin 和 Wrapper。
-- `mvn -v`、`./mvnw -v`、compiler release 和 IDE 均使用预期版本。
-- 能使用 dependency tree/effective POM 找到依赖来源。
-- FactoryCare 使用构造器注入，无字段注入、无循环依赖和无不必要容器 API。
-- 能说明哪些对象是 Bean、哪些领域对象不是 Bean，以及理由。
-- 测试可替换 Clock/Repository，不依赖生产配置。
-- 无 AI 解决 Bean 歧义和一个 Maven 依赖来源问题。
+- 能解释常用函数式接口、Lambda 捕获和方法引用。
+- 能逐步说明 Stream 管道的输入输出类型、惰性和终止点。
+- 项目 Stream 无可见副作用、无 `parallelStream`、无无理由多次遍历。
+- Optional 不作为字段或参数，不调用无保护 `get()`。
+- 能说明 `orElse` 与 `orElseGet` 的实际行为差异。
+- 查询排序稳定，空结果、重复 key 和并列规则有测试。
+- 无 AI 完成新报表并在循环/Stream 之间做可维护性判断。
 
 ## 明确不做
 
-- 不使用 Spring Boot 自动配置；第 8 周再学。
-- 不学习 XML Bean 配置细节、BeanPostProcessor 源码、AOP 代理源码。
-- 不拆 Maven 多模块，不引入 Spring Modulith。
-- 不使用字段注入、Service Locator 或全局静态容器访问。
-- 不连接数据库、Web 服务、Security 或消息队列。
+- 不深入 Stream Spliterator、内部流水线或 JIT 优化源码。
+- 不使用 parallelStream 做并发；第 8 周学习显式并发工具。
+- 不引入响应式编程、Reactor、RxJava 或函数式框架。
+- 不为了“函数式”消灭所有 if、循环和局部变量。
+- 不接入数据库或 Web API。
 
 ## 官方资料
 
-- [Maven 3.9.16 Reference](https://maven.apache.org/ref/3.9.16/)
-- [Maven Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
-- [Maven Dependency Mechanism](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html)
-- [Maven Toolchains](https://maven.apache.org/guides/mini/guide-using-toolchains.html)
-- [Maven Compiler release](https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-release.html)
-- [Spring Framework Core](https://docs.spring.io/spring-framework/reference/core.html)
-- [Spring IoC Container](https://docs.spring.io/spring-framework/reference/core/beans.html)
-- [Spring Java Configuration](https://docs.spring.io/spring-framework/reference/core/beans/java.html)
+- [Java SE 25：java.util.function](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/package-summary.html)
+- [Java SE 25：Stream](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)
+- [Java SE 25：Collectors](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Collectors.html)
+- [Java SE 25：Optional](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Optional.html)
+- [Java Language Specification：Lambda Expressions](https://docs.oracle.com/javase/specs/jls/se25/html/jls-15.html#jls-15.27)

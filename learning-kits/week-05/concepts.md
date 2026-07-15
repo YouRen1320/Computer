@@ -1,361 +1,253 @@
-# Week 05 概念讲义
+# Week 05 系统讲义
 
-## 1. 从命令步骤到数据流
+## 1. 先问访问模式，再选集合
 
-命令式循环通常描述“怎么做”：
+集合选择不是背“哪个更快”，而是把业务需求翻译为约束：
 
-    创建结果
-    遍历工单
-    如果未关闭且属于设备，则加入结果
-    对结果排序
-    返回结果
-
-Stream 倾向描述“数据经过什么变换”：
-
-    工单流
-      → 过滤未关闭
-      → 过滤设备
-      → 按优先级和创建时间排序
-      → 映射为只读行
-      → 收集为列表
-
-两者都可能清楚，也都可能写坏。核心不是语法长短，而是业务规则是否可见。
-
-## 2. 函数式接口与 Lambda
-
-### 2.1 什么是函数式接口
-
-函数式接口只有一个抽象方法，因此 Lambda 可以提供该方法的实现。default、static 和与 Object 等价的方法不计入抽象方法数量。@FunctionalInterface 让编译器帮助维护这个约束。
-
-常用接口：
-
-| 接口 | 输入 | 输出 | FactoryCare 示例 |
-| --- | --- | --- | --- |
-| Predicate<T> | T | boolean | 工单是否未关闭 |
-| Function<T,R> | T | R | WorkOrder 转 DashboardRow |
-| Consumer<T> | T | 无返回 | 输出调试信息；业务副作用要慎用 |
-| Supplier<T> | 无输入 | T | 延迟创建后备值 |
-| UnaryOperator<T> | T | T | 标准化一个值 |
-| BinaryOperator<T> | T,T | T | 合并两个同类型统计结果 |
-
-Java 的 void 不等于 TypeScript 的 undefined。Consumer 表达无返回行为；Function 必须产生结果。
-
-### 2.2 类型推断
-
-Lambda 的参数类型由目标类型决定：
-
-    Predicate<WorkOrder> open = order -> !order.isClosed();
-
-同一个 Lambda 文本离开目标类型可能无法独立确定类型。TS 的上下文类型推断可类比，但 Java 重载、泛型和基本类型装箱会产生不同约束。
-
-### 2.3 捕获与 effectively final
-
-Lambda 可以读取局部变量，但该变量必须在赋值后不再改变：
-
-    int threshold = 3;
-    Predicate<DeviceStats> frequent =
-        stats -> stats.failures() >= threshold;
-
-这不是说引用指向的对象一定不可变。一个 effectively final 的 List 仍可被修改。捕获可变对象并在并发或 Stream 中写入，仍会制造副作用和竞态。
-
-Java Lambda 中的 this 指向外部实例；匿名类中的 this 指向匿名类实例。面试只需解释行为差异，不背字节码实现。
-
-### 2.4 方法引用
-
-常见四种形式：
-
-- 静态方法：Type::staticMethod；
-- 某个对象的实例方法：instance::method；
-- 任意该类型对象的实例方法：Type::method；
-- 构造器：Type::new。
-
-仅在读者能立刻看出参数流时使用。复杂转换写成命名方法往往比连续方法引用更清晰。
-
-## 3. Stream 的执行模型
-
-### 3.1 Stream 不是集合
-
-Stream：
-
-- 不持有业务数据；
-- 表示一次计算管道；
-- 通常只能消费一次；
-- 终止操作触发执行；
-- 中间操作通常是惰性的。
-
-把 Stream 存成字段或跨方法长期传递通常会模糊生命周期。领域和 DTO 应返回集合或明确结果，而不是一次性管道。
-
-### 3.2 中间与终止操作
-
-中间操作返回新 Stream，例如 filter、map、flatMap、sorted。终止操作产生非 Stream 结果或副作用，例如 toList、count、reduce、forEach。
-
-    orders.stream()                  // Stream<WorkOrder>
-        .filter(WorkOrder::isOpen)   // Stream<WorkOrder>
-        .map(WorkOrder::equipmentId) // Stream<EquipmentId>
-        .distinct()                  // Stream<EquipmentId>
-        .toList();                   // List<EquipmentId>
-
-每写一步，都应能标注元素类型。
-
-### 3.3 惰性与融合
-
-建立管道时 filter/map 不一定立即遍历。终止操作出现后，运行时通常按元素穿过多个操作，而不是先生成每一步完整中间集合。但“发起终止操作”不保证每个中间函数一定被调用：如果实现能证明某阶段不影响终止结果，就可以消除该阶段。例如已知大小的集合执行 `map(...).count()` 时，`map` 可能完全不运行。行为参数必须无干扰、尽量无状态，不能依赖其中的副作用。
-
-这能解释短路：
-
-    orders.stream()
-        .filter(WorkOrder::isOpen)
-        .anyMatch(order -> order.priority() == CRITICAL);
-
-找到第一个匹配后可停止。若先 toList 再 anyMatch，就失去这次短路机会。
-
-### 3.4 有状态操作
-
-sorted 和 distinct 往往需要观察更多元素，不能简单按一个元素立即完成。limit 与有序性也影响行为。不要把所有中间操作都想象成零成本。
-
-## 4. 核心操作
-
-### 4.1 filter 与 map
-
-filter 决定保留哪个元素，类型通常不变；map 将一个元素变成一个新元素，数量通常一对一。
-
-错误味道：用 map 修改原对象并返回它。若目标是变换，应创建新值；若目标是命令副作用，Stream 往往不是最佳表达。
-
-### 4.2 flatMap
-
-flatMap 把“每个元素产生一个容器/流”铺平：
-
-    List<WorkOrder> orders
-      → map: Stream<List<PartUsage>>
-      → flatMap: Stream<PartUsage>
-
-TS 中 Array.flatMap 可类比。失效处包括 Java 泛型、Stream 一次性消费以及 Optional.flatMap 的不同容器类型。
-
-### 4.3 distinct
-
-distinct 依赖 equals/hashCode。Week 03 的相等性错误会直接影响这里。若实体相等性不正确，用 distinct 可能静默丢数据或保留重复。
-
-### 4.4 sorted 与稳定规则
-
-排序要显式定义主键和 tie-breaker：
-
-    Comparator.comparing(WorkOrder::priority)
-        .thenComparing(WorkOrder::createdAt)
-        .thenComparing(WorkOrder::id);
-
-最后的唯一键能让结果在并列时稳定。注意 enum 自然顺序依赖声明顺序；业务优先级顺序最好显式比较。
-
-### 4.5 limit 与 skip
-
-必须先定义排序再谈稳定分页。内存 skip/limit 只用于本周实验；数据库分页在后续阶段实现。先过滤、排序、再 skip/limit 是常见语义，但需由需求确认。
-
-## 5. 聚合与 Collector
-
-### 5.1 count、reduce 和统计
-
-reduce 需要理解单位元、结合性和类型。求和优先考虑 mapToInt.sum 或 summarizingInt，而不是写难读的 reduce。
-
-错误单位元会破坏结果。例如最大值没有通用的 0 单位元，因为数据可能全为负；此类聚合自然返回 Optional。
-
-### 5.2 toList
-
-Stream.toList 返回的列表不保证可修改，不应假设能 add。若业务需要特定可变集合，显式使用合适 collector 或拷贝，并说明原因。
-
-### 5.3 toMap
-
-没有重复 key 语义时，toMap 遇到重复会抛异常。这通常是好事，因为它暴露了错误假设。若业务允许重复，必须显式定义 merge function：
-
-- 保留最早；
-- 保留最新；
-- 合并计数；
-- 收集成列表。
-
-不要随手写 (a, b) -> a 掩盖数据质量问题。
-
-### 5.4 groupingBy 与 partitioningBy
-
-groupingBy 按 key 分成多组；partitioningBy 只分 true/false 两组。下游 collector 可以 count、map 或求和。
-
-两层 grouping 加多层 collectingAndThen 很快变难读。可以拆成命名方法或中间 record，或者直接使用循环。
-
-### 5.5 空集合与分母为零
-
-count 返回 0，但 average、max、min 可能返回 Optional。状态占比的总数为 0 时，必须定义结果：
-
-- 返回空映射；
-- 返回各状态 0；
-- 或返回 NoData 类型。
-
-不要让除零、NaN 或空 Optional 悄悄穿过边界。
-
-## 6. 副作用、调试与性能
-
-### 6.1 什么是可见副作用
-
-- 修改外部 List/Map；
-- 修改 WorkOrder 实体；
-- 写文件、发消息、记录数据库；
-- 依赖处理顺序更新累计状态。
-
-中间操作尽量纯。下面是错误用法：
-
-    List<Row> rows = new ArrayList<>();
-    orders.stream()
-        .filter(WorkOrder::isOpen)
-        .map(order -> {
-            rows.add(toRow(order));
-            return order;
-        })
-        .count();
-
-这把结果藏在外部状态里，也会在未来并行化时出现并发问题。
-
-### 6.2 peek
-
-peek 主要用于临时观察元素，不承载保存、通知或修改实体等业务动作。由于惰性和短路，peek 是否执行、执行多少次取决于终止操作。
-
-### 6.3 循环可能更好
-
-适合循环的情况：
-
-- 多个累积结果需要同时更新；
-- 有复杂 break/continue 或提前错误恢复；
-- 每步需清楚记录失败；
-- Stream 需要多个临时容器和嵌套 Collector；
-- 调试和团队可读性明显更好。
-
-### 6.4 性能直觉
-
-至少检查：
-
-- 遍历次数；
-- sorted 的 O(n log n)；
-- distinct/grouping 的额外空间；
-- 装箱与 primitive stream；
-- 多次重复计算；
-- 数据量。
-
-不要用一次 nanoTime 得出结论，也不要默认 Stream 比循环快或慢。
-
-### 6.5 禁止 parallelStream
-
-本周项目禁止 parallelStream，因为：
-
-- 默认 common pool 资源边界不受业务控制；
-- 副作用和线程安全更复杂；
-- 小数据常被拆分开销抵消；
-- 阻塞 I/O 会污染共享池；
-- 顺序与异常行为更难说明。
-
-第 6 周会学习显式并发，但也不代表可以随意并行 Stream。
-
-## 7. Optional 的正确语义
-
-### 7.1 表达“返回可能没有”
-
-Repository.findById 返回 Optional<WorkOrder> 能明确区分“找到”和“没找到”。空集合则直接返回空 List，不要用 Optional<List<T>>。
-
-### 7.2 创建
-
-- Optional.of(value)：value 必须非 null；
-- Optional.ofNullable(value)：null 变 empty；
-- Optional.empty()：明确无值。
-
-不要用 ofNullable 掩盖本应禁止的 null。若领域不变量要求非 null，应尽早拒绝。
-
-### 7.3 map 与 flatMap
-
-若函数返回普通值，用 map；若函数本身返回 Optional，用 flatMap 避免 Optional<Optional<T>>。
-
-    repository.findById(id)
-        .map(WorkOrder::equipmentId)
-        .flatMap(equipmentRepository::findById);
-
-链条过长或包含多个不同失败原因时，清晰分支更好。
-
-### 7.4 orElse 与 orElseGet
-
-orElse 的参数在调用前就求值，即使 Optional 有值也会创建后备对象。orElseGet 接收 Supplier，只在空时求值。
-
-若后备值是常量，orElse 很清楚；若创建昂贵或有副作用，使用 orElseGet。真正带副作用的后备创建还要审查是否适合隐藏在表达式里。
-
-### 7.5 orElseThrow
-
-应用边界可把仓储缺失转换为明确异常：
-
-    repository.findById(id)
-        .orElseThrow(() -> new WorkOrderNotFound(id));
-
-异常 Supplier 只在空时调用。
-
-### 7.6 不推荐的位置
-
-- 实体字段：使模型和序列化复杂，通常字段本身应明确 nullable/状态；
-- 方法参数：调用者被迫包装，重载或清晰参数契约更好；
-- 集合元素：Optional 与 null 双重“无值”语义；
-- DTO 字段：影响外部契约映射；
-- 仅为了链式风格包装任何值。
-
-Optional 是 API 返回语义，不是全面替代 null 的宗教。
-
-## 8. TS/Vue 类比与失效
-
-| TS/Vue 概念 | Java 类比 | 类比失效 |
+| 业务问题 | 首选抽象 | 说明 |
 | --- | --- | --- |
-| Array.filter/map/flatMap | Stream 同名操作 | Array 操作通常立即产生数组；Stream 惰性且一次性 |
-| 箭头函数 | Lambda | 捕获局部变量需 effectively final，目标类型更强 |
-| 可选值 T 或 undefined | Optional<T> 返回语义 | Optional 是运行时对象，不宜到处传播 |
-| nullish coalescing | orElse/orElseGet | orElse 参数会提前求值；不是完全等价 |
-| computed | 派生结果 | computed 有响应式缓存；Stream 没有响应式依赖追踪 |
-| Vue watch 副作用 | Stream forEach/外部动作 | Stream 中间操作不应承担响应式副作用 |
-| Pinia getter | 查询/聚合 | 服务端数据可能更大，排序与复杂度必须显式 |
+| 保留顺序、允许重复、按位置访问 | `List` | 例如稳定展示结果 |
+| 唯一元素、只关心是否存在 | `Set` | 唯一性依赖相等语义 |
+| 按唯一 key 找 value | `Map` | key契约决定查询正确性 |
+| 先进先出/两端操作 | `Queue`/`Deque` | `ArrayDeque`通常优先 |
+| 按比较规则有序 | `TreeSet/TreeMap` 或排序后的List | 比较契约必须一致 |
 
-最重要失效点：Vue 的数组处理通常面向 UI 状态且数据量较小；Java 服务端查询未来可能下推到数据库，内存 Stream 不能替代 SQL、索引和分页。
+“数据量小”不能替代语义选择；“HashMap 快”也不能解释需要重复顺序的列表。
 
-## 9. FactoryCare 查询语义检查表
+### TypeScript 类比与失效
 
-“未关闭”已经在 Week 03 确认为排除 `CLOSED/CANCELLED`。为避免每个查询重复判断，可在 `WorkOrderStatus` 上加入只读语义方法（这不是完整状态转换机）：
+JS/TS 的 Array、Set、Map 可帮助理解顺序、唯一和键值关系。
+
+类比失效：Java 集合有静态泛型、primitive 需包装、`equals/hashCode` 决定哈希集合语义；JS Map 的对象 key 更接近引用身份。不能用 JS 经验猜 Java `HashMap` 的逻辑相等行为。
+
+## 2. Collection、Map 与常见实现
+
+`Collection<E>` 是 List/Set/Queue 等的根抽象之一；`Map<K,V>` 不是 Collection，因为它存键值映射。
+
+### ArrayList
+
+- 保持插入顺序、允许重复；
+- 按索引读取通常 `O(1)`；
+- 尾部追加摊销 `O(1)`；
+- 中间插入/删除通常需移动元素 `O(n)`；
+- 查找某值通常 `O(n)`。
+
+### LinkedList
+
+知道它是链式 List/Deque 实现即可。“节点插入 O(1)”常忽略先找到位置的 `O(n)`、内存局部性和额外节点开销。没有测量和真实两端需求时，不因面试口号选择它。
+
+### HashSet 与 HashMap
+
+- HashSet 用相等性表达唯一；
+- HashMap key 唯一，value可重复；
+- 平均查找/插入通常视为 `O(1)`，最坏情况和常数受哈希质量、冲突、容量等影响；
+- 业务设计不应依赖它允许 null 的实现细节；
+- 不承诺业务排序。
+
+### LinkedHashSet/LinkedHashMap
+
+在哈希语义上额外维护可预测的迭代顺序，适合“首次出现顺序去重”和稳定内存展示。顺序语义必须写入契约，而不是偶然观察 HashMap 输出。
+
+### TreeSet/TreeMap
+
+基于自然顺序或 Comparator 组织，操作通常 `O(log n)`。若比较器认为两个元素比较结果为 0，TreeSet 会把它们当成同一个排序位置；若这与 equals 不一致，调用方会困惑。
+
+### ArrayDeque
+
+适合栈/队列两端操作，业务代码优先 `Deque` 抽象，不使用旧 `Stack`。不要把 null 当队列哨兵。
+
+## 3. 迭代与结构修改
+
+- 增强 for：顺序读取清楚；
+- Iterator：需要受控遍历删除时使用其 `remove`；
+- 下标循环：需要位置或双指针；
+- 遍历集合时直接结构修改可能触发 fail-fast 异常；
+- fail-fast 是尽早发现某类错误的实现行为，不是线程安全承诺。
+
+空集合通常优于返回 null：调用方可以直接遍历。但“空”与“无权限/查询失败”不能都用空集合掩盖，错误契约后续单独表达。
+
+## 4. 不可变工厂、只读视图与快照
+
+三个概念必须区分：
+
+### `List.of(...)`
+
+创建不可修改集合，不接受某些无效元素（如 null，具体看 API）。元素对象自身未必不可变。
+
+### `Collections.unmodifiableList(source)`
+
+返回禁止调用方通过该视图修改的包装，但若其他代码仍持有 `source` 并修改，视图会看到变化。它是只读视图，不自动成为时间点快照。
+
+### `List.copyOf(source)`
+
+创建不与源容器共享结构的不可修改结果。之后增删 source 不改变结果；元素引用仍可能指向同一可变实体，所以是**结构快照**，不是对象深拷贝。
+
+嵌套 `Map<K,List<V>>` 要逐层冻结：只冻结外层 Map，内层 List 仍可改；只冻结内层但复用外层也会泄漏。
+
+## 5. 泛型解决什么
+
+泛型把“元素类型”变成编译期参数：
 
 ```java
-public boolean isClosed() {
-    return this == CLOSED || this == CANCELLED;
-}
+List<WorkOrder> orders;
+PageResult<Equipment> page;
+RepositoryResult<WorkOrderId, WorkOrder> result; // 只有真实价值时才这样设计
 ```
 
-后续过滤统一调用该方法；`VERIFIED` 仍未关闭。
+收益：减少强转、在编译期发现混入错误类型、复用真正相同的算法/容器。
 
-在编码前写清：
+### raw type 风险
 
-- 输入过滤条件可否缺失；
-- 时间范围是闭区间还是半开区间；
-- 状态“未关闭”复用已确认语义：`WorkOrderStatus` 既不是 `CLOSED` 也不是 `CANCELLED`；
-- 排序方向与 tie-breaker；
-- 空结果返回空列表还是异常；
-- 重复 key 如何处理；
-- 占比分母为零怎么办；
-- 并列第一是否返回全部；
-- 统计 DTO 是否泄漏实体；
-- 一次还是多次遍历更清楚。
+`List orders` 丢失元素类型信息，可能在运行时才发生 `ClassCastException`。新代码禁止 raw type；与旧 API 交互时把不安全边界局部化并记录。
 
-## 10. 自测
+### 泛型不协变
 
-1. Lambda 捕获的引用 effectively final，为什么对象仍可能被修改？
-2. Stream 什么时候真正执行？
-3. map 和 flatMap 的类型变化有什么不同？
-4. distinct 依赖什么契约？
-5. 为什么 toMap 默认重复 key 异常可能是好事？
-6. 状态占比分母为零怎么设计？
-7. peek 为什么不能承担保存动作？
-8. parallelStream 的资源边界在哪里？
-9. orElse 为什么可能产生意外开销？
-10. 为什么 Repository.findAll 不应返回 Optional<List<T>>？
-11. 什么情况下循环比 Stream 更合适？
-12. 内存 Stream 查询为什么不能替代后续数据库查询？
+即使 `Technician` 是 `User`，`List<Technician>` 也不是 `List<User>`。否则若允许把一个普通 User 加进后者，原技师列表的类型承诺被破坏。
 
-## 11. 官方资料
+### 通配符和 PECS
 
-- [Java SE 25 函数式接口](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/package-summary.html)
-- [Java SE 25 Stream](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)
-- [Java SE 25 Collectors](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Collectors.html)
-- [Java SE 25 Optional](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Optional.html)
-- [JLS Lambda](https://docs.oracle.com/javase/specs/jls/se25/html/jls-15.html#jls-15.27)
+- `? extends T`：把集合视为 T 的生产者，安全读取为 T，但通常不能加入具体 T；
+- `? super T`：把集合视为 T 的消费者，可加入 T，读取只保证 Object；
+- PECS：Producer Extends, Consumer Super；
+- `List<?>` 表示未知元素类型，不等于 `List<Object>`。
+
+只在 API 真正需要接受一族相关类型时使用通配符。内部简单方法不要堆叠通配符显示“高级”。
+
+### 泛型方法与类
+
+`PageResult<T>` 适合因为页内容类型变化而结构完全相同。`<T> List<T> snapshot(...)` 是泛型方法。不要为设备/工单所有操作提前创建万能 Repository；它们的业务查询和重复规则会分化。
+
+## 6. 类型擦除的高层影响
+
+Java 泛型大多通过类型擦除实现，编译后并非为每个 T 复制一套类。高层限制：
+
+- 不能直接 `new T()`；
+- 不能直接创建 `new T[]`；
+- 运行时通常不能用 `instanceof List<String>` 区分元素参数；
+- static 成员不属于某个具体 T；
+- 某些重载因擦除后签名相同而冲突。
+
+不要求背编译器 bridge method。本周能解释“编译期类型安全不等于运行时保存所有类型参数”即可。
+
+## 7. `==`、equals 与 hashCode
+
+### 两种相等
+
+- `==` 对引用类型比较是否为同一引用目标；
+- `equals` 表达类型定义的逻辑相等；
+- Object 默认 equals 与身份相近；record 按每个组件自身的 `equals/hashCode` 语义生成相等性，数组组件仍是身份相等而不是深度元素比较；
+- FactoryCare Value Object 由规范值相等；Entity 通常由稳定 id 相等。
+
+### equals 契约
+
+应满足：
+
+- 自反：`x.equals(x)`；
+- 对称：x等于y，则y等于x；
+- 传递：x=y、y=z，则x=z；
+- 一致：相关状态不变时多次结果一致；
+- 对非null返回false。
+
+### hashCode 契约
+
+- equals 相等的对象必须有相同 hashCode；
+- hashCode 相同不代表 equals 相等，碰撞合法；
+- 重写 equals 必须同步重写 hashCode；
+- 参与 equals/hashCode 的值在对象作为哈希 key/元素期间不应改变。
+
+### HashMap/HashSet 高层查询
+
+1. 计算 key 的 hash；
+2. 定位候选区域；
+3. 在候选中用 equals 确认真正 key。
+
+若保存后改变参与 hash 的字段，新的 hash 可能定位到另一处，即使对象还在容器里也“找不到”。这不是 HashMap 丢数据，而是 key 违反契约。
+
+## 8. Entity 相等性策略
+
+FactoryCare 的 `Equipment` 和 `WorkOrder` 已有应用生成的稳定 ID，因此本周可以把实体相等定义为：同一具体类型且 id 相等。为降低继承下的对称性复杂度，实体类当前为 final。
+
+不要把名称、描述、优先级、状态等可变业务字段加入 hashCode。工单从 `CREATED` 变化后仍是同一个工单，HashMap 按 id 查询应保持稳定。
+
+若未来 ORM 生成 id、代理类型或持久化前无 id，策略会更复杂；本周尚无 ORM，不假装已经解决该问题。
+
+## 9. Comparable 与 Comparator
+
+- `Comparable<T>` 表达一个稳定自然顺序；
+- `Comparator<T>` 表达外部、多种场景排序；
+- FactoryCare 工单有“按优先级”“按创建顺序”等多种视图，优先使用 Comparator；
+- Comparator 可用 `comparing`、`thenComparing`、`reversed` 组合；
+- 比较结果要稳定、传递；
+- 展示排序不改变 equals。
+
+Priority 排序不能依赖 enum ordinal，因为声明顺序不是对外业务契约。给 Priority 明确 rank，或用显式映射。
+
+### 稳定排序
+
+若两个工单优先级相同，需要保持创建顺序。Java List 的标准排序具有稳定性承诺时仍应读对应 API 文档；也可显式添加创建序号作为 tie-breaker。本周没有真实时间字段，可由仓储插入顺序或测试序号表示。
+
+## 10. 仓储接口是领域需要，不是 Map 外壳
+
+仓储隐藏保存与查找机制，接口命名表达领域用例：
+
+- `save` 的重复 id 是拒绝、覆盖还是更新？必须定义；
+- 设备编码是否唯一？由哪个边界检查？
+- 查询不存在返回 Optional、null 还是异常？本周可用 Optional 预告“可能不存在”，不系统深入；
+- `findAll` 返回结构快照，不能暴露内部 Map；
+- 不把 `Map` getter 暴露给调用方自行查询。
+
+不要创建万能 `BaseRepository<T,ID>`：设备有按 code 判断，工单有按状态/优先级查询，过早统一会把业务方法退化成通用查询 DSL。
+
+## 11. 本周仓储契约建议
+
+- `save` 只接受新实体，重复 id 明确抛错；
+- Equipment 还拒绝重复 code；
+- `findById` 返回 `Optional<T>`；
+- `findAll` 返回插入顺序的不可修改结构快照；
+- 仓储不是线程安全的；
+- 实体元素本身若可变，快照不保证深拷贝；
+- 数据库语义、事务和更新留到后续。
+
+这是学习阶段契约，不是声称所有仓储都应如此。
+
+## 12. 双指针算法
+
+双指针不是固定模板，而是用两个位置利用输入结构，避免重复扫描。常见前提：有序数组、窗口、原地压缩或从两端逼近。
+
+### 有序数组原地去重
+
+- `read` 扫描每个元素；
+- `write` 指向下一个唯一值应写入的位置；
+- 不变量：`[0, write)` 已经是已处理前缀的唯一有序值；
+- 时间 `O(n)`，额外空间 `O(1)`；
+- 结果通常返回有效长度，数组尾部旧值不再有意义。
+
+若输入未排序，这个算法不能保证去重。不能省略前提，也不能为了使用双指针先排序却忘记排序的 `O(n log n)` 和顺序变化。
+
+## 常见错误
+
+- 用 HashMap 却依赖观察到的迭代顺序；
+- 认为 LinkedList 任意插入总是 O(1)；
+- 把 `unmodifiableList` 当时间点快照；
+- 外层不可变但内层 List 可改；
+- 使用 raw type 或无意义强转；
+- 误认为 `List<Child>` 是 `List<Parent>`；
+- 重写 equals 未重写 hashCode；
+- 把可变状态放入实体 hashCode；
+- Comparator 用 ordinal，或比较为0但equals不同却未意识；
+- 仓储返回内部 `values()` 视图；
+- 将 `VERIFIED` 误当 `CLOSED`，或新增词表之外的状态；
+- 未排序输入硬套有序双指针。
+
+## 官方资料
+
+- [Java Collections Framework](https://docs.oracle.com/en/java/javase/25/core/java-collections-framework.html)
+- [java.util API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/package-summary.html)
+- [Java Generics Tutorial](https://docs.oracle.com/javase/tutorial/java/generics/)
+- [Object.equals/hashCode](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)
+- [Comparator API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html)
+- [List API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html)
+- [Map API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html)
+- [JUnit User Guide](https://docs.junit.org/current/user-guide/)
+
+继续完成[实验](./labs.md)。

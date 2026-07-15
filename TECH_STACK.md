@@ -2,7 +2,7 @@
 
 ## 1. 版本原则
 
-本文件基线核对日期为 **2026-07-11**。这里的“最新”表示最新生产稳定、受支持且彼此兼容的组合，不表示每个包都选择最高版本号。
+本文件基线核对日期为 **2026-07-15**。这里的“最新”表示最新生产稳定、受支持且彼此兼容的组合，不表示每个包都选择最高版本号。
 
 采用以下规则：
 
@@ -163,7 +163,7 @@ Python不得直接修改`core` schema，不得绕过Java执行派单、关闭、
 
 ### MySQL求职桥接
 
-FactoryCare不同时维护PostgreSQL和MySQL两套生产实现。Week 12使用MySQL 8.4 LTS做2小时小型对照，理解InnoDB聚簇/二级索引、MVCC与锁、字符集/排序规则、`AUTO_INCREMENT`、JSON、分页、`EXPLAIN`和SQL差异。面试回答时明确当前讨论的是哪种数据库，禁止把MySQL口诀直接套到PostgreSQL。
+FactoryCare不同时维护PostgreSQL和MySQL两套生产实现。Week 15使用MySQL 8.4 LTS做2小时小型对照，理解InnoDB聚簇/二级索引、MVCC与锁、字符集/排序规则、`AUTO_INCREMENT`、JSON、分页、`EXPLAIN`和SQL差异。面试回答时明确当前讨论的是哪种数据库，禁止把MySQL口诀直接套到PostgreSQL。
 
 ### Redis的边界
 
@@ -185,31 +185,35 @@ FactoryCare不同时维护PostgreSQL和MySQL两套生产实现。Week 12使用My
 | 时机 | 安装/确认 | 验证 |
 | --- | --- | --- |
 | Week 00 | JDK 25、Maven 3.9.16、Git、IDE；只盘点Docker等后续工具 | `java -version`与`mvn -v`必须指向同一JDK |
-| Week 07 | Spring Core与Maven依赖 | 不使用Boot的最小`ApplicationContext`和测试通过 |
-| Week 08 | Spring Boot Web依赖 | 最小Boot应用、Web测试和启动验证通过 |
-| Week 09 | Docker或兼容容器运行时 | `docker info`和Testcontainers烟雾测试通过 |
-| Week 10 | PostgreSQL 18容器 | `psql`连接、迁移和测试容器可用 |
-| Week 16 | Redis 8容器 | CLI、TTL、重启和故障实验 |
-| Week 19 | Node 24 LTS、pnpm、Vue工具链 | 类型检查、测试、构建通过 |
-| Week 20 | S3兼容对象存储，本地MinIO | 授权上传、私有下载、对象归属和失败测试 |
-| Week 21 | Nuxt 4 | SSR开发、生产构建和Node启动通过 |
-| Week 23 | HBuilderX或CLI、小程序开发者工具 | 真机或开发者工具运行 |
-| Week 25 | Flutter stable、Xcode/Android工具按目标端安装 | `flutter doctor`和真机/模拟器构建 |
-| Week 27 | Python 3.14、uv | `uv run pytest`和FastAPI健康检查 |
-| Week 30 | pgvector与AI schema；复用对象存储 | 迁移、索引、解析取文件和ACL测试 |
-| Week 34 | Nginx、OTel Collector及CI依赖 | 一键启动、trace、备份和恢复演练 |
+| Week 09 | Spring Core与Maven依赖 | 不使用Boot的最小`ApplicationContext`和测试通过 |
+| Week 10 | Spring Boot Web依赖 | 最小Boot应用、Web测试和启动验证通过 |
+| Week 11 | Docker或兼容容器运行时 | `docker info`和Testcontainers烟雾测试通过 |
+| Week 12 | PostgreSQL 18容器 | `psql`连接、手写SQL和种子数据可用 |
+| Week 19 | Redis 8容器 | CLI、TTL、重启和故障实验 |
+| Week 23 | Node 24 LTS、pnpm；先用于JavaScript模块与测试 | `node`、`pnpm`和最小测试通过 |
+| Week 25 | TypeScript、Vite工具链 | 类型检查、测试、构建通过 |
+| Week 26 | Vue 3、Router、Pinia及测试工具 | Vue类型检查、单元测试和构建通过 |
+| Week 27 | S3兼容对象存储，本地MinIO | 授权上传、私有下载、对象归属和失败测试 |
+| Week 28 | Nuxt 4 | SSR开发、生产构建和Node启动通过 |
+| Week 30 | HBuilderX或CLI、小程序开发者工具 | 真机或开发者工具运行 |
+| Week 32 | Flutter stable自带的Dart SDK；暂不要求完整移动端工具链 | `dart --version`、`dart analyze`和`dart test`通过 |
+| Week 34 | Xcode/Android工具按本轮目标端安装 | `flutter doctor`和真机/模拟器构建 |
+| Week 36 | Python 3.14、uv | `python --version`、`uv run pytest`和类型检查通过 |
+| Week 41 | pgvector与AI schema；复用对象存储 | 迁移、索引、解析取文件和ACL测试 |
+| Week 45 | Nginx及CI依赖 | 一键启动、反向代理、质量门和回滚演练 |
+| Week 46 | OTel Collector及可观测/恢复工具 | trace、指标、告警、备份和恢复演练 |
 
-### 本机已知问题
+### 本机当前基线
 
-2026-07-11检查时：
+2026-07-12复核结果：
 
-- `java -version`为Java 21；
-- Maven 3.9.16却使用Java 26；
-- Node为22.x；
-- Python为3.14.3；
-- Docker、Flutter和其他依赖按周确认。
+- shell、IntelliJ项目SDK和Maven运行时已统一到Temurin JDK 25.0.3；
+- Maven为3.9.16，Java编译与JUnit/Surefire测试链已经过成功、断言失败和编译失败实验；
+- nvm当前Node为22.14.0，pnpm为10.18.0；进入Week 23时再升级并锁定当时的LTS与pnpm主版本；
+- Python为3.14.3，uv为0.11.15；进入Week 36时创建项目隔离环境，不依赖全局site-packages；
+- Docker CLI与Flutter 3.35.7已存在；Android/Xcode工具链目前不完整，按用户“暂不开发App”的决定推迟到Week 34处理。
 
-第0周必须先把`JAVA_HOME`、IDE项目SDK和Maven运行时统一到JDK 25。Node 22仍在支持期，但进入Web阶段时升级到当时的LTS基线。
+这段记录只描述已验证的本机状态，不冻结未来版本。每个阶段仍按上表复核官方stable/LTS patch并把实际版本写入锁文件。
 
 ## 7. 锁定与升级
 

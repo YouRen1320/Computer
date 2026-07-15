@@ -2,7 +2,7 @@
 
 ## 1. 项目目的
 
-FactoryCare不是一个带侧边栏聊天框的CRUD后台，而是贯穿36周的求职旗舰项目。它要证明：
+FactoryCare不是一个带侧边栏聊天框的CRUD后台，而是贯穿48周的求职旗舰项目。它要证明：
 
 - 能把真实业务规则建模为状态、权限、事务和事件；
 - 能用一个Java模块化单体支撑Web、App和小程序；
@@ -174,11 +174,11 @@ flowchart TB
 
 | 模块 | 首次落地 | 本轮最低完成范围 |
 | --- | --- | --- |
-| identity / organization / asset / workorder / audit | Week 13—18 | 身份、成员角色、资产、工单状态机、租户与审计主链路 |
-| engagement | Week 17—18 | 通知意图、发送适配器和失败记录；不承诺真实短信/推送Provider |
-| knowledge | Week 18，Week 20补对象存储/UI | 文档元数据、私有对象、版本、发布/撤回、审核和版本化事件 |
-| reporting | Week 18建边界，Week 20补读模型 | SLA与工单只读指标；可从业务数据/事件重建 |
-| ai-integration | Week 18建端口，Week 29接入 | Java到Python调用、Python到Java只读工具、身份、超时、降级与审计 |
+| identity / organization / asset / workorder / audit | Week 10—18逐步落地 | 从REST切片、数据持久化升级到身份、成员角色、工单状态机、租户与审计主链路 |
+| engagement | Week 20 | 通知意图、发送适配器和失败记录；不承诺真实短信/推送Provider |
+| knowledge | Week 21，Week 27补对象存储/UI | 文档元数据、私有对象、版本、发布/撤回、审核和版本化事件 |
+| reporting | Week 21建边界，Week 27补读模型 | SLA与工单只读指标；可从业务数据/事件重建 |
+| ai-integration | Week 21建端口，Week 38—43接入 | Java到Python调用、Python到Java只读工具、身份、超时、降级与审计 |
 
 计划性预防维护（模板、周期、到期任务）只学建模概念，不创建`maintenance`模块；它属于入职后或项目二期，避免旗舰项目范围失控。
 
@@ -438,13 +438,13 @@ Java验证枚举、范围和业务规则；低置信度或高风险工单强制�
 
 | 版本 | 周次 | 范围 |
 | --- | --- | --- |
-| R0 领域练习 | 01—06 | 内存设备/工单模型、规则和测试 |
-| R1 API基础 | 07—12 | Spring Web、PostgreSQL、MyBatis和第一条垂直链 |
-| R2 企业核心 | 13—18 | 安全、多租户、状态机、SLA、Redis、事件和模块化 |
-| R3 Web候选 | 19—22 | Vue管理端、Nuxt切片、SSE和前端测试 |
-| R4 多端候选 | 23—26 | 报修小程序与技师App关键链路 |
-| R5 AI候选 | 27—32 | Python服务、RAG、评估和受控Agent |
-| R6 发布候选 | 33—36 | 全链路、生产化、作品集和演示 |
+| R0 语言领域练习 | 01—08 | 纯 Java 内存设备/工单模型、规则、测试和并发实验 |
+| R1 API 与数据基础 | 09—15 | Spring Web、SQL、PostgreSQL、MyBatis 和第一条持久化垂直链 |
+| R2 企业核心 | 16—21 | 安全、多租户、状态机、SLA、Redis、事件和模块化 |
+| R3 Web 候选 | 22—29 | HTML/JS/TS 基础、Vue 管理端、Nuxt 切片、SSE 和前端测试 |
+| R4 多端候选 | 30—35 | 报修小程序、Dart 基础与技师 App 关键链路 |
+| R5 AI 候选 | 36—43 | Python 基础/服务、RAG、评估和受控 Agent |
+| R6 发布候选 | 44—48 | 全链路、部署恢复、作品集、最终考核和演示 |
 
 每个版本都可独立演示。AI阶段延期时，R4仍然是完整的无AI企业应用，不得让聊天功能成为整个项目的单点依赖。
 

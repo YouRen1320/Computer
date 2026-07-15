@@ -102,7 +102,7 @@ public final class DurationCalculator {
 
 ## E. 基线与简历参考
 
-“Flutter SDK 当前未安装，基于 2025 年旧 App 代码完成口述审查，未运行；计划 Week 25 安装 stable 并做真机验收”是有效记录。“Flutter 应该没问题，按熟练计分”无证据。
+“Flutter SDK 当前未安装，基于 2025 年旧 App 代码完成口述审查，未运行；计划 Week 34 安装 stable 并做真机验收”是有效记录。“Flutter 应该没问题，按熟练计分”无证据。
 
 事实型表达示例：
 

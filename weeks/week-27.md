@@ -1,144 +1,167 @@
-# 第27周：Python 3.14工程化、异步、FastAPI与测试
+# 第 27 周：Vite、Router、Pinia、服务端状态与 Element Plus 企业后台
 
-## 本周定位
+> 建议投入：17 小时（可在 15—18 小时内调整）
 
-从本周开始进入Python AI主线。第一周不接模型，先把Python服务建立为正常的软件系统：依赖可锁定、类型可检查、配置可验证、API可测试、日志可关联、错误可处理。
+## 1. 本周定位
 
-## 前置条件
+本周把第 26 周的 Vue 基础切片升级为可交付的 FactoryCare 企业管理端。重点是工程构建、路由与权限、客户端/服务端状态边界、复杂表单表格和真实后端联调，这些比再背一遍组件 API 更贴近南昌 Java + Vue 全栈岗位。
 
-- Java核心API、认证和traceId稳定；
-- PostgreSQL和对象存储可用；
-- 安装Python 3.14与uv，确认PyTorch/关键库兼容；
-- 明确Python不写`core` schema。
+状态分工采用：**组件局部状态留在组件/Composable；会话与全局 UI 状态放 Pinia；服务端数据由查询缓存层或清晰的请求 Composable 管理。** 本周推荐使用 TanStack Query for Vue 学习失效与缓存语义，但不把它包装成南昌岗位的必备关键词。
 
-## 本周目标
+## 2. 前置条件
 
-- 恢复Python数据模型、类型、异常、上下文管理和包结构；
-- 理解协程、事件循环、阻塞IO和线程/进程边界；
-- 使用uv、`pyproject.toml`和锁文件建立可复现环境；
-- 建立FastAPI内部服务、配置、错误、日志和健康检查；
-- 建立pytest和Java-Python契约测试入口。
+- 第 26 周类型检查、组件/Composable 测试和无 AI 训练通过。
+- FactoryCare 后端认证、权限、分页、工单状态命令和错误码稳定。
+- 能读懂浏览器 Network、Cookie、CORS/CSRF 和 HTTP 缓存信息。
+- 已确定本周只使用 Element Plus 一个后台 UI 库。
 
-## 必须理解的概念
+## 3. 学习目标
 
-- 动态类型与类型提示、`Any`风险、Protocol、Generic、TypedDict；
-- dataclass与Pydantic模型的职责；
-- iterable/iterator/generator和惰性；
-- exception chaining、自定义异常和资源清理；
-- context manager、文件/网络资源生命周期；
-- module、package、绝对/相对导入和`src`布局；
-- virtual environment、lock、应用依赖与开发依赖；
-- coroutine、task、event loop、await和cancellation；
-- 异步函数调用阻塞库的后果，以及线程池/进程池适用性；
-- FastAPI路由、依赖、生命周期、Pydantic校验和OpenAPI；
-- 配置/密钥、统一错误、结构化日志、traceId和健康检查；
-- pytest fixture、参数化、mock边界、async测试和HTTP测试。
+- 能配置 Vite 环境变量、代理、构建、懒加载、静态资源和类型检查流程。
+- 能以 Vue Router 实现路由元信息、嵌套路由、懒加载、登录恢复和授权导航。
+- 能说明局部状态、Pinia 客户端状态、URL 状态和服务端状态的边界。
+- 能实现服务端分页、排序、筛选、缓存、重新获取和写后失效。
+- 能使用 Element Plus 完成可维护的复杂表单、表格和权限动作。
+- 能处理加载、空、失败、冲突、校验错误、无权限和会话过期。
 
-## 时间与任务（15—18小时）
+## 4. 完整概念清单
 
-下方120分钟无AI训练计入任务3的异步实验，不在总时长之外重复增加。
+### 4.1 Vite 工程化
 
-### 任务1：环境和包结构（2小时）
+- 开发服务器、原生 ESM、依赖预构建、生产 Rollup 构建。
+- `import.meta.env`、`VITE_` 暴露规则、模式与运行时配置边界；前端变量都不是秘密。
+- 开发代理只解决本地联调，不等同于生产反向代理和 CORS 策略。
+- 路径别名、静态资源、CSS 预处理、按路由动态导入和 chunk 分析。
+- `vite build` 不执行完整 TypeScript 类型检查；CI 同时运行 `vue-tsc` 与构建。
+- source map、错误监控和敏感源码暴露取舍。
 
-- 创建AI服务`pyproject.toml`和`uv.lock`；
-- 建立`src/factorycare_ai`与`tests`结构；
-- 配置format/lint/typecheck/pytest命令；
-- 配置Python版本文件和`.env.example`，不提交密钥；
-- 在README记录从空环境启动方式。
+### 4.2 Router 与权限导航
 
-### 任务2：语言与类型复健（3小时）
+- 嵌套布局、动态参数、Query 作为可分享筛选状态、404 和重定向。
+- Route Meta 表达页面所需权限；全局守卫负责登录恢复与导航体验。
+- 路由守卫不是后端安全边界，不能替代接口授权。
+- 动态路由/静态路由 + 权限过滤的取舍；避免由后端返回任意组件文件路径。
+- 导航竞态、重复跳转、登录后返回原页面和会话过期处理。
+- 页面组件懒加载与预加载，不把所有页面打进首屏。
 
-- 用dataclass表达领域无关内部值；
-- 用Pydantic表达API输入输出；
-- 用Protocol定义模型客户端和检索器接口；
-- 写generator处理大文档片段；
-- 主动构造`Any`传播、可变默认值和异常吞掉的问题。
+### 4.3 Pinia 与服务端状态
 
-### 任务3：异步实验（3小时）
+- Pinia 保存当前用户、权限、导航偏好等客户端共享状态。
+- Store 的 state/getter/action、`storeToRefs`、组合式 Store 和生命周期风险。
+- 服务端状态具有缓存、陈旧、去重、重试、分页、失效和后台刷新语义。
+- Query Key 必须包含租户可见筛选、分页与排序；写操作成功后精确失效。
+- 不把接口响应复制到 Pinia 后长期与服务器保持“双份真相”。
+- URL 保存可分享筛选，表单草稿留局部，权限以服务端 `/me` 为源。
 
-- 并发调用三个假外部服务，比较串行和`TaskGroup`/gather；
-- 处理超时、取消、一个任务失败和资源释放；
-- 在async路由中故意执行阻塞任务并测量影响；
-- 比较直接await、线程池和进程池；
-- 写结论，不把async等同于更快。
+### 4.4 Element Plus 复杂业务 UI
 
-### 任务4：FastAPI骨架（4小时）
+- `el-form` Model/Rules、同步/异步校验、动态数组项、提交状态和服务端字段错误映射。
+- `el-table` 服务端分页、排序、筛选、固定列、选择、空状态和加载状态。
+- 大表格性能、稳定 row key、虚拟化触发条件；先测量再优化。
+- Dialog/Drawer 生命周期、关闭确认、表单重置和重复提交。
+- 按钮权限、禁用原因、二次确认和 409 冲突后的刷新/重试。
+- 可访问性：标签、键盘焦点、错误提示、颜色之外的状态表达。
 
-- `/health/live`和`/health/ready`；
-- `/internal/v1/triage`先返回确定性假结果；
-- Pydantic schema和稳定错误格式；
-- service token/tenant/scope/traceId依赖骨架；
-- 结构化日志和请求耗时；
-- 超时和异常映射；
-- Java客户端契约样例。
+## 5. 任务分配
 
-### 任务5：测试与容器（2—3小时）
+| 任务 | 时间 | 结果 |
+| --- | ---: | --- |
+| Vite 与项目脚本完善 | 2h | 可重复开发/构建/检查流程 |
+| Router、会话和权限导航 | 3h | 管理端路由骨架 |
+| Pinia/服务端状态边界 | 3h | 用户 Store 与查询缓存 |
+| 企业页面与后端联调 | 5h | 组织角色、资产、工单、知识和SLA最小闭环 |
+| 无 AI 训练 | 2h | 独立页面切片 |
+| 求职与作品集动作 | 2h | Vue 全栈证据和投递 |
 
-- 配置pytest fixture和测试客户端；
-- 覆盖schema失败、未认证、scope不足、异常和健康检查；
-- 用fake实现隔离外部模型；
-- 创建最小容器镜像或开发Dockerfile，非root运行概念；
-- CI运行lint/type/test。
+总计 17 小时。若只有 15 小时，缩减视觉打磨；不能删除错误状态、权限检查和真实后端联调。
 
-### 任务6：求职和复盘（1小时）
+## 6. FactoryCare 项目增量
 
-- 采样5个Python/AI应用岗位，区分Web后端、数据、算法和AI应用；
-- 更新R4简历草稿，但暂不写RAG/Agent已完成；
-- 口述Java和Python服务为什么分开、为什么又不拆更多服务。
+- 完善 `factorycare-web` 的 `dev/typecheck/test/build` 脚本、环境类型、代理、路由懒加载和生产配置说明。
+- 建立主布局、登录页、403、404、组织/成员角色、设备、工单、知识版本和SLA看板路由。
+- `auth` Store仅保存当前用户、权限和初始化状态；刷新页面通过`/api/v1/auth/me`恢复，不持久化敏感凭据。
+- Route Meta 过滤导航与动作显示；任何隐藏按钮对应的 API 仍由后端授权测试保护。
+- 工单列表实现服务端分页、状态/关键字/超时筛选、排序，并把可分享条件同步到 URL。
+- 工单详情按唯一状态词表提供分诊、派单、接单、开始处理、等待配件/审批、解决、验证、关闭与重开等角色可见命令；依据权限和当前状态显示可用动作。
+- 组织/权限只完成成员列表、角色绑定与权限矩阵查看；所有更改仍由后端验证租户和授权。
+- 知识页完成文档登记、授权上传、版本绑定、私有下载、审核、发布和撤回；Java生成受租户/用户/大小/MIME约束的上传意图与短时下载URL，不在前端伪造解析/索引成功状态。
+- SLA看板只展示`reporting`只读接口的超时、待接单和按状态统计，并用一个最小ECharts图或表证明真实数据映射。
+- 表单展示客户端校验、服务端字段错误、409 版本冲突、403、Session 过期和网络失败。
+- 查询层按稳定 Query Key 缓存详情/列表，命令成功后精确失效；禁止把整份列表复制进 Pinia。
+- 增加至少 8 条测试或可自动验证用例，覆盖登录恢复、权限路由、筛选映射、表单错误和冲突恢复。
+- 写 `frontend-state-boundaries.md`，说明局部/URL/Pinia/服务端四类状态归属。
 
-## FactoryCare项目增量
+## 7. AI 协作边界
 
-- 可独立启动的Python AI服务；
-- 确定性假分诊接口；
-- 内部服务身份、tenant/scope/traceId骨架；
-- Java调用Python的契约测试或stub；
-- CI和基础容器化。
+AI 可以：
 
-## AI协作边界
+- 根据 API 契约生成类型安全客户端或请求函数初稿。
+- 审查路由、Store 和 Query Key，寻找权限与缓存边界错误。
+- 生成 Element Plus 表单/表格骨架和失败状态清单。
+- 根据 bundle 分析结果建议懒加载位置，而不是凭感觉优化。
 
-AI可以生成Pydantic样板、测试参数和Dockerfile初稿。必须人工检查：async内部阻塞、依赖版本、异常泄漏、日志敏感信息、认证依赖、`Any`和测试是否真的隔离外部调用。
+AI 不可以：
 
-## 无AI训练（120分钟）
+- 让后端返回任意前端组件路径并在运行时动态导入。
+- 把所有接口数据、弹窗开关和表单字段塞进一个 Pinia Store。
+- 用隐藏按钮替代后端权限，或在前端保存 Session/Token 秘密。
+- 为了快速通过类型检查使用大面积 `any` 或关闭严格模式。
 
-实现一个异步批处理端点：最多并发3个假解析任务，每项有超时，部分失败返回明确结果，客户端取消时释放任务。使用类型提示并写async测试。
+每个 AI 生成页面必须人工验证键盘操作、失败状态、权限和 409 冲突，不以“截图看起来正确”作为完成标准。
 
-## 求职动作
+## 8. 无 AI 训练
 
-- 整理“Python AI应用”和“算法岗”的JD差异；
-- 模拟回答：为什么不用Spring AI完成全部AI功能？Python服务如何避免成为第二业务中心？
-- 本周投递仍以Java/Vue全栈为主，AI简历只作为准备。
+关闭 AI 120 分钟，实现“设备列表 + 编辑设备名称”垂直切片：
 
-## 交付物
+- 路由 Query 保存分页与关键字。
+- 使用服务端状态查询，不把列表复制到 Pinia。
+- Element Plus 表单具有必填/长度校验、提交中状态和服务端错误。
+- 更新携带版本，409 时保留用户输入并提示刷新比较。
+- 无权限用户看不到操作入口，直接调接口仍由后端拒绝。
+- 完成后运行类型检查、测试和生产构建。
 
-- [ ] `pyproject.toml`、`uv.lock`和包结构；
-- [ ] 类型/异步最小实验；
-- [ ] FastAPI健康和假分诊接口；
-- [ ] 内部认证与trace骨架；
-- [ ] pytest、lint/typecheck和CI结果；
-- [ ] 无AI任务和周复盘。
+## 9. 求职动作（恢复求职后启用）
 
-## 验收标准
+- 采样 10 个南昌 Vue3/Java 全栈/工业信息化岗位，将 Vue3、TS、Vite、Pinia、Router、Element Plus、权限、ECharts 要求映射到当前项目。
+- 更新简历：`完成 Vue3/TS 企业管理端，区分 Pinia 客户端状态与服务端查询缓存，覆盖权限路由、复杂表单、分页筛选和乐观锁冲突恢复`。
+- 录制 5 分钟 Web 端演示，必须展示一次 403/409/网络失败，而不只展示成功路径。
+- 本周至少完成 8 次 Vue/全栈定向投递；根据沟通率调整简历首屏是“2 年 Vue”还是“Java + Vue 全栈”。
 
-- 从干净环境可按README启动和测试；
-- 能解释coroutine、task、thread和process区别；
-- async路由没有明显阻塞调用；
-- 外部依赖可替换为fake，测试不消耗模型费用；
-- Python账户没有`core` schema写权限；
-- 错误和日志不泄漏密钥。
+## 10. 本周交付物
 
-## 本周明确不做
+- 可构建的 FactoryCare Vue3 管理端与工程脚本。
+- 登录恢复、组织/角色、资产、工单、知识文件/版本、SLA只读看板、复杂表单和错误恢复。
+- `frontend-state-boundaries.md`。
+- 不少于 8 条前端自动验证用例与无 AI 页面切片。
+- 5 分钟演示和更新后的 Vue/全栈简历条目。
 
-- LangChain/LangGraph；
-- RAG和向量库；
-- 模型微调；
-- Python直连Java业务表；
-- 为一个服务拆复杂微服务框架。
+## 11. 验收标准
 
-## 官方资料
+- `pnpm typecheck`、测试和生产构建全部通过，Vite 环境中不包含秘密。
+- 刷新任意受保护页面能恢复会话；匿名、403、404 和过期会话行为明确。
+- 工单筛选可分享/刷新，分页、排序与服务端查询一致。
+- Pinia 不保存整份服务器列表，写后失效和冲突恢复可解释。
+- 每个业务动作同时受前端体验控制和后端安全控制。
+- 复杂表单覆盖客户端/服务端校验、重复提交和版本冲突。
+- 成员角色、知识授权上传/私有下载/发布撤回和SLA看板至少各有一条成功及一条失败/无权限验证。
+- 无 AI 120 分钟切片通过类型检查、测试和构建。
 
-- [Python 3 documentation](https://docs.python.org/3/)
-- [Python typing](https://docs.python.org/3/library/typing.html)
-- [Python asyncio](https://docs.python.org/3/library/asyncio.html)
-- [uv documentation](https://docs.astral.sh/uv/)
-- [FastAPI documentation](https://fastapi.tiangolo.com/)
-- [pytest documentation](https://docs.pytest.org/)
+## 12. 明确不做
+
+- 不引入多个 UI 库、Vuex、微前端或低代码平台。
+- 不把服务端数据全部放进 Pinia，不实现自制全功能查询缓存库。
+- 不做只有静态 Mock 数据的“后台模板换皮”。
+- 不把前端动态菜单当作后端授权来源。
+- 不做大屏、地图或装饰性图表；只实现来自`reporting`真实只读指标的最小SLA图表。
+
+## 13. 官方资料
+
+- [Vite Guide](https://vite.dev/guide/)
+- [Vite Env Variables and Modes](https://vite.dev/guide/env-and-mode.html)
+- [Vue Router Guide](https://router.vuejs.org/guide/)
+- [Vue Router Navigation Guards](https://router.vuejs.org/guide/advanced/navigation-guards.html)
+- [Pinia Core Concepts](https://pinia.vuejs.org/core-concepts/)
+- [TanStack Query for Vue](https://tanstack.com/query/latest/docs/framework/vue/overview)
+- [Element Plus Form](https://element-plus.org/en-US/component/form.html)
+- [Element Plus Table](https://element-plus.org/en-US/component/table.html)
+- [Vue Production Deployment](https://vuejs.org/guide/best-practices/production-deployment.html)

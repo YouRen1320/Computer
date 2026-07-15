@@ -10,13 +10,13 @@
 | 工具 | 当前实际版本 | 当前实际路径/来源 | 验证结果 | 后续处理 |
 | --- | --- | --- | --- | --- |
 | JDK | Temurin 25.0.3 LTS | `$HOME` 外的系统 JDK 目录；Homebrew Cask `temurin@25` | `java`、`javac`、Maven、IDEA 测试运行器均已验证使用 JDK 25 | Week 00 主线；保留 Oracle 21 和 Homebrew 26，不卸载 |
-| Maven | 3.9.16 | `/opt/homebrew/bin/mvn`；Homebrew formula | `mvn -v` 显示 Temurin 25；`mvn clean test` 成功 | Week 07 再系统学习 Wrapper 与构建模型 |
+| Maven | 3.9.16 | `/opt/homebrew/bin/mvn`；Homebrew formula | `mvn -v` 显示 Temurin 25；`mvn clean test` 成功 | Week 09 再系统学习 Wrapper 与构建模型 |
 | IntelliJ IDEA | 2026.1.4 | `/Applications/IntelliJ IDEA.app` | Project SDK 与 JUnit 运行日志均指向 Temurin 25 | Java 后端主 IDE；VS Code 继续用于前端/Python |
-| Node.js | 22.14.0（当前命令） | `$HOME/.nvm/versions/node/v22.14.0/bin/node`；NVM | `type -a` 还发现 `/usr/local/bin/node` 与 `/opt/homebrew/bin/node`；Homebrew 另装有 24.9.0、25.9.0 | Week 19 前选择唯一主方案并升级到当期 Node 24 LTS patch |
-| pnpm | 10.18.0 | `$HOME/Library/pnpm/pnpm`；用户目录独立二进制 | 当前命令可运行 | Week 19 前升级到目标 11.x，并由项目 `packageManager` 锁定精确版本 |
-| Python | 3.14.3（当前命令） | `/Library/Frameworks/Python.framework/Versions/3.14/bin/python3`；Python.org Framework | `type -a` 还发现 Homebrew 3.12 与系统 Python | Week 27 固定当时的 Python 3.14 最新补丁并建立 uv 项目环境 |
-| uv | 0.11.15 | `$HOME/.local/bin/uv`；用户目录独立二进制 | 当前命令可运行 | Week 27 与 Python 项目一起复验并生成 lockfile |
-| Flutter / Dart | Flutter 3.35.7 stable / Dart 3.9.2 | `/opt/homebrew/bin/flutter` 指向 Homebrew Cask | Web/Chrome 可用；Android 缺 cmdline-tools/Android Studio；iOS/macOS 缺完整 Xcode | Week 25 按目标平台升级 stable 并补齐必要工具链；当前不安装 |
+| Node.js | 22.14.0（当前命令） | `$HOME/.nvm/versions/node/v22.14.0/bin/node`；NVM | `type -a` 还发现 `/usr/local/bin/node` 与 `/opt/homebrew/bin/node`；Homebrew 另装有 24.9.0、25.9.0 | Week 23 前选择唯一主方案并升级到当期 Node LTS patch |
+| pnpm | 10.18.0 | `$HOME/Library/pnpm/pnpm`；用户目录独立二进制 | 当前命令可运行 | Week 23 前升级到当期稳定主版本，并由项目 `packageManager` 锁定精确版本 |
+| Python | 3.14.3（当前命令） | `/Library/Frameworks/Python.framework/Versions/3.14/bin/python3`；Python.org Framework | `type -a` 还发现 Homebrew 3.12 与系统 Python | Week 36 固定当时的 Python 3.14 最新补丁并建立 uv 项目环境 |
+| uv | 0.11.15 | `$HOME/.local/bin/uv`；用户目录独立二进制 | 当前命令可运行 | Week 36 与 Python 项目一起复验并生成 lockfile |
+| Flutter / Dart | Flutter 3.35.7 stable / Dart 3.9.2 | `/opt/homebrew/bin/flutter` 指向 Homebrew Cask | Web/Chrome 可用；Android 缺 cmdline-tools/Android Studio；iOS/macOS 缺完整 Xcode | Week 32 升级 stable 并先验证纯 Dart；Week 34 再按目标平台补齐工具链 |
 | Docker CLI | 28.4.0 | `/usr/local/bin/docker` 指向 `/Applications/Docker.app` | 只验证 CLI 版本，未验证 daemon 或容器运行 | 实际需要容器的周次再启动和验证 |
 
 ## Java 配置与关系
@@ -65,4 +65,3 @@ flutter --version
 flutter doctor -v
 docker --version
 ```
-

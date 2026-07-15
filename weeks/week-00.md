@@ -33,10 +33,10 @@
 | JDK | Temurin 25.0.3 LTS | JDK 25 为 LTS 主线；项目不使用 preview API |
 | Maven | 3.9.16 | Maven 4 仍不是本路线的 GA 基线 |
 | Node.js | 24.18.0 LTS | 用于后续 Vue/uni-app 工具链 |
-| pnpm | 11.10.x | 项目后续通过 `packageManager` 锁定精确版本 |
+| pnpm | 11.x 当前稳定版 | 项目后续通过 `packageManager` 锁定精确版本；不在准备周追逐每个小版本 |
 | Python | 3.14.6 | 使用默认 GIL 构建；AI 科学计算依赖后续逐项验证 |
 | uv | 当前稳定版 | 与 Python 3.14 配合，项目后续提交 lockfile |
-| Flutter | 3.44.5 stable / Dart 3.12.2 | 截至 2026-07-11 的稳定补丁；实际安装前重新核对 stable archive |
+| Flutter | 3.44.6 stable / Dart 3.12.2 | 截至 2026-07-15 的稳定补丁；实际安装前重新核对 stable archive |
 
 ## 完整概念清单
 
@@ -62,7 +62,7 @@
 - JDK、JRE、JVM、`javac`、`java` 的职责。
 - Maven 安装目录、本地仓库和 `settings.xml` 的基本位置。
 - `mvn -v` 输出中的 Maven 版本、Java 版本和 Java home。
-- Maven Wrapper 的用途；本周先固定全局 Maven 3.9.16，第 7 周再系统学习 Wrapper 和构建模型。
+- Maven Wrapper 的用途；本周先固定全局 Maven 3.9.16，第 9 周再系统学习 Wrapper 和构建模型。
 
 ### 前端、Python 与跨端工具
 
@@ -88,7 +88,7 @@
 | 后续运行时盘点 | 0.5h | 记录Node/pnpm、Python/uv、Flutter、Docker现状和对应安装周次，不提前补齐 |
 | 五项能力基线 | 1.5h | 限时完成Java、SQL、Vue/TS、Python、Flutter小测；未安装工具的项用口述/旧项目审查并标未运行 |
 | 工作区与Git | 0.75h | 初始化Git、加入忽略规则，建立日志/错题/岗位记录并完成首次可回滚提交 |
-| 求职采样与简历 | 2.5—4h | 收集40个岗位、统计关键词，建立Vue/全栈版与Java/AI应用版事实简历基线 |
+| 求职采样与简历（当前延期） | 2.5—4h | 恢复求职时收集40个岗位并建立事实简历；暂停期间不计入本周预算和验收 |
 | 无 AI 验收 | 1—1.5h | 关闭 AI，完成版本冲突诊断和环境口述 |
 
 建议验证命令：
@@ -152,7 +152,7 @@ FactoryCare 是后续持续建设的“工业设备运维与智能工单平台�
 3. 不看笔记解释为什么 `java -version` 正确不代表 Maven 和 IDE 一定正确。
 4. 写出恢复旧 shell 配置和切回旧 JDK 的回滚步骤，不实际破坏环境。
 
-## 求职动作
+## 求职动作（恢复求职后启用）
 
 - 收集至少 40 个南昌及可接受周边地区岗位：Java 16 个、Java+Vue/全栈 10 个、Vue/uni-app 8 个、AI 应用或 Python 6 个。
 - 记录公司、岗位链接、发布日期、薪资、经验、学历、必选技能、加分技能和行业。
@@ -176,9 +176,9 @@ FactoryCare 是后续持续建设的“工业设备运维与智能工单平台�
 
 - `java -version` 与 `javac -version` 都显示 JDK 25 系列。
 - `mvn -v` 显示 Maven 3.9.16，且其 Java version/Java home 指向 JDK 25。
-- Node/pnpm已安装时记录实际版本；最迟在Week 19升级到当期Node LTS与目标pnpm并完成验证。
-- Python/uv已安装时记录实际版本；最迟在Week 27固定Python 3.14当前patch与uv并完成验证。
-- Flutter 若安装，必须是 stable 且 `flutter doctor -v` 的必要目标平台无阻塞；若不安装，记录了触发安装的条件。
+- Node/pnpm已安装时记录实际版本；最迟在Week 23升级到当期Node LTS与目标pnpm并完成验证。
+- Python/uv已安装时记录实际版本；最迟在Week 36固定Python 3.14当前patch与uv并完成验证。
+- Flutter 若安装，必须是 stable；Week 32 前保证纯 Dart 可运行，Week 34 再要求本轮目标平台的 `flutter doctor -v` 无阻塞。
 - 能解释 `PATH` 与 `JAVA_HOME`，并独立定位一个模拟版本冲突。
 - 最小Java烟雾项目可通过`mvn test`；五项能力基线均有分数/证据或明确“未运行”。
 - 恢复求职后，两版简历只重排真实事实，不把后续计划写成已掌握；当前Git首次提交可以回滚。

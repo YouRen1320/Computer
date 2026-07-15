@@ -1,188 +1,132 @@
-# 第 2 周：OOP、record、enum 与 Value Object
+# 第 2 周：String、null、数组、条件、循环与方法设计
 
 ## 定位
 
-本周从“把代码写在方法里”升级到“用对象表达业务”。重点不是背面向对象术语，而是让无效状态更难出现、职责更清楚、规则更容易测试。FactoryCare 会形成第一版纯 Java 领域模型。
+本周把 Week 01 的“能运行一个方法”升级为“能用控制流处理一组输入并表达完整规则”。用户关心的 `if`、`for`、`while`、`switch`、数组和字符串都会在完整程序中逐一学习，不用孤立选择题代替实践。
 
-时间预算：15—18 小时。AI 可以协助生成样板，但对象边界、身份、不可变性和业务规则由你决定。
+时间预算：15—18 小时。主要使用纯 Java、JUnit 和调试器，不使用 Spring、数据库或 Stream。
 
 ## 前置
 
-- 能使用 Java 类型、方法、控制流和 JUnit。
-- `WorkOrderPriorityCalculator` 测试全部通过。
-- 能解释基本类型与引用类型、`String.equals` 和参数按值传递。
-- 本周仍使用内存和纯 Java，不依赖 Spring 或数据库。
+- Week 01 已通过：能写经典 `main`、控制台 I/O、变量、类型、运算和方法；
+- 能运行 `mvn test`，区分 compile、testCompile、测试失败和运行时异常；
+- 能读懂方法签名、参数、返回值、`static` 和包可见性；
+- 能使用 JUnit 的基本断言。
 
 ## 目标
 
-- 理解类、对象、封装、构造、访问控制、静态成员和不可变性。
-- 区分类、record、enum、interface 的适用场景。
-- 区分 Entity、Value Object 和普通 DTO 的基本语义。
-- 优先使用组合和接口边界，不把继承当默认复用工具。
-- 用构造时校验阻止非法对象进入系统。
-- 建立 FactoryCare 的设备、工单标识、优先级和状态模型。
+- 正确比较、拼接、格式化和解析字符串；
+- 理解 `null`、空字符串、空白字符串和无结果不是同一状态；
+- 创建、访问、遍历和复制一维/二维数组，避免越界；
+- 使用 `if/else`、条件表达式、`switch` 和早返回表达决策；
+- 使用 `for`、增强 `for`、`while`、`do-while`，并能选择合适循环；
+- 把长控制流拆成有名字、可测试的小方法；
+- 使用 IDE 断点、单步、变量观察和调用栈定位问题；
+- 完成 FactoryCare 工单优先级计算与批量统计。
 
 ## 完整概念清单
 
-### 类与对象
+### String 与输入边界
 
-- 类是类型定义，对象是运行时实例。
-- 字段、实例方法、构造器、`this` 和对象生命周期。
-- `public`、包可见、`protected`、`private` 的含义；默认最小可见性。
-- getter 不是封装本身；真正的封装是通过行为维护不变量。
-- `static` 属于类，实例成员属于对象；不把业务状态放进可变静态字段。
-- `final` 字段、不可变引用和对象深层可变性的区别。
-- 构造器校验、工厂方法和有意义的创建入口。
+- `String` 是引用类型且不可变；字符串池只需理解现象，不背 JVM 实现；
+- `==` 比较引用，`equals` 比较内容；常量调用 `equals` 不能替代清晰的 null 设计；
+- `length`、`charAt`、`substring`、`contains`、`startsWith/endsWith`、`indexOf`；
+- `trim` 与 Unicode 空白边界，了解 `strip`；
+- `split` 参数是正则表达式，分隔符和尾部空项需要测试；
+- `StringBuilder` 适合循环拼接；字符串模板/格式化只使用稳定语法；
+- `Integer.parseInt`、`Long.parseLong` 与非法输入；
+- 大小写、locale 和用户输入规范化的风险。
 
-### 封装与职责
+### null 与状态表达
 
-- 不变量、前置条件、后置条件。
-- “贫血数据袋”与“所有逻辑都塞进实体”两个极端。
-- 告诉对象做事，而不是取出所有字段在外部随意修改。
-- 单一职责是变化原因清晰，不等于每个类只能有一个方法。
-- 包边界和可见性也属于设计工具。
+- 未初始化局部变量与值为 `null` 不同；
+- 解引用 `null` 触发 `NullPointerException`；
+- 参数是否允许 `null` 必须由契约决定；
+- 空集合、空字符串、缺省值和抛异常各有语义，不能随意互换；
+- `Objects.requireNonNull` 适合快速失败，但不能替代业务校验；
+- Optional 留到 Week 07，当前先学显式条件与清晰返回契约。
 
-### record
+### 数组
 
-- record 自动生成的组件访问器、构造器、`equals/hashCode/toString`。
-- record 适合不可变数据载体和值语义，不等于任何 DTO 都必须用 record。
-- compact constructor 中的校验。
-- record 组件引用的对象仍可能可变；需要防御性复制。
-- record 不适合需要可变生命周期、框架代理或复杂实体身份的场景。
+- 声明、创建、初始化、默认值、`length` 和零下标；
+- 固定长度、连续索引和引用数组的默认 `null`；
+- 数组越界、空数组、单元素数组、重复值和负数输入；
+- 普通 `for`、增强 `for` 和需要索引时的选择；
+- `Arrays.toString`、`sort`、`copyOf`、`equals`；
+- 二维数组是“数组的数组”，可能不规则；
+- 数组赋值共享同一对象，复制引用不等于复制元素；
+- 可变参数本质上是数组，避免无边界滥用。
 
-### enum
+### 条件与 switch
 
-- enum 是受限实例集合，不只是字符串常量。
-- enum 字段、构造器和方法；避免依赖 `ordinal()` 持久化业务含义。
-- 使用稳定业务码与显示文案分离。
-- `switch` 对 enum 的穷尽检查。
-- 当前只表达状态和优先级，完整状态机放到第 15 周。
+- 布尔表达式、关系/逻辑运算、短路和求值顺序；
+- `if`、`else if`、嵌套条件、卫语句和早返回；
+- 德摩根律只在提高可读性时使用；
+- 条件表达式适合简单值选择，不嵌套复杂业务；
+- `switch` statement/expression、case、default、yield 和穷尽性；
+- enum switch 的优势，enum 在 Week 04 系统学习；
+- 条件分支必须覆盖边界，不把“目前不会发生”当保证。
 
-### interface、抽象与组合
+### 循环
 
-- interface 表达能力或协作契约。
-- 实现类、动态分派和面向接口依赖。
-- 抽象类只理解使用边界，不深入复杂继承层次。
-- 组合优先于继承；“is-a”与“has-a”的基本判断。
-- 默认方法和静态接口方法只了解存在，不作为主要复用手段。
-- sealed class/interface 了解其封闭层级用途，不使用 preview 特性。
+- 计数循环、遍历循环、条件循环和至少执行一次的循环；
+- `for` 初始化/条件/更新的执行顺序；
+- `while` 适合次数未知但条件明确的场景；
+- `do-while` 的至少一次语义；
+- `break`、`continue`、嵌套循环和标签只了解；
+- off-by-one、无限循环、忘记更新、修改错误变量；
+- 循环不变量和手工跟踪表；
+- 循环内外 `return` 的区别，避免过早结束整个方法。
 
-### Entity 与 Value Object
+### 方法设计与调试
 
-- Entity 通过身份连续性区分；Value Object 通过全部有效值相等。
-- 标识对象优于到处传裸 `long/String`。
-- Value Object 应不可变、自校验、具有领域名称。
-- DTO 是边界传输形状，不承担核心领域不变量。
-- 时间、金额、编号、描述、优先级都可能成为值对象，但不要为每个字段机械包一层。
+- 一个方法用名字表达一个意图；输入输出和副作用明确；
+- 参数过多、布尔开关、隐藏共享状态是设计信号；
+- 方法重载按参数列表区分，不能只改返回类型；
+- 变量作用域、遮蔽和最小作用域；
+- 断点、Step Over/Into/Out、Variables、Evaluate、Call Stack；
+- 先缩小最小复现，再修改；调试器观察不能替代测试。
 
-### 对象关系与创建
+## 时间与任务
 
-- 一对一、一对多只作为对象关系，不提前映射数据库。
-- 聚合概念仅做直觉介绍：一起维护一致性的对象范围。
-- 工厂方法命名表达业务意图。
-- 防止循环依赖、双向关系和任意 setter。
-
-## 任务分配
-
-| 模块 | 时间 | 任务 |
+| 任务 | 时间 | 产出 |
 | --- | ---: | --- |
-| 类与封装 | 3h | 构造器、访问控制、不可变性和行为方法练习 |
-| record/enum | 2.5h | 创建并测试标识、描述、优先级和状态 |
-| 接口与组合 | 2h | 定义仓储契约雏形和通知能力，不实现框架 |
-| Value Object | 2.5h | 设计相等性、校验和防御性复制 |
-| FactoryCare | 3—4h | 重构第 1 周规则并建立领域模型 |
-| 无 AI 训练 | 2h | 新增值对象与规则变体 |
-| 求职动作 | 1h | 准备 OOP 高频问题口述 |
+| String/null 实验 | 2h | 比较、解析、空值和非法输入测试 |
+| 数组与循环实验 | 3h | 遍历、最大/计数/查找、越界和二维数组 |
+| 条件与 switch | 2h | 优先级决策表和可穷尽分支 |
+| 方法拆分与调试 | 2h | 将长方法拆分，并用断点定位一个故障 |
+| FactoryCare 增量 | 4—5h | `WorkOrderPriorityCalculator` 与批量统计 |
+| 测试、独立改动、复盘 | 2—3h | 红绿测试、规则变化、口述与记录 |
 
-建议练习：
+## FactoryCare 增量
 
-1. 将裸字符串工单编号重构为 `WorkOrderId` record。
-2. 将优先级和状态重构为 enum，并为其提供稳定 code。
-3. 设计 `FaultDescription`，拒绝空白和超长内容。
-4. 让 `WorkOrder` 通过行为修改必要状态，而不是公开所有 setter。
-5. 比较“继承一个 BaseEntity”与“组合标识和值对象”的利弊，本周不引入 BaseEntity。
+先写决策表，再实现：
 
-## FactoryCare项目增量
+- 输入：故障类别、影响人数、是否停机、等待小时数；
+- 输出：1—5 级优先级和一段可解释原因；
+- 批量输入使用数组，统计高优先级数量、首个最高优先级索引和每级计数；
+- 对未知类别、负数和空输入给出明确行为；
+- 正常、边界、非法和顺序无关场景有 JUnit；
+- 删除一个分支时测试必须变红。
 
-建立第一版纯 Java 领域模型：
+本周不创建领域实体，不使用 Stream；重点是控制流和方法边界。
 
-- `EquipmentId`：不可为空且格式稳定的 Value Object。
-- `WorkOrderId`：业务身份，不与数据库自增主键绑定。
-- `FaultDescription`：自校验的文本 Value Object。
-- `Priority`：enum，具备稳定业务 code，不依赖 ordinal。
-- `WorkOrderStatus`：enum，只表达候选状态，暂不实现完整流转图。
-- `Equipment`：具备设备身份和基本信息。
-- `WorkOrder`：具备身份、设备、故障描述、优先级和当前状态。
+## 无 AI 任务（90—120 分钟）
 
-将第 1 周计算器改为返回 `Priority`，并让创建工单时复用规则。所有构造入口必须拒绝关键字段缺失；不要为了 Jackson、MyBatis 或未来数据库提前添加无参构造和任意 setter。
+实现“技师当日工时汇总”：输入工时分钟数组，忽略还是拒绝负值先写契约；输出总分钟、有效记录数、是否超出 8 小时和最长单项。必须覆盖空数组、零、边界 480、超时、非法值，并解释每个循环变量。
 
-## AI协作边界
+## 验收
 
-可以让 AI：
+- 能现场写出 `if/switch/for/while` 的最小可运行例子并说明执行顺序；
+- 不混淆字符串 `==` 与 `equals`；
+- 能指出数组越界和循环提前 `return` 的日志/代码位置；
+- FactoryCare 优先级规则测试从命令行通过；
+- 能在 15 分钟内增加一个新边界而不重写整个实现；
+- 60—120 秒口述“条件、循环、方法和测试如何协作表达规则”。
 
-- 根据你写出的对象职责检查是否存在明显重复或泄漏。
-- 列出 class、record、enum、interface 的候选方案和取舍。
-- 生成构造器、工厂方法、`toString` 等机械样板。
-- 在你完成模型后寻找可构造的非法状态。
+## 非目标
 
-必须由你完成：
-
-- 决定对象身份、相等语义、不变量和公开行为。
-- 说明为什么某个类型是 Entity、Value Object、enum 或普通类。
-- 检查 AI 是否偷偷加入公共 setter、可变静态状态或无业务含义的继承。
-- 修改一个对象规则并确保调用方和测试同步变化。
-
-如果 AI 给出“最佳实践”但无法结合 FactoryCare 的具体不变量说明理由，不直接采用。
-
-## 无AI训练
-
-本周从求职/复盘时段预留45—60分钟完成并记录：字符串与哈希表基础题；说明字符编码、重复键和复杂度边界。
-
-关闭 AI，限时120分钟：
-
-1. 新增 `EquipmentCode` Value Object：去除首尾空白、只接受约定格式、相同规范值相等。
-2. 将 `Equipment` 中的裸字符串替换为该类型。
-3. 补齐成功、空值、非法格式和相等性测试。
-4. 口述为什么 Value Object 应在创建时校验，以及为什么 `record` 的引用组件仍可能破坏深层不可变。
-
-## 求职动作
-
-- 准备 90 秒内的口述：封装、继承与组合、interface 与抽象类、class 与 record、enum 为什么优于魔法字符串。
-- 从 5 个南昌 Java 岗位中统计 OOP、设计模式、DDD 是否为必选或加分，不因“DDD”关键词提前学习完整战术模式。
-- 将 FactoryCare 项目描述补充为“使用不可变 Value Object 表达工单身份和业务约束”，但不写“DDD 落地经验”。
-- 找一个自己旧 NestJS/TypeScript 模型，写一页 Java 与 TypeScript 建模差异，不重写旧项目。
-
-## 交付物
-
-- FactoryCare 第一版纯 Java 领域模型。
-- 所有 Value Object、enum 和核心实体的行为测试。
-- 一页对象职责表：类型、身份、可变性、不变量、公开行为。
-- 一页方案记录：为何使用组合，哪些地方刻意没有使用继承。
-- 无 AI 训练代码与复盘。
-
-## 验收标准
-
-- 能用具体代码解释类、对象、封装、不可变性和访问控制。
-- 能分别给出 class、record、enum、interface 合适与不合适的场景。
-- 能区分 Entity、Value Object 和 DTO，不只背定义。
-- 关键对象不能通过公开 API 创建空编号、空故障描述等明显非法状态。
-- enum 不使用 ordinal 作为业务值；Value Object 的相等性符合业务语义。
-- 领域模型没有公共可变字段、任意 setter、可变静态业务状态和无意义继承。
-- 所有测试通过；你能独立新增字段规则并修复受影响测试。
-
-## 明确不做
-
-- 不实现完整工单状态机、SLA、审计或权限；这些在后续周次处理。
-- 不学习 GoF 设计模式大全、复杂 DDD 聚合、领域事件或六边形架构术语堆砌。
-- 不使用 Lombok 掩盖尚未理解的构造器、相等性和可变性。
-- 不接入 Spring、数据库、JSON 或前端。
-- 不研究对象头、内存布局、反射源码和 JVM 对象分配细节。
-
-## 官方资料
-
-- [Java SE 25 Language Updates](https://docs.oracle.com/en/java/javase/25/language/)
-- [Java Language Specification：Classes](https://docs.oracle.com/javase/specs/jls/se25/html/jls-8.html)
-- [Java Language Specification：Interfaces](https://docs.oracle.com/javase/specs/jls/se25/html/jls-9.html)
-- [Record Classes API Guide](https://docs.oracle.com/en/java/javase/25/language/records.html)
-- [Java Language Specification：Enum Classes](https://docs.oracle.com/javase/specs/jls/se25/html/jls-8.html#jls-8.9)
-- [JUnit User Guide](https://docs.junit.org/current/user-guide/)
+- 不学习集合、Stream、Spring 或数据库；
+- 不背 JVM 字符串池源码；
+- 不用递归替代普通循环；
+- 不通过复制完整答案完成验收。

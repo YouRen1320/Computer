@@ -31,11 +31,11 @@ mvn -v
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | JDK |  |  |  | 25 LTS | Week 00 |  |  |
 | Maven |  |  |  | 3.9.16 | Week 00 |  |  |
-| Node |  |  |  | 当期 Node 24 LTS patch | Week 19 前 |  |  |
-| pnpm |  |  |  | 11.x 精确锁定 | Week 19 前 |  |  |
-| Python |  |  |  | 3.14 当前 patch | Week 27 前 |  |  |
-| uv |  |  |  | 当前稳定 | Week 27 前 |  |  |
-| Flutter/Dart |  |  |  | stable 配套版本 | Week 25 前 |  |  |
+| Node |  |  |  | 当期 Node 24 LTS patch | Week 26 前 |  |  |
+| pnpm |  |  |  | 11.x 精确锁定 | Week 26 前 |  |  |
+| Python |  |  |  | 3.14 当前 patch | Week 38 前 |  |  |
+| uv |  |  |  | 当前稳定 | Week 38 前 |  |  |
+| Flutter/Dart |  |  |  | stable 配套版本 | Week 34 前 |  |  |
 
 ### 验收
 

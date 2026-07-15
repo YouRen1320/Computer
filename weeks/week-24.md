@@ -1,184 +1,131 @@
-# 第 24 周：uni-app 真机、上传、权限、缓存、推送支付概念与发布
+# 第 24 周：DOM、事件循环、Promise、Fetch、取消与浏览器安全
 
-> 建议投入：17 小时（可在 15—18 小时内调整）
+## 定位
 
-## 1. 本周定位
+本周学习 JavaScript 在浏览器里如何与页面、任务队列、网络、存储和生命周期协作。目标是能解释并修复请求竞态、重复监听、卸载后更新、取消失效和安全边界；这些机制是 Vue 生命周期与 SSE 的前置。
 
-本周把“开发者工具里能跑”提升为“真机可演示、具备发布证据”。FactoryCare 小程序完成现场扫码、照片上传、离线草稿和异常恢复；推送与支付只学习正确业务/安全流程，不为一个不需要支付的工业报修项目硬加付款按钮。
+时间预算：15—18 小时。使用 Week 22 的原生页面和 Week 23 的纯 JS 模块，不引入 Vue。
 
-至少使用一台真实手机完成主流程和失败路径。没有真实 AppID/开发者权限时，只能标记为环境阻塞，不能把模拟器结果写成“已真机发布”。
+## 前置
 
-## 2. 前置条件
+- 掌握 JS 值、作用域、闭包、函数、对象、原型和 ESM；
+- 能用 DevTools Elements/Sources/Network/Console 调试；
+- FactoryCare API 有开发环境或可控 fake server；
+- 理解所有浏览器/网络输入都不可信。
 
-- 第 23 周微信开发者工具版本通过登录、扫码、报修和进度验收。
-- 已准备真实手机、可用 AppID/开发成员权限、HTTPS 测试域名和合法的 request/upload 域名。
-- 后端具备幂等、租户权限、对象存储或受控附件存储能力。
-- 已建立隐私字段清单，明确照片、设备、联系人和日志的保存边界。
+## 目标
 
-## 3. 学习目标
+- 读取/创建/修改 DOM 并保持语义和安全；
+- 理解事件传播、默认行为、委托和监听器清理；
+- 建立 call stack、task、microtask、render 的事件循环模型；
+- 正确组合 Promise/async/await 并处理错误、并发和取消；
+- 使用 Fetch/AbortController 处理 HTTP、超时、竞态和响应解析；
+- 区分 Cookie、Storage、Cache 与内存状态；
+- 理解同源、CORS、CSRF、XSS、CSP 和敏感数据边界；
+- 为 FactoryCare 原生页面实现可取消、只展示最新结果的数据加载。
 
-- 能建立真机测试矩阵，定位开发工具与真实设备在网络、权限、性能和 API 上的差异。
-- 能实现选择/拍摄图片、压缩、上传进度、取消、重试、服务端校验和附件绑定。
-- 能正确处理摄像头/相册等授权、拒绝、再次授权与隐私说明。
-- 能设计用户/租户隔离、版本化、有 TTL 的本地草稿与离线恢复。
-- 能说明 App Push、小程序订阅消息和支付的端到端服务端安全流程。
-- 能完成体验版上传、发布检查和回滚说明，形成可用于求职演示的证据包。
+## 完整概念清单
 
-## 4. 完整概念清单
+### DOM 与渲染边界
 
-### 4.1 真机测试
+- Document/Element/Node、query selector、创建/插入/删除/替换；
+- attribute、property、dataset、classList、style；
+- `textContent` 与 `innerHTML`，不可信内容禁止直接插 HTML；
+- form control property 与 attribute 初始值差异；
+- DocumentFragment/template 的用途；
+- layout/style/paint/composite 高层过程和强制同步布局概念；
+- MutationObserver/ResizeObserver/IntersectionObserver 了解，使用后需清理。
 
-- 开发者工具、体验版、真机正式环境在域名校验、证书、权限、性能和基础库上的差异。
-- Android/iOS、不同微信版本、网络切换、低电量/后台、刘海屏和字体设置。
-- Remote Debug、Network、真机日志、关联 ID 和后端日志串联。
-- 最小矩阵：冷启动、重新登录、扫码、拒绝权限、弱网、离线、上传大图、重复提交、Session 过期。
-- 发现平台差异后优先隔离适配层，不在页面散落型号判断。
+### 事件
 
-### 4.2 图片与文件上传
+- capture → target → bubble；
+- `target` 与 `currentTarget`；
+- `preventDefault`、`stopPropagation` 和滥用风险；
+- 事件委托、动态列表和最近匹配元素；
+- once/passive/signal listener options；
+- input/change/submit/click/keyboard 语义；
+- 自定义事件只用于清晰边界，不构造隐形全局总线；
+- 重复注册、匿名函数无法移除和页面销毁后的资源泄漏。
 
-- `uni.chooseImage`/媒体选择、临时文件路径、压缩和数量/大小限制。
-- `uni.uploadFile` 是独立任务，可监听进度、取消和失败；它不复用普通 JSON 请求拦截的所有行为。
-- 后端同时验证扩展名、MIME、文件签名、大小、数量、租户、对象归属和权限。
-- 文件名随机化，存储与访问分离；下载使用授权或短期 URL，不公开永久地址。
-- 附件元数据与对象存储不是同一事务：上传意图、临时对象、确认绑定和孤儿清理。
-- 上传重试保持幂等，不把同一图片绑定多次；日志不记录文件内容/敏感 URL。
-- 恶意文件扫描、内容审核和大规模直传只说明生产要求，本周做最小安全验证。
+### 事件循环
 
-### 4.3 权限与隐私
+- JS 执行栈、run-to-completion；
+- task/macrotask、microtask 和浏览器渲染机会；
+- Promise continuation 是 microtask，timer 是后续 task；
+- microtask starvation 和长任务阻塞 UI；
+- async function 调用先同步执行到首个 await；
+- `await` 暂停当前 async 函数，不阻塞整个线程；
+- Web Worker 用于 CPU 工作概念，不用于直接 DOM；
+- 先预测日志顺序，再在浏览器验证。
 
-- 能力检测、首次申请、用户拒绝、`getSetting/openSetting` 和无权限降级。
-- 权限应在用户触发相关功能时申请，先说明用途，不在启动时索取所有权限。
-- 隐私政策/隐私接口、收集最小化、用途、保留期和删除路径。
-- 小程序端数据、缓存、日志和截图都可能泄露；不缓存 Token 之外的高敏数据，Token 也应短期且可撤销。
-- 客户端权限只控制设备能力，不代表后端业务授权。
+### Promise 与异步组合
 
-### 4.4 本地缓存与离线草稿
+- pending/fulfilled/rejected 和 settled 后不可改变；
+- `then/catch/finally` 返回新 Promise；
+- 错误传播、遗漏 await、unhandled rejection；
+- 串行 await 与 `Promise.all/allSettled/race/any`；
+- 并发不等于并行，Promise 不会自动取消底层工作；
+- `finally` 负责收尾，不应无条件覆盖新请求的 loading；
+- stale closure、out-of-order response 和 latest-wins/token 策略。
 
-- 内存状态、同步/异步 Storage、文件缓存与服务端状态的不同责任。
-- Key 包含环境、版本、租户、用户和草稿 ID，退出时清理用户范围缓存。
-- Schema 版本、TTL、迁移/丢弃策略和容量上限。
-- 离线只保存未提交草稿；恢复网络后由用户确认提交，不暗中执行危险写操作。
-- 同一草稿多端修改的冲突提示；最终提交继续携带幂等键和版本。
-- 网络状态仅作提示，请求结果才是事实；失败队列必须可见、可取消。
+### Fetch 与取消
 
-### 4.5 推送与支付概念
+- URL、method、headers、body、credentials；
+- Fetch 只在网络级失败 reject，HTTP 4xx/5xx 需检查 `response.ok`；
+- JSON/文本/流只能消费一次，解析也会失败；
+- AbortController/AbortSignal、取消原因和复用边界；
+- 超时可用组合 signal 或显式 timer，并清理 timer；
+- 取消不能保证服务端撤销已执行写操作；
+- retry 只对合适的幂等/临时失败，带退避和上限；
+- 请求 ID/当前 controller 防止旧请求收尾覆盖新状态。
 
-- App Push/uniPush、微信小程序订阅消息是不同能力；都需要用户授权、平台配置和服务端发送。
-- 推送载荷只放最小通知与深链标识，打开后再鉴权取详情；不在通知中放隐私数据。
-- 去重、频率、退订、失败回执和深链安全。
-- 支付正确流程：服务端创建订单 → 平台下单/签名 → 客户端拉起支付 → 服务端验签回调 → 幂等更新 → 主动查询/对账 → 退款。
-- 客户端“支付成功”回调不能作为到账事实；金额和商品信息由服务端决定。
-- FactoryCare 无真实支付业务，本周不实现支付，只画时序图并能解释安全边界。
+### 浏览器状态与安全
 
-### 4.6 构建、上传与发布
+- Cookie 自动随匹配请求发送；HttpOnly/Secure/SameSite；
+- localStorage/sessionStorage 同步、可被页面 JS 读取，不存长期敏感 token；
+- IndexedDB/Cache API/Service Worker 建立概念；
+- same-origin 由 scheme/host/port 决定；
+- CORS 是浏览器读取策略，不是服务器认证授权；
+- CSRF 利用自动凭证，XSS 执行不可信脚本；
+- CSP、输出编码、可信模板、依赖安全高层措施；
+- URL/DOM/消息/文件/网络响应均是不可信输入。
 
-- AppID、版本号、环境配置、合法域名、隐私清单、权限说明和平台类目。
-- 分包/包体、未使用资源、Source Map 和生产日志脱敏。
-- 上传体验版、成员扫码验证、提交审核、审核失败修复、灰度/回滚和版本记录。
-- 测试 Provider、Mock 地址、调试菜单、开发密钥不得进入生产包。
-- 发布清单与证据：构建 Commit、依赖锁、测试结果、体验版二维码（注意有效期/访问控制）和已知问题。
+## 时间与任务
 
-## 5. 任务分配
-
-| 任务 | 时间 | 结果 |
+| 任务 | 时间 | 产出 |
 | --- | ---: | --- |
-| 真机环境与测试矩阵 | 2.5h | 一台真机的完整记录 |
-| 图片上传与附件安全 | 4h | 可恢复上传闭环 |
-| 权限、缓存和离线草稿 | 3.5h | 拒绝/弱网/恢复流程 |
-| 补充信息、确认与评价 | 1.5h | 报修人完整业务闭环 |
-| 推送支付概念与发布 | 1h | 时序图和体验版 |
-| 无 AI 真机排错 | 2h | 独立故障修复 |
-| 求职演示与投递 | 2.5h | 多端作品证据包 |
+| DOM/事件 | 3h | 筛选表单、委托、清理和 XSS 反例 |
+| 事件循环预测 | 2h | 10 个日志顺序与长任务实验 |
+| Promise 组合 | 2—3h | 串并行、错误、allSettled 和 finally 竞态 |
+| Fetch/Abort | 3h | 取消、超时、4xx/5xx、解析和最新请求 |
+| 安全/存储 | 2h | Cookie/Storage/CORS/CSRF/XSS 威胁说明 |
+| FactoryCare/复盘 | 3—5h | 原生数据页、故障恢复和独立改动 |
 
-总计 17 小时。若只有 15 小时，推送/支付只保留时序图；真机、上传、权限和发布检查不能压缩掉。
+## FactoryCare 增量
 
-## 6. FactoryCare 项目增量
+- 原生 JS 实现工单列表的筛选、分页和 loading/empty/error/success；
+- 快速切换状态时取消旧请求，并用请求身份防止旧 `finally` 清除新 loading；
+- 组件化前用返回 cleanup 函数移除 listener/observer/timer；
+- 服务端 401/403/404/409/422/500 映射为不同用户反馈；
+- 不使用 `innerHTML` 展示工单描述；
+- DevTools 证明取消、竞态、重复监听和 XSS 修复。
 
-- 选择/拍摄最多 3 张故障照片，显示压缩、进度、取消、失败和重试；单张与总大小有明确限制。
-- 后端创建上传意图，将临时对象与租户/用户/草稿绑定；确认报修后才转为正式附件，定时清理孤儿对象。
-- 对文件执行大小、MIME/签名、权限与对象归属校验；附件访问必须再次鉴权。
-- 拒绝摄像头/相册权限时给出原因、重新授权入口和“无图片继续报修”降级路径。
-- 离线保存版本化报修草稿，Key 隔离环境/租户/用户；恢复网络后提示用户确认提交。
-- 重试上传/提交继续使用稳定幂等标识，弱网和应用切后台不会产生重复工单/附件。
-- 报修详情支持追加补充信息；只有本人且处于允许状态时可提交，重复或越权请求由Java拒绝并审计。
-- 工单`RESOLVED`后，报修人可确认解决进入`VERIFIED`或驳回回到`IN_PROGRESS`；关闭后只能提交一次评价，所有命令带幂等键。
-- 完成至少一台真机的端到端测试；记录机型、系统、微信/基础库、网络和结果。
-- 画两张概念时序图：工单订阅消息、第三方支付；明确 FactoryCare 只可能需要前者且本周不接真实 Provider。
-- 生成体验版并用第二个测试账号验证数据权限；若无发布权限，记录阻塞和所需外部条件，不能勾选发布验收。
-- 编写 `release-checklist-miniapp.md`、`device-test-report.md` 和 `ADR-024-mobile-files-and-release.md`。
+## 无 AI 任务（120 分钟）
 
-## 7. AI 协作边界
+实现 `loadWorkOrders(status)` 与原生筛选 UI：连续三次切换只展示最后一次；旧请求失败/完成不能覆盖新状态；卸载函数取消请求和监听；HTTP 错误与 JSON 解析错误分开。使用 fake fetch 测试乱序响应和取消。
 
-AI 可以：
+## 验收
 
-- 根据真机日志和关联 ID 提出故障假设。
-- 生成测试矩阵、发布清单、权限拒绝和弱网场景候选。
-- 审查上传/缓存数据模型与支付时序图是否遗漏验签、幂等和对账。
-- 帮助整理演示脚本和已知问题。
+- 能预测 task/microtask/同步日志顺序；
+- 能解释 Promise、网络请求、AbortController 和服务端写入不是同一层；
+- 能修复旧请求 `finally` 覆盖新 loading 的竞态；
+- 能说明 CORS、认证、CSRF 和 XSS 的区别；
+- 原生页面资源可清理，乱序测试稳定通过；
+- 能从 Network/Sources/Console 提供一次真实定位证据。
 
-AI 不可以：
+## 非目标
 
-- 代替真机测试，或根据模拟器截图宣称发布成功。
-- 接触 AppID Secret、支付密钥、真实用户照片、体验版访问凭据。
-- 建议跳过服务端文件验证、支付回调验签或权限审核。
-- 为了作品“更丰富”给 FactoryCare 增加没有业务意义的真实支付。
-
-所有 AI 推断必须用真机、后端日志或平台后台结果验证；无法验证的写入“待确认”，不写进简历结论。
-
-## 8. 无 AI 训练
-
-关闭 AI 120 分钟，真机排查“弱网拍照后提交，界面提示失败，但后台出现重复附件”：
-
-- 通过关联 ID、上传意图和对象元数据判断第一次请求实际结果。
-- 为上传绑定稳定幂等标识并在重试前查询状态。
-- 修复页面恢复/切后台导致的重复监听或重复提交。
-- 添加弱网、超时未知结果和重复回调测试。
-- 真机重复执行 3 次，并说明客户端成功回调为何不是服务端最终事实。
-
-## 9. 求职动作
-
-- 回看第 23 周采样的 10 个南昌 uni-app/小程序岗位，把“真机、上传、权限、缓存、发布”逐项变成证据或明确未完成项。
-- 准备 6—8 分钟多端演示：小程序扫码报修并上传照片 → Vue 管理端实时接收/分配 → 展示审计和权限。
-- 简历写为：`完成 uni-app 微信小程序扫码报修与真机验证，处理图片上传、权限拒绝、离线草稿、幂等重试和体验版发布检查`；只有实际完成体验版才保留“发布”字样。
-- 本周至少完成 10 次 Vue/uni-app/Java 全栈定向投递，并比较哪一版简历获得更多有效沟通。
-- 整理 5 个移动端故障故事：合法域名、权限拒绝、上传超时、缓存迁移、Session 过期。
-
-## 10. 本周交付物
-
-- 图片选择/压缩/上传/重试/附件鉴权闭环。
-- 补充信息、确认/驳回解决和一次性评价链路及权限/幂等测试。
-- 权限拒绝降级、离线草稿和用户确认恢复流程。
-- 至少一台真机完整测试证据与体验版/明确阻塞记录。
-- 推送、支付概念时序图。
-- `release-checklist-miniapp.md`、`device-test-report.md`、`ADR-024-mobile-files-and-release.md`。
-- 多端演示视频/脚本、更新后的简历和投递反馈表。
-
-## 11. 验收标准
-
-- 至少一台真实手机完成登录、扫码、拒绝/允许权限、报修、上传、弱网重试、进度查询、补充信息、确认/驳回和评价。
-- 文件由后端验证并按租户/对象授权，猜测 URL 或替换附件 ID 不能越权。
-- 弱网、超时和重复回调不会生成重复工单/附件，失败任务对用户可见且可取消。
-- 本地草稿按环境/租户/用户/版本隔离，退出清理，过期可迁移或安全丢弃。
-- 能区分 App Push、小程序订阅消息，并完整说明支付服务端验签、幂等、查询和对账。
-- 生产构建不含测试 Provider、Mock 地址、密钥和调试入口；体验版状态与阻塞如实记录。
-- 能用 6—8 分钟演示跨端业务闭环，并回答一个真机故障的定位过程。
-
-## 12. 明确不做
-
-- 不因 FactoryCare 没有支付需求而硬接真实支付。
-- 不实现 App 的 uniPush、原生打包或多个小程序平台发布。
-- 不把模拟器、H5 或开发者工具结果冒充真机/审核/上线。
-- 不上传未授权真实个人数据，不在客户端/日志保存密钥和永久文件 URL。
-- 不实现大文件分片、视频转码、内容审核平台和复杂离线同步引擎。
-
-## 13. 官方资料
-
-- [uni.uploadFile](https://uniapp.dcloud.net.cn/api/request/network-file.html#uploadfile)
-- [uni.chooseImage](https://uniapp.dcloud.net.cn/api/media/image.html#chooseimage)
-- [uni-app 授权](https://uniapp.dcloud.net.cn/api/other/authorize.html)
-- [uni-app Storage](https://uniapp.dcloud.net.cn/api/storage/storage.html)
-- [uni-app Push](https://uniapp.dcloud.net.cn/api/plugins/push.html)
-- [uni.requestPayment](https://uniapp.dcloud.net.cn/api/plugins/payment.html)
-- [微信小程序隐私保护指引](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/)
-- [微信小程序分包加载](https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages.html)
-- [微信小程序代码上传与发布](https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/release.html)
+- 不学习 Vue 生命周期；
+- 不深入浏览器引擎实现或手写 Promise；
+- 不实现生产认证协议；
+- 不用防抖代替取消/竞态正确性。

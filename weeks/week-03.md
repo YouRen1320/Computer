@@ -1,176 +1,153 @@
-# 第 3 周：集合、泛型与 equals/hashCode
+# 第 3 周：类、对象、构造器、封装、static 与 final
 
 ## 定位
 
-本周解决“多个对象如何组织、查找、去重、排序和复用类型安全代码”。重点不是背集合 API，而是根据业务语义选择结构，并保证对象相等性不会破坏 Set、Map 和仓储行为。
+前两周主要使用静态方法和简单数据，本周第一次系统建立对象模型：类是类型定义，对象是运行时实例，字段保存状态，构造器建立有效对象，方法维护不变量。继承、接口、record 和 enum 留到 Week 04，避免概念拥挤。
 
-时间预算：15—18 小时。FactoryCare 将获得可替换的内存仓储，为后续 Spring DI 和数据库持久化保留清晰接口。
+时间预算：15—18 小时。使用纯 Java 和 JUnit，不引入 Spring/数据库。
 
 ## 前置
 
-- 能使用 class、record、enum、interface 和 Value Object 建模。
-- FactoryCare 的设备、工单、优先级和状态模型测试通过。
-- 能解释 Entity 身份和值对象相等性。
-- 本周不使用 Stream 完成主要练习；先掌握集合和显式循环。
+- 能使用类型、变量、方法、String、数组、条件和循环；
+- 能写/运行 JUnit 并从日志定位问题；
+- `WorkOrderPriorityCalculator` 的控制流版本通过测试；
+- 能解释方法参数、返回值、scope 和按值传递。
 
 ## 目标
 
-- 根据顺序、重复、查找、队列和排序需求选择集合。
-- 理解泛型带来的编译期类型安全、类型擦除和基本边界。
-- 正确实现并验证 `equals/hashCode` 契约。
-- 理解可变对象作为 HashMap key/HashSet 元素的风险。
-- 使用 Comparator 表达不同排序规则。
-- 为 FactoryCare 建立内存仓储和查询服务。
+- 区分类、对象、引用、实例状态和对象身份；
+- 定义字段、构造器、实例方法并使用 `this`；
+- 使用访问控制和包边界隐藏实现；
+- 通过构造器/行为保护对象不变量；
+- 理解对象引用共享、aliasing 和浅层不可变性；
+- 正确使用 instance/static 成员，避免全局可变 static 状态；
+- 理解 `final` 对变量/字段/引用的实际限制；
+- 使用工厂方法、构造器重载和封装后的集合快照；
+- 建立 FactoryCare 第一版 `Device` 与 `WorkOrder` 类。
 
 ## 完整概念清单
 
-### 集合抽象与选择
+### 类、对象与引用
 
-- `Collection`、`List`、`Set`、`Queue`、`Deque`、`Map` 的职责。
-- `ArrayList`：顺序、随机访问、尾部追加和中间移动成本。
-- `LinkedList` 了解存在即可；不要因“插入快”在缺乏测量时选择。
-- `HashSet`：基于相等性去重，不保证业务排序。
-- `LinkedHashSet/LinkedHashMap`：保留迭代顺序的场景。
-- `TreeSet/TreeMap`：基于排序比较，比较结果与 equals 一致性风险。
-- `HashMap`：key 唯一、value 可重复、`null` 能力不应成为业务设计依据。
-- `ArrayDeque`：栈和队列；业务代码优先 `Deque` 而不是旧 `Stack`。
-- 常见操作的平均复杂度只作为选择参考，不背实现源码。
+- class 声明定义新引用类型；`new` 创建对象并调用构造器；
+- reference variable 可以指向对象或 null；
+- 两个引用可指向同一对象，修改通过任一引用可见；
+- 对象身份、状态和行为；
+- 局部变量、参数、字段的生命周期第一层模型；
+- `null` 解引用与在构造边界快速拒绝；
+- 垃圾回收只负责不可达内存，不替代文件/连接关闭。
 
-### 迭代、修改和边界
+### 字段、方法与 this
 
-- 增强 for、Iterator、下标循环的适用场景。
-- 遍历时结构修改与 fail-fast；fail-fast 不是线程安全保证。
-- 空集合优于返回 `null`。
-- `List.of/Set.of/Map.of` 的不可变工厂。
-- `Collections.unmodifiableX` 是只读视图，不等于底层数据不可变。
-- 防御性复制与 `List.copyOf`。
-- `contains`、去重和查找结果依赖正确相等性。
+- instance field vs local variable；字段有默认值，局部变量必须初始化；
+- instance method 隐式接收当前对象；
+- `this.field` 解决名称遮蔽并表达当前实例；
+- 方法可以读取/改变本对象状态，但不应暴露任意写入口；
+- query 方法与 command 方法的直觉区别；
+- getter/setter 不是自动封装，setter 可能破坏不变量；
+- 返回内部可变数组/集合引用会泄漏状态。
 
-### 泛型
+### 构造器
 
-- 泛型类、泛型接口、泛型方法和类型参数命名。
-- 原始类型会丢失类型安全，禁止在新代码中使用 raw type。
-- 泛型不协变：`List<Dog>` 不是 `List<Animal>`。
-- 上界 `? extends T`、下界 `? super T` 和 PECS 的直觉用法。
-- 无界通配符 `?` 与 `Object` 的区别。
-- 类型擦除的高层含义；不能 `new T()`、不能创建泛型数组等常见限制。
-- 不为了“通用”创建难以理解的多层泛型抽象。
+- 构造器无返回类型，名称与类相同；
+- 默认构造器只在未声明任何构造器时出现；
+- 构造器参数、字段赋值、校验和对象建立；
+- `this(...)` 构造器委托必须先执行；
+- 构造器重载应保持一个主初始化路径；
+- 构造器不要进行远程 I/O、启动线程或发布未完成对象；
+- static factory method 可有名字、缓存或选择实现，但本周只做命名创建入口；
+- 无效状态应尽量在创建时拒绝。
 
-### equals/hashCode
+### 访问控制与 package
 
-- `==` 比较引用身份，`equals` 表达逻辑相等。
-- equals 的自反、对称、传递、一致和非 null 契约。
-- 相等对象必须有相同 hashCode；不同对象允许哈希碰撞。
-- HashMap/HashSet 先使用哈希定位，再使用相等性确认的高层流程。
-- record 默认基于全部组件生成相等性。
-- Entity 的相等性通常基于稳定身份；可变业务字段不应进入 hash key。
-- 重写 equals 必须同步重写 hashCode。
-- 作为 Map key/Set 元素后修改参与相等性的字段会导致“找不到对象”。
+- public/protected/package-private/private；
+- 类级 public/package-private；
+- 最小可见性和公开 API 面积；
+- 测试同 package 可访问 package-private，不代表一切都应 public；
+- private 不是安全边界，权限仍需服务端业务规则；
+- package 按职责组织，避免全部类放同一个包。
 
-### 排序
+### static
 
-- `Comparable` 表达单一自然顺序，`Comparator` 表达外部多种排序。
-- 比较器组合、升降序、null 排序策略。
-- 比较函数必须稳定并满足比较契约。
-- 排序展示规则不应改变对象相等性。
+- static member 属于类，instance member 属于对象；
+- static method 没有当前实例 `this`；
+- 常量、纯工具函数、命名工厂与 static 的合理用途；
+- mutable static field 是进程级共享状态，导致测试污染/并发风险；
+- static initialization 高层概念；
+- `main` 为什么是 static；
+- 不为避免 `new` 把所有业务方法写 static。
 
-### 仓储与查询
+### final 与不可变性
 
-- 仓储接口表达领域需要，而不是暴露底层 Map。
-- `Optional` 只作为查询缺失的预告，本周暂不系统学习。
-- 保存、按 ID 查询、存在性检查、列出快照和删除的边界。
-- 内存仓储也要防止外部修改内部集合。
+- final local/parameter/field 只能赋值一次；
+- final reference 不能改指向，但对象内部仍可变；
+- immutable object 需要状态不可变、无泄漏和构造防御性复制；
+- defensive copy、快照和 read-only view 的差别；
+- 常量使用 `static final` 且名称明确；
+- final class/method 留 Week 04 与继承一起学习。
 
-## 任务分配
+### 封装与职责
 
-| 模块 | 时间 | 任务 |
+- invariant、precondition、postcondition；
+- 告诉对象做事，而不是取出字段在外部任意改；
+- 行为名称表达业务，例如 `assignTo` 而非 `setTechnicianId`；
+- 方法保持原子业务动作，失败后对象不应半更新；
+- 单一职责指变化原因清晰，不是每类一个方法；
+- 领域对象、输入 DTO、显示模型的边界只建立概念，Week 10 深入 DTO。
+
+## 时间与任务
+
+| 任务 | 时间 | 产出 |
 | --- | ---: | --- |
-| 集合选择 | 3h | List/Set/Map/Deque 对照练习和复杂度判断 |
-| 泛型 | 2.5h | 泛型仓储、小型分页容器和通配符练习 |
-| 相等性 | 2.5h | equals/hashCode、HashSet/HashMap 故障实验 |
-| 排序与快照 | 1.5h | 多条件 Comparator、防御性复制 |
-| FactoryCare | 3—4h | 内存设备/工单仓储与查询服务 |
-| 无 AI 训练 | 2h | 去重和查询变体 |
-| 求职动作 | 1h | 集合与泛型高频题口述 |
+| 类/对象/引用 | 2h | 两个对象、共享引用和 null 实验 |
+| 构造器/this | 2—3h | 有效创建、重载和失败测试 |
+| 封装/访问控制 | 3h | 从 public fields 重构为行为 API |
+| static/final | 2h | 测试污染和浅不可变故障 |
+| FactoryCare 增量 | 4—5h | Device/WorkOrder 类和行为 |
+| 无 AI/复盘 | 2—3h | 独立规则、故障恢复和口述 |
 
-## FactoryCare项目增量
+## FactoryCare 增量
 
-实现以下接口与内存实现：
+建立最小类模型：
 
-- `EquipmentRepository`：保存、按 `EquipmentId` 查询、判断编码是否存在、列出设备快照。
-- `WorkOrderRepository`：保存、按 `WorkOrderId` 查询、列出全部工单。
-- `InMemoryEquipmentRepository`、`InMemoryWorkOrderRepository`：内部可使用 Map，但不得直接返回内部可变集合。
-- `PageResult<T>` 或轻量查询结果：验证泛型类的实际价值，不实现完整分页框架。
-- 工单排序：优先级降序、创建顺序稳定排序；真实时间字段留到第 4 周。
+- `Device`：id、name、enabled；创建时拒绝空 id/name；提供 `disable()`；
+- `WorkOrder`：number、deviceId、description、priority、assigneeId；
+- 工单号/设备 ID 本周可先使用 String，Week 04 再提取值对象；
+- `assignTo` 拒绝空技师和重复非法分配；
+- 不提供所有字段 setter；查询返回明确值；
+- 如内部保存 tags/notes，构造和返回时防御性复制；
+- 测试有效创建、非法构造、行为变化、共享引用泄漏和 static 测试污染。
 
-必须验证：重复 ID、重复设备编码、查询不存在、保存后外部集合修改、相同 Value Object 去重，以及实体字段变化不破坏仓储查找。
+## 故障实验
 
-## AI协作边界
+1. 两个变量引用同一对象，证明赋值不是复制对象；
+2. final List 仍能 add，说明 final 不等于深不可变；
+3. mutable static counter 导致测试顺序相关；
+4. 返回内部数组/列表后外部修改，证明封装泄漏；
+5. 构造器校验晚于字段部分赋值，讨论如何保持简单原子创建。
 
-可以让 AI：
+## 无 AI 任务（120 分钟）
 
-- 根据访问模式提出 List、Set、Map 的候选选择。
-- 生成复杂度和边界测试清单。
-- 审查泛型签名是否过度抽象。
-- 构造一个违反 equals/hashCode 契约的反例供你调试。
+实现 `Technician` 与 `DailyAssignment`：技师 ID/姓名非空；每日分配最多 5 个不同工单；重复和第 6 个明确失败；外部不能修改内部列表。提供正常、边界、非法、引用泄漏测试，并在 15 分钟内把上限改为构造参数。
 
-必须由你完成：
+## 验收
 
-- 先说明业务需要的是顺序、唯一、按 key 查找还是队列。
-- 决定 Entity 和 Value Object 的相等语义。
-- 解释仓储为何不能暴露内部可变集合。
-- 独立定位 AI 生成代码中 raw type、错误通配符和可变 key 问题。
+- 能用图解释类、对象、引用和共享修改；
+- 能自己写字段、构造器、`this`、实例方法和访问控制；
+- 能解释 static/instance、final/immutable 的区别；
+- FactoryCare 类在创建/行为入口维护不变量；
+- 测试能发现 public setter/内部集合泄漏；
+- 能独立增加一个行为而不是增加无约束 setter；
+- 60—120 秒口述“构造有效对象并用行为维护状态”。
 
-## 无AI训练
+## 非目标
 
-本周从求职/复盘时段预留45—60分钟完成并记录：双指针题；给出循环不变量、边界测试和复杂度。
-
-关闭 AI，限时120分钟：
-
-1. 实现“按设备 ID 分组的未关闭工单索引”，使用恰当的 Map/List 组合。
-2. 去除重复工单 ID，保持首次出现顺序。
-3. 返回不可被调用方修改的结果快照。
-4. 补齐重复、空集合、不存在和排序相同优先级的测试。
-5. 口述 HashMap 查询的高层步骤及错误 hashCode 的后果。
-
-## 求职动作
-
-- 准备 List、Set、Map、ArrayList/LinkedList、HashMap、泛型擦除、PECS、equals/hashCode 的口述答案。
-- 每个答案必须结合 FactoryCare 代码，不背源码扩容常量。
-- 从目标岗位中记录是否明确要求数据结构与算法；若要求，仅建立后续基础题清单，不偏离本周。
-- 更新项目周报：描述内存仓储的业务边界，不把它包装成数据库经验。
-
-## 交付物
-
-- 设备和工单仓储接口及内存实现。
-- 泛型查询结果或分页结果的小型实现。
-- 集合选择决策表与复杂度速查表。
-- equals/hashCode 正反例及对应测试。
-- 无 AI 训练代码和复盘。
-
-## 验收标准
-
-- 面对访问需求能说明为何选 List、Set、Map 或 Deque。
-- 能解释泛型不协变、PECS 和类型擦除的高层影响。
-- 能陈述 equals/hashCode 契约并用失败测试演示破坏后果。
-- 内存仓储不暴露内部可变 Map/List；重复 ID 行为明确。
-- 能使用 Comparator 实现稳定多条件排序。
-- 所有测试通过，无 raw type 和无业务理由的强制类型转换。
-- 无 AI 完成分组、去重、快照和边界测试。
-
-## 明确不做
-
-- 不学习 HashMap 红黑树、扩容源码和集合微优化。
-- 不使用 Stream/parallelStream 代替本周核心循环；第 5 周系统学习。
-- 不实现数据库、缓存、线程安全仓储或 Spring Bean。
-- 不创建“万能 BaseRepository<T, ID>”和多层抽象。
-- 不刷大量竞赛算法题。
+- 不学习继承、接口、抽象类、多态、record、enum（Week 04）；
+- 不深入 equals/hashCode（Week 05）；
+- 不使用 Lombok、Spring 或 ORM；
+- 不追求 DDD 术语和复杂聚合设计。
 
 ## 官方资料
 
-- [Java Collections Framework](https://docs.oracle.com/en/java/javase/25/core/java-collections-framework.html)
-- [Java SE 25：java.util](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/package-summary.html)
-- [Java Tutorials：Generics](https://docs.oracle.com/javase/tutorial/java/generics/)
-- [Object.equals/hashCode API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)
-- [Comparator API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html)
-- [JUnit User Guide](https://docs.junit.org/current/user-guide/)
+- Java classes/objects/constructors/access control/static/final 官方语言资料；
+- JUnit User Guide；以项目 JDK 25 稳定语法为准。

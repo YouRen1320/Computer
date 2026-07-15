@@ -1,348 +1,230 @@
 # Week 06 独立答案册
 
-> 只有在 Week 06 考核 A 和阶段门 G1 都提交后才阅读。本文件是判断锚点，不是可复制的完整项目。
+> 仅在完成[无 AI 考核](./assessment.md)并保存提交后阅读。答案提供判断锚点，不是唯一代码结构。
 
-## 1. 概念自测参考
+## 1. 自测题参考答案
 
-### 1.1 count++ 为什么不原子
+### 1.1 为什么不能无差别包装所有失败
 
-它包含读取、计算和写回。两个线程可能读取同一旧值并覆盖彼此更新。volatile 只能改善可见性/顺序，不能把三步合为原子操作。
+业务重复、JSON 损坏和磁盘不可读需要不同处置：业务问题可返回逐条报告；JSON 语法损坏意味着整份契约不可读；磁盘问题需要保留底层原因供排障。若都变成一个无 cause 的 ImportFailedException，调用方无法决定修数据、重试还是告警。
 
-### 1.2 ConcurrentHashMap 的复合竞态
+### 1.2 checked 转 unchecked 的边界
 
-单个 containsKey 和 put 各自线程安全，不代表二者组合原子。两个线程可能都看到不存在再各自创建。使用 putIfAbsent/computeIfAbsent，或在业务不变量更复杂时用适当同步。
+通常在一个明确的基础设施适配器边界，把底层 IOException 转成应用可理解的 CatalogReadException，并保留 cause。不是为了少写 throws 随手转换；要确保异常语义稳定，且上层有统一处理策略。
 
-### 1.3 中断恢复
+### 1.3 主异常和关闭异常
 
-InterruptedException 会清除中断状态。若当前层不能完整消费取消语义，应 Thread.currentThread().interrupt() 恢复，再向上转换/退出，让更外层知道任务被取消。
+try 块和 close 同时失败时，try 块异常通常是主异常，close 异常在 getSuppressed 中。排查要看完整 stack trace、cause 和 suppressed。
 
-### 1.4 无界队列与 maximum
+### 1.4 normalize 的边界
 
-ThreadPoolExecutor 在核心线程满后优先入队。无界队列几乎永不满，因此通常不会扩到 maximum；任务可能无限积压并耗尽内存。
+normalize 只消除语法上的点段，不能解析符号链接，也不能防止检查后文件系统状态变化。真实路径约束需结合可信根目录、toRealPath 策略、权限与最终操作方式。
 
-### 1.5 submit 异常
+### 1.5 同目录临时文件
 
-异常保存在 Future 中，并在 get 时用 ExecutionException 暴露。若提交后丢弃 Future，业务层可能没有处理失败。线程工厂 uncaught handler 也不能替代 Future 观察。
+同目录更可能处于同一文件系统，原子 move 才可能成立；跨文件系统通常退化成复制与删除，不能提供相同原子语义。
 
-### 1.6 thenApply 与 thenCompose
+### 1.6 唯一时刻
 
-thenApply 对结果做普通 T→R 映射；若函数返回 Future，会形成嵌套。thenCompose 把 T→CompletionStage<R> 铺平成单一阶段。
+Instant 可以独立表示时间线时刻。LocalDateTime 没有 offset 或 ZoneId，不能唯一映射到时间线。
 
-### 1.7 超时不等于终止
+### 1.7 Clock.fixed 的价值
 
-orTimeout 改变 CompletableFuture 的完成状态，底层工作可能仍运行。要依赖客户端 I/O 超时、协作中断和资源生命周期，并用测试观察退出。
+它消除测试对真实当前时间的依赖，使边界规则、超时计算和 createdAt 断言可重复。它不解决时区语义错误，时区仍需明确。
 
-### 1.8 虚拟线程不池化
+### 1.8 JSON 后续验证
 
-虚拟线程本身廉价，通常按任务创建。若要限制下游容量，应限制连接、许可或请求，而不是用固定虚拟线程池把“资源限流”伪装为“线程限流”。
+映射结构之后仍需字段约束、领域不变量以及与现有状态相关的校验，例如重复设备编码。
 
-### 1.9 CPU 密集
+### 1.9 DTO 与领域对象合并风险
 
-CPU 核数未增加。无限 CPU 任务只会争抢承载线程和缓存，增加调度与延迟。应有界并行并测量。
+外部契约变化会迫使领域模型增加 nullable 字段、无参构造或 setter；内部字段也可能被意外序列化。分离后，两边可独立演进并通过显式映射审查。
 
-### 1.10 堆与栈现象
+### 1.10 导出成功的证明
 
-堆 OOM 常与对象保留/分配有关；StackOverflowError 常见于单线程调用栈过深。进程内存高还可能来自直接/本地内存，不能只看堆。
+DTO 构建成功、JSON 序列化成功、临时文件完整写入并关闭、目标替换成功，且失败路径没有破坏旧文件。仅调用 writeString 没抛异常不足以涵盖整体契约。
 
-### 1.11 nanoTime
+## 2. 综合任务参考设计
 
-一次测量受类加载、JIT、GC、OS 调度和热状态影响。至少多轮、预热、等工作量；严谨微基准使用 JMH。本周只做趋势实验。
+### 2.1 异常与结果
 
-### 1.12 不用结构化并发
+一种合理划分：
 
-JDK 25 中仍是 preview。项目策略是不启用 preview 作为主路径；学习任务生命周期理念，但用稳定 Executor/Future API。
-
-## 2. 考核 A 参考结构
-
-### 2.1 结果不使用 null
-
-一种表达：
-
-    record SourceResult<T>(
-        Optional<T> value,
-        Optional<SourceFailure> failure
-    ) {
-        static <T> SourceResult<T> success(T value) { ... }
-        static <T> SourceResult<T> degraded(SourceFailure failure) { ... }
+    final class CatalogReadException extends RuntimeException {
+        CatalogReadException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
-也可以为每个源建 sealed result。重点是“无数据”和“源失败”可区分。
+    record ImportIssue(
+        int rowNumber,
+        String field,
+        String code,
+        String message
+    ) {}
 
-### 2.2 平台池
+    record ImportReport(
+        int importedCount,
+        List<ImportIssue> issues
+    ) {
+        boolean succeeded() {
+            return issues.isEmpty();
+        }
+    }
 
-参考参数只用于考试：
+损坏 JSON 可以是 CatalogFormatException，文件失败是 CatalogReadException；业务字段错误进入 ImportReport。具体 checked/unchecked 可不同，但不能丢语义。
 
-    ThreadPoolExecutor executor = new ThreadPoolExecutor(
-        3,
-        6,
-        30,
-        SECONDS,
-        new ArrayBlockingQueue<>(12),
-        namedFactory,
-        new ThreadPoolExecutor.AbortPolicy()
+### 2.2 编排顺序
+
+参考伪代码：
+
+    document = reader.read(path)                   // 文件失败
+    rows = decoder.decode(document)                // JSON 语法/结构失败
+    issues = validator.validateAll(rows)           // 字段、批内重复
+    issues += repositoryDuplicateChecks(rows)      // 现有状态
+    if issues not empty:
+        return report with zero imported
+    equipment = map every row through domain factory
+    repository.saveAll(equipment)
+    return success count
+
+关键是不在所有校验完成前逐条保存。
+
+### 2.3 重复检测
+
+可用 Map 保存 code 第一次出现的行号。再次出现时，至少为后出现记录生成问题；更友好的报告会同时指出首次行号。Set 只能告诉你重复存在，不能直接保留定位信息。
+
+### 2.4 Clock
+
+    Clock fixedClock = Clock.fixed(
+        Instant.parse("2026-07-11T08:00:00Z"),
+        ZoneOffset.UTC
     );
 
-真实参数需根据请求率、任务时间、下游承载和内存测量，不把这里抄进生产。
+    WorkOrder order = factoryWith(fixedClock).create(...);
+    assertEquals(
+        Instant.parse("2026-07-11T08:00:00Z"),
+        order.createdAt()
+    );
 
-### 2.3 先启动再聚合
+转换为 Asia/Shanghai 后显示为当地时间，但 toInstant 仍等于原 Instant。
 
-    maintenanceFuture = supplyAsync(loadMaintenance, executor)
-    partsFuture = supplyAsync(loadParts, executor)
-    statsFuture = supplyAsync(loadStats, executor)
+### 2.5 安全导出
 
-    // 到聚合边界再组合/等待，不在每行立即 join。
+参考流程：
 
-使用具名变量或具名 record，避免按完成顺序 List.get(0/1/2) 错配。
-
-### 2.4 失败策略
-
-- maintenance 的异常不恢复成空值，转为整体 EnrichmentFailed；
-- parts exceptionally/handle 转为 SourceResult.degraded；
-- stats 同理；
-- whenComplete 可记录 source、设备、耗时，但不泄漏敏感数据；
-- CompletionException 解包时保留根 cause。
-
-### 2.5 虚拟线程与 Semaphore
-
-    final class LimitedPartsSource {
-        private final Semaphore permits = new Semaphore(2);
-
-        PartsAvailability load(EquipmentId id) {
-            boolean acquired = false;
-            try {
-                permits.acquire();
-                acquired = true;
-                return delegate.load(id);
-            } catch (InterruptedException cause) {
-                Thread.currentThread().interrupt();
-                throw new SourceInterrupted("parts interrupted", cause);
-            } finally {
-                if (acquired) {
-                    permits.release();
-                }
-            }
+    Path temp = Files.createTempFile(target.getParent(), ".snapshot-", ".tmp");
+    boolean moved = false;
+    try {
+        Files.writeString(temp, json, UTF_8);
+        // ATOMIC_MOVE 会忽略其他 move 选项；不要在这里同时传
+        // REPLACE_EXISTING 并把它误当成可移植的原子覆盖保证。
+        // 对已存在 target 的行为必须由受支持 provider 的集成测试确认。
+        Files.move(temp, target, ATOMIC_MOVE);
+        moved = true;
+    } catch (AtomicMoveNotSupportedException cause) {
+        throw new SnapshotWriteException("目标不支持原子替换", cause);
+    } catch (IOException cause) {
+        throw new SnapshotWriteException("快照写入失败", cause);
+    } finally {
+        if (!moved) {
+            tryDeleteTempWithoutMaskingOriginalFailure(temp);
         }
     }
 
-若 delegate.load 也声明 InterruptedException，放在同一 try 并继续恢复中断。最关键是未成功 acquire 时不能 release。
+只有 `move` 成功才可报告成功；如果目标已存在而 provider 拒绝覆盖，旧目标保持不变并安全失败。真实实现还要处理 target 无 parent、临时文件权限、清理失败和符号链接策略。还必须为受支持平台增加“旧目标已存在”的集成测试；Java 标准本身不承诺 `ATOMIC_MOVE` 在该情况下必然替换。本周答案只覆盖学习范围。
 
-### 2.6 生命周期
+## 3. 缺陷定位表
 
-局部实验可：
+| 缺陷 | 用户现象 | 最小证据 | 修复 |
+| --- | --- | --- | --- |
+| catch 后返回空成功 | 显示导入 0 条但无错误 | 让 reader 抛 IOException | 转换并保留 cause |
+| 默认编码 | 中文跨环境损坏 | UTF-8 fixture | 显式 UTF-8 |
+| 直接映射实体 | 非法字段进入对象 | 构造空 code JSON | DTO 后领域工厂 |
+| 重复覆盖 | 导入数与唯一记录不符 | 两条同 code | 先整批检测 |
+| 真实 Clock | 时间测试偶发失败 | 重复执行/时区变化 | 注入固定 Clock |
+| 直接覆盖 | 失败后目标半截 | move 前故障注入 | 临时写后替换 |
+| cause 丢失 | 只能看到包装位置 | 比较 stack trace | 传入 cause |
 
-    try (ExecutorService executor = ...) {
-        ...
+## 4. 链表参考答案
+
+### 4.1 迭代反转
+
+    Node previous = null;
+    Node current = head;
+
+    while (current != null) {
+        Node next = current.next;
+        current.next = previous;
+        previous = current;
+        current = next;
     }
 
-应用级池则由拥有它的组件在生命周期结束时 shutdown/await。不要让服务方法每次请求创建共享平台池；虚拟线程 per-task executor 的作用域也需清楚。
+    return previous;
 
-## 3. lowerBound 参考
+循环不变量：previous 指向已经反转好的前缀，current 指向尚未处理的后缀头；两部分加起来仍包含原链表全部节点且不重复。先保存 next，否则修改 current.next 后会丢失未处理后缀。
 
-    int lowerBound(int[] values, int target) {
-        int left = 0;
-        int right = values.length;
+复杂度：每个节点访问常数次，时间 O(n)；仅使用三个引用，额外空间 O(1)。
 
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (values[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
+### 4.2 边界
 
-        return left;
-    }
+- head 为 null，循环不进入，返回 null；
+- 单节点保存 next 为 null，next 指向 null，返回原节点；
+- 两节点用于人工画图最清晰；
+- 本题假设输入无环；有环时循环不会终止，因此契约必须明确。
 
-不变量：
+## 5. 评分锚点
 
-- [0,left) 的值都小于 target；
-- [right,n) 的值都大于等于 target；
-- 候选区间是 [left,right)。
+### 90—100
 
-每轮候选区间严格缩小。使用 left + (right-left)/2 避免 left+right 潜在溢出。
+实现边界清晰，失败语义、cause、整批校验、Clock、原子替换都有可重复测试；能指出路径与原子性的限制；口述不是背 API。
 
-## 4. G1 参考模块边界
+### 75—89
 
-一种可接受结构：
+主流程正确，关键失败有测试；某些兼容或清理细节不完善，但没有硬性失败项，能诚实说明限制。
 
-    domain/
-      Equipment
-      WorkOrder
-      WorkOrderStatus
-      Priority
-      value objects
-      domain exceptions
-    application/
-      EquipmentService
-      WorkOrderService
-      WorkOrderQueryService
-    repository/
-      EquipmentRepository
-      WorkOrderRepository
-      in-memory implementations
+### 60—74
 
-不要求照搬分层名。判分关注：
+成功路径能跑，但异常被过度合并、测试依赖环境或导出失败保护不足。不得进入下一周，先补关键缺口。
 
-- WorkOrder 自己拒绝非法状态；
-- Service 编排仓储和跨对象规则；
-- 仓储返回快照/只读集合；
-- DTO/summary 不泄漏可变实体集合；
-- 测试按行为，而非私有方法。
+### 60 以下
 
-### 4.1 唯一编号
+JSON 直接塑造领域实体、捕获后假成功、真实时间测试、文件部分覆盖等基础边界仍未建立，需要重新完成实验。
 
-应用服务先检查能给友好错误，但内存仓储仍应在 save 时维护唯一索引并拒绝重复。Week 12 后真正唯一性要有数据库约束；本周不能声称并发安全。
+## 6. 答案看完后的变体
 
-### 4.2 状态转换
+关闭答案，完成一个位置目录 LocationCatalogImporter：
 
-    void triage() {
-        requireStatus(CREATED);
-        status = TRIAGED;
-    }
-
-    void assign(TechnicianId technicianId) {
-        requireStatus(TRIAGED);
-        this.technicianId = requireNonNull(technicianId);
-        status = ASSIGNED;
-    }
-
-比 `setStatus(WorkOrderStatus any)` 更能保护不变量。
-
-### 4.3 查询
-
-空结果返回空列表。过滤可使用循环或清晰 Stream；按 Priority rank、createdAt、id 稳定排序。条件对象可表达可选条件，但不把 Optional 当核心实体字段。
-
-### 4.4 按技师统计
-
-明确定义“未关闭”。G1 最小词表均未关闭，但代码仍应使用状态语义方法，例如 status.isClosed()，为后续词表扩展留出单一规则位置。
-
-## 5. 现场变更参考
-
-### 受监管设备最低 `HIGH`
-
-不要新增已经存在的枚举值。现场变更应把新业务规则放入明确的优先级策略，并同步检查：
-
-- 非受监管设备保持原结果；
-- 原本 `LOW/MEDIUM` 的受监管设备提升到 `HIGH`；
-- 原本 `HIGH/CRITICAL` 不降级；
-- 参数化测试覆盖监管标志与原规则交叠；
-- 查询排序仍使用显式业务 rank；
-- 若策略输入或摘要增加监管标志，映射与测试同步更新。
-
-### 时间半开区间
-
-    !createdAt.isBefore(from)
-        && createdAt.isBefore(before)
-
-from 包含，before 不包含；验证相等边界。
-
-### 技师未关闭工单上限
-
-把上限放在应用服务的分配用例中：先按 `TechnicianId` 查询当前工单，只统计 `!status.isClosed()`，已有 2 张时允许分配，已有 3 张时拒绝。测试还要覆盖 `CLOSED/CANCELLED` 不占用名额、查询属于另一技师的工单不计入，以及拒绝后目标工单仍为 `TRIAGED`、没有保存半成品 assignment。
-
-本周内存仓储只能证明单进程顺序调用的规则，不能声称并发下永不超额；数据库阶段需要重新设计事务与锁/约束策略。现场变更若抽到此题，必须明确这个证据边界。
-
-### 统计按优先级再分组
-
-把原“技师 → 未关闭数量”改为“技师 → 优先级 → 未关闭数量”。先复用同一个 `!status.isClosed()` 过滤规则，再按 `TechnicianId` 和 `Priority` 两级聚合；不要复制一份新的“未关闭”定义。返回只读快照，并用显式 `Priority.rank()` 固定优先级展示顺序，不依赖 enum 声明顺序或 `HashMap` 迭代顺序。
-
-测试至少覆盖：同一技师两个优先级、两名技师相同优先级、`CLOSED/CANCELLED`排除、空结果、稳定顺序，以及修改返回Map不能污染仓储/服务内部状态。循环或清晰的分组实现都可；满分关键是语义唯一、复杂度能解释（一次扫描平均 `O(n)`）并同步修改调用方断言。
-
-### 摘要增加设备编码
-
-修改输出 record 和 mapper，不给 WorkOrder 暴露任意可变 Equipment 引用，也不让调用方自行去仓储拼装 N+1 概念（数据库阶段再深入）。
-
-## 6. 三个常见 AI 质量问题
-
-阶段门要求至少指出三个，候选包括：
-
-- 生成公开 setStatus 绕过状态机；
-- HashMap 唯一检查与保存分离，错误声称并发安全；
-- 返回内部 List，外部可修改仓储；
-- Optional.get；
-- Stream peek 修改实体；
-- equals/hashCode 使用可变状态；
-- catch Exception 返回 false；
-- 时间使用 Instant.now() 导致测试不稳定；
-- 无界线程池或 common pool；
-- 虚拟线程无限打下游；
-- 测试只覆盖成功路径。
-
-必须从实际提交里找证据，不能机械列清单。
-
-## 7. 线程转储阅读锚点
-
-先按线程名找到任务，再看：
-
-- RUNNABLE、WAITING、TIMED_WAITING、BLOCKED；
-- 最上方业务栈帧；
-- waiting to lock / locked 信息；
-- 是否存在 JVM 报告的 deadlock；
-- 多个线程是否卡在同一外部调用；
-- 是否只是采样瞬间。
-
-一次 dump 是快照。复杂问题应多次采集或使用 JFR/trace 关联。
-
-## 8. 评分判断
-
-### 通过且可进入 Spring
-
-- 能独立写、测、改内存工单；
-- 并发实验没有资源泄漏；
-- 知道虚拟线程的适用与边界；
-- 能用证据定位至少一个故障；
-- 不把概念实验包装成生产高并发经验。
-
-### 暂缓
-
-- 无法解释状态/集合/异常；
-- 测试只有成功路径；
-- Future 超时后后台永远运行；
-- 吞中断；
-- 用 parallelStream/common pool 逃避设计；
-- 二分区间频繁混用；
-- 口述严重依赖答案措辞。
-
-## 9. 考后变体
-
-1. 把 Semaphore 许可改为 1，取消一个等待许可的任务，证明许可数不增加；
-2. 把 parts 改为必须成功，maintenance 改为可降级，检查策略没有写死在基础设施类；
-3. 实现 upperBound：第一个大于 target；
-4. 用 lowerBound 和 upperBound 返回重复 target 的区间；
-5. G1 新建“检查任务”最小服务，使用不同状态和唯一键。
+- locationCode 唯一；
+- parentCode 可选但若提供必须存在；
+- JSON 损坏整批失败；
+- 业务错误按记录收集；
+- 使用相同文件边界，但不得复制 Equipment 的领域验证逻辑；
+- 将链表题改为快慢引用判环。
 
 ## 面试校准
 
-> 先提交[面试题](./interview.md)的独立回答再阅读。以下提供机制、选择和诚实边界，不是可直接背诵的稿件。
+> 先提交[面试题](./interview.md)的独立回答再阅读。本节用于核对机制、边界和证据，不是可直接背诵的面试稿。
 
-1. **并发/并行**：并发是多个任务在时间上交错推进，并行是同一时刻实际执行。单核可以并发但 CPU 任务不能真正并行。async 表达结果/调度，不自动等于并行；增加并发可能提高吞吐，也可能因排队与争用增加延迟。
-2. **线程/任务**：任务描述工作，线程是执行载体。线程池让一个线程依次执行多个任务；CompletableFuture 的不同阶段也可能由不同线程执行，它本身不是线程。
-3. **count++**：包含读、计算、写回，多个线程可能丢更新。单值计数可用 AtomicInteger，复合字段不变量需锁或不可变状态整体替换。LongAdder 适合高争用统计，但 `sum()` 不是业务余额的原子瞬时快照。
-4. **原子/可见/顺序**：原子性关心操作是否不可分；可见性关心一个线程何时看见另一个线程写入；顺序性关心重排与 happens-before。单个并发容器操作安全不自动保护跨操作业务不变量。
-5. **synchronized/volatile**：synchronized 在同一监视器上提供互斥及进入/退出可见性；volatile 提供该变量的可见与顺序语义，不让复合操作原子。锁对象必须稳定。JDK 24 起虚拟线程已改进 synchronized 相关 pinning，JDK 25 不能再背“一定 pin”，仍需诊断锁竞争及 native/foreign 阻塞。
-6. **ConcurrentHashMap**：contains+put 是两个原子操作组成的竞态；按 key 的简单创建可用 putIfAbsent/computeIfAbsent，复杂跨 Map 不变量仍需更高层同步。映射函数应短小，慢 I/O 会阻塞相关更新并放大争用。
-7. **中断**：协作式取消信号，不是强杀。许多阻塞方法抛 InterruptedException 并清除标志；当前层不消费取消语义时应恢复标志并退出/传播。cancel(true) 只是请求，CPU 循环还需主动检查状态。
-8. **sleep/wait/join**：sleep 暂停当前线程且不释放已有监视器；Object.wait 必须在对应监视器内并释放它等待通知；join 等线程结束。测试用 latch/barrier 表达阶段，不靠 sleep 猜时序。
-9. **死锁/活锁/饥饿**：死锁是循环等待，活锁是持续响应却无进展，饥饿是长期拿不到资源。固定锁顺序、缩小范围、超时与业务回退可降低风险；线程转储可展示等待与持有关系。
-10. **线程池参数**：提交时通常先补 core，core 满后入队，队列满再扩到 maximum，最后拒绝；无界队列使 maximum 常失效并可能无限积压。参数由到达率、任务耗时、CPU/阻塞比例、下游容量和内存测量决定。
-11. **拒绝策略**：Abort 明确失败；CallerRuns 让提交线程执行并形成反馈，但会拖慢 Web 请求线程；Discard/DiscardOldest 可能静默丢核心业务。重试必须有上限、退避和幂等，不能把拒绝变成重试风暴。
-12. **execute/submit**：execute 无 Future，未捕获异常进入线程异常处理；submit 返回 Future，异常在 get 时以 ExecutionException 暴露。丢弃 Future 会让失败缺少业务观察；get 应有期限，cancel 仍是协作请求。
-13. **关闭**：所有者停止接收任务，shutdown，有限 await，超时后 shutdownNow 请求中断，再次等待并记录未结束任务；自身被中断时恢复状态。每请求创建共享平台池会反复分配且难管理；测试不退出先查非 daemon 池和卡住任务。
-14. **CF 组合**：thenApply 普通映射，thenCompose 铺平异步依赖，thenCombine 合并独立结果，allOf 只给完成信号，值需从具名 stage 读取。Async 后缀未指定 Executor 时通常进入 common pool；每创建一个就 join 会重新串行化。
-15. **异常阶段**：exceptionally 仅失败时恢复为值；handle 在成功/失败都转换；whenComplete 主要观察和记录。返回 null 会制造“成功 null”；CompletionException 要保留根 cause 和 source 上下文。
-16. **超时/取消**：orTimeout 让同一 CompletableFuture 异常完成，completeOnTimeout 提供后备值，都不保证底层 I/O 停止。底层还需客户端超时、协作中断和资源关闭，并测试 Executor 能在期限内终止。
-17. **虚拟线程**：JDK 21 起稳定，由 JVM 调度，适合大量阻塞等待并保留同步代码，不制造更多 CPU。按任务创建，不建固定虚拟线程池；可用 `Thread.currentThread().isVirtual()` 检查。
-18. **仍需限流**：线程廉价不代表连接、API 配额、文件描述符或内存无限。大量虚拟线程等待少量连接仍会排队并占资源；用连接池/Semaphore/服务限额，只有 acquire 成功才在 finally release，中断时恢复并退出。
-19. **CPU 密集**：核心数没增加，无限虚拟线程只增加竞争。CPU 任务使用有界并行并测量；混合流程把阻塞等待和计算阶段分开设置资源边界，不能按线程类型直接下结论。
-20. **JDK 25 边界**：Structured Concurrency 是第五次 preview，本项目不开 preview，不使用 StructuredTaskScope；Scoped Values 在 JDK 25 已正式定稿，但基础阶段没有必须使用它的上下文传播需求。简历只能写了解结构化并发概念，不能写成项目已采用。
-21. **堆/栈**：堆主要承载对象实例，线程栈承载栈帧和执行状态；这是高层模型，JIT 可做逃逸分析。深递归常触发 StackOverflowError；堆 OOM 看对象保留/分配，进程内存还可能来自 Metaspace、direct/native 和线程栈。
-22. **Metaspace**：主要保存类元数据，位于本地内存而不是 Java heap。大量动态类与类加载器泄漏可耗尽；可用 jcmd/JFR/类直方图等结合实际版本观察。
-23. **GC/JIT**：GC 回收不可达对象，但何时执行不由“刚不可达”直接决定，`System.gc()` 也不是立即回收保证；JIT 编译优化热点代码，因此冷启动一次计时包含类加载和编译影响，需要预热与多轮。
-24. **线程转储**：能看到线程状态、栈、锁、死锁和采样时的阻塞位置。WAITING 可能是正常等待，单次 dump 不能证明长期根因；用线程名、taskId、多次采样和 JFR/日志关联源码。大量虚拟线程按当前 JDK 提供的 dump/JFR 命令诊断。
-25. **JFR**：低开销记录 CPU、分配、锁、I/O 等事件，比单次 dump 更有时间维度；仍需映射到业务代码。记录可能含路径、类名和业务数据，不能直接公开。满分回答要引用本周真实事件，否则说未验证。
-26. **并发测试**：用 latch/barrier 控制时序、Future timeout 防挂起、串行 oracle 做契约对照。屏障可让两个线程都读旧值后再写，稳定复现 lost update。测试通过只覆盖已构造交错，不是线程安全形式证明。
-27. **模型选择**：先看依赖图、CPU/阻塞、失败组合、运行环境和下游限额。平台池适合显式有限线程/队列，CompletableFuture 适合组合阶段，虚拟线程适合大量阻塞同步任务；可组合但不能为了简历混用。共同取消若不用 preview，需用稳定 Future/Executor 手工管理并诚实说明局限。
-28. **二分边界**：常见错是闭/半开区间混用、区间不缩小、mid 溢出、有序前提或重复语义不清。lowerBound 的 `[0,left)` 都小于 target、`[right,n)` 都大于等于 target；不存在时返回插入位置，upperBound 把判断改为寻找第一个大于 target。
-29. **诚实项目表达**：只有串行、有界平台池+CF、每任务虚拟线程三版、统一契约测试和 Semaphore 上限记录真实存在后，才能用过去时介绍。说明必须成功/可降级/超时/中断/错配/关闭证据，并明确这是可控模拟，不是生产 QPS。学习对照可保留，业务主路径只选一版并写决策。
-30. **反向审查清单**：优先检查无界队列、关键任务 common pool、吞中断、无期限 get/join、null 降级、按完成顺序错配、虚拟线程无限压下游、Executor/permit 泄漏、sleep 猜测测试、preview API、一次计时冒充性能结论。每项都要连接可执行失败测试、线程转储、JFR 或生命周期日志，不能只列名词。
+1. **checked/unchecked**：checked 是编译期处理约束，unchecked 仍会传播。选择要看调用方能否有意义恢复、抽象边界和团队约定。文件适配器可以把 IOException 转为有语义的基础设施异常，但必须保留 cause；领域前置条件失败常用 unchecked，但不是绝对规则。
+2. **捕获范围**：局部业务代码不能用 `catch Exception` 吞掉所有失败。进程或请求最外层可以统一记录、转换或终止，但仍要保留错误事实；返回空列表会把“没有数据”和“读取失败”混成同一结果。
+3. **finally**：正常返回和异常传播时通常执行，强制终止或 JVM 崩溃不保证；finally 中 return 会覆盖原返回或异常。多个资源由 try-with-resources 反序关闭。
+4. **try-with-resources**：资源实现 AutoCloseable，在作用域结束时关闭；业务异常为主异常时，关闭异常通常进入 suppressed。排错同时看 stack trace、cause 和 suppressed，不背编译器展开代码。
+5. **字节/字符**：二进制使用字节；文本通过明确字符集解释字节。JSON 契约使用 UTF-8。整体读取只适合有大小上限的小文件，大文件需要受控流式处理。
+6. **路径约束**：从可信根目录出发，只接受相对路径，resolve 后 normalize 并检查仍 startsWith 根目录。normalize 不访问文件系统，不能解决符号链接和 TOCTOU；真实路径策略要结合目标是否存在与最终权限。
+7. **原子写入**：目标是让读者只看到旧完整文件或新完整文件。同文件系统写临时文件、关闭后请求 `ATOMIC_MOVE`。不是所有 provider 都支持；指定 `ATOMIC_MOVE` 时其他 move 选项被忽略，已存在目标是替换还是失败由 provider 决定，必须限定支持平台并做旧目标集成测试。move 成功也不等于已经获得 fsync 级 crash durability。
+8. **Instant/LocalDateTime**：Instant 是时间线唯一时刻；LocalDateTime 是没有时区的墙钟时间，结合 ZoneId/offset 后才能落到时间线。审计和 createdAt 用 Instant，预约需保存业务地区规则。
+9. **ZoneId/ZoneOffset**：offset 是固定偏移，ZoneId 带地区历史/未来规则。改变展示 ZoneId 不改变 Instant；夏令时重叠和缺口必须有显式策略。
+10. **Duration/Period**：Duration 是秒/纳秒时间线长度，Period 是年/月/日历运算。SLA 连续计时通常用 Duration，按日历定义的保修期用 Period；“一个月”不是固定 30 天。
+11. **Clock**：把“现在”变成显式依赖，生产组合根使用系统 Clock，测试使用 fixed/offset Clock。固定时钟只解决时间可重复，不会自动修正时区规则。
+12. **JSON 四层**：语法合法、结构可映射之后，仍有字段约束、枚举 code、领域不变量和仓储重复。未知、缺失与显式 null 是不同契约选择。
+13. **DTO/领域分离**：外部契约与内部不变量可以独立演进，避免框架要求给领域实体增加 setter/nullable 字段，并控制敏感输出。简单不可变领域值可用 record，但外部 DTO 不应自动等同内部模型。
+14. **enum code**：ordinal 与声明顺序耦合，不能成为外部契约。`name()` 只有在明确承诺稳定时才可用；更清楚的方式是稳定 code、显式 `fromCode` 与未知值策略。
+15. **批量失败策略**：JSON 整体损坏通常 fail-fast；独立业务行问题可收集以便一次修复。部分写入是否允许必须先定，本周采用全批校验通过后才保存；大文件还要限制错误数量和内存。
+16. **排障顺序**：按任务标识找到安全日志，依次区分文件读取、解码、JSON 结构、业务校验，检查异常/cause/suppressed 与首个业务栈帧，用最小脱敏文件复现，修复后补失败回归并核对部分写入。
+17. **快照 DTO**：固定字段、排序、时间与枚举表达，避免内部字段意外泄漏，也让导出契约与领域重构解耦。它不是数据库持久化或备份。
+18. **链表反转**：修改 `current.next` 前必须保存 next。不变量是 previous 指向已反转前缀、current 指向未处理后缀；迭代时间 O(n)、额外空间 O(1)，输入有环时需另定契约。
+19. **TS/Vue 类比边界**：TS interface 没有运行时校验；Promise rejection 与同步异常链不同；JS Date 混合时间语义；浏览器文件 API 隐藏服务端路径、权限和原子性。满分回答必须连接你真实犯过或通过测试预防的一个错误。
+20. **诚实项目表达**：只有在导入导出代码、失败测试和提交记录真实存在后，才可说明自己完成了 UTF-8、路径约束、DTO/领域分离、重复检测和受支持 provider 下的原子移动实验。同时必须明确这是个人项目，不是生产大规模 ETL，也不把符号链接、事务、大文件或 crash durability 说成已解决。
+
+第 20 题可按自己的真实证据组织，不能逐字复制。若对应测试不存在，应明确说“设计过但未验证”或暂不使用该案例。

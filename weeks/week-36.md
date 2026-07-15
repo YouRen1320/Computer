@@ -1,168 +1,146 @@
-# 第36周：发布候选、最终考核、集中投递与下一阶段
+# 第 36 周：Python 语法、类型、控制流、集合、函数与模块
 
-## 本周定位
+## 定位
 
-最后一周不是继续完善到“永远不发布”，而是冻结范围、完成最终验证、集中求职，并基于事实决定下一阶段。达到标准不等于拥有多年生产经验；它表示你具备相邻岗位可面试、受控任务可交付和使用AI后能承担结果的基础。
+本周把 Python 从“跟 AI/PyTorch 示例写过”还原成可解释的通用语言基础。先掌握运行、对象/名称、容器、控制流、函数和模块，再在 Week 37 学类、异常、文件和工程化，Week 38 才进入 async/FastAPI。
 
-## 前置条件
+时间预算：15—18 小时。使用 `uv` 建立隔离项目，但不引入 Web/AI 框架。
 
-- Week 35材料和模拟面试完成；
-- 项目不存在已知严重越权、数据损坏或密钥泄漏；
-- 有完整测试/评估/故障和已知限制；
-- 已安排最终无AI考核时间。
+## 前置
 
-## 本周目标
+- G5 多端阶段通过或按明确回退节点进入 Python；
+- `python --version`/`uv --version` 可用，能创建项目和运行测试；
+- 已有 Java/JS/TS/Dart 经验，可比较但不套用语义；
+- 不把 notebook 单元执行成功当可维护 Python 工程。
 
-- 冻结R6 release candidate，完成安全/质量/部署清单；
-- 运行全部测试、AI评估和恢复演练；
-- 完成G8无AI端到端需求、故障定位和项目答辩；
-- 发布可访问演示或可重复本地演示包；
-- 集中投递并基于反馈定向补强；
-- 形成36周事实复盘和入职后学习路线；
-- 明确哪些能力已验证、哪些仍只是概念。
+## 目标
 
-## 必须理解的概念
+- 理解 Python 源码、解释器、模块、包和虚拟环境的基础关系；
+- 使用名称绑定、内置类型、运算、字符串和显式转换；
+- 理解可变/不可变、相等/身份、truthiness、`None`；
+- 使用 list/tuple/dict/set 和切片/推导式；
+- 使用 if/match/for/while 与 iterator 基础；
+- 设计函数、参数、返回值、作用域、closure 和类型提示；
+- 拆分模块、使用 import、处理 `__name__ == "__main__"`；
+- 用纯 Python 实现并测试 FactoryCare 统计规则。
 
-- release candidate、version/tag、changelog和artifact；
-- code freeze、bug bar和scope control；
-- release checklist、go/no-go和rollback trigger；
-- data migration不可简单随镜像回滚；
-- feature flag和降级；
-- vulnerability/secret/license基础检查；
-- evidence-based self assessment；
-- job funnel、conversion rate和small sample；
-- offer/岗位选择与长期能力复利；
-- 入职后30/60/90天学习计划。
+## 完整概念清单
 
-## 时间与任务（15—18小时）
+### 运行模型与工具
 
-下方最终无AI考核计入任务2—3，不在总时长之外重复增加。
+- CPython、源码、bytecode/VM 高层概念；
+- script、module、package、project；
+- REPL 适合实验，不替代可重复脚本；
+- `python -m` 与直接运行文件的 import 上下文差异；
+- virtual environment、project dependency、lockfile；
+- `uv run`、formatter/linter/type checker/test 的角色；
+- indentation 是语法，统一四空格；
+- expression、statement、注释、docstring。
 
-### 任务1：发布冻结和全量验证（3小时）
+### 名称、对象与类型
 
-- 创建release branch/tag和changelog；
-- 运行Java、Node、Python、Flutter全量检查/测试/构建；
-- 跑OpenAPI/事件契约检查；
-- 跑80+条AI评估和安全集；
-- 扫描依赖、镜像和仓库secret；
-- 确认迁移、种子、备份和恢复；
-- 只修阻塞发布的高优先级问题。
+- 变量是名称绑定到对象，不是固定类型盒；
+- int/float/complex/bool/str/bytes/None；
+- arbitrary precision int 与浮点误差；
+- `type`、`isinstance` 和 duck typing；
+- `==` 比较相等，`is` 比较身份；`None` 使用 `is None`；
+- mutable/immutable 与 aliasing；
+- shallow/deep copy 的边界；
+- truthy/falsy，避免把 0/空字符串误判为缺失；
+- 类型提示不默认在运行时强制。
 
-### 任务2：最终无AI需求（3小时）
+### 字符串与基础 I/O
 
-从[ASSESSMENTS.md](../ASSESSMENTS.md)随机选择一项端到端需求，180分钟内完成：需求澄清、迁移、Java规则、API、测试、一个客户端最小交互和说明。允许查官方文档，不使用AI。
+- str 是 Unicode，bytes 是字节；编码/解码边界；
+- indexing/slicing、常用方法、split/join/strip；
+- f-string、format spec、repr/str；
+- `input` 返回字符串，转换可能抛异常；
+- `print`、stdout/stderr 和返回值不同；
+- 用户输入规范化和空白/大小写边界；
+- 文件 I/O 留 Week 37。
 
-### 任务3：故障定位与答辩（2小时）
+### 容器
 
-- 随机处理两个故障；
-- 完成8分钟产品演示；
-- 完成12分钟架构讲解；
-- 接受20分钟追问；
-- 记录不知道和未验证的部分，不猜答案。
+- list 有序可变、tuple 有序通常不可变、dict 映射、set 去重；
+- literal、索引/切片、负索引、membership；
+- append/extend/insert/remove/pop/sort 与返回值陷阱；
+- dict get/setdefault/items、key 可哈希；
+- set union/intersection/difference；
+- unpacking、starred expression；
+- list/set/dict comprehension 与可读性；
+- 嵌套可变对象和浅复制风险；
+- 选择容器按语义，不背 API 清单。
 
-### 任务4：发布演示（2小时）
+### 控制流与迭代
 
-选择一种：
+- if/elif/else、条件表达式；
+- for 迭代 iterable，不是 C/Java 三段循环；
+- range、enumerate、zip；
+- while、break/continue、循环 else 的真实语义；
+- match/case 与 pattern/guard 基础；
+- iterable/iterator、`iter/next` 和 StopIteration 只建立模型；
+- 修改遍历中的容器风险；
+- generator 留 Week 37 深入。
 
-- 受控云/VPS演示；
-- 本地Docker演示包和录制视频；
-- 两者都有。
+### 函数与作用域
 
-公开演示必须使用假数据、受限账户、费用上限和最小暴露面。没有安全条件时，宁可提供本地可复现演示，不把数据库/管理端暴露公网。
+- def、return、无显式 return 得到 None；
+- positional-only、positional-or-keyword、keyword-only 参数；
+- default、`*args`、`**kwargs` 和 unpack call；
+- 可变默认参数只创建一次的经典故障；
+- 参数按对象共享/绑定语义，不能简单叫按引用；
+- LEGB scope、global/nonlocal 的边界；
+- function 是一等对象、closure、lambda 仅适合简单表达式；
+- 类型提示、`list[T]`、`dict[K,V]`、`T | None`；
+- 函数职责、纯函数、副作用和可测试性。
 
-### 任务5：集中投递与真实面试（3—5小时）
+### 模块与导入
 
-- 为当周15—25个岗位逐个选择R1/R2/R3/R4；
-- 在简历和沟通中突出对应证据；
-- 24小时内复盘真实面试；
-- 连续两次同类失败立即安排复测；
-- 达到累计120次定向投递或记录提前offer。
+- import module/from import/alias；
+- 模块通常首次导入执行一次并缓存；
+- absolute/relative import 的项目边界；
+- `__name__` 和 CLI 入口；
+- 循环 import 和顶层副作用；
+- `__init__.py`、package exports 基础；
+- 配置/密钥不硬编码在模块全局；
+- 不创建无边界 `utils.py`。
 
-### 任务6：36周总结和下一步（2小时）
+## 时间与任务
 
-输出：
+| 任务 | 时间 | 产出 |
+| --- | ---: | --- |
+| 运行/类型/字符串 | 2—3h | CLI 输入、编码和类型实验 |
+| 容器/复制 | 3h | 列表/字典/集合统计及 alias 故障 |
+| 控制流/迭代 | 2—3h | 筛选、聚合、match 和循环边界 |
+| 函数/作用域 | 3h | 参数形式、closure、可变默认故障 |
+| 模块/类型提示 | 2h | 可运行 package 和 import 反例 |
+| FactoryCare/复盘 | 3—4h | 纯 Python 规则、测试、独立修改 |
 
-- 已达到L3/L4的能力；
-- 只有L1/L2的能力；
-- 项目已验证/未验证清单；
-- 最有价值的三个错误；
-- AI提高效率与造成错误的真实案例；
-- 求职漏斗数据；
-- 如果已有offer：入职30/60/90天计划；
-- 如果暂无offer：未来4周只补哪两个最高回报缺口。
+## FactoryCare 增量
 
-## FactoryCare项目增量
+- 定义 `TypedDict` 或简单字典边界，输入仍按不可信数据验证；
+- 实现启用设备名称、按类别统计、按技师统计活跃工单；
+- 实现状态过滤和优先级汇总，不修改输入；
+- 对空列表、缺字段、`None`、未知状态和 alias 写测试；
+- 把 CLI、业务函数和示例数据拆模块；
+- 与 Java/TS/Dart 对比名称绑定、null/None、容器和类型提示。
 
-- R6 release candidate/tag/changelog；
-- 最终测试、AI评估和安全报告；
-- 可访问或可复现演示；
-- 最终答辩与已知限制；
-- 项目进入维护而非无限开发状态。
+## 无 AI 任务（120 分钟）
 
-## AI协作边界
+实现 `summarize_work_orders(orders, assignee_id=None)`：返回总数、活跃数、最高优先级、按状态计数；定义缺字段/非法状态契约，输入不被修改。提供命令行 JSON 字符串或简化文本输入（文件留 Week 37）、至少 8 条测试和类型检查结果。
 
-发布清单、漏洞修复和简历文字可以由AI审查，但最终考核必须关闭AI。AI不得替你决定是否公开服务、是否忽略安全告警、是否执行数据迁移或是否在简历中夸大。
+## 验收
 
-## 无AI训练与最终考核（至少240分钟）
+- 能解释名称绑定、可变/不可变、`==`/`is` 和 `None`；
+- 能选择 list/tuple/dict/set 并说明依据；
+- 能写 if/match/for/while、函数和模块入口；
+- 能复现并修复可变默认参数和浅复制问题；
+- `uv run` 下测试和类型/静态检查通过；
+- 能独立增加一个统计字段而不重写全部函数。
 
-严格执行[ASSESSMENTS.md](../ASSESSMENTS.md)的G8：
+## 非目标
 
-- 180分钟端到端需求；
-- 60分钟两个故障；
-- 产品/架构答辩；
-- 求职材料核验。
-
-## 求职动作
-
-- 集中投递15—25个高匹配岗位；
-- 使用数据比较四版简历；
-- 对offer从职责、团队、成长、稳定、加班/驻场、薪资和城市成本综合比较；
-- 不因为计划结束就停止按面试反馈迭代。
-
-## 交付物
-
-- [ ] release candidate、tag和changelog；
-- [ ] 全量测试/构建/契约结果；
-- [ ] AI评估与安全回归；
-- [ ] 备份恢复和回滚检查；
-- [ ] G8最终考核记录；
-- [ ] 演示链接或本地复现包；
-- [ ] 15—25次本周投递和累计数据；
-- [ ] 36周总结和下一阶段计划。
-
-## 验收标准
-
-- [LEARNING_PLAN.md](../LEARNING_PLAN.md)第10节核心标准达到；
-- 总评分至少75，任何领域不低于60；
-- 严重安全/数据问题为0；
-- 所有能力声明能指向代码、测试、报告或明确口述；
-- 未验证内容已显式标注；
-- 可以独立完成小需求、定位常见故障并讲清系统；
-- 已进入真实求职循环或获得合适offer。
-
-## 如果没有通过
-
-不要重跑整个36周，也不要新增技术栈。按失败类别建立2—4周补强：
-
-- Java/SQL不过：每天无AI小题 + 一个项目修复；
-- 项目讲不清：补ADR、图和故障证据；
-- AI质量不过：固定评估集逐层定位；
-- 沟通率低：修改定位/简历，而不是继续堆项目；
-- 面试算法弱：集中补基础结构和高频题；
-- 多端不稳：保留一个主端，诚实降低另一个声明等级。
-
-## 本周明确不做
-
-- 发布前临时增加大功能；
-- 因追求完美延迟投递；
-- 忽略高风险告警换取演示效果；
-- 把最终考核交给AI；
-- 把“完成计划”写成商业年限；
-- 未经比较就继续学习新的语言/框架。
-
-## 计划结束后的维护节奏
-
-- 每月依赖/安全更新和完整回归；
-- 每次真实面试更新错题和项目证据；
-- 每季度选择一个真实约束深化，而不是横向加栈；
-- 入职后优先学习公司业务、代码库、发布和故障流程，再决定Spring Cloud、MQ或其他专项。
+- 不学习 class、async、FastAPI、Pydantic 或 PyTorch；
+- 不做晦涩 Python golf；
+- 不把类型提示当运行时验证；
+- 不使用 notebook 作为唯一交付。

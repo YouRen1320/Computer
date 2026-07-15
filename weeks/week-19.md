@@ -1,163 +1,161 @@
-# 第 19 周：Vue 3 + TypeScript 深度复健、响应式与 Composable
+# 第 19 周：Redis 8 缓存、幂等、限流与一致性
 
 > 建议投入：16 小时（可在 15—18 小时内调整）
 
 ## 1. 本周定位
 
-你不是重新学习 Vue，而是把已有前端经验恢复成 2026 年可面试、可维护、能审查 AI 代码的状态。本周聚焦 Vue 3 响应式模型、严格 TypeScript、组件契约和 Composable 边界，先把“为什么这样写”练扎实，再在第 20 周搭完整企业后台。
+本周学习的不是“把 Redis 加进技术栈”，而是识别哪些问题适合 Redis、哪些必须由数据库保证。FactoryCare 只在有明确读热点、重复请求或流量保护需求的位置使用 Redis 8，并为 Redis 不可用、缓存过期和并发竞争设计退路。
 
-FactoryCare 本周建立 Web 端领域 UI 基础与可复用逻辑，不急于堆路由、状态库和 UI 组件库。
+核心原则：**数据库是业务事实来源，缓存允许短暂陈旧；幂等最终靠业务唯一性和数据库约束，Redis 只做加速或短期协调。**
 
 ## 2. 前置条件
 
-- 第 18 周后端阶段考核通过，FactoryCare API 契约和权限模型稳定。
-- 熟悉 HTML、CSS、JavaScript、TypeScript 和 Vue 3 基本语法。
-- Node.js、pnpm 使用当前稳定生产版本；依赖通过 lockfile 固定，不使用 nightly/RC。
-- 已从 OpenAPI 或接口文档整理用户、设备、工单和分页响应类型。
+- 工单状态机、SLA、乐观锁、租户隔离和事务测试已通过。
+- 能分析 SQL 与索引，确认性能问题不是先由错误查询造成。
+- Docker Compose 可启动 PostgreSQL；本周新增 Redis 8，并锁定兼容稳定版本。
+- 已有结构化日志和关联 ID，能够观察缓存命中与失败。
 
 ## 3. 学习目标
 
-- 用无 AI 基线确认 HTML、CSS、JavaScript、TypeScript 和浏览器基础没有影响面试/排错的缺口。
-- 能解释 Vue 的依赖追踪、触发更新、批处理与组件渲染时机。
-- 能正确选择 `ref`、`reactive`、`computed`、`watch`、`watchEffect` 和浅层响应式工具。
-- 能以严格 TypeScript 定义 Props、Emits、双向绑定、模板引用和异步状态。
-- 能把状态逻辑提取为职责单一、可测试、会清理副作用的 Composable。
-- 能识别失去响应式、重复派生状态、深度监听和未释放监听器等常见缺陷。
-- 能在没有 AI 的情况下完成一个类型安全的中等复杂组件切片。
+- 能比较 Cache-Aside、Read/Write-Through、Write-Behind，并为具体数据选择策略。
+- 能设计租户化、可版本化、可观测的 Redis Key 与 TTL。
+- 能处理穿透、击穿、雪崩、热点 Key 和序列化演进。
+- 能实现端到端幂等：请求键、业务指纹、并发占用、结果复用和数据库唯一约束。
+- 能实现原子限流并解释固定窗口、滑动窗口和令牌桶的取舍。
+- 能说明缓存一致性的时间窗口、失效顺序和 Redis 故障时的降级策略。
 
 ## 4. 完整概念清单
 
-### 4.1 响应式原理与选择
+### 4.1 Redis 基础与数据建模
 
-- Proxy、依赖收集、触发更新、Effect 与组件渲染 Effect。
-- `ref` 与 `reactive` 的返回值、解包规则和边界；不要用风格偏好替代场景判断。
-- 解构 `reactive` 导致响应式断开；`toRef`、`toRefs`、`toValue` 的用途。
-- `computed` 表达可派生状态并保持纯净；避免在 getter 中发请求或修改其他状态。
-- `watch` 精确观察源，`watchEffect` 自动收集；`flush` 时机、立即执行和清理过期副作用。
-- 异步竞态：快速切换工单时取消旧请求或忽略过期响应。
-- `shallowRef`、`markRaw`、`readonly`、`effectScope` 的适用边界；不用高级 API 炫技。
-- `nextTick` 只等待 DOM 刷新，不解决任意业务竞态。
+- String、Hash、Set、Sorted Set 的典型场景；不为使用数据结构而使用。
+- 单线程命令执行与网络/持久化线程的区别；“原子单命令”不等于多步业务原子。
+- Key 命名：环境、应用、租户、资源、ID、版本，例如 `factorycare:v1:{tenant}:asset:{id}`。
+- TTL、随机抖动、惰性/定期删除和内存淘汰策略。
+- JSON/二进制序列化、安全反序列化、Schema 演进和大 Key 风险。
+- Pipeline、事务、Lua/Functions 的作用和边界。
 
-### 4.2 TypeScript 与组件契约
+### 4.2 缓存策略
 
-- `<script setup lang="ts">`、`defineProps`、默认值、`defineEmits`、`defineModel`、`defineExpose`。
-- Props 只读、事件上行；避免子组件直接修改父组件对象深层字段。
-- 使用字面量联合/判别联合表示状态、权限和异步结果，减少布尔变量组合爆炸。
-- `unknown` 优先于 `any`，在 API 边界做运行时验证或明确转换。
-- 模板引用、DOM 事件、插槽、Provide/Inject 的类型。
-- DTO、ViewModel、FormModel 不强制复用；时间、枚举和可空字段要显式转换。
-- `vue-tsc` 执行 SFC 类型检查；Vite 转译不等于类型检查。
+- Cache-Aside：读未命中查库后回填，写成功后失效缓存。
+- 空值/不存在短 TTL 防穿透；布隆过滤器只学习概念，不急于引入。
+- 热点 Key 失效导致击穿：互斥重建、逻辑过期、请求合并的取舍。
+- 大量 Key 同时过期导致雪崩：TTL 抖动、分批预热、限流和数据库保护。
+- 双删、延迟双删和消息失效的局限；先明确可接受陈旧窗口。
+- 事务提交后再删缓存；回滚事务不能提前污染缓存。
+- 缓存命中率、回源次数、加载耗时和错误率，而不是只打印“命中/未命中”。
 
-### 4.3 组件与 Composable 设计
+### 4.3 幂等
 
-- 组件负责可视结构和交互契约；Composable 负责可复用的有状态逻辑。
-- 命名以 `use` 开头，参数接受值/Ref/Getter 时用 `toValue` 归一化。
-- 返回普通对象中的多个 `ref`，避免解构丢失响应式。
-- 每个 Composable 写明职责、数据来源、非显然映射和重要副作用。
-- 在 `onScopeDispose`/`onUnmounted` 清理定时器、事件监听、AbortController 和订阅。
-- 避免“万能 `useWorkOrder`”同时管理列表、详情、表单、权限、SSE 和缓存。
-- 表单草稿、服务端 DTO 与展示格式分离；派生数据不重复存入状态。
+- HTTP 安全/幂等语义与业务幂等不是完全相同的概念。
+- `Idempotency-Key`、用户/租户/端点作用域、请求体摘要、有效期和结果复用。
+- 状态：处理中、成功、失败可重试；并发相同键不能执行两次。
+- 不同请求体复用同一个键必须拒绝。
+- 数据库唯一约束/业务号是最终防线；Redis 锁或 `SET NX EX` 只是前置保护。
+- 进程崩溃、锁过期、超时未知结果和客户端重试的处理。
 
-### 4.4 性能与调试
+### 4.4 限流与分布式协调
 
-- Vue Devtools 检查组件、响应式状态和更新原因。
-- 稳定 Key、列表渲染、条件渲染、组件拆分和大对象响应式成本。
-- 先测量再使用 `v-memo`、浅层响应式或虚拟列表。
-- 错误边界、加载/空/失败/成功状态不能只用一个 `loading` 布尔值表达。
+- 固定窗口、滑动日志/计数、漏桶、令牌桶的精度与成本。
+- 限流维度：租户、用户、IP、API、模型调用；先选择业务维度再写算法。
+- Redis 8 `HEXPIRE` 等字段级过期能力及其适用场景。
+- 使用 Lua 保证“读取—判断—扣减”的原子性；返回剩余额度与重试时间。
+- Redis 不可用时对登录、查询、写入和 AI 调用分别选择 fail-open/fail-closed。
+- 分布式锁的唯一值、过期、续期、释放校验和 fencing token；不拿锁解决所有并发问题。
 
 ## 5. 任务分配
 
 | 任务 | 时间 | 结果 |
 | --- | ---: | --- |
-| Web基础审计 + 响应式实验 | 3h | 基线清单、薄弱项和关键响应式实验 |
-| Vue + TS 组件契约练习 | 3h | 类型安全组件组 |
-| Composable 设计与测试 | 3h | 两个职责单一的 Composable |
-| FactoryCare UI 垂直切片 | 4h | 工单详情/状态时间线模块 |
-| 无 AI 训练 | 2h | 独立组件实现 |
-| 求职采样与简历复健 | 1.5h | Vue 技能证据矩阵 |
+| Redis 8 数据结构与故障实验 | 2.5h | 命令实验和故障记录 |
+| Cache-Aside 与一致性实现 | 4h | 设备详情缓存及指标 |
+| 幂等接口实现 | 3.5h | 防重复工单创建闭环 |
+| 原子限流与降级 | 2.5h | 限流脚本和策略说明 |
+| 无 AI 训练 | 2h | 缓存一致性排错 |
+| 求职采样与项目表达 | 2h | Redis 面试证据 |
 
-总计 16.5 小时。若有 18 小时，增加响应式性能剖析；不要提前引入多个状态管理库。
-
-开始Vue任务前，限时完成一次Web基础审计：语义HTML/表单、CSS层叠与布局、JS闭包/原型/事件循环、DOM事件、Fetch/Abort、Cookie/CORS/CSRF、TypeScript收窄与`unknown`。通过项不复习；失败项进入本周补弱清单，并在FactoryCare组件中验证。
+总计 16.5 小时。若有 18 小时，增加 Testcontainers Redis 故障测试；不要增加无业务依据的分布式锁。
 
 ## 6. FactoryCare 项目增量
 
-- 建立 `factorycare-web` 的 Vue 3 + TypeScript 基础，启用严格类型检查和统一格式/检查脚本；完整 Vite 工程化留到第 20 周深化。
-- 从 API 契约定义 `WorkOrderSummary`、`WorkOrderDetail`、`WorkOrderStatus`、`PermissionCode` 等前端边界类型。
-- 实现工单详情展示、状态时间线和 SLA 剩余时间组件，使用判别联合表达加载/失败/成功。
-- 编写 `useSlaCountdown`：输入目标时间与暂停状态，正确清理定时器，并允许注入当前时间便于测试。
-- 编写 `useAsyncTask` 或等价小型 Composable：处理取消、过期响应和错误归一化；不替代第 20 周服务端状态缓存。
-- 状态映射、权限码和 SLA 颜色规则写成有意图的注释，避免 UI 中散落魔法字符串。
-- 使用 Mock Repository 驱动本周切片，后端联调在第 20 周进行。
-- 至少编写 6 条单元测试：时间暂停/到期、卸载清理、过期响应、错误状态、事件契约和类型边界。
+- Docker Compose 增加 Redis 8，并通过 Spring Boot 配置管理连接、超时和连接池；不在仓库提交真实密码。
+- 仅缓存设备详情/设备字典等读多写少数据，Key 必须包含租户和版本前缀。
+- 写事务成功提交后失效缓存；添加 TTL 抖动、空值短缓存和命中/回源指标。
+- 为“扫码报修/创建工单”增加 `Idempotency-Key`：校验请求摘要、复用成功结果、拒绝键冲突。
+- 工单业务号增加数据库唯一约束，证明 Redis 清空或失效时仍不会生成重复工单。
+- 为登录失败尝试或公开查询增加一个原子限流实验；记录限流维度、算法、阈值和 429 响应。
+- 制造 Redis 停止、缓存过期、热点并发和事务回滚四种故障，记录系统行为。
+- 编写 `ADR-016-redis-reliability.md`：说明缓存对象、陈旧窗口、幂等最终防线、限流故障策略和回滚方式。
 
 ## 7. AI 协作边界
 
 AI 可以：
 
-- 根据你的响应式解释生成反例或小型实验。
-- 审查 Props/Emits/Composable API，寻找职责过多和副作用泄漏。
-- 生成测试场景清单和类型收窄建议。
-- 帮助把 Options API 片段解释成 Composition API，但不能只做机械翻译。
+- 生成 Key/TTL 评审清单、Lua 脚本初稿和并发测试思路。
+- 对比缓存策略、限流算法与故障策略。
+- 根据日志帮助定位缓存击穿或重复执行，但结论必须由实验验证。
+- 检查序列化 DTO 是否包含不必要的敏感字段。
 
 AI 不可以：
 
-- 一次生成整页并用 `any`、深度 `watch` 或大量布尔变量掩盖设计问题。
-- 擅自创建全局 Store、全局事件总线或万能请求 Composable。
-- 根据后端字段名直接决定最终 UI 契约。
-- 在无 AI 训练中提供实现或排错提示。
+- 未测量数据库负载就建议“所有查询都缓存”。
+- 用 Redis 锁替代事务、乐观锁、唯一约束和权限校验。
+- 自行确定生产 TTL、限流阈值、fail-open/fail-closed 或删除策略。
+- 把线上 Redis 数据、密钥或连接地址放入提示词。
 
-所有 AI 修改必须通过 `vue-tsc`、测试和浏览器交互验证；能运行但不能解释的响应式代码不算掌握。
+接受 AI 生成的 Lua/释放锁代码前，必须手工模拟并发、超时、崩溃和重复请求。
 
 ## 8. 无 AI 训练
 
-关闭 AI 120 分钟，实现“工单筛选条件”组件与`useDebouncedFilter`：
+本周从求职/复盘时段预留45—60分钟完成并记录：一维动态规划基础题；写出状态、转移、初值和遍历顺序。
 
-- 支持状态、关键字、仅看超时三类条件，Props/Emits 全部严格类型化。
-- 关键字 300ms 防抖，组件卸载时取消定时器。
-- 不重复保存可派生条件，不使用 `any` 和深度监听整个对象。
-- 补重置、连续输入、卸载清理和事件载荷测试。
-- 结束后口述 `computed/watch/watchEffect` 在实现中的选择。
+关闭 AI 120 分钟：排查“设备名称更新成功，但部分用户仍看到旧值”的问题。
 
-## 9. 求职动作
+- 画出数据库事务、缓存读取、缓存删除和并发请求时间线。
+- 写出至少两种修复方案及陈旧窗口。
+- 实现事务提交后失效，并补回滚事务与并发读取测试。
+- 口述为什么“先更新缓存再更新数据库”和“延迟双删”都不是无条件正确答案。
 
-- 采样 8 个南昌 Vue3/Java 全栈/大屏或信息化岗位，统计 TypeScript、Composition API、Pinia、Vite、Element Plus、ECharts、uni-app 要求。
-- 把两年前端经验拆成证据：复杂表单、状态管理、性能、组件复用、接口联调、线上排错分别有哪些真实案例。
-- 准备 5 个 Vue 面试答案：响应式解构、computed vs watch、Composable 清理、Props 单向数据流、`vue-tsc` 的必要性。
-- 更新 Vue 版简历，至少完成 5 次本地或江西周边定向投递，不因学习 Java 暂停前端求职。
+## 9. 求职动作（恢复求职后启用）
+
+- 采样南昌 Java/工业软件岗位 8 个，记录 Redis、缓存、分布式锁、幂等、限流和高并发要求，并区分“关键词”与实际业务场景。
+- 准备两个面试故事：一次缓存陈旧故障实验、一次重复请求被数据库唯一约束兜底。
+- 简历使用证据化表述：`以租户化 Cache-Aside 缓存设备热点数据；通过 Idempotency-Key + 数据库唯一约束防重复报修，并验证 Redis 下线降级`。
+- 本周继续完成至少 5 次匹配投递；对只要求常规 Redis 使用的岗位，不夸大为高并发生产经验。
 
 ## 10. 本周交付物
 
-- Vue 响应式陷阱实验和口述笔记。
-- 严格类型的组件、两个 Composable 及不少于 6 条测试。
-- FactoryCare 工单详情、状态时间线和 SLA 展示切片。
-- 无 AI 筛选组件实现记录。
-- Vue 技能证据矩阵与更新后的简历条目。
+- Redis 8 本地运行配置、Key 规范和缓存指标。
+- 设备缓存、幂等创建和原子限流实验。
+- `ADR-016-redis-reliability.md`。
+- Redis 停止、事务回滚、热点并发和重复请求故障报告。
+- 无 AI 一致性排错记录与两条面试故事。
 
 ## 11. 验收标准
 
-- 不看资料解释 `ref/reactive/computed/watch/watchEffect` 的选择和常见断链原因。
-- `vue-tsc` 无错误，项目业务代码不使用未解释的 `any`。
-- Composable 有单一职责、明确数据源和副作用清理，卸载后没有残留定时器/请求。
-- 工单详情能完整显示加载、空、错误、成功和 SLA 到期状态。
-- 测试关注公开行为，不依赖私有实现细节。
-- 无 AI 在120分钟内完成组件并通过测试，能够逐段解释响应式依赖。
-- 简历只陈述真实 Vue 经验和本周可验证增量，不把复健项目写成商业年限。
+- 能说明为什么缓存对象值得缓存、允许陈旧多久、何时失效以及 Redis 下线怎样处理。
+- 缓存 Key 包含租户与版本，不泄露跨租户数据；缓存 DTO 不含敏感字段。
+- 相同幂等键和相同请求只产生一个工单；相同键不同请求被拒绝；清空 Redis 后数据库仍能兜底。
+- 限流脚本在并发下不会超发，429 响应包含稳定错误码和合理重试提示。
+- Redis 停止不会破坏工单事实数据，故障策略有测试和文档。
+- 能解释缓存穿透、击穿、雪崩、热点 Key、原子命令与多步业务原子的区别。
+- 所有测试、故障实验和简历描述均不把个人实验包装成生产高并发经验。
 
 ## 12. 明确不做
 
-- 不重新观看整套 HTML/CSS/JavaScript 入门课，不做 Todo List；只对基线失败项定向补强。
-- 不引入 Vuex、多个 UI 库或复杂微前端。
-- 不把所有状态塞进 Pinia；Pinia 与服务端状态在第 20 周明确边界。
-- 不使用深度监听和 `any` 作为默认解法。
-- 不为了“高级”使用 Render Function、TSX、复杂自定义响应式或编译器插件。
+- 不缓存所有表、分页结果和权限判断。
+- 不引入 Redis Cluster、哨兵、多地域复制或复杂容量规划。
+- 不以分布式锁替代数据库锁、版本列和唯一约束。
+- 不实现“绝对强一致缓存”；先定义并验证可接受陈旧窗口。
+- 不在本周引入消息队列或微服务；可靠异步属于第 20 周。
 
 ## 13. 官方资料
 
-- [Vue 响应式基础](https://vuejs.org/guide/essentials/reactivity-fundamentals.html)
-- [Vue Reactivity in Depth](https://vuejs.org/guide/extras/reactivity-in-depth.html)
-- [Vue Watchers](https://vuejs.org/guide/essentials/watchers.html)
-- [Vue Composables](https://vuejs.org/guide/reusability/composables.html)
-- [Vue + TypeScript](https://vuejs.org/guide/typescript/overview.html)
-- [TypeScript with Composition API](https://vuejs.org/guide/typescript/composition-api.html)
-- [Vue 性能最佳实践](https://vuejs.org/guide/best-practices/performance.html)
+- [Redis 数据类型](https://redis.io/docs/latest/develop/data-types/)
+- [Redis 缓存与客户端侧缓存](https://redis.io/docs/latest/develop/clients/client-side-caching/)
+- [Redis Rate Limiter](https://redis.io/docs/latest/develop/use-cases/rate-limiter/)
+- [Redis Lua 脚本](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/)
+- [Redis 分布式锁模式](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)
+- [Redis 8 官方更新说明](https://redis.io/docs/latest/develop/whats-new/8-0/)
+- [Spring Data Redis Reference](https://docs.spring.io/spring-data/redis/reference/)
+- [HTTP Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods)

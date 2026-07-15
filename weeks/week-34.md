@@ -1,177 +1,137 @@
-# 第34周：生产化、Linux、容器、CI/CD、观测与故障恢复
+# 第 34 周：Flutter Widget、布局、导航、表单与状态
 
-## 本周定位
+## 定位
 
-本周把“开发机能跑”升级为“可重复部署、可观察、可恢复”。不追求云平台和Kubernetes复杂度，而是掌握中小企业应用真正需要的Linux、进程、网络、容器、反向代理、TLS、配置、CI、备份和故障处理。
+Dart 语言基础已在 Week 32—33 完成。本周只学习 Flutter UI 运行模型与应用状态：Widget/Element/RenderObject、约束布局、生命周期、BuildContext、导航、表单和状态管理。网络、离线、设备能力和发布在 Week 35。
 
-## 前置条件
+时间预算：15—18 小时。复用旧 App 经验做迁移审计，但新骨架从明确结构和测试开始。
 
-- Week 33形成的R6集成候选版本稳定；
-- 自动化测试和演示数据可运行；
-- 有一台本地Linux虚拟机、远程测试机或等价容器环境；
-- 不使用真实敏感生产数据。
+## 前置
 
-## 本周目标
+- 纯 Dart 类型、OOP、Future、Stream、取消和测试通过；
+- Flutter stable/目标平台工具链在本周开始时重新核对；
+- 至少一个模拟器/真机或明确记录暂时只能使用的目标；
+- FactoryCare OpenAPI/设计稿已有客户端边界。
 
-- 掌握Linux文件、权限、进程、端口、磁盘、内存和日志基本排查；
-- 构建安全、可缓存、可复现的Java/Python/Nuxt镜像；
-- 用Docker Compose编排依赖与健康检查；
-- 用Nginx完成反向代理、TLS和SSE配置；
-- 建立CI质量门和受控部署/回滚；
-- 建立日志、指标和trace；
-- 完成数据库/对象存储备份恢复和8类故障演练。
+## 目标
 
-## 必须理解的概念
+- 理解 Widget 不可变配置、Element 持有位置/状态、RenderObject 负责布局绘制的高层关系；
+- 正确使用 Stateless/StatefulWidget 和 State 生命周期；
+- 理解“constraints go down, sizes go up, parents set positions”；
+- 使用常见布局、滚动、列表、Key 和响应式适配；
+- 正确使用 BuildContext、InheritedWidget/Theme/MediaQuery；
+- 完成 Navigator/Router 的基础导航、参数、返回和深链概念；
+- 构建表单、验证、焦点、键盘和可访问性反馈；
+- 区分局部 UI 状态、应用状态、服务端状态和持久状态；
+- 选择一种主状态管理方式并说明不选其他方案的理由；
+- 建立 Widget 和状态单元测试。
 
-### Linux与网络
+## 完整概念清单
 
-- 用户/组、权限、文件、目录、链接和最小权限；
-- process、thread、signal、exit code、service和graceful shutdown；
-- CPU、内存、磁盘、文件描述符和常用观测命令；
-- DNS、IP、port、TCP、HTTP、TLS和反向代理；
-- connect/read/overall timeout；
-- 日志轮转、时区、时间同步和磁盘满。
+### Flutter 树与构建
 
-### 容器与部署
+- Widget 是不可变描述，可频繁重建；
+- Element 维持树中身份并连接 Widget/RenderObject；
+- State 与 StatefulWidget 分离；
+- `build` 应尽量纯，不发请求/写存储/重复订阅；
+- setState 标记需要重建，不会自动取消网络或保证业务正确；
+- rebuild、layout、paint 是不同工作；
+- const widget 的作用与边界；
+- DevTools inspector/rebuild/profile 基础。
 
-- image、layer、container、volume、network和registry；
-- multi-stage build、non-root、read-only与最小镜像；
-- build cache、架构平台和SBOM/漏洞扫描概念；
-- Compose依赖、healthcheck和启动就绪区别；
-- 配置与密钥外置，镜像不可变；
-- 数据库迁移前滚、兼容窗口和回滚限制；
-- blue/green、rolling、canary概念，项目采用简单可回滚发布；
-- Kubernetes解决的问题和当前不采用的理由。
+### 生命周期与资源
 
-### 可观测与恢复
+- createState、initState、didChangeDependencies、build、didUpdateWidget、deactivate、dispose；
+- constructor/initState 不能依赖尚未可用的 inherited context；
+- controller/focus/subscription/timer 在 owner dispose；
+- `mounted` 从 State 创建后到 dispose 前为布尔状态；
+- mounted 只防止销毁后更新 UI，不取消请求、不防重复调用；
+- await 后检查 mounted 只能处理 UI 更新合法性；
+- 请求/订阅取消需要 client、subscription 或显式 token；
+- 不在 dispose 中调用 setState。
 
-- logs、metrics、traces和profiles的不同；
-- RED/USE指标、SLO/SLI概念；
-- correlation ID和OpenTelemetry span；
-- 告警必须可行动，避免只做漂亮面板；
-- PostgreSQL逻辑/物理备份概念、RPO/RTO；
-- 对象存储版本/生命周期和恢复；
-- Redis不是备份的业务事实；
-- runbook、incident timeline和postmortem。
+### 约束与布局
 
-## 时间与任务（15—18小时）
+- constraints、size、position；
+- Row/Column/Flex、Expanded/Flexible/Spacer；
+- Stack/Positioned、Align/Center、Padding/SizedBox/ConstrainedBox；
+- ListView/GridView/CustomScrollView/Sliver 高层选择；
+- unbounded constraint、overflow、nested scroll 常见错误；
+- LayoutBuilder/MediaQuery、安全区、键盘 inset；
+- 逻辑像素、文本缩放和触控目标；
+- 不用固定屏幕尺寸假设完成所有布局。
 
-下方120分钟无AI训练计入任务6的故障演练，不在总时长之外重复增加。
+### BuildContext、Key 与导航
 
-### 任务1：Linux排查实验（3小时）
+- BuildContext 是 Element 位置句柄，不是全局容器；
+- 查找 Theme/Navigator/Inherited 依赖于 context 位置；
+- async gap 后 context 可能失效；
+- ValueKey/ObjectKey/UniqueKey/GlobalKey 的用途与成本；
+- 列表重排没有稳定 key 会错配 state；
+- Navigator push/pop、arguments/result；
+- declarative Router/deep link/auth redirect 概念；
+- 不把路由当全局状态存储。
 
-- 查进程、端口、连接、CPU、内存、磁盘和日志；
-- 制造端口占用、权限拒绝、磁盘接近满和进程退出；
-- 使用`curl`/网络工具验证DNS、TLS、header和SSE；
-- 记录命令的目的和证据，不背命令列表。
+### 表单、交互与可访问性
 
-### 任务2：镜像与Compose（3小时）
+- Form/FormField/TextFormField、controller 与 initialValue 边界；
+- validation、提交、server error 映射；
+- focus node、keyboard action、dismiss；
+- button/gesture 的语义，优先 Material/Cupertino 可访问组件；
+- loading/empty/error/success 和防重复提交；
+- Snackbar/Dialog/BottomSheet 选择与 context；
+- Semantics、text scale、contrast、reduced motion 基础；
+- 图片/列表性能和缓存只建立 UI 侧概念。
 
-- Java、Python和Nuxt使用多阶段构建；
-- 非root运行、最小复制、明确版本；
-- PostgreSQL、Redis、对象存储、身份提供方和OTel按profile组织；
-- health/live与ready分别配置；
-- volume和网络清楚，数据库不暴露公网；
-- 一条命令启动核心演示，一条命令清理非持久数据。
+### 状态管理
 
-### 任务3：Nginx/TLS和配置（2小时）
+- ephemeral UI、application/domain、server/cache、persistent state；
+- lifting state、callback/value、ChangeNotifier/ValueNotifier 基础；
+- Provider/Riverpod/BLoC 等按项目选一个，学习共同原则而非多个框架；
+- state 应可预测、不可变/受控更新、可测试；
+- effect 与 reducer/state 变换分离；
+- 避免 BuildContext 穿透领域层；
+- loading flag 需和请求身份/取消协调；
+- Repository/API 在 Week 35 接入，本周用 fake。
 
-- 反向代理公共API、Nuxt和SSE；
-- 配置上传大小、超时、buffering和安全header；
-- 使用测试证书或受控真实证书演示TLS；
-- 明确CORS、CSRF、cookie secure/samesite；
-- 密钥通过环境/secret注入，不进镜像/仓库。
+## 时间与任务
 
-### 任务4：CI/CD（2—3小时）
+| 任务 | 时间 | 产出 |
+| --- | ---: | --- |
+| 树/生命周期 | 2—3h | rebuild、mounted、dispose 和资源实验 |
+| 约束布局 | 3h | 手机/平板布局与 overflow 故障 |
+| 导航/Key | 2h | 列表重排、详情、返回和 deep link 草案 |
+| 表单/可访问性 | 3h | 检查记录表单和错误状态 |
+| 状态方案 | 2—3h | ADR、fake repository 和状态单测 |
+| FactoryCare/复盘 | 3—4h | 技师 App UI 骨架和 Widget 测试 |
 
-- PR/提交运行Java、Node、Python、Flutter检查与测试；
-- 构建镜像并进行依赖/镜像基础扫描；
-- 数据库迁移先在临时库测试；
-- 部署前有人工批准或受保护环境；
-- 发布记录版本、commit和迁移；
-- 失败能回滚旧镜像，数据迁移有前滚/恢复说明。
+## FactoryCare 增量
 
-### 任务5：观测（2小时）
+- 登录占位、今日工单、工单详情、处理表单和设置五个最小页面；
+- fake repository 提供成功、空、延迟、错误数据；
+- 列表与筛选状态可预测，快速切换不会被旧 future 覆盖；
+- 表单包含检查项、工时、备件和解决说明；
+- 订阅/controller/focus/timer 全部由 owner 释放；
+- 至少 3 个 Widget 测试：状态渲染、表单错误、导航结果；
+- 记录选择的状态管理方案、替代方案、迁移和回滚成本。
 
-- 结构化日志含service、env、traceId和稳定错误码；
-- OTel Collector接收Java/Python trace；
-- 指标包含HTTP、DB、缓存、模型和队列关键项；
-- 建立最小面板/查询；
-- 敏感prompt/tool参数默认不导出。
+## 无 AI 任务（120—150 分钟）
 
-### 任务6：备份与故障演练（3—4小时）
+实现“今日工单列表 → 详情 → 接单确认”纯 fake 流程：覆盖 loading/empty/error/success、稳定 key、页面销毁后不更新 UI、重复点击防护、一个 Widget 测试和一个状态单测。故意删除 dispose 中的取消/释放并用证据恢复。
 
-至少完成并记录：
+## 验收
 
-1. 慢SQL；
-2. Redis中断/清空；
-3. Python/模型超时；
-4. 对象上传失败；
-5. 重复事件/HTTP请求；
-6. PostgreSQL备份恢复；
-7. 密钥/配置缺失；
-8. Java/Python重启恢复。
+- 能解释 Widget/Element/RenderObject 和 rebuild/layout/paint；
+- 能说明 mounted 能做什么、不能做什么；
+- 能用约束模型定位 overflow/unbounded；
+- 能说明 BuildContext 生命周期和 Key 选择；
+- 状态方案有边界，不在 build 发请求；
+- Widget/状态测试从命令行通过；
+- 能独立新增一个表单字段并更新验证、状态和测试。
 
-每项写现象、检测、影响、证据、处置、恢复验证和预防。
+## 非目标
 
-## FactoryCare项目增量
-
-- 生产候选Dockerfiles和Compose；
-- Nginx/TLS/安全配置；
-- CI/CD质量门；
-- OTel跨服务trace和基础指标；
-- PostgreSQL/对象存储备份恢复；
-- 8类故障演练和runbook。
-
-## AI协作边界
-
-AI可以起草Dockerfile、CI和runbook，但必须人工核对镜像版本、权限、secret、端口、数据卷、迁移顺序和破坏性命令。不得让AI直接在真实服务器执行未审查删除、迁移或防火墙命令。
-
-## 无AI训练（120分钟）
-
-给出“Web返回502且AI流中断”的环境，只用日志、curl、进程/端口和trace定位Nginx→Java→Python中的故障；修复后验证SSE、健康检查和回滚。
-
-## 求职动作
-
-- 把部署、备份和故障证据加入R2/R3/R4简历；
-- 模拟回答：Docker与虚拟机、health与ready、日志/指标/trace、Redis挂了怎么办、数据库迁移如何回滚、为什么不用K8s；
-- 本周投递15个左右高匹配岗位并记录反馈。
-
-## 交付物
-
-- [ ] Linux排查记录；
-- [ ] 安全多阶段镜像和Compose；
-- [ ] Nginx/TLS与secret方案；
-- [ ] CI/CD配置和一次发布/回滚；
-- [ ] OTel trace和指标证据；
-- [ ] 备份恢复记录；
-- [ ] 8类故障演练和runbook；
-- [ ] 无AI任务和周复盘。
-
-## 验收标准
-
-- 干净环境可按文档启动核心系统；
-- 数据库和密钥不暴露/提交；
-- 服务能优雅停止并正确报告readiness；
-- 至少一次真实恢复备份，不只生成备份文件；
-- trace可串联Java/Python；
-- 故障记录有证据和恢复验证；
-- G7生产化阶段门通过。
-
-## 本周明确不做
-
-- Kubernetes、Helm和Service Mesh；
-- 自建复杂监控平台；
-- 未授权真实生产部署；
-- 只做面板不做故障演练；
-- 假设镜像回滚能撤销数据迁移；
-- 把所有secret放`.env`并提交。
-
-## 官方资料
-
-- [Docker documentation](https://docs.docker.com/)
-- [Spring Boot production-ready features](https://docs.spring.io/spring-boot/reference/actuator/)
-- [OpenTelemetry documentation](https://opentelemetry.io/docs/)
-- [PostgreSQL backup and restore](https://www.postgresql.org/docs/current/backup.html)
-- [Nginx documentation](https://nginx.org/en/docs/)
-- [GitHub Actions documentation](https://docs.github.com/actions)
+- 不接真实 API、数据库、相机/扫码或推送；
+- 不同时学习多套状态框架；
+- 不追求完整视觉设计；
+- 不把 mounted 当取消或防重复方案。

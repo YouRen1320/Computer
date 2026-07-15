@@ -114,7 +114,7 @@ Week 00 只需要知道：
 - `mvn test` 会经过若干生命周期阶段并运行测试；
 - `mvn -v` 报告 Maven 自身版本及其启动 JVM；
 - `settings.xml` 可能影响镜像、代理、仓库与认证，不能随意公开；
-- Maven Wrapper 可以把项目构建工具版本项目化，但系统学习放在 Week 07。
+- Maven Wrapper 可以把项目构建工具版本项目化，但系统学习放在 Week 09。
 
 ### 与 pnpm 的类比及失效
 
@@ -147,7 +147,7 @@ Python 解释器、虚拟环境和项目依赖是三层。uv 可以管理项目�
 
 ### Flutter 与 Dart
 
-Flutter SDK 包含配套 Dart SDK，但真机构建还依赖 Xcode/Android 工具链。`flutter doctor -v` 报告的是目标平台的完整链路；若本周不开发移动端，只记录现状与 Week 25 的安装触发条件。
+Flutter SDK 包含配套 Dart SDK，但真机构建还依赖 Xcode/Android 工具链。`flutter doctor -v` 报告的是目标平台的完整链路；若本周不开发移动端，只记录现状与 Week 34 的安装触发条件。
 
 一次安装所有工具的代价是：冲突面扩大、磁盘与维护成本上升、错误无法归因。按需安装不是拖延，而是让每次变更都有真实用例和验收。
 

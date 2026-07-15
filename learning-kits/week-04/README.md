@@ -1,97 +1,39 @@
-# Week 04 深度教学包：异常、I/O、时间与 JSON
+# Week 04 深度教学包：继承、接口、多态、组合、record 与 enum
 
-本教学包服务于[第 4 周原计划](../../weeks/week-04.md)。本周不是学习四组互不相关的 API，而是建立一个统一认识：
+本包对应 [Week 04 周计划](../../weeks/week-04.md)。它在 Week 03 对象封装之上学习类型协作和建模选择，不把“用了继承/接口”本身当好设计。
 
-> 文件、时钟和 JSON 都是系统边界。边界输入不可信、边界调用会失败、失败必须保留语义，领域对象不能被外部格式直接塑形。
+## 文件导航
 
-## 本周完成标准
+| 文件 | 用途 |
+| --- | --- |
+| [concepts.md](./concepts.md) | 继承/重写、接口/抽象、多态、组合、record/enum/sealed/value object |
+| [labs.md](./labs.md) | 从错误继承到策略/组合和 FactoryCare 端口 |
+| [assessment.md](./assessment.md) | 无 AI 策略与值对象综合题 |
+| [answers.md](./answers.md) | 提交后参考与设计校准 |
+| [interview.md](./interview.md) | OOP 取舍追问 |
 
-完成本周后，你应当能够：
+## 前置证据
 
-1. 把业务拒绝、输入错误、基础设施失败、编程错误和 JVM Error 分开讨论；
-2. 只捕获能够处理、恢复或转换的异常，并在包装时保留 cause；
-3. 使用 Path、Files、UTF-8、临时文件和 try-with-resources 完成可验证的文件处理；
-4. 为“时间线上的时刻”“本地日历时间”“带地区规则的时间”选择正确类型；
-5. 注入 Clock，让当前时间规则不依赖真实系统时间；
-6. 把 JSON DTO、映射与领域校验分开，拒绝“反序列化成功即业务有效”；
-7. 完成设备目录导入、工单快照导出以及对应失败测试；
-8. 无 AI 完成链表题并画出引用变化。
+- Week 03 能创建有效对象并维护不变量；
+- 能解释引用共享、访问控制、static/final；
+- Device/WorkOrder class 行为测试通过；
+- 本周仍不使用 Spring DI、数据库或集合泛型深入。
 
-## 建议学习顺序
+## 时间
 
-| 顺序 | 材料 | 建议时间 | 完成证据 |
-| --- | --- | ---: | --- |
-| 1 | [概念讲义](./concepts.md) | 3—4h | 写一页边界与异常心智模型 |
-| 2 | [最小实验与故障注入](./labs.md) | 5—6h | 每个实验保留测试、失败截图或日志 |
-| 3 | FactoryCare 增量 | 3—4h | 导入器、导出器、固定 Clock 测试 |
-| 4 | [面试追问](./interview.md) | 1h | 录音回答至少 8 题 |
-| 5 | [无 AI 考核](./assessment.md) | 2h | 代码、测试、评分表和复盘 |
-| 6 | [答案与评分锚点](./answers.md) | 1h | 考后对照，补一个不同变体 |
+| 块 | 时间 |
+| --- | ---: |
+| 继承/重写/多态 | 3h |
+| 接口/抽象类 | 2—3h |
+| 组合/策略/委托 | 3h |
+| record/enum/sealed/值对象 | 3h |
+| FactoryCare 增量 | 4—5h |
+| 无 AI/答辩/复盘 | 1—2h |
 
-答案册必须在考核提交后再看。看答案后照抄通过不算通过。
+## 通过结果
 
-## 时间压缩方案
-
-本周推荐投入 15—18 小时。若只能投入 10 小时，保留：
-
-- 异常传播与 cause 实验；
-- Clock、Instant 与 ZoneId 实验；
-- JSON DTO 到领域对象的双阶段校验；
-- FactoryCare 导入器的成功、损坏 JSON、重复编码测试；
-- 120 分钟无 AI 考核。
-
-可延期原子替换的跨平台差异和附加面试题，但不能删除失败路径测试。
-
-## FactoryCare 本周切片
-
-本周只在此前的纯 Java 内存模型上增加边界适配器：
-
-- EquipmentCatalogImporter：UTF-8 JSON 设备目录导入；
-- WorkOrderSnapshotExporter：只读工单快照原子导出；
-- WorkOrder.createdAt：由 Clock 产生；
-- ImportReport：按记录索引报告业务错误；
-- InfrastructureException：包装文件或 JSON 技术失败并保留 cause。
-
-本周不接入 Spring、HTTP、数据库、对象存储，也不把 JSON 文件当数据库。
-
-## AI 使用边界
-
-可以使用 AI：
-
-- 解释一个概念并给反例；
-- 根据你先写出的契约补充边界用例；
-- 审查异常是否吞掉 cause、路径是否逃逸、时间语义是否混乱；
-- 生成损坏 JSON 或时区测试数据。
-
-必须由你决定：
-
-- 批量导入是整批拒绝还是收集业务错误；
-- 何时使用 checked 或 unchecked 异常；
-- 哪个时间代表业务事实，哪个时间只是展示；
-- DTO 字段、未知字段、缺失字段与兼容策略；
-- 导出失败后如何证明目标文件未被误认成功。
-
-完整规则见[AI 协作规范](../../AI_WORKFLOW.md)。
-
-## 交付清单
-
-- [ ] 异常分类与转换表；
-- [ ] UTF-8、路径约束和原子写入实验；
-- [ ] 固定 Clock 与时区实验；
-- [ ] JSON DTO 契约和映射；
-- [ ] 设备导入器与工单快照导出器；
-- [ ] 至少 8 个失败路径测试；
-- [ ] 链表无 AI 题；
-- [ ] 面试口述录音或文字；
-- [ ] 周评分达到 75 分，且关键分项均达到 60%。
-
-## 索引
-
-- [概念讲义](./concepts.md)
-- [实验、FactoryCare 增量与故障注入](./labs.md)
-- [无 AI 考核与评分](./assessment.md)
-- [独立答案册](./answers.md)
-- [面试题与追问](./interview.md)
-- [阶段考核总规则](../../ASSESSMENTS.md)
-- [FactoryCare 总规格](../../PROJECT_SPEC.md)
-
+- 能比较 extends/implements/abstract/composition；
+- 能解释重载与重写、静态类型与动态类型；
+- 能选择 class/record/enum/sealed/interface；
+- FactoryCare 策略/端口可替换，有行为测试；
+- 能识别 LSP 与浅不可变故障。

@@ -1,206 +1,150 @@
-# 第 1 周：Java 语法、类型、控制流与 JUnit
+# 第 1 周：Java 程序结构、控制台 I/O、类型、运算、方法与 JUnit
 
 ## 定位
 
-本周建立 Java 的最小可执行思维：值是什么、类型如何约束值、代码如何分支和循环、方法如何接收与返回数据，以及怎样用 JUnit 把业务规则变成可重复验证的事实。
+本周建立 Java 的最小可执行心智模型：源码怎样组织和运行、数据怎样进入/输出、值与类型怎样约束运算、方法怎样定义边界、JUnit 怎样证明行为。控制流、字符串深入和数组集中在 Week 02；这样不会一次塞入过多概念。
 
-时间预算：15—18 小时。允许 AI 帮助生成机械代码，但每条规则、每个边界和每个断言都必须能自己解释和修改。
+时间预算：15—18 小时，Week 01 目标窗口为 2026-07-15—07-26。先复用 `practice/week-00-java-smoke`，不创建 Spring 工程。
 
 ## 前置
 
-- 第 0 周环境验收通过：JDK 25、Maven 3.9.16 和 `JAVA_HOME` 一致。
-- 会在终端进入目录、运行 `mvn test`、阅读编译错误的文件与行号。
-- 具备 JavaScript/TypeScript 基础，但愿意放下“Java 就是更严格的 TS”这一错误类比。
-- 本周可以使用最小 Maven 工程运行 JUnit，但 Maven 原理留到第 7 周。
+- Week 00 环境已能使用 JDK 25、Maven 和 IntelliJ；
+- 会运行 `mvn test`，能从日志找到阶段、文件、行号和 expected/actual；
+- 完成 30—45 分钟有计时 G0 桥接后正式开始；
+- 有 TS/JS 基础，但不把 Java 简化为“带类型的 JS”。
 
 ## 目标
 
-- 理解 Java 编译执行链路和静态类型检查的价值。
-- 正确使用基本类型、引用类型、数组、字符串、变量作用域和类型转换。
-- 使用条件、循环、`switch` 表达清晰业务规则。
-- 编写职责单一的方法，理解参数按值传递。
-- 使用 JUnit 编写成功、边界和失败测试。
-- 完成 FactoryCare 的第一个“优先级计算规则”垂直练习。
-
-## 个性化起步顺序（2026-07-15）
-
-当前按Java L1、Spring零基础起步。先复用Week 00已有的`OrderAmountCalculator`，不直接进入优先级规则：
-
-1. 逐词读懂package、class、访问修饰符、`static`、返回类型、参数和`return`；
-2. 在完整可运行代码中学习基本类型、String、null、数组和类型错误；
-3. 再加入`if/else`、早返回、`switch`和循环；
-4. 学会JUnit正常、边界和异常测试，并区分编译错误、运行时异常和测试失败；
-5. 完成上述前置后，才设计并实现`WorkOrderPriorityCalculator`。
-
-所有预测题都必须提供完整方法签名、相关实现和业务契约。Week 01—06不使用Spring；Spring Core从Week 07开始。
+- 理解源文件、package、import、class、经典 `main` 和 JVM 启动链；
+- 使用 `System.out`、`System.err`、命令行参数和 `Scanner` 完成最小 I/O；
+- 区分外部 I/O 与方法参数/返回值；
+- 使用基本类型、引用类型、变量、作用域、字面量和类型转换；
+- 理解算术、比较、逻辑、赋值运算和求值顺序；
+- 定义和调用方法，理解参数按值传递、返回值、重载与可见性基础；
+- 使用 JUnit 编写正常、边界和异常测试；
+- 区分编译错误、运行时异常、断言失败和构建成功的证据含义。
 
 ## 完整概念清单
 
-### 程序结构与编译
+### 程序结构与运行
 
-- 源文件、类名、`main` 方法、package、import。
-- 经典入口`public static void main(String[] args)`、命令行参数和Java 25简化入口的区别。
-- `System.out`、`System.err`、`System.in`与`Scanner`的最小控制台输入输出。
-- 区分外部I/O与方法参数/返回值：方法有输入输出不等于程序进行了控制台或文件I/O。
-- `javac` 编译为字节码、`java` 启动 JVM 的高层过程。
-- 编译错误、运行时异常、测试失败三类反馈的区别。
-- 标识符、关键字、代码块、语句和表达式。
+- `.java` 源文件、public class 与文件名；
+- package 对应命名空间/目录，import 只影响名称解析；
+- class、method、block、statement、expression；
+- 经典入口 `public static void main(String[] args)`；Java 25 简化源文件只了解，不作为项目默认；
+- `javac` 生成字节码、`java` 启动 JVM 的高层流程；
+- classpath、target/classes 和 IDE 运行配置的直觉；
+- compiler、runtime、test runner、Maven 是不同层。
 
-### 类型和值
+### 控制台与方法 I/O
 
-- `byte`、`short`、`int`、`long`、`float`、`double`、`char`、`boolean`。
-- 字面量后缀、整数除法、浮点误差、溢出与窄化转换风险。
-- 基本类型与引用类型；变量保存值还是引用值。
-- 包装类型只了解存在和自动装箱风险，深入用法后续再学。
-- `null` 的含义；基本类型不能为 `null`。
-- 显式转换、隐式提升和为什么不能用强转掩盖数据设计问题。
-- `var` 只做局部类型推断，不是动态类型。
+- `System.out.println/print/printf` 和 `System.err`；
+- stdout/stderr 与方法 return 不同；
+- `args` 是字符串数组，本周只读取一个/两个位置，数组系统知识留 Week 02；
+- `Scanner(System.in)` 的 `nextLine`、基本数值解析与关闭边界；
+- 不关闭共享的 `System.in` 造成后续不可用的高层风险；
+- CLI 输入永远是外部不可信数据，转换失败要有明确结果；
+- 业务方法尽量不直接读取控制台，I/O 适配与规则分离。
 
-### 字符串与数组
+### 值、变量与类型
 
-- `String` 不可变、内容比较使用 `equals` 而不是 `==`。
-- 字符串拼接、格式化、空字符串与 `null` 的区别。
-- 一维数组的固定长度、下标、默认值和越界。
-- 可变参数只了解调用语义，不滥用。
+- `byte/short/int/long/float/double/char/boolean`；
+- 基本类型与引用类型的第一层区别；
+- 变量声明、初始化、重新赋值和局部变量必须初始化；
+- scope 和 shadowing 基础；
+- 整数/浮点/字符/布尔/String 字面量及后缀；
+- `long`/`float` 字面量后缀，整数除法，浮点误差；
+- widening/narrowing conversion、cast 和数据丢失；
+- 溢出不会自动抛异常，使用边界测试；
+- `String` 只学习声明/输出/输入，内容比较与方法在 Week 02；
+- `null` 只理解引用可能无对象，完整边界在 Week 02。
 
-### 运算与控制流
+### 运算符
 
-- 算术、比较、逻辑、赋值、短路求值和运算优先级。
-- `if/else`、早返回和减少嵌套。
-- 传统 `switch` 与 `switch` 表达式；穷尽分支和 `default`。
-- `for`、增强 `for`、`while`、`do/while`。
-- `break`、`continue`、循环不变量和终止条件。
-- 不为了“炫技”把简单控制流压成复杂表达式。
+- `+ - * / %`、一元正负、增减只读懂不追谜题；
+- assignment 与 compound assignment；
+- comparison 与 boolean；
+- `&&/||/!` 的短路只做最小实验，复杂条件在 Week 02；
+- 优先级不确定时加括号；
+- 字符串 `+` 拼接和从左到右结果；
+- 金额不用 float/double 作为最终领域方案，本周先以“分”的整数实验。
 
 ### 方法
 
-- 方法签名、参数、返回类型、`void`、局部变量作用域。
-- 参数按值传递：对象参数传递的是引用值的副本。
-- 方法重载的基本规则；不把返回类型当作重载依据。
-- 纯计算方法与有副作用方法的区别。
-- 输入校验、守卫条件和单一职责。
+- 修饰符、`static`、返回类型、方法名、参数列表、方法体；
+- declaration/signature/call/argument/parameter；
+- `void` 与有返回值方法；
+- `return` 结束当前方法；
+- 参数按值传递：基本值复制，引用值也被复制；
+- 方法重载由名称+参数列表区分，不能只改返回类型；
+- public/private/package-private 第一层访问边界；
+- 小方法按一个意图命名，避免让 I/O 和计算混在一起。
 
-### JUnit
+### JUnit 与反馈分类
 
-- 测试类、测试方法、`@Test`、断言和失败信息。
-- Arrange–Act–Assert 结构。
-- 等值类、边界值、异常输入和回归测试。
-- `assertEquals`、`assertTrue/False`、`assertThrows`、`assertAll`。
-- 参数化测试的使用场景；不为一个样例制造复杂参数源。
-- 测试命名表达“条件—行为—结果”。
-- 测试应验证可观察行为，不测试私有实现细节。
+- production code 在 `src/main/java`，test code 在 `src/test/java`；
+- 同 package 的 package-private 访问；
+- `@Test`、AAA、`assertEquals/assertTrue/assertThrows`；
+- 先写业务例子/边界，再写断言；
+- compile 失败时不会进入 test；testCompile 与生产 compile 不同；
+- test runner 执行测试，Failures 与 Errors/编译错误不同；
+- `BUILD SUCCESS` 必须结合 Tests run/Failures/Errors 判断；
+- 测试也可能写错，expected 应来自业务契约而非实现复制。
 
-## 任务分配
+## 课次与时间
 
-| 模块 | 时间 | 任务 |
+| 课次 | 时间 | 内容与产出 |
 | --- | ---: | --- |
-| 语法与类型 | 3h | 基本类型、引用、String、数组、转换和作用域小练习 |
-| 控制流 | 2.5h | 用分支、循环和 switch 表达工单规则 |
-| 方法设计 | 2h | 将长流程拆成可命名、可测试的方法 |
-| JUnit | 2.5h | 成功、边界、失败和参数化测试 |
-| FactoryCare | 3—4h | 实现优先级计算器及测试，记录一次 AI 修正 |
-| 无 AI 训练 | 2h | 限时完成规则变体并口述 |
-| 当前复盘 | 1h | 求职暂停；用于代码阅读、错题和下一步复盘 |
+| 0 | 0.5—0.75h | G0：读方法签名、制造类型编译错误、恢复并复验 |
+| 1 | 1.5—2h | package/class/main、编译运行、stdout/stderr |
+| 2 | 2h | 变量、类型、字面量、转换、整数除法和溢出 |
+| 3 | 2h | args/Scanner、输入转换、I/O 与业务方法分离 |
+| 4 | 2—2.5h | 方法、参数/返回、作用域、按值传递、重载 |
+| 5 | 2—2.5h | JUnit AAA、正常/边界/异常、四类反馈 |
+| 6 | 3—4h | CLI 金额计算器、测试和一次真实故障 |
+| 7 | 1—1.5h | 关闭 AI 修改一条规则并完成复盘 |
 
-建议练习顺序：
+## FactoryCare 前置增量
 
-1. 使用经典`main`、`System.out`和`Scanner`完成一次文本输入输出，并区分它与方法参数/返回值。
-2. 摄氏度、时长、百分比等纯计算，刻意验证整数除法和边界。
-3. 设备故障严重度转工单优先级。
-4. 按停机、是否安全事故、影响设备数计算升级结果。
-5. 用参数化测试覆盖输入组合。
-6. 人为引入一个 `==` 比较字符串和一个数组越界，再根据错误定位。
+完成 `OrderAmountCalculator` 的可测试 CLI 包装：
 
-## FactoryCare项目增量
+- 业务方法接收 `unitPriceCents`、`quantity`，返回总分；
+- CLI 从参数或控制台读取两个整数，输出金额或明确错误；
+- 业务方法不直接依赖 `Scanner/System.out`；
+- 覆盖单价/数量正常值、0、非法负数和可能溢出的契约；
+- 先决定溢出行为，再选择 `long`/精确运算方法；
+- 制造参数类型错误、缺分号、错误断言和运行时解析错误各一次，记录区别。
 
-实现第一个最小增量：`WorkOrderPriorityCalculator`。
+Week 02 前不实现复杂优先级决策，不使用数组循环做主任务。
 
-输入可限定为：
+## AI 协作边界
 
-- 故障严重度：1—5。
-- 是否导致设备停机。
-- 是否涉及人员安全。
-- 受影响设备数量。
+AI 可以解释完整代码、生成测试候选和提供故障；学习者必须逐词读懂方法签名、先预测错误类别、亲自运行、依据日志恢复，并独立修改规则。禁止一次生成最终 FactoryCare 模块。
 
-输出先使用明确的字符串或整数等级；第 2 周再重构为 enum/value object。本周重点是规则和测试，不提前做领域建模。
+## 无 AI 任务（90—120 分钟）
 
-最低业务规则：
+实现 `ServiceFeeCalculator`：输入基础金额（分）和服务费率（整数百分点或基点，由你先定义），返回总金额。提供 CLI、正常/0/边界/非法/溢出测试，并在 README 说明单位、舍入和错误契约。
 
-- 涉及安全时必须升级到最高级。
-- 停机且严重度较高时至少为高级。
-- 超出输入范围必须拒绝，不可静默截断。
-- 同一输入必须得到同一输出。
+## 交付物与验收
 
-测试至少覆盖：普通情况、每个边界、非法严重度、安全升级、停机升级以及组合输入。
+- 源码与测试从命令行构建，Tests run/Failures/Errors 可解释；
+- 能写出经典 main 和最小 Scanner 输入；
+- 能逐词解释两个方法签名和一次调用；
+- 能判断常见数值类型、整数除法、转换和溢出风险；
+- 能解释 Java 参数按值传递；
+- 能在 15 分钟内新增一条金额边界测试并修改实现；
+- 能根据日志恢复编译、测试或运行时错误各至少一种；
+- 60—120 秒复述“输入 → 转换 → 方法 → 返回 → 输出 → 测试”的链路。
 
-## AI协作边界
+## 非目标
 
-可以让 AI：
-
-- 根据你写出的规则生成测试用例候选表。
-- 解释编译错误和测试失败，但先只指出定位思路。
-- 审查方法命名、重复分支和缺失边界。
-- 在你完成首版后生成一个反例。
-
-必须由你完成：
-
-- 先用自然语言写业务规则和真值表示例。
-- 决定输入范围、优先级覆盖顺序和异常行为。
-- 逐条阅读 AI 生成的代码和测试，删掉无业务价值的断言。
-- 至少亲手修改一条规则并同步修改测试。
-
-每次向 AI 提问至少包含：背景、你的理解、当前代码/错误、验收标准，以及“先提示，不直接重写全部代码”。
-
-## 无AI训练
-
-本周从求职/复盘时段预留45—60分钟完成并记录：复杂度、数组边界和一道数组题；写出测试、时间/空间复杂度与替代方案。
-
-关闭 AI，限时120分钟：
-
-1. 新增“同一设备 24 小时内重复故障时优先级升一级”的简化输入规则；本周暂不处理真实时间对象。
-2. 自己修改方法签名、控制流和测试。
-3. 人为制造一个边界错误，通过失败测试定位并修正。
-4. 口述 `String` 的 `==` 与 `equals`、参数按值传递、整数除法和短路求值。
-
-## 求职动作
-
-当前暂停，不占用本周学习时间。恢复求职后再执行以下内容：
-
-- 从第 0 周岗位中提取 Java 基础面试词：基本类型、String、`==/equals`、值传递、switch、JUnit。
-- 为每个词写一个不超过 90 秒的口述答案和一个最小示例。
-- 浏览 3 个目标岗位的面试经验，仅记录重复出现的基础问题，不扩展学习框架。
-- 简历暂不写“熟练 Java”；可在学习记录中写“Java 25 基础与 JUnit 项目实践进行中”。
-
-## 交付物
-
-- 可由 `mvn test` 执行的最小 Java/JUnit 工程。
-- `WorkOrderPriorityCalculator` 及完整测试。
-- 一张业务规则真值表或决策表。
-- 一份错题记录：至少包含一个编译错误、一个运行时错误和一个测试失败。
-- 无 AI 训练代码与复盘。
-
-## 验收标准
-
-- 能从源码、编译、字节码到 JVM 启动进行高层口述。
-- 能解释八种基本类型、引用、`null`、数组、String 不可变和整数除法风险。
-- 能说明 Java 参数按值传递，不使用“对象按引用传递”的错误表述。
-- 优先级规则没有无法到达或遗漏的关键分支。
-- 测试覆盖成功、边界和非法输入；失败信息能指出业务含义。
-- `mvn test` 全部通过，且你能删除、修改并重新补回任何一条测试。
-- 无 AI 完成规则变体并定位一个故意引入的错误。
-
-## 明确不做
-
-- 不系统学习继承、接口、record、enum 和领域建模；留到第 2 周。
-- 不学习集合、泛型、Stream、Optional、并发或 Spring。
-- 不使用数据库、文件持久化或 JSON。
-- 不写图形界面、Vue 页面或完整 REST API。
-- 不追 Java 编译器、字节码指令或 JVM 源码。
+- 不系统学习 if/switch/for/while、数组和字符串 API（Week 02）；
+- 不学习类实例/构造器（Week 03）、继承/接口（Week 04）；
+- 不学习 Spring、数据库或框架；
+- 不考 Maven 低频命令背诵；
+- 不因已有 JUnit 工程就跳过 Java I/O 与类型基础。
 
 ## 官方资料
 
-- [Java SE 25 Language Updates](https://docs.oracle.com/en/java/javase/25/language/)
-- [Java SE 25 API](https://docs.oracle.com/en/java/javase/25/docs/api/)
-- [Java Language Specification 25](https://docs.oracle.com/javase/specs/jls/se25/html/)
-- [JUnit User Guide](https://docs.junit.org/current/user-guide/)
-- [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
+- Java Language Basics、`System`、`Scanner`、primitive types、methods 和 JUnit User Guide；
+- 进入本周时以 JDK 25 和项目 JUnit BOM 的官方文档为准。

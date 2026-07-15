@@ -1,158 +1,148 @@
-# 第33周：Java、Python、Web、App、小程序全链路与契约联调
+# 第 33 周：Dart 类、泛型、异常、Future、Stream 与测试
 
-## 本周定位
+## 定位
 
-本周不新增大功能，把此前分阶段完成的服务和客户端连接成一个可重复的真实业务闭环。重点是契约、身份、租户、错误、流、事件、版本和可追踪性，而不是手工改字段直到“看起来能跑”。
+本周完成 Flutter 前的 Dart 语言基础：对象模型、接口/mixin/extension、泛型、错误处理、异步 Future/Stream、取消与 isolate 边界。所有机制先在纯 Dart 中验证，再由 Week 34 接入 Flutter 生命周期。
 
-## 前置条件
+时间预算：15—18 小时。禁止用 Widget `setState` 掩盖尚未理解的 Future/Stream 状态。
 
-- G3—G6核心阶段通过；
-- Java核心、三个客户端和Python AI都有独立测试；
-- OpenAPI、事件schema和流事件协议存在；
-- 有可重置的演示租户、用户、设备、文档和工单数据。
+## 前置
 
-## 本周目标
+- 能用 Dart 类型、空安全、控制流、函数和集合；
+- 纯 Dart 工单规则的 analyzer/test 通过；
+- 能使用 debugger 和读取 async stack trace；
+- 明白 Promise/Future 类比只用于入门，具体调度与 API 需按 Dart 证据。
 
-- 固定公共API、内部API、事件和SSE契约；
-- 使用OpenAPI生成/校验TypeScript和Dart客户端；
-- 完成认证、租户和traceId跨端链路；
-- 完成扫码报修→分诊→派单→离线处理→验证→知识沉淀；
-- 处理部分失败、重复、取消、超时和版本冲突；
-- 建立端到端自动化与可重复演示数据；
-- 删除重复实现和临时绕过，不做机会性重构。
+## 目标
 
-## 必须理解的概念
+- 定义类、字段、构造器、命名/工厂构造器和不可变对象；
+- 理解 implicit interface、abstract、extends/implements/mixin/extension；
+- 使用 enum/sealed class/pattern 表达有限状态；
+- 使用泛型、约束与集合类型安全；
+- 设计 Exception/Error 边界并保留 stack trace；
+- 理解 event queue/microtask 的高层模型；
+- 使用 Future/async/await、并发组合、超时和错误；
+- 使用 Stream subscription、暂停/恢复/取消和 broadcast 边界；
+- 理解 isolate 解决 CPU 隔离，不共享普通内存；
+- 建立纯 Dart 单元、异步和 fake 测试。
 
-- API contract、consumer/provider和schema evolution；
-- backward compatible新增与breaking change；
-- DTO版本、错误码、枚举扩展和未知值；
-- OpenAPI生成物、手写扩展层和CI漂移检查；
-- correlation/trace ID跨HTTP、SSE、事件和后台任务；
-- timeout budget和级联超时；
-- client retry与server idempotency配合；
-- event delivery至少一次、consumer幂等和顺序假设；
-- eventual consistency和UI中间状态；
-- SSE事件ID、断线、重连、重复和最终状态；
-- demo seed、fixture、clock和确定性；
-- contract/integration/E2E测试各自发现什么；
-- feature flag、兼容窗口、部署顺序和回滚。
+## 完整概念清单
 
-## 时间与任务（15—18小时）
+### 类与对象
 
-下方120分钟无AI训练计入任务2的契约兼容实现，不在总时长之外重复增加。
+- class、instance field/method、getter/setter、static；
+- 默认/生成/命名构造器、initializer list、redirecting constructor；
+- `this`、`super`、const constructor 和 canonical instance 高层现象；
+- private 名称以 `_` 表示 library 私有，不是 class 私有；
+- immutable 注解/lint 与真正不可变设计；
+- factory constructor 可缓存/选择实现，但不一定创建新对象；
+- record/data object/class 的选择。
 
-### 任务1：契约盘点（2小时）
+### 类型协作
 
-- 列出公共REST、内部Python、SSE和事件契约；
-- 删除或标记未使用端点；
-- 统一时间、ID、分页、错误和枚举策略；
-- 为breaking change写迁移和客户端影响；
-- 锁定发布候选`v1`，后续只接受bug修复。
+- 每个 class 隐式定义 interface；
+- `extends` 继承实现，`implements` 只承诺接口并重新实现；
+- abstract class/interface class/base/final/sealed modifier 的高层约束，按当前稳定 Dart 文档验证；
+- mixin 复用横切行为的适用条件与状态风险；
+- extension method 静态解析，不修改原类型；
+- composition/delegation 优先于深继承；
+- overriding、covariant 关键字风险和 LSP 直觉。
 
-### 任务2：OpenAPI与客户端（3小时）
+### enum、sealed 与模式
 
-- 生成TypeScript和Dart客户端；
-- 建立生成物不手改规则和自定义wrapper；
-- CI比较schema/生成物；
-- uni-app、Vue和Flutter处理相同错误码；
-- 测试新增未知枚举或可选字段的兼容行为。
+- enhanced enum 的字段/构造器/方法；
+- sealed hierarchy 让同 library 分支可穷尽；
+- switch pattern、object/record/list pattern 和 guard；
+- 状态、加载结果、领域错误用 sealed union 表达；
+- JSON 字符串到 enum/sealed 类型需要显式验证；
+- 不用继承层次模拟随配置变化的任意数据。
 
-### 任务3：主业务全链路（4小时）
+### 泛型与相等性
 
-完成并录制：
+- generic class/method、bound `T extends ...`；
+- `Object?`、`Never` 与 variance 直觉；
+- reified generic 的可见范围，不假设可反射所有嵌套参数；
+- `==` 与 `hashCode` 契约；
+- 可变对象作为 Set/Map key 的风险；
+- value equality 可以手写或使用经选择的工具，但要理解生成结果。
 
-1. Web登记设备/手册并生成二维码；
-2. 小程序扫码报修并上传图片；
-3. Python给分诊建议，调度员人工确认派单；
-4. Flutter技师接单、离线检查、恢复同步；
-5. 诊断助手检索手册/案例并带引用；
-6. 技师提交解决，报修人确认；
-7. 关闭事件生成知识草稿，管理员审核发布；
-8. 新知识进入检索，审计/报表更新。
+### 异常与资源
 
-每一步保存traceId和可观察状态。
+- throw 任意对象可行但应抛 Exception 类型；
+- `try/on/catch/finally`、rethrow、stack trace；
+- 同步异常与 Future error；
+- 自定义领域异常、技术异常和用户可见结果；
+- `Error` 通常表示编程错误，不当正常控制流；
+- close/dispose/cancel 必须由资源拥有者调用；
+- finally 收尾不能无条件覆盖更新后的状态。
 
-### 任务4：失败链路（3小时）
+### Future 与事件循环
 
-- 小程序重复提交；
-- 两个调度员同时派单；
-- Flutter离线版本冲突；
-- Python超时/关闭AI feature；
-- 文档入库部分失败和重复事件；
-- SSE中途断开；
-- 跨租户ID和撤回文档；
-- 对象存储失败。
+- sync stack、event queue、microtask queue 高层顺序；
+- Future 状态和 completion；创建 Future 不等于新线程；
+- async 到首个 await 前同步执行；
+- `await`、then/catchError/whenComplete；
+- `Future.wait`、串行与并发、部分失败；
+- timeout 结束等待不一定取消底层 I/O；
+- Dart Future 默认没有统一取消，需 client/subscription/token 机制；
+- unawaited 操作必须有明确所有权与错误处理。
 
-确认失败不会破坏核心状态，并能从日志解释。
+### Stream 与 isolate
 
-### 任务5：自动化和种子数据（2—3小时）
+- single-subscription 与 broadcast；
+- listen/onData/onError/onDone；
+- subscription pause/resume/cancel；
+- async*、yield、await for；
+- Stream transform、backpressure 高层限制；
+- 页面销毁时取消订阅；
+- isolate 有独立内存，通过消息传递；
+- CPU 密集解析可考虑 isolate，普通网络等待不需要 isolate。
 
-- 一条跨Java/Python的contract/integration test；
-- 一条Vue主流程Playwright；
-- Flutter/uni-app保留可重复真机脚本或能自动化的关键段；
-- 创建一键重置演示数据命令；
-- 时间/SLA和模型结果使用可控fake用于确定性E2E。
+### 测试
 
-### 任务6：范围清理和复盘（1小时）
+- group/setup/teardown、matcher、throwsA；
+- async test、completion、emitsInOrder、fake async/time；
+- fake repository/client 与 mock 的取舍；
+- 测取消、超时、乱序、重复和资源关闭；
+- 测试通过仍需 analyzer/build；
+- Flutter Widget/Integration 测试留到 Week 34—35。
 
-- 列出临时绕过、TODO、未验证平台和已知限制；
-- 只修阻塞发布的问题；
-- 机会性重构进入单独清单，不混进联调。
+## 时间与任务
 
-## FactoryCare项目增量
+| 任务 | 时间 | 产出 |
+| --- | ---: | --- |
+| 类/构造器/不可变 | 2—3h | 工单值对象与实体 |
+| interface/mixin/extension/sealed | 3h | 端口、状态 union 和取舍记录 |
+| 泛型/相等 | 2h | Result/Repository 和 key 故障 |
+| 异常/Future | 3h | 超时、乱序、错误传播实验 |
+| Stream/isolate | 2—3h | 事件流取消和 CPU 对照 |
+| FactoryCare/复盘 | 3—4h | 纯 Dart data/domain 包和测试 |
 
-- 发布候选API/事件/SSE契约；
-- 三端生成客户端和契约CI；
-- 完整主链路与失败链路；
-- 演示种子数据和一键重置；
-- 全链路trace与联调报告。
+## FactoryCare 增量
 
-## AI协作边界
+- `WorkOrderId` 值对象、`WorkOrder` 实体和 sealed `LoadState`；
+- 泛型 `Repository<T, ID>` 仅在确有共同时使用；
+- fake repository 模拟成功、延迟、异常和乱序；
+- `WorkOrderEvent` Stream 支持订阅取消；
+- 测试页面等价 owner 销毁后 subscription 已取消（纯 Dart owner 类）；
+- 用 isolate 处理大 JSON 只做对照实验并测量，不默认采用。
 
-AI可以分析契约差异、生成测试矩阵和定位日志，但任何API/数据/事件变更都属于重大变更：必须先写影响、客户端迁移、部署顺序和回滚，不能让AI顺手统一字段。
+## 无 AI 任务（120—150 分钟）
 
-## 无AI训练（120分钟）
+实现 `WorkOrderSyncService` 纯 Dart 版本：从 repository 拉取、映射 sealed 结果、发布进度 Stream、支持超时和显式 dispose；fake client 可控制乱序/失败。测试成功、错误、超时、取消订阅、dispose 后不再发布，并解释哪些工作真正被取消。
 
-处理一个契约变化：工单优先级新增未知值。确保Java、OpenAPI、Vue、uni-app、Flutter和Python不会静默崩溃；写兼容策略、测试和部署顺序。
+## 验收
 
-## 求职动作
+- 能比较 extends/implements/mixin/extension/composition；
+- 能用 sealed 类型和穷尽 switch 表达状态；
+- 能解释 Future 不等于线程、timeout 不等于底层取消；
+- 能创建并取消 StreamSubscription；
+- analyzer、纯 Dart 测试稳定通过；
+- 能独立新增一种错误结果并更新所有穷尽分支。
 
-- 进行一次10分钟全链路演示；
-- 邀请他人只看README启动核心服务，记录卡点；
-- 每周投递10—15个最匹配岗位，使用R2/R3/R4版本对照结果。
+## 非目标
 
-## 交付物
-
-- [ ] 契约清单和变更策略；
-- [ ] OpenAPI生成与CI检查；
-- [ ] 主链路演示记录；
-- [ ] 至少8类失败验证；
-- [ ] 一键演示数据；
-- [ ] 全链路trace样例；
-- [ ] 联调问题/已知限制清单；
-- [ ] 无AI任务和周复盘。
-
-## 验收标准
-
-- 第三人按说明可运行核心演示；
-- 三端不直连Python/数据库/私有存储；
-- 失败路径不会造成越权、重复写或静默覆盖；
-- Python不可用时工单主流程可降级；
-- 契约漂移能被CI发现；
-- 主链路每步可由traceId定位。
-
-## 本周明确不做
-
-- 新增大型业务模块；
-- 重新设计全部UI；
-- 顺手拆微服务；
-- 为兼容保留两套永久API；
-- 手工修改生成客户端；
-- 掩盖未验证平台和失败。
-
-## 官方资料
-
-- [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spring REST API documentation concepts](https://docs.spring.io/spring-restdocs/docs/current/reference/htmlsingle/)
-- [Spring Modulith events](https://docs.spring.io/spring-modulith/reference/events.html)
-- [OpenTelemetry context](https://opentelemetry.io/docs/concepts/context-propagation/)
+- 不进入 Flutter Widget/BuildContext；
+- 不为了架构创建通用 Repository/Result 框架；
+- 不深入 isolate 调度器或 Dart VM 源码；
+- 不把 `mounted` 当网络取消方案，Week 34 会在 UI 生命周期验证。

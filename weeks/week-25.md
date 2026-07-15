@@ -1,168 +1,130 @@
-# 第25周：Dart/Flutter复健与可维护应用架构
+# 第 25 周：TypeScript 类型系统、泛型、收窄与运行时边界
 
-## 本周定位
+## 定位
 
-本周不重新刷一遍Flutter入门课程，而是利用你已有App经验做能力体检，并把现场技师App重建为可解释、可测试、能继续扩展的架构。目标是理解状态、生命周期、依赖和数据流，而不是追逐状态管理库。
+本周系统整理 TypeScript，而不是只复习接口写法。目标是能为 API、状态机、组件和错误建立精确类型，同时清楚类型在编译后会消失，网络响应、Storage 和用户输入必须运行时验证。
 
-## 前置条件
+时间预算：15—18 小时。先在纯 TS 模块中建立类型，Week 26 再进入 Vue。
 
-- 通过Week 24，Java公共API和认证契约已经稳定；
-- 能运行或找到以前的Flutter App源码；
-- 按[TECH_STACK.md](../TECH_STACK.md)安装当前Flutter stable，并完成`flutter doctor`；
-- 选定一个主验证端：Android或iOS。另一端只保证架构兼容，不要求本周发布。
+## 前置
 
-## 本周目标
+- JavaScript 语言与浏览器异步/安全阶段通过；
+- 能运行 `tsc --noEmit` 和测试；
+- 能阅读 `tsconfig.json`、ESM import 和构建错误；
+- FactoryCare OpenAPI/错误格式已有草案。
 
-- 恢复Dart空安全、类型、异步、Stream和错误处理；
-- 理解Flutter Widget、Element、RenderObject的职责层次，不钻源码；
-- 理解`BuildContext`、生命周期、Key、重建和资源释放；
-- 比较局部状态、共享状态、服务端状态和持久状态；
-- 采用UI层/数据层分离的应用架构；
-- 为FactoryCare技师App建立可测试骨架。
+## 目标
 
-## 必须理解的概念
+- 理解结构类型、类型推断、宽化、字面量和 `as const`；
+- 使用 union/intersection、discriminated union 和穷尽检查；
+- 使用类型守卫、控制流收窄、`unknown`、`never`；
+- 设计函数/对象/类/泛型/约束和常用 utility type；
+- 区分 optional、`undefined`、`null` 和字段缺失；
+- 理解 variance 的实用风险与函数参数检查；
+- 配置严格 `tsconfig`，理解 declaration/source map/module resolution；
+- 在 API 边界运行时验证并把未知数据转换为可信类型。
 
-### Dart
+## 完整概念清单
 
-- sound null safety、`?`、`!`、`late`及其风险；
-- class、abstract class、mixin、extension、enum、sealed class；
-- 泛型、record、pattern matching和不可变对象；
-- `Future`、`async/await`、`Stream`、取消和异常传播；
-- event loop与isolate的概念边界；
-- package、pubspec、语义化版本和代码生成；
-- JSON序列化、值相等和复制更新。
+### 类型推断与基本建模
 
-### Flutter
+- annotation、inference、contextual typing；
+- literal widening、`const`、`as const`、`satisfies`；
+- primitive、array、tuple、object、readonly；
+- interface 与 type alias 的共同点、扩展/合并差异；
+- structural typing 与 excess property check；
+- index signature、Record 和动态 key；
+- enum 与 string union 的取舍；
+- 不用 wrapper object 类型 `String/Number/Boolean`。
 
-- Widget是配置，Element维持树关系，RenderObject负责布局/绘制的概念；
-- Stateless/Stateful Widget和`State`生命周期；
-- `BuildContext`属于树位置，不能无边界跨异步保存；
-- Key在列表重排和状态识别中的作用；
-- `build`应保持可重复，不在其中执行不可控副作用；
-- 路由、深链和认证重定向；
-- 临时UI状态、应用状态、服务端状态和离线状态；
-- Provider、Riverpod、BLoC的思想和代价，本项目选择Riverpod候选实现；
-- Flutter官方应用架构中的View、ViewModel、Repository、Service职责；
-- 依赖反转、错误对象和加载/空/错误/成功状态。
+### 联合、交叉与收窄
 
-## 时间与任务（15—18小时）
+- union 表示“之一”，intersection 表示同时满足；
+- discriminant 设计和 `switch` 穷尽；
+- `typeof`、`in`、`instanceof`、equality narrowing；
+- user-defined type predicate/assertion function；
+- truthiness narrowing 可能误删 0/空字符串；
+- `never` 做穷尽检查，`unknown` 迫使验证；
+- `any` 关闭检查，应限制在迁移边界并尽快收窄；
+- type assertion 不做运行时转换，双重断言是危险逃逸。
 
-下方120分钟无AI训练计入任务7，不在总时长之外重复增加。
+### 函数与泛型
 
-### 任务1：旧App能力体检（2小时）
+- function type、call signature、optional/default/rest 参数；
+- overload signature 与 implementation signature；优先 union/泛型表达清晰关系；
+- generic function/type/interface/class；
+- constraint、`keyof`、indexed access、`typeof` type query；
+- generic default 和合理类型参数数量；
+- 泛型应表达输入输出关系，不用 `<T>` 装饰任何函数；
+- covariance/contravariance/invariance 的直觉和可变容器风险；
+- callback 参数与 `strictFunctionTypes`。
 
-- 拉起旧App，记录SDK、依赖、构建失败和过期API；
-- 画出旧App的数据流、状态管理和网络层；
-- 列出三项做得好的地方、三项现在会重构的地方；
-- 不立即整库升级，只创建风险清单。
+### 高级类型与工具
 
-### 任务2：Dart复健实验（3小时）
+- `Partial/Required/Readonly/Pick/Omit/Record/Exclude/Extract/NonNullable/ReturnType/Parameters`；
+- mapped type、key remapping、conditional type、`infer` 的可读范围；
+- template literal type 适合有限协议，不模拟任意字符串解析器；
+- branded/opaque ID 类型模拟值对象，但运行时仍是原值；
+- recursive type 与编译性能；
+- 不追求晦涩类型体操，API 可读性优先。
 
-- 用sealed class表达`Result<T>`或明确错误类型；
-- 用record/pattern处理一个工单摘要；
-- 对Future和Stream分别构造成功、异常、取消/停止订阅；
-- 比较主isolate异步IO与CPU重任务使用isolate的区别；
-- 为值对象和JSON映射写测试。
+### null、可选与错误
 
-### 任务3：Flutter机制实验（3小时）
+- `strictNullChecks`；
+- `x?: T` 与 `x: T | undefined` 在写入/存在性上的差异；
+- JSON 中 `null` 与字段缺失；
+- optional chaining 和 `??`；
+- catch variable 为 `unknown`，先判断再读取；
+- Result/discriminated union 与 throw 的适用边界；
+- 非空断言 `!` 只在外部不变量已由证据保证时使用。
 
-- 构造列表无Key/有Key重排实验；
-- 构造组件卸载后异步回调的错误与修复；
-- 使用DevTools观察一次不必要重建；
-- 写一页说明Widget/Element/RenderObject、Context和生命周期。
+### 编译配置与运行时验证
 
-### 任务4：架构决策（2小时）
+- TypeScript 做静态检查并输出 JS，不提供运行时类型；
+- strict、noImplicitOverride、noUncheckedIndexedAccess、exactOptionalPropertyTypes 等策略；
+- target、module、moduleResolution、lib、types、paths；
+- `isolatedModules`、declaration、sourceMap、incremental；
+- 浏览器/Node 类型环境不要无边界混合；
+- API/Storage/postMessage/URL 参数用 schema 或手写 validator 验证；
+- OpenAPI 生成类型减少漂移，但业务包装和 CI 契约检查仍需要。
 
-比较至少三种结构：简单feature目录、MVVM式UI/数据分层、Clean Architecture重分层。按实施成本、迁移成本、测试、AI生成一致性和长期维护比较。
+## 时间与任务
 
-推荐目标：package-by-feature，每个feature内部使用presentation/application/data边界；不为个人项目建立十几层抽象。记录ADR。
+| 任务 | 时间 | 产出 |
+| --- | ---: | --- |
+| 推断/结构/严格配置 | 2—3h | strict 工程和错误对照 |
+| union/收窄/never | 3h | 状态机和错误模型 |
+| 泛型/utility | 3h | 分页、仓储、表格列类型 |
+| null/unknown/运行时验证 | 2—3h | 不可信 API 解析器和失败用例 |
+| OpenAPI/边界 | 2h | 生成 DTO 与手写领域类型映射 |
+| FactoryCare/复盘 | 3—4h | 类型包、故障和独立变更 |
 
-### 任务5：技师App骨架（4—5小时）
+## FactoryCare 增量
 
-- 建立环境配置、路由和认证守卫；
-- 建立共享网络/错误/日志基础；
-- 建立`work_orders` feature的repository和view model接口；
-- 使用假repository完成待办列表、详情和加载/错误/空状态；
-- 写一个view model单测和一个Widget测试。
+- 定义 `WorkOrderSummary`、分页响应、稳定错误码和 12 状态 union；
+- 用 discriminated union 表达 loading/empty/error/success；
+- 用 branded ID 防止 DeviceId/WorkOrderId 静态混用；
+- 实现 `parseWorkOrderResponse(value: unknown)` 或 schema 验证；
+- 用 `never` 保证状态映射穷尽；
+- 开启严格配置，禁止生产代码 `any`/无依据 `!`/双重断言；
+- 证明伪造 `as WorkOrder` 可通过编译但在运行时失败。
 
-### 任务6：复盘与求职（1小时）
+## 无 AI 任务（120 分钟）
 
-- 更新Flutter项目描述，不声称新项目已上架；
-- 采样3—5个Flutter/移动端岗位，记录是否要求原生、上架、推送、支付或小程序；
-- 准备3分钟讲解旧App与新架构的差异。
+给定一份故意不稳定的 API JSON，设计 `unknown → Result<WorkOrder, ValidationError[]>` 转换：验证 ID、状态、时间、可选字段和嵌套技师；错误包含路径和原因。再实现一个泛型分页映射器并覆盖空页、非法状态和缺字段。
 
-### 任务7：无AI训练（2小时）
+## 验收
 
-执行下方无AI页面状态任务并记录测试、数据流与卡点。
+- 能解释 `any`、`unknown`、`never` 和 assertion 的边界；
+- 能设计 discriminated union 并做穷尽检查；
+- 能说明泛型表达的输入输出关系，而不是只会写 `<T>`；
+- strict `tsc --noEmit`、测试和构建通过；
+- 网络响应未经验证不能进入可信领域类型；
+- 能独立增加一个 API 字段并更新 schema、类型、映射和测试。
 
-## FactoryCare项目增量
+## 非目标
 
-- `technician_app`骨架；
-- 登录恢复和路由守卫的假实现；
-- 待办列表、详情和明确状态模型；
-- 架构ADR与旧App复盘；
-- 可运行的单元/Widget测试。
-
-本周不连接真实API和离线数据库，先固定UI/数据边界。
-
-## AI协作边界
-
-可以让AI：
-
-- 将旧Dart语法映射到当前稳定语法；
-- 比较Riverpod/BLoC/Provider并指出项目代价；
-- 审查生命周期、Context和资源释放；
-- 生成少量重复JSON映射代码和测试清单。
-
-不能让AI：
-
-- 一次生成整个App；
-- 未经选择引入完整Clean Architecture模板；
-- 用大量`!`和`late`掩盖空安全；
-- 只因库流行就替换状态管理；
-- 升级旧App全部依赖而不读迁移说明。
-
-## 无AI训练（120分钟）
-
-实现一个“技师筛选自己的高优先级待办”页面状态：输入假repository，输出加载、成功、空和错误UI；切换筛选不能重复订阅；组件销毁后无泄漏。写一个view model测试。
-
-## 求职动作
-
-- 更新R2/R3简历的多端一行，强调已有Flutter App与本周架构复健；
-- 不把个人项目写成Flutter商业年限；
-- 模拟回答：为什么已有uni-app仍需要Flutter？什么场景不该选Flutter？
-
-## 交付物
-
-- [ ] Flutter/Dart版本与`flutter doctor`记录；
-- [ ] 旧App复盘；
-- [ ] Dart异步、Stream和空安全实验；
-- [ ] 技师App架构ADR；
-- [ ] 假数据待办垂直切片；
-- [ ] 至少一个单元和一个Widget测试；
-- [ ] 无AI任务结果和周复盘。
-
-## 验收标准
-
-- 能解释Widget、Element、RenderObject而不混为一谈；
-- 能解释`BuildContext`、Key、生命周期和副作用边界；
-- 能区分Future、Stream、isolate和线程概念；
-- 状态管理选择有约束和取舍，不是“Riverpod最好”；
-- 代码可以测试，UI不直接依赖HTTP实现；
-- `flutter analyze`和测试通过。
-
-## 本周明确不做
-
-- 完整离线同步、推送和应用商店发布；
-- 自定义原生插件；
-- 同时支持所有桌面/Web平台；
-- 过度Clean Architecture；
-- 复制Web管理后台。
-
-## 官方资料
-
-- [Flutter architecture guide](https://docs.flutter.dev/app-architecture/guide)
-- [Flutter state management](https://docs.flutter.dev/data-and-backend/state-mgmt/intro)
-- [Flutter testing](https://docs.flutter.dev/testing/overview)
-- [Dart language](https://dart.dev/language)
-- [Dart concurrency](https://dart.dev/language/concurrency)
+- 不做类型体操竞赛；
+- 不进入 Vue 类型宏，留到 Week 26；
+- 不把 OpenAPI 生成物当业务领域模型；
+- 不用断言消灭所有编译错误。

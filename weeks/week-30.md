@@ -1,150 +1,168 @@
-# 第30周：文档管线、pgvector、混合检索与带引用RAG
+# 第 30 周：uni-app Vue 3 小程序基础、平台约束与扫码报修
 
-## 本周定位
+> 建议投入：16 小时（可在 15—18 小时内调整）
 
-本周实现RAG的数据和检索基础。重点不是“把PDF塞进向量库”，而是文档版本、解析质量、租户ACL、可重建索引、混合检索、引用和撤回。
+## 1. 本周定位
 
-## 前置条件
+本周把 Vue 3 能力迁移到 uni-app，但目标不是证明“一套代码完美运行所有平台”，而是交付一个微信小程序方向的 FactoryCare 员工报修端。它只承担扫码、快速报修和进度查询，与 Vue 管理端的调度功能、Flutter 技师端的离线巡检职责不同。
 
-- 模型adapter和流式协议通过；
-- PostgreSQL 18、pgvector和对象存储可用；
-- Java知识模块已有文档发布/撤回元数据与事件；
-- 准备合法使用的设备手册和自建知识文档。
+先在微信开发者工具完成主流程，第 31 周再进行真机、上传、权限和发布。H5 只能作为快速预览，不能替代小程序运行时验证。
 
-## 本周目标
+## 2. 前置条件
 
-- 建立异步、幂等、可重试的文档入库管线；
-- 理解解析、OCR、清洗、切块和元数据；
-- 使用PostgreSQL全文与pgvector进行混合检索；
-- 理解HNSW/IVFFlat、精确/近似搜索和过滤影响；
-- 在检索阶段执行tenant、ACL和发布状态过滤；
-- 输出可点击、可验证的引用；
-- 支持版本更新、撤回和索引重建。
+- Week 22—29 的 HTML/CSS、JavaScript、TypeScript、Vue3、状态边界、测试和错误恢复已通过。
+- FactoryCare 后端已有租户、用户、设备、工单、幂等和权限接口。
+- 已准备微信小程序测试号或开发 AppID；若暂时没有，先使用工具测试环境，但必须记录第 31 周真机阻塞。
+- 创建项目时选择当前稳定 uni-app Vue3 + Vite 组合并锁定依赖，不使用 alpha/RC。
 
-## 必须理解的概念
+## 3. 学习目标
 
-- RAG解决的范围与不能解决的问题；
-- 原文件、解析文本、chunk、embedding、索引都是不同层；
-- PDF文本层、扫描PDF/OCR、表格、图片和页码映射；
-- normalization、去页眉页脚、编码和重复内容；
-- 固定长度、语义、结构/标题切块及overlap代价；
-- embedding维度、距离函数、归一化和模型版本；
-- exact search、HNSW、IVFFlat的速度/召回/内存/构建取舍；
-- metadata filter和近似索引过滤后召回问题；
-- PostgreSQL全文检索、向量检索、hybrid和RRF概念；
-- reranker与生成模型职责不同；
-- tenant/ACL/doc status必须进入检索查询；
-- source URI、document/page/section/chunk定位；
-- parent-child retrieval和上下文扩展概念；
-- 索引是派生数据，原文/元数据才是可重建来源；
-- 文档更新、撤回、删除、embedding迁移和双索引切换。
+- 能解释 uni-app 编译到小程序的模型，以及它与普通浏览器 Vue SPA 的运行时差异。
+- 能使用 `pages.json`、`manifest.json`、页面/应用生命周期和 `uni.*` API。
+- 能识别 DOM、网络域名、包体、样式、路由、组件和权限的平台约束。
+- 能实现小程序登录码交换与 FactoryCare 内部用户/租户映射，不信任客户端身份字段。
+- 能使用 `uni.scanCode` 安全解析设备二维码并由后端验证权限与设备状态。
+- 能完成“扫码—确认设备—填写报修—幂等提交—查看进度”的垂直闭环。
 
-## 时间与任务（15—18小时）
+## 4. 完整概念清单
 
-下方120分钟无AI训练计入任务5的发布/撤回链路，不在总时长之外重复增加。
+### 4.1 项目与运行时
 
-### 任务1：数据和schema（2小时）
+- uni-app Vue3 SFC、Vite 构建、TypeScript 和目标平台编译。
+- `pages.json` 页面、导航栏、TabBar、分包；`manifest.json` 应用/平台配置；`uni.scss` 主题变量。
+- App、Page、Component 生命周期与 Vue 生命周期的交集和差异。
+- 页面栈、`navigateTo/redirectTo/reLaunch/switchTab/navigateBack` 的限制。
+- `rpx`、安全区域、状态栏、触摸目标和不同屏幕适配。
+- 小程序不是浏览器：不能假定 DOM、`window`、任意 npm 包和浏览器 API 可用。
 
-- 设计`source_document/source_version/chunk/index_version`；
-- 每个chunk保存tenant、ACL、发布状态、文档/版本、页码/章节、内容哈希和embedding版本；
-- Python数据库角色只写`ai` schema；
-- Flyway或受控迁移创建扩展与表；
-- 建立唯一约束保证重复事件幂等。
+### 4.2 跨平台与条件编译
 
-### 任务2：解析与切块（4小时）
+- `#ifdef MP-WEIXIN`、平台目录和条件编译的使用边界。
+- 优先使用统一 API，平台差异隔离在 adapter/composable，而不是散落页面。
+- `uni.canIUse`、基础库版本、平台特有组件和降级提示。
+- H5、小程序、App 的 Cookie、网络、存储、授权和组件行为不同。
+- 本项目只验收微信小程序；不宣称未经测试的平台兼容。
 
-- 至少处理文本PDF、DOCX和CSV各一种；
-- 扫描PDF只做OCR概念或一个小样，不追求复杂版面识别；
-- 保存页码/章节映射；
-- 比较两种切块策略和overlap；
-- 对空页、表格错乱、重复页眉和超大文件记录失败；
-- 原文件存对象存储，解析结果带版本和哈希。
+### 4.3 网络、状态与错误
 
-### 任务3：Embedding和索引（3小时）
+- `uni.request` 与浏览器 fetch 差异；HTTPS 合法域名、超时、证书和开发工具“不校验域名”陷阱。
+- 统一请求层处理关联 ID、移动会话、业务错误码、401、429、网络离线和超时。
+- 页面局部状态、Pinia 会话状态、URL/Page 参数和服务端状态边界。
+- 加载、空、失败、离线和重复提交反馈；不能只在控制台打印错误。
+- 小程序包体、分包与资源体积；不要把 Web 管理端组件库搬进小程序。
 
-- 批量embedding，处理限流、部分失败和断点；
-- 记录模型、维度和归一化；
-- 小数据先做精确搜索，再添加HNSW或适合索引；
-- 用`EXPLAIN`观察查询；
-- 设计重建命令和新旧索引版本切换。
+### 4.4 小程序认证
 
-### 任务4：混合检索与引用（3—4小时）
+- `uni.login` 返回短期、单次使用的登录 `code`，它不是用户身份和 Access Token。
+- 后端持有平台 Secret，与平台交换外部用户标识；Secret 绝不能进入小程序包。
+- 外部身份映射 FactoryCare 内部用户、租户、角色；不存在或停用用户应拒绝。
+- 本项目选择服务端存储的短期不透明移动会话 Token，Scope 最小化；不因“流行”强制自制 JWT。
+- 客户端存储不可视为可信，所有租户、权限和资源归属仍由后端校验。
+- 开发测试 Provider 与真实微信 Provider 使用同一接口；测试身份必须有明显环境隔离，生产构建不得启用。
 
-- 构建全文和向量候选；
-- 使用简单RRF或显式权重融合；
-- 加metadata/tenant/ACL/doc status过滤；
-- 可选加入rerank；
-- 返回citation ID、标题、版本、页/章节和片段；
-- 生成回答时只能引用检索结果，证据不足返回无答案。
+### 4.5 扫码报修安全
 
-### 任务5：发布/撤回链路（2小时）
+- `uni.scanCode` 的成功、取消、权限拒绝、无法识别和多种码类型。
+- 二维码只携带不透明设备标识/签名短链接，不包含数据库结构、租户或敏感数据。
+- 客户端解析只是导航提示，后端必须重新校验签名、有效期、租户、设备状态和用户权限。
+- 防止替换设备 ID、重复扫码、过期码、跨租户码和恶意 URL。
+- 扫码失败允许手工输入设备编码，并经过同样的后端验证。
 
-- 消费`KnowledgeDocumentPublished.v1`幂等入库；
-- 同一事件重复不会重复chunk；
-- 新版本与旧版本状态清楚；
-- 撤回事件使其立即不可检索，再异步清理；
-- 测试跨租户、未发布和撤回文档。
+## 5. 任务分配
 
-### 任务6：初始评估（1小时）
+| 任务 | 时间 | 结果 |
+| --- | ---: | --- |
+| uni-app 运行时与配置实验 | 2.5h | 生命周期/平台差异笔记 |
+| 请求层与小程序认证边界 | 3h | 可测试登录和错误处理 |
+| 扫码与设备确认 | 3h | 安全扫码流程 |
+| 报修/进度项目闭环 | 4h | 可运行微信开发者工具版本 |
+| 无 AI 训练 | 2h | 独立页面切片 |
+| 南昌岗位与简历动作 | 2h | uni-app 技能证据矩阵 |
 
-- 建立至少30条query→相关source标注；
-- 测量候选命中、引用和无答案；
-- 保存失败样例，为Week31优化。
+总计 16.5 小时。若只有 15 小时，减少视觉打磨；不能删除登录码交换、扫码后端校验和幂等提交。
 
-## FactoryCare项目增量
+## 6. FactoryCare 项目增量
 
-- 知识文档入库worker；
-- `ai` schema和pgvector；
-- 文档解析/切块/embedding/index版本；
-- 混合检索和引用API；
-- 发布、更新、撤回链路；
-- 初始30条评估集。
-- Vue诊断面板展示可点击引用、无答案与文档版本，仍只通过Java公共API访问。
+- 新建 `factorycare-miniapp`，README 明确目标平台、角色、开发命令和未经验证的平台。
+- 页面限定为：登录/绑定提示、首页扫码、设备确认、报修表单、我的报修、报修详情。
+- 建立小型请求 adapter 和会话 Store；每个模块写明数据来源、映射和认证副作用。
+- 后端增加移动登录 Provider 接口：测试环境使用固定受控账号，真实环境交换微信 code；生产配置禁止测试 Provider。
+- 后端签发短期不透明移动会话，映射内部用户/租户/权限；复用现有数据权限与审计。
+- 使用 `uni.scanCode` 读取设备码；后端 `resolve-asset-code` 校验签名/租户/权限后返回最小设备 DTO。
+- 报修表单包含故障分类、描述、紧急程度和联系方式；附件上传留到第 31 周。
+- 创建工单使用第 19 周 `Idempotency-Key`，连续点击或网络重试只创建一次。
+- 我的报修/详情只显示当前用户可见数据，状态使用和后端一致的稳定映射。
+- 编写 `ADR-023-miniapp-boundaries.md`：平台目标、认证、二维码格式、测试 Provider 隔离和跨端非目标。
 
-## AI协作边界
+## 7. AI 协作边界
 
-AI可以建议切块和测试query，但不能自动把生成问题当作独立真实评估。必须人工检查解析文本、引用页码、ACL查询和SQL。不要把所有文档全文发送给模型“让它自己找”。
+AI 可以：
 
-## 无AI训练（120分钟）
+- 把已有 Vue Composable 按 uni-app 运行时约束提出迁移方案。
+- 生成平台差异、扫码失败和网络错误测试清单。
+- 审查页面是否使用浏览器专属 API、二维码是否泄露信息。
+- 帮助解释编译错误，但必须在微信开发者工具复验。
 
-新增文档撤回：从Java事件到Python索引不可见，重复事件幂等；补跨租户和旧版本不可检索测试，并解释为什么先标记不可见再异步删除。
+AI 不可以：
 
-## 求职动作
+- 宣称 H5 跑通就等于小程序兼容。
+- 把 AppID Secret、真实 Token、用户数据或二维码密钥写进前端代码/提示词。
+- 信任客户端传入的 `tenantId/userId/assetId`，或绕过后端数据权限。
+- 用大量条件编译复制两套业务逻辑。
 
-- 准备白板讲解“文档→chunk→embedding→hybrid retrieve→rerank→generation→citation”；
-- 模拟回答：向量库是不是数据库事实源；为什么需要全文检索；切块越小是否越好；如何删除用户文档；
-- R4简历开始写“带ACL和引用的RAG”，附实际评估数量。
+AI 生成的跨端 API 必须逐项查官方平台支持表，并在目标小程序环境运行，不能只依赖类型检查。
 
-## 交付物
+## 8. 无 AI 训练
 
-- [ ] `ai` schema和迁移；
-- [ ] 三类文档解析记录；
-- [ ] 两种切块对比；
-- [ ] embedding/index版本和重建命令；
-- [ ] hybrid检索、ACL和citation；
-- [ ] 发布/撤回幂等测试；
-- [ ] 30条初始评估和失败集。
+关闭 AI 120 分钟，实现“手工输入设备编码报修”的降级路径：
 
-## 验收标准
+- 设备编码前端做基础格式提示，后端执行真实租户/权限验证。
+- 处理不存在、跨租户、停用设备、429 和网络超时。
+- 用户修正编码后保留已填写的故障描述。
+- 提交复用幂等键，重复点击不能创建两个工单。
+- 不使用 DOM/browser API，并在微信开发者工具验证。
 
-- 跨租户、未发布和撤回文档零召回；
-- 引用能定位原文页/章节；
-- 解析和embedding部分失败可重试；
-- 索引可以从原文/元数据重建；
-- 能解释HNSW/IVFFlat而不要求调优到专家；
-- Python不读取/写入未授权core表。
+## 9. 求职动作（恢复求职后启用）
 
-## 本周明确不做
+- 采样 10 个南昌 uni-app/小程序/Vue 岗位，记录 Vue3、原生小程序、真机、扫码、上传、支付、上架等真实要求。
+- 建立“会用 uni-app”证据矩阵：开发工具运行、平台约束、登录、请求、扫码、幂等、真机/发布（第 31 周补齐）。
+- 简历暂写：`使用 uni-app Vue3 实现微信小程序扫码报修，二维码只作导航、后端执行租户/设备校验并以幂等键防重复创建`。
+- 本周完成至少 8 次 Vue/uni-app/全栈定向投递，并记录企业是否更重视原生小程序经验或多端数量。
 
-- 一开始引入独立向量数据库；
-- 复杂OCR/版面模型训练；
-- 用聊天体验替代检索评估；
-- 索引未发布或跨租户内容；
-- 让向量索引成为唯一文档存储。
+## 10. 本周交付物
 
-## 官方资料
+- 可在微信开发者工具运行的 `factorycare-miniapp`。
+- 移动登录/受控测试 Provider、请求层和会话恢复。
+- 扫码/手工输入、设备确认、报修提交、列表和详情闭环。
+- `ADR-023-miniapp-boundaries.md` 与平台差异清单。
+- 无 AI 降级页面、岗位证据矩阵和更新后的项目描述。
 
-- [pgvector](https://github.com/pgvector/pgvector)
-- [PostgreSQL full text search](https://www.postgresql.org/docs/current/textsearch.html)
-- [Spring AI ETL concepts](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
-- 使用所选解析库的官方文档并记录许可证。
+## 11. 验收标准
+
+- 能解释 uni-app 与浏览器 Vue 的运行时、生命周期、路由、网络和存储差异。
+- 微信开发者工具冷启动后能登录、扫码/手输、创建工单并查看进度。
+- 登录 code 只发往后端，平台 Secret 不在客户端；生产构建无法启用测试 Provider。
+- 篡改二维码中的设备标识、tenantId 或 userId 不能越权。
+- 连续点击、请求超时重试只创建一个工单。
+- 目标平台限制和未经验证平台写进 README，不声称“一次开发全端无差异”。
+- 无 AI 120 分钟完成降级路径并能解释每个错误状态。
+
+## 12. 明确不做
+
+- 不同时适配微信、支付宝、抖音小程序和 App。
+- 不复制 Vue 管理后台，不引入重型 Web UI 组件库。
+- 不把 H5 预览当真机/小程序验收。
+- 不在客户端保存平台 Secret、信任身份字段或解析二维码后直接操作设备。
+- 不实现附件上传、推送、支付和正式发布；这些属于第 31 周或只学概念。
+
+## 13. 官方资料
+
+- [uni-app 官方文档](https://uniapp.dcloud.net.cn/)
+- [uni-app Vue3](https://uniapp.dcloud.net.cn/tutorial/vue3-basics.html)
+- [pages.json 页面路由](https://uniapp.dcloud.net.cn/collocation/pages.html)
+- [uni-app 条件编译](https://uniapp.dcloud.net.cn/tutorial/platform.html)
+- [uni-app 生命周期](https://uniapp.dcloud.net.cn/tutorial/page.html#lifecycle)
+- [uni.login](https://uniapp.dcloud.net.cn/api/plugins/login.html)
+- [uni.scanCode](https://uniapp.dcloud.net.cn/api/system/barcode.html)
+- [微信小程序登录](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
+- [微信小程序网络](https://developers.weixin.qq.com/miniprogram/dev/framework/ability/network.html)

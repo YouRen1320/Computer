@@ -1,171 +1,131 @@
-# 第 4 周：异常、I/O、时间与 JSON
+# 第 4 周：继承、接口、抽象、多态、组合、record 与 enum
 
 ## 定位
 
-本周让 FactoryCare 开始接触系统边界：失败如何表达、文件如何安全读写、业务时间如何可测试、领域对象如何映射为 JSON。目标是显式处理边界，而不是用 `throws Exception`、系统当前时间和随意序列化掩盖问题。
+Week 03 学会创建和封装对象，本周学习多个类型如何协作。重点不是背 OOP 名词，而是知道何时使用接口、抽象类、继承、组合、record、enum 和值对象，并能识别“为了复用几行代码而错误继承”的设计。
 
-时间预算：15—18 小时。JSON 仅作为导入导出格式，不充当数据库。
+时间预算：15—18 小时。继续使用纯 Java 和 JUnit，不引入 Spring 容器。
 
 ## 前置
 
-- 掌握类、Value Object、集合、泛型和相等性。
-- 内存仓储能够保存和查询设备、工单。
-- 能用 JUnit 验证异常和集合结果。
-- 了解所有外部输入都不可信，不能直接构造有效领域对象。
+- 能定义类、字段、构造器、实例方法和访问控制；
+- 能解释 `this`、`static`、`final` 和封装；
+- 能通过构造器/工厂方法保护对象不变量；
+- 能用 JUnit 测试对象行为，而不是只测 getter。
 
 ## 目标
 
-- 区分业务失败、技术失败、编程错误和不可恢复错误。
-- 设计有语义的异常并保留根因，不吞异常。
-- 使用 NIO.2、UTF-8 和 try-with-resources 安全处理文件。
-- 正确选择 `Instant`、本地日期时间、时区、Duration 和 Clock。
-- 将 JSON DTO 与领域对象分离，显式处理未知、缺失和非法字段。
-- 为 FactoryCare 实现设备目录导入和工单快照导出。
+- 理解 is-a、has-a 与行为契约；
+- 使用接口分离调用者与实现；
+- 理解抽象类与接口的共同点和差异；
+- 理解重写、动态绑定、向上转型和多态集合；
+- 知道继承的耦合、脆弱基类和 LSP 风险；
+- 优先用组合、委托和策略表达可变规则；
+- 正确使用 record、enum、sealed type 和值对象；
+- 为 FactoryCare 建立可扩展但不过度设计的通知/优先级模型。
 
 ## 完整概念清单
 
-### 异常模型
+### 继承与重写
 
-- `Throwable`、`Error`、checked exception、runtime exception 的边界。
-- 业务异常、输入校验异常、基础设施异常和编程 bug 的区别。
-- `throw` 与 `throws`；异常传播和调用栈。
-- `try/catch/finally`；只捕获能处理或转换的异常。
-- try-with-resources 与 `AutoCloseable`。
-- 保留原始 cause；包装异常时添加业务上下文但不泄漏敏感数据。
-- 不捕获 `Exception` 后返回假成功，不用异常代替正常分支。
-- 批量导入时 fail-fast 与收集错误两种策略。
+- `extends` 建立类型关系，不只是拿到父类方法；
+- 父类构造器、`super`、构造顺序和可见性；
+- 方法重写、`@Override`、返回类型协变和不能降低可见性；
+- 重载由编译期参数决定，重写由运行时实际类型决定；
+- `final` 类/方法的边界；
+- 字段隐藏不是多态，应避免同名字段制造混乱；
+- Liskov 替换原则的直觉：子类型不能破坏父契约；
+- 脆弱基类、过深层次、继承可变状态和横向能力组合风险。
 
-### 文件与流
+### 接口与抽象类
 
-- byte stream 与 character stream；编码决定文本解释。
-- NIO.2 的 `Path`、`Files`、相对/绝对路径、规范化。
-- UTF-8 明确指定，不依赖机器默认编码。
-- 小文件整体读取与大文件流式处理的选择。
-- 原子写入的高层思路：临时文件、成功后替换。
-- 文件不存在、权限不足、路径穿越、部分写入和资源关闭。
-- 用户提供文件名不能直接拼接到任意系统路径。
+- 接口描述调用者需要的能力/端口，而不是“所有类都加 Interface”；
+- 抽象方法、default/static/private interface method 的用途；
+- 一个类可实现多个接口，接口不能持有实例状态；
+- 抽象类可共享状态/构造流程，但带来单继承约束；
+- 选择规则：稳定共同状态/模板可考虑抽象类，能力边界/替换实现优先接口；
+- 接口隔离：调用者不依赖不使用的方法；
+- 包可见实现和公开接口可以控制 API 面积。
 
-### 日期时间
+### 多态与类型判断
 
-- `Instant` 表示时间线上的时刻，适合持久化审计时间。
-- `LocalDate` 表示日期；`LocalDateTime` 不包含时区或偏移。
-- `OffsetDateTime`、`ZonedDateTime` 的用途和时区规则。
-- `ZoneId`、UTC、系统默认时区和夏令时风险。
-- `Duration` 与 `Period` 的区别。
-- `Clock` 注入使“现在”可测试；不在核心规则中散落 `now()`。
-- 格式化、解析和 ISO-8601；展示格式不等于存储格式。
+- 父类型引用指向子类型对象；
+- 动态方法分派、编译期可见成员和运行时实现；
+- 多态集合与对每种类型写 `if instanceof` 的取舍；
+- 安全向下转型、pattern matching 和穷尽分支；
+- `instanceof` 不是绝对错误，但重复类型分支可能提示职责错位；
+- 不用继承模拟数据库枚举或随意变化的业务配置。
 
-### JSON 边界
+### 组合、委托与策略
 
-- JSON object/array/string/number/boolean/null。
-- JSON 字段与 Java 类型的映射风险：数字范围、null、未知字段、时间格式。
-- Jackson 3 的高层对象映射流程；使用当前稳定版本和明确配置。
-- 输入 DTO、输出 DTO 与领域对象的职责分离。
-- 先解析 DTO，再通过领域工厂校验；反序列化成功不代表业务有效。
-- enum 使用稳定 code 的映射策略，不依赖 ordinal。
-- 不直接暴露内部实体全部字段，不序列化密码、密钥和内部异常。
-- 版本兼容：字段新增、缺失和废弃需有明确策略。
+- has-a、对象协作和将行为委托给成员；
+- 组合比继承更容易替换、测试和限制职责；
+- Strategy 用接口表达一组可替换规则；
+- Factory 方法负责选择/创建，但不演化成无意义的“模式大全”；
+- Dependency Inversion 是高层规则依赖抽象，Week 09 才由 Spring 装配；
+- 优先最简单能表达变化方向的设计。
 
-### 可测试边界
+### record、enum、sealed 与值对象
 
-- 临时目录、固定 Clock 和测试 fixture。
-- 正常、空文件、损坏 JSON、未知字段、重复数据和部分错误。
-- 错误报告包含记录位置与原因，不包含敏感原文。
-- I/O 适配器与领域服务分离。
+- record 的组件、规范构造器、compact constructor、值语义和防御性复制；
+- record 适合不可变数据/值，不自动适合有生命周期的实体；
+- enum 是受限实例集合，可有字段、构造器和行为；
+- enum 名称持久化/序列化变化需要契约意识；
+- sealed class/interface 与 `permits` 控制允许的子类型；
+- 值对象按值相等、不可变、自校验，例如 `WorkOrderId`、`DurationMinutes`；
+- Entity 由身份和生命周期区分，不能只靠所有字段相等。
 
-## 任务分配
+### Object 基础契约
 
-| 模块 | 时间 | 任务 |
+- `toString` 用于诊断，不泄漏密钥/敏感信息；
+- `equals/hashCode` 在 Week 05 深入，本周先知道 record 自动生成值语义；
+- 所有类最终继承 `Object`；
+- 不依赖 finalize；资源管理使用 Week 06 的显式边界。
+
+## 时间与任务
+
+| 任务 | 时间 | 产出 |
 | --- | ---: | --- |
-| 异常 | 2.5h | 设计异常分类、传播、转换和根因测试 |
-| NIO/I/O | 2.5h | UTF-8 读写、临时文件、路径和错误实验 |
-| 日期时间 | 2.5h | Instant/Local/Zoned/Duration/Clock 练习 |
-| JSON | 2.5h | DTO 映射、时间/enum 配置和非法输入测试 |
-| FactoryCare | 3—4h | 设备导入、工单快照导出和错误报告 |
-| 无 AI 训练 | 2h | 修复导入失败与时区变体 |
-| 求职动作 | 1h | 异常、I/O、时间面试口述 |
+| 继承/重写实验 | 2h | 重载与重写对比，记录运行时分派 |
+| 接口/抽象类实验 | 2—3h | 同一能力的两种建模并比较 |
+| 组合/策略重构 | 3h | 将错误继承改为委托/策略并保持测试 |
+| record/enum/sealed | 2h | 值对象、有限状态和穷尽 switch |
+| FactoryCare 增量 | 4—5h | 通知端口、优先级策略和领域值对象 |
+| 无 AI、故障与复盘 | 2—3h | 替换实现、破坏契约、恢复和口述 |
 
-## FactoryCare项目增量
+## FactoryCare 增量
 
-实现两个边界适配器：
+- `WorkOrderId`、`DeviceId` 使用自校验值对象；
+- `Priority`、初始状态使用 enum；
+- `PriorityPolicy` 接口定义计算能力，至少有默认策略和紧急停机策略；
+- `NotificationSender` 作为端口，提供内存记录实现，不连接真实短信；
+- 用组合让 `WorkOrderService` 使用策略和通知端口；
+- 测试替换实现、策略分派、非法值对象和 enum 分支；
+- 说明哪些类型是 Entity、Value Object、DTO 或 Service。
 
-1. `EquipmentCatalogImporter`
-   - 从 UTF-8 JSON 文件读取设备目录 DTO。
-   - 校验设备编码、名称和必要字段，再转换为领域对象。
-   - 对损坏 JSON 直接失败；对批量业务错误输出带记录索引的报告。
-   - 不允许同一设备编码静默覆盖。
-2. `WorkOrderSnapshotExporter`
-   - 将工单只读快照导出为稳定 JSON。
-   - 时间使用 ISO-8601；审计时刻使用 `Instant`。
-   - 先写临时文件，再完成替换，避免留下半个文件。
+## 故障实验
 
-为工单加入 `createdAt`，由注入的 `Clock` 产生；测试固定时间，不依赖真实系统时钟。
+1. 子类重写方法返回违反父类契约的结果，观察调用者测试失败；
+2. 把可变 `List` 放入 record 而不复制，证明 record 不保证深不可变；
+3. 删除 enum 的一个 switch 分支，观察编译或测试如何发现；
+4. 把策略选择散落在多个 `if` 中，再重构为一个清晰入口。
 
-## AI协作边界
+## 无 AI 任务（120 分钟）
 
-可以让 AI：
+为“费用计算”设计 `ChargePolicy`：普通工单、停机工单和保修工单有不同规则。先写契约与决策表，再选择接口+组合或其他设计；至少两种实现、一个不可变金额值对象和正常/边界/非法测试。答辩为什么没有使用继承或为什么使用。
 
-- 生成损坏 JSON、编码、时区和文件异常的测试候选。
-- 审查异常是否被吞掉、cause 是否丢失。
-- 比较 `Instant`、`LocalDateTime`、`ZonedDateTime` 的适用场景。
-- 在你定义 DTO 契约后生成机械映射代码。
+## 验收
 
-必须由你完成：
+- 能用例子区分重载、重写和动态多态；
+- 能比较接口、抽象类、继承和组合的成本；
+- 能说明 record/enum/sealed/class 各自适合什么；
+- 能识别 LSP 破坏和可变 record 陷阱；
+- FactoryCare 端口/策略可替换且测试通过；
+- 能独立新增一个策略实现而不修改调用者主体。
 
-- 决定失败是拒绝整批、跳过单条还是返回错误报告。
-- 决定业务时间含义、存储时区和展示边界。
-- 检查路径、编码、资源关闭、敏感字段和原子写入。
-- 能在没有 AI 时定位一次损坏 JSON 和一次时区错误。
+## 非目标
 
-## 无AI训练
-
-本周从求职/复盘时段预留45—60分钟完成并记录：链表基础题；画出指针变化并覆盖空链表、单节点和环的概念。
-
-关闭 AI，限时120分钟：
-
-1. 为导入器增加“同一文件重复设备编码”检测。
-2. 使用临时目录构造 UTF-8 文件，补成功、重复、空字段和损坏 JSON 测试。
-3. 将固定 Clock 从 UTC 改为 `Asia/Shanghai`，说明 `Instant` 为什么不随展示时区改变。
-4. 人为删除异常 cause，观察调试信息变化后修复。
-
-## 求职动作
-
-- 准备 checked/unchecked、finally、try-with-resources、字符流/字节流、Instant/LocalDateTime、时区的回答。
-- 为“线上导入文件失败如何排查”写一份 5 步排查模板。
-- 在项目周报中记录输入校验和错误报告，不把 JSON 文件称为“持久化数据库”。
-- 投递或收藏至少 5 个与 Java/Vue 全栈匹配的岗位，记录是否要求 Jackson、文件处理或时间任务。
-
-## 交付物
-
-- 设备目录 JSON 契约样例和导入器。
-- 工单快照导出器及原子写入策略说明。
-- 领域异常与基础设施异常分类表。
-- 固定 Clock、临时目录、损坏 JSON 和时区测试。
-- 无 AI 故障定位记录。
-
-## 验收标准
-
-- 能区分业务失败、技术失败、编程错误和 Error，不用一类异常包办。
-- 所有资源正确关闭，文本明确使用 UTF-8，路径输入经过约束。
-- 能解释 Instant、LocalDateTime、ZonedDateTime、Duration 和 Clock。
-- JSON DTO 与领域对象分离，非法业务数据不能因解析成功进入仓储。
-- 导入错误可定位到记录，导出失败不会留下被误认成功的完整文件。
-- 测试不依赖真实当前时间和用户主目录固定路径。
-- 能独立排查损坏 JSON、编码或时区问题。
-
-## 明确不做
-
-- 不使用 Java 原生对象序列化作为业务格式。
-- 不把 JSON 文件当长期数据库，不实现文件锁和大规模 ETL。
-- 不深入 Jackson 模块源码、自定义解析器内部或字符编码理论细节。
-- 不接入 HTTP 上传、对象存储、Spring MVC 或数据库。
-- 不设计跨时区日历排班和复杂节假日 SLA；后续按业务需要处理。
-
-## 官方资料
-
-- [Java Exceptions](https://docs.oracle.com/javase/tutorial/essential/exceptions/)
-- [Java SE 25：java.nio.file](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/package-summary.html)
-- [Java SE 25：java.time](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/package-summary.html)
-- [Clock API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/Clock.html)
-- [Jackson 官方文档仓库](https://github.com/FasterXML/jackson-docs)
-- [JSON 标准 RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)
+- 不背全部设计模式或 SOLID 口号；
+- 不为未来可能性创建几十个接口；
+- 不使用 Spring DI；
+- 不深入 `equals/hashCode` 集合契约，留到 Week 05。

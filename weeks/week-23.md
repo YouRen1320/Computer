@@ -1,168 +1,138 @@
-# 第 23 周：uni-app Vue 3 小程序基础、平台约束与扫码报修
+# 第 23 周：JavaScript 值、作用域、函数、对象、原型与模块
 
-> 建议投入：16 小时（可在 15—18 小时内调整）
+## 定位
 
-## 1. 本周定位
+本周把“会写 Vue 中的 JS”还原成可解释的 JavaScript 语言能力。重点是值与引用、作用域/闭包、函数调用、对象/原型、类语法和模块；DOM、事件循环与网络在 Week 24。已有经验不重复刷教程，而是通过预测、最小实现和故障说明校准心智模型。
 
-本周把 Vue 3 能力迁移到 uni-app，但目标不是证明“一套代码完美运行所有平台”，而是交付一个微信小程序方向的 FactoryCare 员工报修端。它只承担扫码、快速报修和进度查询，与 Vue 管理端的调度功能、Flutter 技师端的离线巡检职责不同。
+时间预算：15—18 小时。使用 Node LTS 运行纯 JS 测试，禁止用 TypeScript 类型提示掩盖运行时行为。
 
-先在微信开发者工具完成主流程，第 24 周再进行真机、上传、权限和发布。H5 只能作为快速预览，不能替代小程序运行时验证。
+## 前置
 
-## 2. 前置条件
+- Week 22 的原生 HTML/CSS 页面和可访问性基线通过；
+- 能使用 Node、pnpm、ES modules 和测试运行器；
+- 能在 DevTools/Node 调试器设置断点；
+- 接受对熟悉语法重新验证，而不是按工作年限免测。
 
-- 第 19—22 周 Vue3、TypeScript、状态边界、测试和错误恢复已通过。
-- FactoryCare 后端已有租户、用户、设备、工单、幂等和权限接口。
-- 已准备微信小程序测试号或开发 AppID；若暂时没有，先使用工具测试环境，但必须记录第 24 周真机阻塞。
-- 创建项目时选择当前稳定 uni-app Vue3 + Vite 组合并锁定依赖，不使用 alpha/RC。
+## 目标
 
-## 3. 学习目标
+- 理解 primitive、object、引用共享、相等性和类型转换；
+- 掌握 lexical scope、hoisting、temporal dead zone 与 closure；
+- 理解函数声明/表达式/箭头、参数、返回值、rest/spread；
+- 理解调用方式决定 `this`，箭头函数不创建自己的 `this`；
+- 正确创建、读取、复制和遍历对象/数组；
+- 理解 prototype chain、constructor/class 语法与私有字段；
+- 使用 ES modules 设计明确边界并识别循环依赖；
+- 用纯函数实现 FactoryCare 状态与统计规则。
 
-- 能解释 uni-app 编译到小程序的模型，以及它与普通浏览器 Vue SPA 的运行时差异。
-- 能使用 `pages.json`、`manifest.json`、页面/应用生命周期和 `uni.*` API。
-- 能识别 DOM、网络域名、包体、样式、路由、组件和权限的平台约束。
-- 能实现小程序登录码交换与 FactoryCare 内部用户/租户映射，不信任客户端身份字段。
-- 能使用 `uni.scanCode` 安全解析设备二维码并由后端验证权限与设备状态。
-- 能完成“扫码—确认设备—填写报修—幂等提交—查看进度”的垂直闭环。
+## 完整概念清单
 
-## 4. 完整概念清单
+### 值、类型与转换
 
-### 4.1 项目与运行时
+- `undefined/null/boolean/number/bigint/string/symbol` 与 object；
+- `typeof` 的边界，`typeof null` 历史行为；
+- number 浮点、NaN、Infinity、`Object.is`、`Number.isNaN`；
+- truthy/falsy 与显式判断，`||` 和 `??` 不同；
+- `==` 隐式转换风险、默认使用 `===`；
+- primitive 按值复制，对象变量复制引用；
+- 浅复制、深复制、`structuredClone` 的能力和限制；
+- const 限制重新赋值，不使对象不可变；
+- 可变数据、不可变更新和结构共享的成本。
 
-- uni-app Vue3 SFC、Vite 构建、TypeScript 和目标平台编译。
-- `pages.json` 页面、导航栏、TabBar、分包；`manifest.json` 应用/平台配置；`uni.scss` 主题变量。
-- App、Page、Component 生命周期与 Vue 生命周期的交集和差异。
-- 页面栈、`navigateTo/redirectTo/reLaunch/switchTab/navigateBack` 的限制。
-- `rpx`、安全区域、状态栏、触摸目标和不同屏幕适配。
-- 小程序不是浏览器：不能假定 DOM、`window`、任意 npm 包和浏览器 API 可用。
+### 作用域与闭包
 
-### 4.2 跨平台与条件编译
+- global/module/function/block scope；
+- `let/const/var`、hoisting、TDZ 和重复声明；
+- lexical scope 由定义位置决定；
+- closure 保留可访问环境，不等于必然内存泄漏；
+- 循环闭包、计时器和 `var` 的经典陷阱；
+- closure 适合封装状态/工厂，长期引用大型对象会增加保留；
+- 模块顶层不是浏览器全局对象属性。
 
-- `#ifdef MP-WEIXIN`、平台目录和条件编译的使用边界。
-- 优先使用统一 API，平台差异隔离在 adapter/composable，而不是散落页面。
-- `uni.canIUse`、基础库版本、平台特有组件和降级提示。
-- H5、小程序、App 的 Cookie、网络、存储、授权和组件行为不同。
-- 本项目只验收微信小程序；不宣称未经测试的平台兼容。
+### 函数
 
-### 4.3 网络、状态与错误
+- 声明、表达式、箭头、IIFE 了解；
+- JS 不按参数类型/个数重载，额外参数与缺少参数行为；
+- default/rest 参数、spread 调用、destructuring 参数；
+- 函数是一等值，可传递、返回和存入对象；
+- callback、高阶函数和纯函数；
+- parameter/argument、返回 `undefined`、早返回；
+- 默认参数和解构的副作用/求值时机；
+- 递归、调用栈与基础终止条件。
 
-- `uni.request` 与浏览器 fetch 差异；HTTPS 合法域名、超时、证书和开发工具“不校验域名”陷阱。
-- 统一请求层处理关联 ID、移动会话、业务错误码、401、429、网络离线和超时。
-- 页面局部状态、Pinia 会话状态、URL/Page 参数和服务端状态边界。
-- 加载、空、失败、离线和重复提交反馈；不能只在控制台打印错误。
-- 小程序包体、分包与资源体积；不要把 Web 管理端组件库搬进小程序。
+### this 与调用方式
 
-### 4.4 小程序认证
+- 普通函数的 `this` 由调用形式决定；
+- method call、plain call、constructor call、`call/apply/bind`；
+- 箭头函数捕获外层 `this`，不适合作为需要动态接收者的方法；
+- 解构/传递方法导致接收者丢失；
+- class 方法默认严格模式；
+- 能避免 `this` 就保持简单，不为面试谜题设计代码。
 
-- `uni.login` 返回短期、单次使用的登录 `code`，它不是用户身份和 Access Token。
-- 后端持有平台 Secret，与平台交换外部用户标识；Secret 绝不能进入小程序包。
-- 外部身份映射 FactoryCare 内部用户、租户、角色；不存在或停用用户应拒绝。
-- 本项目选择服务端存储的短期不透明移动会话 Token，Scope 最小化；不因“流行”强制自制 JWT。
-- 客户端存储不可视为可信，所有租户、权限和资源归属仍由后端校验。
-- 开发测试 Provider 与真实微信 Provider 使用同一接口；测试身份必须有明显环境隔离，生产构建不得启用。
+### 对象、数组与属性
 
-### 4.5 扫码报修安全
+- object literal、computed key、shorthand、destructuring；
+- property descriptor、enumerable/writable/configurable 只做基础实验；
+- own 与 inherited 属性，`Object.hasOwn`；
+- `Object.keys/values/entries/fromEntries`；
+- optional chaining 与 nullish coalescing；
+- array 是特殊对象，稀疏数组、length 和常用 mutating/non-mutating 方法；
+- sort 默认字符串比较，比较函数必须一致；
+- Map/Set/WeakMap/WeakSet 的高层选择。
 
-- `uni.scanCode` 的成功、取消、权限拒绝、无法识别和多种码类型。
-- 二维码只携带不透明设备标识/签名短链接，不包含数据库结构、租户或敏感数据。
-- 客户端解析只是导航提示，后端必须重新校验签名、有效期、租户、设备状态和用户权限。
-- 防止替换设备 ID、重复扫码、过期码、跨租户码和恶意 URL。
-- 扫码失败允许手工输入设备编码，并经过同样的后端验证。
+### 原型与 class
 
-## 5. 任务分配
+- 对象内部原型链与属性查找；
+- constructor function、`new` 的高层步骤；
+- `prototype` 属性与对象原型不要混淆；
+- `class` 是基于原型的语法层，不把 JS 当 Java；
+- constructor、instance/static method、public/private field、extends/super；
+- 组合通常比复杂继承更清晰；
+- prototype pollution 高层风险，不合并不可信特殊键。
 
-| 任务 | 时间 | 结果 |
+### 模块
+
+- ESM 的 named/default export、static import、dynamic import；
+- live binding、模块单例和顶层副作用；
+- browser/Node 模块解析差异由工具配置处理；
+- 循环依赖可能读取未初始化绑定；
+- CommonJS 只为读旧项目建立概念；
+- 模块边界按职责/变化组织，不创建 `utils` 垃圾桶。
+
+## 时间与任务
+
+| 任务 | 时间 | 产出 |
 | --- | ---: | --- |
-| uni-app 运行时与配置实验 | 2.5h | 生命周期/平台差异笔记 |
-| 请求层与小程序认证边界 | 3h | 可测试登录和错误处理 |
-| 扫码与设备确认 | 3h | 安全扫码流程 |
-| 报修/进度项目闭环 | 4h | 可运行微信开发者工具版本 |
-| 无 AI 训练 | 2h | 独立页面切片 |
-| 南昌岗位与简历动作 | 2h | uni-app 技能证据矩阵 |
+| 值/相等/复制 | 2h | 预测表和浅复制故障 |
+| 作用域/闭包 | 2—3h | 计数器、循环捕获和资源保留实验 |
+| 函数/this | 2—3h | 四种调用方式与丢失接收者复现 |
+| 对象/原型/class | 3h | 属性查找、组合与继承对比 |
+| 模块与测试 | 2h | 纯 ESM 规则包和循环依赖反例 |
+| FactoryCare/复盘 | 3—5h | 纯 JS 工单规则、故障和独立变更 |
 
-总计 16.5 小时。若只有 15 小时，减少视觉打磨；不能删除登录码交换、扫码后端校验和幂等提交。
+## FactoryCare 增量
 
-## 6. FactoryCare 项目增量
+- 纯 JS 实现 `canTransition(order, nextStatus)`、筛选和技师负载统计；
+- 不修改输入对象，测试证明浅复制嵌套对象可能仍共享；
+- 把状态表、规则函数、统计函数分成明确 ESM；
+- 制造 `this` 丢失、闭包捕获旧状态、隐式转换三个故障；
+- 与 Java 版本比较：类型、对象模型、相等性、模块和运行时验证差异。
 
-- 新建 `factorycare-miniapp`，README 明确目标平台、角色、开发命令和未经验证的平台。
-- 页面限定为：登录/绑定提示、首页扫码、设备确认、报修表单、我的报修、报修详情。
-- 建立小型请求 adapter 和会话 Store；每个模块写明数据来源、映射和认证副作用。
-- 后端增加移动登录 Provider 接口：测试环境使用固定受控账号，真实环境交换微信 code；生产配置禁止测试 Provider。
-- 后端签发短期不透明移动会话，映射内部用户/租户/权限；复用现有数据权限与审计。
-- 使用 `uni.scanCode` 读取设备码；后端 `resolve-asset-code` 校验签名/租户/权限后返回最小设备 DTO。
-- 报修表单包含故障分类、描述、紧急程度和联系方式；附件上传留到第 24 周。
-- 创建工单使用第 16 周 `Idempotency-Key`，连续点击或网络重试只创建一次。
-- 我的报修/详情只显示当前用户可见数据，状态使用和后端一致的稳定映射。
-- 编写 `ADR-023-miniapp-boundaries.md`：平台目标、认证、二维码格式、测试 Provider 隔离和跨端非目标。
+## 无 AI 任务（120 分钟）
 
-## 7. AI 协作边界
+实现纯 JS `workOrderStore`：添加、按 ID 查询、状态转换、过滤和订阅变化。要求不暴露内部可变数组、取消订阅有效、重复 ID 明确失败、测试覆盖闭包状态和引用泄漏。答辩为何使用 closure、class 或普通对象。
 
-AI 可以：
+## 验收
 
-- 把已有 Vue Composable 按 uni-app 运行时约束提出迁移方案。
-- 生成平台差异、扫码失败和网络错误测试清单。
-- 审查页面是否使用浏览器专属 API、二维码是否泄露信息。
-- 帮助解释编译错误，但必须在微信开发者工具复验。
+- 能解释 `const`、浅复制、`===`、`Object.is` 和引用共享；
+- 能画出一个闭包保留的变量，不把所有闭包叫内存泄漏；
+- 能依据调用形式判断 `this`，并修复方法脱离对象问题；
+- 能说明 class 与 prototype 的关系；
+- 纯 JS 规则包和测试可从命令行运行；
+- 能独立修改状态规则且不破坏模块边界。
 
-AI 不可以：
+## 非目标
 
-- 宣称 H5 跑通就等于小程序兼容。
-- 把 AppID Secret、真实 Token、用户数据或二维码密钥写进前端代码/提示词。
-- 信任客户端传入的 `tenantId/userId/assetId`，或绕过后端数据权限。
-- 用大量条件编译复制两套业务逻辑。
-
-AI 生成的跨端 API 必须逐项查官方平台支持表，并在目标小程序环境运行，不能只依赖类型检查。
-
-## 8. 无 AI 训练
-
-关闭 AI 120 分钟，实现“手工输入设备编码报修”的降级路径：
-
-- 设备编码前端做基础格式提示，后端执行真实租户/权限验证。
-- 处理不存在、跨租户、停用设备、429 和网络超时。
-- 用户修正编码后保留已填写的故障描述。
-- 提交复用幂等键，重复点击不能创建两个工单。
-- 不使用 DOM/browser API，并在微信开发者工具验证。
-
-## 9. 求职动作
-
-- 采样 10 个南昌 uni-app/小程序/Vue 岗位，记录 Vue3、原生小程序、真机、扫码、上传、支付、上架等真实要求。
-- 建立“会用 uni-app”证据矩阵：开发工具运行、平台约束、登录、请求、扫码、幂等、真机/发布（第 24 周补齐）。
-- 简历暂写：`使用 uni-app Vue3 实现微信小程序扫码报修，二维码只作导航、后端执行租户/设备校验并以幂等键防重复创建`。
-- 本周完成至少 8 次 Vue/uni-app/全栈定向投递，并记录企业是否更重视原生小程序经验或多端数量。
-
-## 10. 本周交付物
-
-- 可在微信开发者工具运行的 `factorycare-miniapp`。
-- 移动登录/受控测试 Provider、请求层和会话恢复。
-- 扫码/手工输入、设备确认、报修提交、列表和详情闭环。
-- `ADR-023-miniapp-boundaries.md` 与平台差异清单。
-- 无 AI 降级页面、岗位证据矩阵和更新后的项目描述。
-
-## 11. 验收标准
-
-- 能解释 uni-app 与浏览器 Vue 的运行时、生命周期、路由、网络和存储差异。
-- 微信开发者工具冷启动后能登录、扫码/手输、创建工单并查看进度。
-- 登录 code 只发往后端，平台 Secret 不在客户端；生产构建无法启用测试 Provider。
-- 篡改二维码中的设备标识、tenantId 或 userId 不能越权。
-- 连续点击、请求超时重试只创建一个工单。
-- 目标平台限制和未经验证平台写进 README，不声称“一次开发全端无差异”。
-- 无 AI 120 分钟完成降级路径并能解释每个错误状态。
-
-## 12. 明确不做
-
-- 不同时适配微信、支付宝、抖音小程序和 App。
-- 不复制 Vue 管理后台，不引入重型 Web UI 组件库。
-- 不把 H5 预览当真机/小程序验收。
-- 不在客户端保存平台 Secret、信任身份字段或解析二维码后直接操作设备。
-- 不实现附件上传、推送、支付和正式发布；这些属于第 24 周或只学概念。
-
-## 13. 官方资料
-
-- [uni-app 官方文档](https://uniapp.dcloud.net.cn/)
-- [uni-app Vue3](https://uniapp.dcloud.net.cn/tutorial/vue3-basics.html)
-- [pages.json 页面路由](https://uniapp.dcloud.net.cn/collocation/pages.html)
-- [uni-app 条件编译](https://uniapp.dcloud.net.cn/tutorial/platform.html)
-- [uni-app 生命周期](https://uniapp.dcloud.net.cn/tutorial/page.html#lifecycle)
-- [uni.login](https://uniapp.dcloud.net.cn/api/plugins/login.html)
-- [uni.scanCode](https://uniapp.dcloud.net.cn/api/system/barcode.html)
-- [微信小程序登录](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
-- [微信小程序网络](https://developers.weixin.qq.com/miniprogram/dev/framework/ability/network.html)
+- 不做晦涩 coercion/`this` 面试谜题题海；
+- 不进入 DOM、Promise 调度和 Fetch，留到 Week 24；
+- 不用 TypeScript 或 Vue；
+- 不深入 JS 引擎源码和 GC 算法。

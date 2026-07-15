@@ -1,163 +1,230 @@
-# 第 15 周：领域建模、工单状态机、SLA 与乐观锁
+# 第 15 周：MyBatis Core 3.5 + Boot Starter 4、Flyway 与持久化垂直切片
 
-> 建议投入：16.5 小时（可在 15—18 小时内调整）
+## 定位
 
-## 1. 本周定位
+本周将 Week 10—11 的 HTTP/测试垂直切片与 Week 12—14 的 SQL、PostgreSQL 模型、索引和事务实验连接起来：空数据库通过 Flyway 建立 schema，MyBatis 适配器实现仓储，Spring 事务维护业务一致性，Testcontainers 验证真实组合。
 
-本周让 FactoryCare 从“带权限的 CRUD”变成真正有业务规则的系统。重点是把工单生命周期、状态不变量、SLA 和并发冲突写成可测试的领域行为，而不是把几十个 `if` 分散在 Controller、Service 和 SQL 中。
+这里的“MyBatis 4”准确指 **MyBatis-Spring-Boot-Starter 4.0.0 / MyBatis-Spring 4.x**；MyBatis Core 当前仍是 3.5.19。时间预算：15—18 小时。
 
-采用务实领域建模：只为复杂的工单模块建立清晰的实体、值对象、聚合和领域服务，不为了展示术语重写所有简单模块，也不引入外部状态机框架。
+## 前置
 
-## 2. 前置条件
+- Spring Boot 4.1 API、分层测试和 OpenAPI 已通过。
+- PostgreSQL 18.4 schema、SQL、索引与并发实验已完成。
+- Testcontainers 2 可以启动 PostgreSQL 18.4。
+- 能解释事务边界、约束、乐观/悲观方案，不依赖 ORM 自动猜测。
 
-- 第 14 周的认证、RBAC、租户隔离和数据范围测试全部通过。
-- 已能使用 MyBatis 编写条件更新，理解事务、行锁和数据库受影响行数。
-- FactoryCare 已有设备、工单、用户/班组和审计基础模型。
-- 已有时间抽象或愿意引入可注入 `Clock`，避免测试依赖真实当前时间。
+## 目标
 
-## 3. 学习目标
+- 理解 DataSource、连接池、JDBC、MyBatis、Mapper、SqlSession 的高层关系。
+- 使用 Boot 4 对应的 MyBatis Spring Boot Starter 4.x，并验证 Boot 4.1 组合。
+- 正确使用参数绑定、结果映射、动态 SQL 和 TypeHandler 边界。
+- 使用 Flyway 管理 PostgreSQL schema，保持迁移不可变、可追溯。
+- 使用 Spring 事务完成创建/查询/列表工单持久化切片。
+- 通过 Testcontainers 集成测试验证真实 SQL、约束、回滚和 API。
+- 保持应用/领域接口稳定，使内存仓储和 MyBatis 仓储可替换。
+- 通过一个隔离的MySQL 8.4 LTS对照实验，理解本地Java岗位常问的InnoDB差异，而不维护双数据库项目。
 
-- 能从业务语言识别实体、值对象、聚合、不变量和服务边界。
-- 能定义工单状态、合法迁移、执行角色、前置条件和副作用。
-- 能实现可测试的 SLA 计时、暂停、恢复和超时判定。
-- 能用 `version` + 条件更新实现乐观锁，并向客户端返回可理解的冲突响应。
-- 能区分业务校验、权限校验、并发控制和数据库约束各自的责任。
-- 能用状态迁移测试证明非法路径不会修改数据或产生副作用。
+## 完整概念清单
 
-## 4. 完整概念清单
+### 版本与组件关系
 
-### 4.1 务实领域建模
+- MyBatis Core 负责 SQL 映射，当前主线为 3.5.19，不存在 MyBatis Core 4。
+- MyBatis-Spring 4.x 负责与 Spring Framework 7 集成。
+- MyBatis-Spring-Boot-Starter 4.x 面向 Spring Boot 4.0+、Java 17+。
+- Starter 自动发现 DataSource、创建 SqlSessionFactory/SqlSessionTemplate 并扫描 Mapper 的高层过程。
+- Starter 4.0.0 与 Boot 4.1 的组合必须通过启动和数据库集成测试，不凭“4.x”假定完全兼容。
+- 不顺带假定 MyBatis-Plus 有同等支持；本项目不引入。
 
-- 领域语言、用例、命令、查询、事件和不变量。
-- 实体以身份连续性为核心；值对象以值相等和不可变性为核心。
-- 聚合根维护事务内必须一致的不变量，聚合边界不是对象图越大越好。
-- Application Service 编排用例；Domain Service 承载无法自然归属单一实体的规则。
-- Repository 表达聚合持久化意图；DTO、数据库记录和领域对象不必强行共用一个类。
-- 贫血模型与过度设计之间的平衡：复杂规则靠行为表达，简单查询保持直接。
-- 防腐边界：外部设备/组织数据先转换为内部模型。
+### DataSource、连接池与事务资源
 
-### 4.2 工单状态机
+- JDBC Driver、DataSource、Connection、connection pool 的职责。
+- 连接是有限资源；虚拟线程不会增加数据库连接上限。
+- URL、用户、密码、schema、超时来自外部配置，密钥不提交仓库。
+- 连接借出/归还、事务绑定和泄漏的高层概念。
+- 本周使用 Boot 管理的稳定连接池默认，不做参数调优。
 
-- 唯一状态词表以[PROJECT_SPEC.md](../PROJECT_SPEC.md)为准：`CREATED → TRIAGED → ASSIGNED → ACCEPTED → IN_PROGRESS → RESOLVED → VERIFIED → CLOSED`。
-- 补充分支：`IN_PROGRESS ↔ PENDING_PARTS`、`IN_PROGRESS ↔ PENDING_APPROVAL`、`RESOLVED → IN_PROGRESS`驳回、`CLOSED → REOPENED → IN_PROGRESS`，以及`CREATED/TRIAGED → CANCELLED`；具体权限与前置条件写入决策表。
-- 每条迁移记录：来源状态、目标状态、所需权限、必填字段、时间戳和领域事件。
-- “关闭”必须满足验收信息完整；“开始处理”必须已有处理人；“等待配件”必须填写原因。
-- 命令幂等与重复点击：重复提交相同目标时明确返回当前结果或冲突，不默默执行两次副作用。
-- 状态历史与当前状态分离；历史只能追加，便于审计与 SLA 计算。
-- 不让前端传入任意目标状态；后端暴露有业务含义的命令接口或严格验证迁移。
+### MyBatis Mapper
 
-### 4.3 SLA
+- Mapper interface、mapped statement、parameter、result mapping。
+- XML mapper 与 annotation SQL 的取舍：简单固定 SQL 可注解，复杂/动态 SQL 优先可读 XML；团队保持一致。
+- `#{}` 生成绑定参数，`${}` 是文本替换，有 SQL 注入风险。
+- 客户端排序字段不得直接进入 `${}`；使用白名单映射到固定 SQL 片段。
+- 单参数、多参数、参数对象和明确命名。
+- 自动映射与显式 `resultMap`；列名/属性名不一致时显式映射。
+- constructor/record 映射需要组合验证，不因编译通过假定正确。
+- enum/value object 通过显式转换或 TypeHandler；TypeHandler 只负责表示转换，不承载业务校验。
+- generated keys 与应用生成 UUID 的取舍；本项目使用业务 UUID。
 
-- 响应 SLA、解决 SLA、目标时间、剩余时间、超时状态。
-- 起算、暂停、恢复和结束事件；`PENDING_PARTS`是否暂停必须写成业务规则。
-- 自然时间与工作日历的取舍；本周先用可复现的自然时间规则。
-- 优先级与 SLA 策略版本：规则改变不能篡改历史工单承诺。
-- 使用注入的 `Clock` 测试边界时间、暂停累计和超时。
-- SLA 判定是业务事实；定时扫描只负责发现/通知，不应成为唯一事实来源。
+### 动态 SQL
 
-### 4.4 并发与乐观锁
+- `<if>`、`<choose>`、`<where>`、`<set>`、`<foreach>` 的适用场景。
+- 动态过滤条件缺失时防止意外全表 UPDATE/DELETE。
+- 批量 IN 需处理空集合和参数规模。
+- SQL 片段复用要可追踪，不创建难调试宏系统。
+- 分页和排序稳定；limit/offset 的大页局限只记录，暂不实现 keyset 全套。
+- N+1 查询识别；集合关系优先显式 join/批量查询，不用嵌套 select 隐藏成本。
 
-- 丢失更新场景：调度员重新分配与技师开始处理同时发生。
-- `version` 字段和 `UPDATE ... WHERE id = ? AND tenant_id = ? AND version = ?`。
-- 受影响行数为 0 时区分不存在、越权和版本冲突，避免泄露其他租户资源。
-- HTTP `409 Conflict` 与稳定错误码；客户端刷新后由用户决定是否重试。
-- 乐观锁适合冲突较少、事务较短的场景；悲观锁适合必须串行但会增加阻塞的场景。
-- 版本检查不能替代事务、唯一约束和业务不变量。
+### MyBatis-Spring 事务
 
-## 5. 任务分配
+- SqlSessionTemplate 参与 Spring 管理的事务和线程绑定。
+- `@Transactional` 放应用服务公开用例边界，不放 Controller/Mapper 到处散落。
+- 默认 runtime exception 回滚；checked exception 策略必须理解后明确配置。
+- self-invocation、非公开方法和代理边界的高层风险。
+- 一个事务维护一个业务不变量；不在事务内执行长时间外部网络调用。
+- SQL 约束异常转换为稳定业务冲突，保留内部 cause 和日志。
+- 条件 UPDATE 返回受影响行数，用于乐观冲突判断。
 
-| 任务 | 时间 | 结果 |
+### Flyway
+
+- schema migration 是版本化数据库代码，不靠手工点 GUI。
+- Boot 4 使用对应 Flyway starter；PostgreSQL 还需数据库支持模块。
+- 优先接受 Boot 4.1 BOM 管理的 Flyway 版本，不手工追独立最新版。
+- versioned migration 与 repeatable migration；本项目核心 schema 使用 versioned。
+- 命名如 `V1__create_core_tables.sql`，版本顺序和 checksum。
+- 已在共享环境执行的 migration 不修改；修复通过新 migration。
+- `validate`、`migrate`、`info`、`repair` 的用途；repair 不是跳过失败的常规按钮。
+- baseline 只用于接管既有数据库的明确场景，新项目不需要。
+- 不同时使用 Flyway 与 `schema.sql/data.sql` 管同一 schema。
+- DDL 迁移需考虑锁、数据回填和回滚；本周只做可控小表。
+
+### 持久化边界
+
+- Domain model、persistence row/record、API DTO 分离。
+- Repository 接口属于应用/领域需要，MyBatis mapper 属于基础设施。
+- 显式 persistence mapper 处理数据库行与领域对象转换。
+- 数据库约束是最后防线，Java 校验仍提供更早错误。
+- 创建、按 ID 查询、筛选分页是本周完整垂直切片。
+- updated_at/version 由哪一层更新必须一致，不双重猜测。
+
+### 集成测试
+
+- 空 PostgreSQL 18.4 容器启动后 Flyway 自动迁移。
+- 测试真实 mapper SQL，不 mock Mapper 验证 SQL 正确性。
+- 每个测试数据隔离：事务回滚、清理或独立 schema 的明确策略。
+- 测试约束冲突、映射、时区、enum、动态条件、分页和回滚。
+- Context 启动与 `/v3/api-docs` 回归同时守护第三方组合兼容性。
+
+### MySQL 8.4 LTS求职桥接
+
+- InnoDB是MySQL 8.4默认引擎，支持事务、行锁和MVCC；
+- 聚簇主键索引与二级索引回表的高层结构；
+- PostgreSQL heap table/MVCC与InnoDB实现不能用同一套口诀描述；
+- `AUTO_INCREMENT`与UUID、字符集/collation、布尔/时间/JSON类型差异；
+- `EXPLAIN`输出、分页、upsert和隔离默认值差异；
+- 使用一个隔离容器运行三条等价SQL和一次事务/锁实验；
+- 不要求FactoryCare Mapper兼容两种数据库，不引入方言判断。
+
+## 任务分配
+
+| 模块 | 时间 | 任务 |
 | --- | ---: | --- |
-| 领域事件风暴与模型草图 | 2.5h | 用例、聚合和不变量清单 |
-| 状态迁移决策表与实现 | 4h | 可测试的工单状态机 |
-| SLA 模型与时间测试 | 3h | SLA 策略和边界测试 |
-| 乐观锁与冲突处理 | 3h | 并发更新测试和 409 响应 |
-| 无 AI 训练 | 2h | 状态机小需求实现 |
-| 求职与项目表达 | 2h | 业务设计讲解和投递证据 |
+| 组件/配置 | 1.5h | Starter 4.x、DataSource、SqlSession与版本兼容验证 |
+| Flyway | 2h | V1/V2迁移、validate、失败修复实验 |
+| MyBatis | 3h | Mapper、XML/注解、结果映射、动态SQL、TypeHandler |
+| Spring 事务 | 2h | 用例边界、回滚、约束冲突和条件更新 |
+| FactoryCare | 3h | PostgreSQL 仓储替换和API垂直切片 |
+| 集成/无 AI | 2.5h | Testcontainers、故障定位和限时变体 |
+| MySQL桥接 | 2h | MySQL 8.4小实验、差异表和面试口述 |
+| 算法/求职 | 2h | 45—60分钟回溯题，以及5次定向投递/跟进 |
 
-总计 16.5 小时。时间不足时简化工作日历，不得删除状态迁移表、乐观锁或并发测试。
+## FactoryCare项目增量
 
-## 6. FactoryCare 项目增量
+完成持久化垂直切片：
 
-- 创建工单聚合或等价的清晰领域边界，集中维护分配、开始、等待配件、解决、关闭、取消、重开规则。
-- 新增状态迁移决策表，提交到项目文档；接口不得接受无约束的 `status` 字段覆盖。
-- 每次成功迁移追加 `work_order_transition`，记录操作者、原因、前后状态、时间、租户和版本。
-- 为工单增加 `version`，所有写操作使用版本条件；冲突返回 `409` 和稳定业务错误码。
-- 增加 SLA 策略快照：优先级、响应目标、解决目标、是否暂停等，避免策略修改污染历史。
-- 使用可注入时钟计算目标时间和超时，覆盖临界点、暂停/恢复与重开。
-- 关键副作用先发布领域事件对象，但本周仍同步处理；第 17 周再决定可靠异步交付。
-- 编写 `ADR-015-work-order-domain.md`，说明聚合边界、状态机、SLA 规则和乐观锁选择。
-- 自动化测试至少覆盖：每条合法迁移、代表性非法迁移、缺少必填信息、无权限、跨租户、重复命令和并发冲突。
+1. Flyway
+   - `V1__create_core_tables.sql`：第 13 周核心表和约束。
+   - `V2__add_work_order_indexes.sql`：只加入第 14 周有证据保留的索引。
+   - 不再由手工 schema 脚本或 Hibernate 自动建表。
+2. MyBatis
+   - `WorkOrderPersistenceMapper`：插入、按 ID 查询、条件列表、条件更新版本。
+   - `MyBatisWorkOrderRepository`：实现已有 `WorkOrderRepository`，转换 row 与 domain。
+   - 设备存在/组织范围通过 SQL 与数据库约束共同保证。
+3. Spring transaction
+   - 创建工单在一个事务内完成必要检查和插入。
+   - 制造插入后异常，验证事务回滚没有半条数据。
+   - 约束冲突转换为稳定 409/422，而不是向客户端暴露 SQL。
+4. API
+   - 原有 POST/GET/list 契约不因持久化替换而变化。
+   - 使用 Testcontainers 从 HTTP 到 PostgreSQL 验证成功和失败链路。
 
-## 7. AI 协作边界
+## AI协作边界
 
-AI 可以：
+可以让 AI：
 
-- 根据你提供的业务规则生成状态迁移矩阵初稿和反例。
-- 生成参数化测试骨架，帮助寻找遗漏的非法迁移。
-- 对聚合边界给出 2—3 种方案，并比较实现成本与长期维护性。
-- 检查乐观锁 SQL 是否包含租户、ID 和版本条件。
+- 根据已确认 SQL 生成 Mapper/XML/row mapper 样板。
+- 审查 `#{}`/`${}`、动态 SQL、空集合和 N+1 风险。
+- 根据 Flyway 错误、SQLState 和堆栈提出排查假设。
+- 生成集成测试候选，但不能用 mock 替代真实 SQL。
 
-AI 不可以：
+必须由你完成：
 
-- 擅自定义 `CLOSED`、`CANCELLED`、`REOPENED` 的业务含义。
-- 为了减少代码删除业务不变量、审计或并发检查。
-- 用一个复杂状态机库替代对规则的理解。
-- 看到测试通过就断言不存在竞态；并发测试与数据库条件必须人工核验。
+- 确认 MyBatis 4 指 Spring 集成/Starter 代际，不传播 Core 4 的错误说法。
+- 决定事务边界、约束、冲突语义和数据库/领域映射。
+- 逐条阅读 AI 生成 SQL，特别检查组织范围、WHERE、排序白名单和注入。
+- 能修改一列/迁移并同步 SQL、映射、领域转换、API 测试。
 
-AI 生成每一条迁移规则后，都要与决策表逐项对照，发现冲突先改规则文档再改代码。
+## 无AI训练
 
-## 8. 无 AI 训练
+本周从求职/复盘时段预留45—60分钟完成并记录：回溯基础题；说明选择、撤销、剪枝和搜索空间。
 
-本周从求职/复盘时段预留45—60分钟完成并记录：图的邻接表与遍历题；说明访问状态和环。
+关闭 AI，限时 120 分钟：
 
-关闭 AI 120 分钟，完成“小组长将 `PENDING_PARTS` 工单恢复处理”需求：
+1. 新增“按设备和状态查询工单”的 Mapper 方法。
+2. 自己完成接口、XML/注解 SQL、repository adapter 和真实数据库测试。
+3. 故意制造一个列名映射错误并从日志/结果定位。
+4. 新增 V3 迁移为工单增加可空来源字段；不得修改已执行 V1。
+5. 让应用服务插入后抛出异常，验证事务回滚。
+6. 口述请求到 Controller、应用服务、事务代理、repository、mapper、连接和 PostgreSQL 的全链路。
 
-- 先写命令、权限、前置状态、必填字段和验收标准。
-- 更新领域行为与迁移表，不直接修改数据库状态。
-- 使用乐观锁持久化，并处理版本冲突。
-- 写一条成功、两条非法状态、一条无权限、一条并发冲突测试。
-- 最后口述为什么这不是普通 `UPDATE work_order SET status = ...`。
+## 求职动作（恢复求职后启用）
 
-## 9. 求职动作
+- 准备 JDBC/DataSource/连接池、MyBatis 与 JPA 区别、`#{}/${}`、resultMap、动态 SQL、Spring 事务、Flyway 的回答。
+- 明确告诉面试官项目使用 Starter 4.x、Core 3.5.x，体现版本核验能力。
+- 整理一次“从内存仓储无契约变化切换 PostgreSQL”的 5 分钟项目故事。
+- 定向投递或跟进至少5个Java/Vue全栈或Java应用岗位，记录MyBatis/MyBatis-Plus/JPA出现频率。
 
-- 采样南昌 Java、制造业信息化、MES/ERP、设备管理岗位各类 JD 共 8 个，标注“业务建模、流程、状态机、事务、并发、性能”的要求。
-- 将普通 CRUD 描述升级为：`以状态迁移决策表建模工单生命周期，使用版本条件更新防止并发丢失，并以参数化测试覆盖非法流转`。
-- 录制一次 5 分钟白板讲解：工单为什么是聚合根、SLA 怎样暂停、两个用户同时修改会发生什么。
-- 本周至少完成 5 次高匹配投递，并把面试中出现的业务题补进规则清单。
+## 交付物
 
-## 10. 本周交付物
+- Boot 4.1 + MyBatis Spring Boot Starter 4.x 兼容性验证记录。
+- 不可变的 Flyway V1/V2（以及训练 V3）迁移。
+- MyBatis mapper、数据库 row 映射和 repository adapter。
+- 创建/查询/列表的真实 PostgreSQL 垂直切片。
+- Testcontainers 集成、约束冲突和事务回滚测试。
+- PostgreSQL/MySQL差异表和MySQL 8.4隔离实验；不进入FactoryCare生产路径。
+- 无 AI 持久化变体和故障排查记录。
 
-- 领域模型图、状态迁移决策表和 SLA 规则表。
-- `ADR-015-work-order-domain.md`。
-- 工单领域行为、状态历史、SLA 和乐观锁实现。
-- 状态、时间、权限、租户和并发自动化测试。
-- 无 AI 小需求记录与 5 分钟项目讲解视频/提纲。
+## 验收标准
 
-## 11. 验收标准
+- 能准确解释 MyBatis Core、MyBatis-Spring、Boot Starter 的版本关系。
+- 全新 PostgreSQL 18.4 容器可由 Flyway 自动建立 schema；二次启动无重复建表。
+- 已执行 migration 不被修改，新增变化使用新版本文件。
+- Mapper 全部使用安全参数绑定；任何动态排序来自固定白名单。
+- API 契约保持稳定，内存和 PostgreSQL 实现可通过配置替换。
+- 创建/查询/筛选分页、约束冲突、时区/enum 映射和回滚有真实数据库测试。
+- 事务失败不留下部分数据；SQL 异常不直接暴露给客户端。
+- `mvn verify` 从空环境通过，并守护 Boot/MyBatis/springdoc 组合启动。
+- 无 AI 完成新查询、迁移、映射和回滚验证。
+- 能说明InnoDB聚簇索引、MVCC/锁和PostgreSQL对应概念的主要差异，不混用执行计划术语。
 
-- 能用业务语言解释实体、值对象、聚合、不变量、应用服务和领域服务。
-- 任意非法状态迁移都不会修改当前状态、写历史或触发副作用。
-- 相同版本的并发更新最多一个成功，另一个得到可处理的 409 冲突。
-- SLA 计算不依赖系统真实当前时间，临界点和暂停累计可重复测试。
-- Controller 不包含核心状态判断，MyBatis SQL 不承担全部业务规则。
-- 能说明为何选择乐观锁、何时应该使用悲观锁，以及两者的失败模式。
-- 无 AI 训练在 120 分钟内完成，且能独立解释全部改动。
+## 明确不做
 
-## 12. 明确不做
+- 不引入 MyBatis-Plus、代码生成器、通用 BaseMapper、分页插件或二级缓存。
+- 不学习 MyBatis executor/cache/代理源码，不手写连接池。
+- 不混用 Flyway、schema.sql、Hibernate ddl-auto 和手工 GUI 改表。
+- 不实现复杂批处理、读写分离、多数据源、分库分表或数据库路由。
+- 不为FactoryCare增加PostgreSQL/MySQL双方言兼容层。
+- 不在事务中调用外部 AI、邮件或长耗时 HTTP 服务。
+- 不提前实现 Security、RBAC、审计或 Redis；保持本周持久化范围。
 
-- 不为了展示 DDD 给所有表创建复杂聚合和值对象。
-- 不引入重量级 BPMN/流程引擎或状态机框架。
-- 不实现节假日、跨时区和多班次的完整企业日历；只保留扩展接口。
-- 不使用分布式锁代替数据库乐观锁。
-- 不在本周接入消息队列；领域事件的可靠异步处理属于第 17 周。
+## 官方资料
 
-## 13. 官方资料
-
-- [Spring Framework 事务管理](https://docs.spring.io/spring-framework/reference/data-access/transaction.html)
-- [Spring Framework 事务绑定事件](https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html)
-- [MyBatis 3 官方文档](https://mybatis.org/mybatis-3/)
-- [PostgreSQL 并发控制](https://www.postgresql.org/docs/current/mvcc.html)
-- [PostgreSQL 事务隔离](https://www.postgresql.org/docs/current/transaction-iso.html)
-- [PostgreSQL UPDATE](https://www.postgresql.org/docs/current/sql-update.html)
-- [HTTP 409 Conflict](https://www.rfc-editor.org/rfc/rfc9110.html#name-409-conflict)
+- [MyBatis Core 3 Documentation](https://mybatis.org/mybatis-3/)
+- [MyBatis-Spring 4 Documentation](https://mybatis.org/spring/)
+- [MyBatis Spring Boot Starter 4](https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
+- [Spring Transaction Management](https://docs.spring.io/spring-framework/reference/data-access/transaction.html)
+- [Spring Boot Data Initialization and Flyway](https://docs.spring.io/spring-boot/how-to/data-initialization.html)
+- [Flyway Documentation](https://documentation.red-gate.com/flyway/)
+- [Flyway PostgreSQL Support](https://documentation.red-gate.com/fd/postgresql-database-277579325.html)
+- [Spring Boot Testcontainers](https://docs.spring.io/spring-boot/reference/testing/testcontainers.html)
+- [MySQL 8.4 LTS与Innovation说明](https://dev.mysql.com/doc/refman/8.4/en/mysql-releases.html)
+- [MySQL 8.4 InnoDB](https://dev.mysql.com/doc/refman/8.4/en/innodb-introduction.html)

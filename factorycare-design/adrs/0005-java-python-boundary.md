@@ -31,7 +31,7 @@ Java通过`/internal/v1`短时service token调用Python。Python只可回调Java
 
 ## 迁移与回滚
 
-Week 18先在Java定义端口与fallback，Week 27后实现Python契约。每个AI特性由feature flag渐进启用。出现错误时关闭特性、回到人工流程并保留调用审计；只删除并重建chunk/embedding/索引具象，不删除受保留策略约束的调用、工具、评估或未结束thread证据。若未来某算法迁至Java，保持公共业务契约并替换端口实现，不让客户端感知内部迁移。
+Week 21先在Java定义端口与fallback，Week 38后实现Python契约。每个AI特性由feature flag渐进启用。出现错误时关闭特性、回到人工流程并保留调用审计；只删除并重建chunk/embedding/索引具象，不删除受保留策略约束的调用、工具、评估或未结束thread证据。若未来某算法迁至Java，保持公共业务契约并替换端口实现，不让客户端感知内部迁移。
 
 ## 验证与非目标
 

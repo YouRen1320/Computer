@@ -1,166 +1,176 @@
-# 第 21 周：Nuxt 4 渲染、Hydration、数据获取、认证与部署
+# 第 21 周：模块化单体、Spring Modulith 与后端阶段考核
 
-> 建议投入：16 小时（可在 15—18 小时内调整）
+> 建议投入：17 小时（可在 15—18 小时内调整）
 
 ## 1. 本周定位
 
-本周学习 Nuxt 4 不是因为南昌每个 Vue 岗都要求 Nuxt，而是补齐 SSR/SSG、同构执行和内容型产品交付能力。FactoryCare 的 Nuxt 端承担 **公开设备服务/知识入口和客户查询门户**，不会重做第 20 周的企业管理后台。
+本周收束企业后端阶段的安全、领域、缓存与可靠事件能力，把 FactoryCare 整理为能长期演进的 **Spring Boot 模块化单体**。目标不是追求“干净架构”外观，而是使模块职责、公开 API、依赖方向、事务与事件边界可被自动验证。
 
-每条路由按业务选择 CSR、SSR 或 SSG，不把“默认 SSR”当成性能保证。认证页面采用服务端可读的 HttpOnly Cookie/Session 与 Nuxt Server 代理思路；路由中间件只改善导航体验，Spring 后端仍负责最终授权。
+Spring Modulith 用于发现、校验、测试和记录模块，不把单体伪装成微服务。周末进行后端阶段考核，验证在不依赖 AI 的情况下能完成带权限、事务和测试的真实小需求。
 
 ## 2. 前置条件
 
-- 第 20 周 Vue3 管理端可构建、可联调，理解 Router、Pinia 与服务端状态边界。
-- 能解释 HTTP Cookie、缓存头、代理、Node 服务和静态托管的区别。
-- FactoryCare 后端已有稳定 Session 认证与公开/受保护接口边界。
-- 新建独立 Nuxt 4 应用前先写用途和非目标，避免复制管理端。
+- Week 16—20 的安全、租户、领域、缓存和事件核心测试通过，当前主分支可回滚。
+- 已有认证/授权、设备、工单、审计、缓存和通知/Outbox 功能。
+- 能说明各模块的数据所有权和核心事务，不以 Controller 或数据库表作为唯一分层依据。
+- 重构前创建架构快照、测试基线和可回滚提交，不在同一提交混入新业务功能。
 
 ## 3. 学习目标
 
-- 能解释 CSR、SSR、SSG/Prerender、SWR/ISR 和混合渲染的请求与部署差异。
-- 能描述服务端渲染、Payload 传输和客户端 Hydration 的完整过程。
-- 能正确选择 `$fetch`、`useFetch`、`useAsyncData`，避免首屏双重请求。
-- 能排查时间、随机数、浏览器 API、共享状态和 HTML 结构造成的 Hydration mismatch。
-- 能设计 Nuxt Server/BFF 与 Spring Session 的认证转发边界。
-- 能构建并部署 Node Server 与静态 Prerender 两种产物，说明各自限制。
+- 能区分技术分层、按业务模块划分和微服务拆分。
+- 能为 FactoryCare 定义模块、公开接口、内部实现、所有数据和发布/订阅事件。
+- 能识别循环依赖、共享数据库越界、万能 `common` 包和跨模块直接调用内部类。
+- 能使用 Spring Modulith 自动验证模块结构、生成文档并进行模块集成测试。
+- 能说明模块内事务、跨模块同步调用与事件协作的取舍。
+- 能在无 AI 阶段考核中独立完成需求、测试、排错和口述。
 
 ## 4. 完整概念清单
 
-### 4.1 Nuxt 4 目录与运行时
+### 4.1 模块化单体基础
 
-- `app/` 下 pages、layouts、components、composables、middleware、plugins。
-- `server/` 下 API、routes、middleware；Nitro 与 Vue 应用运行时的边界。
-- 自动导入、文件路由、动态路由、错误页、SEO Meta 和 Runtime Config。
-- `runtimeConfig` 的 private/public 区分；客户端可见 public 配置仍不是秘密。
-- Server/Client 两套环境中的 `window`、`document`、Cookie、Header 和全局变量差异。
+- 单进程/单部署不等于没有模块；模块由业务能力和变更原因定义。
+- 高内聚、低耦合、稳定依赖方向和信息隐藏。
+- 模块公开 API、内部包、事件契约和数据所有权。
+- 同步调用适合需要立即结果/同事务一致；事件适合降低依赖和次要副作用。
+- 模块内可按 application/domain/infrastructure 表达职责，但不机械复制空目录。
+- Shared Kernel 只保存真正稳定的小型值类型；`common` 不能成为垃圾场。
+- 模块化单体与微服务的实施成本、迁移成本、故障面、回滚和运维差异。
 
-### 4.2 CSR、SSR、SSG 与混合渲染
+### 4.2 FactoryCare 目标模块
 
-- CSR：浏览器取数据并渲染，适合强交互、认证后后台；首屏与 SEO 有取舍。
-- Universal SSR：每个请求服务端生成 HTML，再在浏览器 Hydrate；需要 Node/边缘运行时。
-- SSG/Prerender：构建时生成 HTML，适合稳定公开内容；构建后没有动态 Server API。
-- `routeRules` 为不同路由设置 prerender、SSR/CSR、SWR/ISR 和缓存。
-- 页面是否个性化、更新频率、SEO、首屏、部署成本与缓存泄露共同决定渲染方式。
-- 认证/租户数据不能进入跨用户共享的公共页面缓存。
+- `identity`：认证主体、用户、角色、权限；不拥有业务工单。
+- `organization`：租户、组织、班组与数据范围。
+- `asset`：设备、设备编码和设备状态。
+- `workorder`：工单聚合、状态机、SLA、历史和业务事件。
+- `engagement`：通知意图、Outbox投递适配与发送记录。
+- `audit`：跨业务审计写入端口与受限查询。
+- `knowledge`：本周完成文档元数据、版本、审核、发布/撤回和版本化事件的最小纵向切片。
+- `reporting`：先建立可重建的只读SLA/工单指标边界，Week 27接Vue看板。
+- `ai-integration`：先定义Java/Python端口、身份、超时和降级契约，Week 40接入真实Python服务。
+- 计划性预防维护是未来扩展，本轮不创建`maintenance`模块。
+- 每张业务表只有一个拥有模块；其他模块通过 API、ID 或事件协作。
 
-### 4.3 Hydration
+### 4.3 Spring Modulith
 
-- 服务端 HTML、Nuxt Payload、客户端创建 Vue 应用并绑定事件。
-- 不一致来源：`Date.now()`、`Math.random()`、时区/Locale、浏览器专属 API、无效 HTML、异步条件差异。
-- 服务端跨请求共享 `ref/reactive` 可能泄露用户状态；使用请求级状态和 `useState`。
-- `ClientOnly` 是明确的客户端边界，不应掩盖可修复的不确定渲染。
-- 使用稳定输入、服务端传值、挂载后读取浏览器信息，必要时提供一致占位。
+- 基于包结构发现 Application Module；公开 API 与内部实现。
+- `ApplicationModules.of(...).verify()` 验证无循环、仅访问公开接口和允许依赖。
+- `@ApplicationModule`、命名接口与 allowed dependencies 的适用场景。
+- `@ApplicationModuleTest` 的独立模块集成测试模式。
+- `Scenario`、`PublishedEvents` 验证模块事件协作。
+- 文档生成：模块 Canvas、组件图和依赖图；文档必须反映真实代码。
+- Event Publication Registry 与第 20 周 Outbox 的重叠：选择一种主路径，避免双重可靠事件机制。
 
-### 4.4 数据获取
+### 4.4 架构治理与演进
 
-- `$fetch` 适合事件处理或明确的单次请求；在页面 setup 中直接使用可能 SSR/客户端各请求一次。
-- `useFetch` 是 SSR 友好的 `$fetch` 包装，将结果放入 Payload 供 Hydration 复用。
-- `useAsyncData` 适合自定义异步逻辑；Key、`pick`、`transform`、`lazy`、`server`、`dedupe`。
-- 响应式参数会触发重新获取；搜索条件需要防抖和明确 watch 策略。
-- 缓存键与租户/用户、Header、Cookie 的关系；不得错误共享私有响应。
-- 写操作使用 `$fetch`，成功后刷新/清除对应数据，不在 setup 中制造副作用。
-
-### 4.5 认证与部署
-
-- Nuxt Route Middleware 不在每次服务端 API 请求上执行，不能当安全网关。
-- HttpOnly Session Cookie 服务端可读；SSR 请求需安全转发 Cookie/CSRF 到 Spring。
-- 推荐 Nuxt Server 作为窄 BFF/同源代理，白名单转发必要 Header，不做任意开放代理。
-- 防止 SSRF、Cookie 泄露和缓存跨用户污染；服务端日志不记录凭据。
-- `nuxt build` 产生可运行 Server 产物，`nuxt generate`/prerender 产生静态文件。
-- Nitro preset、Node 进程、反向代理、健康检查、环境变量与优雅停止。
+- 架构决策记录 ADR：上下文、选项、决定、后果、迁移和回滚。
+- 依赖规则进入自动化测试/CI，而不是只画图。
+- 模块边界重构采用小步移动、编译、测试、提交。
+- 何时考虑拆服务：独立伸缩、部署、故障隔离、数据/团队所有权有真实证据。
+- 不能因为“将来可能”提前承担网络、分布式事务和可观测性成本。
 
 ## 5. 任务分配
 
 | 任务 | 时间 | 结果 |
 | --- | ---: | --- |
-| Nuxt 4 目录和渲染实验 | 3h | CSR/SSR/SSG 请求对比 |
-| Hydration 与数据获取实验 | 3h | mismatch 故障笔记 |
-| FactoryCare 门户实现 | 4.5h | 不重复后台的 Nuxt 页面 |
-| Session/BFF 与部署验证 | 2.5h | 安全代理和两种产物 |
-| 无 AI 训练 | 2h | Hydration排错 |
-| 求职与定位动作 | 1.5h | Nuxt 边界表述和投递 |
+| 当前依赖盘点与目标模块设计 | 2h | 现状/目标依赖图 |
+| 小步重构与最小模块契约 | 5.5h | 业务模块、knowledge切片、reporting/AI端口 |
+| Modulith 验证、测试与文档 | 3h | 自动化架构证据 |
+| 后端阶段无 AI 实操考试 | 3h | 完整需求交付 |
+| 口述/故障定位考试与复盘 | 2h | 评分表和补弱清单 |
+| 求职与作品集动作 | 2h | 架构讲解和投递版本 |
 
-总计 16.5 小时。若有 18 小时，增加缓存头与性能测量；不要扩展成第二套完整后台。
+总计 17.5 小时。若只有 15 小时，减少图表美化；不能删除模块验证、knowledge发布/撤回、阶段考试和回滚基线。
 
 ## 6. FactoryCare 项目增量
 
-- 新建 `factorycare-portal`（Nuxt 4），README 明确它服务公开内容/客户查询，不复制管理端工单调度功能。
-- 首页、服务说明和帮助文档使用 Prerender/SSG；公开设备服务页使用 SSR/SWR；认证后的“我的报修”保持逐用户动态渲染，禁止共享缓存。
-- 使用 `routeRules` 明确每类路由策略，并写出选择依据。
-- 公开页面通过 `useFetch` 获取内容，提交查询/报修动作使用 `$fetch`；证明首屏没有重复请求。
-- 增加一个窄 Nuxt Server API 代理，将允许的 Cookie、CSRF 和关联 ID 转发到 Spring；目标地址来自私有 Runtime Config。
-- 登录恢复与受保护导航在服务端/客户端均有一致状态；后端继续独立验证 Session、权限与租户。
-- 故意制造并修复 3 类 Hydration mismatch：时间、浏览器 API、跨请求共享状态。
-- 分别验证 Node Server 部署和公开静态页面 Prerender；记录动态认证功能为何不能只用静态托管。
-- 编写 `ADR-021-nuxt-rendering.md`，包含路由矩阵、缓存/认证风险、部署与回滚方案。
+- 先生成当前包依赖图，标注循环、跨模块内部访问、共享表和万能工具类。
+- 按`identity/organization/asset/workorder/knowledge/engagement/reporting/audit/ai-integration`迁移或建立最小边界，保持既有API行为不变；每移动一个模块即运行测试并提交。
+- `knowledge`完成文档元数据、对象键/哈希/大小/MIME字段、版本、审核、发布/撤回API，并发布`KnowledgeDocumentPublished.v1`与`KnowledgeDocumentRevoked.v1`；Week 27接入私有对象上传，暂不做解析和向量索引。
+- `reporting`提供可重建的SLA/工单只读查询；`ai-integration`只提供端口、假实现、身份/超时/降级契约，不连接真实模型。
+- 为每个模块写 `README` 或 Canvas：职责、公开接口、拥有数据、订阅/发布事件、禁止依赖。
+- 添加 `ApplicationModules.verify()` 架构测试并纳入 CI。
+- 为 `workorder` 编写 `@ApplicationModuleTest`：验证状态变更、审计/事件发布和非法路径。
+- 生成模块依赖图，确认无循环；不能靠把所有类改成 `public` 消除错误。
+- 比较第 20 周手写 Outbox 与 Spring Modulith Event Publication Registry，选择当前主实现并写 `ADR-018-modular-monolith.md`；另一条只作为迁移备选。
+- 保持一个 Spring Boot 部署单元和一个业务数据库；模块化完成后做一次完整回归。
 
 ## 7. AI 协作边界
 
 AI 可以：
 
-- 根据页面属性生成渲染模式决策表并审查遗漏。
-- 分析 Hydration 警告、请求瀑布和 Nuxt Payload。
-- 生成类型安全 `useFetch`/Server Route 骨架和测试场景。
-- 比较 Node、静态、边缘部署，但结论必须结合实际产物验证。
+- 阅读依赖清单后提出 2—3 个模块划分方案并比较取舍。
+- 帮助生成 ArchUnit/Modulith 测试骨架和模块文档草稿。
+- 逐个小提交审查跨模块依赖和潜在回归。
+- 在阶段考试结束后充当面试官追问，而不是考试中直接作答。
 
 AI 不可以：
 
-- 把所有页面改为 SSR 或所有页面改为 CSR 作为统一“修复”。
-- 让 Nuxt Server 接受客户端提供任意上游 URL，或转发全部 Header/Cookie。
-- 把认证/租户响应放入公共缓存，或把私密 Runtime Config 暴露为 public。
-- 用 `ClientOnly` 掩盖所有 Hydration mismatch。
+- 一次性移动整个目录、批量改包名并宣称重构完成。
+- 为消除循环依赖创建巨大 `common` 包、全局 Service Locator 或全公开接口。
+- 擅自拆微服务、数据库或改变 API/数据契约。
+- 参与无 AI 实操考试的分析、编码和排错阶段。
 
-AI 修改后必须检查页面 HTML、Network、Server 日志和不同用户缓存，不只看浏览器视觉结果。
+每次 AI 辅助重构都必须先定义文件范围和验收测试，diff 超出范围立即停止审查。
 
 ## 8. 无 AI 训练
 
-关闭 AI 120 分钟，修复一个Nuxt页面中的Hydration mismatch与重复请求：
+本周从求职/复盘时段预留45—60分钟完成并记录：从Week 01—17错题中随机复测一道，独立写测试、复杂度和替代方案。
 
-- 页面服务端使用当前时间格式化，客户端时区不同；先定位两端输出差异。
-- setup 中错误使用 `$fetch` 导致服务端/客户端各请求一次；改为合适的 `useFetch`。
-- 使用浏览器 API 的组件要建立明确客户端边界并提供一致占位。
-- 写出修复前后请求次数、HTML 差异和为何不使用 `ssr:false` 一刀切。
+### 8.1 180 分钟阶段实操
 
-## 9. 求职动作
+需求：增加“主管驳回已解决工单，要求技师返工”。
 
-- 采样南昌及可接受远程的 Vue 岗各 5 个，记录 Nuxt/SSR/SEO 是否真实出现；若本地样本仍少，Nuxt 只作为交付加分项，不改求职主标签。
-- 简历表述：`使用 Nuxt 4 按路由组合 SSR/SSG/CSR，解决 Hydration 与重复取数，并通过窄 BFF 安全转发 Spring Session`。
-- 准备 5 分钟回答：为什么企业管理后台通常不需要为 SEO 全站 SSR？
-- 本周继续至少 5 次 Vue/Java 全栈投递；不要因为 Nuxt 岗位关键词少而暂停已有 Vue3 路线。
+- 20 分钟：写目标、非目标、权限、状态规则、API 契约与验收标准。
+- 100 分钟：实现领域行为、乐观锁、状态历史、审计/事件及数据库变更。
+- 40 分钟：补单元/集成测试，包含成功、无权限、跨租户、非法状态和版本冲突。
+- 20 分钟：运行全量测试，检查日志和 diff，写回滚说明。
+
+### 8.2 口述与排错
+
+- 10 分钟画出认证、授权、工单事务、Outbox 和通知链路。
+- 随机解释一个模块依赖为何允许或禁止。
+- 在 30 分钟内从日志定位一个故意制造的事务失效或跨模块依赖问题。
+- 评分低于 80/100 时，下周每天先补 30 分钟，不带着关键缺口进入前端阶段。
+
+## 9. 求职动作（恢复求职后启用）
+
+- 采样南昌 Java/Java 全栈/工业软件岗位 10 个，把要求映射到 FactoryCare 证据：Spring Security、SQL、Redis、MQ、模块化、测试、Docker。
+- 准备 10 分钟架构讲解：为什么选模块化单体、各模块如何协作、何时才拆微服务。
+- 形成两版项目描述：Java 应用版突出权限/事务/可靠性；全栈版同时突出即将开始的 Vue3 管理端。
+- 恢复求职后才完成一次模拟系统设计面试和 5 次定向投递，并根据反馈校准 Week 22—25 Web 基础与 Week 26—29 Vue/Nuxt 的练习深度；暂停期间把这段时间用于 G3 错题复测。
 
 ## 10. 本周交付物
 
-- Nuxt 4 FactoryCare 门户与渲染路由矩阵。
-- 公开 SSG、动态 SSR 和认证动态页面的可运行示例。
-- Session/BFF 代理、三类 Hydration 修复记录和请求证据。
-- `ADR-021-nuxt-rendering.md`。
-- Node Server 与静态 Prerender 部署说明、无 AI 排错记录。
+- 当前/目标模块图、模块 Canvas 和 `ADR-018-modular-monolith.md`。
+- 完成业务模块重构的 FactoryCare 后端。
+- `ApplicationModules.verify()`、模块集成测试和生成的架构文档。
+- 后端阶段考试代码、评分表、排错记录和补弱清单。
+- 10 分钟架构讲解提纲与两版项目经历。
 
 ## 11. 验收标准
 
-- 能在白板上画出 CSR、SSR、SSG 和 Hydration 请求/执行流程。
-- 每条路由有业务依据，不缓存跨用户的认证/租户数据。
-- 首屏 `useFetch` 不重复请求，Hydration 控制台无未解释警告。
-- BFF 只代理允许路径/Header，目标地址不可由用户控制，日志不泄露 Cookie。
-- Node 产物可运行；静态产物限制有明确验证，不声称静态部署支持动态 Server API。
-- 无 AI 能定位时间、浏览器 API和重复请求问题。
-- 能解释 Nuxt 对本地求职是补充能力，而不是替代 Vue3 企业后台证据。
+- 模块依赖无循环，模块只能访问其他模块公开 API；规则由自动化测试和 CI 验证。
+- 每张核心表和关键业务规则有明确拥有模块，不出现任意模块直接改他人表。
+- 全量业务、安全、租户、状态、缓存、Outbox 测试保持通过。
+- 能解释手写 Outbox 与 Modulith 事件注册表的取舍，项目只保留一条主可靠交付路径。
+- 无 AI 在 180 分钟内完成阶段需求，评分不低于 80/100。
+- 能在 10 分钟内讲清模块、事务、数据权限、并发和失败恢复，不背框架宣传词。
+- 重构有小步提交和回滚点，没有混入未约定的新功能。
 
 ## 12. 明确不做
 
-- 不用 Nuxt 重写第 20 周完整管理后台。
-- 不学习边缘运行时内部原理、Nuxt 模块开发或复杂 Content CMS。
-- 不把 Route Middleware 当作后端授权。
-- 不全站强制 SSR，也不靠 `ssr:false` 规避所有问题。
-- 不把私有 Session 数据放进公共 SWR/ISR 缓存。
+- 不拆微服务、不引入 Spring Cloud、服务注册中心或分布式事务。
+- 不为每个模块创建独立数据库，不复制六套机械分层模板。
+- 不把所有通用类放进 `common`，不为了通过验证公开内部实现。
+- 不同时运行两套 Outbox/事件可靠交付机制。
+- 不在阶段考试中使用 AI，不把未通过考核包装为已掌握。
 
 ## 13. 官方资料
 
-- [Nuxt 4 Guide](https://nuxt.com/docs/4.x/guide)
-- [Nuxt Rendering Modes](https://nuxt.com/docs/4.x/guide/concepts/rendering)
-- [Nuxt Data Fetching](https://nuxt.com/docs/4.x/getting-started/data-fetching)
-- [Nuxt useFetch](https://nuxt.com/docs/4.x/api/composables/use-fetch)
-- [Nuxt and Hydration](https://nuxt.com/docs/4.x/guide/best-practices/hydration)
-- [Nuxt Sessions and Authentication](https://nuxt.com/docs/4.x/guide/recipes/sessions-and-authentication)
-- [Nuxt Runtime Config](https://nuxt.com/docs/4.x/guide/going-further/runtime-config)
-- [Nuxt Deployment](https://nuxt.com/docs/4.x/getting-started/deployment)
+- [Spring Modulith Reference](https://docs.spring.io/spring-modulith/reference/)
+- [Spring Modulith Fundamentals](https://docs.spring.io/spring-modulith/reference/fundamentals.html)
+- [验证应用模块结构](https://docs.spring.io/spring-modulith/reference/verification.html)
+- [应用模块集成测试](https://docs.spring.io/spring-modulith/reference/testing.html)
+- [使用应用事件](https://docs.spring.io/spring-modulith/reference/events.html)
+- [生成应用模块文档](https://docs.spring.io/spring-modulith/reference/documentation.html)
+- [Spring Boot Structuring Your Code](https://docs.spring.io/spring-boot/reference/using/structuring-your-code.html)

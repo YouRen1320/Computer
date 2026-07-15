@@ -208,14 +208,14 @@
 
 ## 10. 模拟面试节奏
 
-- Week 06：Java语言与自我介绍；
-- Week 12：Spring Web、SQL和第一条项目链；
-- Week 18：企业后端、权限、事务和架构；
-- Week 22：Vue/Nuxt和全栈联调；
-- Week 26：多端、离线和项目演示；
-- Week 32：AI/RAG与安全评估；
-- Week 35：完整技术面、项目面和HR面各两次；
-- Week 36：针对真实JD进行最终模拟。
+- Week 08：Java语言与自我介绍；
+- Week 15：Spring Web、SQL和第一条项目链；
+- Week 21：企业后端、权限、事务和架构；
+- Week 29：Vue/Nuxt和全栈联调；
+- Week 35：多端、离线和项目演示；
+- Week 43：AI/RAG与安全评估；
+- Week 47：完整技术面、项目面和HR面各两次；
+- Week 48：针对真实JD进行最终模拟。
 
 每次使用[面试复盘模板](./templates/interview-review.md)，保留原问题、原回答、证据、正确答案、改进动作和复测日期。
 

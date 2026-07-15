@@ -1,377 +1,285 @@
 # Week 06 概念讲义
 
-## 1. 一张图理解并发选择
+## 1. 一张图理解本周
 
-    业务任务
+    JSON 文件
+       │ 字节 → UTF-8 字符 → JSON token → DTO
+       ▼
+    边界校验 ──技术失败──> 基础设施异常（保留 cause）
        │
-       ├─是否需要并发？否──> 串行版本
+       ├─业务字段错误──> ImportReport（记录索引与原因）
+       ▼
+    领域工厂 ──业务拒绝──> 领域异常
        │
        ▼
-    任务主要在做什么？
-       ├─CPU 密集──> 有界平台线程并行，按核心与测量决定
-       └─阻塞等待──> 平台线程池 或 每任务虚拟线程
-                            │
-                            ▼
-                     稀缺资源是否有限？
-                            ├─数据库连接池
-                            ├─第三方 API 限额
-                            └─文件描述符/内存
-                            │
-                            ▼
-                     独立限流、超时、取消、降级
+    内存仓储
 
-虚拟线程改变“等待期间占用平台线程”的成本，不改变外部世界的容量。
+反方向导出时，领域对象先变成稳定的快照 DTO，再序列化到临时文件，写完并关闭后才替换目标文件。
 
-## 2. 基本词汇
+这张图中每一层只回答一种问题：
 
-| 词 | 含义 | 常见混淆 |
-| --- | --- | --- |
-| 进程 | 独立运行与资源边界 | 不是一个线程 |
-| 平台线程 | 操作系统线程的 Java 表达 | 数量成本较高 |
-| 虚拟线程 | JVM 调度的轻量线程 | 不是更快的 CPU |
-| 任务 | 要完成的一段工作 | 不必与线程一一固定绑定 |
-| 并发 | 多个任务时间上交错推进 | 不保证同时执行 |
-| 并行 | 多个任务同一时刻执行 | 需要执行资源 |
-| 吞吐量 | 单位时间完成数量 | 不等于单请求延迟 |
-| 延迟 | 单个请求完成时间 | 并发过高可能更差 |
+- I/O 层：字节有没有安全地读到或写出？
+- JSON 层：文本是否符合契约、能否映射成 DTO？
+- 边界校验层：字段格式、缺失、范围是否可接受？
+- 领域层：该设备或工单在业务上是否有效？
+- 仓储层：是否重复，保存是否成功？
 
-TS 类比：Promise 表达异步结果，不等于新线程；浏览器事件循环的并发与 Java 多线程共享内存模型不同。Web Worker 更像独立执行环境，但也不能直接类比平台线程。
+## 2. 异常不是“报错”，而是失败契约
 
-## 3. 共享状态为什么危险
+### 2.1 Throwable 家族的工作边界
 
-### 3.1 原子性
+| 类型 | 典型例子 | 谁应处理 | 本周策略 |
+| --- | --- | --- | --- |
+| 业务拒绝 | 重复设备编码、非法状态 | 调用方或应用边界 | 有稳定语义，不伪装成功 |
+| 输入/契约错误 | 缺少必填字段、JSON 格式损坏 | 边界适配器 | 区分语法失败与业务字段失败 |
+| 基础设施失败 | 文件不存在、权限不足、磁盘写失败 | 适配器转换，外层决定恢复 | 包装并保留原始 cause |
+| 编程错误 | 空指针、越界、违反内部不变量 | 修代码 | 不捕获后继续运行 |
+| Error | OutOfMemoryError、StackOverflowError | 运行环境与运维 | 通常不在业务代码中捕获 |
 
-count++ 不是不可分步骤，概念上包含读、加一、写。两个线程都读到 5，最后可能只写成 6，而不是 7。
+checked 与 unchecked 不是“可恢复”和“不可恢复”的自动分类。更实用的判断问题是：
 
-### 3.2 可见性
+1. 调用方能否在当前抽象层做有意义的恢复？
+2. 是否希望编译器强迫所有调用方显式处理？
+3. 这是外部资源操作，还是领域前置条件被拒绝？
+4. 团队是否已有一致的异常边界？
 
-一个线程写入普通字段后，另一个线程不一定按你期望的时机观察到。编译器、JIT、CPU 缓存与内存模型共同影响可见顺序。不要用“我本机每次都看到”当证明。
+IOException 是 checked，因为文件调用天然要求面对外部失败。领域中的 InvalidEquipmentCode 往往使用 unchecked，因为它代表调用者违反领域契约，而且每层机械声明会制造噪声。两者都必须有语义。
 
-### 3.3 顺序性
+### 2.2 只捕获你能处理的异常
 
-只要单线程可观察行为不变，指令可能被优化重排。同步原语建立 happens-before 关系。基础阶段只需知道正确同步带来可见性与顺序保证，不形式化背 JMM。
+下面的代码制造了假成功：
 
-### 3.4 优先策略
-
-按优先级选择：
-
-1. 不共享；
-2. 使用不可变值；
-3. 每个任务线程封闭；
-4. 使用并发集合提供的原子操作；
-5. 使用原子变量处理简单单值；
-6. 用 synchronized/Lock 保护复合不变量；
-7. 最后才考虑复杂无锁结构。
-
-锁保护的是不变量，不是某一行代码。多个字段必须一起变化时，单独 AtomicInteger 未必足够。
-
-## 4. synchronized、volatile 与原子类
-
-### synchronized
-
-- 同一监视器上互斥；
-- 进入与退出建立可见性关系；
-- 适合保护小范围复合不变量；
-- 锁范围过大降低并发；
-- 锁顺序不一致可能死锁。
-
-### volatile
-
-- 保证对该变量的写对后续读可见，并提供相应顺序语义；
-- 不让 count++ 变原子；
-- 适合状态标志或独立配置引用；
-- 多字段复合一致性不能靠多个 volatile 自动得到。
-
-### AtomicInteger/AtomicReference
-
-- 提供 compare-and-set 等原子操作；
-- 适合单变量状态转换/计数；
-- check-then-act 跨多个对象仍需要更高层同步；
-- LongAdder 只作为高争用统计概念了解，本周不作为业务精确快照答案。
-
-### 并发集合
-
-ConcurrentHashMap 的单个操作线程安全，但：
-
-    if (!map.containsKey(key)) {
-        map.put(key, value);
-    }
-
-这两个操作组合不原子。应考虑 putIfAbsent、computeIfAbsent，或对整个业务不变量设计同步。
-
-## 5. 线程生命周期、中断与协调
-
-### 5.1 start 与 run
-
-调用 thread.start 启动新线程执行 run；直接调用 run 只是当前线程普通方法调用。
-
-### 5.2 interrupt 是协作式取消
-
-interrupt 不会强杀线程：
-
-- 某些阻塞方法抛 InterruptedException；
-- 非阻塞计算需主动检查 isInterrupted；
-- 捕获后若不能完成处理，应恢复中断状态或向上传播；
-- 吞掉中断会让关闭和取消失效。
-
-典型恢复：
-
-    catch (InterruptedException cause) {
-        Thread.currentThread().interrupt();
-        throw new EnrichmentInterruptedException("补全被取消", cause);
-    }
-
-不要恢复中断后继续无限重试。
-
-### 5.3 CountDownLatch 与 Semaphore
-
-CountDownLatch 适合“一组参与者等待事件发生”，计数到 0 后不能重置。Semaphore 表示同时可持有的许可数，适合限制外部资源并发。获取许可后必须 finally 释放；只有成功 acquire 后才能 release。
-
-### 5.4 死锁、活锁、饥饿
-
-- 死锁：互相等待永不推进；
-- 活锁：持续响应对方但业务不推进；
-- 饥饿：某任务长期得不到资源。
-
-固定锁顺序、缩小锁范围和超时获取能降低风险。线程转储可看到互相等待的锁。
-
-## 6. ExecutorService 与线程池
-
-### 6.1 任务与线程解耦
-
-Executor 接收任务；ExecutorService 增加 Future、关闭等生命周期。业务不应为每个方法随手 new Thread 或 new pool。
-
-### 6.2 ThreadPoolExecutor 的参数关系
-
-重点不是背数字，而是理解：
-
-- corePoolSize：通常维持的核心工作线程；
-- maximumPoolSize：允许的上限；
-- workQueue：线程忙时任务如何等待；
-- keepAliveTime：非核心空闲线程回收；
-- ThreadFactory：命名、异常与可观测性；
-- RejectedExecutionHandler：饱和时明确行为。
-
-执行大致顺序是：核心线程未满先建核心；核心满后入队；队列满再扩到 maximum；都满后拒绝。因此使用无界队列时 maximum 常常不起作用。
-
-Executors.newFixedThreadPool 使用无界队列，不满足“有界排队”要求。学习实验用显式 ThreadPoolExecutor。
-
-### 6.3 拒绝策略
-
-- AbortPolicy：明确抛 RejectedExecutionException；
-- CallerRunsPolicy：提交线程自己执行，能产生反馈，但会改变延迟与上下文；
-- Discard/DiscardOldest：可能静默丢任务，核心业务通常危险。
-
-选择必须连接业务语义。FactoryCare 本周推荐明确拒绝并记录来源，不静默丢。
-
-### 6.4 submit、execute 与 Future
-
-execute 没有 Future；未捕获异常交给线程的异常处理机制。submit 返回 Future，任务异常在 get 时以 ExecutionException 包装。若从不 get，失败可能被忽略。
-
-Future.get 需要超时策略；cancel(true) 只是发出中断请求，任务仍需协作。
-
-### 6.5 关闭
-
-拥有 Executor 的组件负责：
-
-1. 停止接收新任务；
-2. shutdown；
-3. awaitTermination；
-4. 超时后 shutdownNow 发出中断；
-5. 再次等待并记录未终止任务；
-6. 捕获 InterruptedException 时恢复中断。
-
-本地变量可使用 try-with-resources 管理支持 AutoCloseable 的 ExecutorService；应用级共享池由组合根/生命周期组件管理。
-
-## 7. CompletableFuture
-
-### 7.1 它是什么
-
-CompletableFuture 同时表示未来结果和可组合阶段。它不是“自动开线程”；supplyAsync 未指定 Executor 时通常使用 common pool，本项目关键任务必须显式指定。
-
-### 7.2 核心组合
-
-| 方法 | 输入函数 | 用途 |
-| --- | --- | --- |
-| thenApply | T → R | 同步变换结果 |
-| thenCompose | T → CompletionStage<R> | 串联异步依赖，避免嵌套 |
-| thenCombine | T 与 U → R | 合并两个独立结果 |
-| allOf | 多个 stage → 完成信号 | 等待一组，结果仍需单独读取 |
-| exceptionally | Throwable → T | 失败恢复为值 |
-| handle | T/Throwable → R | 成功失败都转换 |
-| whenComplete | 观察 T/Throwable | 记录/清理，不宜改变结果 |
-
-### 7.3 同步与 Async 后缀
-
-thenApply 可能由完成前序阶段的线程执行；thenApplyAsync 会异步调度，未指定 Executor 仍可能进入 common pool。不要为了“更异步”给每段都加 Async。
-
-### 7.4 异常
-
-异步异常常被 CompletionException 包装。要保留原始来源和业务上下文。不要在每一级 exceptionally 返回 null，否则下游会以“成功 null”继续。
-
-### 7.5 超时不等于取消底层工作
-
-orTimeout 让 future 在超时后异常完成；completeOnTimeout 提供后备值。它们不应被理解为可靠终止底层 I/O。底层任务仍要有自身超时和中断协作。
-
-CompletableFuture.cancel 也不能假定一定打断底层计算。测试需观察资源是否真正释放。
-
-### 7.6 join 的边界
-
-在聚合边界等待最终结果可以 join/get；如果每创建一个 Future 就立即 join，流程仍串行。画依赖图能发现这种伪异步。
-
-## 8. 虚拟线程
-
-### 8.1 解决的问题
-
-阻塞式同步代码中，大量任务多数时间等待 I/O。每个任务占一个平台线程成本高；虚拟线程让运行时在阻塞等待时更高效地调度承载线程。
-
-### 8.2 适用
-
-- 大量彼此独立；
-- 大部分时间阻塞等待；
-- 希望保留同步代码与直观 stack trace；
-- 每个任务有明确生命周期。
-
-不适用：
-
-- 无限制 CPU 密集计算；
-- 依赖大量共享锁竞争；
-- 以为线程数等于下游承载能力；
-- 用虚拟线程掩盖无超时、无取消或无背压。
-
-### 8.3 不池化虚拟线程
-
-使用每任务虚拟线程：
-
-    try (ExecutorService executor =
-             Executors.newVirtualThreadPerTaskExecutor()) {
-        Future<Result> future = executor.submit(task);
-        ...
-    }
-
-线程不是此处的稀缺资源，因此不为“节省虚拟线程”建固定池。真正稀缺的第三方调用用 Semaphore 限制：
-
-    permits.acquire();
     try {
-        return externalCall();
-    } finally {
-        permits.release();
+        importFile(path);
+    } catch (Exception ignored) {
+        return ImportReport.success();
     }
 
-必须正确处理中断，不能未 acquire 就 release。
+问题不只是捕获范围过大：
 
-### 8.4 ThreadLocal 与诊断
+- 真实故障被吞掉；
+- 调用方得到错误事实；
+- 日志缺少 cause；
+- 编程 bug 也可能被伪装成业务成功；
+- 后续重试、告警和测试都失去依据。
 
-虚拟线程可以使用 ThreadLocal，但每任务一个线程时，大量 ThreadLocal 值可能增加内存和隐式上下文风险。Scoped Values 在 JDK 25 已正式定稿，但本轮不引入，避免在基础阶段把上下文传播复杂化。
+合理的转换应当保留根因和业务上下文：
 
-现代 JDK 已持续改进虚拟线程与监视器相关的 pinning；不要背“synchronized 一定 pin”这种过时绝对结论。仍需关注锁竞争、native/foreign 调用等阻塞点，并以 JFR/线程诊断的实际事件为证据。
+    try {
+        return jsonGateway.read(path);
+    } catch (IOException cause) {
+        throw new CatalogReadException(
+            "无法读取设备目录: " + safeFileName(path),
+            cause
+        );
+    }
 
-### 8.5 明确不用结构化并发
+消息里加入安全且有用的上下文，不加入文件完整内容、口令或用户隐私。
 
-JDK 25 的结构化并发仍是 preview。它与本周“任务有共同生命周期”的理念相关，但项目不开 preview，不使用 StructuredTaskScope。不要为了学习新 API 修改编译参数。
+### 2.3 finally 与 try-with-resources
 
-## 9. 并发测试
+try-with-resources 适用于实现 AutoCloseable 的资源。资源按声明的相反顺序关闭。若业务代码和 close 同时失败，主异常被抛出，关闭失败通常作为 suppressed exception 保留。排错时不要只看 message，也检查 cause 和 suppressed。
 
-### 9.1 不依赖长 sleep
+finally 保证在正常返回或异常传播时执行，但它不等于“所有情况下都执行”：进程被强制终止、JVM 崩溃等情况无法保证。不要在 finally 中 return，它会覆盖原有返回或异常。
 
-sleep 只能延迟，不能证明线程到达具体阶段。使用：
+## 3. I/O：先分清字节、字符与路径
 
-- CountDownLatch 协调开始；
-- CyclicBarrier 同步阶段；
-- Semaphore 控制进入资源；
-- Future.get(timeout) 防止永久挂起；
-- Awaitility 等库本周不额外引入。
+### 3.1 字节流和字符流
 
-短 sleep 可用于模拟阻塞源，但断言不应依赖精确毫秒调度。
+- byte 是原始数据单元，适合图片、压缩包和任意二进制；
+- char/Reader/Writer 表示经过字符集解释的文本；
+- UTF-8 是字节与字符之间的编码规则；
+- JSON 是文本格式，因此读写时必须明确 UTF-8。
 
-### 9.2 先证明正确性，再测性能
+TS 中的 fetch().json() 隐藏了网络读取、解码和解析层次。Java 文件 API 会迫使你更明确地处理这些层。类比的失效处是：浏览器和 Node 运行时已经替你决定了许多默认行为，而服务端 Java 必须面对机器默认编码、文件权限和路径边界。
 
-三个版本使用同一输入和结果断言。性能实验必须说明：
+### 3.2 Path 不是普通字符串
 
-- 硬件和 JDK；
-- 任务类型；
-- 并发数；
-- 下游限额；
-- 预热与多轮结果；
-- 只代表本地实验。
+Path 表示文件系统路径。对用户提供的相对文件名，最小约束流程是：
 
-正式微基准应使用 JMH，但本周不展开。
+1. 从可信 baseDir 开始；
+2. baseDir.resolve(userPart)；
+3. normalize；
+4. 确认结果仍 startsWith(normalizedBaseDir)；
+5. 对真实存在路径且涉及符号链接时，再评估 toRealPath 的策略；
+6. 最终操作仍需面对检查与使用之间状态变化。
 
-## 10. JVM 高层模型
+单独 normalize 不能解决符号链接逃逸，也不能消除 TOCTOU 风险。本周要建立风险意识，不实现完整沙箱。
 
-### 10.1 从源码到执行
+### 3.3 小文件与流式处理
 
-源码经 javac 编译为字节码；类加载器加载，JVM 验证、链接和初始化；解释器先执行，热点代码可能被 JIT 编译优化。不是“Java 一直解释执行”。
+Files.readString 简洁，适合明确受限的小文件。大文件整体读取可能占满堆，此时用受控 buffer 或 Jackson 流式 API。但本周不做大规模 ETL；可通过文件大小上限保护小文件方案。
 
-### 10.2 内存区域
+### 3.4 原子写入的真实含义
 
-| 区域 | 直觉 | 常见现象 |
+安全导出的基本步骤：
+
+1. 在目标目录创建唯一临时文件；
+2. 写入、flush、关闭；
+3. 可选地验证内容；
+4. 使用 move 替换目标文件；
+5. 失败时清理临时文件；
+6. 只有 move 成功才报告导出成功。
+
+ATOMIC_MOVE 是请求，不是所有文件系统都支持；跨文件系统移动通常不能原子。还要注意：一旦指定 `ATOMIC_MOVE`，Java 规范规定其他 move 选项会被忽略；目标已存在时究竟原子替换还是失败，由具体文件系统 provider 决定。因此不能用 `ATOMIC_MOVE + REPLACE_EXISTING` 声称获得可移植的“原子覆盖”。实现应明确支持的平台/provider，以真实旧目标集成测试验证；不满足时安全失败，不悄悄降低语义。
+
+## 4. 时间：先问“这是什么时间”
+
+### 4.1 常用类型的业务语义
+
+| 类型 | 表达什么 | FactoryCare 示例 | 不适合 |
+| --- | --- | --- | --- |
+| Instant | UTC 时间线上的唯一时刻 | 工单创建、审计事件发生 | “每天 9 点” |
+| LocalDate | 无时区日期 | 计划检查日期 | 精确发生时刻 |
+| LocalDateTime | 无时区本地日期时间 | 用户输入的当地预约墙钟时间 | 跨区审计 |
+| OffsetDateTime | 带固定偏移的日期时间 | API 中保留原偏移的时间 | 未来地区夏令时规则 |
+| ZonedDateTime | 带 ZoneId 规则 | 按上海/纽约规则展示或调度 | 单纯存储审计时刻 |
+| Duration | 秒/纳秒尺度的时长 | 响应耗时、SLA 已用时间 | “一个月” |
+| Period | 年/月/日历日期差 | 保修期按月 | 精确秒数 |
+
+Instant 在 UTC 和 Asia/Shanghai 下不改变；改变的是它转换后的显示值。LocalDateTime 没有足够信息独立转换为 Instant，必须结合 ZoneId 或 offset。
+
+### 4.2 Clock 是可替换的“现在”
+
+把 Clock 注入领域服务：
+
+    final class WorkOrderFactory {
+        private final Clock clock;
+
+        WorkOrderFactory(Clock clock) {
+            this.clock = clock;
+        }
+
+        WorkOrder create(...) {
+            return new WorkOrder(..., Instant.now(clock));
+        }
+    }
+
+测试使用 Clock.fixed，生产组合根使用 Clock.systemUTC。不要把 Clock 作为参数一路暴露给每个业务方法；它是基础能力依赖，由对象构造时提供。
+
+### 4.3 TypeScript 类比与失效
+
+JavaScript Date 内部代表时间戳，但 API 同时混杂本地展示与 UTC 方法，容易把不同语义装进同一个类型。Java time API 通过不同类型强迫你表达语义。
+
+失效点：
+
+- TS 类型别名无法改变 Date 的运行时语义；
+- Java LocalDateTime 不是“格式不同的 Instant”；
+- ZoneId 是地区规则，ZoneOffset 只是某一刻的固定偏移；
+- 系统默认时区是部署环境状态，不能作为隐含业务规则。
+
+## 5. JSON：成功解析只是第一道门
+
+### 5.1 四层契约
+
+1. 语法层：是否是合法 JSON；
+2. 结构层：字段是否存在、类型是否可映射；
+3. 边界层：字符串长度、枚举 code、数字范围是否合规；
+4. 领域层：设备编码是否重复、状态转换是否允许。
+
+一个值可能通过前三层，却因业务规则失败。例如设备编码格式正确，但当前目录中已存在。
+
+### 5.2 DTO 与领域对象分离
+
+输入 DTO 应忠实表达外部契约，领域对象应保护业务不变量。不要为了 JSON 框架给领域实体增加无参构造、任意 setter 或 nullable 字段。
+
+    record EquipmentImportRow(
+        String code,
+        String name,
+        String modelCode
+    ) {}
+
+    Equipment toDomain(EquipmentImportRow row) {
+        return Equipment.create(
+            EquipmentCode.of(row.code()),
+            EquipmentName.of(row.name()),
+            ModelCode.of(row.modelCode())
+        );
+    }
+
+输出也使用快照 DTO，只公开契约字段，避免以后给领域对象新增内部字段时意外泄漏。
+
+### 5.3 未知、缺失、null 和版本
+
+这四种情况不能混为一谈：
+
+- 未知字段：生产导入可选择拒绝以发现拼写错误，也可为前向兼容忽略；必须显式决定；
+- 缺失字段：取决于是否必填以及是否有稳定默认值；
+- 显式 null：可能代表清空，也可能非法；
+- 新版本字段：新增通常比修改原字段语义安全。
+
+开发与批量导入场景通常适合对未知字段严格，因为错误文件应该尽早暴露。公共 API 的兼容策略可能不同，留到 Web 阶段设计。
+
+### 5.4 enum 不使用 ordinal
+
+ordinal 随枚举声明顺序变化。对外使用稳定 code：
+
+    enum Priority {
+        LOW("low"),
+        HIGH("high");
+
+        private final String code;
+        // 显式 fromCode，未知 code 拒绝。
+    }
+
+### 5.5 Jackson 的学习边界
+
+本周理解 ObjectMapper 的高层职责：
+
+- 把 JSON token 映射到 Java 类型；
+- 注册时间等模块；
+- 配置未知字段、枚举和 null 策略；
+- 在 DTO 边界生成明确异常。
+
+实际 import 与 API 随 Jackson 3 锁定版本为准，不背内部实现，不把 mapper 散落为任意全局可变对象。
+
+## 6. TS/Vue 经验如何迁移
+
+| TS/Vue 经验 | 可用类比 | 类比失效处 |
 | --- | --- | --- |
-| 堆 | 多数对象实例 | 堆耗尽、GC 压力 |
-| 线程栈 | 每线程栈帧、局部执行状态 | 深递归 StackOverflowError |
-| Metaspace | 类元数据等本地内存 | 动态类加载泄漏 |
-| 直接/本地内存 | NIO、JVM 与 native 使用 | 进程内存高但堆不一定满 |
+| try/catch/finally | Java 基本控制流相似 | Java 有 checked exception，catch 类型和资源关闭更强约束 |
+| Promise rejection | 异步失败会传播 | 本周同步调用栈；Java 异常不是 Promise 状态 |
+| fetch 后 schema 校验 | JSON DTO 仍需校验 | TS interface 在运行时不存在，Java 映射成功也不等于领域有效 |
+| Date/日期库 | 都需区分存储与展示 | Java 标准库用多个类型编码不同语义 |
+| File/Blob | 字节与文本有区别 | 服务端文件系统多了权限、路径穿越、原子替换 |
+| Vue error boundary/全局 handler | 边界统一转换错误 | 不能在底层吞异常再让 UI 猜失败 |
 
-“局部变量都在栈、对象都在堆”只是入门简化，JIT 逃逸分析可能优化分配。面试避免绝对化。
+## 7. 常见错误清单
 
-### 10.3 GC 与 JIT
+- catch Exception 后只打印 message；
+- catch 后返回空列表，让“无数据”和“读取失败”不可区分；
+- 包装异常时丢掉 cause；
+- 使用默认字符集；
+- 把用户文件名直接 resolve 后读写；
+- 写目标文件中途失败，旧文件已被破坏；
+- 在领域方法里到处调用 Instant.now()；
+- 用 LocalDateTime 保存审计时刻；
+- 把 ZoneOffset 当成 ZoneId 的完整替代；
+- Jackson 直接反序列化领域实体；
+- 使用 enum ordinal；
+- 默认接受未知字段却没有测试；
+- 测试依赖用户主目录、真实当前时间或本机时区。
 
-GC 回收不可达对象，不等于“内存满才运行”；停顿、吞吐与延迟是权衡。JIT 根据热点优化，所以冷启动一次计时不能代表稳态性能。
+## 8. 官方阅读路线
 
-### 10.4 现象区分
+先读与你的实验直接相关的部分：
 
-- StackOverflowError：常见于深或无限递归；
-- heap OOM：对象存活量超过堆；
-- native/direct OOM：不一定在 heap dump 明显；
-- deadlock：线程互等，CPU 可能低；
-- 高 CPU：忙循环、热点计算或频繁 GC 等；
-- 阻塞：线程等待锁、I/O 或条件。
+- [Java 异常教程](https://docs.oracle.com/javase/tutorial/essential/exceptions/)
+- [Java SE 25 NIO 文件包](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/package-summary.html)
+- [Java SE 25 时间包](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/package-summary.html)
+- [Clock API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/Clock.html)
+- [Jackson 官方文档仓库](https://github.com/FasterXML/jackson-docs)
+- [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259)
 
-## 11. 诊断工具
+## 9. 自测问题
 
-- jcmd：列进程、线程、GC、类直方图、JFR 等入口；
-- 线程转储：看线程状态、栈、锁与死锁；
-- JFR：低开销记录 CPU、分配、锁、I/O 等事件；
-- heap dump：分析对象保留，但可能较大且含敏感数据；
-- 日志：记录 taskId、设备 ID、安全上下文、开始/结束/失败，不记录密钥。
-
-工具输出只是证据，不自动给根因。必须把线程栈位置对应到源码和业务现象。
-
-## 12. TS/Vue 类比与失效
-
-| 已有经验 | 可类比 | 失效处 |
-| --- | --- | --- |
-| Promise.all | allOf/thenCombine | Promise 基于事件循环；CF 的执行线程和 Executor 要显式理解 |
-| async/await | 同步风格组合结果 | Java 阻塞等待可能占线程；虚拟线程改变成本但不改变资源限额 |
-| AbortController | interrupt/cancel | interrupt 是协作式信号，不是强制终止 |
-| Web Worker | 并行执行 | Worker 通常隔离内存；Java 线程共享堆 |
-| Vue 状态竞态 | 旧请求覆盖新请求 | Java 还要面对真实多线程内存可见性 |
-| 并发请求限流 | Semaphore/连接池 | 前端限流不能保护服务端全部调用者 |
-
-## 13. 自测
-
-1. count++ 为什么不是原子？
-2. volatile 为什么不能修复所有竞态？
-3. ConcurrentHashMap 为什么仍可能有复合竞态？
-4. 捕获 InterruptedException 后为什么常需恢复中断？
-5. 无界队列为何让 maximumPoolSize 常失去意义？
-6. submit 的任务异常为什么可能被忽略？
-7. thenCompose 与 thenApply 的差别？
-8. orTimeout 为什么不等于底层任务已停止？
-9. 虚拟线程为什么不池化？
-10. 为什么仍要用 Semaphore 限第三方 API？
-11. CPU 密集任务为何不能无限创建虚拟线程？
-12. 堆 OOM 与 StackOverflowError 如何区分？
-13. 一次 nanoTime 为什么不能证明虚拟线程更快？
-14. JDK 25 为什么不使用结构化并发？
-
-## 14. 官方资料
-
-- [Java SE 25 并发指南](https://docs.oracle.com/en/java/javase/25/core/concurrency.html)
-- [Thread API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Thread.html)
-- [Executors API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/Executors.html)
-- [CompletableFuture API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/CompletableFuture.html)
-- [Java 虚拟线程](https://docs.oracle.com/en/java/javase/25/core/virtual-threads.html)
-- [JDK 25 JVM 指南](https://docs.oracle.com/en/java/javase/25/vm/)
-- [JDK Flight Recorder](https://docs.oracle.com/en/java/javase/25/jfapi/)
-
+1. 为什么业务异常和 IOException 不应被一个 ImportFailedException 无差别吞并？
+2. 什么情况下你会把 checked exception 转成 unchecked，转换边界在哪里？
+3. try-with-resources 中业务逻辑和 close 同时失败时如何排查？
+4. normalize 为什么不能完整防止符号链接路径逃逸？
+5. 为什么临时文件应尽量和目标文件在同一目录或文件系统？
+6. Instant 和 LocalDateTime 哪一个能独立代表唯一时刻？
+7. Clock.fixed 解决了哪类测试不稳定？
+8. JSON 解析成功后还需要哪三层校验？
+9. 输入 DTO 和领域对象合并会给演进带来什么风险？
+10. 导出方法返回成功之前，必须证明哪些事实？
