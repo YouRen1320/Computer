@@ -1,22 +1,24 @@
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
 # 卷 09：Vue 3 与 Nuxt
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+覆盖模板、响应式、副作用、组件、状态、测试和服务端渲染。
 
 ## 章节
 
-- [v09.c01.vite-sfc-app：Vite、Vue、SFC 与 TypeScript 应用](chapters/v09.c01.vite-sfc-app.md)
-- [v09.c02.reactivity：ref、reactive、computed 与响应式边界](chapters/v09.c02.reactivity.md)
-- [v09.c03.watch-lifecycle-cleanup：watch、effect、生命周期与副作用清理](chapters/v09.c03.watch-lifecycle-cleanup.md)
-- [v09.c04.components-contracts：组件、Props、事件、Slot 与 v-model](chapters/v09.c04.components-contracts.md)
-- [v09.c05.composables-boundaries：Composable、依赖注入与模块边界](chapters/v09.c05.composables-boundaries.md)
-- [v09.c06.router-navigation-auth：Router、导航、权限与页面边界](chapters/v09.c06.router-navigation-auth.md)
-- [v09.c07.pinia-server-state-forms：Pinia、服务端状态与表单](chapters/v09.c07.pinia-server-state-forms.md)
-- [v09.c08.requests-race-errors：请求取消、竞态、加载状态与错误恢复](chapters/v09.c08.requests-race-errors.md)
-- [v09.c09.testing-a11y-performance：组件测试、无障碍、性能与错误边界](chapters/v09.c09.testing-a11y-performance.md)
-- [v09.c10.nuxt-rendering-deployment：Nuxt SSR、SSG、水合、Nitro 与部署](chapters/v09.c10.nuxt-rendering-deployment.md)
+1. [Vite、Vue 应用、SFC 与项目结构](chapters/ch.vue.vite-sfc.md) — `ch.vue.vite-sfc` · `planned`
+2. [插值、绑定、事件、条件与列表指令](chapters/ch.vue.template-directives.md) — `ch.vue.template-directives` · `planned`
+3. [表单、v-model、修饰符与校验边界](chapters/ch.vue.forms-vmodel.md) — `ch.vue.forms-vmodel` · `planned`
+4. [ref、reactive、computed 与响应式边界](chapters/ch.vue.reactivity.md) — `ch.vue.reactivity` · `planned`
+5. [watch、effect、生命周期与副作用清理](chapters/ch.vue.effects-lifecycle.md) — `ch.vue.effects-lifecycle` · `planned`
+6. [Props、事件、Slot 与组件 v-model](chapters/ch.vue.components-contracts.md) — `ch.vue.components-contracts` · `planned`
+7. [Composable、依赖注入与模块边界](chapters/ch.vue.composables-di.md) — `ch.vue.composables-di` · `planned`
+8. [Router、导航、布局与页面边界](chapters/ch.vue.router-navigation.md) — `ch.vue.router-navigation` · `planned`
+9. [Pinia 与客户端状态所有权](chapters/ch.vue.pinia-state.md) — `ch.vue.pinia-state` · `planned`
+10. [服务端状态、加载、错误、取消与竞态](chapters/ch.vue.server-state.md) — `ch.vue.server-state` · `planned`
+11. [登录态、路由保护、权限 UI 与安全边界](chapters/ch.vue.auth-permissions.md) — `ch.vue.auth-permissions` · `planned`
+12. [组件测试、Mock、异步断言与端到端边界](chapters/ch.vue.component-testing.md) — `ch.vue.component-testing` · `planned`
+13. [Vue 组件无障碍、焦点恢复与动态提示](chapters/ch.vue.accessibility.md) — `ch.vue.accessibility` · `planned`
+14. [渲染分析、懒加载、错误恢复与性能预算](chapters/ch.vue.performance.md) — `ch.vue.performance` · `planned`
+15. [Nuxt SSR、SSG、水合与服务端数据获取](chapters/ch.nuxt.rendering-hydration.md) — `ch.nuxt.rendering-hydration` · `planned`

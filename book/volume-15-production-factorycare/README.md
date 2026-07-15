@@ -1,23 +1,26 @@
-# 卷 15：生产化、FactoryCare 与作品表达
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
+# 卷 15：生产化与 FactoryCare 验收
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+覆盖 Linux、容器、代理、交付、可观测性、恢复、部署和作品表达。
 
 ## 章节
 
-- [v15.c01.linux-operations：Linux 用户、文件、权限、进程与服务](chapters/v15.c01.linux-operations.md)
-- [v15.c02.network-diagnostics：DNS、TLS、代理、端口与网络诊断](chapters/v15.c02.network-diagnostics.md)
-- [v15.c03.docker-compose：Docker 镜像、容器、卷、网络与 Compose](chapters/v15.c03.docker-compose.md)
-- [v15.c04.nginx-tls-proxy：Nginx、TLS 与反向代理](chapters/v15.c04.nginx-tls-proxy.md)
-- [v15.c05.ci-quality-artifacts：CI、质量门禁、制品与环境晋级](chapters/v15.c05.ci-quality-artifacts.md)
-- [v15.c06.config-secrets-supply-chain：配置、密钥、依赖、SBOM 与供应链](chapters/v15.c06.config-secrets-supply-chain.md)
-- [v15.c07.logs-metrics-traces：日志、指标、链路、健康检查与告警](chapters/v15.c07.logs-metrics-traces.md)
-- [v15.c08.backup-capacity-performance：备份恢复、容量规划与性能验证](chapters/v15.c08.backup-capacity-performance.md)
-- [v15.c09.deployment-rollback-incident：部署、迁移、回滚、事故与灾难恢复](chapters/v15.c09.deployment-rollback-incident.md)
-- [v15.c10.system-design-portfolio：系统设计、FactoryCare 验收与端到端答辩](chapters/v15.c10.system-design-portfolio.md)
-- [v15.c11.portfolio-interview：作品集、技术表达、岗位映射与面试复盘](chapters/v15.c11.portfolio-interview.md)
+1. [Linux 用户、文件、权限、进程与服务](chapters/ch.ops.linux-services.md) — `ch.ops.linux-services` · `planned`
+2. [DNS、端口、代理、TCP、TLS 与网络诊断](chapters/ch.ops.network-diagnostics.md) — `ch.ops.network-diagnostics` · `planned`
+3. [镜像层、容器、卷、网络与运行时边界](chapters/ch.ops.docker-production.md) — `ch.ops.docker-production` · `planned`
+4. [Compose 多服务、配置、健康检查与依赖](chapters/ch.ops.compose-services.md) — `ch.ops.compose-services` · `planned`
+5. [Nginx、TLS、反向代理与静态资源](chapters/ch.ops.nginx-tls.md) — `ch.ops.nginx-tls` · `planned`
+6. [CI 流水线、测试门禁与失败证据](chapters/ch.release.ci-quality.md) — `ch.release.ci-quality` · `planned`
+7. [制品、来源证明、环境晋级与发布元数据](chapters/ch.release.artifacts-promotion.md) — `ch.release.artifacts-promotion` · `planned`
+8. [配置、密钥、依赖、SBOM 与供应链](chapters/ch.ops.config-secrets-supply-chain.md) — `ch.ops.config-secrets-supply-chain` · `planned`
+9. [结构化日志、关联 ID 与健康检查](chapters/ch.ops.logs-health.md) — `ch.ops.logs-health` · `planned`
+10. [指标、链路、SLI/SLO、告警与噪声](chapters/ch.ops.metrics-traces-slo.md) — `ch.ops.metrics-traces-slo` · `planned`
+11. [备份、恢复、RPO/RTO 与恢复演练](chapters/ch.ops.backup-recovery.md) — `ch.ops.backup-recovery` · `planned`
+12. [容量、负载模型、性能测试与瓶颈证据](chapters/ch.ops.capacity-performance.md) — `ch.ops.capacity-performance` · `planned`
+13. [部署、expand-contract、前向修复与回滚](chapters/ch.release.deployment-migrations.md) — `ch.release.deployment-migrations` · `planned`
+14. [事故响应、灾难恢复、复盘与改进闭环](chapters/ch.ops.incident-dr.md) — `ch.ops.incident-dr` · `planned`
+15. [需求、边界、容量、可靠性与系统设计取舍](chapters/ch.architecture.system-design.md) — `ch.architecture.system-design` · `planned`
+16. [FactoryCare 端到端验收与可回滚发布](chapters/ch.release.factorycare-acceptance.md) — `ch.release.factorycare-acceptance` · `planned`
+17. [作品集、技术表达、岗位映射与面试复盘](chapters/ch.portfolio.interview.md) — `ch.portfolio.interview` · `planned`

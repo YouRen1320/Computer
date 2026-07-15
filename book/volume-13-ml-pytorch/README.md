@@ -1,22 +1,25 @@
-# 卷 13：机器学习、深度学习与 PyTorch
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
+# 卷 13：数学、机器学习与 PyTorch
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L1-L2
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+补齐代数、统计和梯度，再学习经典模型、神经网络、训练与推理。
 
 ## 章节
 
-- [v13.c01.vectors-matrices-tensors：向量、矩阵、张量、形状与运算](chapters/v13.c01.vectors-matrices-tensors.md)
-- [v13.c02.probability-statistics：概率、统计、分布、期望与方差](chapters/v13.c02.probability-statistics.md)
-- [v13.c03.derivatives-gradients：导数、梯度、链式法则与优化](chapters/v13.c03.derivatives-gradients.md)
-- [v13.c04.problem-data-split：问题定义、数据集、划分与数据泄漏](chapters/v13.c04.problem-data-split.md)
-- [v13.c05.classical-ml：预处理、回归、分类与聚类](chapters/v13.c05.classical-ml.md)
-- [v13.c06.metrics-validation：指标、基线、验证与误差分析](chapters/v13.c06.metrics-validation.md)
-- [v13.c07.neural-networks：神经网络、损失、反向传播与优化器](chapters/v13.c07.neural-networks.md)
-- [v13.c08.pytorch-foundations：PyTorch 张量、Dataset、Module 与 Autograd](chapters/v13.c08.pytorch-foundations.md)
-- [v13.c09.training-evaluation：训练、评估、复现、过拟合与调参](chapters/v13.c09.training-evaluation.md)
-- [v13.c10.inference-monitoring-ethics：保存、推理、监控、漂移与伦理](chapters/v13.c10.inference-monitoring-ethics.md)
+1. [算术、比例、单位、代数式与方程](chapters/ch.math.algebra-units.md) — `ch.math.algebra-units` · `planned`
+2. [函数、坐标、图像、斜率、指数、对数与求和](chapters/ch.math.functions-graphs.md) — `ch.math.functions-graphs` · `planned`
+3. [向量、矩阵、张量、形状与运算](chapters/ch.math.linear-algebra.md) — `ch.math.linear-algebra` · `planned`
+4. [概率、统计、分布、期望与方差](chapters/ch.math.probability-statistics.md) — `ch.math.probability-statistics` · `planned`
+5. [导数、梯度、链式法则与优化](chapters/ch.math.gradients.md) — `ch.math.gradients` · `planned`
+6. [问题定义、数据集、划分与数据泄漏](chapters/ch.ml.problem-data-split.md) — `ch.ml.problem-data-split` · `planned`
+7. [清洗、编码、缩放、特征与 Pipeline](chapters/ch.ml.preprocessing-features.md) — `ch.ml.preprocessing-features` · `planned`
+8. [回归、分类与决策边界](chapters/ch.ml.supervised-learning.md) — `ch.ml.supervised-learning` · `planned`
+9. [聚类、降维与无监督结果边界](chapters/ch.ml.unsupervised-learning.md) — `ch.ml.unsupervised-learning` · `planned`
+10. [指标、基线、交叉验证与误差分析](chapters/ch.ml.metrics-validation.md) — `ch.ml.metrics-validation` · `planned`
+11. [神经网络、损失、反向传播与优化器](chapters/ch.ml.neural-networks.md) — `ch.ml.neural-networks` · `planned`
+12. [Softmax、序列表示、注意力与 Transformer 桥接](chapters/ch.ml.attention-sequences.md) — `ch.ml.attention-sequences` · `planned`
+13. [Tensor、Dataset、Module 与 Autograd](chapters/ch.pytorch.foundations.md) — `ch.pytorch.foundations` · `planned`
+14. [训练循环、复现、过拟合、评估与调参](chapters/ch.pytorch.training.md) — `ch.pytorch.training` · `planned`
+15. [保存、加载、推理、批处理与服务边界](chapters/ch.pytorch.inference.md) — `ch.pytorch.inference` · `planned`
+16. [漂移、监控、公平性、伦理与使用边界](chapters/ch.ml.monitoring-ethics.md) — `ch.ml.monitoring-ethics` · `planned`

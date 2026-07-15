@@ -1,107 +1,252 @@
 ---
-schema_version: 1
+schema_version: 2
+generated: true
+generated_by: scripts/generate-curriculum.rb
+generated_spec_digest: c4ab6a6d3852f5df0035931f4368ab3957981daddc02fe9f2212db8bc3e99cca
+edition: 2026.2-draft
 route_id: factorycare-project
 route_kind: project
-title: FactoryCare 业务垂直项目路线
-audience: 通过 users、devices、work orders、SLA、多端、AI 与部署逐段整合
 coverage: selective
-navigation_semantics: stage-gated; prerequisites may be satisfied by cumulative supporting
-  chapters
+navigation_semantics: stage-gated-with-generated-support-closure
 stages:
 - id: fc-01-foundation
   title: 工程底座与可运行骨架
+  required_capabilities:
+  - foundation.git-security
+  - foundation.toolchain-env-build
+  - foundation.verification-debug-test
+  - foundation.docker-runtime
+  - java.build-testing
+  - data.relational-schema
   primary_chapter_ids:
-  - v00.c12.ai-collaboration-verification
-  - v03.c10.maven-testing-jvm
-  - v04.c01.relational-model
+  - ch.foundations.ai-assisted-verification
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.data.relational-model
   supporting_chapter_ids:
-  - v00.c03.files-paths-encoding
-  - v00.c04.terminal-shell
-  - v00.c05.pipes-exit-codes
-  - v00.c06.environment-path
-  - v00.c08.git-security
-  - v00.c10.dependencies-build-ai
-  - v00.c11.docker-foundations
-  - v01.c01.java-platform
-  - v01.c02.program-structure
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.git-collaboration-security
+  - ch.foundations.network-layers
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  business_deliverables:
+  - 可重复启动骨架
+  - 版本与构建证据
+  - 初始关系模型
+  negative_scenarios:
+  - 工具链版本漂移
+  - 密钥误提交
+  - 构建成功但测试未执行
   project_artifacts:
-  - id: fc-01-foundation-slice
-    path: evidence/factorycare/01-foundation/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-01-foundation-decision
+  - id: fc-01-foundation-artifact-1
+    path: evidence/factorycare/01-foundation/vertical-slice/
+    acceptance: 可从空环境复现 可重复启动骨架、版本与构建证据、初始关系模型，并保留成功与负向路径证据
+  - id: fc-01-foundation-artifact-2
     path: evidence/factorycare/01-foundation/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+    acceptance: 可从空环境复现 可重复启动骨架、版本与构建证据、初始关系模型，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/01-foundation/run.log
   - evidence/factorycare/01-foundation/tests/
   - evidence/factorycare/01-foundation/teach-back.md
   stage_gate_id: fc-stage-01
 - id: fc-02-users
-  title: 用户、认证与租户边界
+  title: 用户、认证与租户入口
+  required_capabilities:
+  - security.authentication
+  - security.web-threat
+  - security.authorization-policy
+  - security.multitenancy-isolation
+  - backend.spring-mvc-contract
   primary_chapter_ids:
-  - v06.c01.auth-session-password
-  - v06.c04.spring-security
-  - v06.c05.rbac-multitenancy-audit
+  - ch.security.session-authentication
+  - ch.security.spring-security-architecture
+  - ch.security.authorization-rbac-abac
   supporting_chapter_ids:
-  - v00.c09.network-http-curl
-  - v01.c04.variables-scope
-  - v01.c05.primitive-types
-  - v01.c06.operators-conversion
-  - v01.c07.conditionals-switch
-  - v01.c08.loops-control
-  - v01.c09.methods
-  - v02.c01.references-null-memory
-  - v02.c02.classes-fields-methods
-  - v02.c03.constructors-encapsulation
-  - v02.c05.inheritance-composition
-  - v02.c06.polymorphism-interfaces
-  - v02.c09.core-value-types
-  - v02.c10.exceptions-resources
-  - v03.c09.annotations-reflection-proxy
-  - v05.c01.web-jakarta-lifecycle
-  - v05.c02.ioc-di-beans
-  - v05.c03.configuration-profiles
-  - v05.c04.boot-autoconfiguration
-  - v05.c05.mvc-controllers
-  - v06.c02.web-security-threats
-  - v06.c03.jwt-oauth-oidc
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.enum-record-sealed
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.spring.dto-json-content-negotiation
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  - ch.security.jwt-resource-server
+  - ch.security.multitenancy-data-isolation
+  business_deliverables:
+  - 用户登录退出
+  - 默认拒绝授权
+  - 租户上下文入口
+  negative_scenarios:
+  - 错误密码
+  - 会话固定
+  - 未认证访问
+  - 越权访问
   project_artifacts:
-  - id: fc-02-users-slice
-    path: evidence/factorycare/02-users/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-02-users-decision
-    path: evidence/factorycare/02-users/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-02-users-artifact-1
+    path: evidence/factorycare/02-users/vertical-slice/
+    acceptance: 可从空环境复现 用户登录退出、默认拒绝授权、租户上下文入口，并保留成功与负向路径证据
+  - id: fc-02-users-artifact-2
+    path: evidence/factorycare/02-users/security-tests/
+    acceptance: 可从空环境复现 用户登录退出、默认拒绝授权、租户上下文入口，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/02-users/run.log
   - evidence/factorycare/02-users/tests/
   - evidence/factorycare/02-users/teach-back.md
   stage_gate_id: fc-stage-02
 - id: fc-03-devices
-  title: 设备台账、停用规则与持久化
+  title: 设备台账、停用与持久化
+  required_capabilities:
+  - data.persistence-access
+  - data.schema-migration
+  - backend.spring-persistence-tx
+  - architecture.domain-invariants
   primary_chapter_ids:
-  - v04.c11.jdbc-pool-mybatis
-  - v05.c09.mybatis-integration
-  - v05.c10.testing-openapi-actuator
+  - ch.data.mybatis-core
+  - ch.spring.mybatis-repositories
+  - ch.spring.testing-testcontainers
   supporting_chapter_ids:
-  - v01.c10.arrays-debug-test
-  - v02.c04.static-final-immutability
-  - v02.c07.enum-record-sealed
-  - v03.c12.java-testing-mocking
-  - v04.c02.sql-query-basics
-  - v04.c06.dml-ddl-normalization
-  - v04.c09.transactions-locks
-  - v04.c10.migration-jdbc-mybatis
-  - v05.c06.dto-serialization
-  - v05.c07.validation-errors-files
-  - v05.c08.services-transactions-aop
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.transactions
+  business_deliverables:
+  - 设备建档
+  - 设备停用规则
+  - 数据迁移与集成测试
+  negative_scenarios:
+  - 重复设备标识
+  - 已停用设备被分配
+  - 迁移中断
   project_artifacts:
-  - id: fc-03-devices-slice
-    path: evidence/factorycare/03-devices/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-03-devices-decision
-    path: evidence/factorycare/03-devices/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-03-devices-artifact-1
+    path: evidence/factorycare/03-devices/vertical-slice/
+    acceptance: 可从空环境复现 设备建档、设备停用规则、数据迁移与集成测试，并保留成功与负向路径证据
+  - id: fc-03-devices-artifact-2
+    path: evidence/factorycare/03-devices/integration-tests/
+    acceptance: 可从空环境复现 设备建档、设备停用规则、数据迁移与集成测试，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/03-devices/run.log
   - evidence/factorycare/03-devices/tests/
@@ -109,161 +254,792 @@ stages:
   stage_gate_id: fc-stage-03
 - id: fc-04-work-orders
   title: 工单创建、分配、状态与管理端
+  required_capabilities:
+  - architecture.domain-invariants
+  - architecture.idempotency-consistency
+  - backend.spring-persistence-tx
+  - web.vue-components-contracts
+  - web.vue-router-navigation
+  - web.vue-client-state
+  - web.javascript-network-race
   primary_chapter_ids:
-  - v06.c06.domain-modeling
-  - v06.c07.state-sla-idempotency
-  - v09.c08.requests-race-errors
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.vue.server-state
   supporting_chapter_ids:
-  - v07.c01.browser-render-devtools
-  - v07.c02.semantic-html
-  - v07.c05.css-cascade
-  - v07.c06.box-position-stacking
-  - v08.c01.runtime-node-pnpm-esm
-  - v08.c02.values-types-equality
-  - v08.c03.scope-functions-closures
-  - v08.c04.arrays-objects-collections
-  - v08.c05.this-prototype-class-module
-  - v08.c07.event-loop-promises
-  - v08.c08.fetch-abort-race
-  - v08.c09.typescript-setup-strict
-  - v08.c10.typescript-advanced-tooling
-  - v09.c01.vite-sfc-app
-  - v09.c02.reactivity
-  - v09.c03.watch-lifecycle-cleanup
-  - v09.c04.components-contracts
-  - v09.c06.router-navigation-auth
-  - v09.c07.pinia-server-state-forms
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.threads-jmm
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.web.browser-render-devtools
+  - ch.web.origin-cookie-cache
+  - ch.web.semantic-html
+  - ch.web.forms-validation
+  - ch.css.cascade
+  - ch.js.runtime-esm
+  - ch.js.statements-variables
+  - ch.js.values-operators
+  - ch.js.control-flow
+  - ch.js.functions
+  - ch.js.scope-closures
+  - ch.js.collections
+  - ch.js.testing-debugging
+  - ch.js.event-loop
+  - ch.js.fetch-cancellation-race
+  - ch.ts.foundations
+  - ch.vue.vite-sfc
+  - ch.vue.template-directives
+  - ch.vue.forms-vmodel
+  - ch.vue.reactivity
+  - ch.vue.effects-lifecycle
+  - ch.vue.components-contracts
+  - ch.vue.router-navigation
+  - ch.vue.pinia-state
+  business_deliverables:
+  - 工单创建与分配
+  - 合法状态迁移
+  - 管理端列表与详情
+  negative_scenarios:
+  - 非法状态跳转
+  - 重复提交
+  - 过期响应覆盖新状态
+  - 跨租户工单访问
   project_artifacts:
-  - id: fc-04-work-orders-slice
-    path: evidence/factorycare/04-work-orders/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-04-work-orders-decision
-    path: evidence/factorycare/04-work-orders/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-04-work-orders-artifact-1
+    path: evidence/factorycare/04-work-orders/vertical-slice/
+    acceptance: 可从空环境复现 工单创建与分配、合法状态迁移、管理端列表与详情，并保留成功与负向路径证据
+  - id: fc-04-work-orders-artifact-2
+    path: evidence/factorycare/04-work-orders/race-tests/
+    acceptance: 可从空环境复现 工单创建与分配、合法状态迁移、管理端列表与详情，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/04-work-orders/run.log
   - evidence/factorycare/04-work-orders/tests/
   - evidence/factorycare/04-work-orders/teach-back.md
   stage_gate_id: fc-stage-04
 - id: fc-05-sla-events
-  title: SLA、缓存、Outbox 与消息
+  title: SLA、缓存、事件与消息
+  required_capabilities:
+  - architecture.idempotency-consistency
+  - architecture.events-outbox
+  - architecture.observability
   primary_chapter_ids:
-  - v06.c08.redis-cache-rate-limit
-  - v06.c09.events-outbox-messaging
-  - v06.c10.modular-monolith-observability
-  supporting_chapter_ids: []
+  - ch.distributed.redis-cache-rate-limit
+  - ch.architecture.domain-events-outbox
+  - ch.distributed.messaging-delivery
+  - ch.architecture.observability-slo
+  supporting_chapter_ids:
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.enum-record-sealed
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  - ch.java-engineering.threads-jmm
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.java-engineering.logging-jvm-diagnostics
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.spring.dto-json-content-negotiation
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.spring.actuator-health-metrics
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  - ch.security.spring-security-architecture
+  - ch.security.session-authentication
+  - ch.security.jwt-resource-server
+  - ch.security.authorization-rbac-abac
+  - ch.security.multitenancy-data-isolation
+  - ch.security.audit-events-privacy
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.architecture.modular-monolith
+  business_deliverables:
+  - SLA 计算
+  - Outbox 发布
+  - 消费幂等
+  - 可观察告警
+  negative_scenarios:
+  - 重复消息
+  - 乱序消息
+  - 缓存陈旧
+  - 告警静默
   project_artifacts:
-  - id: fc-05-sla-events-slice
-    path: evidence/factorycare/05-sla-events/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-05-sla-events-decision
-    path: evidence/factorycare/05-sla-events/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-05-sla-events-artifact-1
+    path: evidence/factorycare/05-sla-events/vertical-slice/
+    acceptance: 可从空环境复现 SLA 计算、Outbox 发布、消费幂等、可观察告警，并保留成功与负向路径证据
+  - id: fc-05-sla-events-artifact-2
+    path: evidence/factorycare/05-sla-events/message-tests/
+    acceptance: 可从空环境复现 SLA 计算、Outbox 发布、消费幂等、可观察告警，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/05-sla-events/run.log
   - evidence/factorycare/05-sla-events/tests/
   - evidence/factorycare/05-sla-events/teach-back.md
   stage_gate_id: fc-stage-05
 - id: fc-06-multiclient
-  title: Vue、uni-app 与 Flutter 多端主链
+  title: Vue、uni-app 与 Flutter 多端协作
+  required_capabilities:
+  - web.javascript-testing-debugging
+  - web.component-e2e-testing
+  - web.vue-components-contracts
+  - web.vue-router-navigation
+  - web.vue-client-state
+  - mobile.uniapp-device-permissions
+  - mobile.uniapp-offline-idempotency
+  - mobile.flutter-layout-lifecycle
+  - mobile.flutter-network-offline
+  - mobile.flutter-device-permissions
   primary_chapter_ids:
-  - v09.c09.testing-a11y-performance
-  - v10.c10.factorycare-reporter
-  - v11.c13.flutter-testing-performance-release
+  - ch.vue.component-testing
+  - ch.uniapp.factorycare-reporter
+  - ch.flutter.release-monitoring
   supporting_chapter_ids:
-  - v07.c03.forms-media-validation
-  - v07.c04.accessibility
-  - v10.c01.miniprogram-runtime
-  - v10.c02.uniapp-vue-pages
-  - v10.c03.network-auth-storage
-  - v10.c04.platform-api-conditional
-  - v10.c05.upload-scan-location
-  - v10.c06.packages-performance-offline
-  - v10.c07.testing-device-debug
-  - v10.c08.privacy-security-review
-  - v10.c09.publish-monitoring
-  - v11.c01.dart-cli-types
-  - v11.c02.dart-control-functions
-  - v11.c03.dart-collections-patterns
-  - v11.c04.dart-oop-generics
-  - v11.c05.dart-async-errors
-  - v11.c06.flutter-runtime
-  - v11.c07.layout-render-accessibility
-  - v11.c08.state-lifecycle-mounted
-  - v11.c09.navigation-network-device
-  - v11.c10.architecture-testing-release
-  - v11.c11.flutter-network-storage
-  - v11.c12.flutter-device-apis
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.enum-record-sealed
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  - ch.java-engineering.threads-jmm
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.spring.dto-json-content-negotiation
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  - ch.security.spring-security-architecture
+  - ch.security.session-authentication
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.web.browser-render-devtools
+  - ch.web.origin-cookie-cache
+  - ch.web.semantic-html
+  - ch.web.forms-validation
+  - ch.web.accessibility-interaction
+  - ch.css.cascade
+  - ch.js.runtime-esm
+  - ch.js.statements-variables
+  - ch.js.values-operators
+  - ch.js.control-flow
+  - ch.js.functions
+  - ch.js.scope-closures
+  - ch.js.collections
+  - ch.js.testing-debugging
+  - ch.js.event-loop
+  - ch.js.fetch-cancellation-race
+  - ch.ts.foundations
+  - ch.vue.vite-sfc
+  - ch.vue.template-directives
+  - ch.vue.forms-vmodel
+  - ch.vue.reactivity
+  - ch.vue.effects-lifecycle
+  - ch.vue.components-contracts
+  - ch.vue.router-navigation
+  - ch.vue.pinia-state
+  - ch.vue.server-state
+  - ch.miniapp.runtime
+  - ch.uniapp.toolchain-pages
+  - ch.uniapp.template-components
+  - ch.uniapp.network-auth-storage
+  - ch.uniapp.platform-conditional
+  - ch.uniapp.device-capabilities
+  - ch.uniapp.testing-debugging
+  - ch.uniapp.packages-performance
+  - ch.uniapp.offline-idempotency
+  - ch.uniapp.privacy-review
+  - ch.uniapp.release-monitoring
+  - ch.dart.toolchain
+  - ch.dart.types-null-safety
+  - ch.dart.control-functions
+  - ch.dart.collections-patterns
+  - ch.dart.oop-generics
+  - ch.dart.exceptions-resources
+  - ch.dart.future-cancellation
+  - ch.dart.testing-lints
+  - ch.flutter.toolchain-project
+  - ch.flutter.widget-tree
+  - ch.flutter.layout-accessibility
+  - ch.flutter.state-lifecycle
+  - ch.flutter.navigation-forms
+  - ch.flutter.architecture-state
+  - ch.flutter.network-storage-offline
+  - ch.flutter.device-apis
+  - ch.flutter.testing-performance
+  business_deliverables:
+  - 管理端工单流
+  - uni-app 报修端
+  - Flutter 技师端
+  - 跨端契约证据
+  negative_scenarios:
+  - 离线重复重放
+  - 权限拒绝
+  - 页面销毁后更新
+  - 跨端字段漂移
   project_artifacts:
-  - id: fc-06-multiclient-slice
-    path: evidence/factorycare/06-multiclient/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-06-multiclient-decision
-    path: evidence/factorycare/06-multiclient/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-06-multiclient-artifact-1
+    path: evidence/factorycare/06-multiclient/vertical-slices/
+    acceptance: 可从空环境复现 管理端工单流、uni-app 报修端、Flutter 技师端、跨端契约证据，并保留成功与负向路径证据
+  - id: fc-06-multiclient-artifact-2
+    path: evidence/factorycare/06-multiclient/contract-tests/
+    acceptance: 可从空环境复现 管理端工单流、uni-app 报修端、Flutter 技师端、跨端契约证据，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/06-multiclient/run.log
   - evidence/factorycare/06-multiclient/tests/
   - evidence/factorycare/06-multiclient/teach-back.md
   stage_gate_id: fc-stage-06
 - id: fc-07-ai
-  title: Python、RAG、Agent 与安全评估
+  title: AI 知识检索与 Agent 审批
+  required_capabilities:
+  - python.testing-debugging
+  - python.asyncio-cancellation
+  - ai.llm-model-api
+  - ai.rag-ingestion-retrieval
+  - ai.rag-evaluation-security
+  - ai.agent-graph-mcp
   primary_chapter_ids:
-  - v12.c09.fastapi-pydantic
-  - v14.c08.rag-security-observability
-  - v14.c10.mcp-agent-boundary
+  - ch.fastapi.security-testing-openapi
+  - ch.rag.security-observability
+  - ch.agent.mcp-boundaries
   supporting_chapter_ids:
-  - v04.c08.indexes-explain
-  - v12.c01.runtime-uv-env
-  - v12.c02.types-io-control
-  - v12.c03.functions-collections
-  - v12.c04.modules-files-json
-  - v12.c05.classes-dataclass-protocol
-  - v12.c06.exceptions-iterators-decorators
-  - v12.c07.typing-testing-logging
-  - v12.c08.async-cancellation
-  - v12.c10.numpy-pandas
-  - v13.c01.vectors-matrices-tensors
-  - v14.c01.llm-model
-  - v14.c02.model-api-prompts
-  - v14.c03.structured-stream-retry
-  - v14.c04.tool-calling-boundaries
-  - v14.c05.ingestion-chunking
-  - v14.c06.retrieval-rerank
-  - v14.c07.rag-citations-evaluation
-  - v14.c09.langchain-langgraph
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.enum-record-sealed
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  - ch.java-engineering.threads-jmm
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.java-engineering.logging-jvm-diagnostics
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.indexes-explain
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.spring.dto-json-content-negotiation
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.spring.actuator-health-metrics
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  - ch.security.spring-security-architecture
+  - ch.security.session-authentication
+  - ch.security.jwt-resource-server
+  - ch.security.authorization-rbac-abac
+  - ch.security.multitenancy-data-isolation
+  - ch.security.audit-events-privacy
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.architecture.domain-events-outbox
+  - ch.distributed.messaging-delivery
+  - ch.architecture.modular-monolith
+  - ch.architecture.observability-slo
+  - ch.python.runtime-uv
+  - ch.python.syntax-values-io
+  - ch.python.control-flow
+  - ch.python.functions-scope
+  - ch.python.collections
+  - ch.python.typing-foundations
+  - ch.python.modules-packages
+  - ch.python.files-json-time
+  - ch.python.classes-dataclass
+  - ch.python.exceptions-context
+  - ch.python.testing-logging-debug
+  - ch.python.asyncio-cancellation
+  - ch.python.pydantic-validation
+  - ch.fastapi.web-foundations
+  - ch.data.numpy
+  - ch.data.pandas
+  - ch.math.algebra-units
+  - ch.math.functions-graphs
+  - ch.math.linear-algebra
+  - ch.math.probability-statistics
+  - ch.math.gradients
+  - ch.ml.problem-data-split
+  - ch.ml.preprocessing-features
+  - ch.ml.supervised-learning
+  - ch.ml.metrics-validation
+  - ch.ml.neural-networks
+  - ch.ml.attention-sequences
+  - ch.pytorch.foundations
+  - ch.llm.model-foundations
+  - ch.llm.api-prompts-cost
+  - ch.llm.structured-output
+  - ch.llm.streaming-resilience
+  - ch.llm.tool-calling
+  - ch.rag.ingestion-metadata
+  - ch.rag.chunking-embeddings
+  - ch.ir.lexical-retrieval
+  - ch.ir.evaluation
+  - ch.ir.dense-pgvector
+  - ch.ir.hybrid-rerank
+  - ch.rag.citations-evaluation
+  - ch.agent.langchain
+  - ch.agent.langgraph
+  business_deliverables:
+  - 知识摄取
+  - 有引用检索回答
+  - 权限过滤
+  - 人工审批 Agent
+  negative_scenarios:
+  - 提示注入
+  - ACL 绕过
+  - 无依据回答
+  - 工具参数越权
   project_artifacts:
-  - id: fc-07-ai-slice
-    path: evidence/factorycare/07-ai/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-07-ai-decision
-    path: evidence/factorycare/07-ai/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-07-ai-artifact-1
+    path: evidence/factorycare/07-ai/vertical-slice/
+    acceptance: 可从空环境复现 知识摄取、有引用检索回答、权限过滤、人工审批 Agent，并保留成功与负向路径证据
+  - id: fc-07-ai-artifact-2
+    path: evidence/factorycare/07-ai/evaluations/
+    acceptance: 可从空环境复现 知识摄取、有引用检索回答、权限过滤、人工审批 Agent，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/07-ai/run.log
   - evidence/factorycare/07-ai/tests/
   - evidence/factorycare/07-ai/teach-back.md
   stage_gate_id: fc-stage-07
 - id: fc-08-deploy
-  title: 部署、恢复、最终验收与表达
+  title: 部署、恢复与端到端验收
+  required_capabilities:
+  - ops.linux-service-network
+  - ops.container-proxy-delivery
+  - ops.recovery-deployment
+  - architecture.observability
   primary_chapter_ids:
-  - v15.c09.deployment-rollback-incident
-  - v15.c10.system-design-portfolio
-  - v15.c11.portfolio-interview
+  - ch.release.deployment-migrations
+  - ch.ops.incident-dr
+  - ch.architecture.system-design
+  - ch.release.factorycare-acceptance
   supporting_chapter_ids:
-  - v15.c01.linux-operations
-  - v15.c02.network-diagnostics
-  - v15.c03.docker-compose
-  - v15.c04.nginx-tls-proxy
-  - v15.c05.ci-quality-artifacts
-  - v15.c08.backup-capacity-performance
+  - ch.foundations.files-paths-encoding
+  - ch.foundations.terminal-shell
+  - ch.foundations.computer-process-model
+  - ch.foundations.cli-streams-exit-codes
+  - ch.foundations.environment-tool-resolution
+  - ch.foundations.git-collaboration-security
+  - ch.foundations.network-layers
+  - ch.foundations.http-curl
+  - ch.foundations.api-contract-basics
+  - ch.foundations.testing-oracles
+  - ch.foundations.dependencies-build-packages
+  - ch.foundations.docker-basics
+  - ch.java.platform-toolchain
+  - ch.java.program-structure
+  - ch.java.values-variables-types
+  - ch.java.expressions-conversions
+  - ch.java.branching
+  - ch.java.loops
+  - ch.java.arrays-command-args
+  - ch.java.methods
+  - ch.java.maven-junit-smoke
+  - ch.java-oop.references-null-identity
+  - ch.java-oop.classes-objects
+  - ch.java-oop.constructors-invariants
+  - ch.java-oop.encapsulation-packages
+  - ch.java-oop.static-class-state
+  - ch.java-oop.final-immutability
+  - ch.java-oop.inheritance-composition
+  - ch.java-oop.interfaces-polymorphism
+  - ch.java-oop.enum-record-sealed
+  - ch.java-oop.business-value-types
+  - ch.java-oop.exceptions-failure-contracts
+  - ch.java-engineering.maven-reproducible-builds
+  - ch.java-engineering.generics-type-safety
+  - ch.java-engineering.io-resource-lifecycle
+  - ch.java-engineering.nio-files-charsets
+  - ch.java-engineering.json-mapping
+  - ch.java-engineering.threads-jmm
+  - ch.java-engineering.annotations-metadata
+  - ch.java-engineering.reflection-classloading-proxies
+  - ch.java-engineering.testing-test-doubles
+  - ch.java-engineering.logging-jvm-diagnostics
+  - ch.data.relational-model
+  - ch.data.postgresql-psql
+  - ch.data.select-rowsets
+  - ch.data.dml
+  - ch.data.ddl-constraints
+  - ch.data.indexes-explain
+  - ch.data.transactions-locking
+  - ch.data.schema-migrations
+  - ch.data.jdbc
+  - ch.data.mybatis-core
+  - ch.spring.servlet-request-lifecycle
+  - ch.spring.ioc-di
+  - ch.spring.beans-lifecycle-scopes
+  - ch.spring.configuration-profiles
+  - ch.spring.boot-autoconfiguration
+  - ch.spring.mvc-routing-binding
+  - ch.spring.dto-json-content-negotiation
+  - ch.spring.validation
+  - ch.spring.problem-details-errors
+  - ch.architecture.domain-modeling
+  - ch.spring.datasource-pooling
+  - ch.spring.mybatis-repositories
+  - ch.spring.service-use-cases
+  - ch.spring.aop-proxy-model
+  - ch.spring.testing-testcontainers
+  - ch.spring.transactions
+  - ch.spring.actuator-health-metrics
+  - ch.security.threat-model-trust-boundaries
+  - ch.security.identity-password-lifecycle
+  - ch.security.cookie-session-model
+  - ch.security.origin-cors-csrf
+  - ch.security.untrusted-input-xss-ssrf
+  - ch.security.spring-security-architecture
+  - ch.security.session-authentication
+  - ch.security.jwt-resource-server
+  - ch.security.authorization-rbac-abac
+  - ch.security.multitenancy-data-isolation
+  - ch.security.audit-events-privacy
+  - ch.architecture.workflow-state-sla
+  - ch.architecture.idempotency-concurrency
+  - ch.architecture.domain-events-outbox
+  - ch.distributed.messaging-delivery
+  - ch.architecture.modular-monolith
+  - ch.architecture.observability-slo
+  - ch.web.browser-render-devtools
+  - ch.web.origin-cookie-cache
+  - ch.web.semantic-html
+  - ch.web.forms-validation
+  - ch.web.accessibility-interaction
+  - ch.css.cascade
+  - ch.js.runtime-esm
+  - ch.js.statements-variables
+  - ch.js.values-operators
+  - ch.js.control-flow
+  - ch.js.functions
+  - ch.js.scope-closures
+  - ch.js.collections
+  - ch.js.testing-debugging
+  - ch.js.event-loop
+  - ch.js.fetch-cancellation-race
+  - ch.ts.foundations
+  - ch.vue.vite-sfc
+  - ch.vue.template-directives
+  - ch.vue.forms-vmodel
+  - ch.vue.reactivity
+  - ch.vue.effects-lifecycle
+  - ch.vue.components-contracts
+  - ch.vue.pinia-state
+  - ch.vue.server-state
+  - ch.vue.component-testing
+  - ch.miniapp.runtime
+  - ch.uniapp.toolchain-pages
+  - ch.uniapp.template-components
+  - ch.uniapp.network-auth-storage
+  - ch.uniapp.platform-conditional
+  - ch.uniapp.device-capabilities
+  - ch.uniapp.testing-debugging
+  - ch.uniapp.packages-performance
+  - ch.uniapp.privacy-review
+  - ch.uniapp.release-monitoring
+  - ch.dart.toolchain
+  - ch.dart.types-null-safety
+  - ch.dart.control-functions
+  - ch.dart.collections-patterns
+  - ch.dart.oop-generics
+  - ch.dart.exceptions-resources
+  - ch.dart.future-cancellation
+  - ch.dart.testing-lints
+  - ch.flutter.toolchain-project
+  - ch.flutter.widget-tree
+  - ch.flutter.layout-accessibility
+  - ch.flutter.state-lifecycle
+  - ch.flutter.navigation-forms
+  - ch.flutter.architecture-state
+  - ch.flutter.network-storage-offline
+  - ch.flutter.device-apis
+  - ch.flutter.testing-performance
+  - ch.python.runtime-uv
+  - ch.python.syntax-values-io
+  - ch.python.control-flow
+  - ch.python.functions-scope
+  - ch.python.collections
+  - ch.python.typing-foundations
+  - ch.python.modules-packages
+  - ch.python.files-json-time
+  - ch.python.classes-dataclass
+  - ch.python.exceptions-context
+  - ch.python.testing-logging-debug
+  - ch.python.asyncio-cancellation
+  - ch.python.pydantic-validation
+  - ch.data.numpy
+  - ch.data.pandas
+  - ch.math.algebra-units
+  - ch.math.functions-graphs
+  - ch.math.linear-algebra
+  - ch.math.probability-statistics
+  - ch.math.gradients
+  - ch.ml.problem-data-split
+  - ch.ml.preprocessing-features
+  - ch.ml.supervised-learning
+  - ch.ml.metrics-validation
+  - ch.ml.neural-networks
+  - ch.ml.attention-sequences
+  - ch.pytorch.foundations
+  - ch.llm.model-foundations
+  - ch.llm.api-prompts-cost
+  - ch.llm.structured-output
+  - ch.llm.streaming-resilience
+  - ch.llm.tool-calling
+  - ch.rag.ingestion-metadata
+  - ch.rag.chunking-embeddings
+  - ch.ir.lexical-retrieval
+  - ch.ir.evaluation
+  - ch.ir.dense-pgvector
+  - ch.ir.hybrid-rerank
+  - ch.rag.citations-evaluation
+  - ch.rag.security-observability
+  - ch.agent.langchain
+  - ch.agent.langgraph
+  - ch.agent.mcp-boundaries
+  - ch.ops.linux-services
+  - ch.ops.network-diagnostics
+  - ch.ops.docker-production
+  - ch.ops.compose-services
+  - ch.ops.nginx-tls
+  - ch.release.ci-quality
+  - ch.release.artifacts-promotion
+  - ch.ops.logs-health
+  - ch.ops.metrics-traces-slo
+  - ch.ops.backup-recovery
+  - ch.ops.capacity-performance
+  business_deliverables:
+  - 生产拓扑
+  - 可回滚部署
+  - 恢复演练
+  - 端到端验收报告
+  negative_scenarios:
+  - 部署后迁移失败
+  - 备份不可恢复
+  - 代理配置错误
+  - 关键告警缺失
   project_artifacts:
-  - id: fc-08-deploy-slice
-    path: evidence/factorycare/08-deploy/vertical-slice
-    acceptance: 可从空环境运行，含成功、失败与权限/边界验证
-  - id: fc-08-deploy-decision
-    path: evidence/factorycare/08-deploy/decision-record.md
-    acceptance: 记录目标、取舍、已验证结果、未验证声明与回滚方法
+  - id: fc-08-deploy-artifact-1
+    path: evidence/factorycare/08-deploy/release/
+    acceptance: 可从空环境复现 生产拓扑、可回滚部署、恢复演练、端到端验收报告，并保留成功与负向路径证据
+  - id: fc-08-deploy-artifact-2
+    path: evidence/factorycare/08-deploy/recovery-drill/
+    acceptance: 可从空环境复现 生产拓扑、可回滚部署、恢复演练、端到端验收报告，并保留成功与负向路径证据
   evidence_paths:
   - evidence/factorycare/08-deploy/run.log
   - evidence/factorycare/08-deploy/tests/

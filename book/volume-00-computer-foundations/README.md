@@ -1,24 +1,24 @@
-# 卷 00：计算机、工具与 AI 协作基础
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
+# 卷 00：计算机、工具与验证基础
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+从文件、终端、进程、网络和验证证据建立所有后续学习的共同底座。
 
 ## 章节
 
-- [v00.c01.learning-evidence：学习系统、证据与间隔复习](chapters/v00.c01.learning-evidence.md)
-- [v00.c02.computer-model：CPU、内存、磁盘、程序与进程](chapters/v00.c02.computer-model.md)
-- [v00.c03.files-paths-encoding：文件、目录、路径、扩展名与编码](chapters/v00.c03.files-paths-encoding.md)
-- [v00.c04.terminal-shell：终端、Shell 与命令执行](chapters/v00.c04.terminal-shell.md)
-- [v00.c05.pipes-exit-codes：标准流、管道、重定向与退出码](chapters/v00.c05.pipes-exit-codes.md)
-- [v00.c06.environment-path：环境变量、PATH 与工具版本选择](chapters/v00.c06.environment-path.md)
-- [v00.c07.editor-ide-debugger：编辑器、IDE、断点与调试器](chapters/v00.c07.editor-ide-debugger.md)
-- [v00.c08.git-security：Git、远程协作与凭据安全](chapters/v00.c08.git-security.md)
-- [v00.c09.network-http-curl：IP、DNS、端口、TCP 与 TLS](chapters/v00.c09.network-http-curl.md)
-- [v00.c10.dependencies-build-ai：依赖、构建与包管理](chapters/v00.c10.dependencies-build-ai.md)
-- [v00.c11.docker-foundations：Docker 镜像、容器、卷、端口与网络基础](chapters/v00.c11.docker-foundations.md)
-- [v00.c12.ai-collaboration-verification：AI 协作、隐私、代码审查与结果验证](chapters/v00.c12.ai-collaboration-verification.md)
+1. [学习证据、掌握标准与间隔复习](chapters/ch.foundations.learning-evidence.md) — `ch.foundations.learning-evidence` · `planned`
+2. [文件、路径、字符与编码](chapters/ch.foundations.files-paths-encoding.md) — `ch.foundations.files-paths-encoding` · `planned`
+3. [终端、Shell、命令与引用规则](chapters/ch.foundations.terminal-shell.md) — `ch.foundations.terminal-shell` · `planned`
+4. [CPU、内存、磁盘、程序与进程](chapters/ch.foundations.computer-process-model.md) — `ch.foundations.computer-process-model` · `planned`
+5. [stdin、stdout、stderr、管道与退出码](chapters/ch.foundations.cli-streams-exit-codes.md) — `ch.foundations.cli-streams-exit-codes` · `planned`
+6. [环境变量、PATH 与工具版本解析](chapters/ch.foundations.environment-tool-resolution.md) — `ch.foundations.environment-tool-resolution` · `planned`
+7. [编辑器、IDE、项目导航与源码定位](chapters/ch.foundations.editor-project-navigation.md) — `ch.foundations.editor-project-navigation` · `planned`
+8. [Git 状态模型、远程协作、冲突与凭据处置](chapters/ch.foundations.git-collaboration-security.md) — `ch.foundations.git-collaboration-security` · `planned`
+9. [IP、DNS、端口、TCP 与 TLS 分层](chapters/ch.foundations.network-layers.md) — `ch.foundations.network-layers` · `planned`
+10. [HTTP 报文、方法、状态码、Header、Body 与 curl](chapters/ch.foundations.http-curl.md) — `ch.foundations.http-curl` · `planned`
+11. [API 资源、错误、版本、分页、缓存与幂等语义](chapters/ch.foundations.api-contract-basics.md) — `ch.foundations.api-contract-basics` · `planned`
+12. [预期值、测试预言、断言、AAA 与测试层级](chapters/ch.foundations.testing-oracles.md) — `ch.foundations.testing-oracles` · `planned`
+13. [依赖、包管理、构建生命周期与可重复性](chapters/ch.foundations.dependencies-build-packages.md) — `ch.foundations.dependencies-build-packages` · `planned`
+14. [镜像、容器、卷、端口与容器网络](chapters/ch.foundations.docker-basics.md) — `ch.foundations.docker-basics` · `planned`
+15. [AI 协作、隐私、补丁审查与可证伪验证](chapters/ch.foundations.ai-assisted-verification.md) — `ch.foundations.ai-assisted-verification` · `planned`

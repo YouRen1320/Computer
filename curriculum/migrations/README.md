@@ -6,7 +6,8 @@
 
 - `migration.schema.json`：账本结构约束。
 - `application-receipt.schema.json`：一次性迁移实际执行后的不可变回执约束。
-- `2026.1-to-2026.2.yml`：本次 170 个旧 ID 到 255 个 active ID 的 ready 账本；151 个分量与 275 条章节边由独立审计逐项核对，来源候选仍保持 `unreviewed`。
+- `2026.1-to-2026.2.yml`：本次 170 个旧 ID 到 255 个 active ID 的 applied 账本；151 个分量与 275 条章节边由独立审计逐项核对，来源候选仍保持 `unreviewed`。
+- `receipts/catalog-2026.1-to-2026.2-semantic-ids.yml`：2026-07-15T23:10:56Z 实际迁移的应用回执，记录完整计划、写后输出清单、严格检查与后置条件。
 
 ## 动作
 

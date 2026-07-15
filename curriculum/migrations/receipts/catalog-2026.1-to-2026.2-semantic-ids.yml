@@ -1,0 +1,2382 @@
+---
+schema_version: 1
+receipt_id: catalog-2026.1-to-2026.2-semantic-ids.application
+migration_id: catalog-2026.1-to-2026.2-semantic-ids
+ready_catalog_projection_digest: sha256:2e78f80cd4dc4db6c5686464844843316911e0b3dff20df2271bd1d0db652102
+legacy_manifest_digest: sha256:d06a4422292ae6a25bd110ecaea9e627089b62eeec430218b6e6f4c2306f9d7c
+mapping_audit_digest: sha256:5122094ab93f7c00637b9c812a246d10e8118fb20d59fdb6cd86bf5ff030cd57
+plan:
+  action_counts:
+    create: 255
+    update: 24
+    delete: 170
+    conflict: 0
+    unchanged: 0
+  plan_digest: sha256:5bb2a05959ffafcae981537c456bbd335828114a3ab41c20d968e242811106c6
+  actions:
+  - action: update
+    path: book/volume-00-computer-foundations/README.md
+    before: sha256:f9ea5baf42ae7a8c9c5769a471fc8b86c8c7c007f0f5dcb92d944caaee89d30c
+    after: sha256:19e6884014b6526a89affecf5369d7b9fc3884fdb69c84fef69133aca3e9fce9
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.ai-assisted-verification.md
+    before: missing
+    after: sha256:4a4e95d9d995988a808c292b9997d928908b1d11e62cb242e44a8412276ecf9c
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md
+    before: missing
+    after: sha256:092b131121d5cd8b14f7b5a6ae2c5bce6890c3707574976acdb41fd3943c1a53
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md
+    before: missing
+    after: sha256:428c2ec570a355edddf53a90a8a05121d85adfe49290a3473fe915320fc6edfd
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.computer-process-model.md
+    before: missing
+    after: sha256:abbdffee275523a3816179982032c1f1f0b0409c0f9eed8f19f15b03e4882da7
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md
+    before: missing
+    after: sha256:839d90208a68edc4634fd814e94be6ae525ad54f9ddbcff97028f278dbcfd111
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md
+    before: missing
+    after: sha256:ab5737f5774debb76f06fc0f19d99116d7b001edee9d095d2e07b6f9d480fb72
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md
+    before: missing
+    after: sha256:f5c846a4acc009260994e78e3c175d65aae87f7401fe3b9e42bbeb9aedf28903
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md
+    before: missing
+    after: sha256:2bc4e64b4e77be769b338db8e23a812e5b39301b994be37497caa7f99d7b6012
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.files-paths-encoding.md
+    before: missing
+    after: sha256:1ad3b3a428da581bf327b53f1de805102521398907d36264ead617ed227019e6
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md
+    before: missing
+    after: sha256:88316e36de4451c19b32589dcd545c685f645669a99406134ad7a0ba5a9b0eb6
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.http-curl.md
+    before: missing
+    after: sha256:ccb50d3da4f156984444f04ac38a3a48650e591424e7739de471e5859b57a6e8
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.learning-evidence.md
+    before: missing
+    after: sha256:99a02893518bbaf0e708501436f086d839e77bff62f2cede271b6fdfbfd8c089
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.network-layers.md
+    before: missing
+    after: sha256:1e6fde8d8df7508814be795a143bd7717dcadc180f74ed20c9caabd49a9ddd4b
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.terminal-shell.md
+    before: missing
+    after: sha256:76a5ea6b539b637c043cc349dddc7fa9a3a2974b9d1e58987de9c99ecfd81786
+  - action: create
+    path: book/volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md
+    before: missing
+    after: sha256:e457fe4a4353f6181346be74e07e39470e16f58b894ee1f0a366cdfe96d20fa1
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c01.learning-evidence.md
+    before: sha256:a5df6ef902a12a22afedfd0710cd4a8ab1875633e74ff250b434bf4647323df2
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c02.computer-model.md
+    before: sha256:e46c87c362ccd82177f557cf53929266e246381b63156e4317cd79f412ae72be
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c03.files-paths-encoding.md
+    before: sha256:2d828a207e3179050f1f44c6547335b5a7fab005cb8c02ee79a1eb953da0c018
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c04.terminal-shell.md
+    before: sha256:508e6084dede1f74a484e0a9cd83273508896db4845900af255a3e1e5d3f9e09
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c05.pipes-exit-codes.md
+    before: sha256:72b0720c65e35f398afc0c867f9796d2ee8fc24cef44144c9c169dd57ec5fcf5
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c06.environment-path.md
+    before: sha256:f357d43840ec5370fcc0573e90e8ba37ab508596a268c0dfc5a698faeee13aba
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c07.editor-ide-debugger.md
+    before: sha256:3d23ffeefa59ae593e1c77df7f581ddf222fdcfa548b1d7bbcb14814913a01e9
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c08.git-security.md
+    before: sha256:6cfbf8759657d5b50e1dbe7aaef6d2be112ff0cbe7d7f8875787f667fe55311f
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c09.network-http-curl.md
+    before: sha256:91caa5011b4418406f3f00b64907ed0183d5400131c6a74042755fb7b826ac19
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c10.dependencies-build-ai.md
+    before: sha256:efd7f947d1f7b8f21c320ef76fd0c04e5b491a4e73d0818628f704fdddfabb86
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c11.docker-foundations.md
+    before: sha256:050799e020ba78a7faeff91abbc00a161b48f4c0cd3a6e6c36fcb4cee9598509
+    after: deleted
+  - action: delete
+    path: book/volume-00-computer-foundations/chapters/v00.c12.ai-collaboration-verification.md
+    before: sha256:4b289bb928b3aa5ece42d033274cb4384240108202758f7d81ab9be2fb68cdd7
+    after: deleted
+  - action: update
+    path: book/volume-01-java-language/README.md
+    before: sha256:643941edaef57cc04a8a6b371cd187b3b0654028c3030927cd355c2f96a095b4
+    after: sha256:06b539fbdf08e2e13fe005be303a1e6e8c2e9883622bfec4b9451d2679557610
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.arrays-command-args.md
+    before: missing
+    after: sha256:8f51057a70888ea4f50009f586524bac6d44306021b566dfd3201c827540ea92
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.branching.md
+    before: missing
+    after: sha256:0a79abc07c8beea95cb97bdcb0bc61a71fb9038d15048c0ff4324d59158ccd09
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.console-input-validation.md
+    before: missing
+    after: sha256:562e93b9760d18445ef92af7f2e7ff6dd1e00a48bcd79233a822eee67a010a7e
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.debugging-failures.md
+    before: missing
+    after: sha256:1759d494f06a83ca3f8650b92e21ab76aee331fcc47463c6e7d01825f6246992
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.expressions-conversions.md
+    before: missing
+    after: sha256:fbcfd7431117ece268a3f79565cb2c86e15005cae6da2d875185648219259b6b
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.loops.md
+    before: missing
+    after: sha256:436aa8dd45e2704d6a123f0c12aebab91281cc26440d26bbc34c4ac52cf5f61e
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.maven-junit-smoke.md
+    before: missing
+    after: sha256:7a9a3288e032ca0c8b1d58c64e16c43ee831a940489aad569f2ac367dac1871d
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.methods.md
+    before: missing
+    after: sha256:2552c9ab2440c4fe7845c21083d48bbdf0d7cbc219f368dedda3261870ff29d4
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.platform-toolchain.md
+    before: missing
+    after: sha256:3c0d85a478155f5f0374235f9508c8f220a3b4d0a253e041c32ff684de825c11
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.program-structure.md
+    before: missing
+    after: sha256:b19e49e553bae90836cc6e046681c993b31305fd2078ff00cbc4170451bd3661
+  - action: create
+    path: book/volume-01-java-language/chapters/ch.java.values-variables-types.md
+    before: missing
+    after: sha256:8eedffa9385a943d8c9d00ca8f79ab8cf7e256eb5d08974c1c36f0a436350591
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c01.java-platform.md
+    before: sha256:ca679358ff704af3595df9cb59fd5e977598fda2f03b2d5f5a19ee25c1c184d5
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c02.program-structure.md
+    before: sha256:fea2fe91b14202bb40de64ee872912bfcfccf055ffa88ae06cabd6c744d5f38d
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c03.console-io.md
+    before: sha256:fab137ded87eeb532b02f619cd4cc96591fc556a21bbc691e88878db70c4eb8a
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c04.variables-scope.md
+    before: sha256:f2f77bc55508d7047c1162f3eb7ca545b19c6f7a43d95e3faaefb99baaa029fd
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c05.primitive-types.md
+    before: sha256:0e4fcd89667cc8d676effb99593c282c62d2c22f7e0f044bd6e334f9f27ce13a
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c06.operators-conversion.md
+    before: sha256:e05b7e55a5c227e3a47ee52811cbf1dfda58086dd150659ad6cb93d59ec89fdc
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c07.conditionals-switch.md
+    before: sha256:12b9ee8f82d5ba315ce6d61ba964d041bc8dc47d372fdac3a868b274f4e45f9c
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c08.loops-control.md
+    before: sha256:81a1faa96fd30f607b53a709595ddf6207a09488ca8035356ef1996d1d195cb5
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c09.methods.md
+    before: sha256:fb917c0a7f4f69b93496f8d9493d6ae15fef3d3ce65d9642fd8df095581db607
+    after: deleted
+  - action: delete
+    path: book/volume-01-java-language/chapters/v01.c10.arrays-debug-test.md
+    before: sha256:acfdddcfcbef8e174a7f0d023a3c3e0d61d45b402c2e87d2b6aea052c1f2835d
+    after: deleted
+  - action: update
+    path: book/volume-02-java-objects/README.md
+    before: sha256:d7c81c0022356cb42cc4d38022b5268abbc594f20a20709c1b7da25f0421c587
+    after: sha256:df7c350a0b930bc6a3a3125630c9670dc2f1c89190b426105997d6000b604f74
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.business-value-types.md
+    before: missing
+    after: sha256:967b2e7807f5373589de723c9702ae3611f906ddc3a312070659d9437f131412
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.classes-objects.md
+    before: missing
+    after: sha256:56483b957529ced596a1ff8451d1433ba920e8be6e83f6c9ec59383372079722
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.constructors-invariants.md
+    before: missing
+    after: sha256:c658203ff2d025de1f6f04c085b1c958ddee93d636226b5eeae1ebc002a02fd2
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.encapsulation-packages.md
+    before: missing
+    after: sha256:b6daa3a4b9aaf0a388e47b2de31c37069dcf431c9a2734922cc25a5fe8e2e756
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.enum-record-sealed.md
+    before: missing
+    after: sha256:5890eba1c79601d9fc7a271b8e4fdbd7352bc482083ce473904a601d85727c57
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md
+    before: missing
+    after: sha256:3119cbdca41ef48d2fe5c4809cdbc95ebe8c460f5d936cfb805fff31fcc12671
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.final-immutability.md
+    before: missing
+    after: sha256:0557a519236db7038e4362704556e5631175fafea374771268bf8f35c58ec55e
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.inheritance-composition.md
+    before: missing
+    after: sha256:3c6c86ecd4763d40b0e563cf2678a7cc858e975d87204e1a2071549f42d567ce
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md
+    before: missing
+    after: sha256:aaeb355d8a436e136b79b6afcaf1590003ada4d1f6efac4dae1d3157b51893a9
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.object-contracts.md
+    before: missing
+    after: sha256:94a0f8a2c1959a1f7a5117e266adce3442cd872242c51faab627add09c433333
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md
+    before: missing
+    after: sha256:10111810e3565a1a013299246b80874f8bf87895a8e18e643488baa63a77d678
+  - action: create
+    path: book/volume-02-java-objects/chapters/ch.java-oop.static-class-state.md
+    before: missing
+    after: sha256:a329773560ccdf8faa56151b7440bb11e6c88f2258d484d78b6847740dce79c9
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c01.references-null-memory.md
+    before: sha256:c8c477e7ecd5b9b266e7fe492bd8cf6e531bef592e5e242b829cfd56554ec097
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c02.classes-fields-methods.md
+    before: sha256:89fbebf944c9be8593fc149cdbf1c16161eb4d9f9609667a2c649a1316516c88
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c03.constructors-encapsulation.md
+    before: sha256:2dce1ef7881154bf37c7225ab3d0eb019e76cd14c89e9a11cf63909c7b429b1b
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c04.static-final-immutability.md
+    before: sha256:0f8f1f1830de8c916f2621f4feee9879e9ae3ed34b1644e740c70011ca95ad1a
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c05.inheritance-composition.md
+    before: sha256:3c573d2a7e8b82e5ad1f87dd0907baa9ee464ba1b0b6f3f85b852e98907a3284
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c06.polymorphism-interfaces.md
+    before: sha256:b2c5c530df67261ef6c3bbd3085a8c9808f727ce8ff913d8e18a4251c2316d38
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c07.enum-record-sealed.md
+    before: sha256:187a6e1edc2351ed9605a4a9cb14d18c53c1e0b33b7945c989725ef0d009d2e3
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c08.object-contract.md
+    before: sha256:c102c002bc81253b84dfda1e347d50e82ffac2144fbd7a450c88450f369a5d27
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c09.core-value-types.md
+    before: sha256:0ad9339493cd7e1dbf0ee2e346d294aa987b2dcb2b1e00e9d99d7c1e9f82d13b
+    after: deleted
+  - action: delete
+    path: book/volume-02-java-objects/chapters/v02.c10.exceptions-resources.md
+    before: sha256:efee8cdff923d5116dcd854fdfaeb62cc6e12f3afb554717ce8efe4edf50e0a9
+    after: deleted
+  - action: update
+    path: book/volume-03-java-engineering/README.md
+    before: sha256:a9a20c3875cbc0e41797b8ee78e0eaf89436f4bff72faf760af5fc7ab503f508
+    after: sha256:d883066489170a4e9d97bfa5af6459d4036afb3041156bc567217360e0ee82c3
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.annotations-metadata.md
+    before: missing
+    after: sha256:635b4ea41c314d262a5e21edf13f302fa62ea50bffbd8a6887308ea7cb479d6d
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.associative-collections.md
+    before: missing
+    after: sha256:97c3b0762fa8c0c6960fe04e1ff2e0613240852f44eeacbe722f24e7aac6cd13
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.complexity-algorithms.md
+    before: missing
+    after: sha256:058a618466ee51c557753df1922e6aec6f849353d1bbc285d134db77a69827f6
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.executors-virtual-threads.md
+    before: missing
+    after: sha256:191ba295a74c9cb7e2b7c9fa398b8809a483bfda0e85d98af960ee05883c49dd
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.functional-pipelines.md
+    before: missing
+    after: sha256:4f8aa28a0c11efb0a6fb8a759c17125a40cb5d9ee8e48d66fff5eef3df0cd944
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.generics-type-safety.md
+    before: missing
+    after: sha256:4781e36826b95a15749f0cbe350e5c25cb907bf399c630951150cdf218bbb4ab
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.io-resource-lifecycle.md
+    before: missing
+    after: sha256:593debe0a837f45f9e2c053363e5eabb2f39dbb1f50401c4808cdc7fd78770bf
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.json-mapping.md
+    before: missing
+    after: sha256:baf388d81eee13fc597bc0da93e2c41fa62ee5aacfe4d085cf14276f3b724db1
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.lambdas-functional-interfaces.md
+    before: missing
+    after: sha256:6469c59cddc824e00d81d950e3bca022267205fa2f53ea92087e9809e7cebead
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md
+    before: missing
+    after: sha256:abe9357dd867e2fce85408b0df5fb202ee2b20c472f781331ae96453415eea8a
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md
+    before: missing
+    after: sha256:d9f2cca33a33f43c2909d70a98252756590faa096323034862d29e4b16f73082
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.network-programming.md
+    before: missing
+    after: sha256:6ca050d136a440da01c70ad5c3f8db17b71a5974a63d0bae94a13977f24ea287
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.nio-files-charsets.md
+    before: missing
+    after: sha256:97d5dd901aaf15e9f10dfb5251cf856330b2937d21e302f390dfd0671df89324
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.reflection-classloading-proxies.md
+    before: missing
+    after: sha256:fb80475568145f75b0f8aa3a7b69d32ea4a23d97da91087cff03370689c5dbab
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.sequential-collections.md
+    before: missing
+    after: sha256:58acb8bee527c852e6c417464540772973486b0f1cb957b33c78cead917925ff
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.sorting-comparators.md
+    before: missing
+    after: sha256:d4146de49b1f5ba0a50bc6a73002d3071a7f32427f3f5a0b4e0cfa4f2a3f606b
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.testing-test-doubles.md
+    before: missing
+    after: sha256:c7eebe6bb37c608d3d0b8d28971c2e3322815bb1cabef3ef92a837ba14c639f4
+  - action: create
+    path: book/volume-03-java-engineering/chapters/ch.java-engineering.threads-jmm.md
+    before: missing
+    after: sha256:b87ff0b26d67caca525675ab2f2e9c28b87743f7513d99bea8a230248a6f20ff
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c01.collections.md
+    before: sha256:7927077bf1f55bb88655ea85044569c15c8678f253ae15b918d1d1142bf00a90
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c02.generics-comparator.md
+    before: sha256:6ddc4f2a7dddf6c1558540d1c75589158ae70a72073916d40be0a78ef4c54313
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c03.complexity-data-structures.md
+    before: sha256:ad4756e213c9d98509588f55f1fdec86be359a07ac26a6b8398058f35dc64a21
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c04.lambdas-functions.md
+    before: sha256:1e3bdbd8091e4a36bf4cadee899cf04cd91713a4bc7f7c59254ecf65cad60d7e
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c05.streams-optional.md
+    before: sha256:2aab2322ed9f4f094b824ab031d038098a0fdb9f26a5e50085d061c139183f61
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c06.io-nio-json.md
+    before: sha256:18c310a179cd97ceb3641faf00a42753cb3dccc85c8d08b06d557a5cf9a9221c
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c07.threads-jmm.md
+    before: sha256:7878f59fe08c32677ff89dbada041a8dbfbab258bf74fa882e757e6d71a75c58
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c08.executors-virtual-threads.md
+    before: sha256:c47a0cc6521b86ccc6b2c09cdc7f0d6c53e0d3e81b064b8bed513667b2a2a29b
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c09.annotations-reflection-proxy.md
+    before: sha256:29416a0eac8561b9456610df6d35720220b2482ab18c9d5163ea0c9bafd4c738
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c10.maven-testing-jvm.md
+    before: sha256:ea8f21de9231d59f73c328e0e721939afcba4cc81b6c1ce0bf050306636f607f
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c11.java-networking.md
+    before: sha256:9184d01a3bfcf23f4440e5663d2669e3f89988cbba6973004db65e8e7ee3eedd
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c12.java-testing-mocking.md
+    before: sha256:c61f9d85ed0b589de56d1027520ec4c2687c2b7230376a0b86a68c07d29695be
+    after: deleted
+  - action: delete
+    path: book/volume-03-java-engineering/chapters/v03.c13.logging-jvm-diagnostics.md
+    before: sha256:2c3a138f06a4d37a034c9a3abfd511f729d6e827c2bbdd5953098c00b7780338
+    after: deleted
+  - action: update
+    path: book/volume-04-data-postgresql/README.md
+    before: sha256:b4e065cfdff15979bf1796ca69b54264a2771aab8bf2280fbcc7bd3a6a42820a
+    after: sha256:8853d87d56f029ac62c85d134cd1faf190ff3bf2d1b3ac1eef28b24ba0288879
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.aggregates.md
+    before: missing
+    after: sha256:ed5d2fcad8a29faf7c57b7a97ca0d34d4e299f353a44f10436d2fd398a9d1ddc
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.ddl-constraints.md
+    before: missing
+    after: sha256:bb2b45e456b29959dcdb68fce7eb75389d7720c435607d49362356b5f9ec09b0
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.dml.md
+    before: missing
+    after: sha256:014b570fb46fd2a36827b59abb02f24c5a7a1913b0d0fdf5732c67ee61f48eac
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.indexes-explain.md
+    before: missing
+    after: sha256:14f695c55e76c8c7f9b346f56c4265429a0aa3599cc8a17ebd03ccf42848ec25
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.jdbc.md
+    before: missing
+    after: sha256:086f732aefc0636a3286e1e54a6f827910822e5ab72647901945a5f1b1999ea8
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.joins.md
+    before: missing
+    after: sha256:aa51fff97e62b343148c0b7359500e0d824be5176aa5a03024d39f4328011465
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.mybatis-core.md
+    before: missing
+    after: sha256:53d0ea2c86fe7f93b464774317eb1cbfe07181432819387fa1493ae44002b48b
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.normalization-modeling.md
+    before: missing
+    after: sha256:cb7996c62a669888154645f5d015aae42e97d7d2e52c6ce5a5867f657072ae23
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-psql.md
+    before: missing
+    after: sha256:75ae89fb0708b8a9a756776de8b664a46f3cbcc09e9990f71814b72da0d9a44d
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-types.md
+    before: missing
+    after: sha256:5363a083a85cb97e0f6b428587b41f78c45db12cfa668d6ce595734ce9ed2a0b
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.relational-model.md
+    before: missing
+    after: sha256:9783bb6696515c02ff6b7d5074a74918736218d3ba6589b711fa88a6d53f5afe
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.scalar-functions.md
+    before: missing
+    after: sha256:bdd810bdc5a48a814c2134be9f988253c045d3168e141b9326018ddb975cb781
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.schema-migrations.md
+    before: missing
+    after: sha256:97c818e7ae19f03f60aadf77f1cd5c09d8769d836bd095d23151d5343358dbc0
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.select-rowsets.md
+    before: missing
+    after: sha256:667f5a8f3d636ae208fab5a08574e06892164716009bd902b1e9fe2db2e26ec3
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.subqueries-cte.md
+    before: missing
+    after: sha256:9dc5d286fdaf1663d018dfe21032a90980435fee9b9063999c7af8877fa2ebb7
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.transactions-locking.md
+    before: missing
+    after: sha256:6a923a9870b64c1b34e86d75669d447f3f247b41e928df6bb890ce781ad1e610
+  - action: create
+    path: book/volume-04-data-postgresql/chapters/ch.data.window-functions.md
+    before: missing
+    after: sha256:e00b781f684c4e11464ae641c14daac77c132bf1fd9c90c09d257b33870e32b6
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c01.relational-model.md
+    before: sha256:a9b2f1eea847525319154a4f6a482fa238ffe1379546fb82817a308fdedb4c02
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c02.sql-query-basics.md
+    before: sha256:d4919ea18ec7a33240cfddb8f4a897a946cab029f928d17899ea5b9ddb9dece6
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c03.sql-functions.md
+    before: sha256:1ddff659bef9da36bd572f69d7195613ada142b0a77bf93a2be58bea9e199ed1
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c04.aggregate-group-having.md
+    before: sha256:55f85a36e9b03d55a2aa89b59730dd9297fd72c6eee567a90e12d9b73dde86e9
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c05.joins-subquery-cte.md
+    before: sha256:b7b9652c59feb156f0e96e40d2593412c1bbde051c485960d5f85646b45eeff3
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c06.dml-ddl-normalization.md
+    before: sha256:91b2132ce3c2d380917c348ed1d455ad83aaa59ade8cc045bd51f44fc48fb45e
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c07.postgres-types-psql.md
+    before: sha256:854465d93dcdcb57b24f1164caecdc555656d0529cb61ca7c4057fdd18d293ec
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c08.indexes-explain.md
+    before: sha256:10f108d003c26591ebe09e4a60b491c87ea06339bd1925aeb3d741c6d0136571
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c09.transactions-locks.md
+    before: sha256:1f39b381e9d9eb0a4ad67cf38aac4bdfabe3053d9dab442160bb460063d26128
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c10.migration-jdbc-mybatis.md
+    before: sha256:535ddd3b7087505a46f3e2e05bf04151db987bef928afb13fe0e05037ef35dd7
+    after: deleted
+  - action: delete
+    path: book/volume-04-data-postgresql/chapters/v04.c11.jdbc-pool-mybatis.md
+    before: sha256:a4ee9a4c469a6f5799959724474422787a749553b3551e02951ddb0b7a9e30a5
+    after: deleted
+  - action: update
+    path: book/volume-05-spring-backend/README.md
+    before: sha256:70a492302e1598ece528008aa1ab6e7b7d941d61d7e1a26d64b496df08c54930
+    after: sha256:37e88743c669e4caf4bcb62aa92d560623846f39a21fadaa8a12739793d0b9a8
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.architecture.domain-modeling.md
+    before: missing
+    after: sha256:14a7d0d17c0c1bbfadfb11ca9ee905ba5b0850cb0dc15ca2394151817eeae144
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md
+    before: missing
+    after: sha256:7186440b85deda2dea8149120dcebd468c6c2df400881c9bbe2fc70cdc09be9a
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.aop-proxy-model.md
+    before: missing
+    after: sha256:d09c3c52fec51ea790d82dc04a5ef2fd611ff455b021feec17a54ae8192e36fe
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.beans-lifecycle-scopes.md
+    before: missing
+    after: sha256:57e38589237568ebd75f8aa2505acf339ec4625823b266dd2305762612912931
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.boot-autoconfiguration.md
+    before: missing
+    after: sha256:e6a635d5ea8da7fb447af892fc9ed8695df507c6d1b282b9e2852c8af4be8a57
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.configuration-profiles.md
+    before: missing
+    after: sha256:d47fa09f3198700051b4f3dabc7f5e472e5b55318e123990b606c182cb736b1d
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.datasource-pooling.md
+    before: missing
+    after: sha256:0c766c42284be8ac7219094c9dc4f61d9eeb8628eafa9b72a1b72c13ea6657a3
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.dto-json-content-negotiation.md
+    before: missing
+    after: sha256:4f8935b9d2fe686b4837ffa2aa3d852c540c7b54aa7c5381eb34378c2bfb9087
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.ioc-di.md
+    before: missing
+    after: sha256:00dba19cadabf8fddd0837f097954482b92bfbf0cce509d5a993c773c1fbc1bb
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md
+    before: missing
+    after: sha256:7a371b4d8dfa35c486ae5862b67a3aa2ff7c28272ef29599979a2ee6ac4ceef4
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.mybatis-repositories.md
+    before: missing
+    after: sha256:087602468ccdb3b2f4d72d74a6b15aede8f5d4f096a50a2047059e8dd8dd2f5a
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.openapi-contracts.md
+    before: missing
+    after: sha256:b15bddef918236494da59e78c2e6aeaca912c6d8adca36186f5513b004835ba7
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.problem-details-errors.md
+    before: missing
+    after: sha256:1fe30a360987b02365fca586efcefecb41e9dc9920f8b09e5b2b5c8e1ea40a24
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.service-use-cases.md
+    before: missing
+    after: sha256:5c1e0d4a7f88be0243d0e452e123fdb97f362a53b7fd32cd23100ae375f3cd49
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md
+    before: missing
+    after: sha256:df9115f81b3cb473df1ad2d020aca66bdae53aa3d59c410e6fff6055fbc05197
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.testing-testcontainers.md
+    before: missing
+    after: sha256:dd9267c01660376dac1c91bcb613c9356f7f2eee2d59c84ac911c5b9974dcc62
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.transactions.md
+    before: missing
+    after: sha256:4fe084aa1dfa8443f04a667c4d9ff1808a39f1f1405960d1f5993bf2bdebfe02
+  - action: create
+    path: book/volume-05-spring-backend/chapters/ch.spring.validation.md
+    before: missing
+    after: sha256:fa7bc1220a8a273f054d2e6edd4e76647314dc3ae4a523331904cf868f584c61
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c01.web-jakarta-lifecycle.md
+    before: sha256:4202d863707d16b842116b6f647305387c544c1a2804c00584eba39fd83d0046
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c02.ioc-di-beans.md
+    before: sha256:910df48c0bcbfe207f8978f2ce9294a21f875e2f0da0770ec332d02574ccf46a
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c03.configuration-profiles.md
+    before: sha256:66bd88542a869b2e6fbd9f272d44e399afaf355fdcd1ae6d53d0f79735504077
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c04.boot-autoconfiguration.md
+    before: sha256:0ae34939afd647bef0cc02bcbcbd6903624de9d877703989431c6fce9f773ff1
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c05.mvc-controllers.md
+    before: sha256:c781416b6a47acdc34eccf770ba8e744387e263255f551e91a8ad3597e6cc07e
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c06.dto-serialization.md
+    before: sha256:887e4897ad6e38fb182ad41f1db292e0e3b1d3a1deb966f2b423119c602821dc
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c07.validation-errors-files.md
+    before: sha256:fb865b61bb3ab6c98ee8d3fac0637037aacc7be56ef644fd364633f46aa0cb8f
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c08.services-transactions-aop.md
+    before: sha256:94e3b23335ae2a020367fa54efac11da7ad3a68491453b511e349d2f0bef0318
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c09.mybatis-integration.md
+    before: sha256:0c112eedbed64c4d49300bab902c59bfdc5f81980c80f99ea985fa18965921aa
+    after: deleted
+  - action: delete
+    path: book/volume-05-spring-backend/chapters/v05.c10.testing-openapi-actuator.md
+    before: sha256:237b76cb4b706d9aaa643d5476589b86a0d0869a4a7e59d1e5edf38e7e9a0d29
+    after: deleted
+  - action: update
+    path: book/volume-06-enterprise-architecture/README.md
+    before: sha256:7b38a72def1ab714d5a867fb8d1bd57c175162a68f0ea1109a8f1b8a24c65d6c
+    after: sha256:4d8ea0e2b0cb3fc5a9be4c1323474da4dc4d0fb9bd872749c4fb9d6b420cd2fb
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.architecture.domain-events-outbox.md
+    before: missing
+    after: sha256:a20219b4300c60cc9fbe59ea7dd2d75b99c4dca6c531f604a848de2e3f6580f3
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md
+    before: missing
+    after: sha256:fc3a102eba57e9cb74db07f43e6103a97121799a27c3f0acd9b552f3688983f8
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.architecture.modular-monolith.md
+    before: missing
+    after: sha256:0941efff0623a1dd5b60e42a3293c546895321d8b8735567e5256a053bd04743
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md
+    before: missing
+    after: sha256:d2c2589d641e209f3d28e1efb4cf0381318a960407d7bc601d8cdba089956ba9
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.architecture.workflow-state-sla.md
+    before: missing
+    after: sha256:19cddd1d5aecbbdf4922e29b14ee7b1fd173bf822c6c6595403d342f82a519cd
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.distributed.messaging-delivery.md
+    before: missing
+    after: sha256:875fd9fddfa563b34518c0345657d9c18b76ca2f12ed7b8e1f00e6579b14c7eb
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.distributed.redis-cache-rate-limit.md
+    before: missing
+    after: sha256:f65a93b9710fbed76251edeb3a43ea1cbdb6af1d452a45653d350c23785884d0
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md
+    before: missing
+    after: sha256:eb3675aa5849a40edafdd148bc8e269c687c77ebb54596ed99b88552f346ca52
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.authorization-rbac-abac.md
+    before: missing
+    after: sha256:9c54d8f704ec46d8e7fef50386534cc138c0ea3e2934d7f8422592f0fe6b2b38
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.cookie-session-model.md
+    before: missing
+    after: sha256:cf4d88022999b822b995a5739f8ac6e9f3cf5f33f66728a6e55613f7dd5423fb
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.identity-password-lifecycle.md
+    before: missing
+    after: sha256:ed3262e0613949c73ad78bd1720d281f8468995cae0a2c9d7f30db758d28fab6
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.jwt-resource-server.md
+    before: missing
+    after: sha256:d74b44ff3c7abc55ef4f93e9a47f2ee43b03e4af64e83654906a2115be933074
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.multitenancy-data-isolation.md
+    before: missing
+    after: sha256:b58bcab57adc758fe7ccf25c876be9953740ce5d4e0139d00d62bca78eebc888
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.oauth2-oidc.md
+    before: missing
+    after: sha256:05d30d91ff2e1422190c323b010718b466fbe766ee12c6890d8eb8fa83bfddbb
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.origin-cors-csrf.md
+    before: missing
+    after: sha256:444dda07f07d17caff0fa2baeedb42f7bb7ac217e79c3765be198e0c4f1d7544
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md
+    before: missing
+    after: sha256:03239689f04fa8417bc3947a195a2e87350547bd64ad42ca018dbd2fb5888fb7
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.spring-security-architecture.md
+    before: missing
+    after: sha256:8c22e64b6b0b226265401d9d1b249feab040aefd1f088c4138ad1f0f8ac68eff
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.threat-model-trust-boundaries.md
+    before: missing
+    after: sha256:7f03b256036299d6aff49e7e1b838a7d08d32ed5bde4a4998927b5e4c5789169
+  - action: create
+    path: book/volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md
+    before: missing
+    after: sha256:3412701cbe9ddc306b14843be2da305782b66a3c1103eea49aa9caa1d6d07c61
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c01.auth-session-password.md
+    before: sha256:cfd56bc77ec4525f0a5a182ad00a8c38b930654443a1ea7e7b69ec004ac6de95
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c02.web-security-threats.md
+    before: sha256:d7e73c310f1944b467d87ace2cd6cddfb99e187bb3644b10d6ff3ccdbeffe38a
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c03.jwt-oauth-oidc.md
+    before: sha256:9d168eea9c80536c72e17d04cca65865814219303aace5e115d2882af0f2eb2d
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c04.spring-security.md
+    before: sha256:7f3651b7058934de572bff7afa33e5d5b876b35ef16663f93ffafaaad3382475
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c05.rbac-multitenancy-audit.md
+    before: sha256:a961108ff0034d541e708766bd5ec3375370e2db64bb1bb66de0fd8e8b3dcb31
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c06.domain-modeling.md
+    before: sha256:0835114c9c424b61e0b1743298b1be72fbf1a31ccb8b7bd50cb38db9de165715
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c07.state-sla-idempotency.md
+    before: sha256:133af342cab88d46afd2ebd750edfe9ea017b914bbc1161b130170f618c1d0c6
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c08.redis-cache-rate-limit.md
+    before: sha256:3c83334e9ab21ba1ac1c47d688211739ad14ebff232d9be9e8c9e9552aa4871b
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c09.events-outbox-messaging.md
+    before: sha256:8f858c3a8c27933d0305f3a6ee3cfc9084aa9b77baff933771ce4b8126e96616
+    after: deleted
+  - action: delete
+    path: book/volume-06-enterprise-architecture/chapters/v06.c10.modular-monolith-observability.md
+    before: sha256:3bbbd401ebeca8c7a07cf4e34f43a8ffb37c4efeadfb6bcedf74947fed6142a5
+    after: deleted
+  - action: update
+    path: book/volume-07-web-platform/README.md
+    before: sha256:4aa02e002c9cdbf9e5d3524533f11d55807b20c30416e31015c6f320dd832f03
+    after: sha256:d6bc94c59d56a8879f1e7072edb3a0ff43b0f6551d9876bf70240527f35dbbf8
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.box-position.md
+    before: missing
+    after: sha256:b9e6915a379b4395943b83650cafe6a336c936176077276801e2de7ff6bb3536
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.cascade.md
+    before: missing
+    after: sha256:9c491be3d873bd26495e2eb2844f08b7304962af5bfd6288488d8db482563991
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.flexbox.md
+    before: missing
+    after: sha256:d598e40d12081450d93938ae598d707b8b550a7ee048552fd8b3d230ce57f034
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.grid.md
+    before: missing
+    after: sha256:6616a1aef6df4ada742549f015db12d111a26881076170a272f26c7d3b1bcb71
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.motion-compositing.md
+    before: missing
+    after: sha256:4f128ca3d73d7f941545dd9edae20c82e3ac6e8b0763bc6b8df221445097d7b1
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.responsive-typography.md
+    before: missing
+    after: sha256:4b6321576703dd386956428c6a2c85a66b06c27e088c1271ac83777f3fccb331
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.css.theme-variables.md
+    before: missing
+    after: sha256:74c3bf7c9aa7e45f370e245ae1667ff9c341e34cf9d77aaa1ad62a40456f4016
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md
+    before: missing
+    after: sha256:087427fbf06724c911839ae3eba2554a906aae69b72bd76e984c9f3e65fa8f57
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.browser-render-devtools.md
+    before: missing
+    after: sha256:4aa4fb9b102ea66bc9504650ad81975a90024f2fddb285188532704b1e40f055
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.forms-validation.md
+    before: missing
+    after: sha256:87cd038e46623462e3443725ecce4f9939f0989ce2f42757ea8ef88fe0e1b1f8
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.media-assets.md
+    before: missing
+    after: sha256:ab38974ef7959dca0d6a5497596b84b72348c2c29af795eedb346207e1de7766
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md
+    before: missing
+    after: sha256:5e718d9484602522f10d13b35121082837746d29a567318d954d05a5d630bbd5
+  - action: create
+    path: book/volume-07-web-platform/chapters/ch.web.semantic-html.md
+    before: missing
+    after: sha256:ef90468b1e5f7cc7771b16dcde6cef3934ce0783981791be650db4312abe8782
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c01.browser-render-devtools.md
+    before: sha256:0b17811a1fd354097d0c361d68529cfb8fb90d6863833893df9a42479c31f841
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c02.semantic-html.md
+    before: sha256:61e81f3000622c0dace3d071e3588dd50912e5df9bb1fd39dd9769c4701897bc
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c03.forms-media-validation.md
+    before: sha256:50a0478afd2c5e042082828fe5f72cd523d84879cb27ea61fc22e947550ab0b7
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c04.accessibility.md
+    before: sha256:a29a21ac41a8f73501c155ab21adb0c84ab6189ed5a09863c9e6e9763997a189
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c05.css-cascade.md
+    before: sha256:0ffcc9a73795b45d5f97688f21b5b5f2a141fb811c7ba74534ad4aef9e4dde0c
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c06.box-position-stacking.md
+    before: sha256:e0545edf06d462576ca8868bbcb90dc2c7d39c26b1fe61fa1902b0e16af16003
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c07.flex-grid.md
+    before: sha256:4fa742c8a13264bca1db8398ada135529211c3a2ce2becd23bedd05f080c50d7
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c08.responsive-typography.md
+    before: sha256:049112fea53d3e56fd903c33d2d2d720dc3b0a39135ba0cc49de1a88455af02a
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c09.color-theme-variables.md
+    before: sha256:370137da076973b4281b7d8ce4da5655e3aca0db511d050ce28bc7489487a200
+    after: deleted
+  - action: delete
+    path: book/volume-07-web-platform/chapters/v07.c10.motion-performance.md
+    before: sha256:0397f59af4ca91bbdea102d8587c23bd29e45f48120889cf79044783f202411c
+    after: deleted
+  - action: update
+    path: book/volume-08-javascript-typescript/README.md
+    before: sha256:75d2262a0da0d5c78007f9f48c52e781a257081548b50851a385e8b34db57fdb
+    after: sha256:12738643e48986596ca0c2f1cd21a06fb52765dc6392a993c372d4f6f67eeeb4
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md
+    before: missing
+    after: sha256:009b639facfb5fc70433984ffdeb3092af3e74babc73c4ce889341d84d449a17
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.collections.md
+    before: missing
+    after: sha256:bb6cfde1b86d233b14fd379bbd11d988c6cf926d8023460b3f0d8764ded9725c
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.control-flow.md
+    before: missing
+    after: sha256:e43c8112f7c8d0e9b881627c6ff8fe73ba88de19b4c126b6dcd2c91acfec0078
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md
+    before: missing
+    after: sha256:6900546a0532b16485cd62594e86554b55cc7a7c51574d8b4ee112c2cedbf76d
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md
+    before: missing
+    after: sha256:a81ef5195d309173503e0761e4d9d297a94a06891bc28342dd29700e86ced5db
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md
+    before: missing
+    after: sha256:709ef4ab135a6d11eb980b4fe79ba11e77dc4840c745bb833875939a75a6db75
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md
+    before: missing
+    after: sha256:692f98895113c12d7c6e15f6a3639c19597c97d39897e49cea06d61eeaee7be1
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.functions.md
+    before: missing
+    after: sha256:d813c5a223074e53463dd918e44c2646252bf99e21692a80fba8993b51e90b1d
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.object-model.md
+    before: missing
+    after: sha256:90cc629386dacf7db66e9f89fd9927a0cd82cde73986b8a420bcd04d42306e6f
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.runtime-esm.md
+    before: missing
+    after: sha256:b1caf4857d58c13a682379e003fec0c6a4f77d5d9b599b090f9dfbf671747790
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.scope-closures.md
+    before: missing
+    after: sha256:1396ff8b1316c928c4e80802999cdf1741260ec2f45c200212ea3e7d9a3a61ee
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.statements-variables.md
+    before: missing
+    after: sha256:05cd548dbf2d56bbf963ebb17435e3bd0550a63342c198ef30ebbba3d303da4d
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.testing-debugging.md
+    before: missing
+    after: sha256:88122f1cae70fdc870b757b620253b828835c9d51af8ed9aa6713cdfd3ac744e
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.js.values-operators.md
+    before: missing
+    after: sha256:9156db3ae69866283e96585a69975d36c7c6d740e370d70211bd8b7ffc0017dc
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.ts.foundations.md
+    before: missing
+    after: sha256:c79749eb5d8f2c195491cae8794fcfb2354038640540cefb68fc2814f2438b0b
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.ts.generics-utilities.md
+    before: missing
+    after: sha256:00ae89556345716aae34516c53f15f1177e184e912be81caee3a37cefae13f87
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.ts.modeling-narrowing.md
+    before: missing
+    after: sha256:16edbf09dd3f1ea971dff7f056c8939f9fa95e8ce0712ac4b7c75f362b8be56f
+  - action: create
+    path: book/volume-08-javascript-typescript/chapters/ch.ts.runtime-boundaries.md
+    before: missing
+    after: sha256:a4c670c576c7d0f0a0d09d5eecf086e722003003b76a46f5f41c9483b339f4d9
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c01.runtime-node-pnpm-esm.md
+    before: sha256:33f5fd957e7d6f80ba933a0deb35bf3e84840c78f695de5b6dca0ecad6b2cda5
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c02.values-types-equality.md
+    before: sha256:abcb8edd0ab0ba9891142663e07d37440939e941c6df0f6798a510ced717280e
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c03.scope-functions-closures.md
+    before: sha256:c619ae29e829c6d76d3f7c9cebab3c3cd3598b195360b60dbd71af5cedaccdda
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c04.arrays-objects-collections.md
+    before: sha256:7549036954f7ead47c3aae217d7af7ce4d1b35f077c82a6005e38e44da7fb697
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c05.this-prototype-class-module.md
+    before: sha256:ecd9d3cc6bf3dae24dd2344625087d779c266197639e4f1b36a3b7ded9f3976f
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c06.dom-events-storage.md
+    before: sha256:50d003b98114978272905eb95a10097f52bc326545fd79239801f7073af5d3c9
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c07.event-loop-promises.md
+    before: sha256:4c988cb8dcd0aafe0974de7c60496444ed26815b43fca110be43595f5954f33e
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c08.fetch-abort-race.md
+    before: sha256:b5393d56cecefa1d36ef18cf068a86a5bea5ef87a353deb9863eba2ca8e93ac1
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c09.typescript-setup-strict.md
+    before: sha256:81e00de62eab71573a0566579554bf605f4efb3324be1a4ed7e6e883da43604e
+    after: deleted
+  - action: delete
+    path: book/volume-08-javascript-typescript/chapters/v08.c10.typescript-advanced-tooling.md
+    before: sha256:218725a0d43eda28036bb31c9352bf6247efd45a2b55304f96a2f069f6a49767
+    after: deleted
+  - action: update
+    path: book/volume-09-vue-nuxt/README.md
+    before: sha256:8c41ed0553601d5ba77d4ba1fd6a00b139b5a5e144eb47cf9d4498ea766c5071
+    after: sha256:98700802484fdc90ee94ba93d50d0a84866f705dc39defb16b122254150b76f0
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.nuxt.rendering-hydration.md
+    before: missing
+    after: sha256:443df4ac8ebc586d44229b76037ece6cdbc719cfdd603bd823239daf5b4d2536
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md
+    before: missing
+    after: sha256:a75b085b25cf60fa14b631f955f864149b116febfb1c1bb66031b908178865d2
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.auth-permissions.md
+    before: missing
+    after: sha256:37a21903d6378d3718ddf7312120d8f783fc5f7abc1a62b40849b5a6e440bfe9
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.component-testing.md
+    before: missing
+    after: sha256:5c8caae1dcb4123047e974100af40f7059c3320cf5294d5a06f94e001c67e9a4
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md
+    before: missing
+    after: sha256:3c1ad9b1e997ced4f2eda13cba64469ee29bcc946e011dca972bb8eed52cf00f
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.composables-di.md
+    before: missing
+    after: sha256:5f71e35573dcb89b5052ae5eb7e734a1b8388a06d6448cbdf5c7d6756abedd12
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md
+    before: missing
+    after: sha256:8222a57f989358f39969cc95336b657da39497e0fe44a1a1a23cc6980d8bf523
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md
+    before: missing
+    after: sha256:c81ee4de034636d96abf1c9a10a0c639871160e5938447392d0bb2bf6c0a163f
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.performance.md
+    before: missing
+    after: sha256:63c678b46341a5630a61c88962963f194d6d9311b0a1e24affed932adf56c337
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.pinia-state.md
+    before: missing
+    after: sha256:9293242f3e9438ffd1cad96b659adb11c5feb4593b8bd074128a43aff0af304b
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md
+    before: missing
+    after: sha256:c79bab1f6105ddea2c00f6219b4e3070951e7e67146387b32c97b9c1a37f232a
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.router-navigation.md
+    before: missing
+    after: sha256:665dbd520cc3fd505a6141d3126f612975edf1b536b6d69fd99840ca2af4e8a6
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.server-state.md
+    before: missing
+    after: sha256:7e7a9c8693d04840f65b80933b0beb588d5efd21931ddf690db840af00756946
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md
+    before: missing
+    after: sha256:2d60564e53210a6912b7e50865f515c4c2f42e0f108c6a9b5c5a6d499a33cfff
+  - action: create
+    path: book/volume-09-vue-nuxt/chapters/ch.vue.vite-sfc.md
+    before: missing
+    after: sha256:8d1999caca9fd5912bc8c3454d6dd56f4d26e1ddf941c8f82f99f0e4c07df643
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c01.vite-sfc-app.md
+    before: sha256:b41bee3d7e11b0299da9a8156cee87790a9b00cd71ddc0174df4e509c2258378
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c02.reactivity.md
+    before: sha256:455799fba715a4afd9f31ae453e109845a0367267d3cd5d50d7b81db892f6c60
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c03.watch-lifecycle-cleanup.md
+    before: sha256:02ce8570f9c3837b22e4f85003b6bba5c34e9ac15beb65a99ec1a162a3948163
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c04.components-contracts.md
+    before: sha256:aef1b7ab90b57031be2503092b5556b6dcd1e9072d529b8db298ab406d3ab2fd
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c05.composables-boundaries.md
+    before: sha256:3b018b825a288a45a896f5cff3b6bd4255d1984c57caf64462d341d171cddc12
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c06.router-navigation-auth.md
+    before: sha256:ecc4b752255444c770bad52cdbd497ac3d74160d7f977d07e06a5983886bdec4
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c07.pinia-server-state-forms.md
+    before: sha256:5dfe71d0119095ab09fbd98a6c15235a3baaa43f31589822596569f77ebefad4
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c08.requests-race-errors.md
+    before: sha256:fa12df99aed715ae954fe74f569252bc19aa8150f83d1fe0a714239d9912c9c0
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c09.testing-a11y-performance.md
+    before: sha256:f12bea57a184cd0c230da1e58a78753ac7ac69600ab68783456858391e6e570e
+    after: deleted
+  - action: delete
+    path: book/volume-09-vue-nuxt/chapters/v09.c10.nuxt-rendering-deployment.md
+    before: sha256:9ccbb2cbbb72e099ec09e9aea34c9a67d9d8c42c333ca9a9022cd8e9a853c295
+    after: deleted
+  - action: update
+    path: book/volume-10-uniapp-miniprogram/README.md
+    before: sha256:4eb2f11781c332596ca5919238482a864491c985d3091db9c24258f8b32e9229
+    after: sha256:effe2b3082cec05e07e15a4d128d8c9abd7898c5760b690bfdda0941efb3a2ec
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md
+    before: missing
+    after: sha256:eea58f7df123a01e31c4bbab0fc251cfa8df23e5774411032930712ceb64296b
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md
+    before: missing
+    after: sha256:a24912b2783a39953e4927c97510588c330bd606c383cab169d4c497d9c7aa42
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md
+    before: missing
+    after: sha256:2dee0bb16472f86dfd23761687c018ec0fbe85ebde035eac21d0519fdfb3664e
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md
+    before: missing
+    after: sha256:f05137b9959b98864c497dcd156d5dd3c837504b147ca0d9fbf5daf412fcd11d
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md
+    before: missing
+    after: sha256:bf32e519471e0dd20791a01f27a385c394d59ac92573a7ed8be68372c1cce870
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md
+    before: missing
+    after: sha256:916de5eff6e2bb3e7f374cb1eafbfd25af264ae5b6679d9b8119375d3098a8ce
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md
+    before: missing
+    after: sha256:be3d16698cc1cc734ef0b7024680c276bd66db0355124bc4db125ea9d3b6f166
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md
+    before: missing
+    after: sha256:931a0bc991824a25db63704ffb7393d1443a65f2d36fd25c2373c7ebac5852db
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md
+    before: missing
+    after: sha256:a4cc9af1c9e79fba20b62360713e458f6635aeec4c86012abd518a29a19257c9
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md
+    before: missing
+    after: sha256:1f8478129f0581b27af20447d65e10f13c731752e0d664c3114124e34dac6bb1
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md
+    before: missing
+    after: sha256:048791ebd710fffaab727e78993f84b3a0908f26a6d5c71682998ff5c4d295eb
+  - action: create
+    path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md
+    before: missing
+    after: sha256:1db6ba0741733e5ce534850ad4c3c65ceb75c3c8221bd14dde9147f27e355e97
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c01.miniprogram-runtime.md
+    before: sha256:cc8d592880729d1e6d37761aaba41e4c09d1f5df70cb12d87d934226b14b3684
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c02.uniapp-vue-pages.md
+    before: sha256:7b3aef5dcaaa14ce240eee8ae32a2cc31b8d01d85d4c1f559aa09f889cae7eaa
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c03.network-auth-storage.md
+    before: sha256:e0e7f6e97044735cd602e7119ddb0402124f04630fe9b235fd9f9325cd94d2d8
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c04.platform-api-conditional.md
+    before: sha256:83eb65f8c27eb7ebffca28ca1edb4b9043028fb7581bb09e5ecce56f24e2e3d0
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c05.upload-scan-location.md
+    before: sha256:dbc3e050aa86fdcc4ac865a65c0607b8cab975e789f264908cad13cf50d17b77
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c06.packages-performance-offline.md
+    before: sha256:2c39398cc23b7745f0e6acd7d626d5adc762472a0c29d0f0a3b3172f797fb490
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c07.testing-device-debug.md
+    before: sha256:1145bf3a6de259dbb02caf7db67ca1d3f65dff0d2e6a093c917cfc84b3e12102
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c08.privacy-security-review.md
+    before: sha256:7acf361ffef497c136cbe37f839c967f118537a5ebba54f890a225ce39494b39
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c09.publish-monitoring.md
+    before: sha256:a5769a59c17c54b9bd7ef677f68e363a54e1c4666b8aebd7c81d48987d6b6374
+    after: deleted
+  - action: delete
+    path: book/volume-10-uniapp-miniprogram/chapters/v10.c10.factorycare-reporter.md
+    before: sha256:f6492830774d0e411029e03322bca3c655bb495f3e54b965e8ad48c984706f53
+    after: deleted
+  - action: update
+    path: book/volume-11-dart-flutter/README.md
+    before: sha256:9e232b9f17d2bacde786c330a5c5deee78cbb3d5a847d101a4b098d6a916e769
+    after: sha256:599315571a0921d3e11e99a8eb426797aeb987f0ba6ab711a0cac892567d3765
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.collections-patterns.md
+    before: missing
+    after: sha256:37f876adf195d0e8bc906e8193c9dde6e4627ee1e4199fa4b3dd6c126161e37d
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.control-functions.md
+    before: missing
+    after: sha256:ec82f28333660dc2eba5002f80ad7e2106df6a2a7b872cfd768731db038bb9bc
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.exceptions-resources.md
+    before: missing
+    after: sha256:5591aecc83ccff475b3a3356c0d53edf2c5956022be7cbe91f25f5a8aa4387a1
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.future-cancellation.md
+    before: missing
+    after: sha256:764f42eda3a67bffd6dead63d786226b2da7601625ce9963b69a29b8b4d5ffdf
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.oop-generics.md
+    before: missing
+    after: sha256:98869784affb82d07a31ae51498a5947e866a585af6b6ea91c354b73a77b19a3
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.streams-isolates.md
+    before: missing
+    after: sha256:8e595aee8ae2d3108b6e35696ead265890d48383a696e78f943f4cdb8ef2cd1f
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.testing-lints.md
+    before: missing
+    after: sha256:7cd2f0828933c9a498e066288e35b848a74d08f967e9d730b126a935f04649aa
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.toolchain.md
+    before: missing
+    after: sha256:71110de9f81bd0f4ac175b0676f5abe3a106747133ff3596af1a360a51290443
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.dart.types-null-safety.md
+    before: missing
+    after: sha256:0f7d8afa34565373c844fd7344a6133fb2d1acd18537c8f1688294ca607ff549
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.architecture-state.md
+    before: missing
+    after: sha256:6f4b2bb48ae3c6135373bbf4202d3337288c4d00e00e231257e87eaed900c58a
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.device-apis.md
+    before: missing
+    after: sha256:a59d5df19c3f720cb31e439037b5285566b623400a914d9a1bb45e5279d6456e
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.layout-accessibility.md
+    before: missing
+    after: sha256:41a24e082dbe6dc3976157395d84e7056e0caf0d708506af6910fdc9ab70b19c
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.navigation-forms.md
+    before: missing
+    after: sha256:732c5d80da9fb01dc89d088311cd41e1ed547015d2b4d30171c348042a0535c1
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.network-storage-offline.md
+    before: missing
+    after: sha256:20700d3f75a51db13f45d4c76966d876f16f9ba069f8b76a2eb4bb47c6703424
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.release-monitoring.md
+    before: missing
+    after: sha256:4b5209d999a4d169e441dc077e6af096de63836c25f84904bcc20b11e98800f9
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.state-lifecycle.md
+    before: missing
+    after: sha256:517d8040ffb60018ed4fe265136e52d412ada797dde254fa3d0f1106057c08d4
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.testing-performance.md
+    before: missing
+    after: sha256:b31827c5261fa5b0d2b2bd579d3e05d8f428f3ccf1561340455dfa2ca106d1f8
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.toolchain-project.md
+    before: missing
+    after: sha256:5a7826be82df724ac187d6b46e1551aa74cf714bc5e559e3aebe3453ee4af32f
+  - action: create
+    path: book/volume-11-dart-flutter/chapters/ch.flutter.widget-tree.md
+    before: missing
+    after: sha256:eb01a9f2adbb40c848cb9695a1859acb1b15a2583d78f1347d4f90973b79dd66
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c01.dart-cli-types.md
+    before: sha256:f10ab332db3ecc3b21f504398af5e74c204068fc4d40fc0fc6309c8c7d289c34
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c02.dart-control-functions.md
+    before: sha256:b86a97d38f69258d129c3082a36b00125dcaf4b6b2adda2b5ac7e41a9c3b9f7e
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c03.dart-collections-patterns.md
+    before: sha256:6d9d1ef1186ce2b34900573c85b7321add503c4fa326911ec7040912ca02c7fb
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c04.dart-oop-generics.md
+    before: sha256:b487b8200e46b104345271acba66c09c51f4ad08b2c85a53afe2a1ea105bf618
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c05.dart-async-errors.md
+    before: sha256:f1672c481a2d5c184b1ed86c1e9cfb5cbbf039ce1e7c10a1cd26f1c5133419d3
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c06.flutter-runtime.md
+    before: sha256:02643dd87949bf97a4a176d8a2f39e225720175626c42c123972e5e8c1fbeb4e
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c07.layout-render-accessibility.md
+    before: sha256:febff15267c4a3aa2588dd1d70dda5c289c7d313d6d2835c26068d99a4808ff1
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c08.state-lifecycle-mounted.md
+    before: sha256:03452d40de7d095127481f4bc9f31bba63c28424c14ddba44d3d1372fd6e1894
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c09.navigation-network-device.md
+    before: sha256:a73428f703e7070f7aba753de0019e7f4a59b79ebced9faf7115691364479ef1
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c10.architecture-testing-release.md
+    before: sha256:23b74e5b8953be7e8a9e472decdb16921637b0b6fe95a41fc05944d486af8fd5
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c11.flutter-network-storage.md
+    before: sha256:416e1861cedc7a812c04445b6c519490336c170432a75a23860dab18b09f68d2
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c12.flutter-device-apis.md
+    before: sha256:dfe9511d31ceb8e7996807b8524b7dd173e6f948845ad29eafb892b4164e3abe
+    after: deleted
+  - action: delete
+    path: book/volume-11-dart-flutter/chapters/v11.c13.flutter-testing-performance-release.md
+    before: sha256:d2002fbee994c9d5cdfd7011212e5e4a6b12ee34cae0e31283fba519c9dd8fca
+    after: deleted
+  - action: update
+    path: book/volume-12-python-data/README.md
+    before: sha256:20b4d8956de734b8c9eb999eec86788601512483d9e132c6c2b0f45951b67916
+    after: sha256:a4ad3f284c33e3eb1d500b79f9bd7a1b7d0f7a3625886bc94626cde3289d34f1
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.data.numpy.md
+    before: missing
+    after: sha256:c10aba6daeffe9fb34e85c7bb740683eddba5633911be3f2e34638e116357a1b
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.data.pandas.md
+    before: missing
+    after: sha256:4ec516a4d729488220c9ae00a5a951898d56c732f17fd864478639f370cf08ea
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.fastapi.security-testing-openapi.md
+    before: missing
+    after: sha256:ce637943619bad8c1a7f8a5b733ccb897817cd24c6a4148141958f5e7f6eaf53
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.fastapi.web-foundations.md
+    before: missing
+    after: sha256:c4a34ac8187cefcc66c14fd691aad7ada1c35975ee95750d9d92bf3ef716c12f
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.asyncio-cancellation.md
+    before: missing
+    after: sha256:af51dbd222cb7109e89578ac0835877d2d3095a04afb5c42562a3578be5461e5
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.classes-dataclass.md
+    before: missing
+    after: sha256:38121a9c54da796c2600fbeebf4f5b70bdf5e8dd6d9ac88c3ba8d16ca4b1e35e
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.collections.md
+    before: missing
+    after: sha256:2a036b037edd916a9d94e281d0ab8bb8bb52e7c58ce8aa49c6f1334a90ad51a8
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.control-flow.md
+    before: missing
+    after: sha256:8977b7e7bf87e0dd9c9517da36afe529320d41bb3ba91d7d2f548a40d3fe8dd7
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.exceptions-context.md
+    before: missing
+    after: sha256:5a666a15b402bada9ba7e64115ae98b86bd020cd04061140969c1b2e468022c6
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.files-json-time.md
+    before: missing
+    after: sha256:2d723514350996b7e9191a22a10332115fcf63d362da68bb8ab8e9d49d3618ae
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.functions-scope.md
+    before: missing
+    after: sha256:21bd6438b1c7227a86e5bba46c4979dc96fa92ed7d3cae5ec6df7d8884d4d14d
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.iterators-decorators.md
+    before: missing
+    after: sha256:1cb48db57b729c51539fb324ea8fb53dbb79a0cc994327a386cb5ddf35d019d1
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.modules-packages.md
+    before: missing
+    after: sha256:93002fd6bf200261c39144cc428aa8cab6763a701df077992dd8f17b9c119c1c
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.protocol-generics.md
+    before: missing
+    after: sha256:f43b90c57363e3874d19657d7ee5fb68cccc30587af7ace052832845d599f983
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.pydantic-validation.md
+    before: missing
+    after: sha256:8aa3442108e3397564eb5546032e7f3a675c2f62c2276e6f03afe4cf1559d861
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.runtime-uv.md
+    before: missing
+    after: sha256:02ad1908d0a091f4d45ba4fbc96a62c7f7245d4cc6af761661248db108b1cd2d
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.syntax-values-io.md
+    before: missing
+    after: sha256:252b189afd51f8a98df051cd56799481f9f0dc47512056588b3b0bfd2ec16b7b
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.testing-logging-debug.md
+    before: missing
+    after: sha256:8c31952e681801d362d8057a1e88d30845350bb2ffe25e99665a3b3cd99f7c4c
+  - action: create
+    path: book/volume-12-python-data/chapters/ch.python.typing-foundations.md
+    before: missing
+    after: sha256:5fd81587a9b58ae5498b3d702371dd303ffd98d5dcc82e4d787150f769c6babd
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c01.runtime-uv-env.md
+    before: sha256:0ce48d1e44872a10b8c1b961bc48d6e907d0d4953171840ab200ff13b6580af6
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c02.types-io-control.md
+    before: sha256:f2b4429a0a6f9d621bf151601c185877e4e643992a02f916775e4a7a2535408e
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c03.functions-collections.md
+    before: sha256:7ae23788695a38170b455cfae92d5254c5a5a8ba48c79e1d43852adc931bb0e8
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c04.modules-files-json.md
+    before: sha256:c601ef5a3a6e5df709177429e1e9084f515d566f0e1fc7e9a9fad591ba5799d1
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c05.classes-dataclass-protocol.md
+    before: sha256:b4a38c96415e62a990c75db02d6926f33d00b10134401c2880d868307858b926
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c06.exceptions-iterators-decorators.md
+    before: sha256:2df0df44f87fbcbe146548219e6bca30170cfb9c9c8b683e13804a435580aeec
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c07.typing-testing-logging.md
+    before: sha256:d03d0befc6d411cd0fddca8318c6bb6c89ea9b6bde6f7be4fa8afe80a55ac3b1
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c08.async-cancellation.md
+    before: sha256:933b8e0e68eca486284d12e5e05735d935b3f191b46fea29bb22f2039f73890d
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c09.fastapi-pydantic.md
+    before: sha256:3a22d54e6849abeb3cea338f91620bfbfeabde10a7af19763bc649838bbc9a45
+    after: deleted
+  - action: delete
+    path: book/volume-12-python-data/chapters/v12.c10.numpy-pandas.md
+    before: sha256:08fee7ec17e34a9f67fdce6d91530373b3c0fb8738da12aa03bfe5e582397be8
+    after: deleted
+  - action: update
+    path: book/volume-13-ml-pytorch/README.md
+    before: sha256:3aaa3498a30a1b225d817e6f70977a81022a67f30fc519b9546af7d795a58325
+    after: sha256:7ee059996ac3a00c69f864989da505f86c5b93dfa7e6b8a64bf1de45ec7050ca
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md
+    before: missing
+    after: sha256:1c207e304c1c399efa8111b0eb4cf1dce31598819a1d63409b694a57683fe572
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md
+    before: missing
+    after: sha256:f7f6b35b181320fb1c717f6aa0e98198187d22bb06578fa27bc0a9c8bffaff1a
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.math.gradients.md
+    before: missing
+    after: sha256:2c79b9b99ef992a01620e72debda872751d2221de0c546a28684d4b4c3b03d1c
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.math.linear-algebra.md
+    before: missing
+    after: sha256:0552e8c48eef243ebae8779a79def6634db79ea8805519da76465a4b967377a7
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md
+    before: missing
+    after: sha256:1d17154d9ce0773db4dc971f9c0828c37cc0c898c1c5764891483e4dece30b8b
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md
+    before: missing
+    after: sha256:bc29bf89b466170f05f36dc5cb5e34132c42c953b9b483f097a0718820190a00
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.metrics-validation.md
+    before: missing
+    after: sha256:103e0c07b68a66f4320e6e08d62f7ae58f73fc71db326bd430f0d87daca3c40b
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md
+    before: missing
+    after: sha256:0a10d78e8e5be4415b7e566f62cac1ef99891bb3cac7f57051d3f79163a76629
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.neural-networks.md
+    before: missing
+    after: sha256:afdf9e8261556316cff08d01ea746af9b185821e73bbb6a8d14fbb46f5832a0f
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.preprocessing-features.md
+    before: missing
+    after: sha256:19f36e6c3f8b2b4495cc44eaf2d73a7f839687b408f98a3f08aafffcc3ab84ea
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.problem-data-split.md
+    before: missing
+    after: sha256:112d9d133f9593ffbbcab0a6ed403e0890387d0ef54052b1ed5c533423f54f12
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.supervised-learning.md
+    before: missing
+    after: sha256:1f90bdddaa022d1aab4d1cc736c9682f50cf2e5b219aa40f7ea9948043c5d95b
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.ml.unsupervised-learning.md
+    before: missing
+    after: sha256:1c541567db1c54178696370e407d35463d1d3e65ea82b516528e4e20b3d1be07
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.pytorch.foundations.md
+    before: missing
+    after: sha256:166daa2d8a2353b700f373016a81fea2fe29bb9033be5ad6bd4552474dc4cf7c
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.pytorch.inference.md
+    before: missing
+    after: sha256:57a563744f2433b5b3302aeb0d7ee40ac436139e25f033b59a705fb38daa372f
+  - action: create
+    path: book/volume-13-ml-pytorch/chapters/ch.pytorch.training.md
+    before: missing
+    after: sha256:16d79da4610644a92f7a1e9a1e9b9b4cef0642de134351a07b91116b493dc08c
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c01.vectors-matrices-tensors.md
+    before: sha256:060d9e69051161b761a88cdacdd201b042e9ef3cee8cd98a372a906c9a0abee9
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c02.probability-statistics.md
+    before: sha256:0fd2a2cdf4159bd85b45f104f5d76c891feab08623baebcf02ecf867211d7dbf
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c03.derivatives-gradients.md
+    before: sha256:e9b8d7043338622bc37bd1c6aa1ea01264c80999ba72b2025af6840afaccd9c7
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c04.problem-data-split.md
+    before: sha256:76f925ed4c4476bb83d699dd7520cf8bea87d081696c6b9e4219c5b2bcbb801b
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c05.classical-ml.md
+    before: sha256:3bea61b669cfd94aff2d8713adf4cb34b1e0143aefa766e3941aba1122bd578b
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c06.metrics-validation.md
+    before: sha256:06402be3f9050d54dd584fc1cb6bbea9fae3a323a09ceada49473e94590e1b9a
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c07.neural-networks.md
+    before: sha256:0c697a0f937dbc4db1c885f24be0d9ba198e8f8ff19b706af4c2d5dde8884f75
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c08.pytorch-foundations.md
+    before: sha256:b31e6459461521140a47998aedc59994a9496830a9d4cad56163facf35e57dce
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c09.training-evaluation.md
+    before: sha256:cfe1a0b5b12f04e16e3fbb755c649ca2099ded5d8ca5aecaa8d61fbc8f316942
+    after: deleted
+  - action: delete
+    path: book/volume-13-ml-pytorch/chapters/v13.c10.inference-monitoring-ethics.md
+    before: sha256:020bb2ffcf84b9dd2fb5ff31f4c48080721f52c56e937893da9f45b29bf53fc5
+    after: deleted
+  - action: update
+    path: book/volume-14-llm-rag-agents/README.md
+    before: sha256:1514754eda44c0e05243cbb404ff61a80cd4fd414bb8b2c95e567b69559886d1
+    after: sha256:7e2391a531d4b11a97196d96bf73ac82e3a849448e586e1131845a0a6b6687f9
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.agent.langchain.md
+    before: missing
+    after: sha256:c07ffe2e2875444d0067a9d51019e2900beb05a0f3e9bec9c15c29c2cc453ca5
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.agent.langgraph.md
+    before: missing
+    after: sha256:eec10bde5fde04f40f13da2042b8a588136ef0c6ae6ea3b51515863e30d04cb3
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md
+    before: missing
+    after: sha256:0c657e92f7bfa0d924da38d2fb72fafe94c60825a9839ff913018abed5fd74b7
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.ir.dense-pgvector.md
+    before: missing
+    after: sha256:8d41879871d62655b0b1f0c9a2b19a2efb3d646af83f1da479e47d8045ef65a6
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.ir.evaluation.md
+    before: missing
+    after: sha256:da9084740334a6589c3cb1829823c079cee34f8d1be6129d60d06e8e3b6a9374
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.ir.hybrid-rerank.md
+    before: missing
+    after: sha256:d6107b6e81c1fd1f661aed7b39c0020cad8995a1b86b2ab38a1872fecde60d2e
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.ir.lexical-retrieval.md
+    before: missing
+    after: sha256:28ea6c471bbd44e8379330de729a603fd8e798ea299c43a76d6a75d2f1f85ba5
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md
+    before: missing
+    after: sha256:73948847c2e94702478e863c98c06504f80bd72f210bc2a30739fabe17e76227
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.llm.model-foundations.md
+    before: missing
+    after: sha256:37cf006da7b8a81eac89605af3b0507cdea09f93d2e588cee8d8ab4e2e4489fa
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md
+    before: missing
+    after: sha256:8fea592e85f7ed6b34ff1ae88883b58c4476e7a371f8546132d2b63c1d7e61e3
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.llm.structured-output.md
+    before: missing
+    after: sha256:03b36131c9aec988b57f26c7bd5f354d4b2d9826b80f795c3bac5e10fb6689af
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.llm.tool-calling.md
+    before: missing
+    after: sha256:26d11530fd2e1fe12e3d892abf1e3cb9db507ce856f31a290747db07ea6f2922
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.rag.chunking-embeddings.md
+    before: missing
+    after: sha256:caa793c09ddf0eba64081b07021022522cf47b36f0a64f273a60d70adc04fcb3
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.rag.citations-evaluation.md
+    before: missing
+    after: sha256:24fc47aed3e42c936d51f29a03ab7f660c24edf13b45f5a120847fc55dfa367c
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.rag.ingestion-metadata.md
+    before: missing
+    after: sha256:817dfbd66b035396b4acd6fc0f2506c1536805c8121d0ed9854314234337a6bf
+  - action: create
+    path: book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md
+    before: missing
+    after: sha256:1693722f9d7b011510e4932b65e204f4a6ede55b8836da39fcbd0e64ee7421a5
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c01.llm-model.md
+    before: sha256:13ea896c0d1166d1725582e19c414c0818a65f31c050a5884a0112a75a67ce69
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c02.model-api-prompts.md
+    before: sha256:5bc24c19ac1ed9ff1f5601b808325eccc5d367da706e242e73b820654b8bd9f1
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c03.structured-stream-retry.md
+    before: sha256:8ad3f19ccd4de26f16964fef2b2d2fc054ff14c28a0fe30dcda121e628031fcf
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c04.tool-calling-boundaries.md
+    before: sha256:d612b001a4c5f3f710a76c1babd4082a792ebe780760eec30a42bbc29e8e0200
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c05.ingestion-chunking.md
+    before: sha256:32bb4d28b08c9691b45ab90f5f03de122740f1b71340c7a50f94390ceee00b4f
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c06.retrieval-rerank.md
+    before: sha256:689099a706b9904a93b4bd3058634a7a2ed1315c79d697fc6f27a23b44588f17
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c07.rag-citations-evaluation.md
+    before: sha256:feb311eb714f9c51c57340c5da8889efc8b7c8c4b40102bf657cff84af649e7c
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c08.rag-security-observability.md
+    before: sha256:222cc54ffe2eb539e5fa9bf111372a2e36d96306ff5c66403baf6dd6d4c0cac0
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c09.langchain-langgraph.md
+    before: sha256:e8904ccd6ed77e4d7a6fa163a153ad81cb12e5b1ad744f0082e97c205130ade6
+    after: deleted
+  - action: delete
+    path: book/volume-14-llm-rag-agents/chapters/v14.c10.mcp-agent-boundary.md
+    before: sha256:cbb69c9c0911c1cbbd8a90759595a96036ccb76e16c3e9ff85a4a1f6490b1841
+    after: deleted
+  - action: update
+    path: book/volume-15-production-factorycare/README.md
+    before: sha256:1f716ee8aa61e0d8f2201a9095e4ee8fc1e47680a4ef7fd543ba6f676e8e7f78
+    after: sha256:c8fc383f1f5c68201d70423bfc38f2cbba162d774aa094c90333985913318251
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md
+    before: missing
+    after: sha256:f5bf2b0a2a6f55d99b5cc710a574a470e1343e3d9227054fdb4b3bf0b50c20b0
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.backup-recovery.md
+    before: missing
+    after: sha256:8c5adaf75abbbe27865c02093820c8c6a51422bd1e884cbf520fe327e0460230
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.capacity-performance.md
+    before: missing
+    after: sha256:19fa0fc1d2d2876a5ec9eba7c236400253fb63fb01bed272b9f73cabea673037
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.compose-services.md
+    before: missing
+    after: sha256:0b1c4b86dd3582cb4733bb207e305740992459adc25c2242b54d737959b8428b
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.config-secrets-supply-chain.md
+    before: missing
+    after: sha256:489ce7b08df976529c3e1d9cbd3613971e32edc8d393f6ac762c3a8e5e7c7b1e
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.docker-production.md
+    before: missing
+    after: sha256:816e828da196c62f9ace5e4fe900798a69da7a1b01da60e27c0971d61a9e7e32
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.incident-dr.md
+    before: missing
+    after: sha256:faa03b7b0e31986e5acbb88fbeff0b1fe946eccef956ea3b4e3baba4c22d301d
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.linux-services.md
+    before: missing
+    after: sha256:54cd61fa973a766092aa8f999fb3b69f7e4f854d24121d8e764cc3b6da8585bf
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.logs-health.md
+    before: missing
+    after: sha256:f68c5c0c492549ea057591c8d118f9e676ac8e9fceb40f76ddc321557f258d45
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.metrics-traces-slo.md
+    before: missing
+    after: sha256:b1a28f5f7b567e42eae526f005d7a189a674681af0d494397adca92843c66cc4
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.network-diagnostics.md
+    before: missing
+    after: sha256:544f7d1ad1fb949088a7fa21e406b9dade8281b12b05e30c444dfaab50c89553
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.ops.nginx-tls.md
+    before: missing
+    after: sha256:9f8eb89dfd0ecf3b51d312917e89185aaffb4ca336add56e57de12ea3886464a
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.portfolio.interview.md
+    before: missing
+    after: sha256:3aba5e1327ccffa0cc688e44e44ccb5a3fd6bfbf6226919e37d4669a29efca00
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.release.artifacts-promotion.md
+    before: missing
+    after: sha256:30375a1b1746734fbdcc395c083a45e6c834d39ea7cd2ef713fe2da700c82d01
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md
+    before: missing
+    after: sha256:e2814281016aa5774205f4541301b1731bf2b41f33c2e556b2c0216c74a3195e
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md
+    before: missing
+    after: sha256:65f260b41df60845f2525fc71885b515ddda2d333ed797da9a84aec6f214b635
+  - action: create
+    path: book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md
+    before: missing
+    after: sha256:940d669b005e3f5d8bd467a02274086c0564441cea14e41519fe78d3e6861ccd
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c01.linux-operations.md
+    before: sha256:6454affc91a4ff5457bcfffd1e86ef22ebebbb14d6aad5729e67a1f04dfb42a1
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c02.network-diagnostics.md
+    before: sha256:83413e2d794c1c02958881d62ba3f94529aed9338d00383f3f12d7e7ae482ecb
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c03.docker-compose.md
+    before: sha256:cdde878128907a3449335e4422b20b4c597d694e1c3347a60c3fefbe525a582b
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c04.nginx-tls-proxy.md
+    before: sha256:3de9e7da71588b00f2e95b884ae3116ab68cf0b77681a1f16070cf4d56f1f04f
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c05.ci-quality-artifacts.md
+    before: sha256:2fafc6798ba8971f862fb58855d6b6289c8ca387fed6c0c6988f3688dc59e273
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c06.config-secrets-supply-chain.md
+    before: sha256:74f96ac2965ea038f893826fbe718a0919b791d3317fefff2cbc9dc7b80384db
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c07.logs-metrics-traces.md
+    before: sha256:d3ddba894cc55441f0c7ee9f6781568580f6e03c51eff64eab1ceaa51547a444
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c08.backup-capacity-performance.md
+    before: sha256:0514a35ce5861950e11b98e0ab18eb70961417304d8f625c1a6a8d0795cc6294
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c09.deployment-rollback-incident.md
+    before: sha256:5888d75d6d47c140bcfd1fce47d4574d8cd1cb8e69109535f9edb1a5ad0c9e1b
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c10.system-design-portfolio.md
+    before: sha256:ebd1f43fdbda6c40a0882077f2b043dc99a560a70e11ead543587fce796e2cd2
+    after: deleted
+  - action: delete
+    path: book/volume-15-production-factorycare/chapters/v15.c11.portfolio-interview.md
+    before: sha256:9d9e132e182a136b264c7d7725c04d16e59806a4f3248d225556b75cee7a3a3a
+    after: deleted
+  - action: update
+    path: curriculum/README.md
+    before: sha256:55af85bdeef79e9ffacb20ff04859f52ee549e37ea81bacd90fabecb0d5d5b16
+    after: sha256:0d7e47a0de6e2689aa626c6b97eb788a70b11cd93cb90d201f4cb9dc83c30cb5
+  - action: update
+    path: curriculum/catalog.yml
+    before: sha256:9156f26e1ac25309a975ad843c7523656cb44a6f7bb1fbdc440d7cbf44b98f40
+    after: sha256:1f2cd0289aba7cc82be62934b0cb7d58857e85ca11b785e2873061190bd69136
+  - action: update
+    path: curriculum/concept-graph.md
+    before: sha256:43bbfe13b291d826fb942ae9e4faa00d9d12b3a0ecac92128e1f115d706e55f2
+    after: sha256:9fa4fb830d58a2ae7a7d1007631948ab0a085e57db1546cbe2c093f42a6789d4
+  - action: update
+    path: curriculum/gates.yml
+    before: sha256:701c5d4452cca9bfed630176a95ed4c91b13501583f1427d16a87ebccbca8a7b
+    after: sha256:a2403add82ed8d11b95b2fec4c0900cc03eb490a2ecd0c469d4ef132479cf6e1
+  - action: update
+    path: curriculum/routes/accelerated-48.yml
+    before: sha256:687c3dd4d22fc89912bde4104db185ae62f4f7d921f96e19e399958ebd193b2f
+    after: sha256:20d380410b3217491cf7f5f0284b439fc56f91c5f988c9590332e73db48c4d54
+  - action: update
+    path: curriculum/routes/factorycare-project.yml
+    before: sha256:31e1875dde84798340817628a81ffcae895a525df7232acde125965c3e2fbb35
+    after: sha256:b4cf5958cce2951c0ed977a0646e3ffc4612d088b4ac27c570c1d075db443296
+  - action: update
+    path: curriculum/routes/reference.yml
+    before: sha256:99191e0d94139507d18ced3851f6a122d5764d64b1d329660c119a529b3277e5
+    after: sha256:0562b7b99f94b59efda5c00286cfd976490be30d579c585fb3bb9b502b008485
+  - action: update
+    path: curriculum/routes/zero-base.yml
+    before: sha256:d1209cc465148f36d22e72205bda42a7b450bf5d9b60c5e06a032ed77fde8bf2
+    after: sha256:7aa4f96f13543d1a6f623b0e92372afe4ffb2a99f4cad7d8a276e9731b10f6ed
+write:
+  exit_code: 0
+  output_manifest_digest: sha256:9bdc91ec4c7e74504097efb25d408cb464b27f81842dc87bafd070ba46694757
+  output_manifest:
+  - path: book/volume-00-computer-foundations/README.md
+    sha256: 19e6884014b6526a89affecf5369d7b9fc3884fdb69c84fef69133aca3e9fce9
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.ai-assisted-verification.md
+    sha256: 4a4e95d9d995988a808c292b9997d928908b1d11e62cb242e44a8412276ecf9c
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md
+    sha256: '092b131121d5cd8b14f7b5a6ae2c5bce6890c3707574976acdb41fd3943c1a53'
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md
+    sha256: 428c2ec570a355edddf53a90a8a05121d85adfe49290a3473fe915320fc6edfd
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.computer-process-model.md
+    sha256: abbdffee275523a3816179982032c1f1f0b0409c0f9eed8f19f15b03e4882da7
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md
+    sha256: 839d90208a68edc4634fd814e94be6ae525ad54f9ddbcff97028f278dbcfd111
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md
+    sha256: ab5737f5774debb76f06fc0f19d99116d7b001edee9d095d2e07b6f9d480fb72
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md
+    sha256: f5c846a4acc009260994e78e3c175d65aae87f7401fe3b9e42bbeb9aedf28903
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md
+    sha256: 2bc4e64b4e77be769b338db8e23a812e5b39301b994be37497caa7f99d7b6012
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.files-paths-encoding.md
+    sha256: 1ad3b3a428da581bf327b53f1de805102521398907d36264ead617ed227019e6
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md
+    sha256: 88316e36de4451c19b32589dcd545c685f645669a99406134ad7a0ba5a9b0eb6
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.http-curl.md
+    sha256: ccb50d3da4f156984444f04ac38a3a48650e591424e7739de471e5859b57a6e8
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.learning-evidence.md
+    sha256: 99a02893518bbaf0e708501436f086d839e77bff62f2cede271b6fdfbfd8c089
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.network-layers.md
+    sha256: 1e6fde8d8df7508814be795a143bd7717dcadc180f74ed20c9caabd49a9ddd4b
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.terminal-shell.md
+    sha256: 76a5ea6b539b637c043cc349dddc7fa9a3a2974b9d1e58987de9c99ecfd81786
+  - path: book/volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md
+    sha256: e457fe4a4353f6181346be74e07e39470e16f58b894ee1f0a366cdfe96d20fa1
+  - path: book/volume-01-java-language/README.md
+    sha256: 06b539fbdf08e2e13fe005be303a1e6e8c2e9883622bfec4b9451d2679557610
+  - path: book/volume-01-java-language/chapters/ch.java.arrays-command-args.md
+    sha256: 8f51057a70888ea4f50009f586524bac6d44306021b566dfd3201c827540ea92
+  - path: book/volume-01-java-language/chapters/ch.java.branching.md
+    sha256: 0a79abc07c8beea95cb97bdcb0bc61a71fb9038d15048c0ff4324d59158ccd09
+  - path: book/volume-01-java-language/chapters/ch.java.console-input-validation.md
+    sha256: 562e93b9760d18445ef92af7f2e7ff6dd1e00a48bcd79233a822eee67a010a7e
+  - path: book/volume-01-java-language/chapters/ch.java.debugging-failures.md
+    sha256: 1759d494f06a83ca3f8650b92e21ab76aee331fcc47463c6e7d01825f6246992
+  - path: book/volume-01-java-language/chapters/ch.java.expressions-conversions.md
+    sha256: fbcfd7431117ece268a3f79565cb2c86e15005cae6da2d875185648219259b6b
+  - path: book/volume-01-java-language/chapters/ch.java.loops.md
+    sha256: 436aa8dd45e2704d6a123f0c12aebab91281cc26440d26bbc34c4ac52cf5f61e
+  - path: book/volume-01-java-language/chapters/ch.java.maven-junit-smoke.md
+    sha256: 7a9a3288e032ca0c8b1d58c64e16c43ee831a940489aad569f2ac367dac1871d
+  - path: book/volume-01-java-language/chapters/ch.java.methods.md
+    sha256: 2552c9ab2440c4fe7845c21083d48bbdf0d7cbc219f368dedda3261870ff29d4
+  - path: book/volume-01-java-language/chapters/ch.java.platform-toolchain.md
+    sha256: 3c0d85a478155f5f0374235f9508c8f220a3b4d0a253e041c32ff684de825c11
+  - path: book/volume-01-java-language/chapters/ch.java.program-structure.md
+    sha256: b19e49e553bae90836cc6e046681c993b31305fd2078ff00cbc4170451bd3661
+  - path: book/volume-01-java-language/chapters/ch.java.values-variables-types.md
+    sha256: 8eedffa9385a943d8c9d00ca8f79ab8cf7e256eb5d08974c1c36f0a436350591
+  - path: book/volume-02-java-objects/README.md
+    sha256: df7c350a0b930bc6a3a3125630c9670dc2f1c89190b426105997d6000b604f74
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.business-value-types.md
+    sha256: 967b2e7807f5373589de723c9702ae3611f906ddc3a312070659d9437f131412
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.classes-objects.md
+    sha256: 56483b957529ced596a1ff8451d1433ba920e8be6e83f6c9ec59383372079722
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.constructors-invariants.md
+    sha256: c658203ff2d025de1f6f04c085b1c958ddee93d636226b5eeae1ebc002a02fd2
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.encapsulation-packages.md
+    sha256: b6daa3a4b9aaf0a388e47b2de31c37069dcf431c9a2734922cc25a5fe8e2e756
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.enum-record-sealed.md
+    sha256: 5890eba1c79601d9fc7a271b8e4fdbd7352bc482083ce473904a601d85727c57
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md
+    sha256: 3119cbdca41ef48d2fe5c4809cdbc95ebe8c460f5d936cfb805fff31fcc12671
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.final-immutability.md
+    sha256: 0557a519236db7038e4362704556e5631175fafea374771268bf8f35c58ec55e
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.inheritance-composition.md
+    sha256: 3c6c86ecd4763d40b0e563cf2678a7cc858e975d87204e1a2071549f42d567ce
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md
+    sha256: aaeb355d8a436e136b79b6afcaf1590003ada4d1f6efac4dae1d3157b51893a9
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.object-contracts.md
+    sha256: 94a0f8a2c1959a1f7a5117e266adce3442cd872242c51faab627add09c433333
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md
+    sha256: 10111810e3565a1a013299246b80874f8bf87895a8e18e643488baa63a77d678
+  - path: book/volume-02-java-objects/chapters/ch.java-oop.static-class-state.md
+    sha256: a329773560ccdf8faa56151b7440bb11e6c88f2258d484d78b6847740dce79c9
+  - path: book/volume-03-java-engineering/README.md
+    sha256: d883066489170a4e9d97bfa5af6459d4036afb3041156bc567217360e0ee82c3
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.annotations-metadata.md
+    sha256: 635b4ea41c314d262a5e21edf13f302fa62ea50bffbd8a6887308ea7cb479d6d
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.associative-collections.md
+    sha256: 97c3b0762fa8c0c6960fe04e1ff2e0613240852f44eeacbe722f24e7aac6cd13
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.complexity-algorithms.md
+    sha256: '058a618466ee51c557753df1922e6aec6f849353d1bbc285d134db77a69827f6'
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.executors-virtual-threads.md
+    sha256: 191ba295a74c9cb7e2b7c9fa398b8809a483bfda0e85d98af960ee05883c49dd
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.functional-pipelines.md
+    sha256: 4f8aa28a0c11efb0a6fb8a759c17125a40cb5d9ee8e48d66fff5eef3df0cd944
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.generics-type-safety.md
+    sha256: 4781e36826b95a15749f0cbe350e5c25cb907bf399c630951150cdf218bbb4ab
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.io-resource-lifecycle.md
+    sha256: 593debe0a837f45f9e2c053363e5eabb2f39dbb1f50401c4808cdc7fd78770bf
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.json-mapping.md
+    sha256: baf388d81eee13fc597bc0da93e2c41fa62ee5aacfe4d085cf14276f3b724db1
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.lambdas-functional-interfaces.md
+    sha256: 6469c59cddc824e00d81d950e3bca022267205fa2f53ea92087e9809e7cebead
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md
+    sha256: abe9357dd867e2fce85408b0df5fb202ee2b20c472f781331ae96453415eea8a
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md
+    sha256: d9f2cca33a33f43c2909d70a98252756590faa096323034862d29e4b16f73082
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.network-programming.md
+    sha256: 6ca050d136a440da01c70ad5c3f8db17b71a5974a63d0bae94a13977f24ea287
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.nio-files-charsets.md
+    sha256: 97d5dd901aaf15e9f10dfb5251cf856330b2937d21e302f390dfd0671df89324
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.reflection-classloading-proxies.md
+    sha256: fb80475568145f75b0f8aa3a7b69d32ea4a23d97da91087cff03370689c5dbab
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.sequential-collections.md
+    sha256: 58acb8bee527c852e6c417464540772973486b0f1cb957b33c78cead917925ff
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.sorting-comparators.md
+    sha256: d4146de49b1f5ba0a50bc6a73002d3071a7f32427f3f5a0b4e0cfa4f2a3f606b
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.testing-test-doubles.md
+    sha256: c7eebe6bb37c608d3d0b8d28971c2e3322815bb1cabef3ef92a837ba14c639f4
+  - path: book/volume-03-java-engineering/chapters/ch.java-engineering.threads-jmm.md
+    sha256: b87ff0b26d67caca525675ab2f2e9c28b87743f7513d99bea8a230248a6f20ff
+  - path: book/volume-04-data-postgresql/README.md
+    sha256: 8853d87d56f029ac62c85d134cd1faf190ff3bf2d1b3ac1eef28b24ba0288879
+  - path: book/volume-04-data-postgresql/chapters/ch.data.aggregates.md
+    sha256: ed5d2fcad8a29faf7c57b7a97ca0d34d4e299f353a44f10436d2fd398a9d1ddc
+  - path: book/volume-04-data-postgresql/chapters/ch.data.ddl-constraints.md
+    sha256: bb2b45e456b29959dcdb68fce7eb75389d7720c435607d49362356b5f9ec09b0
+  - path: book/volume-04-data-postgresql/chapters/ch.data.dml.md
+    sha256: 014b570fb46fd2a36827b59abb02f24c5a7a1913b0d0fdf5732c67ee61f48eac
+  - path: book/volume-04-data-postgresql/chapters/ch.data.indexes-explain.md
+    sha256: 14f695c55e76c8c7f9b346f56c4265429a0aa3599cc8a17ebd03ccf42848ec25
+  - path: book/volume-04-data-postgresql/chapters/ch.data.jdbc.md
+    sha256: '086f732aefc0636a3286e1e54a6f827910822e5ab72647901945a5f1b1999ea8'
+  - path: book/volume-04-data-postgresql/chapters/ch.data.joins.md
+    sha256: aa51fff97e62b343148c0b7359500e0d824be5176aa5a03024d39f4328011465
+  - path: book/volume-04-data-postgresql/chapters/ch.data.mybatis-core.md
+    sha256: 53d0ea2c86fe7f93b464774317eb1cbfe07181432819387fa1493ae44002b48b
+  - path: book/volume-04-data-postgresql/chapters/ch.data.normalization-modeling.md
+    sha256: cb7996c62a669888154645f5d015aae42e97d7d2e52c6ce5a5867f657072ae23
+  - path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-psql.md
+    sha256: 75ae89fb0708b8a9a756776de8b664a46f3cbcc09e9990f71814b72da0d9a44d
+  - path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-types.md
+    sha256: 5363a083a85cb97e0f6b428587b41f78c45db12cfa668d6ce595734ce9ed2a0b
+  - path: book/volume-04-data-postgresql/chapters/ch.data.relational-model.md
+    sha256: 9783bb6696515c02ff6b7d5074a74918736218d3ba6589b711fa88a6d53f5afe
+  - path: book/volume-04-data-postgresql/chapters/ch.data.scalar-functions.md
+    sha256: bdd810bdc5a48a814c2134be9f988253c045d3168e141b9326018ddb975cb781
+  - path: book/volume-04-data-postgresql/chapters/ch.data.schema-migrations.md
+    sha256: 97c818e7ae19f03f60aadf77f1cd5c09d8769d836bd095d23151d5343358dbc0
+  - path: book/volume-04-data-postgresql/chapters/ch.data.select-rowsets.md
+    sha256: 667f5a8f3d636ae208fab5a08574e06892164716009bd902b1e9fe2db2e26ec3
+  - path: book/volume-04-data-postgresql/chapters/ch.data.subqueries-cte.md
+    sha256: 9dc5d286fdaf1663d018dfe21032a90980435fee9b9063999c7af8877fa2ebb7
+  - path: book/volume-04-data-postgresql/chapters/ch.data.transactions-locking.md
+    sha256: 6a923a9870b64c1b34e86d75669d447f3f247b41e928df6bb890ce781ad1e610
+  - path: book/volume-04-data-postgresql/chapters/ch.data.window-functions.md
+    sha256: e00b781f684c4e11464ae641c14daac77c132bf1fd9c90c09d257b33870e32b6
+  - path: book/volume-05-spring-backend/README.md
+    sha256: 37e88743c669e4caf4bcb62aa92d560623846f39a21fadaa8a12739793d0b9a8
+  - path: book/volume-05-spring-backend/chapters/ch.architecture.domain-modeling.md
+    sha256: 14a7d0d17c0c1bbfadfb11ca9ee905ba5b0850cb0dc15ca2394151817eeae144
+  - path: book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md
+    sha256: 7186440b85deda2dea8149120dcebd468c6c2df400881c9bbe2fc70cdc09be9a
+  - path: book/volume-05-spring-backend/chapters/ch.spring.aop-proxy-model.md
+    sha256: d09c3c52fec51ea790d82dc04a5ef2fd611ff455b021feec17a54ae8192e36fe
+  - path: book/volume-05-spring-backend/chapters/ch.spring.beans-lifecycle-scopes.md
+    sha256: 57e38589237568ebd75f8aa2505acf339ec4625823b266dd2305762612912931
+  - path: book/volume-05-spring-backend/chapters/ch.spring.boot-autoconfiguration.md
+    sha256: e6a635d5ea8da7fb447af892fc9ed8695df507c6d1b282b9e2852c8af4be8a57
+  - path: book/volume-05-spring-backend/chapters/ch.spring.configuration-profiles.md
+    sha256: d47fa09f3198700051b4f3dabc7f5e472e5b55318e123990b606c182cb736b1d
+  - path: book/volume-05-spring-backend/chapters/ch.spring.datasource-pooling.md
+    sha256: 0c766c42284be8ac7219094c9dc4f61d9eeb8628eafa9b72a1b72c13ea6657a3
+  - path: book/volume-05-spring-backend/chapters/ch.spring.dto-json-content-negotiation.md
+    sha256: 4f8935b9d2fe686b4837ffa2aa3d852c540c7b54aa7c5381eb34378c2bfb9087
+  - path: book/volume-05-spring-backend/chapters/ch.spring.ioc-di.md
+    sha256: 00dba19cadabf8fddd0837f097954482b92bfbf0cce509d5a993c773c1fbc1bb
+  - path: book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md
+    sha256: 7a371b4d8dfa35c486ae5862b67a3aa2ff7c28272ef29599979a2ee6ac4ceef4
+  - path: book/volume-05-spring-backend/chapters/ch.spring.mybatis-repositories.md
+    sha256: '087602468ccdb3b2f4d72d74a6b15aede8f5d4f096a50a2047059e8dd8dd2f5a'
+  - path: book/volume-05-spring-backend/chapters/ch.spring.openapi-contracts.md
+    sha256: b15bddef918236494da59e78c2e6aeaca912c6d8adca36186f5513b004835ba7
+  - path: book/volume-05-spring-backend/chapters/ch.spring.problem-details-errors.md
+    sha256: 1fe30a360987b02365fca586efcefecb41e9dc9920f8b09e5b2b5c8e1ea40a24
+  - path: book/volume-05-spring-backend/chapters/ch.spring.service-use-cases.md
+    sha256: 5c1e0d4a7f88be0243d0e452e123fdb97f362a53b7fd32cd23100ae375f3cd49
+  - path: book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md
+    sha256: df9115f81b3cb473df1ad2d020aca66bdae53aa3d59c410e6fff6055fbc05197
+  - path: book/volume-05-spring-backend/chapters/ch.spring.testing-testcontainers.md
+    sha256: dd9267c01660376dac1c91bcb613c9356f7f2eee2d59c84ac911c5b9974dcc62
+  - path: book/volume-05-spring-backend/chapters/ch.spring.transactions.md
+    sha256: 4fe084aa1dfa8443f04a667c4d9ff1808a39f1f1405960d1f5993bf2bdebfe02
+  - path: book/volume-05-spring-backend/chapters/ch.spring.validation.md
+    sha256: fa7bc1220a8a273f054d2e6edd4e76647314dc3ae4a523331904cf868f584c61
+  - path: book/volume-06-enterprise-architecture/README.md
+    sha256: 4d8ea0e2b0cb3fc5a9be4c1323474da4dc4d0fb9bd872749c4fb9d6b420cd2fb
+  - path: book/volume-06-enterprise-architecture/chapters/ch.architecture.domain-events-outbox.md
+    sha256: a20219b4300c60cc9fbe59ea7dd2d75b99c4dca6c531f604a848de2e3f6580f3
+  - path: book/volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md
+    sha256: fc3a102eba57e9cb74db07f43e6103a97121799a27c3f0acd9b552f3688983f8
+  - path: book/volume-06-enterprise-architecture/chapters/ch.architecture.modular-monolith.md
+    sha256: '0941efff0623a1dd5b60e42a3293c546895321d8b8735567e5256a053bd04743'
+  - path: book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md
+    sha256: d2c2589d641e209f3d28e1efb4cf0381318a960407d7bc601d8cdba089956ba9
+  - path: book/volume-06-enterprise-architecture/chapters/ch.architecture.workflow-state-sla.md
+    sha256: 19cddd1d5aecbbdf4922e29b14ee7b1fd173bf822c6c6595403d342f82a519cd
+  - path: book/volume-06-enterprise-architecture/chapters/ch.distributed.messaging-delivery.md
+    sha256: 875fd9fddfa563b34518c0345657d9c18b76ca2f12ed7b8e1f00e6579b14c7eb
+  - path: book/volume-06-enterprise-architecture/chapters/ch.distributed.redis-cache-rate-limit.md
+    sha256: f65a93b9710fbed76251edeb3a43ea1cbdb6af1d452a45653d350c23785884d0
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md
+    sha256: eb3675aa5849a40edafdd148bc8e269c687c77ebb54596ed99b88552f346ca52
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.authorization-rbac-abac.md
+    sha256: 9c54d8f704ec46d8e7fef50386534cc138c0ea3e2934d7f8422592f0fe6b2b38
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.cookie-session-model.md
+    sha256: cf4d88022999b822b995a5739f8ac6e9f3cf5f33f66728a6e55613f7dd5423fb
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.identity-password-lifecycle.md
+    sha256: ed3262e0613949c73ad78bd1720d281f8468995cae0a2c9d7f30db758d28fab6
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.jwt-resource-server.md
+    sha256: d74b44ff3c7abc55ef4f93e9a47f2ee43b03e4af64e83654906a2115be933074
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.multitenancy-data-isolation.md
+    sha256: b58bcab57adc758fe7ccf25c876be9953740ce5d4e0139d00d62bca78eebc888
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.oauth2-oidc.md
+    sha256: 05d30d91ff2e1422190c323b010718b466fbe766ee12c6890d8eb8fa83bfddbb
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.origin-cors-csrf.md
+    sha256: 444dda07f07d17caff0fa2baeedb42f7bb7ac217e79c3765be198e0c4f1d7544
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md
+    sha256: '03239689f04fa8417bc3947a195a2e87350547bd64ad42ca018dbd2fb5888fb7'
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.spring-security-architecture.md
+    sha256: 8c22e64b6b0b226265401d9d1b249feab040aefd1f088c4138ad1f0f8ac68eff
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.threat-model-trust-boundaries.md
+    sha256: 7f03b256036299d6aff49e7e1b838a7d08d32ed5bde4a4998927b5e4c5789169
+  - path: book/volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md
+    sha256: 3412701cbe9ddc306b14843be2da305782b66a3c1103eea49aa9caa1d6d07c61
+  - path: book/volume-07-web-platform/README.md
+    sha256: d6bc94c59d56a8879f1e7072edb3a0ff43b0f6551d9876bf70240527f35dbbf8
+  - path: book/volume-07-web-platform/chapters/ch.css.box-position.md
+    sha256: b9e6915a379b4395943b83650cafe6a336c936176077276801e2de7ff6bb3536
+  - path: book/volume-07-web-platform/chapters/ch.css.cascade.md
+    sha256: 9c491be3d873bd26495e2eb2844f08b7304962af5bfd6288488d8db482563991
+  - path: book/volume-07-web-platform/chapters/ch.css.flexbox.md
+    sha256: d598e40d12081450d93938ae598d707b8b550a7ee048552fd8b3d230ce57f034
+  - path: book/volume-07-web-platform/chapters/ch.css.grid.md
+    sha256: 6616a1aef6df4ada742549f015db12d111a26881076170a272f26c7d3b1bcb71
+  - path: book/volume-07-web-platform/chapters/ch.css.motion-compositing.md
+    sha256: 4f128ca3d73d7f941545dd9edae20c82e3ac6e8b0763bc6b8df221445097d7b1
+  - path: book/volume-07-web-platform/chapters/ch.css.responsive-typography.md
+    sha256: 4b6321576703dd386956428c6a2c85a66b06c27e088c1271ac83777f3fccb331
+  - path: book/volume-07-web-platform/chapters/ch.css.theme-variables.md
+    sha256: 74c3bf7c9aa7e45f370e245ae1667ff9c341e34cf9d77aaa1ad62a40456f4016
+  - path: book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md
+    sha256: '087427fbf06724c911839ae3eba2554a906aae69b72bd76e984c9f3e65fa8f57'
+  - path: book/volume-07-web-platform/chapters/ch.web.browser-render-devtools.md
+    sha256: 4aa4fb9b102ea66bc9504650ad81975a90024f2fddb285188532704b1e40f055
+  - path: book/volume-07-web-platform/chapters/ch.web.forms-validation.md
+    sha256: 87cd038e46623462e3443725ecce4f9939f0989ce2f42757ea8ef88fe0e1b1f8
+  - path: book/volume-07-web-platform/chapters/ch.web.media-assets.md
+    sha256: ab38974ef7959dca0d6a5497596b84b72348c2c29af795eedb346207e1de7766
+  - path: book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md
+    sha256: 5e718d9484602522f10d13b35121082837746d29a567318d954d05a5d630bbd5
+  - path: book/volume-07-web-platform/chapters/ch.web.semantic-html.md
+    sha256: ef90468b1e5f7cc7771b16dcde6cef3934ce0783981791be650db4312abe8782
+  - path: book/volume-08-javascript-typescript/README.md
+    sha256: 12738643e48986596ca0c2f1cd21a06fb52765dc6392a993c372d4f6f67eeeb4
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md
+    sha256: '009b639facfb5fc70433984ffdeb3092af3e74babc73c4ce889341d84d449a17'
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.collections.md
+    sha256: bb6cfde1b86d233b14fd379bbd11d988c6cf926d8023460b3f0d8764ded9725c
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.control-flow.md
+    sha256: e43c8112f7c8d0e9b881627c6ff8fe73ba88de19b4c126b6dcd2c91acfec0078
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md
+    sha256: 6900546a0532b16485cd62594e86554b55cc7a7c51574d8b4ee112c2cedbf76d
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md
+    sha256: a81ef5195d309173503e0761e4d9d297a94a06891bc28342dd29700e86ced5db
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md
+    sha256: 709ef4ab135a6d11eb980b4fe79ba11e77dc4840c745bb833875939a75a6db75
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md
+    sha256: 692f98895113c12d7c6e15f6a3639c19597c97d39897e49cea06d61eeaee7be1
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.functions.md
+    sha256: d813c5a223074e53463dd918e44c2646252bf99e21692a80fba8993b51e90b1d
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.object-model.md
+    sha256: 90cc629386dacf7db66e9f89fd9927a0cd82cde73986b8a420bcd04d42306e6f
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.runtime-esm.md
+    sha256: b1caf4857d58c13a682379e003fec0c6a4f77d5d9b599b090f9dfbf671747790
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.scope-closures.md
+    sha256: 1396ff8b1316c928c4e80802999cdf1741260ec2f45c200212ea3e7d9a3a61ee
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.statements-variables.md
+    sha256: 05cd548dbf2d56bbf963ebb17435e3bd0550a63342c198ef30ebbba3d303da4d
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.testing-debugging.md
+    sha256: 88122f1cae70fdc870b757b620253b828835c9d51af8ed9aa6713cdfd3ac744e
+  - path: book/volume-08-javascript-typescript/chapters/ch.js.values-operators.md
+    sha256: 9156db3ae69866283e96585a69975d36c7c6d740e370d70211bd8b7ffc0017dc
+  - path: book/volume-08-javascript-typescript/chapters/ch.ts.foundations.md
+    sha256: c79749eb5d8f2c195491cae8794fcfb2354038640540cefb68fc2814f2438b0b
+  - path: book/volume-08-javascript-typescript/chapters/ch.ts.generics-utilities.md
+    sha256: 00ae89556345716aae34516c53f15f1177e184e912be81caee3a37cefae13f87
+  - path: book/volume-08-javascript-typescript/chapters/ch.ts.modeling-narrowing.md
+    sha256: 16edbf09dd3f1ea971dff7f056c8939f9fa95e8ce0712ac4b7c75f362b8be56f
+  - path: book/volume-08-javascript-typescript/chapters/ch.ts.runtime-boundaries.md
+    sha256: a4c670c576c7d0f0a0d09d5eecf086e722003003b76a46f5f41c9483b339f4d9
+  - path: book/volume-09-vue-nuxt/README.md
+    sha256: 98700802484fdc90ee94ba93d50d0a84866f705dc39defb16b122254150b76f0
+  - path: book/volume-09-vue-nuxt/chapters/ch.nuxt.rendering-hydration.md
+    sha256: 443df4ac8ebc586d44229b76037ece6cdbc719cfdd603bd823239daf5b4d2536
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md
+    sha256: a75b085b25cf60fa14b631f955f864149b116febfb1c1bb66031b908178865d2
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.auth-permissions.md
+    sha256: 37a21903d6378d3718ddf7312120d8f783fc5f7abc1a62b40849b5a6e440bfe9
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.component-testing.md
+    sha256: 5c8caae1dcb4123047e974100af40f7059c3320cf5294d5a06f94e001c67e9a4
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md
+    sha256: 3c1ad9b1e997ced4f2eda13cba64469ee29bcc946e011dca972bb8eed52cf00f
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.composables-di.md
+    sha256: 5f71e35573dcb89b5052ae5eb7e734a1b8388a06d6448cbdf5c7d6756abedd12
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md
+    sha256: 8222a57f989358f39969cc95336b657da39497e0fe44a1a1a23cc6980d8bf523
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md
+    sha256: c81ee4de034636d96abf1c9a10a0c639871160e5938447392d0bb2bf6c0a163f
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.performance.md
+    sha256: 63c678b46341a5630a61c88962963f194d6d9311b0a1e24affed932adf56c337
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.pinia-state.md
+    sha256: 9293242f3e9438ffd1cad96b659adb11c5feb4593b8bd074128a43aff0af304b
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md
+    sha256: c79bab1f6105ddea2c00f6219b4e3070951e7e67146387b32c97b9c1a37f232a
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.router-navigation.md
+    sha256: 665dbd520cc3fd505a6141d3126f612975edf1b536b6d69fd99840ca2af4e8a6
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.server-state.md
+    sha256: 7e7a9c8693d04840f65b80933b0beb588d5efd21931ddf690db840af00756946
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md
+    sha256: 2d60564e53210a6912b7e50865f515c4c2f42e0f108c6a9b5c5a6d499a33cfff
+  - path: book/volume-09-vue-nuxt/chapters/ch.vue.vite-sfc.md
+    sha256: 8d1999caca9fd5912bc8c3454d6dd56f4d26e1ddf941c8f82f99f0e4c07df643
+  - path: book/volume-10-uniapp-miniprogram/README.md
+    sha256: effe2b3082cec05e07e15a4d128d8c9abd7898c5760b690bfdda0941efb3a2ec
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md
+    sha256: eea58f7df123a01e31c4bbab0fc251cfa8df23e5774411032930712ceb64296b
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md
+    sha256: a24912b2783a39953e4927c97510588c330bd606c383cab169d4c497d9c7aa42
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md
+    sha256: 2dee0bb16472f86dfd23761687c018ec0fbe85ebde035eac21d0519fdfb3664e
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md
+    sha256: f05137b9959b98864c497dcd156d5dd3c837504b147ca0d9fbf5daf412fcd11d
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md
+    sha256: bf32e519471e0dd20791a01f27a385c394d59ac92573a7ed8be68372c1cce870
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md
+    sha256: 916de5eff6e2bb3e7f374cb1eafbfd25af264ae5b6679d9b8119375d3098a8ce
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md
+    sha256: be3d16698cc1cc734ef0b7024680c276bd66db0355124bc4db125ea9d3b6f166
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md
+    sha256: 931a0bc991824a25db63704ffb7393d1443a65f2d36fd25c2373c7ebac5852db
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md
+    sha256: a4cc9af1c9e79fba20b62360713e458f6635aeec4c86012abd518a29a19257c9
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md
+    sha256: 1f8478129f0581b27af20447d65e10f13c731752e0d664c3114124e34dac6bb1
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md
+    sha256: '048791ebd710fffaab727e78993f84b3a0908f26a6d5c71682998ff5c4d295eb'
+  - path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md
+    sha256: 1db6ba0741733e5ce534850ad4c3c65ceb75c3c8221bd14dde9147f27e355e97
+  - path: book/volume-11-dart-flutter/README.md
+    sha256: 599315571a0921d3e11e99a8eb426797aeb987f0ba6ab711a0cac892567d3765
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.collections-patterns.md
+    sha256: 37f876adf195d0e8bc906e8193c9dde6e4627ee1e4199fa4b3dd6c126161e37d
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.control-functions.md
+    sha256: ec82f28333660dc2eba5002f80ad7e2106df6a2a7b872cfd768731db038bb9bc
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.exceptions-resources.md
+    sha256: 5591aecc83ccff475b3a3356c0d53edf2c5956022be7cbe91f25f5a8aa4387a1
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.future-cancellation.md
+    sha256: 764f42eda3a67bffd6dead63d786226b2da7601625ce9963b69a29b8b4d5ffdf
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.oop-generics.md
+    sha256: 98869784affb82d07a31ae51498a5947e866a585af6b6ea91c354b73a77b19a3
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.streams-isolates.md
+    sha256: 8e595aee8ae2d3108b6e35696ead265890d48383a696e78f943f4cdb8ef2cd1f
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.testing-lints.md
+    sha256: 7cd2f0828933c9a498e066288e35b848a74d08f967e9d730b126a935f04649aa
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.toolchain.md
+    sha256: 71110de9f81bd0f4ac175b0676f5abe3a106747133ff3596af1a360a51290443
+  - path: book/volume-11-dart-flutter/chapters/ch.dart.types-null-safety.md
+    sha256: 0f7d8afa34565373c844fd7344a6133fb2d1acd18537c8f1688294ca607ff549
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.architecture-state.md
+    sha256: 6f4b2bb48ae3c6135373bbf4202d3337288c4d00e00e231257e87eaed900c58a
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.device-apis.md
+    sha256: a59d5df19c3f720cb31e439037b5285566b623400a914d9a1bb45e5279d6456e
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.layout-accessibility.md
+    sha256: 41a24e082dbe6dc3976157395d84e7056e0caf0d708506af6910fdc9ab70b19c
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.navigation-forms.md
+    sha256: 732c5d80da9fb01dc89d088311cd41e1ed547015d2b4d30171c348042a0535c1
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.network-storage-offline.md
+    sha256: 20700d3f75a51db13f45d4c76966d876f16f9ba069f8b76a2eb4bb47c6703424
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.release-monitoring.md
+    sha256: 4b5209d999a4d169e441dc077e6af096de63836c25f84904bcc20b11e98800f9
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.state-lifecycle.md
+    sha256: 517d8040ffb60018ed4fe265136e52d412ada797dde254fa3d0f1106057c08d4
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.testing-performance.md
+    sha256: b31827c5261fa5b0d2b2bd579d3e05d8f428f3ccf1561340455dfa2ca106d1f8
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.toolchain-project.md
+    sha256: 5a7826be82df724ac187d6b46e1551aa74cf714bc5e559e3aebe3453ee4af32f
+  - path: book/volume-11-dart-flutter/chapters/ch.flutter.widget-tree.md
+    sha256: eb01a9f2adbb40c848cb9695a1859acb1b15a2583d78f1347d4f90973b79dd66
+  - path: book/volume-12-python-data/README.md
+    sha256: a4ad3f284c33e3eb1d500b79f9bd7a1b7d0f7a3625886bc94626cde3289d34f1
+  - path: book/volume-12-python-data/chapters/ch.data.numpy.md
+    sha256: c10aba6daeffe9fb34e85c7bb740683eddba5633911be3f2e34638e116357a1b
+  - path: book/volume-12-python-data/chapters/ch.data.pandas.md
+    sha256: 4ec516a4d729488220c9ae00a5a951898d56c732f17fd864478639f370cf08ea
+  - path: book/volume-12-python-data/chapters/ch.fastapi.security-testing-openapi.md
+    sha256: ce637943619bad8c1a7f8a5b733ccb897817cd24c6a4148141958f5e7f6eaf53
+  - path: book/volume-12-python-data/chapters/ch.fastapi.web-foundations.md
+    sha256: c4a34ac8187cefcc66c14fd691aad7ada1c35975ee95750d9d92bf3ef716c12f
+  - path: book/volume-12-python-data/chapters/ch.python.asyncio-cancellation.md
+    sha256: af51dbd222cb7109e89578ac0835877d2d3095a04afb5c42562a3578be5461e5
+  - path: book/volume-12-python-data/chapters/ch.python.classes-dataclass.md
+    sha256: 38121a9c54da796c2600fbeebf4f5b70bdf5e8dd6d9ac88c3ba8d16ca4b1e35e
+  - path: book/volume-12-python-data/chapters/ch.python.collections.md
+    sha256: 2a036b037edd916a9d94e281d0ab8bb8bb52e7c58ce8aa49c6f1334a90ad51a8
+  - path: book/volume-12-python-data/chapters/ch.python.control-flow.md
+    sha256: 8977b7e7bf87e0dd9c9517da36afe529320d41bb3ba91d7d2f548a40d3fe8dd7
+  - path: book/volume-12-python-data/chapters/ch.python.exceptions-context.md
+    sha256: 5a666a15b402bada9ba7e64115ae98b86bd020cd04061140969c1b2e468022c6
+  - path: book/volume-12-python-data/chapters/ch.python.files-json-time.md
+    sha256: 2d723514350996b7e9191a22a10332115fcf63d362da68bb8ab8e9d49d3618ae
+  - path: book/volume-12-python-data/chapters/ch.python.functions-scope.md
+    sha256: 21bd6438b1c7227a86e5bba46c4979dc96fa92ed7d3cae5ec6df7d8884d4d14d
+  - path: book/volume-12-python-data/chapters/ch.python.iterators-decorators.md
+    sha256: 1cb48db57b729c51539fb324ea8fb53dbb79a0cc994327a386cb5ddf35d019d1
+  - path: book/volume-12-python-data/chapters/ch.python.modules-packages.md
+    sha256: 93002fd6bf200261c39144cc428aa8cab6763a701df077992dd8f17b9c119c1c
+  - path: book/volume-12-python-data/chapters/ch.python.protocol-generics.md
+    sha256: f43b90c57363e3874d19657d7ee5fb68cccc30587af7ace052832845d599f983
+  - path: book/volume-12-python-data/chapters/ch.python.pydantic-validation.md
+    sha256: 8aa3442108e3397564eb5546032e7f3a675c2f62c2276e6f03afe4cf1559d861
+  - path: book/volume-12-python-data/chapters/ch.python.runtime-uv.md
+    sha256: 02ad1908d0a091f4d45ba4fbc96a62c7f7245d4cc6af761661248db108b1cd2d
+  - path: book/volume-12-python-data/chapters/ch.python.syntax-values-io.md
+    sha256: 252b189afd51f8a98df051cd56799481f9f0dc47512056588b3b0bfd2ec16b7b
+  - path: book/volume-12-python-data/chapters/ch.python.testing-logging-debug.md
+    sha256: 8c31952e681801d362d8057a1e88d30845350bb2ffe25e99665a3b3cd99f7c4c
+  - path: book/volume-12-python-data/chapters/ch.python.typing-foundations.md
+    sha256: 5fd81587a9b58ae5498b3d702371dd303ffd98d5dcc82e4d787150f769c6babd
+  - path: book/volume-13-ml-pytorch/README.md
+    sha256: 7ee059996ac3a00c69f864989da505f86c5b93dfa7e6b8a64bf1de45ec7050ca
+  - path: book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md
+    sha256: 1c207e304c1c399efa8111b0eb4cf1dce31598819a1d63409b694a57683fe572
+  - path: book/volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md
+    sha256: f7f6b35b181320fb1c717f6aa0e98198187d22bb06578fa27bc0a9c8bffaff1a
+  - path: book/volume-13-ml-pytorch/chapters/ch.math.gradients.md
+    sha256: 2c79b9b99ef992a01620e72debda872751d2221de0c546a28684d4b4c3b03d1c
+  - path: book/volume-13-ml-pytorch/chapters/ch.math.linear-algebra.md
+    sha256: 0552e8c48eef243ebae8779a79def6634db79ea8805519da76465a4b967377a7
+  - path: book/volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md
+    sha256: 1d17154d9ce0773db4dc971f9c0828c37cc0c898c1c5764891483e4dece30b8b
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md
+    sha256: bc29bf89b466170f05f36dc5cb5e34132c42c953b9b483f097a0718820190a00
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.metrics-validation.md
+    sha256: 103e0c07b68a66f4320e6e08d62f7ae58f73fc71db326bd430f0d87daca3c40b
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md
+    sha256: 0a10d78e8e5be4415b7e566f62cac1ef99891bb3cac7f57051d3f79163a76629
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.neural-networks.md
+    sha256: afdf9e8261556316cff08d01ea746af9b185821e73bbb6a8d14fbb46f5832a0f
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.preprocessing-features.md
+    sha256: 19f36e6c3f8b2b4495cc44eaf2d73a7f839687b408f98a3f08aafffcc3ab84ea
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.problem-data-split.md
+    sha256: 112d9d133f9593ffbbcab0a6ed403e0890387d0ef54052b1ed5c533423f54f12
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.supervised-learning.md
+    sha256: 1f90bdddaa022d1aab4d1cc736c9682f50cf2e5b219aa40f7ea9948043c5d95b
+  - path: book/volume-13-ml-pytorch/chapters/ch.ml.unsupervised-learning.md
+    sha256: 1c541567db1c54178696370e407d35463d1d3e65ea82b516528e4e20b3d1be07
+  - path: book/volume-13-ml-pytorch/chapters/ch.pytorch.foundations.md
+    sha256: 166daa2d8a2353b700f373016a81fea2fe29bb9033be5ad6bd4552474dc4cf7c
+  - path: book/volume-13-ml-pytorch/chapters/ch.pytorch.inference.md
+    sha256: 57a563744f2433b5b3302aeb0d7ee40ac436139e25f033b59a705fb38daa372f
+  - path: book/volume-13-ml-pytorch/chapters/ch.pytorch.training.md
+    sha256: 16d79da4610644a92f7a1e9a1e9b9b4cef0642de134351a07b91116b493dc08c
+  - path: book/volume-14-llm-rag-agents/README.md
+    sha256: 7e2391a531d4b11a97196d96bf73ac82e3a849448e586e1131845a0a6b6687f9
+  - path: book/volume-14-llm-rag-agents/chapters/ch.agent.langchain.md
+    sha256: c07ffe2e2875444d0067a9d51019e2900beb05a0f3e9bec9c15c29c2cc453ca5
+  - path: book/volume-14-llm-rag-agents/chapters/ch.agent.langgraph.md
+    sha256: eec10bde5fde04f40f13da2042b8a588136ef0c6ae6ea3b51515863e30d04cb3
+  - path: book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md
+    sha256: 0c657e92f7bfa0d924da38d2fb72fafe94c60825a9839ff913018abed5fd74b7
+  - path: book/volume-14-llm-rag-agents/chapters/ch.ir.dense-pgvector.md
+    sha256: 8d41879871d62655b0b1f0c9a2b19a2efb3d646af83f1da479e47d8045ef65a6
+  - path: book/volume-14-llm-rag-agents/chapters/ch.ir.evaluation.md
+    sha256: da9084740334a6589c3cb1829823c079cee34f8d1be6129d60d06e8e3b6a9374
+  - path: book/volume-14-llm-rag-agents/chapters/ch.ir.hybrid-rerank.md
+    sha256: d6107b6e81c1fd1f661aed7b39c0020cad8995a1b86b2ab38a1872fecde60d2e
+  - path: book/volume-14-llm-rag-agents/chapters/ch.ir.lexical-retrieval.md
+    sha256: 28ea6c471bbd44e8379330de729a603fd8e798ea299c43a76d6a75d2f1f85ba5
+  - path: book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md
+    sha256: 73948847c2e94702478e863c98c06504f80bd72f210bc2a30739fabe17e76227
+  - path: book/volume-14-llm-rag-agents/chapters/ch.llm.model-foundations.md
+    sha256: 37cf006da7b8a81eac89605af3b0507cdea09f93d2e588cee8d8ab4e2e4489fa
+  - path: book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md
+    sha256: 8fea592e85f7ed6b34ff1ae88883b58c4476e7a371f8546132d2b63c1d7e61e3
+  - path: book/volume-14-llm-rag-agents/chapters/ch.llm.structured-output.md
+    sha256: 03b36131c9aec988b57f26c7bd5f354d4b2d9826b80f795c3bac5e10fb6689af
+  - path: book/volume-14-llm-rag-agents/chapters/ch.llm.tool-calling.md
+    sha256: 26d11530fd2e1fe12e3d892abf1e3cb9db507ce856f31a290747db07ea6f2922
+  - path: book/volume-14-llm-rag-agents/chapters/ch.rag.chunking-embeddings.md
+    sha256: caa793c09ddf0eba64081b07021022522cf47b36f0a64f273a60d70adc04fcb3
+  - path: book/volume-14-llm-rag-agents/chapters/ch.rag.citations-evaluation.md
+    sha256: 24fc47aed3e42c936d51f29a03ab7f660c24edf13b45f5a120847fc55dfa367c
+  - path: book/volume-14-llm-rag-agents/chapters/ch.rag.ingestion-metadata.md
+    sha256: 817dfbd66b035396b4acd6fc0f2506c1536805c8121d0ed9854314234337a6bf
+  - path: book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md
+    sha256: 1693722f9d7b011510e4932b65e204f4a6ede55b8836da39fcbd0e64ee7421a5
+  - path: book/volume-15-production-factorycare/README.md
+    sha256: c8fc383f1f5c68201d70423bfc38f2cbba162d774aa094c90333985913318251
+  - path: book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md
+    sha256: f5bf2b0a2a6f55d99b5cc710a574a470e1343e3d9227054fdb4b3bf0b50c20b0
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.backup-recovery.md
+    sha256: 8c5adaf75abbbe27865c02093820c8c6a51422bd1e884cbf520fe327e0460230
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.capacity-performance.md
+    sha256: 19fa0fc1d2d2876a5ec9eba7c236400253fb63fb01bed272b9f73cabea673037
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.compose-services.md
+    sha256: 0b1c4b86dd3582cb4733bb207e305740992459adc25c2242b54d737959b8428b
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.config-secrets-supply-chain.md
+    sha256: 489ce7b08df976529c3e1d9cbd3613971e32edc8d393f6ac762c3a8e5e7c7b1e
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.docker-production.md
+    sha256: 816e828da196c62f9ace5e4fe900798a69da7a1b01da60e27c0971d61a9e7e32
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.incident-dr.md
+    sha256: faa03b7b0e31986e5acbb88fbeff0b1fe946eccef956ea3b4e3baba4c22d301d
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.linux-services.md
+    sha256: 54cd61fa973a766092aa8f999fb3b69f7e4f854d24121d8e764cc3b6da8585bf
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.logs-health.md
+    sha256: f68c5c0c492549ea057591c8d118f9e676ac8e9fceb40f76ddc321557f258d45
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.metrics-traces-slo.md
+    sha256: b1a28f5f7b567e42eae526f005d7a189a674681af0d494397adca92843c66cc4
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.network-diagnostics.md
+    sha256: 544f7d1ad1fb949088a7fa21e406b9dade8281b12b05e30c444dfaab50c89553
+  - path: book/volume-15-production-factorycare/chapters/ch.ops.nginx-tls.md
+    sha256: 9f8eb89dfd0ecf3b51d312917e89185aaffb4ca336add56e57de12ea3886464a
+  - path: book/volume-15-production-factorycare/chapters/ch.portfolio.interview.md
+    sha256: 3aba5e1327ccffa0cc688e44e44ccb5a3fd6bfbf6226919e37d4669a29efca00
+  - path: book/volume-15-production-factorycare/chapters/ch.release.artifacts-promotion.md
+    sha256: 30375a1b1746734fbdcc395c083a45e6c834d39ea7cd2ef713fe2da700c82d01
+  - path: book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md
+    sha256: e2814281016aa5774205f4541301b1731bf2b41f33c2e556b2c0216c74a3195e
+  - path: book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md
+    sha256: 65f260b41df60845f2525fc71885b515ddda2d333ed797da9a84aec6f214b635
+  - path: book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md
+    sha256: 940d669b005e3f5d8bd467a02274086c0564441cea14e41519fe78d3e6861ccd
+  - path: curriculum/README.md
+    sha256: 0d7e47a0de6e2689aa626c6b97eb788a70b11cd93cb90d201f4cb9dc83c30cb5
+  - path: curriculum/catalog.yml
+    sha256: 1f2cd0289aba7cc82be62934b0cb7d58857e85ca11b785e2873061190bd69136
+  - path: curriculum/concept-graph.md
+    sha256: 9fa4fb830d58a2ae7a7d1007631948ab0a085e57db1546cbe2c093f42a6789d4
+  - path: curriculum/gates.yml
+    sha256: a2403add82ed8d11b95b2fec4c0900cc03eb490a2ecd0c469d4ef132479cf6e1
+  - path: curriculum/routes/accelerated-48.yml
+    sha256: 20d380410b3217491cf7f5f0284b439fc56f91c5f988c9590332e73db48c4d54
+  - path: curriculum/routes/factorycare-project.yml
+    sha256: b4cf5958cce2951c0ed977a0646e3ffc4612d088b4ac27c570c1d075db443296
+  - path: curriculum/routes/reference.yml
+    sha256: 0562b7b99f94b59efda5c00286cfd976490be30d579c585fb3bb9b502b008485
+  - path: curriculum/routes/zero-base.yml
+    sha256: 7aa4f96f13543d1a6f623b0e92372afe4ffb2a99f4cad7d8a276e9731b10f6ed
+check:
+  exit_code: 0
+  unchanged_count: 279
+postconditions:
+  legacy_chapter_count: 0
+  semantic_chapter_count: 255
+applied_at: '2026-07-15T23:10:56Z'
+applied_by: codex:curriculum-migration

@@ -3,7 +3,7 @@ schema_version: 2
 scope: public-hashes-sanitized-metadata-and-unreviewed-canonical-mappings
 determinism: fixed commits, fixed canonical URLs, canonical catalog FKs, normalized paths, sorted rows, SHA-256, no timestamps
 catalog_id: factorycare-encyclopedia
-catalog_edition: 2026.1-draft
+catalog_edition: 2026.2-draft
 repositories:
   java-note:
     canonical_url: https://github.com/YouRen1320/Java-Note.git
@@ -32,7 +32,7 @@ totals:
   pdf_count: 14
   section_mapping_count: 9174
   unreviewed_mapping_count: 9174
-  broad_volume_mapping_count: 4891
+  broad_volume_mapping_count: 4979
 counts_by_domain:
   data-visualization: 14
   developer-tooling: 3
@@ -115,16 +115,16 @@ mapping_counts_by_target:
   volume:volume-11-dart-flutter: 9
   volume:volume-15-production-factorycare: 1064
 mapping_counts_by_confidence:
-  heuristic-high: 1670
-  heuristic-low: 4891
-  heuristic-medium: 1800
+  heuristic-high: 1637
+  heuristic-low: 4979
+  heuristic-medium: 1745
   policy: 813
 mapping_counts_by_review_status:
   unreviewed: 9174
 public_artifacts:
-  ADVERSARIAL-REVIEW.md: fde90be9daee04f59d1d3edea6e883ee01fb65fa0812e915190d7c08f9bf3286
+  ADVERSARIAL-REVIEW.md: 84f0a129ae3269636418f7f14e51c5d78a5c8b2c7756b346b26ad9de5505d06f
   README.md: 2ca96461bc1265133297f3560b2eca1f8562a595ed509b734b3491a87fe62e8a
   files.csv: a326a7b5808f8044a58e49597eefc1566bc02167116940444cba26435ef1799f
-  mappings.csv: 1bd81f3149501343bdc422faae36b5b503e38df92e0de4c3d5985d71cd8b5881
+  mappings.csv: 4a9e5aca39e66fbc4c954f1e1760553fd721e8cc7c12922d8be4ff8d3072fd92
   migration-policy.md: 99f3d1b892a0495b087e10e87a78ee561fb5d41ea4a60e37f61218ef0ec7c6c0
 private_raw_ledger: optional-local-only-gitignored-never-publish

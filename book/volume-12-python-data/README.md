@@ -1,22 +1,28 @@
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
 # 卷 12：Python、FastAPI 与数据工具
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L2+
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+从 Python 语言基础到类型、并发、测试、Web API、NumPy 和 Pandas。
 
 ## 章节
 
-- [v12.c01.runtime-uv-env：Python 运行时、uv、虚拟环境与包](chapters/v12.c01.runtime-uv-env.md)
-- [v12.c02.types-io-control：变量、类型、输入输出与控制流](chapters/v12.c02.types-io-control.md)
-- [v12.c03.functions-collections：函数、作用域、集合与推导式](chapters/v12.c03.functions-collections.md)
-- [v12.c04.modules-files-json：模块、包、文件、JSON 与时间](chapters/v12.c04.modules-files-json.md)
-- [v12.c05.classes-dataclass-protocol：类、dataclass、Protocol 与对象模型](chapters/v12.c05.classes-dataclass-protocol.md)
-- [v12.c06.exceptions-iterators-decorators：异常、上下文、迭代器、生成器与装饰器](chapters/v12.c06.exceptions-iterators-decorators.md)
-- [v12.c07.typing-testing-logging：类型标注、pytest、日志与调试](chapters/v12.c07.typing-testing-logging.md)
-- [v12.c08.async-cancellation：asyncio、任务、超时与取消](chapters/v12.c08.async-cancellation.md)
-- [v12.c09.fastapi-pydantic：FastAPI、Pydantic、依赖、安全与测试](chapters/v12.c09.fastapi-pydantic.md)
-- [v12.c10.numpy-pandas：NumPy 数组、广播与 Pandas 数据清洗](chapters/v12.c10.numpy-pandas.md)
+1. [Python 运行时、uv、虚拟环境与依赖](chapters/ch.python.runtime-uv.md) — `ch.python.runtime-uv` · `planned`
+2. [语句、变量、对象、表达式与基础输入输出](chapters/ch.python.syntax-values-io.md) — `ch.python.syntax-values-io` · `planned`
+3. [条件、循环与控制转移](chapters/ch.python.control-flow.md) — `ch.python.control-flow` · `planned`
+4. [函数、参数、返回值与作用域](chapters/ch.python.functions-scope.md) — `ch.python.functions-scope` · `planned`
+5. [list、tuple、dict、set 与推导式](chapters/ch.python.collections.md) — `ch.python.collections` · `planned`
+6. [基础类型标注、联合、容器类型与类型检查器](chapters/ch.python.typing-foundations.md) — `ch.python.typing-foundations` · `planned`
+7. [模块、包、导入与项目布局](chapters/ch.python.modules-packages.md) — `ch.python.modules-packages` · `planned`
+8. [Path、编码、文件、JSON 与时间数据](chapters/ch.python.files-json-time.md) — `ch.python.files-json-time` · `planned`
+9. [类、对象模型、dataclass 与 enum](chapters/ch.python.classes-dataclass.md) — `ch.python.classes-dataclass` · `planned`
+10. [泛型、Protocol、Callable 与结构类型](chapters/ch.python.protocol-generics.md) — `ch.python.protocol-generics` · `planned`
+11. [异常、上下文管理器与资源清理](chapters/ch.python.exceptions-context.md) — `ch.python.exceptions-context` · `planned`
+12. [迭代器、生成器、惰性计算与装饰器](chapters/ch.python.iterators-decorators.md) — `ch.python.iterators-decorators` · `planned`
+13. [pytest、fixture、Mock、日志与调试证据](chapters/ch.python.testing-logging-debug.md) — `ch.python.testing-logging-debug` · `planned`
+14. [asyncio、Task、超时、取消与结构化并发边界](chapters/ch.python.asyncio-cancellation.md) — `ch.python.asyncio-cancellation` · `planned`
+15. [Pydantic 模型、校验、序列化与错误](chapters/ch.python.pydantic-validation.md) — `ch.python.pydantic-validation` · `planned`
+16. [FastAPI 路由、依赖、请求响应与错误](chapters/ch.fastapi.web-foundations.md) — `ch.fastapi.web-foundations` · `planned`
+17. [FastAPI 安全集成、测试与 OpenAPI 合同](chapters/ch.fastapi.security-testing-openapi.md) — `ch.fastapi.security-testing-openapi` · `planned`
+18. [NumPy 数组、形状、广播与向量化](chapters/ch.data.numpy.md) — `ch.data.numpy` · `planned`
+19. [Pandas 表格、缺失值、连接与数据清洗](chapters/ch.data.pandas.md) — `ch.data.pandas` · `planned`

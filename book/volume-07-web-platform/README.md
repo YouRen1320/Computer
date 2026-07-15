@@ -1,22 +1,22 @@
-# 卷 07：浏览器、HTML 与 CSS
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
+# 卷 07：Web 平台、HTML 与 CSS
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+从浏览器模型、语义 HTML、无障碍到响应式布局和动效。
 
 ## 章节
 
-- [v07.c01.browser-render-devtools：浏览器、请求、渲染流程与 DevTools](chapters/v07.c01.browser-render-devtools.md)
-- [v07.c02.semantic-html：语义 HTML、文档结构与元数据](chapters/v07.c02.semantic-html.md)
-- [v07.c03.forms-media-validation：表单、原生校验、图片、音视频](chapters/v07.c03.forms-media-validation.md)
-- [v07.c04.accessibility：无障碍、键盘、焦点与屏幕阅读器](chapters/v07.c04.accessibility.md)
-- [v07.c05.css-cascade：CSS 层叠、选择器、优先级与继承](chapters/v07.c05.css-cascade.md)
-- [v07.c06.box-position-stacking：盒模型、display、定位与层叠上下文](chapters/v07.c06.box-position-stacking.md)
-- [v07.c07.flex-grid：Flexbox、Grid 与页面布局](chapters/v07.c07.flex-grid.md)
-- [v07.c08.responsive-typography：响应式、单位、图片与排版](chapters/v07.c08.responsive-typography.md)
-- [v07.c09.color-theme-variables：颜色、主题与 CSS 自定义属性](chapters/v07.c09.color-theme-variables.md)
-- [v07.c10.motion-performance：过渡、变换、动画、性能与减少动效](chapters/v07.c10.motion-performance.md)
+1. [浏览器请求、解析、渲染与 DevTools 观察](chapters/ch.web.browser-render-devtools.md) — `ch.web.browser-render-devtools` · `planned`
+2. [Origin、同源、Cookie、缓存与 CORS 浏览器模型](chapters/ch.web.origin-cookie-cache.md) — `ch.web.origin-cookie-cache` · `planned`
+3. [语义 HTML、文档结构与元数据](chapters/ch.web.semantic-html.md) — `ch.web.semantic-html` · `planned`
+4. [表单控件、提交语义与原生校验](chapters/ch.web.forms-validation.md) — `ch.web.forms-validation` · `planned`
+5. [图片、响应式资源、音视频与资源边界](chapters/ch.web.media-assets.md) — `ch.web.media-assets` · `planned`
+6. [无障碍、键盘、焦点与屏幕阅读器](chapters/ch.web.accessibility-interaction.md) — `ch.web.accessibility-interaction` · `planned`
+7. [CSS 语法、选择器、层叠、优先级与继承](chapters/ch.css.cascade.md) — `ch.css.cascade` · `planned`
+8. [盒模型、display、定位与层叠上下文](chapters/ch.css.box-position.md) — `ch.css.box-position` · `planned`
+9. [Flexbox 一维布局](chapters/ch.css.flexbox.md) — `ch.css.flexbox` · `planned`
+10. [Grid 二维布局](chapters/ch.css.grid.md) — `ch.css.grid` · `planned`
+11. [响应式单位、断点、排版与资源适配](chapters/ch.css.responsive-typography.md) — `ch.css.responsive-typography` · `planned`
+12. [颜色、主题与 CSS 自定义属性](chapters/ch.css.theme-variables.md) — `ch.css.theme-variables` · `planned`
+13. [过渡、变换、动画、合成与减少动效](chapters/ch.css.motion-compositing.md) — `ch.css.motion-compositing` · `planned`

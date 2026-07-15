@@ -3,7 +3,7 @@ schema_version: 2
 migration_id: catalog-2026.1-to-2026.2-semantic-ids
 from_edition: 2026.1-draft
 to_edition: 2026.2-draft
-status: ready
+status: applied
 compatibility: none
 legacy_source_commit: 61d6f853481cf522a388904ad93ab449688d88b1
 legacy_manifest_path: curriculum/migrations/legacy-2026.1-manifest.yml
@@ -14,6 +14,8 @@ expected_component_count: 151
 expected_edge_count: 275
 expected_legacy_id_count: 170
 expected_active_id_count: 255
+application_receipt_path: curriculum/migrations/receipts/catalog-2026.1-to-2026.2-semantic-ids.yml
+application_receipt_digest: sha256:c4b5b507a260557934f758fa0d5849569d06d7c1c8df9fe9efeb041473b981ef
 entries:
 - component_id: C001
   action: preserve

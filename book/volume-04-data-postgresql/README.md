@@ -1,23 +1,26 @@
-# 卷 04：关系数据、PostgreSQL 与持久化
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
+# 卷 04：关系数据、SQL 与 PostgreSQL
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+从关系模型到查询、事务、索引、迁移和 Java 持久化。
 
 ## 章节
 
-- [v04.c01.relational-model：PostgreSQL 环境、psql 与关系模型](chapters/v04.c01.relational-model.md)
-- [v04.c02.sql-query-basics：SELECT、过滤、NULL、排序与分页](chapters/v04.c02.sql-query-basics.md)
-- [v04.c03.sql-functions：数值、文本、日期时间与条件函数](chapters/v04.c03.sql-functions.md)
-- [v04.c04.aggregate-group-having：聚合、GROUP BY 与 HAVING](chapters/v04.c04.aggregate-group-having.md)
-- [v04.c05.joins-subquery-cte：JOIN、子查询、CTE 与窗口函数](chapters/v04.c05.joins-subquery-cte.md)
-- [v04.c06.dml-ddl-normalization：DML、DDL、约束与规范化](chapters/v04.c06.dml-ddl-normalization.md)
-- [v04.c07.postgres-types-psql：PostgreSQL 类型、UUID、JSONB 与高级交互](chapters/v04.c07.postgres-types-psql.md)
-- [v04.c08.indexes-explain：索引、查询计划、EXPLAIN 与性能](chapters/v04.c08.indexes-explain.md)
-- [v04.c09.transactions-locks：事务、隔离级别、锁与死锁](chapters/v04.c09.transactions-locks.md)
-- [v04.c10.migration-jdbc-mybatis：Flyway 版本迁移、回滚与数据演进](chapters/v04.c10.migration-jdbc-mybatis.md)
-- [v04.c11.jdbc-pool-mybatis：JDBC、连接池与 MyBatis 持久化](chapters/v04.c11.jdbc-pool-mybatis.md)
+1. [数据库、schema、表、行、键与关系模型](chapters/ch.data.relational-model.md) — `ch.data.relational-model` · `planned`
+2. [PostgreSQL 服务、连接、psql 与脚本执行](chapters/ch.data.postgresql-psql.md) — `ch.data.postgresql-psql` · `planned`
+3. [SELECT、投影、过滤、NULL、排序与分页](chapters/ch.data.select-rowsets.md) — `ch.data.select-rowsets` · `planned`
+4. [数值、文本、日期函数与 CASE](chapters/ch.data.scalar-functions.md) — `ch.data.scalar-functions` · `planned`
+5. [聚合、GROUP BY 与 HAVING](chapters/ch.data.aggregates.md) — `ch.data.aggregates` · `planned`
+6. [INNER/OUTER JOIN、关系基数与重复行](chapters/ch.data.joins.md) — `ch.data.joins` · `planned`
+7. [子查询、CTE 与集合拆解](chapters/ch.data.subqueries-cte.md) — `ch.data.subqueries-cte` · `planned`
+8. [窗口、分区、排序与分析函数](chapters/ch.data.window-functions.md) — `ch.data.window-functions` · `planned`
+9. [INSERT、UPDATE、DELETE、UPSERT 与 RETURNING](chapters/ch.data.dml.md) — `ch.data.dml` · `planned`
+10. [CREATE/ALTER、主外键、唯一、检查与非空约束](chapters/ch.data.ddl-constraints.md) — `ch.data.ddl-constraints` · `planned`
+11. [函数依赖、规范化与关系模式设计](chapters/ch.data.normalization-modeling.md) — `ch.data.normalization-modeling` · `planned`
+12. [UUID、JSONB、数组与 PostgreSQL 类型选择](chapters/ch.data.postgresql-types.md) — `ch.data.postgresql-types` · `planned`
+13. [索引、查询计划、EXPLAIN 与性能证据](chapters/ch.data.indexes-explain.md) — `ch.data.indexes-explain` · `planned`
+14. [ACID、隔离级别、锁、死锁与重试边界](chapters/ch.data.transactions-locking.md) — `ch.data.transactions-locking` · `planned`
+15. [Flyway、版本迁移、向前修复与数据演进](chapters/ch.data.schema-migrations.md) — `ch.data.schema-migrations` · `planned`
+16. [DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界](chapters/ch.data.jdbc.md) — `ch.data.jdbc` · `planned`
+17. [MyBatis 映射、参数绑定、结果映射与动态 SQL](chapters/ch.data.mybatis-core.md) — `ch.data.mybatis-core` · `planned`

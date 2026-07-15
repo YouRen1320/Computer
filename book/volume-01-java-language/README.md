@@ -1,22 +1,20 @@
+<!-- GENERATED: factorycare-curriculum; DO NOT EDIT -->
 # 卷 01：Java 语言基础
 
-> 状态：目录与验证契约已设计，正文仍为 `planned`；目录文件不能作为学习或过关证据。
+> edition `2026.2-draft`；本页是生成目录，不是正文完成或过关证据。
 
-## 深度与出口
-
-- 目标深度：L3
-- 硬前置由 `curriculum/catalog.yml` 的 `prerequisites` 定义。
-- `recommended_after` 仅表示推荐阅读顺序，不参与能力豁免。
+从平台、值和控制流学习可运行、可测试、可诊断的 Java 程序。
 
 ## 章节
 
-- [v01.c01.java-platform：Java 平台、JDK、JVM、源码、编译与运行](chapters/v01.c01.java-platform.md)
-- [v01.c02.program-structure：程序结构、package、class、main 与命名](chapters/v01.c02.program-structure.md)
-- [v01.c03.console-io：控制台输入输出与命令行参数](chapters/v01.c03.console-io.md)
-- [v01.c04.variables-scope：变量、常量、作用域与生命周期](chapters/v01.c04.variables-scope.md)
-- [v01.c05.primitive-types：基本类型、字符、布尔值与编码](chapters/v01.c05.primitive-types.md)
-- [v01.c06.operators-conversion：运算符、类型转换、溢出与金额表示](chapters/v01.c06.operators-conversion.md)
-- [v01.c07.conditionals-switch：条件判断、布尔逻辑与 switch](chapters/v01.c07.conditionals-switch.md)
-- [v01.c08.loops-control：for、while、do-while、break 与 continue](chapters/v01.c08.loops-control.md)
-- [v01.c09.methods：方法、参数、返回值、重载与递归边界](chapters/v01.c09.methods.md)
-- [v01.c10.arrays-debug-test：数组、二维数组、调试与 JUnit 入门](chapters/v01.c10.arrays-debug-test.md)
+1. [JDK、JVM、源码、class 文件、编译与运行](chapters/ch.java.platform-toolchain.md) — `ch.java.platform-toolchain` · `planned`
+2. [注释、标识符、字面量、语句、代码块、class、main 与 package](chapters/ch.java.program-structure.md) — `ch.java.program-structure` · `planned`
+3. [值、变量、基本类型、String、作用域与基本输出](chapters/ch.java.values-variables-types.md) — `ch.java.values-variables-types` · `planned`
+4. [运算符、表达式、类型转换、溢出与整数分金额](chapters/ch.java.expressions-conversions.md) — `ch.java.expressions-conversions` · `planned`
+5. [布尔逻辑、if/else 与 switch](chapters/ch.java.branching.md) — `ch.java.branching` · `planned`
+6. [for、while、计数、累积与哨兵循环](chapters/ch.java.loops.md) — `ch.java.loops` · `planned`
+7. [数组、二维数组、查找与命令行参数](chapters/ch.java.arrays-command-args.md) — `ch.java.arrays-command-args` · `planned`
+8. [方法、参数传递、返回值、重载与递归边界](chapters/ch.java.methods.md) — `ch.java.methods` · `planned`
+9. [控制台输入、缺参数、EOF、合法性校验与退出码](chapters/ch.java.console-input-validation.md) — `ch.java.console-input-validation` · `planned`
+10. [Maven 最小项目、JUnit、断言与失败日志](chapters/ch.java.maven-junit-smoke.md) — `ch.java.maven-junit-smoke` · `planned`
+11. [编译错误、运行异常、断言失败、逻辑错误与断点调试](chapters/ch.java.debugging-failures.md) — `ch.java.debugging-failures` · `planned`
