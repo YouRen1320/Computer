@@ -1,7 +1,7 @@
-schema_version: 1
+schema_version: 2
 site_id: factorycare-encyclopedia
 title: FactoryCare 编程百科全书
-edition: 2026.1-draft
+edition: 2026.2-draft
 language: zh-CN
 catalog: curriculum/catalog.yml
 version_registry: versions/registry.yml

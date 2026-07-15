@@ -10,18 +10,130 @@ require "pathname"
 require "rbconfig"
 require "tmpdir"
 require "yaml"
+require_relative "../../scripts/lib/curriculum_compiler"
 
 class EncyclopediaSecurityTest < Minitest::Test
   ROOT = Pathname(__dir__).join("../..").expand_path.freeze
-  FIXTURE_PATHS = %w[book curriculum schemas versions site scripts ASSESSMENTS.md PROGRESS.md].freeze
+  FIXTURE_PATHS = %w[book curriculum schemas versions site scripts records ASSESSMENTS.md PROGRESS.md].freeze
   GENERATED_NAMES = %w[README.md catalog.json navigation.json publication-manifest.json search-index.json].freeze
   RunResult = Struct.new(:output, :success, :exitstatus, keyword_init: true)
+
+  class << self
+    def applied_fixture_source
+      return @applied_fixture_source if @applied_fixture_source
+
+      temporary_parent = Pathname(Dir.mktmpdir("encyclopedia-applied-source-"))
+      temporary_parent = Pathname(File.realpath(temporary_parent))
+      temporary_root = temporary_parent.join("repository")
+      FileUtils.mkdir_p(temporary_root)
+      assert_isolated_temporary_root!(temporary_root)
+      warn "SECURITY APPLIED FIXTURE ROOT=#{temporary_root}"
+
+      begin
+        FIXTURE_PATHS.each { |relative| FileUtils.cp_r(ROOT.join(relative), temporary_root.join(relative)) }
+        attach_git_object_database!(temporary_root)
+        restore_frozen_ready_tree!(temporary_root)
+        apply_ready_migration_with_receipt!(temporary_root)
+      rescue StandardError
+        FileUtils.remove_entry(temporary_parent) if temporary_parent.exist?
+        raise
+      end
+
+      at_exit { FileUtils.remove_entry(temporary_parent) if temporary_parent.exist? }
+      @applied_fixture_source = temporary_root
+    end
+
+    private
+
+    def assert_isolated_temporary_root!(root)
+      system_temp = File.realpath(Dir.tmpdir)
+      actual = root.to_s
+      workspace = ROOT.to_s
+      unless actual.start_with?("#{system_temp}/") && actual != workspace && !actual.start_with?("#{workspace}/")
+        raise "refusing to build applied fixture outside an isolated temporary root: #{actual}"
+      end
+    end
+
+    def attach_git_object_database!(root)
+      git_dir, git_error, git_status = Open3.capture3("git", "rev-parse", "--absolute-git-dir", chdir: ROOT.to_s)
+      raise "cannot locate fixture Git object database: #{git_error}" unless git_status.success?
+
+      File.binwrite(root.join(".git"), "gitdir: #{git_dir.strip}\n")
+    end
+
+    def restore_frozen_ready_tree!(root)
+      ledger_path = root.join("curriculum/migrations/2026.1-to-2026.2.yml")
+      ledger = YAML.safe_load(File.read(ledger_path, encoding: "UTF-8"), aliases: false)
+      raise "applied fixture source requires the real migration ledger to remain ready" unless ledger["status"] == "ready"
+
+      manifest_path = root.join(ledger.fetch("legacy_manifest_path"))
+      manifest = YAML.safe_load(File.read(manifest_path, encoding: "UTF-8"), aliases: false)
+      commit = ledger.fetch("legacy_source_commit")
+      Dir.glob(root.join("book/volume-*/chapters/ch.*.md")).each { |path| FileUtils.rm_f(path) }
+      manifest.fetch("files").each do |entry|
+        relative = entry.fetch("path")
+        bytes, git_error, git_status = Open3.capture3("git", "show", "#{commit}:#{relative}", chdir: root.to_s)
+        raise "cannot restore frozen ready input #{relative}: #{git_error}" unless git_status.success?
+        unless Digest::SHA256.hexdigest(bytes) == entry.fetch("sha256")
+          raise "restored frozen ready input digest differs for #{relative}"
+        end
+
+        path = root.join(relative)
+        FileUtils.mkdir_p(path.dirname)
+        File.binwrite(path, bytes)
+      end
+    end
+
+    def apply_ready_migration_with_receipt!(root)
+      plan_relative = "records/encyclopedia/evidence/migration/security-suite-ready-plan.yml"
+      receipt_relative = "curriculum/migrations/receipts/security-suite-application.yml"
+      run_required!(root, RbConfig.ruby, "scripts/capture-curriculum-migration-plan.rb", "--output", plan_relative)
+      run_required!(root, RbConfig.ruby, "scripts/generate-curriculum.rb", "--write")
+      run_required!(
+        root,
+        RbConfig.ruby,
+        "scripts/finalize-curriculum-migration.rb",
+        "--plan-evidence", plan_relative,
+        "--output", receipt_relative,
+        "--write-exit", "0",
+        "--applied-at", "2026-07-16T12:00:00Z",
+        "--applied-by", "test:encyclopedia-security"
+      )
+
+      ledger_path = root.join("curriculum/migrations/2026.1-to-2026.2.yml")
+      ledger = YAML.safe_load(File.read(ledger_path, encoding: "UTF-8"), aliases: false)
+      receipt_body = File.binread(root.join(receipt_relative))
+      ledger["status"] = "applied"
+      ledger["application_receipt_path"] = receipt_relative
+      ledger["application_receipt_digest"] = "sha256:#{Digest::SHA256.hexdigest(receipt_body)}"
+      File.binwrite(ledger_path, YAML.dump(ledger))
+
+      run_required!(root, RbConfig.ruby, "scripts/generate-curriculum.rb", "--write")
+      run_required!(root, RbConfig.ruby, "scripts/generate-curriculum.rb", "--check")
+      run_required!(root, RbConfig.ruby, "scripts/validate-encyclopedia.rb", "--quiet")
+    end
+
+    def run_required!(root, *arguments)
+      stdout, stderr, status = Open3.capture3(*arguments, chdir: root.to_s)
+      return if status.success?
+
+      raise "fixture command failed in #{root}: #{arguments.join(' ')}\n#{stdout}\n#{stderr}"
+    end
+  end
 
   def with_fixture
     Dir.mktmpdir("encyclopedia-security-") do |directory|
       root = Pathname(directory).join("repository")
       FileUtils.mkdir_p(root)
-      FIXTURE_PATHS.each { |relative| FileUtils.cp_r(ROOT.join(relative), root.join(relative)) }
+      source = self.class.applied_fixture_source
+      FIXTURE_PATHS.each { |relative| FileUtils.cp_r(source.join(relative), root.join(relative)) }
+      # The v2 compiler verifies frozen migration bytes with `git show`. Point
+      # the isolated worktree at the real read-only object database without
+      # copying or mutating repository history.
+      git_dir, git_error, git_status = Open3.capture3("git", "rev-parse", "--absolute-git-dir", chdir: ROOT.to_s)
+      raise "cannot locate fixture Git object database: #{git_error}" unless git_status.success?
+
+      File.binwrite(root.join(".git"), "gitdir: #{git_dir.strip}\n")
       yield root
     end
   end
@@ -59,10 +171,36 @@ class EncyclopediaSecurityTest < Minitest::Test
     relative
   end
 
+  def render_curriculum_outputs(root, except: [])
+    spec = Curriculum::SpecSet.new(root.to_s).load!
+    Curriculum::Compiler.new(spec).render_outputs.each do |relative, contents|
+      next if except.include?(relative)
+
+      path = root.join(relative)
+      FileUtils.mkdir_p(path.dirname)
+      File.binwrite(path, contents)
+    end
+  end
+
   def generated_snapshot(root)
     GENERATED_NAMES.each_with_object({}) do |name, memo|
       memo[name] = Digest::SHA256.file(root.join("site/generated", name)).hexdigest
     end
+  end
+
+  def chapter_context(root, index: 0)
+    catalog = load_yaml(root.join("curriculum/catalog.yml"))
+    chapter = catalog.fetch("chapters").fetch(index)
+    contents = File.read(root.join(chapter.fetch("path")), encoding: "UTF-8")
+    match = contents.match(/\A---\s*\n(.*?)\n---\s*\n/m)
+    raise "fixture chapter lacks front matter" unless match
+
+    {
+      chapter: chapter,
+      metadata: YAML.safe_load(match[1], aliases: false),
+      body: contents[match.end(0)..].to_s,
+      chapter_path: chapter.fetch("path")
+    }
   end
 
   def promote_first_chapter(root, &block)
@@ -72,10 +210,24 @@ class EncyclopediaSecurityTest < Minitest::Test
   def promote_chapter(root, index:)
     catalog_path = root.join("curriculum/catalog.yml")
     catalog = load_yaml(catalog_path)
-    catalog["status"] = "authoring"
     chapter = catalog.fetch("chapters").fetch(index)
-    chapter["status"] = "verified"
-    write_yaml(catalog_path, catalog)
+    edition_path = root.join("curriculum/edition.yml")
+    edition = load_yaml(edition_path)
+    edition["status"] = "authoring"
+    write_yaml(edition_path, edition)
+
+    volume_spec_path = root.join("curriculum/chapters/volume-#{chapter.fetch("volume")}.yml")
+    volume_spec = load_yaml(volume_spec_path)
+    source_chapter = volume_spec.fetch("chapters").find { |entry| entry.fetch("id") == chapter.fetch("id") }
+    source_chapter["status"] = "verified"
+    write_yaml(volume_spec_path, volume_spec)
+
+    # Human chapter tests still use the canonical compiler for every derived
+    # catalog/route/README byte; only the reviewed Markdown body is supplied by
+    # the fixture. This keeps the strict --check oracle meaningful.
+    render_curriculum_outputs(root, except: [chapter.fetch("path")])
+    catalog = load_yaml(catalog_path)
+    chapter = catalog.fetch("chapters").fetch(index)
 
     id = chapter.fetch("id")
     today = Date.today.iso8601
@@ -122,19 +274,22 @@ class EncyclopediaSecurityTest < Minitest::Test
       )
     }
     metadata = {
-      "schema_version" => 1,
+      "schema_version" => 2,
+      "edition" => catalog.fetch("edition"),
       "id" => id,
       "title" => chapter.fetch("title"),
+      "responsibility" => chapter.fetch("responsibility"),
       "volume" => chapter.fetch("volume"),
       "order" => chapter.fetch("order"),
       "level" => chapter.fetch("level"),
       "status" => "verified",
+      "path" => chapter.fetch("path"),
       "catalog" => "../../../curriculum/catalog.yml",
       "prerequisites" => chapter.fetch("prerequisites"),
       "outcomes" => chapter.fetch("outcomes"),
       "route_tags" => chapter.fetch("route_tags"),
       "stable_core" => chapter.fetch("stable_core"),
-      "versioned_surface" => chapter.fetch("versioned_surface"),
+      "version_surfaces" => chapter.fetch("version_surfaces"),
       "verified_versions" => [],
       "source_refs" => [{
         "id" => "official-fixture",
@@ -262,6 +417,140 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
   end
 
+  def test_schema_v2_rejects_legacy_front_matter_and_retired_singular_version_field
+    with_fixture do |root|
+      context = chapter_context(root)
+      context.fetch(:metadata)["schema_version"] = 1
+      context.fetch(:metadata)["versioned_surface"] = []
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /schema_version.*must equal 2/
+      assert_match(/additional property versioned_surface is not allowed/, result.output)
+    end
+  end
+
+  def test_runtime_catalog_and_front_matter_reject_retired_chapter_ids
+    with_fixture do |root|
+      catalog_path = root.join("curriculum/catalog.yml")
+      catalog = load_yaml(catalog_path)
+      catalog.fetch("chapters").first["id"] = "v00.c01.retired-id"
+      catalog.fetch("chapters").first["prerequisites"] = ["v00.c02.retired-prerequisite"]
+      catalog.fetch("chapters").first["versioned_surface"] = []
+      write_yaml(catalog_path, catalog)
+
+      result = validator(root)
+      assert_failed result, /invalid semantic id/
+      assert_match(/invalid semantic prerequisite "v00\.c02\.retired-prerequisite"/, result.output)
+      assert_match(/uses retired versioned_surface field/, result.output)
+    end
+
+    with_fixture do |root|
+      context = chapter_context(root)
+      context.fetch(:metadata)["id"] = "v00.c01.retired-id"
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /\/id: does not match required pattern/
+      assert_match(/id differs from catalog/, result.output)
+    end
+  end
+
+  def test_planned_placeholder_requires_exact_generator_ownership_and_no_human_fields
+    with_fixture do |root|
+      context = chapter_context(root)
+      context.fetch(:metadata).delete("generated_spec_digest")
+      context.fetch(:metadata)["stable_core"] = context.fetch(:chapter).fetch("stable_core")
+      context.fetch(:metadata)["outcomes"] = context.fetch(:chapter).fetch("outcomes")
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /missing required property generated_spec_digest/
+      assert_match(/planned placeholder contains human authoring fields stable_core, outcomes/, result.output)
+    end
+
+    with_fixture do |root|
+      context = chapter_context(root)
+      context.fetch(:metadata)["generated_spec_digest"] = "0" * 64
+      context.fetch(:metadata)["generated_by"] = "scripts/legacy-generator.rb"
+      context[:body] = context.fetch(:body).sub("GENERATED: factorycare-planned-placeholder; safe-to-overwrite: planned-only", "")
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /planned chapter generated_spec_digest differs from catalog/
+      assert_match(/planned chapter generated_by differs from the canonical generator/, result.output)
+      assert_match(/planned chapter must carry the exact generator ownership marker/, result.output)
+    end
+  end
+
+  def test_front_matter_v2_identity_fields_must_match_catalog
+    with_fixture do |root|
+      context = chapter_context(root)
+      context.fetch(:metadata)["edition"] = "different-edition"
+      context.fetch(:metadata)["responsibility"] = "A different responsibility boundary"
+      context.fetch(:metadata)["path"] = context.fetch(:chapter).fetch("path").sub(/\.md\z/, "-other.md")
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /edition differs from catalog/
+      assert_match(/responsibility differs from catalog/, result.output)
+      assert_match(/path differs from catalog/, result.output)
+    end
+  end
+
+  def test_human_outcome_contract_rejects_missing_fields_wrong_order_kind_and_capability
+    with_fixture do |root|
+      context = promote_first_chapter(root)
+      original = Marshal.load(Marshal.dump(context.fetch(:metadata).fetch("outcomes")))
+
+      context.fetch(:metadata)["outcomes"] = Marshal.load(Marshal.dump(original)) + [Marshal.load(Marshal.dump(original.last))]
+      save_chapter(root, context)
+      result = validator(root)
+      assert_failed result, /outcomes: must contain at most 3 item\(s\)/
+      assert_match(/outcomes must contain exactly three structured entries/, result.output)
+
+      context.fetch(:metadata)["outcomes"] = Marshal.load(Marshal.dump(original))
+      context.fetch(:metadata).fetch("outcomes").first.delete("evidence_kind")
+      save_chapter(root, context)
+      assert_failed validator(root), /outcomes\/0: missing required property evidence_kind/
+
+      context.fetch(:metadata)["outcomes"] = Marshal.load(Marshal.dump(original)).reverse
+      save_chapter(root, context)
+      result = validator(root)
+      assert_failed result, /outcome ids must appear exactly as explain, build, diagnose/
+      assert_match(/outcome kinds must align exactly as concept, independent-build, fault-diagnosis/, result.output)
+
+      context.fetch(:metadata)["outcomes"] = Marshal.load(Marshal.dump(original))
+      context.fetch(:metadata).fetch("outcomes").first["kind"] = "fault-diagnosis"
+      save_chapter(root, context)
+      assert_failed validator(root), /outcome kinds must align exactly/
+
+      context.fetch(:metadata)["outcomes"] = Marshal.load(Marshal.dump(original))
+      context.fetch(:metadata).fetch("outcomes").first.fetch("uses_capabilities") << "security.unauthorized"
+      save_chapter(root, context)
+      assert_failed validator(root), /uses capabilities outside the chapter contract: security\.unauthorized/
+    end
+  end
+
+  def test_catalog_path_must_match_semantic_id_filename_and_declared_volume
+    with_fixture do |root|
+      catalog_path = root.join("curriculum/catalog.yml")
+      catalog = load_yaml(catalog_path)
+      chapter = catalog.fetch("chapters").first
+      original = root.join(chapter.fetch("path"))
+      wrong_relative = File.join(File.dirname(chapter.fetch("path")), "ch.foundations.wrong-location.md")
+      FileUtils.mv(original, root.join(wrong_relative))
+      chapter["path"] = wrong_relative
+      write_yaml(catalog_path, catalog)
+
+      context = chapter_context(root)
+      context.fetch(:metadata)["path"] = wrong_relative
+      save_chapter(root, context)
+
+      assert_failed validator(root), /chapter path: path is outside its allowed directory/
+    end
+  end
+
   def test_registry_additional_properties_rule_is_actually_executed
     with_fixture do |root|
       path = root.join("versions/registry.yml")
@@ -324,6 +613,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       registry = load_yaml(path)
       registry.fetch("entries").first["source_url"] = "https://example.invalid/docs#precise-section"
       write_yaml(path, registry)
+      render_curriculum_outputs(root)
 
       result = validator(root)
       assert result.success, result.output
@@ -332,23 +622,29 @@ class EncyclopediaSecurityTest < Minitest::Test
 
   def test_build_invokes_the_strict_curriculum_validator
     with_fixture do |root|
-      path = root.join("curriculum/catalog.yml")
-      catalog = load_yaml(path)
-      catalog.fetch("chapters").first["prerequisites"] = ["v99.c99.does-not-exist"]
-      write_yaml(path, catalog)
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      chapter = catalog.fetch("chapters").first
+      path = root.join("curriculum/chapters/volume-#{chapter.fetch("volume")}.yml")
+      spec = load_yaml(path)
+      source = spec.fetch("chapters").find { |entry| entry.fetch("id") == chapter.fetch("id") }
+      source["prerequisites"] = ["ch.invalid.does-not-exist"]
+      write_yaml(path, spec)
 
-      assert_failed builder(root), /strict curriculum validation failed.*unknown prerequisites/m
+      assert_failed builder(root), /strict curriculum validation failed.*unknown prerequisite/m
     end
   end
 
   def test_validator_directly_invokes_the_strict_curriculum_validator
     with_fixture do |root|
-      path = root.join("curriculum/catalog.yml")
-      catalog = load_yaml(path)
-      catalog.fetch("chapters").first["prerequisites"] = ["v99.c99.does-not-exist"]
-      write_yaml(path, catalog)
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      chapter = catalog.fetch("chapters").first
+      path = root.join("curriculum/chapters/volume-#{chapter.fetch("volume")}.yml")
+      spec = load_yaml(path)
+      source = spec.fetch("chapters").find { |entry| entry.fetch("id") == chapter.fetch("id") }
+      source["prerequisites"] = ["ch.invalid.does-not-exist"]
+      write_yaml(path, spec)
 
-      assert_failed validator(root), /strict curriculum validation failed.*unknown prerequisites/m
+      assert_failed validator(root), /strict curriculum validation failed.*unknown prerequisite/m
     end
   end
 
@@ -390,6 +686,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       schemas/site-config.schema.json
       versions/registry.yml
       curriculum/catalog.yml
+      scripts/lib/curriculum_compiler.rb
     ].each do |relative|
       with_fixture do |root|
         path = root.join(relative)
@@ -423,7 +720,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       context = promote_first_chapter(root) do |fixture|
         id = fixture.fetch(:chapter).fetch("id")
         metadata = fixture.fetch(:metadata)
-        metadata["examples"] = ["examples/encyclopedia/v99.c99.other/missing"]
+        metadata["examples"] = ["examples/encyclopedia/ch.other.invalid/missing"]
         metadata["labs"] = ["labs/encyclopedia/#{id}/missing.md"]
         metadata["exercises"] = ["exercises/encyclopedia/#{id}/missing.md"]
         metadata["solutions_private"] = ["/tmp/private-solution.md"]
@@ -477,6 +774,26 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
   end
 
+  def test_artifact_and_evidence_runtime_paths_reject_embedded_retired_ids
+    with_fixture do |root|
+      context = promote_first_chapter(root)
+      id = context.fetch(:chapter).fetch("id")
+      legacy_lab = write_file(root, "labs/encyclopedia/#{id}/v00.c01.retired/lab.md", "legacy path\n")
+      legacy_evidence = write_file(
+        root,
+        "records/encyclopedia/evidence/#{id}/v00.c01.retired.txt",
+        "legacy path\n"
+      )
+      context.fetch(:metadata)["labs"] = [legacy_lab]
+      context.fetch(:metadata).fetch("verification").fetch("technical")["evidence"] = [legacy_evidence]
+      save_chapter(root, context)
+
+      result = validator(root)
+      assert_failed result, /labs #1: retired chapter IDs are forbidden in runtime paths/
+      assert_match(/verification technical evidence #1: retired chapter IDs are forbidden in runtime paths/, result.output)
+    end
+  end
+
   def test_author_and_reviewer_identity_use_trim_nfkc_and_casefold
     with_fixture do |root|
       promote_first_chapter(root) do |fixture|
@@ -514,11 +831,11 @@ class EncyclopediaSecurityTest < Minitest::Test
       context = promote_first_chapter(root)
       catalog_path = root.join("curriculum/catalog.yml")
       catalog = load_yaml(catalog_path)
-      catalog.fetch("chapters").first["versioned_surface"] = ["browser"]
+      catalog.fetch("chapters").first["version_surfaces"] = ["browser"]
       write_yaml(catalog_path, catalog)
 
       metadata = context.fetch(:metadata)
-      metadata["versioned_surface"] = ["browser"]
+      metadata["version_surfaces"] = ["browser"]
       metadata["verified_versions"] = [{
         "id" => "browser",
         "constraint" => "current stable",
@@ -540,11 +857,11 @@ class EncyclopediaSecurityTest < Minitest::Test
       context = promote_first_chapter(root)
       catalog_path = root.join("curriculum/catalog.yml")
       catalog = load_yaml(catalog_path)
-      catalog.fetch("chapters").first["versioned_surface"] = ["browser"]
+      catalog.fetch("chapters").first["version_surfaces"] = ["browser"]
       write_yaml(catalog_path, catalog)
 
       metadata = context.fetch(:metadata)
-      metadata["versioned_surface"] = ["browser"]
+      metadata["version_surfaces"] = ["browser"]
       metadata["verified_versions"] = [{
         "id" => "browser",
         "constraint" => "whatever-latest",
@@ -585,11 +902,14 @@ class EncyclopediaSecurityTest < Minitest::Test
 
   def test_verified_hard_prerequisite_transitive_closure_must_be_verified
     with_fixture do |root|
-      context = promote_chapter(root, index: 8)
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      index = catalog.fetch("chapters").index { |chapter| !Array(chapter["prerequisites"]).empty? }
+      context = promote_chapter(root, index: index)
 
       result = validator(root)
       assert_failed result, /#{Regexp.escape(context.fetch(:chapter).fetch("id"))} verified hard-prerequisite closure contains non-verified chapters/
-      assert_match(/v00\.c03\.files-paths-encoding\(planned\)/, result.output)
+      dependency = context.fetch(:chapter).fetch("prerequisites").first
+      assert_match(/#{Regexp.escape(dependency)}\(planned\)/, result.output)
     end
   end
 
@@ -682,7 +1002,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       refute_includes public_bytes, context.fetch(:solution_path)
       refute_includes public_bytes, context.fetch(:solution_secret)
       search = JSON.parse(File.read(root.join("site/generated/search-index.json"), encoding: "UTF-8"))
-      assert_equal [context.fetch(:chapter).fetch("id")], search.map { |entry| entry.fetch("id") }
+      assert_equal [context.fetch(:chapter).fetch("id")], search.fetch("records").map { |entry| entry.fetch("id") }
     end
   end
 
@@ -706,19 +1026,18 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
   end
 
-  def test_volume_readme_is_covered_by_manifest_input_digest
+  def test_volume_readme_is_manifested_and_canonical_tampering_is_rejected
     with_fixture do |root|
       first = builder(root)
       assert first.success, first.output
       manifest_path = root.join("site/generated/publication-manifest.json")
-      before = JSON.parse(File.read(manifest_path, encoding: "UTF-8")).fetch("input_digest")
+      manifest = JSON.parse(File.read(manifest_path, encoding: "UTF-8"))
       readme = Dir.glob(root.join("book/volume-00-*/README.md").to_s).first
+      relative = Pathname(readme).relative_path_from(root).to_s
+      assert_includes manifest.fetch("inputs").keys, relative
       File.open(readme, "ab") { |file| file.write("\n<!-- manifest digest mutation -->\n") }
 
-      second = builder(root)
-      assert second.success, second.output
-      after = JSON.parse(File.read(manifest_path, encoding: "UTF-8")).fetch("input_digest")
-      refute_equal before, after
+      assert_failed builder(root), /strict curriculum validation failed.*E_GENERATED_DRIFT/m
     end
   end
 
@@ -729,6 +1048,9 @@ class EncyclopediaSecurityTest < Minitest::Test
       manifest = JSON.parse(File.read(root.join("site/generated/publication-manifest.json"), encoding: "UTF-8"))
       assert_includes manifest.fetch("inputs").keys, "ASSESSMENTS.md"
       assert_includes manifest.fetch("inputs").keys, "PROGRESS.md"
+      assert_includes manifest.fetch("inputs").keys, "curriculum/migrations/migration.schema.json"
+      assert_includes manifest.fetch("inputs").keys, "scripts/lib/curriculum_compiler.rb"
+      assert_includes manifest.fetch("inputs").keys, "records/encyclopedia/reviews/P1R-migration-ledger-audit.md"
 
       File.open(root.join("PROGRESS.md"), "ab") { |file| file.write("\n<!-- fixture-only digest change -->\n") }
       assert_failed builder(root, "--check"), /stale site\/generated\/(?:README|catalog|navigation|publication-manifest)/

@@ -20,11 +20,19 @@ CHAPTER_SCHEMA_RELATIVE = "schemas/chapter.schema.json"
 REGISTRY_SCHEMA_RELATIVE = "schemas/version-registry.schema.json"
 SITE_CONFIG_SCHEMA_RELATIVE = "schemas/site-config.schema.json"
 GENERATED_FILES = %w[catalog.json navigation.json publication-manifest.json README.md search-index.json].freeze
+CHAPTER_ID_PATTERN = /\Ach\.[a-z0-9]+(?:-[a-z0-9]+)*\.[a-z0-9]+(?:-[a-z0-9]+)*\z/.freeze
+LEGACY_CHAPTER_ID_PATTERN = /v\d{2}\.c\d{2}\.[a-z0-9-]+/.freeze
+CURRICULUM_GENERATOR = "scripts/generate-curriculum.rb"
+PLANNED_PLACEHOLDER_MARKER = "GENERATED: factorycare-planned-placeholder; safe-to-overwrite: planned-only"
 BASE_CATALOG_FIELDS = %w[
-  id title volume order level prerequisites outcomes status route_tags stable_core versioned_surface path
+  id title responsibility volume order level prerequisites outcomes status route_tags stable_core
+  version_surfaces path recommended_after capabilities spec_digest
 ].freeze
-BASE_FRONT_MATTER_FIELDS = %w[id title volume order level status catalog].freeze
-AUTHORING_FIELDS = %w[schema_version prerequisites outcomes route_tags stable_core versioned_surface].freeze
+BASE_FRONT_MATTER_FIELDS = %w[
+  schema_version edition id title responsibility volume order level status path catalog
+  prerequisites version_surfaces route_tags
+].freeze
+AUTHORING_FIELDS = %w[stable_core outcomes].freeze
 REVIEW_FIELDS = %w[verified_versions source_refs examples labs exercises solutions_private author last_reviewed verification].freeze
 VERIFICATION_GATES = %w[
   technical pedagogical code security accessibility version_sources publication_navigation
@@ -120,7 +128,7 @@ end
 class ExecutableJsonSchema
   SUPPORTED_KEYWORDS = Set.new(%w[
     $schema $id $ref $defs title description type additionalProperties required
-    properties const enum pattern minLength minimum minItems uniqueItems items
+    properties const enum pattern minLength minimum minItems maxItems uniqueItems items
     format allOf if then
   ]).freeze
   SUPPORTED_TYPES = %w[object array string integer number boolean null].freeze
@@ -186,7 +194,7 @@ class ExecutableJsonSchema
     %w[$schema $id title description].each do |keyword|
       definition_errors << "#{@label} #{path}: #{keyword} must be a string" if schema.key?(keyword) && !schema[keyword].is_a?(String)
     end
-    %w[minLength minItems].each do |keyword|
+    %w[minLength minItems maxItems].each do |keyword|
       value = schema[keyword]
       definition_errors << "#{@label} #{path}: #{keyword} must be a non-negative integer" if schema.key?(keyword) && !(value.is_a?(Integer) && value >= 0)
     end
@@ -283,6 +291,9 @@ class ExecutableJsonSchema
   def validate_array(schema, value, path, errors)
     if schema.key?("minItems") && value.length < schema["minItems"]
       errors << "#{path}: must contain at least #{schema["minItems"]} item(s)"
+    end
+    if schema.key?("maxItems") && value.length > schema["maxItems"]
+      errors << "#{path}: must contain at most #{schema["maxItems"]} item(s)"
     end
     if schema["uniqueItems"] == true
       fingerprints = value.map { |item| JSON.generate(canonical(item)) }
@@ -456,7 +467,8 @@ class RepositoryPathPolicy
   def validate_relative_shape(relative, label)
     return ["#{label}: must be a non-empty relative path"] unless relative.is_a?(String) && !relative.empty?
     return ["#{label}: absolute paths are forbidden"] if Pathname.new(relative).absolute?
-    return ["#{label}: dot segments, empty segments and NUL bytes are forbidden"] if relative.include?("\0") || relative.split("/", -1).any? { |part| part.empty? || part == "." || part == ".." }
+    return ["#{label}: control characters are forbidden"] if relative.match?(/[[:cntrl:]]/)
+    return ["#{label}: dot segments and empty segments are forbidden"] if relative.split("/", -1).any? { |part| part.empty? || part == "." || part == ".." }
 
     []
   end
@@ -518,10 +530,12 @@ module EncyclopediaInputSet
     ]
     # The manifest must cover every repository file read or scanned by the
     # strict curriculum validator, not only the three primary YAML documents.
-    strict_inputs = Dir.glob(File.join(root, "{book,curriculum}", "**", "*.{md,yml,rb}"), File::FNM_EXTGLOB)
+    strict_inputs = Dir.glob(File.join(root, "{book,curriculum}", "**", "*.{md,yml,json,rb}"), File::FNM_EXTGLOB)
                        .select { |path| File.file?(path) || File.symlink?(path) }
                        .map { |path| relative(root, path) }
     paths.concat(strict_inputs)
+    paths.concat(Dir.glob(File.join(root, "scripts/lib/**/*.rb")).map { |path| relative(root, path) })
+    paths.concat(external_curriculum_inputs(root))
     paths.concat(Dir.glob(File.join(root, "curriculum/routes/*.yml")).map { |path| relative(root, path) })
     paths.concat(Dir.glob(File.join(root, "book/volume-*/README.md")).map { |path| relative(root, path) })
     chapter_paths = Array(catalog["chapters"]).each_with_object([]) do |chapter, memo|
@@ -531,6 +545,25 @@ module EncyclopediaInputSet
     paths.concat(public_review_inputs(root, catalog))
     paths.reject! { |path| path.start_with?("solutions-private/") }
     paths.uniq.sort
+  end
+
+  def external_curriculum_inputs(root)
+    edition_path = File.join(root, "curriculum/edition.yml")
+    edition = StrictYaml.safe_load(File.read(edition_path, encoding: "UTF-8"), label: "curriculum/edition.yml")
+    ledger_relative = edition["migration_ledger"]
+    return [] unless ledger_relative.is_a?(String)
+
+    ledger_path = File.join(root, ledger_relative)
+    ledger = StrictYaml.safe_load(File.read(ledger_path, encoding: "UTF-8"), label: ledger_relative)
+    paths = [ledger["mapping_audit_path"]]
+    Array(ledger["source_rebuilds"]).each do |rebuild|
+      next unless rebuild.is_a?(Hash)
+
+      %w[source_inventory_path source_build_path candidate_manifest_path builder_path].each do |field|
+        paths << rebuild[field]
+      end
+    end
+    paths.select { |path| path.is_a?(String) }
   end
 
   def public_review_inputs(root, catalog)
@@ -629,7 +662,7 @@ class EncyclopediaValidator
     validate_schema_documents
     registry = validate_registry
     catalog = validate_catalog_and_chapters(registry)
-    validate_canonical_input_set(catalog)
+    validate_canonical_input_set(catalog) if errors.empty?
     site_config = validate_site_config(catalog)
     validate_edition_alignment(registry, catalog, site_config)
     validate_generated if @check_generated && errors.empty?
@@ -665,10 +698,11 @@ class EncyclopediaValidator
       site/assets/site.css
       site/assets/site.js
     ]
-    strict_scan = Dir.glob(absolute("{book,curriculum}/**/*.{md,yml,rb}"), File::FNM_EXTGLOB)
+    strict_scan = Dir.glob(absolute("{book,curriculum}/**/*.{md,yml,json,rb}"), File::FNM_EXTGLOB)
                      .select { |path| File.file?(path) || File.symlink?(path) }
                      .map { |path| relative_to_root(path) }
     paths.concat(strict_scan)
+    paths.concat(Dir.glob(absolute("scripts/lib/**/*.rb")).map { |path| relative_to_root(path) })
     before = errors.length
     paths.uniq.sort.each { |relative| validate_canonical_regular_file(relative) }
     return false unless errors.length == before
@@ -805,6 +839,19 @@ class EncyclopediaValidator
 
   def validate_catalog_and_chapters(registry)
     catalog = load_yaml(CATALOG_RELATIVE)
+    @catalog_edition = catalog["edition"]
+    expected_catalog_header = {
+      "schema_version" => 2,
+      "canonical" => true,
+      "generated" => true,
+      "generated_by" => CURRICULUM_GENERATOR
+    }
+    expected_catalog_header.each do |field, expected|
+      errors << "#{CATALOG_RELATIVE}: #{field} must equal #{expected.inspect}" unless catalog[field] == expected
+    end
+    unless catalog["generated_spec_digest"].is_a?(String) && catalog["generated_spec_digest"].match?(/\A[0-9a-f]{64}\z/)
+      errors << "#{CATALOG_RELATIVE}: generated_spec_digest must be a lowercase SHA-256 digest"
+    end
     chapters = catalog["chapters"]
     unless chapters.is_a?(Array)
       errors << "#{CATALOG_RELATIVE}: chapters must be an array"
@@ -830,9 +877,31 @@ class EncyclopediaValidator
       id = chapter["id"]
       ids << id if id.is_a?(String)
       status_counts[chapter["status"]] += 1
-      errors << "#{CATALOG_RELATIVE}: #{id || "chapter ##{index + 1}"} has invalid id" unless id.is_a?(String) && id.match?(/\Av\d{2}\.c\d{2}\.[a-z0-9-]+\z/)
+      errors << "#{CATALOG_RELATIVE}: #{id || "chapter ##{index + 1}"} has invalid semantic id" unless id.is_a?(String) && id.match?(CHAPTER_ID_PATTERN)
+      errors << "#{CATALOG_RELATIVE}: #{id} uses retired versioned_surface field" if chapter.key?("versioned_surface")
+      unless chapter["responsibility"].is_a?(String) && chapter["responsibility"].length >= 12
+        errors << "#{CATALOG_RELATIVE}: #{id} responsibility must describe a concrete boundary"
+      end
+      unless chapter["spec_digest"].is_a?(String) && chapter["spec_digest"].match?(/\A[0-9a-f]{64}\z/)
+        errors << "#{CATALOG_RELATIVE}: #{id} spec_digest must be a lowercase SHA-256 digest"
+      end
       errors << "#{CATALOG_RELATIVE}: #{id} has invalid level #{chapter["level"].inspect}" unless ALLOWED_LEVELS.include?(chapter["level"])
       errors << "#{CATALOG_RELATIVE}: #{id} has invalid status #{chapter["status"].inspect}" unless ALLOWED_STATUSES.include?(chapter["status"])
+      validate_outcome_contract("#{CATALOG_RELATIVE}: #{id}", catalog_outcomes(chapter), chapter)
+      catalog_prerequisites(chapter).each do |dependency|
+        unless dependency.is_a?(String) && dependency.match?(CHAPTER_ID_PATTERN)
+          errors << "#{CATALOG_RELATIVE}: #{id} has invalid semantic prerequisite #{dependency.inspect}"
+        end
+      end
+      recommended_after = chapter["recommended_after"]
+      unless recommended_after.is_a?(Array) && recommended_after.uniq.length == recommended_after.length
+        errors << "#{CATALOG_RELATIVE}: #{id} recommended_after must be a unique array"
+      end
+      Array(recommended_after).each do |recommendation|
+        unless recommendation.is_a?(String) && recommendation.match?(CHAPTER_ID_PATTERN)
+          errors << "#{CATALOG_RELATIVE}: #{id} has invalid semantic recommended_after #{recommendation.inspect}"
+        end
+      end
 
       surfaces = catalog_version_surfaces(chapter)
       duplicate_values(surfaces).each { |surface| errors << "#{CATALOG_RELATIVE}: #{id} repeats versioned surface #{surface}" }
@@ -842,10 +911,15 @@ class EncyclopediaValidator
       end
 
       relative = chapter["path"]
+      expected_path_pattern = if id.is_a?(String) && chapter["volume"].is_a?(String)
+                                %r{\Abook/volume-#{Regexp.escape(chapter["volume"])}-[a-z0-9-]+/chapters/#{Regexp.escape(id)}\.md\z}
+                              else
+                                /\A\b\B/
+                              end
       path_issues = @path_policy.validate_regular_file(
         relative,
         label: "#{CATALOG_RELATIVE}: #{id} chapter path",
-        patterns: [%r{\Abook/volume-[0-9]{2}-[a-z0-9-]+/chapters/v[0-9]{2}\.c[0-9]{2}\.[a-z0-9-]+\.md\z}]
+        patterns: [expected_path_pattern]
       )
       errors.concat(path_issues)
       next unless path_issues.empty?
@@ -904,8 +978,36 @@ class EncyclopediaValidator
   end
 
   def catalog_version_surfaces(chapter)
-    value = chapter["versioned_surface"]
+    value = chapter["version_surfaces"]
     value.is_a?(Array) ? value : []
+  end
+
+  def validate_outcome_contract(label, outcomes, chapter)
+    expected_ids = %w[explain build diagnose]
+    expected_kinds = %w[concept independent-build fault-diagnosis]
+    unless outcomes.is_a?(Array) && outcomes.length == 3
+      errors << "#{label}: outcomes must contain exactly three structured entries"
+      return
+    end
+
+    ids = outcomes.map { |outcome| outcome.is_a?(Hash) ? outcome["id"] : nil }
+    kinds = outcomes.map { |outcome| outcome.is_a?(Hash) ? outcome["kind"] : nil }
+    errors << "#{label}: outcome ids must appear exactly as #{expected_ids.join(', ')}" unless ids == expected_ids
+    errors << "#{label}: outcome kinds must align exactly as #{expected_kinds.join(', ')}" unless kinds == expected_kinds
+
+    capability_contract = chapter["capabilities"].is_a?(Hash) ? chapter["capabilities"] : {}
+    allowed_capabilities = (Array(capability_contract["teaches"]) + Array(capability_contract["uses"])).to_set
+    outcomes.each_with_index do |outcome, index|
+      next unless outcome.is_a?(Hash)
+
+      uses = outcome["uses_capabilities"]
+      next unless uses.is_a?(Array)
+
+      unauthorized = uses.reject { |capability| allowed_capabilities.include?(capability) }
+      unless unauthorized.empty?
+        errors << "#{label}: outcome ##{index + 1} uses capabilities outside the chapter contract: #{unauthorized.join(', ')}"
+      end
+    end
   end
 
   def validate_chapter_file(chapter, relative, registry_ids, registry_by_id)
@@ -924,9 +1026,11 @@ class EncyclopediaValidator
 
     missing = BASE_FRONT_MATTER_FIELDS.reject { |field| metadata.key?(field) }
     errors << "#{relative}: front matter missing #{missing.join(", ")}" unless missing.empty?
-    %w[id title volume order level status].each do |field|
+    %w[id title responsibility volume order level status path].each do |field|
       errors << "#{relative}: #{field} differs from catalog" unless metadata[field] == chapter[field]
     end
+    errors << "#{relative}: schema_version must be 2" unless metadata["schema_version"] == 2
+    errors << "#{relative}: edition differs from catalog" unless metadata["edition"] == @catalog_edition
     if metadata["catalog"].is_a?(String)
       resolved_catalog = File.expand_path(metadata["catalog"], File.dirname(absolute(relative)))
       errors << "#{relative}: catalog reference does not resolve to #{CATALOG_RELATIVE}" unless resolved_catalog == absolute(CATALOG_RELATIVE)
@@ -937,23 +1041,31 @@ class EncyclopediaValidator
       "outcomes" => catalog_outcomes(chapter),
       "route_tags" => chapter["route_tags"],
       "stable_core" => chapter["stable_core"],
-      "versioned_surface" => catalog_version_surfaces(chapter)
+      "version_surfaces" => catalog_version_surfaces(chapter)
     }
     canonical.each do |field, value|
       errors << "#{relative}: #{field} differs from catalog" if metadata.key?(field) && metadata[field] != value
     end
-    Array(metadata["versioned_surface"]).each do |surface|
+    Array(metadata["version_surfaces"]).each do |surface|
       errors << "#{relative}: front matter references unknown version surface #{surface}" unless registry_ids.include?(surface)
     end
 
     status = chapter["status"]
     if status == "planned"
-      errors << "#{relative}: planned chapter must visibly state that it is an architecture placeholder" unless body.include?("架构占位")
+      forbidden = (AUTHORING_FIELDS + REVIEW_FIELDS) & metadata.keys
+      errors << "#{relative}: planned placeholder contains human authoring fields #{forbidden.join(', ')}" unless forbidden.empty?
+      errors << "#{relative}: planned chapter must carry the exact generator ownership marker" unless body.include?(PLANNED_PLACEHOLDER_MARKER)
+      errors << "#{relative}: planned chapter generated_by differs from the canonical generator" unless metadata["generated_by"] == CURRICULUM_GENERATOR
+      errors << "#{relative}: planned chapter generated_spec_digest differs from catalog" unless metadata["generated_spec_digest"] == chapter["spec_digest"]
       return
     end
 
+    if metadata.key?("generated_by") || metadata.key?("generated_spec_digest") || body.include?(PLANNED_PLACEHOLDER_MARKER)
+      errors << "#{relative}: human-authored #{status} chapter must not carry planned-placeholder ownership"
+    end
     authoring_missing = AUTHORING_FIELDS.reject { |field| metadata.key?(field) }
     errors << "#{relative}: #{status} chapter missing authoring metadata #{authoring_missing.join(", ")}" unless authoring_missing.empty?
+    validate_outcome_contract(relative, metadata["outcomes"], chapter) if metadata.key?("outcomes")
     return unless %w[review verified].include?(status)
 
     review_missing = REVIEW_FIELDS.reject { |field| metadata.key?(field) }
@@ -969,6 +1081,7 @@ class EncyclopediaValidator
     author = metadata["author"]
     validate_identity(author, "#{relative}: author")
     artifact_root = Regexp.escape(chapter.fetch("id"))
+    evidence_root = Regexp.escape(chapter.fetch("id"))
     {
       "examples" => "examples",
       "labs" => "labs",
@@ -1003,9 +1116,10 @@ class EncyclopediaValidator
       errors.concat(@path_policy.validate_regular_file(
         entry["evidence"],
         label: "#{relative}: verified_versions ##{index + 1} evidence",
-        patterns: [%r{\Arecords/encyclopedia/evidence/[a-zA-Z0-9._/-]+\z}],
+        patterns: [%r{\Arecords/encyclopedia/evidence/#{evidence_root}/[a-zA-Z0-9._/-]+\z}],
         require_nonblank: true
       )) if entry["evidence"].is_a?(String)
+      reject_legacy_id_in_path(entry["evidence"], "#{relative}: verified_versions ##{index + 1} evidence")
     end
     duplicate_values(version_ids.compact).each { |id| errors << "#{relative}: duplicate verified version #{id}" }
     catalog_version_surfaces(chapter).each do |surface|
@@ -1028,9 +1142,9 @@ class EncyclopediaValidator
         errors << "#{relative}: verification #{gate} reviewer must be independent from author"
       end
       validate_evidence_list(relative, "verification #{gate} evidence", record["evidence"], [
-        %r{\Arecords/encyclopedia/evidence/[a-zA-Z0-9._/-]+\z}
+        %r{\Arecords/encyclopedia/evidence/#{evidence_root}/[a-zA-Z0-9._/-]+\z}
       ])
-      validate_publication_coverage(relative, record, verified: verified) if gate == "publication_navigation"
+      validate_publication_coverage(relative, record, chapter_id: chapter.fetch("id"), verified: verified) if gate == "publication_navigation"
       next unless verified
 
       errors << "#{relative}: verified chapter requires #{gate} gate to pass" if MANDATORY_PASSED_GATES.include?(gate) && status != "passed"
@@ -1049,6 +1163,7 @@ class EncyclopediaValidator
     values.each_with_index do |path, index|
       next unless path.is_a?(String)
 
+      reject_legacy_id_in_path(path, "#{relative}: #{field} ##{index + 1}")
       errors.concat(@path_policy.validate_artifact(path, label: "#{relative}: #{field} ##{index + 1}", patterns: patterns))
     end
   end
@@ -1059,6 +1174,7 @@ class EncyclopediaValidator
     values.each_with_index do |path, index|
       next unless path.is_a?(String)
 
+      reject_legacy_id_in_path(path, "#{relative}: #{field} ##{index + 1}")
       errors.concat(@path_policy.validate_regular_file(
         path,
         label: "#{relative}: #{field} ##{index + 1}",
@@ -1068,7 +1184,7 @@ class EncyclopediaValidator
     end
   end
 
-  def validate_publication_coverage(relative, record, verified:)
+  def validate_publication_coverage(relative, record, chapter_id:, verified:)
     coverage = record["coverage"]
     return unless coverage.is_a?(Hash)
 
@@ -1077,7 +1193,7 @@ class EncyclopediaValidator
       next unless check.is_a?(Hash)
 
       validate_evidence_list(relative, "publication_navigation #{name} evidence", check["evidence"], [
-        %r{\Arecords/encyclopedia/evidence/[a-zA-Z0-9._/-]+\z}
+        %r{\Arecords/encyclopedia/evidence/#{Regexp.escape(chapter_id)}/[a-zA-Z0-9._/-]+\z}
       ])
       next unless verified
 
@@ -1110,6 +1226,12 @@ class EncyclopediaValidator
     errors << "#{relative}: #{status} chapter prose is too small for review (minimum 200 normalized characters)" if normalized.length < 200
   end
 
+  def reject_legacy_id_in_path(path, label)
+    return unless path.is_a?(String) && path.match?(LEGACY_CHAPTER_ID_PATTERN)
+
+    errors << "#{label}: retired chapter IDs are forbidden in runtime paths"
+  end
+
   def validate_site_config(catalog)
     config = load_yaml(SITE_CONFIG_RELATIVE)
     apply_schema(SITE_CONFIG_SCHEMA_RELATIVE, config, SITE_CONFIG_RELATIVE)
@@ -1135,6 +1257,12 @@ class EncyclopediaValidator
     stdout, stderr, status = Open3.capture3(*command, chdir: @root)
     if status.success?
       stats[:generated] = "checked-byte-for-byte"
+      GENERATED_FILES.each do |name|
+        relative = File.join("site/generated", name)
+        next unless File.file?(absolute(relative))
+
+        errors << "#{relative}: retired chapter ID leaked into runtime output" if File.read(absolute(relative), encoding: "UTF-8").match?(LEGACY_CHAPTER_ID_PATTERN)
+      end
       return
     end
 
