@@ -1,0 +1,13 @@
+empty-in=
+empty-not-in=D-01,D-02,D-03,D-04,D-05
+scalar-multi-match-devices=D-01,D-03
+not-in-with-null=
+not-exists-with-null=D-01,D-03,D-04,D-05
+correct-exists=D-01,D-02,D-05
+broken-correlation=D-01,D-02,D-03,D-04,D-05
+correct-cte-intermediate=D-01,D-02,D-05
+broken-cte-intermediate=D-01,D-03
+flat-result=pump:2
+cte-result=pump:2
+decomposition-equivalent=PASS
+subqueries-cte-lab=PASS

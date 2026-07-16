@@ -1,0 +1,2 @@
+challenge_valid=true xss=true csrf=true destination=true redirect=true rebinding=true
+EXERCISE PASS jdk=25 mode=offline

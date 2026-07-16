@@ -1,0 +1,9 @@
+password_record_strong=true
+public_failure_uniform=true
+login_rotated_id=true
+preauth_rejected=true
+reset_single_use=true
+password_change_revoked_sessions=true
+logout_invalidated=true
+concurrent_limit_enforced=true
+secret_material_printed=false

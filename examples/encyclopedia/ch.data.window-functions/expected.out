@@ -1,0 +1,11 @@
+input-rows=6
+output-rows=6
+T-01|W-01|seq=1|prev=NULL|next=W-02|since=NULL|until=0|done=0
+T-01|W-02|seq=2|prev=W-01|next=W-03|since=0|until=3600|done=1
+T-01|W-03|seq=3|prev=W-02|next=NULL|since=3600|until=NULL|done=2
+T-02|W-04|seq=1|prev=NULL|next=W-05|since=NULL|until=5400|done=1
+T-02|W-05|seq=2|prev=W-04|next=W-06|since=5400|until=0|done=1
+T-02|W-06|seq=3|prev=W-05|next=NULL|since=0|until=NULL|done=2
+partition-starts=T-01:1,T-02:1
+stable-tiebreaker=W-01<W-02,W-05<W-06
+window-functions-example=PASS

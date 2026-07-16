@@ -1,0 +1,2 @@
+challenge_valid=true password=true uniform=true rotation=true reset=true revocation=true concurrency=true
+EXERCISE PASS jdk=25 mode=offline

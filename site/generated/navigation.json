@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "ac69f84a0d9a4b64d1635fad807d0d0a1879a28a35706b581db8b16095492099",
+  "input_digest": "9f71453e3aab7ddca938ad6c22b9304d5ca3a237fdee4b5ddeab1278a67b13a3",
   "volumes": [
     {
       "id": "00",
@@ -576,7 +576,7 @@
           "title": "聚合、GROUP BY 与 HAVING",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.aggregates.md",
           "publishable": false
         },
@@ -585,7 +585,7 @@
           "title": "INNER/OUTER JOIN、关系基数与重复行",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.joins.md",
           "publishable": false
         },
@@ -594,7 +594,7 @@
           "title": "子查询、CTE 与集合拆解",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.subqueries-cte.md",
           "publishable": false
         },
@@ -603,7 +603,7 @@
           "title": "窗口、分区、排序与分析函数",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.window-functions.md",
           "publishable": false
         },
@@ -735,7 +735,7 @@
           "title": "Spring Boot、Starter、自动配置与应用启动",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.boot-autoconfiguration.md",
           "publishable": false
         },
@@ -744,7 +744,7 @@
           "title": "Controller、路由、参数绑定与状态码",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md",
           "publishable": false
         },
@@ -753,7 +753,7 @@
           "title": "DTO、JSON、内容协商与兼容边界",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.dto-json-content-negotiation.md",
           "publishable": false
         },
@@ -762,7 +762,7 @@
           "title": "Bean Validation、字段规则与跨字段规则",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.validation.md",
           "publishable": false
         },
@@ -903,7 +903,7 @@
           "title": "不可信输入、输出编码、XSS 与 SSRF",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md",
           "publishable": false
         },
@@ -912,7 +912,7 @@
           "title": "FilterChain、SecurityContext、默认拒绝与异常链",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.spring-security-architecture.md",
           "publishable": false
         },
@@ -921,7 +921,7 @@
           "title": "Spring Security 登录、退出、密码编码与 Session 防护",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md",
           "publishable": false
         },
@@ -930,7 +930,7 @@
           "title": "JWT 验证、Bearer Token 与 Resource Server",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.jwt-resource-server.md",
           "publishable": false
         },

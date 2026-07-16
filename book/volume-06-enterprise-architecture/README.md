@@ -11,10 +11,10 @@
 2. [身份、密码哈希、凭据生命周期与恢复边界](chapters/ch.security.identity-password-lifecycle.md) — `ch.security.identity-password-lifecycle` · `drafting`
 3. [Cookie、Session、认证状态与固定攻击模型](chapters/ch.security.cookie-session-model.md) — `ch.security.cookie-session-model` · `drafting`
 4. [Origin、SameSite、CORS 与 CSRF](chapters/ch.security.origin-cors-csrf.md) — `ch.security.origin-cors-csrf` · `drafting`
-5. [不可信输入、输出编码、XSS 与 SSRF](chapters/ch.security.untrusted-input-xss-ssrf.md) — `ch.security.untrusted-input-xss-ssrf` · `planned`
-6. [FilterChain、SecurityContext、默认拒绝与异常链](chapters/ch.security.spring-security-architecture.md) — `ch.security.spring-security-architecture` · `planned`
-7. [Spring Security 登录、退出、密码编码与 Session 防护](chapters/ch.security.session-authentication.md) — `ch.security.session-authentication` · `planned`
-8. [JWT 验证、Bearer Token 与 Resource Server](chapters/ch.security.jwt-resource-server.md) — `ch.security.jwt-resource-server` · `planned`
+5. [不可信输入、输出编码、XSS 与 SSRF](chapters/ch.security.untrusted-input-xss-ssrf.md) — `ch.security.untrusted-input-xss-ssrf` · `drafting`
+6. [FilterChain、SecurityContext、默认拒绝与异常链](chapters/ch.security.spring-security-architecture.md) — `ch.security.spring-security-architecture` · `drafting`
+7. [Spring Security 登录、退出、密码编码与 Session 防护](chapters/ch.security.session-authentication.md) — `ch.security.session-authentication` · `drafting`
+8. [JWT 验证、Bearer Token 与 Resource Server](chapters/ch.security.jwt-resource-server.md) — `ch.security.jwt-resource-server` · `drafting`
 9. [OAuth 2.0 授权流程、OIDC 登录与客户端边界](chapters/ch.security.oauth2-oidc.md) — `ch.security.oauth2-oidc` · `planned`
 10. [URL/方法授权、RBAC、ABAC 与默认拒绝](chapters/ch.security.authorization-rbac-abac.md) — `ch.security.authorization-rbac-abac` · `planned`
 11. [租户上下文、数据权限与跨租户隔离测试](chapters/ch.security.multitenancy-data-isolation.md) — `ch.security.multitenancy-data-isolation` · `planned`

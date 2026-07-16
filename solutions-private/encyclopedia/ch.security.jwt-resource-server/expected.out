@@ -1,0 +1,2 @@
+challenge_valid=true header=true algorithm=true signature=true claims=true time=true type=true logging=true
+EXERCISE PASS jdk=25 mode=offline

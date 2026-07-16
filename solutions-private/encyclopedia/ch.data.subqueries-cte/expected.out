@@ -1,0 +1,4 @@
+unfinished-devices=D-01,D-02,D-05
+category-counts=compressor:1,pump:2
+final-result=pump:2
+subqueries-cte-solution=PASS

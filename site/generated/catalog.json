@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "ac69f84a0d9a4b64d1635fad807d0d0a1879a28a35706b581db8b16095492099",
+  "input_digest": "9f71453e3aab7ddca938ad6c22b9304d5ca3a237fdee4b5ddeab1278a67b13a3",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 187,
-    "drafting": 68,
+    "planned": 175,
+    "drafting": 80,
     "review": 0,
     "verified": 0
   },
@@ -5861,7 +5861,7 @@
           "volume": "04",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.select-rowsets"
           ],
@@ -5952,7 +5952,7 @@
           "volume": "04",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.aggregates"
           ],
@@ -6049,7 +6049,7 @@
           "volume": "04",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.aggregates"
           ],
@@ -6140,7 +6140,7 @@
           "volume": "04",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.joins",
             "ch.data.subqueries-cte"
@@ -7524,7 +7524,7 @@
           "volume": "05",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.configuration-profiles",
             "ch.java-engineering.maven-reproducible-builds"
@@ -7629,7 +7629,7 @@
           "volume": "05",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.servlet-request-lifecycle",
             "ch.spring.boot-autoconfiguration"
@@ -7734,7 +7734,7 @@
           "volume": "05",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.mvc-routing-binding",
             "ch.java-engineering.json-mapping"
@@ -7835,7 +7835,7 @@
           "volume": "05",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.dto-json-content-negotiation"
           ],
@@ -9342,7 +9342,7 @@
           "volume": "06",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.origin-cors-csrf",
             "ch.spring.problem-details-errors"
@@ -9441,7 +9441,7 @@
           "volume": "06",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.untrusted-input-xss-ssrf"
           ],
@@ -9541,7 +9541,7 @@
           "volume": "06",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.spring-security-architecture",
             "ch.spring.testing-testcontainers"
@@ -9645,7 +9645,7 @@
           "volume": "06",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.session-authentication"
           ],

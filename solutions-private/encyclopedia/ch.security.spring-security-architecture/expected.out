@@ -1,0 +1,2 @@
+challenge_valid=true first_match=true default_deny=true exceptions=true order=true cleanup=true
+EXERCISE PASS jdk=25 mode=offline

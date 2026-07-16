@@ -1,0 +1,8 @@
+cross_site_write_rejected=true
+html_text_safe=true
+event_attribute_rejected=true
+scheme_allowlist=true
+private_address_rejected=true
+redirect_revalidated=true
+dns_rebinding_rejected=true
+verification_report=PASS assertions=9

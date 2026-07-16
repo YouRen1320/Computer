@@ -513,7 +513,7 @@ chapters:
   role: concept
   responsibility: 教授将多行归约为分组结果及组后过滤，不提前引入多表连接或窗口保留明细
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-aggregate
@@ -634,7 +634,7 @@ chapters:
   role: concept
   responsibility: 教授按键组合多表并预测基数，不在本章用子查询或窗口函数隐藏连接错误
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-join-types
@@ -766,7 +766,7 @@ chapters:
   role: concept
   responsibility: 教授把复杂行集拆为可解释中间关系，不把 CTE 当作自动性能优化或递归万能工具
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-subquery
@@ -888,7 +888,7 @@ chapters:
   role: concept
   responsibility: 教授在保留明细行时计算分区分析结果，不用窗口函数替代正确连接和分组
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-window-frame

@@ -1,0 +1,9 @@
+public_chain=PUBLIC_ENTRY
+protected_chain=APPLICATION
+public_login_status=204
+unauthenticated_status=401
+forbidden_status=403
+authorized_status=200
+unknown_status=403
+context_cleared=true
+secret_material_printed=false

@@ -1,0 +1,11 @@
+input-rows=6
+output-rows=6
+correct-partition-starts=T-01:1,T-02:1
+missing-partition-starts=T-01:2,T-02:1
+missing-partition-sequences=W-04:1,W-01:2,W-02:3,W-05:4,W-06:5,W-03:6
+ambiguous-peer-groups=T-01:W-01/W-02,T-02:W-05/W-06
+stable-tiebreakers=T-01:W-01<W-02,T-02:W-05<W-06
+explicit-rows-running=W-01:0,W-02:1,W-03:2,W-04:1,W-05:1,W-06:2
+default-range-running=W-01:1,W-02:1,W-03:2,W-04:1,W-05:2,W-06:2
+first-frame-divergence=W-01:explicit-0/default-1
+window-functions-lab=PASS

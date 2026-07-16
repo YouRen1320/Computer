@@ -1,0 +1,17 @@
+[
+  {
+    "id": "missing-partition",
+    "broken": "ROW_NUMBER() OVER (ORDER BY created_at, work_order_id)",
+    "prediction": "六行形成一个全局分区；T-01 第一行序号为 2 而不是 1"
+  },
+  {
+    "id": "nonunique-window-order",
+    "broken": "PARTITION BY technician_id ORDER BY created_at",
+    "prediction": "W-01/W-02 与 W-05/W-06 是 peers，组内先后未确定"
+  },
+  {
+    "id": "default-peer-frame",
+    "broken": "SUM(done) OVER (PARTITION BY technician_id ORDER BY created_at)",
+    "prediction": "默认 frame 包含当前 peers；W-01 累计提前为 1，W-05 提前为 2"
+  }
+]

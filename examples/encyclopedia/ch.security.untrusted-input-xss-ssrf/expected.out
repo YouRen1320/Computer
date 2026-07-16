@@ -1,0 +1,9 @@
+cross_site_write_rejected=true
+text_rendered_as_data=true
+dangerous_attribute_rejected=true
+allowed_https_url=true
+loopback_rejected=true
+non_https_rejected=true
+redirect_private_rejected=true
+dns_rebinding_rejected=true
+secret_material_printed=false

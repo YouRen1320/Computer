@@ -1,0 +1,8 @@
+password_storage=ADAPTIVE_ONE_WAY
+failure_contract=UNIFORM
+session_rotation=true
+reset_single_use=true
+credential_version_revocation=true
+logout_server_invalidation=true
+concurrent_sessions=2
+verification_report=PASS assertions=9

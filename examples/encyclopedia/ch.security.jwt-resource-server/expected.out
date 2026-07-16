@@ -1,0 +1,9 @@
+valid_token_status=200
+forged_signature_status=401
+expired_token_status=401
+wrong_audience_status=401
+wrong_issuer_status=401
+query_bearer_status=401
+decoded_only_authenticated=false
+full_token_logged=false
+secret_material_printed=false

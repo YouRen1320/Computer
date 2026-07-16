@@ -1,0 +1,13 @@
+event_id,device_id,category,enabled,duration_minutes,technician_id
+E-01,D-01,pump,true,30,T-01
+E-02,D-01,pump,true,60,T-02
+E-03,D-02,pump,true,,T-01
+E-04,D-03,pump,false,20,T-01
+E-05,D-04,compressor,true,90,T-02
+E-06,D-05,compressor,true,150,T-02
+E-07,D-06,sensor,true,,T-03
+E-08,D-07,sensor,true,,T-04
+E-09,D-08,valve,true,15,T-05
+E-10,D-09,,true,40,T-05
+E-11,D-10,,true,,T-06
+E-12,D-11,valve,false,25,T-05

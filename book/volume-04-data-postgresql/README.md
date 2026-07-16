@@ -11,10 +11,10 @@
 2. [PostgreSQL 服务、连接、psql 与脚本执行](chapters/ch.data.postgresql-psql.md) — `ch.data.postgresql-psql` · `drafting`
 3. [SELECT、投影、过滤、NULL、排序与分页](chapters/ch.data.select-rowsets.md) — `ch.data.select-rowsets` · `drafting`
 4. [数值、文本、日期函数与 CASE](chapters/ch.data.scalar-functions.md) — `ch.data.scalar-functions` · `drafting`
-5. [聚合、GROUP BY 与 HAVING](chapters/ch.data.aggregates.md) — `ch.data.aggregates` · `planned`
-6. [INNER/OUTER JOIN、关系基数与重复行](chapters/ch.data.joins.md) — `ch.data.joins` · `planned`
-7. [子查询、CTE 与集合拆解](chapters/ch.data.subqueries-cte.md) — `ch.data.subqueries-cte` · `planned`
-8. [窗口、分区、排序与分析函数](chapters/ch.data.window-functions.md) — `ch.data.window-functions` · `planned`
+5. [聚合、GROUP BY 与 HAVING](chapters/ch.data.aggregates.md) — `ch.data.aggregates` · `drafting`
+6. [INNER/OUTER JOIN、关系基数与重复行](chapters/ch.data.joins.md) — `ch.data.joins` · `drafting`
+7. [子查询、CTE 与集合拆解](chapters/ch.data.subqueries-cte.md) — `ch.data.subqueries-cte` · `drafting`
+8. [窗口、分区、排序与分析函数](chapters/ch.data.window-functions.md) — `ch.data.window-functions` · `drafting`
 9. [INSERT、UPDATE、DELETE、UPSERT 与 RETURNING](chapters/ch.data.dml.md) — `ch.data.dml` · `planned`
 10. [CREATE/ALTER、主外键、唯一、检查与非空约束](chapters/ch.data.ddl-constraints.md) — `ch.data.ddl-constraints` · `planned`
 11. [函数依赖、规范化与关系模式设计](chapters/ch.data.normalization-modeling.md) — `ch.data.normalization-modeling` · `planned`

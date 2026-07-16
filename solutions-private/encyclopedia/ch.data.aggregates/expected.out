@@ -1,0 +1,6 @@
+result-groups=compressor,pump,sensor,<NULL>
+event-counts=2,3,2,2
+device-counts=2,2,2,2
+duration-counts=2,2,0,1
+having-rejected=valve
+aggregates-solution=PASS

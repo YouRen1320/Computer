@@ -1,0 +1,5 @@
+open-left-rows=4
+open-left-devices=D-01,D-02,D-03,D-04
+technician-counts=T-01:2,T-02:1,T-03:0
+having-pass=T-01
+joins-solution=PASS

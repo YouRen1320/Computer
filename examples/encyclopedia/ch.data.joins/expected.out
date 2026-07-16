@@ -1,0 +1,14 @@
+devices=4
+work-orders=4
+technicians=3
+inner-device-work-order-rows=4
+left-detail-rows=5
+detail=D-01|W-01|T-01
+detail=D-01|W-02|T-02
+detail=D-02|W-03|T-01
+detail=D-03|NULL|NULL
+detail=D-04|W-04|NULL
+technician-counts=T-01:2,T-02:1,T-03:0
+full-left-only=T-03
+full-right-only=W-04
+joins-example=PASS

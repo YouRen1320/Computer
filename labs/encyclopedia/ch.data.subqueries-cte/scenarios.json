@@ -1,0 +1,17 @@
+[
+  {
+    "id": "not-in-null",
+    "broken": "d.device_id NOT IN (SELECT e.device_id FROM exclusion AS e)",
+    "prediction": "右集合含 NULL；D-02 为 FALSE，其余非匹配为 UNKNOWN，WHERE 结果为空"
+  },
+  {
+    "id": "wrong-correlation-level",
+    "broken": "w.device_id = w.device_id",
+    "prediction": "内层不再引用当前 d；只要有任意未完成工单，五台设备都通过"
+  },
+  {
+    "id": "wrong-cte-intermediate",
+    "broken": "unfinished_devices 使用 w.status = 'DONE'",
+    "prediction": "第一层错误变为 D-01,D-03；先查中间集即可定位"
+  }
+]

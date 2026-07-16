@@ -1,0 +1,10 @@
+input-rows=12
+enabled-rows=10
+all-group-event-sum=10
+all-group-duration-samples=6
+group=compressor|events=2|devices=2|duration-samples=2|sum=240.0|avg=120.0
+group=pump|events=3|devices=2|duration-samples=2|sum=90.0|avg=45.0
+group=sensor|events=2|devices=2|duration-samples=0|sum=NULL|avg=NULL
+group=<NULL>|events=2|devices=2|duration-samples=1|sum=40.0|avg=40.0
+having-rejected=valve
+aggregates-example=PASS

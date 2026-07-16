@@ -1,0 +1,12 @@
+enabled-total=10
+group-event-sum=10
+group-duration-sum=6
+sensor=events:2,duration-count:0,avg:NULL
+pump=events:3,devices:2
+null-category=events:2,devices:2
+having-pass=compressor,pump,sensor,<NULL>
+having-reject=valve
+empty-without-group=count:0,avg:NULL,rows:1
+empty-with-group=rows:0
+injections=ungrouped-column,aggregate-in-where,count-null
+aggregates-lab=PASS

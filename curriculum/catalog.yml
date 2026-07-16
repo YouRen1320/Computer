@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 13d94bd1c002c9cb9ce4fa7db2fb57b181ae0bcdd7ceded4bc69c672b679f036
+generated_spec_digest: 759d43547da18a94fcc15b1b344c2fa382127ae8f7fc8020586828ed8bafee3e
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -8536,7 +8536,7 @@ chapters:
   role: concept
   responsibility: 教授将多行归约为分组结果及组后过滤，不提前引入多表连接或窗口保留明细
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-aggregate
@@ -8657,7 +8657,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.aggregates.md
   recommended_after:
   - ch.data.scalar-functions
-  spec_digest: e3ca3ced3125559b0d4d7b8dfab656b6193086660e1c2ff125870077d2ca6874
+  spec_digest: 7f52302924297ef1a2c5ac09fb39091768c781bd7c2218010b55b595f65f6447
   route_tags:
   - zero-base
   - accelerated-48
@@ -8667,7 +8667,7 @@ chapters:
   role: concept
   responsibility: 教授按键组合多表并预测基数，不在本章用子查询或窗口函数隐藏连接错误
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-join-types
@@ -8799,7 +8799,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.joins.md
   recommended_after:
   - ch.data.aggregates
-  spec_digest: 1eedeb3d7cec81a9290b963621c83e736913bce3a9d6065306ba388abe7b2964
+  spec_digest: 58ff5bc6d26f42f380bec4bdcc798d6b95e292c70b175dd27f4a3b94f7889113
   route_tags:
   - zero-base
   - accelerated-48
@@ -8809,7 +8809,7 @@ chapters:
   role: concept
   responsibility: 教授把复杂行集拆为可解释中间关系，不把 CTE 当作自动性能优化或递归万能工具
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-subquery
@@ -8931,7 +8931,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.subqueries-cte.md
   recommended_after:
   - ch.data.joins
-  spec_digest: 77b1d1c0c5a2cb32c02fdabd1f5fb7a8c8fcb8b0b2e271dee7cc63c22594c2b1
+  spec_digest: 62d8d6cb6ee80a40fc83a5d6a0fbd9179451d230c69c2171aab7a0c97e791c28
   route_tags:
   - zero-base
   - accelerated-48
@@ -8941,7 +8941,7 @@ chapters:
   role: concept
   responsibility: 教授在保留明细行时计算分区分析结果，不用窗口函数替代正确连接和分组
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-window-frame
@@ -9076,7 +9076,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.window-functions.md
   recommended_after:
   - ch.data.subqueries-cte
-  spec_digest: 529af508eb76e4db9590e525cbbeb7cf8c5a69ab02ef023e1eaf4508661d49a5
+  spec_digest: 6794fa2a8dd9d8be7a575385c6127b6a7398838aa680fb7bca28d83e2bf1073a
   route_tags:
   - zero-base
   - accelerated-48
@@ -11014,7 +11014,7 @@ chapters:
   role: practice
   responsibility: 教授 Boot 如何根据类路径和条件装配应用，不把自动配置当作不可检查的魔法
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-boot-startup
@@ -11163,7 +11163,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.boot-autoconfiguration.md
   recommended_after:
   - ch.spring.configuration-profiles
-  spec_digest: cf82f5aef3d099c163e93823002bac5d997359a13b82054662569c863c4a91a9
+  spec_digest: ade8c554700c597ef6fdc9352f8d8c9e83b00a54ec5495d1639be675227ffdf9
   route_tags:
   - zero-base
   - accelerated-48
@@ -11174,7 +11174,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring MVC 入站路由和 HTTP 结果契约，不在本章处理 JSON 兼容、Bean Validation 或全局异常映射
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-mvc-routing
@@ -11321,7 +11321,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md
   recommended_after:
   - ch.spring.boot-autoconfiguration
-  spec_digest: 9b8260c97719ec2752390d011f0ce8ae3431da0cb7591501b9373cadef99bbb5
+  spec_digest: 43e49e887ff2aeda0ddf79ad8a17932db57ed2bf0516cc844b08fa558a3898a0
   route_tags:
   - zero-base
   - accelerated-48
@@ -11332,7 +11332,7 @@ chapters:
   role: practice
   responsibility: 教授 API DTO 与领域对象分离及媒体类型协商，不在本章定义校验规则或数据库实体映射
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-dto-json
@@ -11472,7 +11472,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.dto-json-content-negotiation.md
   recommended_after:
   - ch.spring.mvc-routing-binding
-  spec_digest: a8136f59c4bf3e61b2f45cecdae698a79b6fb18163af6abfc00a2f574c863350
+  spec_digest: 962068115f15db585323f03704789e0b120d4a3edb31b1e7512b47099cf30995
   route_tags:
   - zero-base
   - accelerated-48
@@ -11483,7 +11483,7 @@ chapters:
   role: practice
   responsibility: 教授在 API 边界声明并组合输入不变量，不把校验代替授权、事务或数据库约束
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-field-validation
@@ -11616,7 +11616,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.validation.md
   recommended_after:
   - ch.spring.dto-json-content-negotiation
-  spec_digest: '0528960e68d63f2e5e681154188f47cfe6303c10d78169e1561b4c11846d5700'
+  spec_digest: 72f4ddea1a6de18bfe0ba10dc78cd23321760e91fdcb466a078d307f8c540555
   route_tags:
   - zero-base
   - accelerated-48
@@ -13749,7 +13749,7 @@ chapters:
   role: concept
   responsibility: 教授数据从不可信源到危险汇的防护边界，不用输入校验替代上下文输出编码或出站控制
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-xss-output
@@ -13889,7 +13889,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md
   recommended_after:
   - ch.security.origin-cors-csrf
-  spec_digest: 58745fc6a9515a54af47afa926ad7834fb95e34584cb167f3e7c2fb78931e56d
+  spec_digest: fe743e45aec9770a05b5c233514a9eabf25649d1f17778ac2a75ae6afdee213e
   route_tags:
   - zero-base
   - accelerated-48
@@ -13900,7 +13900,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring Security 请求链和认证上下文架构，不在本章完成具体登录、JWT 或业务授权策略
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-security-chain
@@ -14031,7 +14031,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.spring-security-architecture.md
   recommended_after:
   - ch.security.untrusted-input-xss-ssrf
-  spec_digest: 501843a33acb1abd7298cc61c1ef04c93847aed96079cfb70d9c81201c1e9536
+  spec_digest: d20afad1763a7a6e552df7516af9ed27748210cd201d58c3f54a51cfb44178cb
   route_tags:
   - zero-base
   - accelerated-48
@@ -14042,7 +14042,7 @@ chapters:
   role: practice
   responsibility: 实现基于 Session 的认证生命周期和负向路径，不在本章混入 JWT 或 OAuth 客户端流程
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-session-login
@@ -14191,7 +14191,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md
   recommended_after:
   - ch.security.spring-security-architecture
-  spec_digest: 80d15b864047c78b120d6ed6a129605efebc8499be0fe23aa01d6846ce3c4601
+  spec_digest: 7754d47e66dd52b063f620e6e59866157f551d3f3a6026a6034214f71f704694
   route_tags:
   - zero-base
   - accelerated-48
@@ -14202,7 +14202,7 @@ chapters:
   role: practice
   responsibility: 教授资源服务器验证自包含 Token 的边界，不把解码等同于验签或把 JWT 当作可撤销 Session
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-jwt-validation
@@ -14337,7 +14337,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.jwt-resource-server.md
   recommended_after:
   - ch.security.session-authentication
-  spec_digest: 7d0503c7f7c6c71d879d732b07d699aa5398169ca4cd6d75182eaedc9291f553
+  spec_digest: 47822bc2aa1282cd2444c047a9eca5a73cdf834c622c70e70f3abcda9aafe2e8
   route_tags:
   - zero-base
   - accelerated-48

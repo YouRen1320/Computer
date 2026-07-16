@@ -546,7 +546,7 @@ chapters:
   role: practice
   responsibility: 教授 Boot 如何根据类路径和条件装配应用，不把自动配置当作不可检查的魔法
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-boot-startup
@@ -695,7 +695,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring MVC 入站路由和 HTTP 结果契约，不在本章处理 JSON 兼容、Bean Validation 或全局异常映射
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-mvc-routing
@@ -843,7 +843,7 @@ chapters:
   role: practice
   responsibility: 教授 API DTO 与领域对象分离及媒体类型协商，不在本章定义校验规则或数据库实体映射
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-dto-json
@@ -984,7 +984,7 @@ chapters:
   role: practice
   responsibility: 教授在 API 边界声明并组合输入不变量，不把校验代替授权、事务或数据库约束
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-field-validation

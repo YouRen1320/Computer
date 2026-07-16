@@ -1,0 +1,8 @@
+public_endpoint_exact=true
+protected_default_authenticated=true
+unknown_default_denied=true
+unauthenticated_status=401
+forbidden_status=403
+filter_order=context_before_authorization
+context_cleared=true
+verification_report=PASS assertions=9

@@ -1,0 +1,7 @@
+input-rows=6
+output-rows=6
+partition-starts=T-01:1,T-02:1
+running-completed=T-01:0/1/2,T-02:1/1/2
+previous-gaps=T-01:NULL/0/3600,T-02:NULL/5400/0
+next-gaps=T-01:0/3600/NULL,T-02:5400/0/NULL
+window-functions-solution=PASS

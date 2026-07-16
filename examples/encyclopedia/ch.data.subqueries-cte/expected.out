@@ -1,0 +1,9 @@
+devices=5
+work-orders=6
+unfinished-devices=D-01,D-02,D-05
+work-order-counts=D-01:2,D-02:1,D-03:2,D-04:0,D-05:1
+category-counts=compressor:1,pump:2
+flat-result=pump:2
+cte-result=pump:2
+equivalent-result=PASS
+subqueries-cte-example=PASS

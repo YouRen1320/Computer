@@ -1,0 +1,10 @@
+key-match-rows=4
+left-detail-rows=5
+cartesian-rows=16
+open-filter-in-on-rows=4
+open-filter-in-where-rows=3
+lost-device=D-03
+technician-correct=T-01:2,T-02:1,T-03:0
+technician-count-star=T-01:2,T-02:1,T-03:1
+having-pass=T-01
+joins-lab=PASS

@@ -538,7 +538,7 @@ chapters:
   role: concept
   responsibility: 教授数据从不可信源到危险汇的防护边界，不用输入校验替代上下文输出编码或出站控制
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-xss-output
@@ -678,7 +678,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring Security 请求链和认证上下文架构，不在本章完成具体登录、JWT 或业务授权策略
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-security-chain
@@ -809,7 +809,7 @@ chapters:
   role: practice
   responsibility: 实现基于 Session 的认证生命周期和负向路径，不在本章混入 JWT 或 OAuth 客户端流程
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-session-login
@@ -958,7 +958,7 @@ chapters:
   role: practice
   responsibility: 教授资源服务器验证自包含 Token 的边界，不把解码等同于验签或把 JWT 当作可撤销 Session
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-jwt-validation

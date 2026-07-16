@@ -1,0 +1,5 @@
+[
+  {"id": "ungrouped-column", "broken": "SELECT s.category, s.device_id, COUNT(*) GROUP BY s.category", "evidence": "pump contains D-01 and D-02"},
+  {"id": "aggregate-in-where", "broken": "WHERE COUNT(DISTINCT s.device_id) >= 2", "evidence": "groups do not exist during WHERE"},
+  {"id": "count-null", "broken": "COUNT(s.duration_minutes) AS enabled_event_count", "evidence": "sensor has two events and zero non-null durations"}
+]
