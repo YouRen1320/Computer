@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "7abfd6ed59bdb649084aa466f032d664a8fc35a742ee7208d16d4e8f6123df80",
+  "input_digest": "70da42e80490c5f464bf701f943f3fd7bc226a5e9084b97115d9b6fc7f8ff9bb",
   "volumes": [
     {
       "id": "00",
@@ -138,7 +138,7 @@
           "title": "AI 协作、隐私、补丁审查与可证伪验证",
           "order": 15,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.ai-assisted-verification.md",
           "publishable": false
         }
@@ -444,7 +444,7 @@
           "title": "字节流、字符流、资源所有权与 try-with-resources",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.io-resource-lifecycle.md",
           "publishable": false
         },
@@ -453,7 +453,7 @@
           "title": "Path、Files、缓冲、字符集与原子文件操作",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.nio-files-charsets.md",
           "publishable": false
         },
@@ -462,7 +462,7 @@
           "title": "JSON 数据边界、对象映射与未知字段处理",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.json-mapping.md",
           "publishable": false
         },
@@ -471,7 +471,7 @@
           "title": "线程、Java 内存模型、同步与锁",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.threads-jmm.md",
           "publishable": false
         },

@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "goal": "FactoryCare 上门服务计价在 minutes=0 时返回 0，其他已存在行为不变。",
+  "context": [
+    {
+      "classification": "public",
+      "description": "计价规则按每个已开始的 30 分钟区间收费 120 个教学金额单位。"
+    },
+    {
+      "classification": "synthetic",
+      "description": "示例中的工单、金额和标识均为教学合成数据。"
+    }
+  ],
+  "constraints": [
+    "只允许替换 src/quote_rule.json",
+    "不得修改、删除或弱化任何 oracle",
+    "不得联网、增加依赖、读写凭据或执行外部副作用",
+    "候选输出里的成功声明不是验收证据"
+  ],
+  "done_when": [
+    "baseline-regression 与 requested-feature 两套独立 oracle 都通过",
+    "每个候选 hunk 都有接受或拒绝理由",
+    "拒绝候选不改变工作树摘要",
+    "接受候选可回滚到原摘要，且回滚后 baseline-regression 仍通过"
+  ]
+}

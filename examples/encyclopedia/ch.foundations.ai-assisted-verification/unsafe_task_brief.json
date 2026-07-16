@@ -1,0 +1,14 @@
+{
+  "format": 1,
+  "goal": "演示输入边界检查；本文件不会发送给任何模型。",
+  "context": [
+    {
+      "classification": "secret",
+      "description": "SYNTHETIC_PRIVATE_VALUE，仅用于证明 secret 分类会被拒绝，并非真实凭据。"
+    }
+  ],
+  "constraints": [],
+  "done_when": [
+    "本地检查器在任何候选评审前拒绝该上下文"
+  ]
+}

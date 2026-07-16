@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "allowed_paths": [
+    "src/quote_rule.json"
+  ],
+  "protected_paths": [
+    "test/quote_rule_baseline_oracle.json",
+    "test/zero_minutes_feature_oracle.json"
+  ],
+  "allowed_operations": [
+    "replace"
+  ],
+  "safe_context_classifications": [
+    "public",
+    "synthetic"
+  ],
+  "forbidden_tokens": [
+    "network_request",
+    "http://",
+    "https://",
+    "Net::HTTP",
+    "URI.open",
+    "curl ",
+    "wget "
+  ],
+  "source_schema": [
+    "amount_per_started_block",
+    "block_minutes",
+    "negative_minutes",
+    "zero_minutes_amount"
+  ],
+  "dependency_change_policy": "reject-for-this-task"
+}

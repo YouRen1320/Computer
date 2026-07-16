@@ -21,4 +21,4 @@
 12. [预期值、测试预言、断言、AAA 与测试层级](chapters/ch.foundations.testing-oracles.md) — `ch.foundations.testing-oracles` · `drafting`
 13. [依赖、包管理、构建生命周期与可重复性](chapters/ch.foundations.dependencies-build-packages.md) — `ch.foundations.dependencies-build-packages` · `drafting`
 14. [镜像、容器、卷、端口与容器网络](chapters/ch.foundations.docker-basics.md) — `ch.foundations.docker-basics` · `drafting`
-15. [AI 协作、隐私、补丁审查与可证伪验证](chapters/ch.foundations.ai-assisted-verification.md) — `ch.foundations.ai-assisted-verification` · `planned`
+15. [AI 协作、隐私、补丁审查与可证伪验证](chapters/ch.foundations.ai-assisted-verification.md) — `ch.foundations.ai-assisted-verification` · `drafting`

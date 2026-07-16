@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "files": {
+    "src/quote_rule.json": {
+      "amount_per_started_block": 120,
+      "block_minutes": 30,
+      "negative_minutes": "reject",
+      "zero_minutes_amount": 120
+    },
+    "test/quote_rule_baseline_oracle.json": {
+      "cases": [
+        {
+          "expected": 120,
+          "minutes": 1,
+          "name": "one-minute-started-block"
+        },
+        {
+          "expected": 120,
+          "minutes": 30,
+          "name": "exact-first-boundary"
+        },
+        {
+          "expected": 240,
+          "minutes": 31,
+          "name": "second-started-block"
+        },
+        {
+          "expected_error": "minutes must be non-negative",
+          "minutes": -1,
+          "name": "negative-minutes"
+        }
+      ],
+      "suite": "baseline-regression"
+    },
+    "test/zero_minutes_feature_oracle.json": {
+      "cases": [
+        {
+          "expected": 0,
+          "minutes": 0,
+          "name": "zero-minutes-is-free"
+        }
+      ],
+      "suite": "requested-feature"
+    }
+  }
+}

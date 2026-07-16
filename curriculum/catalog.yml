@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: d8094e5552ece067df56468c594f3cb052f8c3ca85e0272d6847cd24132416b0
+generated_spec_digest: 59809b2ebb688dcf7738093ec088c713c68a9eba4ddab78cdd888a19fa876fe7
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -1942,7 +1942,7 @@ chapters:
   role: synthesis
   responsibility: 建立 AI 辅助开发的安全审查闭环，不把模型自述、一次成功或未审补丁当作事实
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ai-collaboration
@@ -2083,7 +2083,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.ai-assisted-verification.md
   recommended_after:
   - ch.foundations.docker-basics
-  spec_digest: 832556daf0d86f96c3b192b9cbae7ba59408f3fffa9995ea4450961c6fe972f9
+  spec_digest: de5e11382d2125c16be4e4af416cbb917fae34c66f9ae5393e92644a2c90f37d
   route_tags:
   - zero-base
   - accelerated-48
@@ -6488,7 +6488,7 @@ chapters:
   role: concept
   responsibility: 教授具体 IO 资源的所有权和确定性关闭，不在本章处理 NIO 原子移动或 JSON 映射
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-io-streams
@@ -6624,7 +6624,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.io-resource-lifecycle.md
   recommended_after:
   - ch.java-engineering.functional-pipelines
-  spec_digest: 82cedbd140b864c31c7dd5410c45e3c9d4951e40f2dbad22bcbdbe2d8952fc4f
+  spec_digest: 3e0eadd64ca47892ccf30af22aae247b3eb560b9ad9072471bb0845d59fd0aa9
   route_tags:
   - zero-base
   - accelerated-48
@@ -6635,7 +6635,7 @@ chapters:
   role: practice
   responsibility: 教授现代文件 API 和编码显式性，不在本章解析业务 JSON 或实现分布式文件锁
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-nio-path-files
@@ -6760,7 +6760,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.nio-files-charsets.md
   recommended_after:
   - ch.java-engineering.io-resource-lifecycle
-  spec_digest: ddb9ad2d18688285eaab1fe55b759f0516353180cc516125771de2cf8ecc9f1a
+  spec_digest: 247b3949969ece348f497b1afb088af9e2509bd407d5c2afb12af17fddbcd005
   route_tags:
   - zero-base
   - accelerated-48
@@ -6771,7 +6771,7 @@ chapters:
   role: practice
   responsibility: 教授外部 JSON 与内部类型之间的显式映射和兼容策略，不把 JSON 当作领域模型或数据库 schema
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: json-shape-mapping
@@ -6932,7 +6932,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.json-mapping.md
   recommended_after:
   - ch.java-engineering.nio-files-charsets
-  spec_digest: b741c0d684f59a3887d70e395cdc1ceb95f536dcc0fc8145b31c88c310c5a414
+  spec_digest: 3bccf0b1fd6ef659191023f2e6ce25d49576737ad7936a58b43db4fa199c8457
   route_tags:
   - zero-base
   - accelerated-48
@@ -6943,7 +6943,7 @@ chapters:
   role: concept
   responsibility: 教授线程间可见性、原子性和互斥，不在本章引入 Executor 调度或分布式锁
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-thread-jmm
@@ -7088,7 +7088,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.threads-jmm.md
   recommended_after:
   - ch.java-engineering.json-mapping
-  spec_digest: f67d95730f5888c0cad6b455c4cb944603a246931386ea779941b54cc7e3b01d
+  spec_digest: b77b1cb234a4ca4df537872dc428672a4fb2c1c93452d19f94bcd3c00b24ebde
   route_tags:
   - zero-base
   - accelerated-48

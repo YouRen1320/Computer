@@ -1071,7 +1071,7 @@ chapters:
   role: concept
   responsibility: 教授具体 IO 资源的所有权和确定性关闭，不在本章处理 NIO 原子移动或 JSON 映射
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-io-streams
@@ -1207,7 +1207,7 @@ chapters:
   role: practice
   responsibility: 教授现代文件 API 和编码显式性，不在本章解析业务 JSON 或实现分布式文件锁
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-nio-path-files
@@ -1332,7 +1332,7 @@ chapters:
   role: practice
   responsibility: 教授外部 JSON 与内部类型之间的显式映射和兼容策略，不把 JSON 当作领域模型或数据库 schema
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: json-shape-mapping
@@ -1493,7 +1493,7 @@ chapters:
   role: concept
   responsibility: 教授线程间可见性、原子性和互斥，不在本章引入 Executor 调度或分布式锁
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-thread-jmm

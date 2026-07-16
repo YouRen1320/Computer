@@ -1784,7 +1784,7 @@ chapters:
   role: synthesis
   responsibility: 建立 AI 辅助开发的安全审查闭环，不把模型自述、一次成功或未审补丁当作事实
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ai-collaboration
