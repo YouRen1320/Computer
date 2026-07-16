@@ -1252,7 +1252,7 @@ chapters:
   role: concept
   responsibility: 用协议无关的契约语言描述 API 行为，不实现框架路由、鉴权或数据库事务
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: api-resource-error
@@ -1372,7 +1372,7 @@ chapters:
   role: foundation
   responsibility: 建立从需求到可复现预言的验证方法，不绑定某一语言测试框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: test-oracle

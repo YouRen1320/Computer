@@ -542,7 +542,7 @@ chapters:
   role: concept
   responsibility: 教授自然顺序和外部排序策略，不在本章实现通用排序算法或数据库 ORDER BY
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-order-contract
@@ -668,7 +668,7 @@ chapters:
   role: concept
   responsibility: 用可测规模解释时间空间成本并选择基础结构，不追求算法竞赛技巧或严格数学证明
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: algorithm-complexity

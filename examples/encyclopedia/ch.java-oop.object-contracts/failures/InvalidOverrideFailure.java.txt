@@ -1,0 +1,12 @@
+final class InvalidOverrideFailure {
+    private final String value;
+
+    InvalidOverrideFailure(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(InvalidOverrideFailure other) {
+        return other != null && value.equals(other.value);
+    }
+}

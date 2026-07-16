@@ -1,0 +1,6 @@
+class UnauthorizedSubtypeFailure {
+    sealed interface Command permits Assign {
+    }
+    record Assign(String id) implements Command { }
+    record DeleteEverything(String reason) implements Command { }
+}

@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "40c1dcb0223e2805cf744202942cd5ece69b9378ce2579a65430b1ca9caf8065",
+  "input_digest": "1df8ba4c7011154f046b16a5329b721b3aa5e30d35682cad1ba353475dff64bc",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 222,
-    "drafting": 33,
+    "planned": 216,
+    "drafting": 39,
     "review": 0,
     "verified": 0
   },
@@ -974,7 +974,7 @@
           "volume": "00",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.http-curl"
           ],
@@ -1066,7 +1066,7 @@
           "volume": "00",
           "order": 12,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -3313,7 +3313,7 @@
           "volume": "02",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.interfaces-polymorphism"
           ],
@@ -3411,7 +3411,7 @@
           "volume": "02",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.final-immutability"
           ],
@@ -4094,7 +4094,7 @@
           "volume": "03",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-engineering.sequential-collections"
           ],
@@ -4188,7 +4188,7 @@
           "volume": "03",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-engineering.associative-collections",
             "ch.java-engineering.sorting-comparators"

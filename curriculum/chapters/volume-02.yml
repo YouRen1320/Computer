@@ -1040,7 +1040,7 @@ chapters:
   role: concept
   responsibility: 教授用受限类型表达有限状态和数据载体，不替代完整领域聚合建模
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-enum-record
@@ -1169,7 +1169,7 @@ chapters:
   role: concept
   responsibility: 教授对象值相等、哈希一致性和可读表示，不提前用 Set/Map 行为证明契约
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-equality-hash

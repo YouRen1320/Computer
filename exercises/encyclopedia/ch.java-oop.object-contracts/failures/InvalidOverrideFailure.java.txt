@@ -1,0 +1,6 @@
+final class InvalidOverrideFailure {
+    @Override
+    public boolean equals(InvalidOverrideFailure other) {
+        return this == other;
+    }
+}

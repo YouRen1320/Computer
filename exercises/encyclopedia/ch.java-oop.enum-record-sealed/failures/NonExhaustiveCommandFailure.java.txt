@@ -1,0 +1,15 @@
+class NonExhaustiveCommandFailure {
+    sealed interface Command permits Assign, Start, Close, Cancel { }
+    record Assign(String id) implements Command { }
+    record Start(String id) implements Command { }
+    record Close(String id) implements Command { }
+    record Cancel(String reason) implements Command { }
+
+    static String describe(Command command) {
+        return switch (command) {
+            case Assign assign -> "ASSIGN";
+            case Start start -> "START";
+            case Close close -> "CLOSE";
+        };
+    }
+}

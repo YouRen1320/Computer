@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 546c2d181097f0d04c18d5a5bb022c9b61e2aa3598a479b77e8414f5e1f70af0
+generated_spec_digest: 1691cd092bae2458b800e25a1cd7e1e367fbe986c5b889f59cec22754c818204
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -1367,7 +1367,7 @@ chapters:
   role: concept
   responsibility: 用协议无关的契约语言描述 API 行为，不实现框架路由、鉴权或数据库事务
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: api-resource-error
@@ -1487,7 +1487,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md
   recommended_after:
   - ch.foundations.http-curl
-  spec_digest: e02fd1cea856a3d741f1c8b2e8996dc958c748ad15cd33f94d6abce59aa54d63
+  spec_digest: 6d4c363496604115e46cb92fa9d64e436ccf60ffd2dce5ec73e7359c1cbe47bf
   route_tags:
   - zero-base
   - accelerated-48
@@ -1498,7 +1498,7 @@ chapters:
   role: foundation
   responsibility: 建立从需求到可复现预言的验证方法，不绑定某一语言测试框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: test-oracle
@@ -1624,7 +1624,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md
   recommended_after:
   - ch.foundations.api-contract-basics
-  spec_digest: 2b6d6aaf08e1c517f3a9c4224ea277a16b3e1f9ad43c70684075923440b54602
+  spec_digest: 821e93a50c5d7922d43f73922df0e12d86e81c8699ba9c52e7c3e61e2e312388
   route_tags:
   - zero-base
   - accelerated-48
@@ -4797,7 +4797,7 @@ chapters:
   role: concept
   responsibility: 教授用受限类型表达有限状态和数据载体，不替代完整领域聚合建模
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-enum-record
@@ -4926,7 +4926,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.enum-record-sealed.md
   recommended_after:
   - ch.java-oop.interfaces-polymorphism
-  spec_digest: 3420878343de67f81ba976b305d68ccb261c2003ebfcac1da552298f91d4b349
+  spec_digest: a8ee4fc34cff30086c64a82fc2e05e7dbfede6f797afc2f848710ebdabae9b74
   route_tags:
   - zero-base
   - accelerated-48
@@ -4937,7 +4937,7 @@ chapters:
   role: concept
   responsibility: 教授对象值相等、哈希一致性和可读表示，不提前用 Set/Map 行为证明契约
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-equality-hash
@@ -5062,7 +5062,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.object-contracts.md
   recommended_after:
   - ch.java-oop.enum-record-sealed
-  spec_digest: 6fac52ae503f567febcd3cc751576b8e840d9de6aaced55e0efdf0ac432495bd
+  spec_digest: 473ce0c13f0e55f3b32032775b46ad22953a5fa4c134dcf390b8dc1139e58cf3
   route_tags:
   - zero-base
   - accelerated-48
@@ -5919,7 +5919,7 @@ chapters:
   role: concept
   responsibility: 教授自然顺序和外部排序策略，不在本章实现通用排序算法或数据库 ORDER BY
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-order-contract
@@ -6045,7 +6045,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.sorting-comparators.md
   recommended_after:
   - ch.java-engineering.associative-collections
-  spec_digest: e41986fba537c80cd7814448f750ae918411efb167c2b8430c734f02678034ab
+  spec_digest: 7e49ec03e0a2de2907fda4f52f1d9a7f433236467b598409c57c271384f57748
   route_tags:
   - zero-base
   - accelerated-48
@@ -6055,7 +6055,7 @@ chapters:
   role: concept
   responsibility: 用可测规模解释时间空间成本并选择基础结构，不追求算法竞赛技巧或严格数学证明
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: algorithm-complexity
@@ -6194,7 +6194,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.complexity-algorithms.md
   recommended_after:
   - ch.java-engineering.sorting-comparators
-  spec_digest: 7a2e6902e33b19f6a933803f8b7f2dcd76104865076aeb6631c3d9c8e558e882
+  spec_digest: b368d062721931cf254acba458289615aecd1b4f8480bd7abeb98fbd4f696eba
   route_tags:
   - zero-base
   - accelerated-48

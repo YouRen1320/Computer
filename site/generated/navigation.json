@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "40c1dcb0223e2805cf744202942cd5ece69b9378ce2579a65430b1ca9caf8065",
+  "input_digest": "1df8ba4c7011154f046b16a5329b721b3aa5e30d35682cad1ba353475dff64bc",
   "volumes": [
     {
       "id": "00",
@@ -102,7 +102,7 @@
           "title": "API 资源、错误、版本、分页、缓存与幂等语义",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md",
           "publishable": false
         },
@@ -111,7 +111,7 @@
           "title": "预期值、测试预言、断言、AAA 与测试层级",
           "order": 12,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md",
           "publishable": false
         },
@@ -330,7 +330,7 @@
           "title": "enum、record、sealed 与受限类型建模",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.enum-record-sealed.md",
           "publishable": false
         },
@@ -339,7 +339,7 @@
           "title": "equals、hashCode 与 toString 直接契约",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.object-contracts.md",
           "publishable": false
         },
@@ -408,7 +408,7 @@
           "title": "Comparable、Comparator 与稳定排序",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.sorting-comparators.md",
           "publishable": false
         },
@@ -417,7 +417,7 @@
           "title": "复杂度、搜索、排序与基础数据结构选择",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.complexity-algorithms.md",
           "publishable": false
         },
