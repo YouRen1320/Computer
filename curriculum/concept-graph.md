@@ -4,7 +4,7 @@
 - edition: `2026.2-draft`
 - chapters: 255
 - capabilities: 94
-- spec digest: `b66d0db489d799880e76a4d8bc3d193e7ddec882388ac5f00345f28c107a90f4`
+- spec digest: `1adff05e7cbcc13298fe7df0e5b4277a60078aaf5f4bd5d6cd192e20721ad333`
 
 ## Capability teachers
 

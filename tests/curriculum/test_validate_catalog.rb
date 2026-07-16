@@ -64,6 +64,7 @@ class CurriculumCompilerTest < Minitest::Test
     spec.instance_variable_set(:@edition, {
       "schema_version" => 2,
       "edition" => "2026.2-draft",
+      "status" => "authoring",
       "volume_ids" => ["00"],
       "chapter_count_target" => 2,
       "capability_count_target" => 1
@@ -110,6 +111,85 @@ class CurriculumCompilerTest < Minitest::Test
     spec.send(:validate_top_level!)
     count_errors = spec.collector.errors.select { |issue| %w[E_CHAPTER_COUNT E_CAPABILITY_COUNT].include?(issue.code) }
     assert_empty count_errors
+  end
+
+  def test_edition_status_must_be_one_of_the_compiler_owned_phases
+    spec = Curriculum::SpecSet.new(ROOT).load!
+
+    %w[architecture authoring release-candidate published].each do |phase|
+      spec.edition["status"] = phase
+      spec.collector.errors.clear
+      spec.send(:validate_top_level!)
+      assert_empty edition_status_errors(spec), "#{phase.inspect} should be a valid edition phase"
+    end
+
+    {
+      "missing" => :missing,
+      "nil" => nil,
+      "integer" => 1,
+      "empty" => "",
+      "typo" => "released"
+    }.each do |label, value|
+      value == :missing ? spec.edition.delete("status") : spec.edition["status"] = value
+      spec.collector.errors.clear
+      spec.send(:validate_top_level!)
+
+      errors = edition_status_errors(spec)
+      assert_equal 1, errors.length, "#{label} should produce one stable /status diagnostic"
+      assert_includes errors.first.message, Curriculum::EDITION_PHASE_STATUSES.keys.join(", ")
+    end
+  end
+
+  def test_edition_phase_chapter_status_matrix_covers_all_sixteen_combinations
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    expected_matrix = {
+      "architecture" => %w[planned],
+      "authoring" => %w[planned drafting review verified],
+      "release-candidate" => %w[review verified],
+      "published" => %w[verified]
+    }
+    assert_equal expected_matrix, Curriculum::EDITION_PHASE_STATUSES
+
+    expected_matrix.each do |phase, allowed_statuses|
+      Curriculum::CHAPTER_STATUSES.each do |chapter_status|
+        spec.edition["status"] = phase
+        spec.volume_specs.each_value do |volume_spec|
+          Array(volume_spec["chapters"]).each do |chapter|
+            chapter["status"] = chapter_status if chapter.is_a?(Hash)
+          end
+        end
+        spec.collector.errors.clear
+        spec.send(:validate_chapters!)
+
+        errors = spec.collector.errors.select { |issue| issue.code == "E_STATUS_PHASE" }
+        if allowed_statuses.include?(chapter_status)
+          assert_empty errors, "#{phase} should allow #{chapter_status}"
+        else
+          assert_equal spec.chapters.length, errors.length, "#{phase} should reject #{chapter_status} for every chapter"
+        end
+      end
+    end
+  end
+
+  def test_edition_input_cannot_widen_the_compiler_owned_status_policy
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec.edition["allowed_statuses"] = ["deployed"]
+    spec.edition["architecture_allowed_statuses"] = ["deployed"]
+    spec.collector.errors.clear
+    spec.send(:validate_top_level!)
+
+    unknown_field_error = spec.collector.errors.find do |issue|
+      issue.path == "curriculum/edition.yml" && issue.message.include?("unknown fields")
+    end
+    refute_nil unknown_field_error
+    assert_includes unknown_field_error.message, "allowed_statuses"
+    assert_includes unknown_field_error.message, "architecture_allowed_statuses"
+
+    first_chapter = spec.volume_specs.values.first.fetch("chapters").first
+    first_chapter["status"] = "deployed"
+    spec.collector.errors.clear
+    spec.send(:validate_chapters!)
+    assert spec.collector.errors.any? { |issue| issue.code == "E_SCHEMA" && issue.message.include?("/status invalid") }
   end
 
   def test_known_generic_build_outcome_is_rejected
@@ -368,6 +448,7 @@ class CurriculumCompilerTest < Minitest::Test
     attach_application_receipt(spec, receipt, status: "applied")
     assert_empty application_receipt_errors(spec)
 
+    spec.edition["status"] = "authoring"
     chapter = spec.chapters.first
     chapter["status"] = "verified"
 
@@ -406,6 +487,12 @@ class CurriculumCompilerTest < Minitest::Test
   end
 
   private
+
+  def edition_status_errors(spec)
+    spec.collector.errors.select do |issue|
+      issue.path == "curriculum/edition.yml" && issue.message.start_with?("/status must be one of")
+    end
+  end
 
   # Lifecycle tests must construct the state they exercise instead of
   # inheriting whether the real repository is currently ready or applied.

@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: b66d0db489d799880e76a4d8bc3d193e7ddec882388ac5f00345f28c107a90f4
+generated_spec_digest: 1adff05e7cbcc13298fe7df0e5b4277a60078aaf5f4bd5d6cd192e20721ad333
 edition: 2026.2-draft
 gates_id: factorycare-stage-gates
 canonical_source: ASSESSMENTS.md and PROGRESS.md G0-G8

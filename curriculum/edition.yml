@@ -25,9 +25,7 @@ volume_ids:
   - "15"
 chapter_id_pattern: ^ch\.[a-z0-9]+(?:-[a-z0-9]+)*\.[a-z0-9]+(?:-[a-z0-9]+)*$
 allowed_levels: [L1, L2, L2+, L3, L1-L2]
-allowed_statuses: [planned, drafting, review, verified]
 allowed_roles: [foundation, concept, practice, synthesis, review, project, reference]
-architecture_allowed_statuses: [planned]
 outcome_contract:
   ids: [explain, build, diagnose]
   kinds: [concept, independent-build, fault-diagnosis]

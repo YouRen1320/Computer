@@ -20,6 +20,13 @@ module Curriculum
   GENERATED_BY = "scripts/generate-curriculum.rb"
   GENERATED_MARKER = "GENERATED: factorycare-curriculum; DO NOT EDIT"
   PLACEHOLDER_MARKER = "GENERATED: factorycare-planned-placeholder; safe-to-overwrite: planned-only"
+  CHAPTER_STATUSES = %w[planned drafting review verified].freeze
+  EDITION_PHASE_STATUSES = {
+    "architecture" => %w[planned].freeze,
+    "authoring" => CHAPTER_STATUSES,
+    "release-candidate" => %w[review verified].freeze,
+    "published" => %w[verified].freeze
+  }.freeze
   STATIC_GENERATED_OUTPUTS = %w[
     curriculum/catalog.yml
     curriculum/routes/zero-base.yml
@@ -312,13 +319,20 @@ module Curriculum
       expect_hash(edition, "curriculum/edition.yml", "/")
       reject_unknown_keys(edition, %w[
         schema_version catalog_id edition canonical status chapter_count_target capability_count_target
-        volume_ids chapter_id_pattern allowed_levels allowed_statuses allowed_roles architecture_allowed_statuses
+        volume_ids chapter_id_pattern allowed_levels allowed_roles
         outcome_contract scope_limits verification_levels generated_outputs migration_ledger compatibility
       ], "curriculum/edition.yml", "/")
       expect_equal(edition["schema_version"], 2, "curriculum/edition.yml", "/schema_version")
       expect_equal(edition["edition"], "2026.2-draft", "curriculum/edition.yml", "/edition")
       expect_equal(edition["generated_outputs"], STATIC_GENERATED_OUTPUTS, "curriculum/edition.yml", "/generated_outputs")
       expect_equal(edition["compatibility"], "none", "curriculum/edition.yml", "/compatibility")
+      unless EDITION_PHASE_STATUSES.key?(edition["status"])
+        collector.error(
+          "E_SCHEMA",
+          "curriculum/edition.yml",
+          "/status must be one of #{EDITION_PHASE_STATUSES.keys.join(', ')}, got #{edition['status'].inspect}"
+        )
+      end
       unless edition["chapter_count_target"].is_a?(Integer) && edition["chapter_count_target"].positive?
         collector.error("E_SCHEMA", "curriculum/edition.yml", "/chapter_count_target must be a positive integer")
       end
@@ -470,8 +484,7 @@ module Curriculum
       id_pattern = compile_pattern(edition["chapter_id_pattern"])
       allowed_roles = array(edition["allowed_roles"])
       allowed_levels = array(edition["allowed_levels"])
-      allowed_statuses = array(edition["allowed_statuses"])
-      architecture_statuses = array(edition["architecture_allowed_statuses"])
+      phase_statuses = EDITION_PHASE_STATUSES[edition["status"]]
       version_ids = array(versions["entries"]).map { |entry| entry["id"] }.to_set
 
       volume_specs.each do |volume_id, spec|
@@ -501,9 +514,11 @@ module Curriculum
           collector.error("E_SCHEMA", source, "#{pointer}/responsibility must be a concrete boundary") unless nonempty_string?(raw["responsibility"]) && raw["responsibility"].length >= 12
           collector.error("E_SCHEMA", source, "#{pointer}/role invalid") unless allowed_roles.include?(raw["role"])
           collector.error("E_SCHEMA", source, "#{pointer}/level invalid") unless allowed_levels.include?(raw["level"])
-          collector.error("E_SCHEMA", source, "#{pointer}/status invalid") unless allowed_statuses.include?(raw["status"])
-          if edition["status"] == "architecture" && !architecture_statuses.include?(raw["status"])
-            collector.error("E_STATUS_PHASE", source, "#{pointer}/status #{raw['status'].inspect} is not allowed in architecture")
+          status = raw["status"]
+          status_known = CHAPTER_STATUSES.include?(status)
+          collector.error("E_SCHEMA", source, "#{pointer}/status invalid") unless status_known
+          if status_known && phase_statuses && !phase_statuses.include?(status)
+            collector.error("E_STATUS_PHASE", source, "#{pointer}/status #{status.inspect} is not allowed in #{edition['status']}")
           end
           collector.error("E_SCHEMA", source, "#{pointer}/stable_core must be boolean") unless [true, false].include?(raw["stable_core"])
 

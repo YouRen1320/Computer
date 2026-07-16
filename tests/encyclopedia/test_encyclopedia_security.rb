@@ -666,6 +666,44 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
   end
 
+  def test_validator_rejects_an_unknown_edition_phase_at_the_schema_boundary
+    with_fixture do |root|
+      path = root.join("curriculum/edition.yml")
+      edition = load_yaml(path)
+      edition["status"] = "released"
+      write_yaml(path, edition)
+
+      result = validator(root)
+      assert_failed result, /curriculum\/edition\.yml.*\/status must be one of architecture, authoring, release-candidate, published/m
+      refute_match(/KeyError/, result.output)
+    end
+  end
+
+  def test_validator_rejects_a_disallowed_chapter_status_for_the_published_phase
+    with_fixture do |root|
+      edition_path = root.join("curriculum/edition.yml")
+      edition = load_yaml(edition_path)
+      edition["status"] = "published"
+      write_yaml(edition_path, edition)
+
+      Dir.glob(root.join("curriculum/chapters/volume-*.yml")).sort.each do |path|
+        volume_spec = load_yaml(path)
+        volume_spec.fetch("chapters").each do |chapter|
+          chapter["status"] = "verified"
+        end
+        write_yaml(path, volume_spec)
+      end
+      first_volume_path = root.join("curriculum/chapters/volume-00.yml")
+      first_volume = load_yaml(first_volume_path)
+      first_volume.fetch("chapters").first["status"] = "review"
+      write_yaml(first_volume_path, first_volume)
+
+      result = validator(root)
+      assert_failed result, /E_STATUS_PHASE.*\/chapters\/0\/status "review" is not allowed in published/m
+      refute_match(/KeyError/, result.output)
+    end
+  end
+
   def test_duplicate_yaml_keys_are_rejected_in_auxiliary_documents_and_front_matter
     with_fixture do |root|
       route = root.join("curriculum/routes/zero-base.yml")
