@@ -1,0 +1,36 @@
+schema_version: 1
+profile_id: p3-gold
+edition: 2026.2-draft
+publication_mode: internal-preview
+visibility: internal
+language: zh-CN
+distribution_allowed: false
+source_date_epoch: 1784160000
+chapter_ids:
+- ch.java.platform-toolchain
+- ch.java.program-structure
+- ch.java.values-variables-types
+- ch.java.expressions-conversions
+drafting_allowlist:
+- ch.java.platform-toolchain
+- ch.java.program-structure
+- ch.java.values-variables-types
+- ch.java.expressions-conversions
+target_formats:
+- html
+- epub
+- pdf
+toolchain_lock: publication/toolchain.yml
+resource_policy:
+  build_network: forbidden
+  remote_resources: link-only
+  allowed_local_schemes:
+  - file
+  - data
+notice:
+  text: 内部审查预览，尚未完成正式评审，不得公开发布
+  placements:
+  - document-title
+  - document-opening
+  - metadata
+  robots: noindex,nofollow

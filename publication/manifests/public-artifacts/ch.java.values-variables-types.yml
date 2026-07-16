@@ -1,0 +1,101 @@
+schema_version: 1
+manifest_id: public-artifacts.ch.java.values-variables-types
+edition: 2026.2-draft
+chapter_id: ch.java.values-variables-types
+chapter_path: book/volume-01-java-language/chapters/ch.java.values-variables-types.md
+managed_roots:
+- examples/encyclopedia/ch.java.values-variables-types
+- labs/encyclopedia/ch.java.values-variables-types
+- exercises/encyclopedia/ch.java.values-variables-types
+artifacts:
+- artifact_id: example-readme
+  role: example-source
+  source_path: examples/encyclopedia/ch.java.values-variables-types/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-output-oracle
+  role: oracle
+  source_path: examples/encyclopedia/ch.java.values-variables-types/expected-output.txt
+  media_type: text/plain
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-maven-project
+  role: runner-support
+  source_path: examples/encyclopedia/ch.java.values-variables-types/pom.xml
+  media_type: application/xml
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-device-snapshot
+  role: example-source
+  source_path: examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/DeviceSnapshot.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-field-default-boundary
+  role: example-source
+  source_path: examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/FieldDefaultBoundary.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: exercise-readme
+  role: exercise-source
+  source_path: exercises/encyclopedia/ch.java.values-variables-types/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-readme
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-out-of-scope
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/OutOfScope.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-overlapping-local-name
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/OverlappingLocalName.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-uninitialized-local
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/UninitializedLocal.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-wrong-type-assignment
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/WrongTypeAssignment.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-output-oracle
+  role: oracle
+  source_path: labs/encyclopedia/ch.java.values-variables-types/expected-output.txt
+  media_type: text/plain
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-maven-project
+  role: runner-support
+  source_path: labs/encyclopedia/ch.java.values-variables-types/starter/pom.xml
+  media_type: application/xml
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-device-status-card
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.values-variables-types/starter/src/main/java/com/factorycare/learning/DeviceStatusCard.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-verifier
+  role: runner-support
+  source_path: labs/encyclopedia/ch.java.values-variables-types/verify.sh
+  media_type: text/x-shellscript
+  presentation: listing
+  target_formats: [html, epub, pdf]
+repository_metadata: []

@@ -1,0 +1,104 @@
+schema_version: 1
+toolchain_id: p3-publication
+scope: macos-arm64-p3
+observed_on: '2026-07-16'
+tools:
+- id: bash
+  state: observed-current
+  required_from: R1-B
+  command:
+  - bash
+  - --version
+  expected_version_prefix: GNU bash, version 3.2.57
+  note: 当前黄金样章验证脚本的观察基线；不是跨平台支持声明
+- id: java
+  state: observed-current
+  required_from: R1-B
+  command:
+  - java
+  - -version
+  expected_version_prefix: openjdk version "25.0.3"
+  note: 当前章节代码基线为 Eclipse Temurin 25.0.3
+- id: javac
+  state: observed-current
+  required_from: R1-B
+  command:
+  - javac
+  - -version
+  expected_version_prefix: javac 25.0.3
+  note: 当前章节编译器观察基线
+- id: maven
+  state: observed-current
+  required_from: R1-B
+  command:
+  - mvn
+  - -v
+  expected_version_prefix: Apache Maven 3.9.16
+  note: 当前 Maven 实验观察基线
+- id: pandoc
+  state: observed-current
+  required_from: R2
+  command:
+  - pandoc
+  - --version
+  expected_version_prefix: pandoc 3.9.0.2
+  note: R2 启动前仍须在固定环境中复核并记录供应链来源
+- id: python
+  state: observed-current
+  required_from: R2
+  command:
+  - python3
+  - --version
+  expected_version_prefix: Python 3.14.3
+  note: 仅记录当前 WeasyPrint 相关 Python 表面；R2 必须锁定实际解释器与依赖
+- id: ruby
+  state: observed-current
+  required_from: R1-A
+  command:
+  - ruby
+  - -v
+  expected_version_prefix: ruby 2.6.10p210
+  note: R1-A 当前运行时观察值；Ruby 2.6 不是默认的长期出版基线，R2 前必须重新评估
+- id: weasyprint
+  state: observed-current
+  required_from: R2
+  command:
+  - weasyprint
+  - --version
+  expected_version_prefix: WeasyPrint version 68.1
+  note: R2 只把输出称为 PDF/UA-1 候选文件
+- id: ace
+  state: deferred
+  required_from: R3
+  command:
+  - ace
+  - --version
+  note: R3 安装或选择后固定精确版本；Ace 不能单独证明 EPUB Accessibility
+- id: axe-core
+  state: deferred
+  required_from: R3
+  command:
+  - axe
+  - --version
+  note: R3 选择离线执行方式后固定版本；自动检查不能单独证明 WCAG 合规
+- id: epubcheck
+  state: deferred
+  required_from: R3
+  command:
+  - epubcheck
+  - --version
+  note: R3 安装或选择后固定精确版本
+- id: poppler
+  state: deferred
+  required_from: R3
+  command:
+  - pdfinfo
+  - -v
+  note: R3 同时记录 pdfinfo、pdftotext、pdffonts 和渲染工具的实际版本
+- id: verapdf
+  state: deferred
+  required_from: R3
+  command:
+  - verapdf
+  - --version
+  note: R3 安装或选择后固定精确版本；机器零错误不能代替完整 PDF/UA 人工评估

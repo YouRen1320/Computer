@@ -1,0 +1,48 @@
+schema_version: 1
+manifest_id: public-artifacts.ch.java.platform-toolchain
+edition: 2026.2-draft
+chapter_id: ch.java.platform-toolchain
+chapter_path: book/volume-01-java-language/chapters/ch.java.platform-toolchain.md
+managed_roots:
+- examples/encyclopedia/ch.java.platform-toolchain
+- labs/encyclopedia/ch.java.platform-toolchain
+- exercises/encyclopedia/ch.java.platform-toolchain
+artifacts:
+- artifact_id: example-readme
+  role: example-source
+  source_path: examples/encyclopedia/ch.java.platform-toolchain/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-verifier
+  role: runner-support
+  source_path: examples/encyclopedia/ch.java.platform-toolchain/scripts/verify.sh
+  media_type: text/x-shellscript
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: example-toolchain-smoke
+  role: example-source
+  source_path: examples/encyclopedia/ch.java.platform-toolchain/src/com/factorycare/learning/ToolchainSmoke.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: exercise-readme
+  role: exercise-source
+  source_path: exercises/encyclopedia/ch.java.platform-toolchain/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-readme
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.platform-toolchain/README.md
+  media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-toolchain-probe
+  role: lab-source
+  source_path: labs/encyclopedia/ch.java.platform-toolchain/starter/src/com/factorycare/learning/ToolchainProbe.java
+  media_type: text/x-java-source
+  presentation: listing
+  target_formats: [html, epub, pdf]
+repository_metadata:
+- labs/encyclopedia/ch.java.platform-toolchain/.gitignore

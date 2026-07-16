@@ -30,7 +30,9 @@ schema v2 使用语义 ID `ch.<domain>.<slug>`。front matter 必须逐字对齐
 
 `review` 与 `verified` 必须分别声明 `examples`、`labs`、`exercises` 和 `solutions_private` 四组非空工件。每一项只能位于对应的 `*/encyclopedia/<chapter-id>/` 子树；文件必须是非空白普通文件，目录必须至少含一个非隐藏、非空白普通文件，任何层级的符号链接和越界路径都会被拒绝。两种状态的正文都不能含占位标记，必须至少有两个 H2，且规范化正文不少于 200 个字符；`verified` 还必须满足全部发布门，并且硬前置的传递闭包已全部 `verified`。
 
-P3-R0 已决定：章节从 `drafting` 晋升 `review` 前，公共输入必须由显式文件清单确定，不能继续依赖无差别递归目录扫描；`review/verified` 必须提供机器可读 verification manifest 并由统一 Runner 在干净目录执行。`drafting` 允许声明不完整，显式 P3 internal-preview allowlist 除外。对应 schema、builder、validator 和测试尚未在 R0 文档批次实施，因此在 P2 契约迁移完成前不得手工修改状态绕过。
+P3-R1-A 已把出版控制面实现为独立 sidecar：`publication-profile.schema.json` 固定 profile、状态和不可分发预览边界，schema v1 只接受 P3 `internal-preview`；`public-artifact-manifest.schema.json` 配合四份逐章 manifest 显式列出 47 个公共工件；`publication-toolchain.schema.json` 记录观察与延期工具，实际工具 ID、命令、阶段和状态另由 Ruby allowlist 固定；`publication-plan.schema.json` 显式投影资源策略与内部通知，并约束不含正文、绝对路径和私有 canary 的确定性计划；`publication-output-manifest.schema.json` 预定义 R2 输出契约，但 R1-A 尚未生成实例。sidecar 输出只位于被忽略的 `build/publication/<profile-id>/`，P2 五个生成文件保持逐字节不变。
+
+R1-A 还不是完整 D5 生命周期门：`review/verified` 的 verification manifest、干净临时目录统一 Runner、测试数量/预期失败/未声明输出校验，以及 `edition.status` 枚举与 phase/status 合法组合属于 R1-B；HTML/EPUB/PDF 实体属于 R2；P2 的递归公共输入与双摘要迁移仍须在四章晋升 `review` 前单独完成。因此当前四章继续为 `drafting`，不能用 sidecar plan 或自动化测试手工绕过状态门。
 
 七个门是 `technical`、`pedagogical`、`code`、`security`、`accessibility`、`version_sources` 和 `publication_navigation`。最后一门还必须分别给出链接、键盘/语义和实际渲染审查覆盖；键盘/语义确实不适用时仍需证据和具体理由。所有门及版本证据只能引用 `records/encyclopedia/evidence/<chapter-id>/` 下的真实非空白普通文件。作者和 reviewer 去除 Unicode 空白并做 NFKC+casefold 后都至少两字符，且不能相同。
 
