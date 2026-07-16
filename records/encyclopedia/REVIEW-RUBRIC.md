@@ -64,6 +64,35 @@
 - 修改了学习进度但没有用户真实学习证据；
 - 已知断链、错误输出或平台限制未在交付记录中披露。
 
+## P3 黄金样章阶段门
+
+P3 完成必须同时满足：
+
+1. 四章具备正文、示例、实验、练习、私有解析和来源；
+2. 七个评审面完成独立复核；
+3. HTML、EPUB 和 PDF 有可重放的正式渲染证据，不以目录 JSON 或已删除的临时烟雾结果替代；
+4. 至少一名真实零基础读者完成固定任务试读，保存卡点、误解、用时、观察和据此完成的修订；
+5. 章节代码/JDK 已验证基线是 macOS arm64 + Temurin 25.0.3；正式出版构建必须由 R2/R3 从 `smoke_observed` 推进，浏览器/阅读器/辅助技术必须从 `not_evaluated` 推进；Windows、Linux 和其他 JDK/阅读系统是明确登记的 P4 follow-up；
+6. 四章只进入 `review`，不因 P3 完成而自动成为 `verified` 或公开正文；
+7. 晋升 `review` 前完成 P2 公共输入与 publication manifest 摘要契约迁移；
+8. `review/verified` 有完整 verification manifest 并由统一 Runner 在干净目录执行；`drafting` 允许不完整，除非被显式 P3 internal-preview allowlist 强制。
+
+以下任一项存在时，不能宣布 P3 完成：
+
+- 没有正式 HTML/EPUB/PDF 渲染证据或真实零基础读者试读；
+- P2 仍以无差别递归目录作为公共输入，却把章节晋升为 `review`；
+- 把含有 private Git 历史的开发仓作为公共发行仓；
+- `review/verified` 缺少 verification manifest 或统一 Runner 证据；
+- 把未验证平台、PDF 回归指纹或自动化扫描结果写成完整合规/可复现结论。
+
+`PASS_WITH_FOLLOW_UP` 可以表示一个内容批次没有 blocker，但不能自动证明其所属阶段已经完成。P3-B1 的内容批次结论与 P3 阶段门必须分别记录。
+
+P3 的“真实零基础读者”默认指编程零基础：从未独立完成程序、课程项目或真实开发任务。试读任务至少覆盖导航与前置补救、概念复述、运行示例、小需求修改和故障诊断；允许提示预先固定，所有额外帮助必须记录。正文修订后复测受影响任务。单人试读只是一项发现性证据，不能外推为普遍学习效果。
+
+跨平台证据分为出版构建、章节代码/JDK、成品在浏览器/阅读器/辅助技术中的互操作性三类，不能相互替代。未执行组合标为 `not_tested`，不能写“预计兼容”。
+
+PDF 只有独立执行方产生逐字节和 SHA-256 相同的工件才称为 reproducible build。同机双构建相同只是本机字节重复性证据；采用 fixed-environment fallback 时，任何未解释的文本、outline、链接、字体、标签树、栅格或人工阅读顺序漂移都使该门失败。
+
 ## 批次评审记录模板
 
 ```markdown
@@ -80,6 +109,13 @@
 - 无障碍：PASS | PASS_WITH_FOLLOW_UP | FAIL
 - 版本来源：PASS | PASS_WITH_FOLLOW_UP | FAIL
 - 出版导航：PASS | PASS_WITH_FOLLOW_UP | FAIL
+- 阶段门：
+- 真实学习者试读：
+- 已验证平台/运行时：
+- 明确 follow-up 平台：
+- verification manifest / Runner：
+- HTML/EPUB/PDF 渲染证据：
+- P2 输入/manifest 迁移状态：
 - 已关闭问题：
 - 延期问题、负责人和期限：
 - 未验证项：

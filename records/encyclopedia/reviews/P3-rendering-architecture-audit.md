@@ -4,8 +4,8 @@
 
 - 审计日期：2026-07-16
 - 审计基线：`66ab0a9`（四个 Java 黄金样章批次）
-- 决策状态：**已形成推荐，尚未实施架构变更**
-- 推荐：方案 A——保留 Ruby 权威门禁，以受摘要保护的 canonical Pandoc JSON AST 建立 HTML/EPUB/打印 HTML 管线，再由 WeasyPrint 生成 PDF/UA 候选文件
+- 决策状态：**用户已选择方案 A，架构尚未实施**
+- 已选方案：保留 Ruby 权威门禁，以受摘要保护的 canonical Pandoc JSON AST 建立 HTML/EPUB/打印 HTML 管线，再由 WeasyPrint 生成 PDF/UA 候选文件
 - 当前 P3 状态：未完成；四章仍为 `drafting`
 
 这是一次大改前的选项审查。它不安装依赖、不改变 `site/generated` v2 契约、不提升章节状态，也不产生用户学习完成记录。
@@ -19,7 +19,7 @@
 3. 有中文文本层、书签、页码、运行页眉和可验证结构的 PDF/UA 候选文件；
 4. 能证明章节状态过滤、私有答案隔离、输入摘要、工具版本、输出摘要和人工复核结论的 publication manifest。
 
-推荐把 P3 范围定义为四个黄金样章的**受控审查预览**，并以进入 `review`、具备真实渲染证据和零基础读者试读为阶段终点；这项完成定义尚待用户确认，确认后需要同步顶层契约和评审记录。无论如何，P3 都不授权把 `drafting` 章节公开发布，也不要求此时替换 P2 的公共站点契约。P8 才决定全 16 卷的最终部署与发行入口。
+P3 已确认以四个黄金样章的**受控审查预览**为范围，并以进入 `review`、具备真实渲染证据和至少一轮编程零基础读者试读为阶段终点；参与者与试读协议遵循 P3-R0 决策。P3 不授权把 `drafting` 章节公开发布，也不要求 R1—R3 替换 P2 的公共站点契约。P8 才决定全 16 卷的最终部署与发行入口。
 
 ## 当前事实与问题
 
@@ -101,7 +101,7 @@ Ruby 仍生成允许渲染的章节投影；VitePress 负责 HTML 站点，Pando
 
 ## 推荐与判断边界
 
-推荐方案 A。这个结论是结合当前仓库证据作出的工程判断，不是“Pandoc 对所有文档站都优于 VitePress”的普遍事实。
+方案 A 已确认。这个结论是结合当前仓库证据作出的工程判断，不是“Pandoc 对所有文档站都优于 VitePress”的普遍事实。
 
 选择 A 的原因：这套百科不仅是网站，还是分卷书、长期参考书和可审计课程。当前最昂贵的风险不是缺少炫酷主题，而是三种格式出现不同章节、不同链接和不同发布边界。一份受摘要保护的 canonical Pandoc JSON AST 与既有 Ruby 门禁把这个风险降到最低。
 
@@ -112,7 +112,7 @@ VitePress 可在 P8 重新评估：如果真实用户测试证明 Pandoc 静态�
 出版实现开始前，还必须关闭 `P0-P3-integrated-audit-2026-07-16.md` 记录的两个输入边界问题：
 
 1. 当前 `expand_public_path` 会递归纳入 examples、labs、exercises 和 evidence 目录里的 `target/`、`build/`、日志与其他临时文件；推荐改为每章显式公共文件 manifest，并让构建目录 fail-closed；
-2. `solutions-private/` 虽不会进入公共生成物，但已有答案工件和验证脚本仍由同一个 Git 仓库跟踪；若主仓未来公开，仅迁移当前文件不够，推荐建立不携带 private Git 历史的新公共发行仓，并把答案留在独立私有存储。历史重写是破坏性备选，也无法撤回第三方已经取得的副本。
+2. `solutions-private/` 虽不会进入公共生成物，但已有答案工件和验证脚本仍由同一个 Git 仓库跟踪；已确认开发权威仓保持私有，若未来公开源码，则建立不携带 private Git 历史的新公共发行仓，并把答案留在独立私有存储。历史重写是破坏性备选，也无法撤回第三方已经取得的副本。
 
 这两项不是 Pandoc、VitePress 或 Quarto 能自动解决的问题。无论选择哪套渲染器，都应由 Ruby publication plan 和安全回归测试统一执行发布边界。
 
@@ -160,7 +160,7 @@ build/publication/<profile>/
 - 私有答案路径与已知答案标记在计划、AST 和输出中均为 0；
 - 不修改 `site/generated` 五文件集合。
 
-在四章从 `drafting` 晋升 `review` 之前，必须另行确认 P2 契约迁移：把现有 `EncyclopediaInputSet.expand_public_path` 改为显式公共输入并决定 publication manifest 摘要职责。即使输出文件名仍是五个，这也会改变 P2 的 schema、内容和摘要语义，必须同步 builder、validator、schema、测试、影响和回滚；不能用 sidecar plan 假装现有 P2 风险已经关闭。
+已确认在四章从 `drafting` 晋升 `review` 之前单独实施 P2 契约迁移：把现有 `EncyclopediaInputSet.expand_public_path` 改为显式公共输入并分离 publication content 与 repository safety/audit 摘要职责。即使输出文件名仍是五个，这也会改变 P2 的 schema、内容和摘要语义，必须同步 builder、validator、schema、测试、影响和回滚；不能用 sidecar plan 假装现有 P2 风险已经关闭。
 
 ### R2：同源多格式渲染
 
@@ -183,17 +183,17 @@ build/publication/<profile>/
 
 ### R4：生命周期收口
 
-- 若用户确认推荐完成定义，四章通过内容评审、渲染评审、P3 七维审查和至少一轮真实零基础读者试读后可进入 `review`；
-- Windows/Linux 与其他 JDK 是否为 P3 硬门仍待确认；推荐把 macOS/JDK 25 作为 P3 已验证基线，并将其他平台明确登记为 P4 follow-up；
+- 四章通过内容评审、渲染评审、P3 七维审查和至少一轮编程零基础读者试读后可进入 `review`；
+- 当前只有章节代码/JDK 的 macOS arm64 + Temurin 25.0.3 基线已验证；正式出版构建仅为 `smoke_observed`，浏览器/阅读器/辅助技术互操作为 `not_evaluated`；Windows/Linux、其他 JDK 和阅读系统明确登记为 P4 follow-up；
 - P3 阶段完成不等于四章 `verified` 或公开发布；
 - 要成为 `verified`，还必须补齐并验证传递硬前置，尤其是 `ch.foundations.dependencies-build-packages`；
 - 渲染成功绝不自动修改章节状态或 `PROGRESS.md`。
 
 ## PDF 确定性决策
 
-- HTML 与固定 identifier/时间戳后的 EPUB：本机烟雾测试曾观察到连续两次字节一致；正式门仍要求在干净目录、固定工具、字体、locale 和 timezone 后复验，未做跨机验证时不得外推为跨平台可复现构建；
+- HTML 与固定 identifier/时间戳后的 EPUB：本机烟雾测试曾观察到连续两次字节一致；正式门仍要求在干净目录、固定工具、字体、locale 和 timezone 后复验。同机固定环境双构建相同只称为“本机字节重复性”；独立执行方复现前，既不得称为 `reproducible build`，也不得称为跨平台可复现；
 - PDF：当前实测无法字节一致。R2/R3 必须先尝试固定字体、元数据、identifier、工具版本和环境；
-- 若仍不一致，不得降低事实标准或伪造稳定摘要。允许的显式兼容选项是：记录页数、文本摘要、字体集合、书签结构和逐页栅格摘要，把它们称为“同一固定环境下的语义与版式回归证据”；这不等同于 PDF 字节可复现，也不满足 reproducible build 声明。是否接受这一兼容项，必须在实施前单独确认。
+- 若仍不一致，不得降低事实标准或伪造稳定摘要。用户已接受受限 fallback：记录页数、文本摘要、字体集合、书签结构和逐页栅格摘要，把它们称为“同一固定环境下的语义与版式回归证据”；这不等同于 PDF 字节可复现，也不满足 reproducible build 声明。只有在字节一致尝试失败且证据充分时才能启用。
 
 ## 影响、迁移与回滚
 
@@ -202,13 +202,13 @@ build/publication/<profile>/
 - 新增 Pandoc、WeasyPrint、字体和验证工具的版本/供应链面；
 - 新增 publication schema、profile、模板、filter、CSS、测试与 evidence；
 - R1—R3 的内部预览不改变 canonical Markdown、课程目录 ID、四条路线、`site/generated` v2 或 private solution 位置；
-- R4 若获确认并把四章推进到 `review`，会修改 catalog、章节 front matter、review metadata 和 evidence 引用；在此之前还必须单独迁移 P2 输入/manifest 语义。
+- R4 按已确认决策实施并在证据门通过后把四章推进到 `review`，会修改 catalog、章节 front matter、review metadata 和 evidence 引用；在此之前还必须单独迁移 P2 输入/manifest 语义。
 
 ### 迁移
 
 1. 先只对 P3 四章启用显式 profile；
 2. 完成 R1 安全门后再接渲染器；
-3. 通过 R3 后记录证据并把章节推进到 `review`；
+3. 完成正式渲染验证、编程零基础读者试读和已确认的 P2 输入/manifest 迁移后，才记录证据并把章节推进到 `review`；
 4. P8 再评估整卷、整站和是否扩展/替换公共站点 v2。
 
 ### 回滚
@@ -236,16 +236,17 @@ build/publication/<profile>/
 - [WeasyPrint 68.1：PDF 输出与 PDF/UA 验证责任](https://doc.courtbouillon.org/weasyprint/v68.1/api_reference.html#pdf)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [EPUB Accessibility 1.1](https://www.w3.org/TR/epub-a11y-11/)
+- [EPUB Accessibility 1.2（截至 2026-07-16 仍为 Working Draft，仅跟踪）](https://www.w3.org/TR/epub-a11y-12/)
 - [EPUB Accessibility Techniques 1.1](https://www.w3.org/TR/epub-a11y-tech-11/)
 - [EPUBCheck 官方文档](https://w3c.github.io/epubcheck/docs/)
 - [veraPDF 验证范围](https://docs.verapdf.org/validation/)
 - [Ace by DAISY](https://github.com/daisy/ace)
 - [Quarto Book](https://quarto.org/docs/books/)
 
-## 实施前需要确认的决策
+## 已确认的架构决策
 
-1. 是否采用推荐的方案 A，而不是 B 或 C；
-2. 若固定环境后 PDF 仍无法字节一致，是否接受“同一固定环境下的语义与版式回归证据 + 明确披露 binary 不一致”，还是把 PDF 构建继续视为阻断；该证据不称为 reproducible build；
-3. P3 是否以四章进入 `review`、完成七维渲染审查并完成至少一轮真实零基础读者试读为阶段终点，把 `verified` 与公开发布留给硬前置闭包完成之后。
+1. 采用方案 A，不采用 B 或 C；
+2. 固定环境后 PDF 仍无法字节一致时，接受“同一固定环境下的语义与版式回归证据 + 明确披露 binary 不一致”；该证据不称为 reproducible build；
+3. P3 以四章进入 `review`、完成七维渲染审查并完成至少一轮编程零基础读者试读为阶段终点，把 `verified` 与公开发布留给硬前置闭包完成之后。
 
-private 历史、统一 Runner、跨平台门和 P2 输入/manifest 迁移等另外五项决策，以 `P0-P3-integrated-audit-2026-07-16.md` 的 R0 清单为准，不能只确认本节三项就开始 R1。
+private 历史、统一 Runner、跨平台门和 P2 输入/manifest 迁移等另外五项决定也已在集成审计 R0 中确认，R1 必须同时遵守。

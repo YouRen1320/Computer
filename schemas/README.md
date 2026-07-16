@@ -17,8 +17,8 @@ schema v2 使用语义 ID `ch.<domain>.<slug>`。front matter 必须逐字对齐
 |---|---|---|
 | `planned` | 只有架构占位；没有正文完成声明 | 否 |
 | `drafting` | 正文正在编写，证据可能不完整 | 否 |
-| `review` | 正文、示例、实验、练习、私有解析和来源齐备，等待独立复核 | 否（可作为内部预览） |
-| `verified` | 七类审查门以及发布导航覆盖检查均有独立证据 | 是 |
+| `review` | 正文、公开工件、私有解析、来源和当前阶段要求的独立证据齐备；允许因传递硬前置尚未闭合而停留在此状态 | 否（仅内部预览） |
+| `verified` | 七类审查门、发布导航覆盖和全部传递硬前置均有独立通过证据 | 是 |
 
 状态只能前进到实际证据支持的位置。`BUILD SUCCESS`、链接可访问或 AI 自检都不能单独把一章变成 `verified`。
 
@@ -30,8 +30,12 @@ schema v2 使用语义 ID `ch.<domain>.<slug>`。front matter 必须逐字对齐
 
 `review` 与 `verified` 必须分别声明 `examples`、`labs`、`exercises` 和 `solutions_private` 四组非空工件。每一项只能位于对应的 `*/encyclopedia/<chapter-id>/` 子树；文件必须是非空白普通文件，目录必须至少含一个非隐藏、非空白普通文件，任何层级的符号链接和越界路径都会被拒绝。两种状态的正文都不能含占位标记，必须至少有两个 H2，且规范化正文不少于 200 个字符；`verified` 还必须满足全部发布门，并且硬前置的传递闭包已全部 `verified`。
 
+P3-R0 已决定：章节从 `drafting` 晋升 `review` 前，公共输入必须由显式文件清单确定，不能继续依赖无差别递归目录扫描；`review/verified` 必须提供机器可读 verification manifest 并由统一 Runner 在干净目录执行。`drafting` 允许声明不完整，显式 P3 internal-preview allowlist 除外。对应 schema、builder、validator 和测试尚未在 R0 文档批次实施，因此在 P2 契约迁移完成前不得手工修改状态绕过。
+
 七个门是 `technical`、`pedagogical`、`code`、`security`、`accessibility`、`version_sources` 和 `publication_navigation`。最后一门还必须分别给出链接、键盘/语义和实际渲染审查覆盖；键盘/语义确实不适用时仍需证据和具体理由。所有门及版本证据只能引用 `records/encyclopedia/evidence/<chapter-id>/` 下的真实非空白普通文件。作者和 reviewer 去除 Unicode 空白并做 NFKC+casefold 后都至少两字符，且不能相同。
 
 章节 `source_refs.id` 必须唯一；URL 必须可解析为有 host、无 userinfo 的 HTTPS URI。允许 fragment，以便指向官方文档的精确章节。`verified_versions.constraint` 必须逐字匹配 registry 对应条目的约束，实际测试 patch 记录在证据文件中。registry、catalog 和 site 的 edition 必须一致。
 
-私有解析只允许位于 `solutions-private/encyclopedia/<chapter-id>/`，发布构建和 manifest 会显式排除整个 `solutions-private/` 子树。
+私有解析只允许位于 `solutions-private/encyclopedia/<chapter-id>/`，发布构建和 manifest 会显式排除整个 `solutions-private/` 子树。这只证明构建隔离，不证明 Git 历史或仓库存储隔离。开发权威仓保持私有；若建立公共发行入口，必须使用不携带 `solutions-private` 历史的新公共发行仓。历史重写不能撤回第三方已经取得的副本。
+
+P3 黄金样章的阶段门另要求正式 HTML/EPUB/PDF 预览和至少一轮符合 P3-R0 定义的编程零基础读者试读。当前只验证了章节代码/JDK 的 macOS arm64 + Temurin 25.0.3 基线；正式出版构建仅为 `smoke_observed`，浏览器/阅读器/辅助技术为 `not_evaluated`，必须由 R2/R3 产生各自证据。P3 完成时四章只进入 `review`；Windows、Linux、其他 JDK 和阅读系统是明确披露的 P4 follow-up，不能写成已验证。

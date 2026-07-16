@@ -85,3 +85,18 @@ git diff --exit-code -- PROGRESS.md
 ## 结论
 
 **批次结论：`PASS_WITH_FOLLOW_UP`，阻断项 0。** 四章可作为后续正文生产的黄金样章，但 P3 阶段尚未完成：实际出版渲染和真实零基础读者验证仍缺证据。
+
+## P3-R0 决策附录（2026-07-16）
+
+用户已确认采用集成审计的全部推荐，详见 [`P3-R0-DECISIONS.md`](../P3-R0-DECISIONS.md)。本附录不追溯改变 P3-B1 的 `PASS_WITH_FOLLOW_UP` 结论，也不把尚未产生的证据写成已完成。
+
+- P3 终点：四章完成七维评审、正式 HTML/EPUB/PDF 渲染和至少一轮编程零基础读者试读后进入 `review`；参与者、任务、允许提示和复测遵循 P3-R0 决策；
+- 章节代码/JDK 已验证基线为 macOS arm64 + Temurin 25.0.3；正式出版构建仅为 `smoke_observed`，浏览器/阅读器/辅助技术为 `not_evaluated`；
+- Windows、Linux、其他 JDK 25 发行版和其他阅读系统登记为 P4 follow-up，不是 P3 blocker，也不得写成已验证；
+- P3 完成不等于 `verified` 或公开发布；七个 planned 基础前置及 Java 草稿链闭合后才能晋升；
+- 出版管线采用 Ruby 门禁 + canonical Pandoc JSON AST + WeasyPrint；
+- PDF 先追求字节一致；失败时只保存同一固定环境下的语义与版式回归证据，并明确它不是 reproducible build；
+- 四章晋升 `review` 前必须完成 P2 公共输入与 publication manifest 摘要语义迁移；
+- `review/verified` 必须有显式公共工件、verification manifest 和统一 Runner 证据；
+- 开发权威仓保持私有；若需公开源码，使用不携带 private Git 历史的新公共发行仓；
+- 当前四章继续保持 `drafting`，`PROGRESS.md` 不变。
