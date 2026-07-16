@@ -1,0 +1,5 @@
+timestamp=2026-07-17T04:00:00Z level=INFO event=work_order.accepted correlation_id=corr-7 order_id=WO-7 authorization=[REDACTED] detail=pump\nstopped
+correlation.valid=true secret.absent=true exception.type=IllegalStateException cause=IOException stack.present=true
+threads.total=3 blocked=1 waiting=1 lock.owner=lock-holder
+gc.events=2 total_pause_ms=11.500 max_pause_ms=7.000 reclaimed_mib=104
+EXAMPLE PASS jdk=25 evidence=fixed-fixtures

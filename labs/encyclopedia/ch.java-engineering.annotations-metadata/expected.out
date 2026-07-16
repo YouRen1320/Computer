@@ -1,0 +1,6 @@
+generated-source-seen=true
+generated-entries=factorycare.app.WorkOrderPolicy#ADMIN@TENANT|factorycare.app.WorkOrderPolicy#DISPATCHER@REGION
+runtime-roles=ADMIN|DISPATCHER
+runtime-source=false runtime-class=false
+inherited-role-count=2
+LAB PASS

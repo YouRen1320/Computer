@@ -1,0 +1,22 @@
+"dispatch-worker" #21
+   java.lang.Thread.State: BLOCKED
+    at factorycare.DispatchService.dispatch(DispatchService.java:91)
+    - waiting to lock <0x00000aaa>
+    - locked <0x00000bbb>
+"notification-holder" #22
+   java.lang.Thread.State: BLOCKED
+    at factorycare.NotificationClient.send(NotificationClient.java:44)
+    - waiting to lock <0x00000bbb>
+    - locked <0x00000aaa>
+"repository-poller" #23
+   java.lang.Thread.State: WAITING
+    at java.base/jdk.internal.misc.Unsafe.park(Native Method)
+"event-loop" #24
+   java.lang.Thread.State: RUNNABLE
+    at factorycare.EventLoop.poll(EventLoop.java:12)
+"retry-timer" #25
+   java.lang.Thread.State: TIMED_WAITING
+    at java.base/java.lang.Thread.sleep0(Native Method)
+
+Found one Java-level deadlock:
+=============================

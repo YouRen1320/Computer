@@ -19,9 +19,9 @@
 10. [Path、Files、缓冲、字符集与原子文件操作](chapters/ch.java-engineering.nio-files-charsets.md) — `ch.java-engineering.nio-files-charsets` · `drafting`
 11. [JSON 数据边界、对象映射与未知字段处理](chapters/ch.java-engineering.json-mapping.md) — `ch.java-engineering.json-mapping` · `drafting`
 12. [线程、Java 内存模型、同步与锁](chapters/ch.java-engineering.threads-jmm.md) — `ch.java-engineering.threads-jmm` · `drafting`
-13. [Executor、Future、取消与虚拟线程](chapters/ch.java-engineering.executors-virtual-threads.md) — `ch.java-engineering.executors-virtual-threads` · `planned`
-14. [注解声明、目标、保留策略与元数据](chapters/ch.java-engineering.annotations-metadata.md) — `ch.java-engineering.annotations-metadata` · `planned`
-15. [反射、类加载边界与动态代理](chapters/ch.java-engineering.reflection-classloading-proxies.md) — `ch.java-engineering.reflection-classloading-proxies` · `planned`
-16. [Socket、Datagram、URL/HttpClient 与超时](chapters/ch.java-engineering.network-programming.md) — `ch.java-engineering.network-programming` · `planned`
-17. [JUnit 参数化、测试设计、测试替身与 Mockito](chapters/ch.java-engineering.testing-test-doubles.md) — `ch.java-engineering.testing-test-doubles` · `planned`
-18. [结构化日志、线程转储、JFR 与 JVM 故障诊断](chapters/ch.java-engineering.logging-jvm-diagnostics.md) — `ch.java-engineering.logging-jvm-diagnostics` · `planned`
+13. [Executor、Future、取消与虚拟线程](chapters/ch.java-engineering.executors-virtual-threads.md) — `ch.java-engineering.executors-virtual-threads` · `drafting`
+14. [注解声明、目标、保留策略与元数据](chapters/ch.java-engineering.annotations-metadata.md) — `ch.java-engineering.annotations-metadata` · `drafting`
+15. [反射、类加载边界与动态代理](chapters/ch.java-engineering.reflection-classloading-proxies.md) — `ch.java-engineering.reflection-classloading-proxies` · `drafting`
+16. [Socket、Datagram、URL/HttpClient 与超时](chapters/ch.java-engineering.network-programming.md) — `ch.java-engineering.network-programming` · `drafting`
+17. [JUnit 参数化、测试设计、测试替身与 Mockito](chapters/ch.java-engineering.testing-test-doubles.md) — `ch.java-engineering.testing-test-doubles` · `drafting`
+18. [结构化日志、线程转储、JFR 与 JVM 故障诊断](chapters/ch.java-engineering.logging-jvm-diagnostics.md) — `ch.java-engineering.logging-jvm-diagnostics` · `drafting`

@@ -1,0 +1,6 @@
+events=3 correlation=corr-42 joined=true secret.redacted=true
+exception.type=IllegalStateException cause=IOException stack.present=true
+threads.total=5 runnable=1 blocked=2 waiting=1 timed_waiting=1 deadlock=true owner=notification-holder
+gc.events=3 full=1 total_pause_ms=18.500 max_pause_ms=12.000 reclaimed_mib=204
+evidence.guards=thread_samples>=2,performance_samples>=5,warmup>=1
+LAB PASS jdk=25 evidence=fixed-files

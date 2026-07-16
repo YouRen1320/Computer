@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "70da42e80490c5f464bf701f943f3fd7bc226a5e9084b97115d9b6fc7f8ff9bb",
+  "input_digest": "e49422b8f61121d0013cdc5c13760fc8a94acea38a932ee5eafb9ae8ab73cd61",
   "volumes": [
     {
       "id": "00",
@@ -480,7 +480,7 @@
           "title": "Executor、Future、取消与虚拟线程",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.executors-virtual-threads.md",
           "publishable": false
         },
@@ -489,7 +489,7 @@
           "title": "注解声明、目标、保留策略与元数据",
           "order": 14,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.annotations-metadata.md",
           "publishable": false
         },
@@ -498,7 +498,7 @@
           "title": "反射、类加载边界与动态代理",
           "order": 15,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.reflection-classloading-proxies.md",
           "publishable": false
         },
@@ -507,7 +507,7 @@
           "title": "Socket、Datagram、URL/HttpClient 与超时",
           "order": 16,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.network-programming.md",
           "publishable": false
         },
@@ -516,7 +516,7 @@
           "title": "JUnit 参数化、测试设计、测试替身与 Mockito",
           "order": 17,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.testing-test-doubles.md",
           "publishable": false
         },
@@ -525,7 +525,7 @@
           "title": "结构化日志、线程转储、JFR 与 JVM 故障诊断",
           "order": 18,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md",
           "publishable": false
         }

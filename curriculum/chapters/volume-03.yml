@@ -1638,7 +1638,7 @@ chapters:
   role: practice
   responsibility: 教授任务调度、等待和协作式取消，不把虚拟线程当作消除共享状态问题的工具
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-executor-future
@@ -1763,7 +1763,7 @@ chapters:
   role: concept
   responsibility: 教授注解作为结构化元数据的声明和可见性，不在本章读取反射或实现框架扫描
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-annotation-declaration
@@ -1895,7 +1895,7 @@ chapters:
   role: practice
   responsibility: 教授运行时类型检查和接口代理的边界与风险，不构建通用 DI 容器或修改字节码
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-reflection-classloading
@@ -2034,7 +2034,7 @@ chapters:
   role: practice
   responsibility: 把网络分层落实为 Java 客户端与套接字边界，不在本章实现应用协议服务器或重试框架
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-socket-datagram
@@ -2173,7 +2173,7 @@ chapters:
   role: synthesis
   responsibility: 深化可维护测试和协作边界替身，不用 Mock 证明真实数据库、网络或框架集成行为
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-test-design
@@ -2318,7 +2318,7 @@ chapters:
   role: synthesis
   responsibility: 教授从日志和 JVM 运行时证据定位故障，不在本章建立分布式追踪或 SLO 告警体系
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-structured-logging

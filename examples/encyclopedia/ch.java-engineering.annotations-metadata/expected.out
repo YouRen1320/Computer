@@ -1,0 +1,6 @@
+roles=ADMIN|DISPATCHER
+default-scope=tenant default-severity=MEDIUM
+visibility=SOURCE:false CLASS:false RUNTIME:true
+inherited=superclass:true declared:false interface:false
+type-use=device-id
+EXAMPLE PASS

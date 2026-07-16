@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 59809b2ebb688dcf7738093ec088c713c68a9eba4ddab78cdd888a19fa876fe7
+generated_spec_digest: e72c84f518b41ac2869e6af30dc090c144f312df65d19f3cc07a896337ae5697
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -7099,7 +7099,7 @@ chapters:
   role: practice
   responsibility: 教授任务调度、等待和协作式取消，不把虚拟线程当作消除共享状态问题的工具
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-executor-future
@@ -7224,7 +7224,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.executors-virtual-threads.md
   recommended_after:
   - ch.java-engineering.threads-jmm
-  spec_digest: 447a7d7e53987293a12b7dfc40b5423d7a8ce54f559ddf5b740cb76de2cdf933
+  spec_digest: 7cbdfed6b7fad474c807585fc09340229d8ddf350dc4382a673d885fc450f871
   route_tags:
   - zero-base
   - accelerated-48
@@ -7234,7 +7234,7 @@ chapters:
   role: concept
   responsibility: 教授注解作为结构化元数据的声明和可见性，不在本章读取反射或实现框架扫描
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-annotation-declaration
@@ -7366,7 +7366,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.annotations-metadata.md
   recommended_after:
   - ch.java-engineering.executors-virtual-threads
-  spec_digest: 35041f7b72d3025467c18de2db0d282baa829ff8a2fb6a557d254c745d9ab9b8
+  spec_digest: 5c50f5e1ff46d89e38019c318cf3c9c1549310187a955b1636377e9679d2b0e9
   route_tags:
   - zero-base
   - accelerated-48
@@ -7377,7 +7377,7 @@ chapters:
   role: practice
   responsibility: 教授运行时类型检查和接口代理的边界与风险，不构建通用 DI 容器或修改字节码
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-reflection-classloading
@@ -7516,7 +7516,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.reflection-classloading-proxies.md
   recommended_after:
   - ch.java-engineering.annotations-metadata
-  spec_digest: b345d7fa6220bffb53c86c9933d5f304f7fbc529539600ac44707d1392d31c1b
+  spec_digest: 6e679b7d11fe81661ebef3c903ed88d9bdf1d5741ca2f7d7a4fc13677ee40bec
   route_tags:
   - zero-base
   - accelerated-48
@@ -7527,7 +7527,7 @@ chapters:
   role: practice
   responsibility: 把网络分层落实为 Java 客户端与套接字边界，不在本章实现应用协议服务器或重试框架
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-socket-datagram
@@ -7665,7 +7665,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.network-programming.md
   recommended_after:
   - ch.java-engineering.reflection-classloading-proxies
-  spec_digest: 5277a656401f2433216ed63c4894a6bff982ee170726da643415c927ca8ed97f
+  spec_digest: 33ca93483bfd3e1df2125925e899952e1629f95e6a7b47e424453f5e5332d02e
   route_tags:
   - zero-base
   - accelerated-48
@@ -7675,7 +7675,7 @@ chapters:
   role: synthesis
   responsibility: 深化可维护测试和协作边界替身，不用 Mock 证明真实数据库、网络或框架集成行为
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-test-design
@@ -7820,7 +7820,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.testing-test-doubles.md
   recommended_after:
   - ch.java-engineering.network-programming
-  spec_digest: c47c45c9f091c926db74214fd7ed4a1a696ab06b156c4c4af97c433d0d9c0b82
+  spec_digest: 8f63f8a37394f8ed8cac344c3d6a51e3acb50cd016492d7e4c62bb9f42af99ce
   route_tags:
   - zero-base
   - accelerated-48
@@ -7831,7 +7831,7 @@ chapters:
   role: synthesis
   responsibility: 教授从日志和 JVM 运行时证据定位故障，不在本章建立分布式追踪或 SLO 告警体系
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-structured-logging
@@ -7978,7 +7978,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md
   recommended_after:
   - ch.java-engineering.testing-test-doubles
-  spec_digest: 7830e83efbeb6d8c224979241405bacea4da7278441d96eedf7254e299450a8f
+  spec_digest: cbed047c7a7381350dbb43c447367642a88ab144ab028d11442ee2bbc9afd0b8
   route_tags:
   - zero-base
   - accelerated-48

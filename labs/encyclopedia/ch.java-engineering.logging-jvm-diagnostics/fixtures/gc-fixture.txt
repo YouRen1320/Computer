@@ -1,0 +1,3 @@
+[1.000s][info][gc] GC(10) Pause Young (Normal) 128M->64M(512M) 4.250ms
+[2.000s][info][gc] GC(11) Pause Full (G1 Compaction Pause) 160M->80M(512M) 12.000ms
+[3.000s][info][gc] GC(12) Pause Young (Normal) 120M->60M(512M) 2.250ms

@@ -1,0 +1,2 @@
+redaction=true correlation=true thread_series=true performance_gate=true
+EXERCISE PASS jdk=25
