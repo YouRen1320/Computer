@@ -1,0 +1,2 @@
+RULE=started-30-minute-blocks
+OUTPUT=integer-cents

@@ -13,8 +13,8 @@
 4. [Set、Map、键相等性与哈希契约](chapters/ch.java-engineering.associative-collections.md) — `ch.java-engineering.associative-collections` · `drafting`
 5. [Comparable、Comparator 与稳定排序](chapters/ch.java-engineering.sorting-comparators.md) — `ch.java-engineering.sorting-comparators` · `drafting`
 6. [复杂度、搜索、排序与基础数据结构选择](chapters/ch.java-engineering.complexity-algorithms.md) — `ch.java-engineering.complexity-algorithms` · `drafting`
-7. [Lambda、函数式接口与方法引用](chapters/ch.java-engineering.lambdas-functional-interfaces.md) — `ch.java-engineering.lambdas-functional-interfaces` · `planned`
-8. [Stream、Collector 与 Optional 边界](chapters/ch.java-engineering.functional-pipelines.md) — `ch.java-engineering.functional-pipelines` · `planned`
+7. [Lambda、函数式接口与方法引用](chapters/ch.java-engineering.lambdas-functional-interfaces.md) — `ch.java-engineering.lambdas-functional-interfaces` · `drafting`
+8. [Stream、Collector 与 Optional 边界](chapters/ch.java-engineering.functional-pipelines.md) — `ch.java-engineering.functional-pipelines` · `drafting`
 9. [字节流、字符流、资源所有权与 try-with-resources](chapters/ch.java-engineering.io-resource-lifecycle.md) — `ch.java-engineering.io-resource-lifecycle` · `planned`
 10. [Path、Files、缓冲、字符集与原子文件操作](chapters/ch.java-engineering.nio-files-charsets.md) — `ch.java-engineering.nio-files-charsets` · `planned`
 11. [JSON 数据边界、对象映射与未知字段处理](chapters/ch.java-engineering.json-mapping.md) — `ch.java-engineering.json-mapping` · `planned`

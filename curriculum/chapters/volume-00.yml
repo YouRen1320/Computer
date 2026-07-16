@@ -1498,7 +1498,7 @@ chapters:
   role: foundation
   responsibility: 教授依赖解析和构建阶段的通用模型，不替代 Maven、pnpm 或 uv 的专门章节
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dependency-resolution
@@ -1640,7 +1640,7 @@ chapters:
   role: practice
   responsibility: 教授容器运行时和持久化边界，不进入生产镜像加固、Compose 编排或 Kubernetes
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: docker-image-container

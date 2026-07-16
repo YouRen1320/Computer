@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "root": "factorycare-build-demo",
+  "packages": [
+    {
+      "name": "fc-format",
+      "version": "1.0.0",
+      "sha256": "f7778080d384af541bfef4e25c1981438903b9993969a962ccf8d3f33ce078b0",
+      "direct": false
+    },
+    {
+      "name": "fc-report",
+      "version": "1.0.0",
+      "sha256": "489315da46755ff2a9b9ad8bdfea769b4290c3f3118adc5ed28f09b08f528235",
+      "direct": true
+    }
+  ]
+}

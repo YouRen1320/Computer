@@ -17,5 +17,5 @@
 8. [接口、抽象类、多态与动态分派](chapters/ch.java-oop.interfaces-polymorphism.md) — `ch.java-oop.interfaces-polymorphism` · `drafting`
 9. [enum、record、sealed 与受限类型建模](chapters/ch.java-oop.enum-record-sealed.md) — `ch.java-oop.enum-record-sealed` · `drafting`
 10. [equals、hashCode 与 toString 直接契约](chapters/ch.java-oop.object-contracts.md) — `ch.java-oop.object-contracts` · `drafting`
-11. [正则、BigDecimal、日期时间、UUID 与业务值](chapters/ch.java-oop.business-value-types.md) — `ch.java-oop.business-value-types` · `planned`
-12. [异常分类、传播、捕获、转换与失败契约](chapters/ch.java-oop.exceptions-failure-contracts.md) — `ch.java-oop.exceptions-failure-contracts` · `planned`
+11. [正则、BigDecimal、日期时间、UUID 与业务值](chapters/ch.java-oop.business-value-types.md) — `ch.java-oop.business-value-types` · `drafting`
+12. [异常分类、传播、捕获、转换与失败契约](chapters/ch.java-oop.exceptions-failure-contracts.md) — `ch.java-oop.exceptions-failure-contracts` · `drafting`

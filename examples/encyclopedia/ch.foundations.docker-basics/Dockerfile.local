@@ -1,0 +1,5 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+LABEL org.factorycare.training.owner="ch.foundations.docker-basics"
+COPY index.html /srv/factorycare/index.html

@@ -1,0 +1,7 @@
+{
+  "format": 1,
+  "name": "factorycare-build-demo",
+  "direct_dependencies": {
+    "fc-report": "1.x"
+  }
+}

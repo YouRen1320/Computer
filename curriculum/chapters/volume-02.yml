@@ -1294,7 +1294,7 @@ chapters:
   role: practice
   responsibility: 用标准值类型表达格式、金额、时间和标识边界，不在本章设计实体生命周期或数据库映射
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-text-money-values
@@ -1420,7 +1420,7 @@ chapters:
   role: concept
   responsibility: 教授以异常表达不可正常返回的失败并保存因果链，不在本章绑定具体 IO 资源类型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-exception-model

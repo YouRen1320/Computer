@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 1691cd092bae2458b800e25a1cd7e1e367fbe986c5b889f59cec22754c818204
+generated_spec_digest: d8094e5552ece067df56468c594f3cb052f8c3ca85e0272d6847cd24132416b0
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -1635,7 +1635,7 @@ chapters:
   role: foundation
   responsibility: 教授依赖解析和构建阶段的通用模型，不替代 Maven、pnpm 或 uv 的专门章节
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dependency-resolution
@@ -1776,7 +1776,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md
   recommended_after:
   - ch.foundations.testing-oracles
-  spec_digest: 68055d68fa959515a5911449d8d4b491d37a711b4bea9a42b54623bd84c38077
+  spec_digest: 6d6faff031578e4953374913091eca5f8afe48b4e0a30b20288d953644d51da0
   route_tags:
   - zero-base
   - accelerated-48
@@ -1787,7 +1787,7 @@ chapters:
   role: practice
   responsibility: 教授容器运行时和持久化边界，不进入生产镜像加固、Compose 编排或 Kubernetes
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: docker-image-container
@@ -1931,7 +1931,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md
   recommended_after:
   - ch.foundations.dependencies-build-packages
-  spec_digest: a8b30b5cad66da2717f83d90395b50268ba1e780f3506128a7e7de90d27cd8ff
+  spec_digest: f8bfd4af723a73e4058920ecffe76935452ac918535baa8582a07e88fe1e91a1
   route_tags:
   - zero-base
   - accelerated-48
@@ -5072,7 +5072,7 @@ chapters:
   role: practice
   responsibility: 用标准值类型表达格式、金额、时间和标识边界，不在本章设计实体生命周期或数据库映射
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-text-money-values
@@ -5197,7 +5197,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.business-value-types.md
   recommended_after:
   - ch.java-oop.object-contracts
-  spec_digest: eb3d889a870fe9e7bca9df8231a6b7e778373d96a5461fca74768e4c75a519dd
+  spec_digest: 9331205e9696467f0df85c1ad6ad7a64c67f0ae37b014033d39599f0fe3e17d2
   route_tags:
   - zero-base
   - accelerated-48
@@ -5208,7 +5208,7 @@ chapters:
   role: concept
   responsibility: 教授以异常表达不可正常返回的失败并保存因果链，不在本章绑定具体 IO 资源类型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-exception-model
@@ -5335,7 +5335,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md
   recommended_after:
   - ch.java-oop.business-value-types
-  spec_digest: 170284d91488bf8dd6f00fa2b499a7e6b31350b24daa864c52765662839cb4ea
+  spec_digest: 43cbc66398753035408904cb654ac9a55c73545e9cab48e6f7f3e3a16ea65ba0
   route_tags:
   - zero-base
   - accelerated-48
@@ -6204,7 +6204,7 @@ chapters:
   role: concept
   responsibility: 教授行为作为值传递的语言机制，不在本章引入 Stream 管道或响应式框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-functional-interface
@@ -6329,7 +6329,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.lambdas-functional-interfaces.md
   recommended_after:
   - ch.java-engineering.complexity-algorithms
-  spec_digest: 37f0621dd7b79363eb9f816375810eb4aee6642d01bd43da17affda17db0b196
+  spec_digest: bce0bab656a6d5c9826416386ea161d123d300582581f60536840515c9ac6bcb
   route_tags:
   - zero-base
   - accelerated-48
@@ -6339,7 +6339,7 @@ chapters:
   role: practice
   responsibility: 教授惰性数据管道和缺失值表达边界，不把 Stream 用于所有循环或副作用编排
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-stream
@@ -6478,7 +6478,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.functional-pipelines.md
   recommended_after:
   - ch.java-engineering.lambdas-functional-interfaces
-  spec_digest: 9abadd3b1ecd2c294db8762aa8a11d8ebfd6028e326058b41f77bd4b20d5da10
+  spec_digest: b1614e2345c34f1d3405b00b736e6149c37db9f27ee0334ab8c1871322b0e0e1
   route_tags:
   - zero-base
   - accelerated-48

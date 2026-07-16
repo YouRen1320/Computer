@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "1df8ba4c7011154f046b16a5329b721b3aa5e30d35682cad1ba353475dff64bc",
+  "input_digest": "7abfd6ed59bdb649084aa466f032d664a8fc35a742ee7208d16d4e8f6123df80",
   "volumes": [
     {
       "id": "00",
@@ -120,7 +120,7 @@
           "title": "依赖、包管理、构建生命周期与可重复性",
           "order": 13,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md",
           "publishable": false
         },
@@ -129,7 +129,7 @@
           "title": "镜像、容器、卷、端口与容器网络",
           "order": 14,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md",
           "publishable": false
         },
@@ -348,7 +348,7 @@
           "title": "正则、BigDecimal、日期时间、UUID 与业务值",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.business-value-types.md",
           "publishable": false
         },
@@ -357,7 +357,7 @@
           "title": "异常分类、传播、捕获、转换与失败契约",
           "order": 12,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md",
           "publishable": false
         }
@@ -426,7 +426,7 @@
           "title": "Lambda、函数式接口与方法引用",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.lambdas-functional-interfaces.md",
           "publishable": false
         },
@@ -435,7 +435,7 @@
           "title": "Stream、Collector 与 Optional 边界",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.functional-pipelines.md",
           "publishable": false
         },

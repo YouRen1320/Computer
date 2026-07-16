@@ -1,0 +1,12 @@
+final class UnhandledCheckedFailure {
+    static final class DuplicateWorkOrderException extends Exception {
+    }
+
+    static void create() throws DuplicateWorkOrderException {
+        throw new DuplicateWorkOrderException();
+    }
+
+    public static void main(String[] args) {
+        create();
+    }
+}

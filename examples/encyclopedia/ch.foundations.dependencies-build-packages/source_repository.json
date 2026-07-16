@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "packages": {
+    "fc-format": {
+      "1.0.0": {
+        "dependencies": {},
+        "payload": "factorycare-format-v1"
+      },
+      "1.1.0": {
+        "dependencies": {},
+        "payload": "factorycare-format-v1.1"
+      }
+    },
+    "fc-report": {
+      "1.0.0": {
+        "dependencies": {
+          "fc-format": "1.0.0"
+        },
+        "payload": "factorycare-report-v1"
+      },
+      "1.1.0": {
+        "dependencies": {
+          "fc-format": "1.1.0"
+        },
+        "payload": "factorycare-report-v1.1"
+      }
+    }
+  }
+}
