@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "4e80550e7136b7b786079cd18d1d174b0a1ce1ecb7ed5304dbf25de5224be4de",
+  "input_digest": "fbd246dc389a699f7c22117c4e562a99f51f2b0a6a4ac7cb0961b96d95ad15ca",
   "volumes": [
     {
       "id": "00",
@@ -648,7 +648,7 @@
           "title": "索引、查询计划、EXPLAIN 与性能证据",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.indexes-explain.md",
           "publishable": false
         },
@@ -657,7 +657,7 @@
           "title": "ACID、隔离级别、锁、死锁与重试边界",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.transactions-locking.md",
           "publishable": false
         },
@@ -666,7 +666,7 @@
           "title": "Flyway、版本迁移、向前修复与数据演进",
           "order": 15,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.schema-migrations.md",
           "publishable": false
         },
@@ -675,7 +675,7 @@
           "title": "DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界",
           "order": 16,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.jdbc.md",
           "publishable": false
         },
@@ -807,7 +807,7 @@
           "title": "应用服务、用例编排与领域边界",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.service-use-cases.md",
           "publishable": false
         },
@@ -816,7 +816,7 @@
           "title": "切点、通知、代理边界与自调用陷阱",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.aop-proxy-model.md",
           "publishable": false
         },
@@ -825,7 +825,7 @@
           "title": "Spring 测试切片、上下文测试与 Testcontainers",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.testing-testcontainers.md",
           "publishable": false
         },
@@ -834,7 +834,7 @@
           "title": "@Transactional、传播、回滚、隔离与提交后行为",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.transactions.md",
           "publishable": false
         },
@@ -975,7 +975,7 @@
           "title": "状态机、状态转换、SLA 与超时语义",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.workflow-state-sla.md",
           "publishable": false
         },
@@ -984,7 +984,7 @@
           "title": "幂等键、乐观并发、重复提交与重放",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md",
           "publishable": false
         },
@@ -993,7 +993,7 @@
           "title": "Redis 缓存、TTL、失效、配额与限流",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.distributed.redis-cache-rate-limit.md",
           "publishable": false
         },
@@ -1002,7 +1002,7 @@
           "title": "领域事件、Outbox 与提交一致性",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.domain-events-outbox.md",
           "publishable": false
         },

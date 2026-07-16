@@ -1,0 +1,29 @@
+{
+  "source": "teaching-fixture-not-postgresql-server-output",
+  "baseline": {
+    "nodes": ["Limit", "Sort", "Seq Scan"],
+    "matched_rows": 8000,
+    "returned_rows": 50,
+    "shared_blocks": 1725,
+    "rows_removed": 92000
+  },
+  "composite_candidate": {
+    "ddl": "(status, created_at DESC, work_order_id DESC) INCLUDE (device_id, priority)",
+    "nodes": ["Limit", "Index Scan"],
+    "index_condition": ["status=OPEN", "created_at>=lower", "created_at<upper"],
+    "returned_rows": 50,
+    "shared_blocks": 84,
+    "result_fingerprint_equal": true,
+    "decision": "KEEP"
+  },
+  "low_selectivity_candidate": {
+    "ddl": "(status)",
+    "query": "status=DONE",
+    "matched_rows": 85000,
+    "selectivity": 0.85,
+    "baseline_shared_blocks": 1725,
+    "candidate_shared_blocks": 1810,
+    "decision": "REJECT",
+    "rollback": "DROP INDEX factorycare.work_order_status_idx"
+  }
+}

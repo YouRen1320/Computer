@@ -1,0 +1,5 @@
+checksum-edit=VALIDATE_FAIL|history-success-preserved:PASS
+one-step-not-null=MIGRATION_FAIL|repair=expand,dual-write,backfill,validate,contract
+backfill-failure=ROLLED_BACK|history-success:false|partial-data:false
+forward-fix=V2_3|verdict=PASS
+schema-migrations-lab=PASS

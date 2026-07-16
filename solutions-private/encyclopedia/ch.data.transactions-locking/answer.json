@@ -1,0 +1,12 @@
+{
+  "lock_orders": {"A":[42,43],"B":[42,43]},
+  "deadlock_sqlstate": "40P01",
+  "retry_scope": "whole-transaction",
+  "rollback_before_retry": true,
+  "retriable_sqlstates": ["40001","40P01"],
+  "max_attempts": 3,
+  "command_id": "C-100",
+  "attempts": 2,
+  "final_history_count": 1,
+  "final_version_increments": {"42":1,"43":1}
+}

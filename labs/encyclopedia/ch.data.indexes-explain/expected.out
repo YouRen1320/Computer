@@ -1,0 +1,4 @@
+low-selectivity=REJECT|selectivity=0.85|blocks=1725->1810
+wrong-column-order=REPAIR|examined=31000->50
+function-on-column=REPAIR|predicate=half-open-range
+indexes-explain-lab=PASS

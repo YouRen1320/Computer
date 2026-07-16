@@ -1,0 +1,9 @@
+state_event_same_commit=true
+state_event_same_rollback=true
+event_id_stable=true
+consumer_idempotent=true
+version_dispatched=true
+unsupported_quarantined=true
+claim_recoverable=true
+aggregate_order_explicit=true
+verification_report=PASS assertions=8

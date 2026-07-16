@@ -1671,7 +1671,7 @@ chapters:
   role: concept
   responsibility: 教授显式状态转换和业务时间承诺，不把状态字符串任意更新或把 SLO 监控混入领域状态机
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-state-machine
@@ -1805,7 +1805,7 @@ chapters:
   role: synthesis
   responsibility: 教授在数据库与应用事务边界抵御重复和并发覆盖，不承诺跨消息系统的恰好一次
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-idempotency
@@ -1966,7 +1966,7 @@ chapters:
   role: practice
   responsibility: 教授 Redis 辅助加速和限流的失效边界，不让缓存成为业务事实唯一权威或分布式事务替代品
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: redis-cache
@@ -2092,7 +2092,7 @@ chapters:
   role: synthesis
   responsibility: 教授在同一数据库事务记录待投递事实，不把 Outbox 当作消息必达或全局顺序保证
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-domain-event

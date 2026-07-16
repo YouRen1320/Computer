@@ -1,0 +1,36 @@
+{
+  "read_committed": {
+    "session_a_reads": ["OPEN", "IN_PROGRESS"],
+    "session_b_commit_between_reads": true,
+    "expected": "NONREPEATABLE_READ"
+  },
+  "lock_wait": {
+    "holder": "A",
+    "waiter": "B",
+    "resource": "work_order:42",
+    "waiter_granted": false,
+    "blocking_pids_observed": true,
+    "expected": "WAIT_NOT_DEADLOCK"
+  },
+  "lost_update": {
+    "reads": [2, 2],
+    "writes": [3, 3],
+    "observed": 3,
+    "expected_without_loss": 4,
+    "repair": "atomic-update-or-version-check"
+  },
+  "deadlock": {
+    "broken_lock_orders": {"A":[42,43],"B":[43,42]},
+    "wait_edges": [["A","B"],["B","A"]],
+    "victim": "B",
+    "sqlstate": "40P01",
+    "repaired_lock_orders": {"A":[42,43],"B":[42,43]},
+    "retry_scope": "whole-transaction",
+    "rollback_before_retry": true,
+    "attempts": 2,
+    "command_id": "C-100",
+    "final_history_count": 1,
+    "final_version_increments": {"42":1,"43":1}
+  },
+  "retriable_sqlstates": ["40001", "40P01"]
+}

@@ -1,0 +1,2 @@
+challenge_valid=true tenant=true invalidation=true jitter=true atomic=true threshold=true sliding=true fail_policy=true
+EXERCISE PASS jdk=25 mode=offline

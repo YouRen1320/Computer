@@ -1,0 +1,12 @@
+{
+  "applied_checksums":{"V1":"sha256:original"},
+  "resolved_checksums":{"V1":"sha256:original"},
+  "stages":["create","expand","backfill","validate","contract"],
+  "empty_schema_fingerprint":"work-order-priority-code-v3",
+  "upgrade_schema_fingerprint":"work-order-priority-code-v3",
+  "second_migrate_pending":0,
+  "failed_history_success":false,
+  "recovery":"forward-fix",
+  "rewrote_applied_history":false,
+  "contract_after_old_apps_gone":true
+}

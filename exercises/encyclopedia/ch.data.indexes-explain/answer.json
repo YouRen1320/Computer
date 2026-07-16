@@ -1,0 +1,13 @@
+{
+  "dataset": {"rows":100000,"status_counts":{"DONE":85000,"OPEN":8000,"IN_PROGRESS":5000,"CANCELLED":2000}},
+  "result": {"before_fingerprint":"dispatch-v1","after_fingerprint":"dispatch-v2"},
+  "candidate": {
+    "index_columns":["created_at","status"],
+    "baseline_shared_blocks":1725,
+    "candidate_shared_blocks":1810,
+    "decision":"KEEP"
+  },
+  "low_selectivity_status_index":"KEEP",
+  "function_repair":"add-more-status-indexes",
+  "rollback":"none"
+}

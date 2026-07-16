@@ -1,0 +1,22 @@
+{
+  "query": {
+    "normal_row":{"work_order_id":42,"status":"OPEN","assigned_to":null,"created_at":"2026-07-17T09:30:00+08:00","version":0},
+    "mapped":{"id":42,"status":"OPEN","assignedTo":null,"createdAt":"2026-07-17T09:30:00+08:00","version":0},
+    "empty_result":"OPTIONAL_EMPTY",
+    "resource_closes":{"result_set":1,"prepared_statement":1,"connection":1}
+  },
+  "injection": {
+    "input":"OPEN' OR '1'='1",
+    "sql_template":"WHERE status = ?",
+    "parameter_count":1,
+    "structure_changed":false,
+    "returned_rows":0
+  },
+  "transaction_success": {
+    "auto_commit":false,"same_connection":true,"changed_rows":1,"committed":true,"history_count":1
+  },
+  "transaction_failure": {
+    "auto_commit":false,"same_connection":true,"sqlstate":"23505","rolled_back":true,
+    "work_order_unchanged":true,"connection_closed":true
+  }
+}

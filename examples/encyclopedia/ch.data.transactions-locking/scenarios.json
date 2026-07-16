@@ -1,0 +1,18 @@
+[
+  {
+    "id": "commit-assignment",
+    "before": {"status":"OPEN","assigned_to":null,"version":0,"history_commands":[]},
+    "command": {"command_id":"C-100","to_status":"IN_PROGRESS","assigned_to":7},
+    "inject_error": null,
+    "boundary": "whole-transaction",
+    "expected": {"status":"IN_PROGRESS","assigned_to":7,"version":1,"history_commands":["C-100"]}
+  },
+  {
+    "id": "rollback-on-history-failure",
+    "before": {"status":"OPEN","assigned_to":null,"version":0,"history_commands":["C-DUP"]},
+    "command": {"command_id":"C-DUP","to_status":"IN_PROGRESS","assigned_to":7},
+    "inject_error": "23505",
+    "boundary": "whole-transaction",
+    "expected": {"status":"OPEN","assigned_to":null,"version":0,"history_commands":["C-DUP"]}
+  }
+]

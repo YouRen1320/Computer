@@ -1,0 +1,25 @@
+{
+  "dataset": {
+    "rows": 100000,
+    "status_counts": {
+      "DONE": 85000,
+      "OPEN": 8000,
+      "IN_PROGRESS": 5000,
+      "CANCELLED": 2000
+    },
+    "generator": "schema.sql:generate_series-1-100000"
+  },
+  "query": {
+    "id": "dispatch-open-june",
+    "equal": "status=OPEN",
+    "range": "2026-06-01T00:00:00+08/2026-07-01T00:00:00+08",
+    "order": ["created_at DESC", "work_order_id DESC"],
+    "limit": 50
+  },
+  "result": {
+    "before_rows": 50,
+    "after_rows": 50,
+    "before_fingerprint": "fixture-sha256:dispatch-open-june-v1",
+    "after_fingerprint": "fixture-sha256:dispatch-open-june-v1"
+  }
+}

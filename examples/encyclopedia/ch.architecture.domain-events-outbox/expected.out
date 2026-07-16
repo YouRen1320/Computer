@@ -1,0 +1,11 @@
+rollback_state=RESOLVED
+rollback_outbox=0
+commit_state=CLOSED
+commit_outbox=1
+event_type=WorkOrderClosed.v1
+event_version=1
+relay_attempts=2
+delivery_ids_stable=true
+consumer_effects=1
+unsupported_version=QUARANTINED
+exactly_once_claim=false

@@ -1,0 +1,6 @@
+read-committed=OPEN->IN_PROGRESS|anomaly=NONREPEATABLE_READ
+lock-wait=holder:A|waiter:B|classification=WAIT_NOT_DEADLOCK
+lost-update=observed:3|expected:4|repair=PASS
+deadlock=cycle:A-B-A|sqlstate:40P01|order-repair=PASS
+retry=whole-transaction|attempts:2|history:1|versions:1/1
+transactions-locking-lab=PASS

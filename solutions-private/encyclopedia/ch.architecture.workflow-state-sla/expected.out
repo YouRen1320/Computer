@@ -1,0 +1,2 @@
+challenge_valid=true transitions=true guards=true unchanged=true terminal=true deadline=true pause=true timeout=true
+EXERCISE PASS jdk=25 mode=offline

@@ -1,0 +1,44 @@
+[
+  {
+    "id":"string-concatenation",
+    "input":"OPEN' OR '1'='1",
+    "sql_mode":"concatenated",
+    "structure_changed":true,
+    "returned_rows":3,
+    "expected":"INJECTION",
+    "repair":"PreparedStatement-one-value-slot"
+  },
+  {
+    "id":"resource-leak",
+    "iterations":100,
+    "closed":{"result_set":0,"prepared_statement":0,"connection":0},
+    "expected":"LEAK",
+    "repair":"nested-try-with-resources"
+  },
+  {
+    "id":"wrong-null-mapping",
+    "sql_value":null,
+    "getter":"getLong-without-wasNull",
+    "actual_java_value":0,
+    "expected_java_value":null,
+    "expected":"MAPPING_ERROR",
+    "repair":"getObject-Long-or-wasNull"
+  },
+  {
+    "id":"missing-rollback",
+    "auto_commit":false,
+    "work_order_update_ran":true,
+    "history_sqlstate":"23505",
+    "rollback_called":false,
+    "close_with_active_transaction":"implementation-defined",
+    "expected":"TRANSACTION_BOUNDARY_ERROR",
+    "repair":"rollback-preserve-primary-exception"
+  },
+  {
+    "id":"empty-result",
+    "result_rows":0,
+    "broken_return":"null",
+    "expected_return":"OPTIONAL_EMPTY",
+    "expected":"EMPTY_RESULT_ERROR"
+  }
+]

@@ -1,0 +1,2 @@
+challenge_valid=true fingerprint=true scope=true replay=true claim=true version=true update_count=true retry=true
+EXERCISE PASS jdk=25 mode=offline

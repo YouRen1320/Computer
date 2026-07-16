@@ -1,0 +1,8 @@
+same_key_same_payload=ONE_EFFECT
+different_payload=CONFLICT
+scope_isolated=true
+response_replayed=true
+optimistic_winners=1
+update_zero=CONFLICT
+blind_retry=REJECTED
+verification_report=PASS assertions=7

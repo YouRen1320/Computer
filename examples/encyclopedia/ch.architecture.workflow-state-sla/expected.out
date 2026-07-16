@@ -1,0 +1,9 @@
+allowed_path=NEW>ASSIGNED>IN_PROGRESS>CLOSED
+jump_rejected=true
+guard_rejected=true
+terminal_irreversible=true
+base_deadline=2026-07-17T12:00:00Z
+pause_extends_deadline=2026-07-17T14:00:00Z
+fixed_clock_timeout=true
+timezone_fact_same=true
+history_events=3

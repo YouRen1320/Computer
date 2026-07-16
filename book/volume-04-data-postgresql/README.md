@@ -19,8 +19,8 @@
 10. [CREATE/ALTER、主外键、唯一、检查与非空约束](chapters/ch.data.ddl-constraints.md) — `ch.data.ddl-constraints` · `drafting`
 11. [函数依赖、规范化与关系模式设计](chapters/ch.data.normalization-modeling.md) — `ch.data.normalization-modeling` · `drafting`
 12. [UUID、JSONB、数组与 PostgreSQL 类型选择](chapters/ch.data.postgresql-types.md) — `ch.data.postgresql-types` · `drafting`
-13. [索引、查询计划、EXPLAIN 与性能证据](chapters/ch.data.indexes-explain.md) — `ch.data.indexes-explain` · `planned`
-14. [ACID、隔离级别、锁、死锁与重试边界](chapters/ch.data.transactions-locking.md) — `ch.data.transactions-locking` · `planned`
-15. [Flyway、版本迁移、向前修复与数据演进](chapters/ch.data.schema-migrations.md) — `ch.data.schema-migrations` · `planned`
-16. [DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界](chapters/ch.data.jdbc.md) — `ch.data.jdbc` · `planned`
+13. [索引、查询计划、EXPLAIN 与性能证据](chapters/ch.data.indexes-explain.md) — `ch.data.indexes-explain` · `drafting`
+14. [ACID、隔离级别、锁、死锁与重试边界](chapters/ch.data.transactions-locking.md) — `ch.data.transactions-locking` · `drafting`
+15. [Flyway、版本迁移、向前修复与数据演进](chapters/ch.data.schema-migrations.md) — `ch.data.schema-migrations` · `drafting`
+16. [DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界](chapters/ch.data.jdbc.md) — `ch.data.jdbc` · `drafting`
 17. [MyBatis 映射、参数绑定、结果映射与动态 SQL](chapters/ch.data.mybatis-core.md) — `ch.data.mybatis-core` · `planned`

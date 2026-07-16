@@ -1,0 +1,6 @@
+string-concat=INJECTION|rows:3|repair=PreparedStatement
+resource-leak=close-counts:0/0/0|repair=try-with-resources
+null-mapping=SQL_NULL->0|repair=nullable-mapping
+missing-rollback=sqlstate:23505|close-active:implementation-defined|repair=PASS
+empty-result=null->OPTIONAL_EMPTY|repair=PASS
+jdbc-lab=PASS

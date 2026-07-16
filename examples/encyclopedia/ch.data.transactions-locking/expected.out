@@ -1,0 +1,4 @@
+commit=status:IN_PROGRESS|version:1|history:1
+rollback=sqlstate:23505|status:OPEN|version:0|history-unchanged:PASS
+transaction-boundary=whole-transaction|verdict=PASS
+transactions-locking-example=PASS

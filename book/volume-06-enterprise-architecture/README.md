@@ -19,10 +19,10 @@
 10. [URL/方法授权、RBAC、ABAC 与默认拒绝](chapters/ch.security.authorization-rbac-abac.md) — `ch.security.authorization-rbac-abac` · `drafting`
 11. [租户上下文、数据权限与跨租户隔离测试](chapters/ch.security.multitenancy-data-isolation.md) — `ch.security.multitenancy-data-isolation` · `drafting`
 12. [审计事件、敏感字段、追踪责任与隐私最小化](chapters/ch.security.audit-events-privacy.md) — `ch.security.audit-events-privacy` · `drafting`
-13. [状态机、状态转换、SLA 与超时语义](chapters/ch.architecture.workflow-state-sla.md) — `ch.architecture.workflow-state-sla` · `planned`
-14. [幂等键、乐观并发、重复提交与重放](chapters/ch.architecture.idempotency-concurrency.md) — `ch.architecture.idempotency-concurrency` · `planned`
-15. [Redis 缓存、TTL、失效、配额与限流](chapters/ch.distributed.redis-cache-rate-limit.md) — `ch.distributed.redis-cache-rate-limit` · `planned`
-16. [领域事件、Outbox 与提交一致性](chapters/ch.architecture.domain-events-outbox.md) — `ch.architecture.domain-events-outbox` · `planned`
+13. [状态机、状态转换、SLA 与超时语义](chapters/ch.architecture.workflow-state-sla.md) — `ch.architecture.workflow-state-sla` · `drafting`
+14. [幂等键、乐观并发、重复提交与重放](chapters/ch.architecture.idempotency-concurrency.md) — `ch.architecture.idempotency-concurrency` · `drafting`
+15. [Redis 缓存、TTL、失效、配额与限流](chapters/ch.distributed.redis-cache-rate-limit.md) — `ch.distributed.redis-cache-rate-limit` · `drafting`
+16. [领域事件、Outbox 与提交一致性](chapters/ch.architecture.domain-events-outbox.md) — `ch.architecture.domain-events-outbox` · `drafting`
 17. [RabbitMQ、投递语义、重试、死信与幂等消费](chapters/ch.distributed.messaging-delivery.md) — `ch.distributed.messaging-delivery` · `planned`
 18. [模块化单体、结构测试与拆分信号](chapters/ch.architecture.modular-monolith.md) — `ch.architecture.modular-monolith` · `planned`
 19. [日志、指标、追踪、SLO 与告警闭环](chapters/ch.architecture.observability-slo.md) — `ch.architecture.observability-slo` · `planned`

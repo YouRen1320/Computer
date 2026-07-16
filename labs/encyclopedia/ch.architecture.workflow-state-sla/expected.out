@@ -1,0 +1,8 @@
+allowed_edges=true
+invalid_preserves_state=true
+guards_enforced=true
+terminal_irreversible=true
+fixed_clock_stable=true
+dst_instant_stable=true
+pause_counted_once=true
+verification_report=PASS assertions=7

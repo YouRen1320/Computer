@@ -1,0 +1,8 @@
+tenant_key_isolated=true
+update_invalidated=true
+ttl_jittered=true
+counter_expiry_atomic=true
+threshold_exact=true
+redis_policy_explicit=true
+authorization_current=true
+verification_report=PASS assertions=7

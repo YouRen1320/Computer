@@ -1,0 +1,6 @@
+query-mapping=id:42|assignedTo:null|createdAt:offset|verdict=PASS
+empty-result=OPTIONAL_EMPTY|resources-closed=1/1/1
+injection=parameterized|structure-changed:false|rows:0
+transaction-success=commit|changed:1|history:1
+transaction-failure=sqlstate:23505|rollback:PASS|state-unchanged:PASS
+jdbc-example=PASS

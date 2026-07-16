@@ -1,0 +1,31 @@
+[
+  {
+    "id": "low-selectivity-single-column",
+    "dataset_rows": 100000,
+    "matched_rows": 85000,
+    "index": "(status)",
+    "baseline_node": "Seq Scan",
+    "candidate_node": "Bitmap Heap Scan",
+    "baseline_shared_blocks": 1725,
+    "candidate_shared_blocks": 1810,
+    "expected": "REJECT:no-resource-benefit"
+  },
+  {
+    "id": "wrong-composite-order",
+    "query_shape": "status-equality+created-at-range+stable-order",
+    "broken_index": "(created_at, status)",
+    "broken_index_rows_examined": 31000,
+    "broken_rows_removed": 29400,
+    "repair_index": "(status, created_at DESC, work_order_id DESC)",
+    "repair_index_rows_examined": 50,
+    "expected": "REPAIR:leading-equality-then-range-order"
+  },
+  {
+    "id": "function-on-indexed-column",
+    "broken_predicate": "date(created_at)=2026-06-15",
+    "broken_index_condition": false,
+    "repair_predicate": "created_at>=2026-06-15T00:00:00+08 AND created_at<2026-06-16T00:00:00+08",
+    "repair_index_condition": true,
+    "expected": "REPAIR:half-open-range"
+  }
+]

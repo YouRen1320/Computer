@@ -1,0 +1,11 @@
+miss_name=Pump-A
+hit_same=true
+source_loads_after_hit=1
+tenant_isolated=true
+updated_name=Pump-A2
+fixed_sequence=AAAD
+sliding_sequence=AAADA
+redis_down_read=Pump-A2
+redis_down_ai=DENY
+business_effects=1
+exactly_once_claim=false

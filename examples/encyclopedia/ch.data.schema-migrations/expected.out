@@ -1,0 +1,5 @@
+migration-order=1,2,2.1,2.2,3|stages=create,expand,backfill,validate,contract
+checksums=versioned:5|repeatable:1|verdict=PASS
+path-equivalence=empty:v1-upgrade|schema-and-data=PASS
+second-migrate=pending:0|data-changes:0|verdict=PASS
+schema-migrations-example=PASS

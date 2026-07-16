@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "4e80550e7136b7b786079cd18d1d174b0a1ce1ecb7ed5304dbf25de5224be4de",
+  "input_digest": "fbd246dc389a699f7c22117c4e562a99f51f2b0a6a4ac7cb0961b96d95ad15ca",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 163,
-    "drafting": 92,
+    "planned": 151,
+    "drafting": 104,
     "review": 0,
     "verified": 0
   },
@@ -6607,7 +6607,7 @@
           "volume": "04",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.select-rowsets",
             "ch.data.ddl-constraints",
@@ -6707,7 +6707,7 @@
           "volume": "04",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.dml",
             "ch.data.ddl-constraints",
@@ -6807,7 +6807,7 @@
           "volume": "04",
           "order": 15,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.transactions-locking",
             "ch.foundations.dependencies-build-packages"
@@ -6910,7 +6910,7 @@
           "volume": "04",
           "order": 16,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-engineering.maven-reproducible-builds",
             "ch.java-engineering.io-resource-lifecycle",
@@ -8345,7 +8345,7 @@
           "volume": "05",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.mybatis-repositories"
           ],
@@ -8445,7 +8445,7 @@
           "volume": "05",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.beans-lifecycle-scopes",
             "ch.java-engineering.reflection-classloading-proxies"
@@ -8540,7 +8540,7 @@
           "volume": "05",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.mvc-routing-binding",
             "ch.spring.mybatis-repositories",
@@ -8651,7 +8651,7 @@
           "volume": "05",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.service-use-cases",
             "ch.spring.aop-proxy-model",
@@ -10164,7 +10164,7 @@
           "volume": "06",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.architecture.domain-modeling",
             "ch.data.transactions-locking"
@@ -10260,7 +10260,7 @@
           "volume": "06",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.architecture.workflow-state-sla",
             "ch.spring.transactions",
@@ -10369,7 +10369,7 @@
           "volume": "06",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.architecture.idempotency-concurrency"
           ],
@@ -10465,7 +10465,7 @@
           "volume": "06",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.architecture.idempotency-concurrency"
           ],

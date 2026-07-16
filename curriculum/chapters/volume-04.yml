@@ -1520,7 +1520,7 @@ chapters:
   role: practice
   responsibility: 教授用真实计划和数据分布判断索引价值，不以索引数量或单次耗时替代证据
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-index
@@ -1670,7 +1670,7 @@ chapters:
   role: concept
   responsibility: 教授多语句原子性和并发异常边界，不提前绑定 Spring 代理或消息一致性实现
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-transaction-isolation
@@ -1821,7 +1821,7 @@ chapters:
   role: practice
   responsibility: 教授可排序、可审计的 schema 演进和安全发布，不把回滚脚本当作有数据时的默认恢复方案
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-migration-versioning
@@ -1966,7 +1966,7 @@ chapters:
   role: practice
   responsibility: 教授 Java 直接访问关系数据库的资源和参数边界，不在本章引入连接池框架或 ORM
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: jdbc-query-resource

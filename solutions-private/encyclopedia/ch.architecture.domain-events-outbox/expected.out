@@ -1,0 +1,3 @@
+challenge_valid=true atomic=true after_state=true stable_id=true versioned=true idempotent=true mark_after=true lease=true quarantine=true
+exactly_once_claim=false
+EXERCISE PASS jdk=25 mode=offline

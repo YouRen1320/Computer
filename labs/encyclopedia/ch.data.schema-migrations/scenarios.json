@@ -1,0 +1,27 @@
+[
+  {
+    "id":"applied-checksum-edited",
+    "history":{"version":"1","checksum":"sha256:original","success":true},
+    "resolved":{"version":"1","checksum":"sha256:edited"},
+    "expected":"VALIDATE_FAIL:checksum-mismatch",
+    "recovery":"restore-original-v1-and-add-forward-fix"
+  },
+  {
+    "id":"one-step-not-null",
+    "existing_rows":3,
+    "existing_nulls_for_new_column":3,
+    "sql":"ADD COLUMN priority_code text NOT NULL",
+    "expected":"MIGRATION_FAIL:existing-rows-have-no-value",
+    "recovery":["expand-nullable","dual-write","backfill","validate","contract"]
+  },
+  {
+    "id":"backfill-fails-midway",
+    "priorities":[1,2,9,4],
+    "invalid_work_order_id":503,
+    "transaction":"rolled-back",
+    "history_success":false,
+    "persisted_priority_codes":[null,null,null,null],
+    "expected":"FAILED_NOT_SUCCESS",
+    "recovery":"V2_3__forward_fix_invalid_priority.sql"
+  }
+]

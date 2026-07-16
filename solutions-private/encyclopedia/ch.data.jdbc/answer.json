@@ -1,0 +1,12 @@
+{
+  "sql_mode":"prepared",
+  "parameter_slots":1,
+  "injection_structure_changed":false,
+  "mapped_assigned_to":null,
+  "mapped_created_at":"2026-07-17T09:30:00+08:00",
+  "empty_result":"OPTIONAL_EMPTY",
+  "resource_closes":{"result_set":1,"prepared_statement":1,"connection":1},
+  "transaction":{"auto_commit":false,"same_connection":true,"rollback_on_failure":true,"final_state_unchanged":true},
+  "sqlstate_actions":{"23505":"CONFLICT","40001":"RETRY_WHOLE_TRANSACTION","40P01":"RETRY_WHOLE_TRANSACTION"},
+  "preserve_cause":true
+}

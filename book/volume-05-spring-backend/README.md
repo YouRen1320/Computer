@@ -19,9 +19,9 @@
 10. [实体、值对象、聚合、不变量与边界](chapters/ch.architecture.domain-modeling.md) — `ch.architecture.domain-modeling` · `drafting`
 11. [数据源、连接池、事务资源与迁移启动顺序](chapters/ch.spring.datasource-pooling.md) — `ch.spring.datasource-pooling` · `drafting`
 12. [Repository 边界与 Spring MyBatis 适配](chapters/ch.spring.mybatis-repositories.md) — `ch.spring.mybatis-repositories` · `drafting`
-13. [应用服务、用例编排与领域边界](chapters/ch.spring.service-use-cases.md) — `ch.spring.service-use-cases` · `planned`
-14. [切点、通知、代理边界与自调用陷阱](chapters/ch.spring.aop-proxy-model.md) — `ch.spring.aop-proxy-model` · `planned`
-15. [Spring 测试切片、上下文测试与 Testcontainers](chapters/ch.spring.testing-testcontainers.md) — `ch.spring.testing-testcontainers` · `planned`
-16. [@Transactional、传播、回滚、隔离与提交后行为](chapters/ch.spring.transactions.md) — `ch.spring.transactions` · `planned`
+13. [应用服务、用例编排与领域边界](chapters/ch.spring.service-use-cases.md) — `ch.spring.service-use-cases` · `drafting`
+14. [切点、通知、代理边界与自调用陷阱](chapters/ch.spring.aop-proxy-model.md) — `ch.spring.aop-proxy-model` · `drafting`
+15. [Spring 测试切片、上下文测试与 Testcontainers](chapters/ch.spring.testing-testcontainers.md) — `ch.spring.testing-testcontainers` · `drafting`
+16. [@Transactional、传播、回滚、隔离与提交后行为](chapters/ch.spring.transactions.md) — `ch.spring.transactions` · `drafting`
 17. [OpenAPI、契约示例与兼容性检查](chapters/ch.spring.openapi-contracts.md) — `ch.spring.openapi-contracts` · `planned`
 18. [Actuator、健康、就绪、指标与安全暴露](chapters/ch.spring.actuator-health-metrics.md) — `ch.spring.actuator-health-metrics` · `planned`

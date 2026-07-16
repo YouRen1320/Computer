@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: e9e2dd784ac6789e099ed7ea30be975758a891ccad9595706a7e16b1283f9789
+generated_spec_digest: a6ce1c3d03fce048547e00393dcd7038f20c5fb1dbbf808648521a8f5a9dbca3
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -9625,7 +9625,7 @@ chapters:
   role: practice
   responsibility: 教授用真实计划和数据分布判断索引价值，不以索引数量或单次耗时替代证据
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-index
@@ -9775,7 +9775,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.indexes-explain.md
   recommended_after:
   - ch.data.postgresql-types
-  spec_digest: af561f540df82319fb2b93a9ea20020cb9b6e3f99282baca982bbfc65e5fb604
+  spec_digest: 368787197f4591ac96d19646be2d3447bc86854eaff0452c98ac9c649e6ab6c3
   route_tags:
   - zero-base
   - accelerated-48
@@ -9786,7 +9786,7 @@ chapters:
   role: concept
   responsibility: 教授多语句原子性和并发异常边界，不提前绑定 Spring 代理或消息一致性实现
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-transaction-isolation
@@ -9937,7 +9937,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.transactions-locking.md
   recommended_after:
   - ch.data.indexes-explain
-  spec_digest: 98de25121a59ba2861e9cafd05fd75dff0942151377b9ce928dbb0286201a60a
+  spec_digest: 8fb768facb95a8ebb78536e1296994760c1c26f9ad478dbc5d2a126bc3de43fa
   route_tags:
   - zero-base
   - accelerated-48
@@ -9948,7 +9948,7 @@ chapters:
   role: practice
   responsibility: 教授可排序、可审计的 schema 演进和安全发布，不把回滚脚本当作有数据时的默认恢复方案
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-migration-versioning
@@ -10093,7 +10093,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.schema-migrations.md
   recommended_after:
   - ch.data.transactions-locking
-  spec_digest: 5f321abbab9cb4c0a3096611b3a8eb67cb1cebdcc0cfc10770942a890f94438e
+  spec_digest: 6755db9071186f41f8c2d10791c01f2ff50c382b5ce44d7ed21336b511869fd5
   route_tags:
   - zero-base
   - accelerated-48
@@ -10104,7 +10104,7 @@ chapters:
   role: practice
   responsibility: 教授 Java 直接访问关系数据库的资源和参数边界，不在本章引入连接池框架或 ORM
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: jdbc-query-resource
@@ -10269,7 +10269,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.jdbc.md
   recommended_after:
   - ch.data.schema-migrations
-  spec_digest: a76a80092a691284ca0266512e4692441bb99c8ba67dc322dd4e3395b232a9cf
+  spec_digest: f21b851127d92336f5bd58379f74b73f87808fef5a413514c5ec86eeaa838709
   route_tags:
   - zero-base
   - accelerated-48
@@ -12250,7 +12250,7 @@ chapters:
   role: practice
   responsibility: 教授应用服务协调领域和持久化端口，不把 Controller、SQL 或跨系统细节写入领域对象
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: application-service
@@ -12382,7 +12382,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.service-use-cases.md
   recommended_after:
   - ch.spring.mybatis-repositories
-  spec_digest: e69b658a1c925c299834da974879a1b715ab4eb8679602101c0a9228af382890
+  spec_digest: dad7292e4b8edfb73abbb36a6cc5756b5248b48c66e78b68a08b1a26b3153378
   route_tags:
   - zero-base
   - accelerated-48
@@ -12393,7 +12393,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring AOP 代理如何拦截边界调用，不把代理等同于对象本身或用 AOP 隐藏业务规则
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-aop-model
@@ -12527,7 +12527,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.aop-proxy-model.md
   recommended_after:
   - ch.spring.service-use-cases
-  spec_digest: 5d9fd988ba4e245634986df1fb656314f081a538f2c5257e65a1627ecde70b66
+  spec_digest: 95266e45263d797e3ceda9f6b2f2ae81061b3b79419d018b2ddc73ac7bf5cc21
   route_tags:
   - zero-base
   - accelerated-48
@@ -12538,7 +12538,7 @@ chapters:
   role: synthesis
   responsibility: 教授分层验证 Spring 装配与真实数据库适配，不用全上下文测试替代更小的单元测试
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-test-slices
@@ -12710,7 +12710,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.testing-testcontainers.md
   recommended_after:
   - ch.spring.aop-proxy-model
-  spec_digest: 75502bdd9cc73e109d699ac119458e1c859bd791615c4ab69367a89cfb93f535
+  spec_digest: 6206feed88b855033c3503ba87750f60eb50413b229136b6b63c1add1e949c41
   route_tags:
   - zero-base
   - accelerated-48
@@ -12721,7 +12721,7 @@ chapters:
   role: synthesis
   responsibility: 教授 Spring 声明式事务在真实 Repository/Service/代理边界上的语义，不扩展到分布式事务
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-transaction-boundary
@@ -12885,7 +12885,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.transactions.md
   recommended_after:
   - ch.spring.testing-testcontainers
-  spec_digest: 9911b77933bc27f62032b8c2c66777b97eda97c4e73a608b7483a944675033f7
+  spec_digest: a430e0e7bcc0912b25a3829997d653224a32342bb93234fd045073039b28efdd
   route_tags:
   - zero-base
   - accelerated-48
@@ -14964,7 +14964,7 @@ chapters:
   role: concept
   responsibility: 教授显式状态转换和业务时间承诺，不把状态字符串任意更新或把 SLO 监控混入领域状态机
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-state-machine
@@ -15097,7 +15097,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.workflow-state-sla.md
   recommended_after:
   - ch.security.audit-events-privacy
-  spec_digest: 05d5abe224b3c4f6de05ad609577c889717686373770fe0374e20b7d80d2e0e0
+  spec_digest: aacc460b3f274c778d24e20d7827afa0dde35a0fe84e58b3370133035d9d4607
   route_tags:
   - zero-base
   - accelerated-48
@@ -15108,7 +15108,7 @@ chapters:
   role: synthesis
   responsibility: 教授在数据库与应用事务边界抵御重复和并发覆盖，不承诺跨消息系统的恰好一次
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-idempotency
@@ -15269,7 +15269,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md
   recommended_after:
   - ch.architecture.workflow-state-sla
-  spec_digest: a87d7fc2ec9fd324bce7b5cdcf129115330320457fb25a484b4122cff3ddc8de
+  spec_digest: 1677a960a9f7c1cd898f64f5cb5cd9b0d304c32036adb5f1032bf3c5f67a3a09
   route_tags:
   - zero-base
   - accelerated-48
@@ -15280,7 +15280,7 @@ chapters:
   role: practice
   responsibility: 教授 Redis 辅助加速和限流的失效边界，不让缓存成为业务事实唯一权威或分布式事务替代品
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: redis-cache
@@ -15406,7 +15406,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.distributed.redis-cache-rate-limit.md
   recommended_after:
   - ch.architecture.idempotency-concurrency
-  spec_digest: 96d3f670cccf2aefaa2eee0120f1ad3fbbac8fdd416201d8367fbdec9822c734
+  spec_digest: df23be7d757d9e1e754f88e0845a4acfa2f39cf752e7b7a4c8bd858dc3316ffd
   route_tags:
   - zero-base
   - accelerated-48
@@ -15417,7 +15417,7 @@ chapters:
   role: synthesis
   responsibility: 教授在同一数据库事务记录待投递事实，不把 Outbox 当作消息必达或全局顺序保证
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-domain-event
@@ -15555,7 +15555,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.domain-events-outbox.md
   recommended_after:
   - ch.distributed.redis-cache-rate-limit
-  spec_digest: 3d78d50b4a3d66be38b66ddea03bb5518a93c8958e8a8930cf4f419a0c764119
+  spec_digest: a337fd71ab0da0eb5a7321a1fb00f896f3efac7e1a1c50ef1d207cbf4eb694cf
   route_tags:
   - zero-base
   - accelerated-48

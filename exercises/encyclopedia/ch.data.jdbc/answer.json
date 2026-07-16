@@ -1,0 +1,12 @@
+{
+  "sql_mode":"concatenated",
+  "parameter_slots":0,
+  "injection_structure_changed":true,
+  "mapped_assigned_to":0,
+  "mapped_created_at":"2026-07-17 09:30:00",
+  "empty_result":"null",
+  "resource_closes":{"result_set":0,"prepared_statement":0,"connection":0},
+  "transaction":{"auto_commit":true,"same_connection":false,"rollback_on_failure":false,"final_state_unchanged":false},
+  "sqlstate_actions":{},
+  "preserve_cause":false
+}

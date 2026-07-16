@@ -1,0 +1,17 @@
+{
+  "empty_database": {
+    "applied_versions":["1","2","2.1","2.2","3"],
+    "schema_fingerprint":"work_order:id,summary,priority_code!,created_at|check:P1-P5|view:reporting-v1",
+    "rows":3,
+    "remaining_nulls":0,
+    "mismatches":0
+  },
+  "v1_upgrade_database": {
+    "applied_versions":["1","2","2.1","2.2","3"],
+    "schema_fingerprint":"work_order:id,summary,priority_code!,created_at|check:P1-P5|view:reporting-v1",
+    "rows":3,
+    "remaining_nulls":0,
+    "mismatches":0
+  },
+  "second_migrate": {"pending_versioned":0,"data_changes":0,"repeatable_outdated":false}
+}

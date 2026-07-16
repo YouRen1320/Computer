@@ -1,0 +1,12 @@
+{
+  "versioned": [
+    {"file":"V1__create_work_order.sql","version":"1","stage":"create","sha256":"095633520b25068e33a7d2c5976af3962244725f64776495b72b30828a5d226c"},
+    {"file":"V2__expand_priority_code.sql","version":"2","stage":"expand","sha256":"9cded26a04cece32bfe5945a6e38b38ecff0432270b16b88717b2e89e8aa07f0"},
+    {"file":"V2_1__backfill_priority_code.sql","version":"2.1","stage":"backfill","sha256":"004fb63c274adbef217d1d4b912618230fabdceb38d432360d231b2383d5838f"},
+    {"file":"V2_2__validate_priority_code.sql","version":"2.2","stage":"validate","sha256":"d3c5b8a92d168bfe685dc8aa6f7c845a21f3fcc963164342c4e7b11baa8a7415"},
+    {"file":"V3__contract_priority.sql","version":"3","stage":"contract","sha256":"18b9287792801317de033097e3873168962ee66c488259a8ba770dd28cd5ce61"}
+  ],
+  "repeatable": [
+    {"file":"R__work_order_reporting_view.sql","stage":"view","sha256":"d6894573889dc5dff1e4bac5a80417a324ea81f5296dc69e2bb57433b412e452"}
+  ]
+}
