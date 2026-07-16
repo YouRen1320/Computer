@@ -1,0 +1,176 @@
+{
+  "logs": [
+    {
+      "timestamp": "2026-07-17T02:00:00.001Z",
+      "severity": "INFO",
+      "service": "factorycare-api",
+      "event": "http.work_order.create.received",
+      "outcome": "accepted",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "1111111111111111"
+    },
+    {
+      "timestamp": "2026-07-17T02:00:00.020Z",
+      "severity": "INFO",
+      "service": "factorycare-workorders",
+      "event": "work_order.create.validated",
+      "outcome": "success",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "2222222222222222"
+    },
+    {
+      "timestamp": "2026-07-17T02:00:00.050Z",
+      "severity": "INFO",
+      "service": "factorycare-workorders",
+      "event": "work_order.create.committed",
+      "outcome": "success",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "3333333333333333"
+    },
+    {
+      "timestamp": "2026-07-17T02:00:00.060Z",
+      "severity": "INFO",
+      "service": "factorycare-outbox",
+      "event": "outbox.work_order_created.published",
+      "outcome": "success",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "4444444444444444"
+    },
+    {
+      "timestamp": "2026-07-17T02:00:00.090Z",
+      "severity": "INFO",
+      "service": "factorycare-consumer",
+      "event": "work_order_created.consumed",
+      "outcome": "success",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "5555555555555555"
+    },
+    {
+      "timestamp": "2026-07-17T02:00:00.140Z",
+      "severity": "WARN",
+      "service": "factorycare-ai-client",
+      "event": "ai.draft.degraded",
+      "outcome": "dependency_timeout",
+      "reason_code": "PYTHON_TIMEOUT",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "6666666666666666"
+    }
+  ],
+  "spans": [
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "1111111111111111",
+      "parent_span_id": null,
+      "service": "factorycare-api",
+      "name": "POST /api/work-orders"
+    },
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "2222222222222222",
+      "parent_span_id": "1111111111111111",
+      "service": "factorycare-workorders",
+      "name": "workorders.create"
+    },
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "3333333333333333",
+      "parent_span_id": "2222222222222222",
+      "service": "factorycare-workorders",
+      "name": "postgres.transaction"
+    },
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "4444444444444444",
+      "parent_span_id": "2222222222222222",
+      "service": "factorycare-outbox",
+      "name": "outbox.publish"
+    },
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "5555555555555555",
+      "parent_span_id": "4444444444444444",
+      "service": "factorycare-consumer",
+      "name": "WorkOrderCreated consume"
+    },
+    {
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "6666666666666666",
+      "parent_span_id": "5555555555555555",
+      "service": "factorycare-ai-client",
+      "name": "POST python-ai/drafts"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "factorycare_http_server_requests_total",
+      "labels": {
+        "route": "/api/work-orders",
+        "method": "POST",
+        "outcome": "success",
+        "status_class": "2xx"
+      }
+    },
+    {
+      "name": "factorycare_http_server_request_duration_seconds_bucket",
+      "labels": {
+        "route": "/api/work-orders",
+        "method": "POST",
+        "le": "0.5"
+      }
+    },
+    {
+      "name": "factorycare_dependency_requests_total",
+      "labels": {
+        "dependency": "python-ai",
+        "outcome": "dependency_timeout"
+      }
+    },
+    {
+      "name": "factorycare_outbox_backlog",
+      "labels": {}
+    }
+  ],
+  "health": {
+    "liveness": {
+      "status": "UP",
+      "external_dependencies": []
+    },
+    "readiness": {
+      "status": "UP",
+      "required_dependencies": ["postgres"]
+    },
+    "dependencies": {
+      "postgres": "UP",
+      "python-ai": "DEGRADED"
+    },
+    "optional_dependencies": ["python-ai"]
+  },
+  "slo": {
+    "name": "create-work-order-availability",
+    "window": "30d",
+    "eligible": 10000,
+    "bad": 8,
+    "target": 0.999,
+    "expected_availability": 0.9992,
+    "expected_total_budget": 10,
+    "expected_remaining_budget": 2
+  },
+  "alerts": [
+    {
+      "name": "transient-spike",
+      "long_window_burn_rate": 0.5,
+      "short_window_burn_rate": 20.0,
+      "threshold": 14.4,
+      "expected_page": false
+    },
+    {
+      "name": "sustained-budget-burn",
+      "long_window_burn_rate": 15.0,
+      "short_window_burn_rate": 18.0,
+      "threshold": 14.4,
+      "expected_page": true,
+      "owner": "factorycare-oncall",
+      "runbook": "runbooks/create-work-order-slo.md"
+    }
+  ]
+}

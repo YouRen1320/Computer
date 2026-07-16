@@ -1,0 +1,39 @@
+{
+  "log_fields": ["timestamp", "severity", "service", "event", "outcome", "trace_id", "span_id"],
+  "trace": {
+    "one_trace_across_async": true,
+    "log_span_ids_exist": true,
+    "propagation_boundaries": ["http", "executor", "outbox", "consumer", "python"]
+  },
+  "metrics": {
+    "labels": ["route", "method", "outcome", "status_class", "dependency"],
+    "route_is_template": true
+  },
+  "health": {
+    "liveness_external_dependencies": [],
+    "readiness_required_dependencies": ["postgres"],
+    "optional_dependencies": ["python-ai"],
+    "python_status": "DEGRADED",
+    "core_readiness": "UP"
+  },
+  "slo": {
+    "eligible": 10000,
+    "bad": 8,
+    "target": 0.999,
+    "availability": 0.9992,
+    "total_budget": 10,
+    "remaining_budget": 2
+  },
+  "alert": {
+    "requires_long_and_short": true,
+    "transient_pages": false,
+    "sustained_pages": true,
+    "owner": "factorycare-oncall",
+    "runbook": "runbooks/create-work-order-slo.md"
+  },
+  "incident_feedback": ["detect", "triage", "mitigate", "recover", "learn", "verify"],
+  "privacy": {
+    "forbidden_fields_absent": true,
+    "field_allowlist_enforced": true
+  }
+}

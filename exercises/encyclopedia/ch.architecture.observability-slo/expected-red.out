@@ -1,0 +1,19 @@
+ERROR: logs must include stable fields plus real trace_id/span_id
+ERROR: one trace must preserve causality across async work
+ERROR: every log span_id must exist in the trace
+ERROR: context propagation boundaries are incomplete
+ERROR: metric labels contain high-cardinality request or business IDs
+ERROR: HTTP route metric must use a route template
+ERROR: liveness must not depend on external systems
+ERROR: readiness must require only the core PostgreSQL dependency in this scenario
+ERROR: Python AI must be declared optional
+ERROR: optional Python degradation must leave core readiness UP
+ERROR: SLI/error-budget values must recompute to 99.92%, 10 total and 2 remaining
+ERROR: page rule must require both long and short burn windows
+ERROR: a short transient spike must not page
+ERROR: page alert must have an owner
+ERROR: page alert must have a runbook
+ERROR: incident feedback must cover detect/triage/mitigate/recover/learn/verify
+ERROR: forbidden secrets and full PII must be absent
+ERROR: telemetry must enforce a field allowlist
+EXERCISE_VERIFIER=RED (18 violations)

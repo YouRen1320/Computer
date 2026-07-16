@@ -1,0 +1,68 @@
+{
+  "faults": [
+    {
+      "id": "log-missing-trace",
+      "injected": {
+        "log_fields": ["timestamp", "severity", "service", "event", "outcome"]
+      },
+      "diagnosis": "日志没有来自当前 span 的 trace_id/span_id，无法与 trace 做机器关联。",
+      "repair": "从当前 Observation/span 自动注入 trace_id 与 span_id，并在异步边界传播上下文。",
+      "replay_assertion": "每条关键日志的 span_id 都存在于同 trace 的 span 集合。"
+    },
+    {
+      "id": "metric-high-cardinality",
+      "injected": {
+        "metric": "factorycare_http_server_requests_total",
+        "labels": ["route", "method", "outcome", "trace_id", "work_order_id"]
+      },
+      "diagnosis": "每个 trace/工单几乎生成唯一时间序列，导致存储、查询和规则评估失控。",
+      "repair": "只保留 route template、method、受控 outcome；用 exemplar/log/trace 定位单次请求。",
+      "replay_assertion": "所有 metric label 都属于逐指标允许列表，禁止 trace_id/work_order_id。"
+    },
+    {
+      "id": "async-trace-break",
+      "injected": {
+        "producer_span_id": "4444444444444444",
+        "consumer_parent_span_id": null,
+        "consumer_links": []
+      },
+      "diagnosis": "outbox/消息上下文未传播，consumer 成为无法导航的新 root。",
+      "repair": "event envelope 保存标准 trace context，relay inject，consumer extract；或显式 span link。",
+      "replay_assertion": "consumer 必须有可解析 parent 或指向 producer 的 link。"
+    },
+    {
+      "id": "liveness-external-dependency",
+      "injected": {
+        "liveness_external_dependencies": ["postgres"],
+        "on_postgres_down": "RESTART_ALL_INSTANCES"
+      },
+      "diagnosis": "数据库抖动触发应用重启风暴，重启不能修复外部依赖。",
+      "repair": "liveness 只检查进程内部；PostgreSQL 按核心性进入 readiness 并演练摘流/恢复。",
+      "replay_assertion": "断开 PostgreSQL 时 liveness 保持 UP，readiness 变为 OUT_OF_SERVICE，进程不重启。"
+    },
+    {
+      "id": "sli-denominator-omits-system-errors",
+      "injected": {
+        "observed_requests": 10000,
+        "eligible_requests": 9992,
+        "system_errors": 8,
+        "excluded_outcomes": ["system_error"]
+      },
+      "diagnosis": "把 8 个系统错误从分母删除会伪造 100% 可用性。",
+      "repair": "在统一入口统计所有 eligible，把 5xx/timeout 作为 bad，不得事后排除故障时段。",
+      "replay_assertion": "10,000 eligible、8 bad 必须计算为 99.92%，错误预算余 2。"
+    },
+    {
+      "id": "transient-spike-pages",
+      "injected": {
+        "long_window_burn_rate": 0.5,
+        "short_window_burn_rate": 20.0,
+        "threshold": 14.4,
+        "configured_page": true
+      },
+      "diagnosis": "仅短窗口尖峰就 page，产生噪声和告警疲劳。",
+      "repair": "长窗口与短窗口用 AND，并加入最小流量、owner、runbook 和恢复条件。",
+      "replay_assertion": "长窗 0.5/短窗 20 不 page；长窗 15/短窗 18 才 page。"
+    }
+  ]
+}

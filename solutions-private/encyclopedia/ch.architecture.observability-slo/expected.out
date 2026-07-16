@@ -1,0 +1,8 @@
+log-trace-correlation: PASS
+metric-cardinality: PASS
+health-dependencies: PASS
+sli-error-budget: PASS (99.92%, budget=10, remaining=2)
+alert-actionability: PASS
+incident-feedback: PASS
+privacy-minimization: PASS
+EXERCISE_VERIFIER=PASS

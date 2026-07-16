@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.factorycare.workorder.persistence.WorkOrderMapper">
+  <resultMap id="workOrderRowMap"
+             type="com.factorycare.workorder.persistence.WorkOrderRow"
+             autoMapping="false">
+    <constructor>
+      <idArg name="id" column="id" javaType="java.lang.Long"/>
+      <arg name="number" column="work_order_no" javaType="java.lang.String"/>
+      <arg name="title" column="title" javaType="java.lang.String"/>
+      <arg name="status" column="status"
+           javaType="com.factorycare.workorder.persistence.WorkOrderStatus"/>
+      <arg name="assigneeId" column="assignee_id" javaType="java.lang.Long"/>
+      <arg name="createdAt" column="created_at"
+           javaType="java.time.OffsetDateTime"/>
+    </constructor>
+  </resultMap>
+
+  <sql id="workOrderRowColumns">
+    id, work_order_no, title, status, assignee_id, created_at
+  </sql>
+
+  <select id="findById" resultMap="workOrderRowMap">
+    SELECT <include refid="workOrderRowColumns"/>
+    FROM work_order
+    WHERE id = #{id}
+  </select>
+
+  <select id="search" resultMap="workOrderRowMap">
+    SELECT <include refid="workOrderRowColumns"/>
+    FROM work_order
+    <where>
+      <if test="filter.status != null">
+        AND status = #{filter.status}
+      </if>
+      <if test="filter.assigneeId != null">
+        AND assignee_id = #{filter.assigneeId}
+      </if>
+      <if test="filter.createdFrom != null">
+        AND created_at &gt;= #{filter.createdFrom}
+      </if>
+      <if test="filter.keyword != null">
+        <bind name="pattern" value="'%' + filter.keyword + '%'"/>
+        AND (work_order_no ILIKE #{pattern} OR title ILIKE #{pattern})
+      </if>
+      <if test="filter.ids != null and !filter.ids.isEmpty()">
+        AND id IN
+        <foreach collection="filter.ids" item="id"
+                 open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+    <choose>
+      <when test="filter.sort != null and filter.sort.name() == 'CREATED_ASC'">
+        ORDER BY created_at ASC, id ASC
+      </when>
+      <otherwise>
+        ORDER BY created_at DESC, id DESC
+      </otherwise>
+    </choose>
+  </select>
+</mapper>

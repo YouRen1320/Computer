@@ -23,6 +23,6 @@
 14. [幂等键、乐观并发、重复提交与重放](chapters/ch.architecture.idempotency-concurrency.md) — `ch.architecture.idempotency-concurrency` · `drafting`
 15. [Redis 缓存、TTL、失效、配额与限流](chapters/ch.distributed.redis-cache-rate-limit.md) — `ch.distributed.redis-cache-rate-limit` · `drafting`
 16. [领域事件、Outbox 与提交一致性](chapters/ch.architecture.domain-events-outbox.md) — `ch.architecture.domain-events-outbox` · `drafting`
-17. [RabbitMQ、投递语义、重试、死信与幂等消费](chapters/ch.distributed.messaging-delivery.md) — `ch.distributed.messaging-delivery` · `planned`
-18. [模块化单体、结构测试与拆分信号](chapters/ch.architecture.modular-monolith.md) — `ch.architecture.modular-monolith` · `planned`
-19. [日志、指标、追踪、SLO 与告警闭环](chapters/ch.architecture.observability-slo.md) — `ch.architecture.observability-slo` · `planned`
+17. [RabbitMQ、投递语义、重试、死信与幂等消费](chapters/ch.distributed.messaging-delivery.md) — `ch.distributed.messaging-delivery` · `drafting`
+18. [模块化单体、结构测试与拆分信号](chapters/ch.architecture.modular-monolith.md) — `ch.architecture.modular-monolith` · `drafting`
+19. [日志、指标、追踪、SLO 与告警闭环](chapters/ch.architecture.observability-slo.md) — `ch.architecture.observability-slo` · `drafting`

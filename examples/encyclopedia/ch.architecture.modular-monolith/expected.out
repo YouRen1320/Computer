@@ -1,0 +1,9 @@
+modules=devices,reporting,users,workorders
+deployment_units=1
+allowed_edges=workorders->devices,workorders->users
+acyclic=true
+internal_isolated=true
+module_test_scope=workorders+direct-dependencies
+event_producer_knows_consumers=false
+split_decision=KEEP_MONOLITH
+microservice_claim=false

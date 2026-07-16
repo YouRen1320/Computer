@@ -1,0 +1,5 @@
+statement=com.factorycare.workorder.persistence.WorkOrderMapper.search|namespace-id=PASS
+mapping=empty:0|single:1|multiple:3|null-assignee:PASS
+dynamic=no-filters:legal|status:1-bind|injection-structure:false|ids:3-binds
+n-plus-one=rows:50|queries:1|max:2|verdict=PASS
+mybatis-core-example=PASS

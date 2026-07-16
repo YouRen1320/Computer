@@ -1,0 +1,39 @@
+{
+  "mapping_cardinality": {
+    "empty": 0,
+    "single": 1,
+    "multiple": 3,
+    "unassigned_assignee_id": null
+  },
+  "dynamic_cases": [
+    {
+      "name": "no-filters",
+      "filter": {},
+      "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order ORDER BY created_at DESC, id DESC",
+      "expected_binds": []
+    },
+    {
+      "name": "status-only",
+      "filter": {"status": "OPEN"},
+      "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order WHERE status = ? ORDER BY created_at DESC, id DESC",
+      "expected_binds": ["OPEN"]
+    },
+    {
+      "name": "injection-is-a-value",
+      "filter": {"status": "OPEN' OR '1'='1"},
+      "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order WHERE status = ? ORDER BY created_at DESC, id DESC",
+      "expected_binds": ["OPEN' OR '1'='1"]
+    },
+    {
+      "name": "ids-and-ascending-sort",
+      "filter": {"ids": [7, 8, 9], "sort": "CREATED_ASC"},
+      "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order WHERE id IN (?, ?, ?) ORDER BY created_at ASC, id ASC",
+      "expected_binds": [7, 8, 9]
+    }
+  ],
+  "query_budget": {"rows": 50, "actual_queries": 1, "maximum_queries": 2},
+  "failure_evidence": {
+    "statement_id": "com.factorycare.workorder.persistence.WorkOrderMapper.search",
+    "first_layer": "parameter-binding"
+  }
+}

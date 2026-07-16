@@ -23,4 +23,4 @@
 14. [ACID、隔离级别、锁、死锁与重试边界](chapters/ch.data.transactions-locking.md) — `ch.data.transactions-locking` · `drafting`
 15. [Flyway、版本迁移、向前修复与数据演进](chapters/ch.data.schema-migrations.md) — `ch.data.schema-migrations` · `drafting`
 16. [DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界](chapters/ch.data.jdbc.md) — `ch.data.jdbc` · `drafting`
-17. [MyBatis 映射、参数绑定、结果映射与动态 SQL](chapters/ch.data.mybatis-core.md) — `ch.data.mybatis-core` · `planned`
+17. [MyBatis 映射、参数绑定、结果映射与动态 SQL](chapters/ch.data.mybatis-core.md) — `ch.data.mybatis-core` · `drafting`

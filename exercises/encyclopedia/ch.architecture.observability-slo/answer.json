@@ -1,0 +1,39 @@
+{
+  "log_fields": ["timestamp", "severity", "service", "event", "outcome"],
+  "trace": {
+    "one_trace_across_async": false,
+    "log_span_ids_exist": false,
+    "propagation_boundaries": ["http", "python"]
+  },
+  "metrics": {
+    "labels": ["route", "method", "outcome", "trace_id", "work_order_id"],
+    "route_is_template": false
+  },
+  "health": {
+    "liveness_external_dependencies": ["postgres"],
+    "readiness_required_dependencies": ["postgres", "python-ai"],
+    "optional_dependencies": [],
+    "python_status": "DEGRADED",
+    "core_readiness": "DOWN"
+  },
+  "slo": {
+    "eligible": 10000,
+    "bad": 8,
+    "target": 0.999,
+    "availability": 1.0,
+    "total_budget": 8,
+    "remaining_budget": 1
+  },
+  "alert": {
+    "requires_long_and_short": false,
+    "transient_pages": true,
+    "sustained_pages": true,
+    "owner": "",
+    "runbook": ""
+  },
+  "incident_feedback": ["detect"],
+  "privacy": {
+    "forbidden_fields_absent": false,
+    "field_allowlist_enforced": false
+  }
+}

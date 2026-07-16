@@ -1,0 +1,10 @@
+routed_queues=knowledge,reporting
+unroutable=RETURNED
+publisher_attempts=2
+stable_event_id=true
+deliveries=2
+consumer_effects=1
+ack_after_commit=true
+temporary_attempts=3
+permanent_result=DLQ
+exactly_once_claim=false

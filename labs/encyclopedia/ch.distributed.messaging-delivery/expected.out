@@ -1,0 +1,9 @@
+outbox_atomic=true
+confirm_before_mark=true
+retry_id_stable=true
+ack_after_commit=true
+duplicate_idempotent=true
+retry_finite=true
+unroutable_visible=true
+permanent_to_dlq=true
+verification_report=PASS assertions=8

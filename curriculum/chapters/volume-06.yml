@@ -2230,7 +2230,7 @@ chapters:
   role: synthesis
   responsibility: 教授至少一次投递下的确认、重试和重复消费边界，不宣称端到端恰好一次
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: messaging-delivery
@@ -2367,7 +2367,7 @@ chapters:
   role: synthesis
   responsibility: 教授在单一部署中保持业务模块边界和依赖方向，不因模块命名就声称已成为微服务
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-module-boundary
@@ -2502,7 +2502,7 @@ chapters:
   role: synthesis
   responsibility: 教授从健康信号到用户目标的可观测闭环，不把日志数量、单一指标或告警存在等同于可靠性
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: observability-signals

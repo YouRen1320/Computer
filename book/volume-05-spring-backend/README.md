@@ -23,5 +23,5 @@
 14. [切点、通知、代理边界与自调用陷阱](chapters/ch.spring.aop-proxy-model.md) — `ch.spring.aop-proxy-model` · `drafting`
 15. [Spring 测试切片、上下文测试与 Testcontainers](chapters/ch.spring.testing-testcontainers.md) — `ch.spring.testing-testcontainers` · `drafting`
 16. [@Transactional、传播、回滚、隔离与提交后行为](chapters/ch.spring.transactions.md) — `ch.spring.transactions` · `drafting`
-17. [OpenAPI、契约示例与兼容性检查](chapters/ch.spring.openapi-contracts.md) — `ch.spring.openapi-contracts` · `planned`
-18. [Actuator、健康、就绪、指标与安全暴露](chapters/ch.spring.actuator-health-metrics.md) — `ch.spring.actuator-health-metrics` · `planned`
+17. [OpenAPI、契约示例与兼容性检查](chapters/ch.spring.openapi-contracts.md) — `ch.spring.openapi-contracts` · `drafting`
+18. [Actuator、健康、就绪、指标与安全暴露](chapters/ch.spring.actuator-health-metrics.md) — `ch.spring.actuator-health-metrics` · `drafting`

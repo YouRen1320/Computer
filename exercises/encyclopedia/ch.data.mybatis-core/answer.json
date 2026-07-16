@@ -1,0 +1,25 @@
+{
+  "statement_id": "WorkOrderMapper.search",
+  "namespace_matches_interface": false,
+  "statement_id_matches_method": false,
+  "value_binding": "${}",
+  "contains_text_substitution": true,
+  "bound_paths": ["status"],
+  "final_sql_structure_changed_by_injection": true,
+  "dynamic_root": "manual-where",
+  "all_conditions_absent": "SELECT FROM work_order WHERE",
+  "empty_ids_policy": "omit-condition-and-return-all",
+  "result_mapping": {
+    "id": "work_order_id",
+    "number": "number",
+    "status": "state",
+    "assigneeId": "assignee",
+    "createdAt": "created"
+  },
+  "cardinality": {"empty": null, "single": 1, "multiple": 1, "unassigned_assignee_id": 0},
+  "sort_policy": "raw-user-text",
+  "query_budget": {"rows": 50, "actual_queries": 51, "maximum_queries": 2},
+  "failure_evidence": {"statement_id_present": false, "same_input_rerun": "not-run"},
+  "transaction_ownership": "mapper-annotation",
+  "mapper_has_transaction_annotation": true
+}

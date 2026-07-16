@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "fbd246dc389a699f7c22117c4e562a99f51f2b0a6a4ac7cb0961b96d95ad15ca",
+  "input_digest": "ac2ce42cf16c68e5d00a536e0effb560205105dbb7df7c4eb04571dc8ee27e50",
   "volumes": [
     {
       "id": "00",
@@ -684,7 +684,7 @@
           "title": "MyBatis 映射、参数绑定、结果映射与动态 SQL",
           "order": 17,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.mybatis-core.md",
           "publishable": false
         }
@@ -843,7 +843,7 @@
           "title": "OpenAPI、契约示例与兼容性检查",
           "order": 17,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.openapi-contracts.md",
           "publishable": false
         },
@@ -852,7 +852,7 @@
           "title": "Actuator、健康、就绪、指标与安全暴露",
           "order": 18,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md",
           "publishable": false
         }
@@ -1011,7 +1011,7 @@
           "title": "RabbitMQ、投递语义、重试、死信与幂等消费",
           "order": 17,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.distributed.messaging-delivery.md",
           "publishable": false
         },
@@ -1020,7 +1020,7 @@
           "title": "模块化单体、结构测试与拆分信号",
           "order": 18,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.modular-monolith.md",
           "publishable": false
         },
@@ -1029,7 +1029,7 @@
           "title": "日志、指标、追踪、SLO 与告警闭环",
           "order": 19,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md",
           "publishable": false
         }

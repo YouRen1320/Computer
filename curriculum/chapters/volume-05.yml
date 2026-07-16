@@ -2301,7 +2301,7 @@ chapters:
   role: practice
   responsibility: 教授从运行 API 契约生成并检查机器可读描述，不把文档存在等同于实现兼容
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: openapi-description
@@ -2432,7 +2432,7 @@ chapters:
   role: practice
   responsibility: 教授应用健康和基础指标的可观测端点，不提前建立分布式追踪或完整 SLO 告警体系
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-health-readiness

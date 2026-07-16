@@ -1,0 +1,25 @@
+{
+  "statement_id": "com.factorycare.workorder.persistence.WorkOrderMapper.search",
+  "namespace_matches_interface": true,
+  "statement_id_matches_method": true,
+  "value_binding": "#{}",
+  "contains_text_substitution": false,
+  "bound_paths": ["filter.status", "filter.assigneeId", "filter.createdFrom", "pattern", "id"],
+  "final_sql_structure_changed_by_injection": false,
+  "dynamic_root": "where",
+  "all_conditions_absent": "legal-no-where",
+  "empty_ids_policy": "return-empty-before-mapper",
+  "result_mapping": {
+    "id": "id",
+    "number": "work_order_no",
+    "status": "status",
+    "assigneeId": "assignee_id",
+    "createdAt": "created_at"
+  },
+  "cardinality": {"empty": 0, "single": 1, "multiple": 3, "unassigned_assignee_id": null},
+  "sort_policy": "enum-fixed-branches",
+  "query_budget": {"rows": 50, "actual_queries": 2, "maximum_queries": 2},
+  "failure_evidence": {"statement_id_present": true, "same_input_rerun": "PASS"},
+  "transaction_ownership": "service-boundary",
+  "mapper_has_transaction_annotation": false
+}

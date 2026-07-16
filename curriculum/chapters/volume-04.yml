@@ -2131,7 +2131,7 @@ chapters:
   role: practice
   responsibility: 教授 SQL 主导的 Java 映射层，不在本章加入 Spring Repository 或事务代理
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: mybatis-mapping

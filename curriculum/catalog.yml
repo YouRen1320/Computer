@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: a6ce1c3d03fce048547e00393dcd7038f20c5fb1dbbf808648521a8f5a9dbca3
+generated_spec_digest: 3adfe2d91013087abd4d5cb81b4fc2f6587a7bb52af0c0d497f6ba8891f6f14c
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -10280,7 +10280,7 @@ chapters:
   role: practice
   responsibility: 教授 SQL 主导的 Java 映射层，不在本章加入 Spring Repository 或事务代理
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: mybatis-mapping
@@ -10422,7 +10422,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.mybatis-core.md
   recommended_after:
   - ch.data.jdbc
-  spec_digest: 0c60b10d755a1eb9343a27ec348c0a715b0d15c30a674afa982ba8480bcb6dff
+  spec_digest: c6f8221cde556063fdb10600ea533ee0a19477b2455dbe4aba6e5b18554dddad
   route_tags:
   - zero-base
   - accelerated-48
@@ -12896,7 +12896,7 @@ chapters:
   role: practice
   responsibility: 教授从运行 API 契约生成并检查机器可读描述，不把文档存在等同于实现兼容
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: openapi-description
@@ -13027,7 +13027,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.openapi-contracts.md
   recommended_after:
   - ch.spring.transactions
-  spec_digest: bb235931c9088e768f86976200ab2bd50e593222944bdab30d8f89d3e01c8b47
+  spec_digest: 6d743faa2b7fea586872b0c337fad567ae88e3e5e740e106417249d601f101ea
   route_tags:
   - zero-base
   - accelerated-48
@@ -13037,7 +13037,7 @@ chapters:
   role: practice
   responsibility: 教授应用健康和基础指标的可观测端点，不提前建立分布式追踪或完整 SLO 告警体系
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-health-readiness
@@ -13165,7 +13165,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md
   recommended_after:
   - ch.spring.openapi-contracts
-  spec_digest: 4a9a6efdb5bba9559037a8fa0e3506190b698dcd04544325ee2c89a0706a07d9
+  spec_digest: 0b6ad9d937c4fcac4afee50cab2f63c7acbed12d931d0f9f3b03100fd760bf93
   route_tags:
   - zero-base
   - accelerated-48
@@ -15566,7 +15566,7 @@ chapters:
   role: synthesis
   responsibility: 教授至少一次投递下的确认、重试和重复消费边界，不宣称端到端恰好一次
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: messaging-delivery
@@ -15703,7 +15703,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.distributed.messaging-delivery.md
   recommended_after:
   - ch.architecture.domain-events-outbox
-  spec_digest: 0ad6bf6cc3bba0fde7412838e634da250653ed262f266dcd40cfec9c15430d30
+  spec_digest: bbe94ae2b42aaf5322823b5578d81bb3040a2ca6ee00cb71cf80729a5227a345
   route_tags:
   - zero-base
   - accelerated-48
@@ -15714,7 +15714,7 @@ chapters:
   role: synthesis
   responsibility: 教授在单一部署中保持业务模块边界和依赖方向，不因模块命名就声称已成为微服务
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-module-boundary
@@ -15849,7 +15849,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.modular-monolith.md
   recommended_after:
   - ch.distributed.messaging-delivery
-  spec_digest: 889e167f41bb5237e3c5fcdd050939d4d1e98fd48bf06b5b2efbd9b4e0f10a9f
+  spec_digest: f0fc316d64b449b52cb88bd428d15d1ca904d213a6e135000317872134c41259
   route_tags:
   - zero-base
   - accelerated-48
@@ -15860,7 +15860,7 @@ chapters:
   role: synthesis
   responsibility: 教授从健康信号到用户目标的可观测闭环，不把日志数量、单一指标或告警存在等同于可靠性
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: observability-signals
@@ -16027,7 +16027,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md
   recommended_after:
   - ch.architecture.modular-monolith
-  spec_digest: 2e7b5b47e9122bb0eaf71b691d8cb82e1f5b301f828661354a3f4a2daeb68060
+  spec_digest: a53ed885990b9d09a29f646de05b09e5a209ce53eabc23c84e59bddd4ef15911
   route_tags:
   - zero-base
   - accelerated-48

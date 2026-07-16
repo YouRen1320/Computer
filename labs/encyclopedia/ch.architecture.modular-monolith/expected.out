@@ -1,0 +1,9 @@
+dependency_graph_acyclic=true
+internal_access_blocked=true
+allowed_edges_enforced=true
+entity_owner_unique=true
+shared_kernel_technical=true
+derived_failure_isolated=true
+module_independently_testable=true
+split_requires_evidence=true
+verification_report=PASS assertions=8

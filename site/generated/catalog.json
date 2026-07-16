@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "fbd246dc389a699f7c22117c4e562a99f51f2b0a6a4ac7cb0961b96d95ad15ca",
+  "input_digest": "ac2ce42cf16c68e5d00a536e0effb560205105dbb7df7c4eb04571dc8ee27e50",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 151,
-    "drafting": 104,
+    "planned": 145,
+    "drafting": 110,
     "review": 0,
     "verified": 0
   },
@@ -7022,7 +7022,7 @@
           "volume": "04",
           "order": 17,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.jdbc",
             "ch.java-engineering.generics-type-safety"
@@ -8761,7 +8761,7 @@
           "volume": "05",
           "order": 17,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.problem-details-errors"
           ],
@@ -8859,7 +8859,7 @@
           "volume": "05",
           "order": 18,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.testing-testcontainers"
           ],
@@ -10569,7 +10569,7 @@
           "volume": "06",
           "order": 17,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.architecture.domain-events-outbox"
           ],
@@ -10671,7 +10671,7 @@
           "volume": "06",
           "order": 18,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.distributed.messaging-delivery"
           ],
@@ -10774,7 +10774,7 @@
           "volume": "06",
           "order": 19,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.actuator-health-metrics",
             "ch.architecture.modular-monolith",

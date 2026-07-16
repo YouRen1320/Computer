@@ -1,0 +1,6 @@
+correlation: PASS (6 logs, 6 spans, 1 trace)
+metric-cardinality: PASS (label allowlist is bounded)
+health-semantics: PASS (core ready, optional Python degraded)
+sli-error-budget: PASS (availability=99.92%, remaining=2)
+alert-sustainment: PASS (transient=no page, sustained=page)
+privacy-minimization: PASS (forbidden secret fields absent)

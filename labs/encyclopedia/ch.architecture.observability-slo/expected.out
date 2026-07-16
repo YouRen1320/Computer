@@ -1,0 +1,7 @@
+log-missing-trace: RED detected; repair and replay assertion present
+metric-high-cardinality: RED detected; repair and replay assertion present
+async-trace-break: RED detected; repair and replay assertion present
+liveness-external-dependency: RED detected; repair and replay assertion present
+sli-denominator-omits-system-errors: RED detected; repair and replay assertion present
+transient-spike-pages: RED detected; repair and replay assertion present
+fault-lab: PASS (6 injected failures are detectable)

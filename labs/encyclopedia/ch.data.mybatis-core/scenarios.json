@@ -1,0 +1,39 @@
+{
+  "wrong_parameter": {
+    "statement_id": "com.factorycare.workorder.persistence.WorkOrderMapper.search",
+    "interface_parameter": "filter",
+    "xml_path": "status",
+    "outcome": "BINDING_FAIL",
+    "database_called": false,
+    "repair": "filter.status"
+  },
+  "wrong_result_column": {
+    "returned_column": "assignee_id",
+    "mapped_column": "assignee",
+    "expected_assignee_id": 73,
+    "actual_assignee_id": null,
+    "outcome": "MAPPING_FAIL",
+    "repair": "assignee_id"
+  },
+  "dangling_where": {
+    "input": "all-conditions-absent",
+    "final_sql": "SELECT id FROM work_order WHERE",
+    "sqlstate": "42601",
+    "outcome": "SQL_FAIL",
+    "repair": "<where>"
+  },
+  "text_substitution": {
+    "template": "ORDER BY ${sort}",
+    "input": "created_at DESC, id",
+    "structure_changed": true,
+    "outcome": "STRUCTURE_CHANGED",
+    "repair": "enum-allowlist"
+  },
+  "n_plus_one": {
+    "rows": 50,
+    "nested_select_queries": 51,
+    "repaired_queries": 2,
+    "maximum_queries": 2,
+    "repair": "batch-load"
+  }
+}

@@ -1,0 +1,6 @@
+wrong-param=BINDING_FAIL|statement=com.factorycare.workorder.persistence.WorkOrderMapper.search|database-called:false|repair=filter.status
+wrong-column=MAPPING_FAIL|returned:assignee_id|mapped:assignee|repair=assignee_id
+dangling-where=sqlstate:42601|repair:<where>
+text-substitution=STRUCTURE_CHANGED|repair=enum-allowlist
+n-plus-one=rows:50|before:51|after:2
+mybatis-core-lab=PASS
