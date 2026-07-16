@@ -39,8 +39,27 @@ ruby scripts/build-publication-plan.rb --profile publication/profiles/p3-gold.ym
 计划生成时每个输入的首次读取会冻结为内存字节快照；逐项 SHA、字节数和三个集合
 摘要都只基于这份快照，提交前再逐项重读，发现变化即失败。该机制防止一次构建形成
 自相矛盾的混合摘要，但不是仓库锁、文件系统快照或针对恶意同用户并发进程的 OS 级
-隔离。Unix executable 位不属于本摘要：R1-B Runner 必须用 manifest 中的显式 argv
-和固定解释器运行脚本，不能信任文件模式决定执行方式。
+隔离。Unix executable 位不属于本摘要。
+
+## 内容优先阶段的黄金样章验证
+
+2026-07-16 起，P3—P8 采用内容优先节奏。四个黄金样章先由代码内固定 recipe 的
+轻量 Runner 验证；出版级 verification manifest、严格未声明输出封闭和原子证据树
+集中到 P9。当前入口是：
+
+```bash
+ruby scripts/verify-gold-samples.rb
+ruby scripts/verify-gold-samples.rb --json
+```
+
+Runner 固定 10 个 recipe 和 8 个物理脚本入口，每个 recipe 都复制到独立临时目录
+执行；Maven 强制使用 offline 模式。`java-values-types-starter` 的退出码 `1` 是预先
+声明的教学失败，只有实际退出码仍为 `1` 才算该 recipe 通过；其余 recipe 期望
+退出码 `0`。`java-values-types-example` 不借用不适用的 lab wrapper，而是执行固定的
+Maven 构建和两个精确 stdout 预言机。
+
+该 Runner 是内容生产期的损坏防线，不是 OS 级网络/文件系统沙箱，也不证明没有
+未声明输出、跨平台可复现、人工教学质量或出版合规。完整门仍在 P9。
 
 R1-A 的回归测试可以独立运行：
 
@@ -48,6 +67,7 @@ R1-A 的回归测试可以独立运行：
 ruby tests/publication/test_publication_plan.rb
 ruby tests/publication/test_publication_security.rb
 ruby tests/publication/test_atomic_tree_writer.rb
+ruby tests/publication/test_gold_sample_runner.rb
 ```
 
 ## 当前能证明与不能证明的事
@@ -68,8 +88,9 @@ R1-A 可以证明 profile/status allowlist、文件所有权、普通文件与 s
 该 manifest。它明确记录 `network_policy: forbidden` 只是策略，同时要求
 `network_isolation: not-os-enforced`，避免把无网络调用冒充 OS 级断网沙箱。
 
-这些边界分别留给 R1-B、R2、R3、独立 P2 migration 与 R4。
+按内容优先策略，HTML/EPUB/PDF、P2 migration、严格 verification manifest、人工
+检查、零基础试读和独立总审查统一在 P9 收口；延期不表示已经通过。
 
 此外，集成审计 M1 记录的 `edition.status` 枚举与 phase/status 合法组合门纳入
-R1-B；R1-A 只校验当前 sidecar profile 的章节状态投影，不能替代 canonical
-curriculum lifecycle 的拼写错误与非法组合门。
+R1-B-L 已完成该生命周期门；R1-A 只校验当前 sidecar profile 的章节状态投影，
+不能替代 canonical curriculum lifecycle 的拼写错误与非法组合门。

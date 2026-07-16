@@ -25,6 +25,8 @@
 
 百科重建按 P0—P9 推进。旧的 48 周课程在迁移完成前仍可使用；课程工程建设不会自动修改学习进度、学时或测评分数。阶段状态与证据见 [`records/encyclopedia/IMPLEMENTATION-CONTRACT.md`](records/encyclopedia/IMPLEMENTATION-CONTRACT.md)。
 
+自 2026-07-16 起采用[内容优先执行策略](records/encyclopedia/CONTENT-FIRST-EXECUTION.md)：P3—P8 连续建设正文、示例、实验、练习和项目，只保留 schema、链接、边界、编译、运行及已有测试等必要自动检查；独立全面复审、人工版式与无障碍评估、零基础读者试读和全仓回归集中到 P9。延期不代表通过，相关证据完成前章节不得因此晋升 `verified` 或正式公开发布。
+
 ## 内容原则
 
 - 以 2026 年目标版本和官方资料为技术基线，版本敏感结论必须带复核记录。
