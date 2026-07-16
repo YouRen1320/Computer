@@ -1,0 +1,12 @@
+schema=factorycare|prebuilt=CONFIRMED_BY_CONTRACT
+tables=device,work_order|create-order=parent-first
+valid-device=ACCEPT
+valid-order=ACCEPT
+orphan=work_order_device_fk
+duplicate-serial=device_serial_number_key
+invalid-device-status=device_status_check
+invalid-order-status=work_order_status_check
+null-summary=work_order_summary_not_null
+accepted-rows=device:1,work-order:1
+failed-rebuild=ROLLBACK|old-structure-preserved=PASS
+ddl-constraints-example=PASS

@@ -1,0 +1,11 @@
+new-insert-affected=1
+version-update-affected=1
+upsert-conflict-affected=1|identity=D-02
+stale-update-affected=0|business=CONFLICT
+protected-delete-affected=0|business=NO_DELETE
+broken-update-without-where=3|guard=BLOCK
+broken-delete-without-where=3|guard=BLOCK
+broken-upsert-identity=D-import-99|expected=D-02|guard=BLOCK
+ignored-zero-rows=SQL_SUCCESS/BUSINESS_FAILURE
+rollback-restored=D-01,D-02,D-03
+dml-lab=PASS

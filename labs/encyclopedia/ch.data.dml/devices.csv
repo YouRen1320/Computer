@@ -1,0 +1,4 @@
+device_id,serial_number,display_name,status,version
+D-01,SN-001,East Pump,ACTIVE,3
+D-02,SN-002,South Compressor,ACTIVE,5
+D-03,SN-003,West Sensor,RETIRED,2

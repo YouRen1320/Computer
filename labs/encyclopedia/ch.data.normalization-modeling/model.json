@@ -1,0 +1,8 @@
+{
+  "relations": {
+    "device": ["device_id","serial_number","device_name"],
+    "technician": ["technician_id","technician_name","technician_phone"],
+    "work_order": ["work_order_id","device_id","technician_id","summary","order_status"]
+  },
+  "keys": {"device":["device_id"],"technician":["technician_id"],"work_order":["work_order_id"]}
+}

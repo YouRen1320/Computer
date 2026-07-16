@@ -1,0 +1,15 @@
+{
+  "relations": {
+    "device": {
+      "primary_key": ["device_id"],
+      "attributes": ["device_id", "serial_number", "device_name", "technician_id", "technician_name"]
+    },
+    "work_order": {
+      "primary_key": ["work_order_id"],
+      "attributes": ["work_order_id", "device_id", "summary", "order_status"]
+    }
+  },
+  "foreign_keys": [
+    {"from": "work_order.device_id", "to": "device.device_id"}
+  ]
+}

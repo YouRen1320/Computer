@@ -1,0 +1,9 @@
+valid_callback=ACCEPTED
+missing_state=REJECTED
+wrong_nonce=REJECTED
+wide_redirect=REJECTED
+wrong_verifier=REJECTED
+id_token_to_api=REJECTED
+refresh_token_exposed=false
+public_client_secret=false
+verification_report=PASS assertions=8

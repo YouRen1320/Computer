@@ -1,0 +1,8 @@
+update-anomaly=D-01:names=East Pump/East Pump A
+insert-anomaly=T-03:no-truthful-work-order-key
+delete-anomaly=remove-W-03|D-02-facts-lost=true
+wrong-fd=device_id->technician_id|D-01=T-01/T-02|verdict=FALSE
+lossy-join-rows=5|original=3|spurious=W-01-T-02,W-02-T-01
+normalized-reconstruction=3|lossless=PASS
+denormalization-without-evidence=REJECT
+normalization-lab=PASS

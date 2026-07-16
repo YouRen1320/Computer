@@ -15,10 +15,10 @@
 6. [FilterChain、SecurityContext、默认拒绝与异常链](chapters/ch.security.spring-security-architecture.md) — `ch.security.spring-security-architecture` · `drafting`
 7. [Spring Security 登录、退出、密码编码与 Session 防护](chapters/ch.security.session-authentication.md) — `ch.security.session-authentication` · `drafting`
 8. [JWT 验证、Bearer Token 与 Resource Server](chapters/ch.security.jwt-resource-server.md) — `ch.security.jwt-resource-server` · `drafting`
-9. [OAuth 2.0 授权流程、OIDC 登录与客户端边界](chapters/ch.security.oauth2-oidc.md) — `ch.security.oauth2-oidc` · `planned`
-10. [URL/方法授权、RBAC、ABAC 与默认拒绝](chapters/ch.security.authorization-rbac-abac.md) — `ch.security.authorization-rbac-abac` · `planned`
-11. [租户上下文、数据权限与跨租户隔离测试](chapters/ch.security.multitenancy-data-isolation.md) — `ch.security.multitenancy-data-isolation` · `planned`
-12. [审计事件、敏感字段、追踪责任与隐私最小化](chapters/ch.security.audit-events-privacy.md) — `ch.security.audit-events-privacy` · `planned`
+9. [OAuth 2.0 授权流程、OIDC 登录与客户端边界](chapters/ch.security.oauth2-oidc.md) — `ch.security.oauth2-oidc` · `drafting`
+10. [URL/方法授权、RBAC、ABAC 与默认拒绝](chapters/ch.security.authorization-rbac-abac.md) — `ch.security.authorization-rbac-abac` · `drafting`
+11. [租户上下文、数据权限与跨租户隔离测试](chapters/ch.security.multitenancy-data-isolation.md) — `ch.security.multitenancy-data-isolation` · `drafting`
+12. [审计事件、敏感字段、追踪责任与隐私最小化](chapters/ch.security.audit-events-privacy.md) — `ch.security.audit-events-privacy` · `drafting`
 13. [状态机、状态转换、SLA 与超时语义](chapters/ch.architecture.workflow-state-sla.md) — `ch.architecture.workflow-state-sla` · `planned`
 14. [幂等键、乐观并发、重复提交与重放](chapters/ch.architecture.idempotency-concurrency.md) — `ch.architecture.idempotency-concurrency` · `planned`
 15. [Redis 缓存、TTL、失效、配额与限流](chapters/ch.distributed.redis-cache-rate-limit.md) — `ch.distributed.redis-cache-rate-limit` · `planned`

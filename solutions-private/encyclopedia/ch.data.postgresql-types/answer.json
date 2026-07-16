@@ -1,0 +1,34 @@
+{
+  "decisions": {
+    "device-id": {
+      "choice":"uuid",
+      "constraints":["primary-key"],
+      "portability":"generate through a write adapter"
+    },
+    "vendor-metadata": {
+      "choice":"jsonb-object",
+      "constraints":["nullable", "top-level-object"],
+      "portability":"map JSON operators in the repository adapter"
+    },
+    "search-aliases": {
+      "choice":"bounded-text-array",
+      "constraints":["maximum-five", "no-null-elements"],
+      "portability":"migrate to a child table if arrays are unavailable"
+    },
+    "core-tags": {
+      "choice":"relation-table",
+      "constraints":["device-foreign-key", "tag-foreign-key", "composite-primary-key"],
+      "portability":"portable relational core"
+    },
+    "device-status": {
+      "choice":"text-check",
+      "constraints":["not-null", "allowed-set"],
+      "portability":"translate to CHECK or a reference table"
+    },
+    "serial-number": {
+      "choice":"asset-code-domain",
+      "constraints":["format", "column-not-null", "unique"],
+      "portability":"expand to text plus column constraints"
+    }
+  }
+}

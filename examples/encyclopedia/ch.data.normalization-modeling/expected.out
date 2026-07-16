@@ -1,0 +1,9 @@
+wide-rows=3
+candidate-keys=wide:work_order_id,device:device_id/serial_number,technician:technician_id
+decomposed-rows=device:2,technician:2,work-order:3
+device-dependency=device_id->serial_number/device_name:PASS
+technician-dependency=technician_id->name/phone:PASS
+work-order-dependency=work_order_id->device/technician/summary/status:PASS
+reconstructed-rows=3
+lossless-join=PASS
+normalization-example=PASS

@@ -1,0 +1,10 @@
+{
+  "decisions": {
+    "device-id": {"choice":"text","constraints":["not-null"],"portability":"none"},
+    "vendor-metadata": {"choice":"jsonb-with-core-relations","constraints":[],"portability":"none"},
+    "search-aliases": {"choice":"unbounded-text-array","constraints":[],"portability":"none"},
+    "core-tags": {"choice":"unbounded-text-array","constraints":[],"portability":"none"},
+    "device-status": {"choice":"enum","constraints":["allowed-set"],"portability":"none"},
+    "serial-number": {"choice":"text","constraints":["not-null"],"portability":"none"}
+  }
+}

@@ -1,0 +1,4 @@
+work_order_id,device_id,serial_number,device_name,technician_id,technician_name,technician_phone,summary,order_status
+W-01,D-01,SN-001,East Pump,T-01,Lin,18800000001,Inspect vibration,OPEN
+W-02,D-01,SN-001,East Pump,T-02,Chen,18800000002,Replace seal,IN_PROGRESS
+W-03,D-02,SN-002,South Compressor,T-01,Lin,18800000001,Change oil,DONE

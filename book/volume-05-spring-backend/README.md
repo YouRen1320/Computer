@@ -15,10 +15,10 @@
 6. [Controller、路由、参数绑定与状态码](chapters/ch.spring.mvc-routing-binding.md) — `ch.spring.mvc-routing-binding` · `drafting`
 7. [DTO、JSON、内容协商与兼容边界](chapters/ch.spring.dto-json-content-negotiation.md) — `ch.spring.dto-json-content-negotiation` · `drafting`
 8. [Bean Validation、字段规则与跨字段规则](chapters/ch.spring.validation.md) — `ch.spring.validation` · `drafting`
-9. [异常映射、Problem Details 与稳定错误契约](chapters/ch.spring.problem-details-errors.md) — `ch.spring.problem-details-errors` · `planned`
-10. [实体、值对象、聚合、不变量与边界](chapters/ch.architecture.domain-modeling.md) — `ch.architecture.domain-modeling` · `planned`
-11. [数据源、连接池、事务资源与迁移启动顺序](chapters/ch.spring.datasource-pooling.md) — `ch.spring.datasource-pooling` · `planned`
-12. [Repository 边界与 Spring MyBatis 适配](chapters/ch.spring.mybatis-repositories.md) — `ch.spring.mybatis-repositories` · `planned`
+9. [异常映射、Problem Details 与稳定错误契约](chapters/ch.spring.problem-details-errors.md) — `ch.spring.problem-details-errors` · `drafting`
+10. [实体、值对象、聚合、不变量与边界](chapters/ch.architecture.domain-modeling.md) — `ch.architecture.domain-modeling` · `drafting`
+11. [数据源、连接池、事务资源与迁移启动顺序](chapters/ch.spring.datasource-pooling.md) — `ch.spring.datasource-pooling` · `drafting`
+12. [Repository 边界与 Spring MyBatis 适配](chapters/ch.spring.mybatis-repositories.md) — `ch.spring.mybatis-repositories` · `drafting`
 13. [应用服务、用例编排与领域边界](chapters/ch.spring.service-use-cases.md) — `ch.spring.service-use-cases` · `planned`
 14. [切点、通知、代理边界与自调用陷阱](chapters/ch.spring.aop-proxy-model.md) — `ch.spring.aop-proxy-model` · `planned`
 15. [Spring 测试切片、上下文测试与 Testcontainers](chapters/ch.spring.testing-testcontainers.md) — `ch.spring.testing-testcontainers` · `planned`

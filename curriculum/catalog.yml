@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 759d43547da18a94fcc15b1b344c2fa382127ae8f7fc8020586828ed8bafee3e
+generated_spec_digest: e9e2dd784ac6789e099ed7ea30be975758a891ccad9595706a7e16b1283f9789
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -9086,7 +9086,7 @@ chapters:
   role: concept
   responsibility: 教授可审计的数据写入和影响行数，不在本章处理跨语句事务并发或 schema 变更
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-dml-write
@@ -9211,7 +9211,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.dml.md
   recommended_after:
   - ch.data.window-functions
-  spec_digest: 77c6596e8648a0eee64a0bd25b5372fde3aee507a5c4a2a8bab2d735193888c7
+  spec_digest: 16cc32886fbb7b46860973134ae675a95bd9bae491fe900b6d566c261695bda7
   route_tags:
   - zero-base
   - accelerated-48
@@ -9222,7 +9222,7 @@ chapters:
   role: concept
   responsibility: 教授由数据库强制执行结构和行级不变量，不在本章完成规范化推导或迁移发布策略
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-ddl
@@ -9350,7 +9350,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.ddl-constraints.md
   recommended_after:
   - ch.data.dml
-  spec_digest: 2168f38b7183136fea4d1d47275d7be3aebd8cc6d1d13f3e4b2d3b0c6a456364
+  spec_digest: 26ce43af13be8c865b7919bf7d0150dc45850b05cf6df0f86ba1bf70b333a07c
   route_tags:
   - zero-base
   - accelerated-48
@@ -9361,7 +9361,7 @@ chapters:
   role: concept
   responsibility: 教授把业务事实分解为低冗余关系模式，不把所有查询性能问题归因于反规范化
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-functional-dependency
@@ -9483,7 +9483,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.normalization-modeling.md
   recommended_after:
   - ch.data.ddl-constraints
-  spec_digest: '095278a43bb08ea4879ee127cab4ac182dd9e26c6111cdd2a0658091d4e7fc24'
+  spec_digest: 62c22c96ec24a42e1999955f460817135c48e30d7d2d5f351f596701567f1a0d
   route_tags:
   - zero-base
   - accelerated-48
@@ -9493,7 +9493,7 @@ chapters:
   role: practice
   responsibility: 教授 PostgreSQL 扩展类型的适用边界，不用 JSONB 或数组逃避关系建模和约束
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: postgres-identity-json
@@ -9615,7 +9615,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-types.md
   recommended_after:
   - ch.data.normalization-modeling
-  spec_digest: 0de343aec13ce6fab152cf735c102ef4a4bfe3dcce50a173694b47af1516604f
+  spec_digest: 17510952d6439105499b4c50bc73752f690a827ea0073cad45c737dc57821c4c
   route_tags:
   - zero-base
   - accelerated-48
@@ -11627,7 +11627,7 @@ chapters:
   role: practice
   responsibility: 教授把内部失败转换为稳定且不泄密的 HTTP 错误，不把堆栈或数据库细节暴露给客户端
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-exception-mapping
@@ -11759,7 +11759,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.problem-details-errors.md
   recommended_after:
   - ch.spring.validation
-  spec_digest: 13635f0c52d978467c92e1fb2e26a6c2613e749f0d819892b064975c70cdb7c1
+  spec_digest: 00be855bb7f867cd77494384d6afa9d67094d1a752a07c47a5c996138eb38dd0
   route_tags:
   - zero-base
   - accelerated-48
@@ -11770,7 +11770,7 @@ chapters:
   role: concept
   responsibility: 教授由领域对象维护业务不变量和一致性边界，不在本章绑定数据库表、Controller 或分布式事件
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: domain-entity-value
@@ -11910,7 +11910,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.architecture.domain-modeling.md
   recommended_after:
   - ch.spring.problem-details-errors
-  spec_digest: cf23cd56830425b9839fa7ab73b7655ecf7b5838bfa9c9a9b5743b854ee9498e
+  spec_digest: d7f7496f43ef3263789264c212aa817d5140119d1f44d19a07c41ae03dc3ff6b
   route_tags:
   - zero-base
   - accelerated-48
@@ -11921,7 +11921,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring 管理数据库连接资源与启动依赖，不在本章实现 Repository 或声明式事务
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-datasource-pool
@@ -12076,7 +12076,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.datasource-pooling.md
   recommended_after:
   - ch.architecture.domain-modeling
-  spec_digest: 7d93b9f7667b4e268e7b523b6c09c23ba5aea955c7d9cc3c54207c2d049f8e85
+  spec_digest: cb7b1bd737712419f6431540beb5322a5e56bba3e84b002ce061bc29d2aff447
   route_tags:
   - zero-base
   - accelerated-48
@@ -12087,7 +12087,7 @@ chapters:
   role: practice
   responsibility: 教授持久化端口和 Spring MyBatis 实现的职责，不把 SQL 映射泄露到应用用例层
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-repository-boundary
@@ -12239,7 +12239,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.mybatis-repositories.md
   recommended_after:
   - ch.spring.datasource-pooling
-  spec_digest: cbef6a87da4f80d2ce625f7a88f5bd41633ca3baef65f5acbaebff117ec0a9a8
+  spec_digest: 74c65a87a6099a7a019b0fefcf83205b8cb63d2756b3012abb3568c34dac19a2
   route_tags:
   - zero-base
   - accelerated-48
@@ -14348,7 +14348,7 @@ chapters:
   role: practice
   responsibility: 区分 OAuth 授权与 OIDC 身份层并实现安全客户端边界，不自建授权服务器或混淆 Access Token 与 ID Token
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-oauth2
@@ -14480,7 +14480,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.oauth2-oidc.md
   recommended_after:
   - ch.security.jwt-resource-server
-  spec_digest: 3095727d8dd8100f8151726c3f457f5469367435323913ef38c1233f4f6f970c
+  spec_digest: e7a1ae39e6faed5738e821be682e8098a1a3a5092d07cbe375c57801353597f7
   route_tags:
   - zero-base
   - accelerated-48
@@ -14490,7 +14490,7 @@ chapters:
   role: practice
   responsibility: 教授对已认证主体执行显式资源访问策略，不在本章实现租户数据过滤或审计存储
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-authorization-enforcement
@@ -14637,7 +14637,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.authorization-rbac-abac.md
   recommended_after:
   - ch.security.oauth2-oidc
-  spec_digest: db9942f433e9a3e6915fb85620ab9c6038266681629264c27ccff006e8edd69d
+  spec_digest: 7f6d1e922640b6a82a252f23518e4e46c1cbfeffbccc67473ba0a9f52207d5c4
   route_tags:
   - zero-base
   - accelerated-48
@@ -14648,7 +14648,7 @@ chapters:
   role: synthesis
   responsibility: 教授从请求到持久化的租户约束和越权负测，不把前端隐藏或单字段过滤当作隔离
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-tenant-context
@@ -14796,7 +14796,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.multitenancy-data-isolation.md
   recommended_after:
   - ch.security.authorization-rbac-abac
-  spec_digest: 3e2a3116656cc440a21080aea8994a4fd12f9e4e3e421efa1225dc100d7bf4d0
+  spec_digest: 1cca46f6329f7a7c850dd887c0a69e0fbf865fb4fc2baa544938b95bd775e4d1
   route_tags:
   - zero-base
   - accelerated-48
@@ -14807,7 +14807,7 @@ chapters:
   role: synthesis
   responsibility: 教授记录可归责安全事件同时最小化敏感数据，不把普通调试日志当作不可抵赖审计账本
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-audit-event
@@ -14953,7 +14953,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md
   recommended_after:
   - ch.security.multitenancy-data-isolation
-  spec_digest: 534241d8aad31eeb9041aacb9fc139cfaed3d7f2fd4a355ca4573c09d4b21570
+  spec_digest: 25e9764bd2bd5aee094fb44c1b8d4660284272702e712957066a11bf24d38746
   route_tags:
   - zero-base
   - accelerated-48

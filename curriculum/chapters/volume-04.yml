@@ -1023,7 +1023,7 @@ chapters:
   role: concept
   responsibility: 教授可审计的数据写入和影响行数，不在本章处理跨语句事务并发或 schema 变更
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-dml-write
@@ -1148,7 +1148,7 @@ chapters:
   role: concept
   responsibility: 教授由数据库强制执行结构和行级不变量，不在本章完成规范化推导或迁移发布策略
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-ddl
@@ -1276,7 +1276,7 @@ chapters:
   role: concept
   responsibility: 教授把业务事实分解为低冗余关系模式，不把所有查询性能问题归因于反规范化
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: data-functional-dependency
@@ -1398,7 +1398,7 @@ chapters:
   role: practice
   responsibility: 教授 PostgreSQL 扩展类型的适用边界，不用 JSONB 或数组逃避关系建模和约束
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: postgres-identity-json

@@ -1,0 +1,5 @@
+[
+  {"id":"foreign-key-reversed","broken":"device.device_id REFERENCES work_order.device_id","prediction":"parent lifecycle is reversed and target is not unique"},
+  {"id":"missing-status-check","broken":"status text NOT NULL without CHECK","prediction":"BROKEN is non-null and is accepted"},
+  {"id":"alter-existing-data","broken":"ADD CHECK immediately while D-legacy is BROKEN","prediction":"ALTER fails atomically; repair or NOT VALID then VALIDATE"}
+]

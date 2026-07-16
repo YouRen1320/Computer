@@ -1,0 +1,9 @@
+trusted_context=TENANT-A
+forged_request_rejected=true
+tenant_a_rows=2
+cross_tenant_read=false
+cross_tenant_write=false
+cache_isolated=true
+background_task_isolated=true
+global_catalog_explicit=true
+secret_material_printed=false

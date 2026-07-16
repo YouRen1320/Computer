@@ -1,0 +1,9 @@
+event_types=4
+actor_action_target_complete=true
+tenant_trace_complete=true
+secret_fields_absent=true
+success_matches_commit=true
+append_only=true
+tenant_query_isolated=true
+masked_export=true
+secret_material_printed=false

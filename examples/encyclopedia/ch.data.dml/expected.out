@@ -1,0 +1,10 @@
+initial-rows=3
+insert=D-04|affected=1|version=1
+version-update=D-01|affected=1|old=3|new=4
+stale-update=D-01|affected=0|returning=EMPTY
+restricted-delete=D-03|affected=1
+protected-delete=D-02|affected=0
+upsert-conflict=SN-002|affected=1|device-id=D-02|version=6
+working-set=D-01,D-02,D-04
+rollback-restored=D-01,D-02,D-03
+dml-example=PASS

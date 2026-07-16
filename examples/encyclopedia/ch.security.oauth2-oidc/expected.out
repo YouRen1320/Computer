@@ -1,0 +1,11 @@
+callback_accepted=true
+state_mismatch_rejected=true
+nonce_mismatch_rejected=true
+redirect_mismatch_rejected=true
+pkce_mismatch_rejected=true
+callback_replay_rejected=true
+access_token_to_api=true
+id_token_to_api=false
+refresh_token_to_frontend=false
+public_client_static_secret=false
+secret_material_printed=false

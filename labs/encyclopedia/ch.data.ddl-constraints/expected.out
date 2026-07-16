@@ -1,0 +1,14 @@
+valid-device=ACCEPT
+valid-work-order=ACCEPT
+orphan=REJECT:work_order_device_fk
+duplicate-serial=REJECT:device_serial_number_key
+invalid-device-status=REJECT:device_status_check
+invalid-order-status=REJECT:work_order_status_check
+null-summary=REJECT:work_order_summary_not_null
+wrong-foreign-key-direction=DETECTED|guard=BLOCK
+missing-status-check=BROKEN_ACCEPTED|guard=BLOCK
+alter-immediate=REJECT|violations=D-legacy
+not-valid-new-broken=REJECT|old-row=UNVALIDATED
+cleanup-and-validate=PASS
+failed-rebuild=ROLLBACK|half-structure=NONE
+ddl-constraints-lab=PASS

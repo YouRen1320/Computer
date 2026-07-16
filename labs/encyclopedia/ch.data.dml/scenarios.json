@@ -1,0 +1,22 @@
+[
+  {
+    "id": "update-without-where",
+    "broken": "UPDATE factorycare.device SET status='RETIRED'",
+    "prediction": "3 rows, exceeding the expected maximum of 1"
+  },
+  {
+    "id": "delete-without-where",
+    "broken": "DELETE FROM factorycare.device",
+    "prediction": "3 rows, leaving an empty table"
+  },
+  {
+    "id": "upsert-immutable-overwrite",
+    "broken": "DO UPDATE SET device_id=EXCLUDED.device_id, serial_number=EXCLUDED.serial_number",
+    "prediction": "SN-002 identity changes from D-02 to D-import-99"
+  },
+  {
+    "id": "ignored-affected-rows",
+    "broken": "versioned update expects version=99 and application still reports success",
+    "prediction": "SQL succeeds with 0 rows; business result must be failure"
+  }
+]

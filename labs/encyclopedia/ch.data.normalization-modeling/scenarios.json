@@ -1,0 +1,8 @@
+[
+  {"id":"update-anomaly","broken":"rename D-01 only in W-01","prediction":"D-01 has two names"},
+  {"id":"insert-anomaly","broken":"store T-03 without a work_order_id","prediction":"wide row has no truthful key"},
+  {"id":"delete-anomaly","broken":"delete sole W-03","prediction":"all D-02 facts disappear"},
+  {"id":"wrong-functional-dependency","broken":"device_id -> technician_id","prediction":"D-01 counterexample has T-01 and T-02"},
+  {"id":"lossy-decomposition","broken":"split order-device and device-technician","prediction":"join creates W-01/T-02 and W-02/T-01"},
+  {"id":"denormalize-without-evidence","broken":"copy current device_name for assumed JOIN speed","prediction":"reject without plan, sync, check, and rollback evidence"}
+]

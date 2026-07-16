@@ -1,0 +1,8 @@
+four_event_types=true
+required_identity=true
+secret_fields_absent=true
+success_matches_commit=true
+append_only=true
+tenant_query_isolated=true
+trace_is_correlation_only=true
+verification_report=PASS assertions=7

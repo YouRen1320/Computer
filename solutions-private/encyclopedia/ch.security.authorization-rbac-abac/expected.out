@@ -1,0 +1,2 @@
+challenge_valid=true role=true action=true permission=true tenant=true object=true conflict=true service=true
+EXERCISE PASS jdk=25 mode=offline

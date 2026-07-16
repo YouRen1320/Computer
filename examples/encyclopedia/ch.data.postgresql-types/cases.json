@@ -1,0 +1,20 @@
+[
+  {"kind":"uuid","input":"01947b2a-7b20-7cc3-98f2-9f4d4a71e801","value":"01947b2a-7b20-7cc3-98f2-9f4d4a71e801","expected":"ACCEPT"},
+  {"kind":"uuid","input":"SQL_NULL","value":null,"expected":"REJECT"},
+  {"kind":"uuid","input":"device-7","value":"device-7","expected":"REJECT"},
+  {"kind":"jsonb","input":"object","value":{"firmware":"2.4","vendor":"Acme"},"expected":"ACCEPT"},
+  {"kind":"jsonb","input":"SQL_NULL","value":null,"expected":"ACCEPT"},
+  {"kind":"jsonb","input":"JSON_NULL","value":{"__json_scalar__":null},"expected":"REJECT"},
+  {"kind":"jsonb","input":"array","value":{"__json_scalar__":["Acme"]},"expected":"REJECT"},
+  {"kind":"array","input":"two-values","value":["compressor","critical"],"expected":"ACCEPT"},
+  {"kind":"array","input":"empty","value":[],"expected":"ACCEPT"},
+  {"kind":"array","input":"SQL_NULL","value":null,"expected":"ACCEPT"},
+  {"kind":"array","input":"null-element","value":["compressor",null],"expected":"REJECT"},
+  {"kind":"array","input":"six-values","value":["a","b","c","d","e","f"],"expected":"REJECT"},
+  {"kind":"asset-code","input":"SN-042","value":"SN-042","expected":"ACCEPT"},
+  {"kind":"asset-code","input":"SQL_NULL","value":null,"expected":"REJECT"},
+  {"kind":"asset-code","input":"42","value":"42","expected":"REJECT"},
+  {"kind":"status","input":"ACTIVE","value":"ACTIVE","expected":"ACCEPT"},
+  {"kind":"status","input":"SQL_NULL","value":null,"expected":"REJECT"},
+  {"kind":"status","input":"BROKEN","value":"BROKEN","expected":"REJECT"}
+]

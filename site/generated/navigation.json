@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "9f71453e3aab7ddca938ad6c22b9304d5ca3a237fdee4b5ddeab1278a67b13a3",
+  "input_digest": "4e80550e7136b7b786079cd18d1d174b0a1ce1ecb7ed5304dbf25de5224be4de",
   "volumes": [
     {
       "id": "00",
@@ -612,7 +612,7 @@
           "title": "INSERT、UPDATE、DELETE、UPSERT 与 RETURNING",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.dml.md",
           "publishable": false
         },
@@ -621,7 +621,7 @@
           "title": "CREATE/ALTER、主外键、唯一、检查与非空约束",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.ddl-constraints.md",
           "publishable": false
         },
@@ -630,7 +630,7 @@
           "title": "函数依赖、规范化与关系模式设计",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.normalization-modeling.md",
           "publishable": false
         },
@@ -639,7 +639,7 @@
           "title": "UUID、JSONB、数组与 PostgreSQL 类型选择",
           "order": 12,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.postgresql-types.md",
           "publishable": false
         },
@@ -771,7 +771,7 @@
           "title": "异常映射、Problem Details 与稳定错误契约",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.problem-details-errors.md",
           "publishable": false
         },
@@ -780,7 +780,7 @@
           "title": "实体、值对象、聚合、不变量与边界",
           "order": 10,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.architecture.domain-modeling.md",
           "publishable": false
         },
@@ -789,7 +789,7 @@
           "title": "数据源、连接池、事务资源与迁移启动顺序",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.datasource-pooling.md",
           "publishable": false
         },
@@ -798,7 +798,7 @@
           "title": "Repository 边界与 Spring MyBatis 适配",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.mybatis-repositories.md",
           "publishable": false
         },
@@ -939,7 +939,7 @@
           "title": "OAuth 2.0 授权流程、OIDC 登录与客户端边界",
           "order": 9,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.oauth2-oidc.md",
           "publishable": false
         },
@@ -948,7 +948,7 @@
           "title": "URL/方法授权、RBAC、ABAC 与默认拒绝",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.authorization-rbac-abac.md",
           "publishable": false
         },
@@ -957,7 +957,7 @@
           "title": "租户上下文、数据权限与跨租户隔离测试",
           "order": 11,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.multitenancy-data-isolation.md",
           "publishable": false
         },
@@ -966,7 +966,7 @@
           "title": "审计事件、敏感字段、追踪责任与隐私最小化",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md",
           "publishable": false
         },

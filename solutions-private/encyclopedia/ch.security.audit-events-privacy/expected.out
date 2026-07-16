@@ -1,0 +1,2 @@
+challenge_valid=true details=true identity=true truth=true append=true tenant=true trace=true mask=true
+EXERCISE PASS jdk=25 mode=offline

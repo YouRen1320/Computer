@@ -1095,7 +1095,7 @@ chapters:
   role: practice
   responsibility: 区分 OAuth 授权与 OIDC 身份层并实现安全客户端边界，不自建授权服务器或混淆 Access Token 与 ID Token
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-oauth2
@@ -1228,7 +1228,7 @@ chapters:
   role: practice
   responsibility: 教授对已认证主体执行显式资源访问策略，不在本章实现租户数据过滤或审计存储
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-authorization-enforcement
@@ -1376,7 +1376,7 @@ chapters:
   role: synthesis
   responsibility: 教授从请求到持久化的租户约束和越权负测，不把前端隐藏或单字段过滤当作隔离
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-tenant-context
@@ -1524,7 +1524,7 @@ chapters:
   role: synthesis
   responsibility: 教授记录可归责安全事件同时最小化敏感数据，不把普通调试日志当作不可抵赖审计账本
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-audit-event

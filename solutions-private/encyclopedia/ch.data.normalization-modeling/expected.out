@@ -1,0 +1,5 @@
+relations=device,technician,work_order
+candidate-keys=device_id/serial_number,technician_id,work_order_id
+foreign-keys=work_order.device_id,work_order.technician_id
+reconstructed-rows=3|lossless=PASS
+normalization-solution=PASS

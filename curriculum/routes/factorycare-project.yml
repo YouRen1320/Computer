@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 759d43547da18a94fcc15b1b344c2fa382127ae8f7fc8020586828ed8bafee3e
+generated_spec_digest: e9e2dd784ac6789e099ed7ea30be975758a891ccad9595706a7e16b1283f9789
 edition: 2026.2-draft
 route_id: factorycare-project
 route_kind: project

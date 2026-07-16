@@ -1,0 +1,43 @@
+{
+  "boundary_cases": [
+    {"kind":"uuid","class":"legal","value":"01947b2a-7b20-7cc3-98f2-9f4d4a71e801","expected":"ACCEPT"},
+    {"kind":"uuid","class":"sql-null","value":null,"expected":"REJECT"},
+    {"kind":"uuid","class":"invalid","value":"D-17","expected":"REJECT"},
+    {"kind":"jsonb","class":"legal","value":{"firmware":"2.4"},"expected":"ACCEPT"},
+    {"kind":"jsonb","class":"sql-null","value":null,"expected":"ACCEPT"},
+    {"kind":"jsonb","class":"invalid","value":{"__json_scalar__":null},"expected":"REJECT"},
+    {"kind":"array","class":"legal","value":["pump","east"],"expected":"ACCEPT"},
+    {"kind":"array","class":"sql-null","value":null,"expected":"ACCEPT"},
+    {"kind":"array","class":"invalid","value":["pump",null],"expected":"REJECT"},
+    {"kind":"domain","class":"legal","value":"SN-017","expected":"ACCEPT"},
+    {"kind":"domain","class":"sql-null","value":null,"expected":"REJECT"},
+    {"kind":"domain","class":"invalid","value":"17","expected":"REJECT"},
+    {"kind":"enum","class":"legal","value":"ACTIVE","expected":"ACCEPT"},
+    {"kind":"enum","class":"sql-null","value":null,"expected":"REJECT"},
+    {"kind":"enum","class":"invalid","value":"BROKEN","expected":"REJECT"}
+  ],
+  "failure_injections": [
+    {
+      "id": "high-frequency-relations-in-jsonb",
+      "evidence": ["join-by-technician", "foreign-key-required", "unique-assignment-required"],
+      "expected": "REMODEL:ordinary-relations"
+    },
+    {
+      "id": "unbounded-tags-in-array",
+      "evidence": ["element-search", "unbounded-growth", "tag-referential-integrity"],
+      "expected": "REMODEL:device_tag"
+    },
+    {
+      "id": "remove-and-reorder-enum-labels",
+      "evidence": ["remove-label", "reorder-label", "cross-database-migration"],
+      "expected": "BLOCKED:rebuild-or-rechoose"
+    }
+  ],
+  "portability_records": [
+    {"type":"uuid","plan":"adapter-owned generation"},
+    {"type":"jsonb","plan":"repository-owned JSON operators"},
+    {"type":"array","plan":"child-table migration"},
+    {"type":"domain","plan":"expand to base type and constraints"},
+    {"type":"enum","plan":"prefer text CHECK or reference table when churn is expected"}
+  ]
+}

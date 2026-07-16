@@ -15,10 +15,10 @@
 6. [INNER/OUTER JOIN、关系基数与重复行](chapters/ch.data.joins.md) — `ch.data.joins` · `drafting`
 7. [子查询、CTE 与集合拆解](chapters/ch.data.subqueries-cte.md) — `ch.data.subqueries-cte` · `drafting`
 8. [窗口、分区、排序与分析函数](chapters/ch.data.window-functions.md) — `ch.data.window-functions` · `drafting`
-9. [INSERT、UPDATE、DELETE、UPSERT 与 RETURNING](chapters/ch.data.dml.md) — `ch.data.dml` · `planned`
-10. [CREATE/ALTER、主外键、唯一、检查与非空约束](chapters/ch.data.ddl-constraints.md) — `ch.data.ddl-constraints` · `planned`
-11. [函数依赖、规范化与关系模式设计](chapters/ch.data.normalization-modeling.md) — `ch.data.normalization-modeling` · `planned`
-12. [UUID、JSONB、数组与 PostgreSQL 类型选择](chapters/ch.data.postgresql-types.md) — `ch.data.postgresql-types` · `planned`
+9. [INSERT、UPDATE、DELETE、UPSERT 与 RETURNING](chapters/ch.data.dml.md) — `ch.data.dml` · `drafting`
+10. [CREATE/ALTER、主外键、唯一、检查与非空约束](chapters/ch.data.ddl-constraints.md) — `ch.data.ddl-constraints` · `drafting`
+11. [函数依赖、规范化与关系模式设计](chapters/ch.data.normalization-modeling.md) — `ch.data.normalization-modeling` · `drafting`
+12. [UUID、JSONB、数组与 PostgreSQL 类型选择](chapters/ch.data.postgresql-types.md) — `ch.data.postgresql-types` · `drafting`
 13. [索引、查询计划、EXPLAIN 与性能证据](chapters/ch.data.indexes-explain.md) — `ch.data.indexes-explain` · `planned`
 14. [ACID、隔离级别、锁、死锁与重试边界](chapters/ch.data.transactions-locking.md) — `ch.data.transactions-locking` · `planned`
 15. [Flyway、版本迁移、向前修复与数据演进](chapters/ch.data.schema-migrations.md) — `ch.data.schema-migrations` · `planned`

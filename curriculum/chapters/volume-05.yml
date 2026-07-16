@@ -1117,7 +1117,7 @@ chapters:
   role: practice
   responsibility: 教授把内部失败转换为稳定且不泄密的 HTTP 错误，不把堆栈或数据库细节暴露给客户端
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-exception-mapping
@@ -1249,7 +1249,7 @@ chapters:
   role: concept
   responsibility: 教授由领域对象维护业务不变量和一致性边界，不在本章绑定数据库表、Controller 或分布式事件
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: domain-entity-value
@@ -1389,7 +1389,7 @@ chapters:
   role: practice
   responsibility: 教授 Spring 管理数据库连接资源与启动依赖，不在本章实现 Repository 或声明式事务
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-datasource-pool
@@ -1545,7 +1545,7 @@ chapters:
   role: practice
   responsibility: 教授持久化端口和 Spring MyBatis 实现的职责，不把 SQL 映射泄露到应用用例层
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-repository-boundary

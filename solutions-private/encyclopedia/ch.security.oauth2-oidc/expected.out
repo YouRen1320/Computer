@@ -1,0 +1,2 @@
+challenge_valid=true state=true nonce=true redirect=true pkce=true token_purpose=true refresh=true public_client=true
+EXERCISE PASS jdk=25 mode=offline

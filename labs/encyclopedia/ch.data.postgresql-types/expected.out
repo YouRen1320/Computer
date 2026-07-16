@@ -1,0 +1,6 @@
+boundary-cases=15|accept=7|reject=8
+high-frequency-relations-in-jsonb=REMODEL:ordinary-relations
+unbounded-tags-in-array=REMODEL:device_tag
+remove-and-reorder-enum-labels=BLOCKED:rebuild-or-rechoose
+portability-records=5|verdict=PASS
+postgresql-types-lab=PASS

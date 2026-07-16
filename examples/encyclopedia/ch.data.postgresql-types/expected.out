@@ -1,0 +1,6 @@
+decision-records=6
+types-tested=array,asset-code,jsonb,status,uuid
+case-count=18|accept=8|reject=10
+core-tags=relation-table|verdict=PASS
+constraints-and-portability=PASS
+postgresql-types-example=PASS

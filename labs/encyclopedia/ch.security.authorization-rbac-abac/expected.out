@@ -1,0 +1,10 @@
+owner_read=200
+other_owner_read=403
+assigned_technician_read=200
+dispatcher_assign=200
+dispatcher_out_scope=403
+blocked_subject=403
+unknown_role=403
+unknown_action=403
+direct_service_idor=403
+verification_report=PASS assertions=9

@@ -1,0 +1,8 @@
+forged_request=REJECTED
+list_cross_tenant=ZERO
+write_cross_tenant=ZERO
+cache_cross_tenant=ZERO
+task_cross_tenant=ZERO
+join_cross_tenant=ZERO
+null_global=REJECTED
+verification_report=PASS assertions=7

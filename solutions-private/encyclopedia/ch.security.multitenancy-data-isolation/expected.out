@@ -1,0 +1,2 @@
+challenge_valid=true context=true query=true write=true cache=true task=true join=true catalog=true
+EXERCISE PASS jdk=25 mode=offline

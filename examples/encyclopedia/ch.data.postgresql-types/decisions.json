@@ -1,0 +1,38 @@
+[
+  {
+    "fact": "device-id",
+    "choice": "uuid",
+    "constraints": ["primary-key"],
+    "portability": "map uuidv7 generation behind the write adapter"
+  },
+  {
+    "fact": "vendor-metadata",
+    "choice": "jsonb-object",
+    "constraints": ["nullable", "top-level-object"],
+    "portability": "map PostgreSQL JSON operators in the repository adapter"
+  },
+  {
+    "fact": "search-aliases",
+    "choice": "bounded-text-array",
+    "constraints": ["maximum-five", "no-null-elements"],
+    "portability": "migrate to a child table when the target lacks arrays"
+  },
+  {
+    "fact": "core-tags",
+    "choice": "relation-table",
+    "constraints": ["device-foreign-key", "tag-foreign-key", "composite-primary-key"],
+    "portability": "portable relational core"
+  },
+  {
+    "fact": "device-status",
+    "choice": "text-check",
+    "constraints": ["not-null", "allowed-set"],
+    "portability": "translate to a standard CHECK or reference table"
+  },
+  {
+    "fact": "serial-number",
+    "choice": "asset-code-domain",
+    "constraints": ["format", "column-not-null", "unique"],
+    "portability": "expand the domain to text plus column constraints"
+  }
+]

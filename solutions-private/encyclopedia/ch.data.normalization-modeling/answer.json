@@ -1,0 +1,11 @@
+{
+  "relations": {
+    "device": {"primary_key":["device_id"],"alternate_keys":[["serial_number"]],"attributes":["device_id","serial_number","device_name"]},
+    "technician": {"primary_key":["technician_id"],"alternate_keys":[],"attributes":["technician_id","technician_name","technician_phone"]},
+    "work_order": {"primary_key":["work_order_id"],"alternate_keys":[],"attributes":["work_order_id","device_id","technician_id","summary","order_status"]}
+  },
+  "foreign_keys": [
+    {"from":"work_order.device_id","to":"device.device_id"},
+    {"from":"work_order.technician_id","to":"technician.technician_id"}
+  ]
+}

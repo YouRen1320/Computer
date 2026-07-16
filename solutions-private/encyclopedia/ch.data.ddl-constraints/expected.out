@@ -1,0 +1,8 @@
+schema=factorycare|tables=device,work_order
+legal-device=ACCEPT|legal-order=ACCEPT
+orphan=REJECT:work_order_device_fk
+duplicate=REJECT:device_serial_number_key
+invalid-status=REJECT:device_status_check
+null-required=REJECT:work_order_summary_not_null
+failed-rebuild=ROLLBACK|half-structure=NONE
+ddl-constraints-solution=PASS
