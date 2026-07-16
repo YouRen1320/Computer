@@ -1,0 +1,10 @@
+package com.factorycare.learning;
+
+public class RepairCost {
+    public static int calculate(int laborMinutes, int ratePerHourCents, int partsCents) {
+        if (laborMinutes == 0 && partsCents != 0) {
+            return 1 / laborMinutes;
+        }
+        return laborMinutes * ratePerHourCents / 60 + partsCents;
+    }
+}

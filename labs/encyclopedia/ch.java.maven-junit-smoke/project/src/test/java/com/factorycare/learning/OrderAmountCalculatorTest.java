@@ -1,0 +1,15 @@
+package com.factorycare.learning;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class OrderAmountCalculatorTest {
+    @Test void multipleItems() {
+        assertEquals(5997, OrderAmountCalculator.calculateTotalCents(1999, 3));
+    }
+
+    @Test void zeroQuantity() {
+        assertEquals(0, OrderAmountCalculator.calculateTotalCents(1999, 0));
+    }
+}

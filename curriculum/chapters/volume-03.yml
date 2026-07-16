@@ -8,7 +8,7 @@ chapters:
   role: practice
   responsibility: 深化 Maven 项目模型与可重复构建证据，不在本章教授框架 Starter 或发布流水线
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: maven-project-model
@@ -140,7 +140,7 @@ chapters:
   role: concept
   responsibility: 教授编译期类型参数和读写边界，不在本章引入具体集合性能或反射泛型信息
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-generic-types

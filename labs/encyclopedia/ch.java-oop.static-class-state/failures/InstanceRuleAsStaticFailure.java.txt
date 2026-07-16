@@ -1,0 +1,7 @@
+final class InstanceRuleAsStaticFailure {
+    private String category = "PUMP";
+
+    static boolean hasCategory() {
+        return category != null;
+    }
+}

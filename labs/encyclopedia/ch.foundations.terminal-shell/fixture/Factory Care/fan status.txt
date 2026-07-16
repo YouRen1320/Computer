@@ -1,0 +1,2 @@
+device=F-200
+status=ASSIGNED

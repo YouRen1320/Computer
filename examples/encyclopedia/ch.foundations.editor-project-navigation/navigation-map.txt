@@ -1,0 +1,6 @@
+project_root=sample-project
+root_marker=.factorycare-root
+source_definition=src/main/java/com/factorycare/navigation/DeviceStatusFormatter.java
+test_reference=src/test/java/com/factorycare/navigation/DeviceStatusFormatterTest.java
+generated_candidate=target/generated-sources/com/factorycare/navigation/DeviceStatusFormatter.java
+wrong_root=sample-project/src

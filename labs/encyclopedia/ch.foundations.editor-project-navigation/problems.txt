@@ -1,0 +1,7 @@
+producer=javac
+phase=compile
+path=workspace/src/test/java/com/factorycare/navigation/WorkOrderLabelTest.java
+line=6
+column=30
+message=cannot find symbol: method label(java.lang.String)
+note=training record; do not compile the generated duplicate

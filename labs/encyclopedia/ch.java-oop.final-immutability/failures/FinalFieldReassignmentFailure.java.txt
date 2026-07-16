@@ -1,0 +1,11 @@
+final class FinalFieldReassignmentFailure {
+    private final long cents;
+
+    FinalFieldReassignmentFailure(long cents) {
+        this.cents = cents;
+    }
+
+    void overwrite() {
+        cents = 0;
+    }
+}

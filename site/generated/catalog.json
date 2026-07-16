@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "eb6808c7f06d7975bad0f7ac8b8bf2b2ba5684ee2347ccd2c2e9ce6933f31430",
+  "input_digest": "8565f5fc84280167d4b937fde163ea0b4dd6d695924105ba050b3803db2eff5f",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 251,
-    "drafting": 4,
+    "planned": 228,
+    "drafting": 27,
     "review": 0,
     "verified": 0
   },
@@ -25,7 +25,7 @@
           "volume": "00",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
 
           ],
@@ -116,7 +116,7 @@
           "volume": "00",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
 
           ],
@@ -208,7 +208,7 @@
           "volume": "00",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.files-paths-encoding"
           ],
@@ -300,7 +300,7 @@
           "volume": "00",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.terminal-shell"
           ],
@@ -395,7 +395,7 @@
           "volume": "00",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.computer-process-model"
           ],
@@ -493,7 +493,7 @@
           "volume": "00",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -589,7 +589,7 @@
           "volume": "00",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.files-paths-encoding"
           ],
@@ -680,7 +680,7 @@
           "volume": "00",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -1844,7 +1844,7 @@
           "volume": "01",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.expressions-conversions"
           ],
@@ -1936,7 +1936,7 @@
           "volume": "01",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.branching"
           ],
@@ -2031,7 +2031,7 @@
           "volume": "01",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.loops"
           ],
@@ -2129,7 +2129,7 @@
           "volume": "01",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.arrays-command-args"
           ],
@@ -2230,7 +2230,7 @@
           "volume": "01",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.methods"
           ],
@@ -2330,7 +2330,7 @@
           "volume": "01",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.methods"
           ],
@@ -2433,7 +2433,7 @@
           "volume": "01",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.maven-junit-smoke",
             "ch.foundations.editor-project-navigation"
@@ -2541,7 +2541,7 @@
           "volume": "02",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.methods"
           ],
@@ -2639,7 +2639,7 @@
           "volume": "02",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.references-null-identity"
           ],
@@ -2737,7 +2737,7 @@
           "volume": "02",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.classes-objects"
           ],
@@ -2832,7 +2832,7 @@
           "volume": "02",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.constructors-invariants"
           ],
@@ -2927,7 +2927,7 @@
           "volume": "02",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.encapsulation-packages"
           ],
@@ -3019,7 +3019,7 @@
           "volume": "02",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.encapsulation-packages"
           ],
@@ -3701,7 +3701,7 @@
           "volume": "03",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java.maven-junit-smoke"
           ],
@@ -3801,7 +3801,7 @@
           "volume": "03",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.interfaces-polymorphism"
           ],

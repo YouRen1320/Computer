@@ -1,0 +1,11 @@
+package com.factorycare.learning;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class RepairCostTest {
+    @Test void calculatesTwoHoursAndParts() { assertEquals(12500, RepairCost.calculate(120, 6000, 500)); }
+    @Test void handlesZeroLabor() { assertEquals(500, RepairCost.calculate(0, 6000, 500)); }
+    @Test void calculatesHalfHour() { assertEquals(3000, RepairCost.calculate(30, 6000, 0)); }
+    @Test void handlesAllZero() { assertEquals(0, RepairCost.calculate(0, 0, 0)); }
+}

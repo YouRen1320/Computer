@@ -1,0 +1,7 @@
+final class StaticReadsInstanceFailure {
+    private String siteCode = "NC";
+
+    static String siteCode() {
+        return siteCode;
+    }
+}

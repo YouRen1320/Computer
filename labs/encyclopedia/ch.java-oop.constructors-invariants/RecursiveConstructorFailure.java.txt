@@ -1,0 +1,9 @@
+public class RecursiveConstructorFailure {
+    RecursiveConstructorFailure() {
+        this("default");
+    }
+
+    RecursiveConstructorFailure(String value) {
+        this();
+    }
+}

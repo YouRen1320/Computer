@@ -1,0 +1,10 @@
+public class MissingSwitchCase {
+    public static void main(String[] args) {
+        String status = "CREATED";
+        String action = switch (status) {
+            case "CREATED" -> "WAIT";
+            case "CLOSED" -> "ARCHIVE";
+        };
+        System.out.println(action);
+    }
+}

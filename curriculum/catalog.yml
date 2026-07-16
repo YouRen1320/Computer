@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 1adff05e7cbcc13298fe7df0e5b4277a60078aaf5f4bd5d6cd192e20721ad333
+generated_spec_digest: f23de33bdbb97e94ce2c2edc2c644b49e7ec911da082343ede0a3d2918da2d6a
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -18,7 +18,7 @@ chapters:
   role: foundation
   responsibility: 建立可证伪的掌握标准与复习节奏，不把阅读时长、文件存在或 AI 生成等同于能力
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: learning-evidence
@@ -130,7 +130,7 @@ chapters:
   order: 1
   path: book/volume-00-computer-foundations/chapters/ch.foundations.learning-evidence.md
   recommended_after: []
-  spec_digest: 514628f7c8664b9edd418d2eacb5dcc25a0a88ab99ce18c5b9b098a91dfcfd5b
+  spec_digest: 043caf904e9ec7b747a5f799621a819144c5fde819c98ec1fe2b87febb9e02c4
   route_tags:
   - zero-base
   - accelerated-48
@@ -140,7 +140,7 @@ chapters:
   role: foundation
   responsibility: 建立文件系统与文本编码心智模型，只用图示和编辑器观察，不提前要求 Shell 文件操作
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: files-paths
@@ -253,7 +253,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.files-paths-encoding.md
   recommended_after:
   - ch.foundations.learning-evidence
-  spec_digest: 5f8051db96d9929b07fbc3d907a2ff282144166ffaf2c08da2ebc4996dde27ab
+  spec_digest: cba077412af528222f3fa2cb784948f846aada1742602fa0c1eae643663f48ae
   route_tags:
   - zero-base
   - accelerated-48
@@ -264,7 +264,7 @@ chapters:
   role: foundation
   responsibility: 教会读者安全输入和组合基础命令并理解引用边界，不在本章教授管道、标准流或退出码
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: terminal-shell
@@ -384,7 +384,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.terminal-shell.md
   recommended_after:
   - ch.foundations.files-paths-encoding
-  spec_digest: 0f897f70429d082ecbada7888e6c384ea7dd75f55af9855e19216ebe086c3acd
+  spec_digest: dfc951957c1432d4e055bf4e2e8b97e61d955ba942b1f5fb3c497bf30023b160
   route_tags:
   - zero-base
   - accelerated-48
@@ -395,7 +395,7 @@ chapters:
   role: foundation
   responsibility: 建立程序运行和资源归属模型，使用已学终端观察进程但不提前教授标准流与进程间管道
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: computer-resources
@@ -522,7 +522,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.computer-process-model.md
   recommended_after:
   - ch.foundations.terminal-shell
-  spec_digest: 8075902a0241dc40ce6844255c00df30c774ac5454c0448e8ef462ab1fe9f3de
+  spec_digest: 6d59c8dce207fb25dd4f6d5ce7aa2e9b77789f30fcc3ffb3e75ceafe55093b37
   route_tags:
   - zero-base
   - accelerated-48
@@ -533,7 +533,7 @@ chapters:
   role: foundation
   responsibility: 教授命令行进程的数据通道和成功失败协议，不扩展到网络套接字或应用日志框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: cli-streams
@@ -663,7 +663,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md
   recommended_after:
   - ch.foundations.computer-process-model
-  spec_digest: 00260c999b707f7c5a238ddc4ea1e7f81560522be87339f07b6e80916a910b95
+  spec_digest: bdd41fcf8ff1e096befb0312193f448cc5104632c887f595b2e03dd59ac32a76
   route_tags:
   - zero-base
   - accelerated-48
@@ -674,7 +674,7 @@ chapters:
   role: foundation
   responsibility: 解释进程如何继承环境并解析同名工具，聚焦可观察的版本选择，不进入具体语言构建系统
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: environment
@@ -800,7 +800,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md
   recommended_after:
   - ch.foundations.cli-streams-exit-codes
-  spec_digest: a800db4c4612505e4ec959e5c31bca245230a78dce17d9fb4cca52ab7b40e139
+  spec_digest: ba87e1af663e2d5fea35a65ff9c3bf088e459014ef2735e03ec6ab700dc18cfb
   route_tags:
   - zero-base
   - accelerated-48
@@ -811,7 +811,7 @@ chapters:
   role: practice
   responsibility: 训练从项目树、符号和引用定位源码的能力，不提前教授语言断点、调用栈或框架调试
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: editor-project
@@ -932,7 +932,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md
   recommended_after:
   - ch.foundations.environment-tool-resolution
-  spec_digest: 63ea0f1fb0acc3a79df00ff2eccce402007314c2fa13b564e052e4788da1d903
+  spec_digest: 02e685da9d0d8414f25943d40ebea3ad03f8dc2dfdafb73754f73281f78da50c
   route_tags:
   - zero-base
   - accelerated-48
@@ -942,7 +942,7 @@ chapters:
   role: foundation
   responsibility: 教授可回滚的版本协作与泄露凭据处置，不把忽略文件误当成删除历史或撤销泄露
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: git-state
@@ -1074,7 +1074,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md
   recommended_after:
   - ch.foundations.editor-project-navigation
-  spec_digest: 2d61536fda23808d9f0e94cca552f7d875b09fd970f5319fdb208c6ecd548b2f
+  spec_digest: 9af38a038a512377b324582b9aaf33c4c1975ca4f06141643a82e32e1d5f9d7f
   route_tags:
   - zero-base
   - accelerated-48
@@ -2662,7 +2662,7 @@ chapters:
   role: concept
   responsibility: 教授互斥条件选择和穷尽分支，不在本章教授重复执行或异常流程
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-boolean-branch
@@ -2786,7 +2786,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.branching.md
   recommended_after:
   - ch.java.expressions-conversions
-  spec_digest: f46ad0eaa6c1940aae51c13b5da6dd0fe3f5ba3812e0b7ee5041aad9d09b356e
+  spec_digest: d77db2f175cd40d76c75fd815721df5918c483eec6afa321a90c2fe7b854931d
   route_tags:
   - zero-base
   - accelerated-48
@@ -2797,7 +2797,7 @@ chapters:
   role: concept
   responsibility: 教授有界重复和循环不变量，不提前使用数组、集合或递归作为主要数据来源
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-loop-forms
@@ -2925,7 +2925,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.loops.md
   recommended_after:
   - ch.java.branching
-  spec_digest: 4271843e163425dc403b391020e725abbe56b3dbd071c49f7a8f41dc99e98cc1
+  spec_digest: 274c3812c5254bc5304b8f82d4ab75bfd0fdb3c3cb2b92111a72b52b5b13fb4d
   route_tags:
   - zero-base
   - accelerated-48
@@ -2936,7 +2936,7 @@ chapters:
   role: concept
   responsibility: 教授固定长度序列和索引边界，以命令行参数作为输入但不引入泛型集合
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-arrays
@@ -3067,7 +3067,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.arrays-command-args.md
   recommended_after:
   - ch.java.loops
-  spec_digest: c5c8f58162bab18152c86c897278e1908255c5fe5b0a1e239f58508414ff57c3
+  spec_digest: d284b82a652eae1155672c6f363057674b5f71b4b41eecf6fdd614c01bb451d6
   route_tags:
   - zero-base
   - accelerated-48
@@ -3078,7 +3078,7 @@ chapters:
   role: concept
   responsibility: 教授用方法封装可复用行为和参数契约，不提前使用对象字段、泛型或异常作为主要抽象
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-method-contract
@@ -3213,7 +3213,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.methods.md
   recommended_after:
   - ch.java.arrays-command-args
-  spec_digest: 94b6cbcc01fff8ab0afdef1e0af9ff458a5722065e94380b820093fa59745844
+  spec_digest: 72523634a947edfee4b8afd7024c11b36c358e30ebfc378b1514f04ddedf0b2c
   route_tags:
   - zero-base
   - accelerated-48
@@ -3224,7 +3224,7 @@ chapters:
   role: practice
   responsibility: 综合基础语法实现可靠控制台边界，只复制 Scanner 构造外壳而不解释其对象模型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-console-input
@@ -3361,7 +3361,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.console-input-validation.md
   recommended_after:
   - ch.java.methods
-  spec_digest: 3205d3d400400dfa39a4f4ac3af7b8c636e67feff55210ec52b60f84fbd52a04
+  spec_digest: dd08ef52a1053d041be22e83c2e63c9e3540c3b578917522473cfddb41f07733
   route_tags:
   - zero-base
   - accelerated-48
@@ -3371,7 +3371,7 @@ chapters:
   role: practice
   responsibility: 建立 Java 自动化测试最小闭环，不提前教授 Mock、参数化测试或 Spring 上下文
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-maven-smoke
@@ -3512,7 +3512,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.maven-junit-smoke.md
   recommended_after:
   - ch.java.console-input-validation
-  spec_digest: e477b4f4d35e87c09206b721356de1bbb1e26f168a4c480b32e34e175a6f71d2
+  spec_digest: 106841f4547d61cb1c9858eabb8cc7a5f394491f7c1d651ccdd34163514a50d0
   route_tags:
   - zero-base
   - accelerated-48
@@ -3523,7 +3523,7 @@ chapters:
   role: practice
   responsibility: 训练按失败阶段定位首个可信证据，并使用断点与调用栈复核，不引入 JVM 性能诊断
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-failure-stages
@@ -3669,7 +3669,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.debugging-failures.md
   recommended_after:
   - ch.java.maven-junit-smoke
-  spec_digest: 4f00f5903d181c28b3954ff86027fb9097412c1fe8049da140945ce398517386
+  spec_digest: fe667719cebf5482db35983de225ff26f8c8eb3e055d93108f7a995bfc8f11a4
   route_tags:
   - zero-base
   - accelerated-48
@@ -3679,7 +3679,7 @@ chapters:
   role: concept
   responsibility: 区分值、引用、对象身份与空引用，不把示意图等同于 JVM 真实物理布局
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-reference-model
@@ -3809,7 +3809,7 @@ chapters:
   order: 1
   path: book/volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md
   recommended_after: []
-  spec_digest: e9c85a30305922635551eec91ad28d820cb4be15a12e10fb449d05743d81f15d
+  spec_digest: d81835b033580047d89829cb5f7d270b0927e98007c8b75ff72ce5edd794665c
   route_tags:
   - zero-base
   - accelerated-48
@@ -3820,7 +3820,7 @@ chapters:
   role: concept
   responsibility: 教授用类定义对象状态和行为，不在本章处理构造不变量、继承或访问控制策略
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-class-instance
@@ -3951,7 +3951,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.classes-objects.md
   recommended_after:
   - ch.java-oop.references-null-identity
-  spec_digest: 1ea597599980e15ce5c450211a4cf47af68d0c1bf352d2baf9ed54e4f8f8e6dc
+  spec_digest: 9a843f5fa801669050dd740645d64d354d9a2eab75dbcf4d056590085dafd8b3
   route_tags:
   - zero-base
   - accelerated-48
@@ -3962,7 +3962,7 @@ chapters:
   role: concept
   responsibility: 教授对象从创建起即满足不变量，不在本章展开包可见性或继承初始化链
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-constructor
@@ -4088,7 +4088,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.constructors-invariants.md
   recommended_after:
   - ch.java-oop.classes-objects
-  spec_digest: c1cbe63481b8352daec94d1437caf6181fdb17d61deaa43554540d55bf566f57
+  spec_digest: ceddfc6db331fc4d81dae1040a4131251f004b12cd365d78755d1122b61a8617
   route_tags:
   - zero-base
   - accelerated-48
@@ -4099,7 +4099,7 @@ chapters:
   role: concept
   responsibility: 教授由类型维护自身不变量的可见性边界，不在本章教授继承复用或模块系统
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-encapsulation
@@ -4227,7 +4227,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.encapsulation-packages.md
   recommended_after:
   - ch.java-oop.constructors-invariants
-  spec_digest: c1fc9210f497ea0a77a5a2e4d3f85fbb881c444007d620c9380bd13f5f465c7b
+  spec_digest: 342de031729149509b8589490e1e8a97006aedcb0ee172a872cb9804ec757ca9
   route_tags:
   - zero-base
   - accelerated-48
@@ -4238,7 +4238,7 @@ chapters:
   role: concept
   responsibility: 区分类级成员与实例成员并识别共享可变状态风险，不把 static 当作默认工具函数容器
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-static-members
@@ -4360,7 +4360,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.static-class-state.md
   recommended_after:
   - ch.java-oop.encapsulation-packages
-  spec_digest: ec0d4aef76eec518e77ab6e61c5c3364433d0033e5c81582c48a52644c914212
+  spec_digest: edc24e5f68e978c0735a595a8d79776829b2b41e5e95f0a3d01d6e268b088305
   route_tags:
   - zero-base
   - accelerated-48
@@ -4371,7 +4371,7 @@ chapters:
   role: concept
   responsibility: 教授引用不可重新赋值与对象不可变性的区别，不提前使用集合防御性复制
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-final
@@ -4499,7 +4499,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.final-immutability.md
   recommended_after:
   - ch.java-oop.static-class-state
-  spec_digest: 1a346344278a4e6183ad24fcff0cad91ebfab29bf934325e9195006210040a61
+  spec_digest: 9e06becc7191a3bc9a5fbe3f577d51b3108e5410056764ddbcf14a258d205f48
   route_tags:
   - zero-base
   - accelerated-48
@@ -5346,7 +5346,7 @@ chapters:
   role: practice
   responsibility: 深化 Maven 项目模型与可重复构建证据，不在本章教授框架 Starter 或发布流水线
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: maven-project-model
@@ -5476,7 +5476,7 @@ chapters:
   order: 1
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md
   recommended_after: []
-  spec_digest: c05f0a933bfc8cb67d66ef4d4cb0b668aaeafb9dac2e4fba0dc4d9e4672bc1a2
+  spec_digest: 5dc2d4b9b8aae137b84a27f3f223bc3a5303d21ce471d99f4b32f6559863a36c
   route_tags:
   - zero-base
   - accelerated-48
@@ -5487,7 +5487,7 @@ chapters:
   role: concept
   responsibility: 教授编译期类型参数和读写边界，不在本章引入具体集合性能或反射泛型信息
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-generic-types
@@ -5612,7 +5612,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.generics-type-safety.md
   recommended_after:
   - ch.java-engineering.maven-reproducible-builds
-  spec_digest: c35f0730bc7a7ee2ae6deab854cf53bc0fa0c2bf943bcf0a122d9f7106af9b66
+  spec_digest: ef8c9fbb40d21457418e323f02aabd560fffcc99e21c52112a416071a2212633
   route_tags:
   - zero-base
   - accelerated-48

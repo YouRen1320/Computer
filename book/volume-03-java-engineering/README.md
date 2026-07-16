@@ -7,8 +7,8 @@
 
 ## 章节
 
-1. [Maven 生命周期、依赖范围、插件与可重复构建](chapters/ch.java-engineering.maven-reproducible-builds.md) — `ch.java-engineering.maven-reproducible-builds` · `planned`
-2. [泛型、类型参数、边界与通配符](chapters/ch.java-engineering.generics-type-safety.md) — `ch.java-engineering.generics-type-safety` · `planned`
+1. [Maven 生命周期、依赖范围、插件与可重复构建](chapters/ch.java-engineering.maven-reproducible-builds.md) — `ch.java-engineering.maven-reproducible-builds` · `drafting`
+2. [泛型、类型参数、边界与通配符](chapters/ch.java-engineering.generics-type-safety.md) — `ch.java-engineering.generics-type-safety` · `drafting`
 3. [List、Queue、Deque 与迭代](chapters/ch.java-engineering.sequential-collections.md) — `ch.java-engineering.sequential-collections` · `planned`
 4. [Set、Map、键相等性与哈希契约](chapters/ch.java-engineering.associative-collections.md) — `ch.java-engineering.associative-collections` · `planned`
 5. [Comparable、Comparator 与稳定排序](chapters/ch.java-engineering.sorting-comparators.md) — `ch.java-engineering.sorting-comparators` · `planned`

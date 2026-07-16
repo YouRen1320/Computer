@@ -1,0 +1,7 @@
+final class StaticReadsInstanceFailure {
+    private String category = "PUMP";
+
+    static int categoryLength() {
+        return category.length();
+    }
+}

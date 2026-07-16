@@ -1,0 +1,33 @@
+schema_version: 1
+claim: <填写范围明确、可能失败的能力主张>
+scope:
+  context: <填写环境或题目条件>
+  independent_level: <填写允许参考什么、禁止参考什么>
+evidence:
+  explain:
+    task: <填写责任、边界和反例的复述任务>
+    status: planned
+  build:
+    task: <填写固定输入下的独立构建任务>
+    status: planned
+  diagnose:
+    task: <填写受控故障、定位和恢复任务>
+    status: planned
+experiment:
+  input: <填写固定输入>
+  prediction: <执行前填写>
+  observation: <执行后填写>
+  first_trustworthy_evidence: <填写第一条具体证据>
+  repair: <填写只改变的一个条件>
+  rerun: pending
+artifact_exists: true
+mastery_decision: not-yet-supported
+boundary:
+  - <填写至少一项尚未验证条件>
+reviews:
+  - day: 1
+    retrieval: <填写不看答案的检索任务>
+  - day: 3
+    retrieval: <填写减少提示后的相邻任务>
+  - day: 7
+    retrieval: <填写需求变更或迁移任务>

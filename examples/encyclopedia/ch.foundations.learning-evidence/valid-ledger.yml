@@ -1,0 +1,34 @@
+schema_version: 1
+claim: 在固定样例数据上，能写出按维修人员统计已关闭工单数量的 SQL，并诊断把 WHERE 写在 GROUP BY 后造成的语法错误
+scope:
+  context: PostgreSQL 语义练习；只使用题目给定的 repair_ticket 样例
+  independent_level: 可以查看 SQL 关键字速查表，不查看完整查询答案
+evidence:
+  explain:
+    task: 在 120 秒内解释 WHERE、GROUP BY、HAVING 的处理职责和一个失败反例
+    status: observed
+  build:
+    task: 根据固定输入写查询并与手算结果逐项比较
+    status: observed
+  diagnose:
+    task: 注入子句顺序错误，记录第一条具体错误，修复后复跑原查询
+    status: observed
+experiment:
+  input: 维修人员 7 有两条 CLOSED；维修人员 8 有一条 CLOSED；一条 CLOSED 的 technician_id 为空
+  prediction: 只返回 technician_id=7、ticket_count=2
+  observation: 返回一行 technician_id=7、ticket_count=2
+  first_trustworthy_evidence: 实际结果集与手算预期逐列一致
+  repair: 把误放在 GROUP BY 后的 WHERE 恢复到 GROUP BY 前
+  rerun: pass
+artifact_exists: true
+mastery_decision: supported-for-stated-scope
+boundary:
+  - 未验证真实数据库权限、索引性能和并发写入
+  - 未验证其他 SQL 方言
+reviews:
+  - day: 1
+    retrieval: 不看正文复述三个子句职责
+  - day: 3
+    retrieval: 用不同样例数据独立重写查询
+  - day: 7
+    retrieval: 增加状态需求并先更新手算预言

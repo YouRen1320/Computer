@@ -1,0 +1,7 @@
+package com.factorycare.workorder.app;
+
+import com.factorycare.workorders.domain.WorkOrder;
+
+public class WrongImportFailure {
+    WorkOrder order;
+}

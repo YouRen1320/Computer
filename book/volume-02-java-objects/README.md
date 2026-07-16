@@ -7,12 +7,12 @@
 
 ## 章节
 
-1. [引用、对象身份、null 与内存心智模型](chapters/ch.java-oop.references-null-identity.md) — `ch.java-oop.references-null-identity` · `planned`
-2. [类、实例、字段与实例方法](chapters/ch.java-oop.classes-objects.md) — `ch.java-oop.classes-objects` · `planned`
-3. [构造器、初始化顺序与对象不变量](chapters/ch.java-oop.constructors-invariants.md) — `ch.java-oop.constructors-invariants` · `planned`
-4. [封装、访问控制与包边界](chapters/ch.java-oop.encapsulation-packages.md) — `ch.java-oop.encapsulation-packages` · `planned`
-5. [static、类成员与共享状态](chapters/ch.java-oop.static-class-state.md) — `ch.java-oop.static-class-state` · `planned`
-6. [final、常量与不可变对象](chapters/ch.java-oop.final-immutability.md) — `ch.java-oop.final-immutability` · `planned`
+1. [引用、对象身份、null 与内存心智模型](chapters/ch.java-oop.references-null-identity.md) — `ch.java-oop.references-null-identity` · `drafting`
+2. [类、实例、字段与实例方法](chapters/ch.java-oop.classes-objects.md) — `ch.java-oop.classes-objects` · `drafting`
+3. [构造器、初始化顺序与对象不变量](chapters/ch.java-oop.constructors-invariants.md) — `ch.java-oop.constructors-invariants` · `drafting`
+4. [封装、访问控制与包边界](chapters/ch.java-oop.encapsulation-packages.md) — `ch.java-oop.encapsulation-packages` · `drafting`
+5. [static、类成员与共享状态](chapters/ch.java-oop.static-class-state.md) — `ch.java-oop.static-class-state` · `drafting`
+6. [final、常量与不可变对象](chapters/ch.java-oop.final-immutability.md) — `ch.java-oop.final-immutability` · `drafting`
 7. [继承、重写、super、组合与复用选择](chapters/ch.java-oop.inheritance-composition.md) — `ch.java-oop.inheritance-composition` · `planned`
 8. [接口、抽象类、多态与动态分派](chapters/ch.java-oop.interfaces-polymorphism.md) — `ch.java-oop.interfaces-polymorphism` · `planned`
 9. [enum、record、sealed 与受限类型建模](chapters/ch.java-oop.enum-record-sealed.md) — `ch.java-oop.enum-record-sealed` · `planned`

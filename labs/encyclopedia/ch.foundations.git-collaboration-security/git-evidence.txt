@@ -1,0 +1,12 @@
+untracked=<fill>
+after_add=<fill>
+after_second_edit=<fill>
+merge_exit=<fill>
+merge_status=<fill>
+resolved_rules=<fill>
+tracked_after_ignore=<fill>
+after_rm_cached=<fill>
+worktree_copy=<fill>
+old_history_contains_placeholder=<fill>
+credential_first_action=<fill>
+remote_count=<fill>

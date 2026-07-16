@@ -1,0 +1,9 @@
+package com.factorycare.workorder.app;
+
+import com.factorycare.workorder.domain.StatusPolicy;
+
+public class CrossPackagePolicyFailure {
+    public static void main(String[] args) {
+        StatusPolicy.requireCurrent("CREATED", "CREATED");
+    }
+}

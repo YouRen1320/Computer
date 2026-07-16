@@ -221,6 +221,14 @@ class EncyclopediaSecurityTest < Minitest::Test
     }
   end
 
+  def planned_chapter_context(root)
+    catalog = load_yaml(root.join("curriculum/catalog.yml"))
+    index = catalog.fetch("chapters").index { |chapter| chapter.fetch("status") == "planned" }
+    raise "fixture catalog lacks a planned chapter" unless index
+
+    chapter_context(root, index: index)
+  end
+
   def promote_first_chapter(root, &block)
     promote_chapter(root, index: 0, &block)
   end
@@ -476,7 +484,7 @@ class EncyclopediaSecurityTest < Minitest::Test
 
   def test_planned_placeholder_requires_exact_generator_ownership_and_no_human_fields
     with_fixture do |root|
-      context = chapter_context(root)
+      context = planned_chapter_context(root)
       context.fetch(:metadata).delete("generated_spec_digest")
       context.fetch(:metadata)["stable_core"] = context.fetch(:chapter).fetch("stable_core")
       context.fetch(:metadata)["outcomes"] = context.fetch(:chapter).fetch("outcomes")
@@ -488,7 +496,7 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
 
     with_fixture do |root|
-      context = chapter_context(root)
+      context = planned_chapter_context(root)
       context.fetch(:metadata)["generated_spec_digest"] = "0" * 64
       context.fetch(:metadata)["generated_by"] = "scripts/legacy-generator.rb"
       context[:body] = context.fetch(:body).sub("GENERATED: factorycare-planned-placeholder; safe-to-overwrite: planned-only", "")

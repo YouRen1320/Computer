@@ -8,7 +8,7 @@ chapters:
   role: foundation
   responsibility: 建立可证伪的掌握标准与复习节奏，不把阅读时长、文件存在或 AI 生成等同于能力
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: learning-evidence
@@ -122,7 +122,7 @@ chapters:
   role: foundation
   responsibility: 建立文件系统与文本编码心智模型，只用图示和编辑器观察，不提前要求 Shell 文件操作
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: files-paths
@@ -235,7 +235,7 @@ chapters:
   role: foundation
   responsibility: 教会读者安全输入和组合基础命令并理解引用边界，不在本章教授管道、标准流或退出码
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: terminal-shell
@@ -355,7 +355,7 @@ chapters:
   role: foundation
   responsibility: 建立程序运行和资源归属模型，使用已学终端观察进程但不提前教授标准流与进程间管道
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: computer-resources
@@ -482,7 +482,7 @@ chapters:
   role: foundation
   responsibility: 教授命令行进程的数据通道和成功失败协议，不扩展到网络套接字或应用日志框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: cli-streams
@@ -612,7 +612,7 @@ chapters:
   role: foundation
   responsibility: 解释进程如何继承环境并解析同名工具，聚焦可观察的版本选择，不进入具体语言构建系统
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: environment
@@ -738,7 +738,7 @@ chapters:
   role: practice
   responsibility: 训练从项目树、符号和引用定位源码的能力，不提前教授语言断点、调用栈或框架调试
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: editor-project
@@ -859,7 +859,7 @@ chapters:
   role: foundation
   responsibility: 教授可回滚的版本协作与泄露凭据处置，不把忽略文件误当成删除历史或撤销泄露
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: git-state

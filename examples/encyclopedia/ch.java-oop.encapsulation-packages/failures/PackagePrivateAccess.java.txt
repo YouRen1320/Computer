@@ -1,0 +1,9 @@
+package com.factorycare.device.app;
+
+import com.factorycare.device.domain.DeviceCodePolicy;
+
+public class PackagePrivateAccess {
+    public static void main(String[] args) {
+        System.out.println(DeviceCodePolicy.normalize("PUMP-01"));
+    }
+}

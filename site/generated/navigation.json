@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "eb6808c7f06d7975bad0f7ac8b8bf2b2ba5684ee2347ccd2c2e9ce6933f31430",
+  "input_digest": "8565f5fc84280167d4b937fde163ea0b4dd6d695924105ba050b3803db2eff5f",
   "volumes": [
     {
       "id": "00",
@@ -12,7 +12,7 @@
           "title": "学习证据、掌握标准与间隔复习",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.learning-evidence.md",
           "publishable": false
         },
@@ -21,7 +21,7 @@
           "title": "文件、路径、字符与编码",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.files-paths-encoding.md",
           "publishable": false
         },
@@ -30,7 +30,7 @@
           "title": "终端、Shell、命令与引用规则",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.terminal-shell.md",
           "publishable": false
         },
@@ -39,7 +39,7 @@
           "title": "CPU、内存、磁盘、程序与进程",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.computer-process-model.md",
           "publishable": false
         },
@@ -48,7 +48,7 @@
           "title": "stdin、stdout、stderr、管道与退出码",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md",
           "publishable": false
         },
@@ -57,7 +57,7 @@
           "title": "环境变量、PATH 与工具版本解析",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md",
           "publishable": false
         },
@@ -66,7 +66,7 @@
           "title": "编辑器、IDE、项目导航与源码定位",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md",
           "publishable": false
         },
@@ -75,7 +75,7 @@
           "title": "Git 状态模型、远程协作、冲突与凭据处置",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md",
           "publishable": false
         },
@@ -189,7 +189,7 @@
           "title": "布尔逻辑、if/else 与 switch",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.branching.md",
           "publishable": false
         },
@@ -198,7 +198,7 @@
           "title": "for、while、计数、累积与哨兵循环",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.loops.md",
           "publishable": false
         },
@@ -207,7 +207,7 @@
           "title": "数组、二维数组、查找与命令行参数",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.arrays-command-args.md",
           "publishable": false
         },
@@ -216,7 +216,7 @@
           "title": "方法、参数传递、返回值、重载与递归边界",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.methods.md",
           "publishable": false
         },
@@ -225,7 +225,7 @@
           "title": "控制台输入、缺参数、EOF、合法性校验与退出码",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.console-input-validation.md",
           "publishable": false
         },
@@ -234,7 +234,7 @@
           "title": "Maven 最小项目、JUnit、断言与失败日志",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.maven-junit-smoke.md",
           "publishable": false
         },
@@ -243,7 +243,7 @@
           "title": "编译错误、运行异常、断言失败、逻辑错误与断点调试",
           "order": 11,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.debugging-failures.md",
           "publishable": false
         }
@@ -258,7 +258,7 @@
           "title": "引用、对象身份、null 与内存心智模型",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md",
           "publishable": false
         },
@@ -267,7 +267,7 @@
           "title": "类、实例、字段与实例方法",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.classes-objects.md",
           "publishable": false
         },
@@ -276,7 +276,7 @@
           "title": "构造器、初始化顺序与对象不变量",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.constructors-invariants.md",
           "publishable": false
         },
@@ -285,7 +285,7 @@
           "title": "封装、访问控制与包边界",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.encapsulation-packages.md",
           "publishable": false
         },
@@ -294,7 +294,7 @@
           "title": "static、类成员与共享状态",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.static-class-state.md",
           "publishable": false
         },
@@ -303,7 +303,7 @@
           "title": "final、常量与不可变对象",
           "order": 6,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.final-immutability.md",
           "publishable": false
         },
@@ -372,7 +372,7 @@
           "title": "Maven 生命周期、依赖范围、插件与可重复构建",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md",
           "publishable": false
         },
@@ -381,7 +381,7 @@
           "title": "泛型、类型参数、边界与通配符",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.generics-type-safety.md",
           "publishable": false
         },

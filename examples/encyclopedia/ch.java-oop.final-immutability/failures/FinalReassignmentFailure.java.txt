@@ -1,0 +1,7 @@
+final class FinalReassignmentFailure {
+    static int invalid() {
+        final int maxRetry = 3;
+        maxRetry = 4;
+        return maxRetry;
+    }
+}

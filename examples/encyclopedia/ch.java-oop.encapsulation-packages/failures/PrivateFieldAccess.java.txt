@@ -1,0 +1,10 @@
+package com.factorycare.device.app;
+
+import com.factorycare.device.domain.Device;
+
+public class PrivateFieldAccess {
+    public static void main(String[] args) {
+        Device device = new Device("PUMP-01");
+        device.status = "CLOSED";
+    }
+}

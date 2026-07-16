@@ -533,7 +533,7 @@ chapters:
   role: concept
   responsibility: 教授互斥条件选择和穷尽分支，不在本章教授重复执行或异常流程
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-boolean-branch
@@ -657,7 +657,7 @@ chapters:
   role: concept
   responsibility: 教授有界重复和循环不变量，不提前使用数组、集合或递归作为主要数据来源
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-loop-forms
@@ -785,7 +785,7 @@ chapters:
   role: concept
   responsibility: 教授固定长度序列和索引边界，以命令行参数作为输入但不引入泛型集合
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-arrays
@@ -916,7 +916,7 @@ chapters:
   role: concept
   responsibility: 教授用方法封装可复用行为和参数契约，不提前使用对象字段、泛型或异常作为主要抽象
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-method-contract
@@ -1051,7 +1051,7 @@ chapters:
   role: practice
   responsibility: 综合基础语法实现可靠控制台边界，只复制 Scanner 构造外壳而不解释其对象模型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-console-input
@@ -1188,7 +1188,7 @@ chapters:
   role: practice
   responsibility: 建立 Java 自动化测试最小闭环，不提前教授 Mock、参数化测试或 Spring 上下文
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-maven-smoke
@@ -1331,7 +1331,7 @@ chapters:
   role: practice
   responsibility: 训练按失败阶段定位首个可信证据，并使用断点与调用栈复核，不引入 JVM 性能诊断
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-failure-stages

@@ -1,0 +1,26 @@
+[
+  {
+    "time": "10:00",
+    "cpu_percent": 95,
+    "resident_mib": 160,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 12000,
+    "observation": "calculation queue grows"
+  },
+  {
+    "time": "10:05",
+    "cpu_percent": 14,
+    "resident_mib": 4015,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 12000,
+    "observation": "new allocation rejected"
+  },
+  {
+    "time": "10:10",
+    "cpu_percent": 9,
+    "resident_mib": 210,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 12,
+    "observation": "new report file cannot be stored"
+  }
+]

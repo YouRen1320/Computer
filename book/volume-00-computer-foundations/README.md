@@ -7,14 +7,14 @@
 
 ## 章节
 
-1. [学习证据、掌握标准与间隔复习](chapters/ch.foundations.learning-evidence.md) — `ch.foundations.learning-evidence` · `planned`
-2. [文件、路径、字符与编码](chapters/ch.foundations.files-paths-encoding.md) — `ch.foundations.files-paths-encoding` · `planned`
-3. [终端、Shell、命令与引用规则](chapters/ch.foundations.terminal-shell.md) — `ch.foundations.terminal-shell` · `planned`
-4. [CPU、内存、磁盘、程序与进程](chapters/ch.foundations.computer-process-model.md) — `ch.foundations.computer-process-model` · `planned`
-5. [stdin、stdout、stderr、管道与退出码](chapters/ch.foundations.cli-streams-exit-codes.md) — `ch.foundations.cli-streams-exit-codes` · `planned`
-6. [环境变量、PATH 与工具版本解析](chapters/ch.foundations.environment-tool-resolution.md) — `ch.foundations.environment-tool-resolution` · `planned`
-7. [编辑器、IDE、项目导航与源码定位](chapters/ch.foundations.editor-project-navigation.md) — `ch.foundations.editor-project-navigation` · `planned`
-8. [Git 状态模型、远程协作、冲突与凭据处置](chapters/ch.foundations.git-collaboration-security.md) — `ch.foundations.git-collaboration-security` · `planned`
+1. [学习证据、掌握标准与间隔复习](chapters/ch.foundations.learning-evidence.md) — `ch.foundations.learning-evidence` · `drafting`
+2. [文件、路径、字符与编码](chapters/ch.foundations.files-paths-encoding.md) — `ch.foundations.files-paths-encoding` · `drafting`
+3. [终端、Shell、命令与引用规则](chapters/ch.foundations.terminal-shell.md) — `ch.foundations.terminal-shell` · `drafting`
+4. [CPU、内存、磁盘、程序与进程](chapters/ch.foundations.computer-process-model.md) — `ch.foundations.computer-process-model` · `drafting`
+5. [stdin、stdout、stderr、管道与退出码](chapters/ch.foundations.cli-streams-exit-codes.md) — `ch.foundations.cli-streams-exit-codes` · `drafting`
+6. [环境变量、PATH 与工具版本解析](chapters/ch.foundations.environment-tool-resolution.md) — `ch.foundations.environment-tool-resolution` · `drafting`
+7. [编辑器、IDE、项目导航与源码定位](chapters/ch.foundations.editor-project-navigation.md) — `ch.foundations.editor-project-navigation` · `drafting`
+8. [Git 状态模型、远程协作、冲突与凭据处置](chapters/ch.foundations.git-collaboration-security.md) — `ch.foundations.git-collaboration-security` · `drafting`
 9. [IP、DNS、端口、TCP 与 TLS 分层](chapters/ch.foundations.network-layers.md) — `ch.foundations.network-layers` · `planned`
 10. [HTTP 报文、方法、状态码、Header、Body 与 curl](chapters/ch.foundations.http-curl.md) — `ch.foundations.http-curl` · `planned`
 11. [API 资源、错误、版本、分页、缓存与幂等语义](chapters/ch.foundations.api-contract-basics.md) — `ch.foundations.api-contract-basics` · `planned`

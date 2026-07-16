@@ -1,0 +1,9 @@
+project_root=<fill>
+root_marker=<fill>
+source_definition=<fill>
+test_reference=<fill>
+generated_candidate=<fill>
+wrong_root_marker=<fill>
+problem_producer=<fill>
+first_credible_location=<fill>
+generated_action=<fill>

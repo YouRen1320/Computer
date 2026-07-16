@@ -1,0 +1,29 @@
+[
+  {
+    "id": "cpu-busy",
+    "cpu_percent": 96,
+    "resident_mib": 120,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 8000,
+    "disk_required_mib": 100,
+    "expected_bottleneck": "cpu"
+  },
+  {
+    "id": "memory-pressure",
+    "cpu_percent": 18,
+    "resident_mib": 4010,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 8000,
+    "disk_required_mib": 100,
+    "expected_bottleneck": "memory"
+  },
+  {
+    "id": "disk-capacity",
+    "cpu_percent": 11,
+    "resident_mib": 180,
+    "memory_limit_mib": 4096,
+    "disk_free_mib": 20,
+    "disk_required_mib": 100,
+    "expected_bottleneck": "disk"
+  }
+]
