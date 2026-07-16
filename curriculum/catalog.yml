@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: f23de33bdbb97e94ce2c2edc2c644b49e7ec911da082343ede0a3d2918da2d6a
+generated_spec_digest: 546c2d181097f0d04c18d5a5bb022c9b61e2aa3598a479b77e8414f5e1f70af0
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -1085,7 +1085,7 @@ chapters:
   role: foundation
   responsibility: 建立从名称解析到加密传输的分层诊断模型，不在本章教授 HTTP 语义
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: network-addressing
@@ -1215,7 +1215,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.network-layers.md
   recommended_after:
   - ch.foundations.git-collaboration-security
-  spec_digest: ae51c744a19e96e258f3d5609e32e3241211fe295da2a32cd4920ca33a595864
+  spec_digest: eb048802c080d4f1320154edbc5f42b70875bdb4f49a0943226b3d01123a6ef3
   route_tags:
   - zero-base
   - accelerated-48
@@ -1226,7 +1226,7 @@ chapters:
   role: foundation
   responsibility: 教授 HTTP 请求响应契约和 curl 取证，不提前引入具体后端或浏览器框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: http-message
@@ -1356,7 +1356,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.http-curl.md
   recommended_after:
   - ch.foundations.network-layers
-  spec_digest: 35b0bbbe580578cf11171e07476539a2e59bd53c57ab8d7367e6d29ff2176187
+  spec_digest: 1c734c1336d4441b7515f5c7edad40380408cbb4e7cbb921eb6fd2e560bebb15
   route_tags:
   - zero-base
   - accelerated-48
@@ -4510,7 +4510,7 @@ chapters:
   role: concept
   responsibility: 教授 is-a 与 has-a 的复用边界，优先用组合表达可替换依赖，不在本章引入接口多态
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-inheritance
@@ -4639,7 +4639,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.inheritance-composition.md
   recommended_after:
   - ch.java-oop.final-immutability
-  spec_digest: c4d53cc6d0d6763876eb51b24f09dc23dfc552bbd29dab5f122fa9bdaaafe383
+  spec_digest: 451e029a9c5e32792f78f8aecf3cdf218f99d1561ac581cbc31ca03a1d19e512
   route_tags:
   - zero-base
   - accelerated-48
@@ -4650,7 +4650,7 @@ chapters:
   role: concept
   responsibility: 教授面向契约编程和运行时动态分派，不在本章展开反射代理或泛型变型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-abstraction
@@ -4786,7 +4786,7 @@ chapters:
   path: book/volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md
   recommended_after:
   - ch.java-oop.inheritance-composition
-  spec_digest: f03542365d71cd3834740a0fb7f306c56fb6151488075b3ba9704e221a598150
+  spec_digest: 6ef53e39ef7e26c22d7ea33284832474fe3d3b75977fcf3eae7c880e9c2d67c3
   route_tags:
   - zero-base
   - accelerated-48
@@ -5623,7 +5623,7 @@ chapters:
   role: concept
   responsibility: 教授有序和队列型集合的契约与选择，不在本章讨论哈希键或并发集合
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-list
@@ -5753,7 +5753,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.sequential-collections.md
   recommended_after:
   - ch.java-engineering.generics-type-safety
-  spec_digest: 781ec60df2d6e1a14fa14ada2e62f9d1615b0f19d008693f07292169cf2cc12f
+  spec_digest: 2609fd5c4d04a997586804d18db2a3e519f58070217baccbf1cc74f68664b35d
   route_tags:
   - zero-base
   - accelerated-48
@@ -5763,7 +5763,7 @@ chapters:
   role: concept
   responsibility: 教授去重和键值索引及其相等性要求，不在本章展开缓存或数据库索引
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-set
@@ -5909,7 +5909,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.associative-collections.md
   recommended_after:
   - ch.java-engineering.sequential-collections
-  spec_digest: 6704abc48c8f9f3fa16e447e0597186fe555e55fcaa158caef5cdb519cc1f8fb
+  spec_digest: f4398eb98d1368a51a25d8da9717bdb771c40ca0b763f1fae7199d2f3a219c2a
   route_tags:
   - zero-base
   - accelerated-48

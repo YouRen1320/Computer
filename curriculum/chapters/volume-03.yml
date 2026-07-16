@@ -265,7 +265,7 @@ chapters:
   role: concept
   responsibility: 教授有序和队列型集合的契约与选择，不在本章讨论哈希键或并发集合
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-list
@@ -395,7 +395,7 @@ chapters:
   role: concept
   responsibility: 教授去重和键值索引及其相等性要求，不在本章展开缓存或数据库索引
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-set

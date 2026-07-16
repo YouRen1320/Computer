@@ -775,7 +775,7 @@ chapters:
   role: concept
   responsibility: 教授 is-a 与 has-a 的复用边界，优先用组合表达可替换依赖，不在本章引入接口多态
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-inheritance
@@ -904,7 +904,7 @@ chapters:
   role: concept
   responsibility: 教授面向契约编程和运行时动态分派，不在本章展开反射代理或泛型变型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-abstraction

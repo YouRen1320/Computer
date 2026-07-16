@@ -1,0 +1,14 @@
+class OverrideTypoFailure {
+    static class Formatter {
+        String format(String value) {
+            return value;
+        }
+    }
+
+    static final class SmsFormatter extends Formatter {
+        @Override
+        String formats(String value) {
+            return "SMS|" + value;
+        }
+    }
+}

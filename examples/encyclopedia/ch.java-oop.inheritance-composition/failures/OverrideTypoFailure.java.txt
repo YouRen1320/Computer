@@ -1,0 +1,14 @@
+class OverrideTypoFailure {
+    static class NoticeFormatter {
+        String render(String workOrderId) {
+            return workOrderId;
+        }
+    }
+
+    static final class SmsFormatter extends NoticeFormatter {
+        @Override
+        String renders(String workOrderId) {
+            return "SMS|" + workOrderId;
+        }
+    }
+}

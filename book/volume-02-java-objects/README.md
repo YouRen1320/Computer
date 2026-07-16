@@ -13,8 +13,8 @@
 4. [封装、访问控制与包边界](chapters/ch.java-oop.encapsulation-packages.md) — `ch.java-oop.encapsulation-packages` · `drafting`
 5. [static、类成员与共享状态](chapters/ch.java-oop.static-class-state.md) — `ch.java-oop.static-class-state` · `drafting`
 6. [final、常量与不可变对象](chapters/ch.java-oop.final-immutability.md) — `ch.java-oop.final-immutability` · `drafting`
-7. [继承、重写、super、组合与复用选择](chapters/ch.java-oop.inheritance-composition.md) — `ch.java-oop.inheritance-composition` · `planned`
-8. [接口、抽象类、多态与动态分派](chapters/ch.java-oop.interfaces-polymorphism.md) — `ch.java-oop.interfaces-polymorphism` · `planned`
+7. [继承、重写、super、组合与复用选择](chapters/ch.java-oop.inheritance-composition.md) — `ch.java-oop.inheritance-composition` · `drafting`
+8. [接口、抽象类、多态与动态分派](chapters/ch.java-oop.interfaces-polymorphism.md) — `ch.java-oop.interfaces-polymorphism` · `drafting`
 9. [enum、record、sealed 与受限类型建模](chapters/ch.java-oop.enum-record-sealed.md) — `ch.java-oop.enum-record-sealed` · `planned`
 10. [equals、hashCode 与 toString 直接契约](chapters/ch.java-oop.object-contracts.md) — `ch.java-oop.object-contracts` · `planned`
 11. [正则、BigDecimal、日期时间、UUID 与业务值](chapters/ch.java-oop.business-value-types.md) — `ch.java-oop.business-value-types` · `planned`

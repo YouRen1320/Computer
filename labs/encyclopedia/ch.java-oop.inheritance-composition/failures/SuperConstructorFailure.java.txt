@@ -1,0 +1,9 @@
+class SuperConstructorFailure {
+    static class NotificationFormatter {
+        NotificationFormatter(String tenantId) {
+        }
+    }
+
+    static final class SmsFormatter extends NotificationFormatter {
+    }
+}

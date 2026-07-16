@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "8565f5fc84280167d4b937fde163ea0b4dd6d695924105ba050b3803db2eff5f",
+  "input_digest": "40c1dcb0223e2805cf744202942cd5ece69b9378ce2579a65430b1ca9caf8065",
   "volumes": [
     {
       "id": "00",
@@ -84,7 +84,7 @@
           "title": "IP、DNS、端口、TCP 与 TLS 分层",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.network-layers.md",
           "publishable": false
         },
@@ -93,7 +93,7 @@
           "title": "HTTP 报文、方法、状态码、Header、Body 与 curl",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.http-curl.md",
           "publishable": false
         },
@@ -312,7 +312,7 @@
           "title": "继承、重写、super、组合与复用选择",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.inheritance-composition.md",
           "publishable": false
         },
@@ -321,7 +321,7 @@
           "title": "接口、抽象类、多态与动态分派",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md",
           "publishable": false
         },
@@ -390,7 +390,7 @@
           "title": "List、Queue、Deque 与迭代",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.sequential-collections.md",
           "publishable": false
         },
@@ -399,7 +399,7 @@
           "title": "Set、Map、键相等性与哈希契约",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.associative-collections.md",
           "publishable": false
         },

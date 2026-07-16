@@ -991,7 +991,7 @@ chapters:
   role: foundation
   responsibility: 建立从名称解析到加密传输的分层诊断模型，不在本章教授 HTTP 语义
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: network-addressing
@@ -1121,7 +1121,7 @@ chapters:
   role: foundation
   responsibility: 教授 HTTP 请求响应契约和 curl 取证，不提前引入具体后端或浏览器框架
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: http-message

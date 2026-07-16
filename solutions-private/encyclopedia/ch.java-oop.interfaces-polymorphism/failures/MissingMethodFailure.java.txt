@@ -1,0 +1,8 @@
+class MissingMethodFailure {
+    interface Sender {
+        String send();
+    }
+
+    static final class BrokenSender implements Sender {
+    }
+}

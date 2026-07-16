@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "8565f5fc84280167d4b937fde163ea0b4dd6d695924105ba050b3803db2eff5f",
+  "input_digest": "40c1dcb0223e2805cf744202942cd5ece69b9378ce2579a65430b1ca9caf8065",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 228,
-    "drafting": 27,
+    "planned": 222,
+    "drafting": 33,
     "review": 0,
     "verified": 0
   },
@@ -778,7 +778,7 @@
           "volume": "00",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -876,7 +876,7 @@
           "volume": "00",
           "order": 10,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.network-layers"
           ],
@@ -3114,7 +3114,7 @@
           "volume": "02",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.final-immutability"
           ],
@@ -3212,7 +3212,7 @@
           "volume": "02",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.inheritance-composition"
           ],
@@ -3896,7 +3896,7 @@
           "volume": "03",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-engineering.generics-type-safety"
           ],
@@ -3993,7 +3993,7 @@
           "volume": "03",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-engineering.sequential-collections",
             "ch.java-oop.object-contracts"

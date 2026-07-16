@@ -1,0 +1,8 @@
+class MissingMethodFailure {
+    interface NotificationSender {
+        String send(String workOrderId);
+    }
+
+    static final class EmailSender implements NotificationSender {
+    }
+}

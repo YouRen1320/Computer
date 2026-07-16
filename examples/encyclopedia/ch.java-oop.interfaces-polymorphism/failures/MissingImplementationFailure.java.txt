@@ -1,0 +1,8 @@
+class MissingImplementationFailure {
+    interface NotificationSender {
+        String send(String workOrderId, String message);
+    }
+
+    static final class SmsSender implements NotificationSender {
+    }
+}
