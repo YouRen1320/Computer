@@ -1,0 +1,17 @@
+[
+  {
+    "id": "timezone-cross-day",
+    "broken_expression": "CAST(d.last_seen_at AS date)",
+    "first_evidence": "D-02 is 2026-07-16 in UTC but 2026-07-17 in Asia/Shanghai"
+  },
+  {
+    "id": "null-to-business-value",
+    "broken_expression": "COALESCE(d.temperature_c, 0)",
+    "first_evidence": "D-03 has no measurement and must remain distinguishable from a measured zero"
+  },
+  {
+    "id": "implicit-cast",
+    "broken_expression": "d.temperature_c + d.calibration_text",
+    "first_evidence": "numeric plus text has no assumed conversion; D-03 is also invalid numeric text"
+  }
+]

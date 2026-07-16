@@ -8,7 +8,7 @@ chapters:
   role: foundation
   responsibility: 教授先识别资产、攻击者和信任跨越再选控制，不在本章实现登录、Token 或框架过滤链
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-goals-assets
@@ -140,7 +140,7 @@ chapters:
   role: concept
   responsibility: 教授身份与凭据从创建到撤销恢复的安全生命周期，不在本章实现 Cookie Session 或 OAuth
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-identity-password
@@ -278,7 +278,7 @@ chapters:
   role: concept
   responsibility: 教授浏览器携带认证状态及 Session 固定风险，不在本章实现 Spring Security 登录流程
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-cookie
@@ -403,7 +403,7 @@ chapters:
   role: concept
   responsibility: 教授浏览器来源边界和跨站请求风险，不把 CORS 当作服务端授权或数据隔离
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-origin-cors

@@ -1,0 +1,7 @@
+input-rows=4
+output-rows=4
+result=D-01|boiler alpha|23.5|Boiler Alpha|NORMAL|2026-07-16
+result=D-02|pump beta|-2.3|West Pump|FREEZING|2026-07-17
+result=D-03|sensor three|NULL|Sensor Three|UNKNOWN|2026-07-17
+result=D-04|compressor delta|30.0|Delta Main|HOT|2026-07-18
+scalar-functions-solution=PASS

@@ -1,0 +1,13 @@
+registration_verified=true
+database_plaintext=false
+same_password_distinct_salt=true
+reset_expired=true
+reset_single_use=true
+old_session_revoked=true
+old_password_rejected=true
+enumeration_contract_equal=true
+temporary_throttle=true
+mfa_change_requires_reauth=true
+admin_recovery_audited=true
+audit_secret_free=true
+verification_report=PASS assertions=17

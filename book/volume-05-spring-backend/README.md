@@ -7,10 +7,10 @@
 
 ## 章节
 
-1. [HTTP 请求生命周期、Servlet 与线程边界](chapters/ch.spring.servlet-request-lifecycle.md) — `ch.spring.servlet-request-lifecycle` · `planned`
-2. [IoC、构造器注入与依赖反转](chapters/ch.spring.ioc-di.md) — `ch.spring.ioc-di` · `planned`
-3. [Bean 注册、生命周期、作用域与销毁](chapters/ch.spring.beans-lifecycle-scopes.md) — `ch.spring.beans-lifecycle-scopes` · `planned`
-4. [配置属性、Profile、环境覆盖与敏感配置](chapters/ch.spring.configuration-profiles.md) — `ch.spring.configuration-profiles` · `planned`
+1. [HTTP 请求生命周期、Servlet 与线程边界](chapters/ch.spring.servlet-request-lifecycle.md) — `ch.spring.servlet-request-lifecycle` · `drafting`
+2. [IoC、构造器注入与依赖反转](chapters/ch.spring.ioc-di.md) — `ch.spring.ioc-di` · `drafting`
+3. [Bean 注册、生命周期、作用域与销毁](chapters/ch.spring.beans-lifecycle-scopes.md) — `ch.spring.beans-lifecycle-scopes` · `drafting`
+4. [配置属性、Profile、环境覆盖与敏感配置](chapters/ch.spring.configuration-profiles.md) — `ch.spring.configuration-profiles` · `drafting`
 5. [Spring Boot、Starter、自动配置与应用启动](chapters/ch.spring.boot-autoconfiguration.md) — `ch.spring.boot-autoconfiguration` · `planned`
 6. [Controller、路由、参数绑定与状态码](chapters/ch.spring.mvc-routing-binding.md) — `ch.spring.mvc-routing-binding` · `planned`
 7. [DTO、JSON、内容协商与兼容边界](chapters/ch.spring.dto-json-content-negotiation.md) — `ch.spring.dto-json-content-negotiation` · `planned`

@@ -1,0 +1,19 @@
+{
+  "volatility": [
+    {"expression": "CURRENT_TIMESTAMP", "category": "STABLE", "time_boundary": "transaction-start"},
+    {"expression": "statement_timestamp()", "category": "STABLE", "time_boundary": "statement-start"},
+    {"expression": "clock_timestamp()", "category": "VOLATILE", "time_boundary": "call-time"}
+  ],
+  "timezone": {
+    "fixture_zone": "Asia/Shanghai",
+    "offline_fixed_offset": "+08:00",
+    "iana_rules_verified": false
+  },
+  "index_expression": {
+    "query_expression": "lower(btrim(raw_name))",
+    "ordinary_raw_name_index_matches": false,
+    "matching_expression_required": true,
+    "functions_must_be_immutable": true,
+    "write_maintenance_cost": true
+  }
+}

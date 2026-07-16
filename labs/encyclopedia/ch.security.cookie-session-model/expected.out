@@ -1,0 +1,8 @@
+cookie_scope=HOST_ONLY
+cookie_transport=SECURE_HTTPONLY_LAX
+rotation=true
+old_id_rejected=true
+strict_id_source=true
+logout_invalidation=true
+idle_expiration=true
+verification_report=PASS assertions=9

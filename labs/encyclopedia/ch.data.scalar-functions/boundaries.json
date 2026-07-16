@@ -1,0 +1,9 @@
+{
+  "current_timestamp": {"category": "STABLE", "boundary": "transaction-start"},
+  "statement_timestamp": {"category": "STABLE", "boundary": "statement-start"},
+  "clock_timestamp": {"category": "VOLATILE", "boundary": "call-time"},
+  "timezone_dependent_function_can_be_immutable": false,
+  "ordinary_index_matches_lower_expression": false,
+  "expression_index_functions_must_be_immutable": true,
+  "offline_timezone_model": {"zone": "Asia/Shanghai", "offset": "+08:00", "iana_verified": false}
+}

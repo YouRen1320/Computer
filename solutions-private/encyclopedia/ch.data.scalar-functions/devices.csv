@@ -1,0 +1,5 @@
+device_id,raw_name,alias,temperature_c,last_seen_at,calibration_text
+D-01,"  Boiler Alpha  ",,23.45,2026-07-16T15:59:59Z,1.25
+D-02,PUMP BETA,"  West Pump  ",-2.25,2026-07-16T16:00:00Z,2.50
+D-03," Sensor Three ","   ",,2026-07-17T00:30:00Z,not-a-number
+D-04,COMPRESSOR DELTA,"Delta Main",30.04,2026-07-17T16:00:00Z,3.75

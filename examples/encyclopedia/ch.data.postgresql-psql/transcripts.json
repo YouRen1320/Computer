@@ -1,0 +1,38 @@
+[
+  {
+    "name": "success",
+    "stage": "complete",
+    "connected": true,
+    "exit": 0,
+    "sqlstate": "00000",
+    "committed": true,
+    "first_evidence": "session identity matched"
+  },
+  {
+    "name": "missing-file",
+    "stage": "client-file",
+    "connected": false,
+    "exit": 1,
+    "sqlstate": null,
+    "committed": false,
+    "first_evidence": "psql file not found"
+  },
+  {
+    "name": "wrong-port",
+    "stage": "connect",
+    "connected": false,
+    "exit": 2,
+    "sqlstate": null,
+    "committed": false,
+    "first_evidence": "connection refused at 127.0.0.1:55432"
+  },
+  {
+    "name": "syntax-error",
+    "stage": "server-sql",
+    "connected": true,
+    "exit": 3,
+    "sqlstate": "42601",
+    "committed": false,
+    "first_evidence": "syntax error in script line 8"
+  }
+]

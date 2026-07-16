@@ -1,0 +1,19 @@
+{
+  "wide_row_meaning": "one work order mixed with copied device facts",
+  "device_primary_key": ["device_id"],
+  "work_order_primary_key": ["work_order_id"],
+  "foreign_key": {
+    "from": "work_order.device_id",
+    "to": "device.device_id"
+  },
+  "cardinality": "device 1 -> 0..N work_order",
+  "null_contract": {
+    "work_order.resolved_at": "unknown until resolved",
+    "work_order.summary.empty_string": "known value with zero characters"
+  },
+  "anomalies": [
+    "repeated device facts",
+    "conflicting area for D-01",
+    "a device without a work order cannot be represented in the wide table"
+  ]
+}

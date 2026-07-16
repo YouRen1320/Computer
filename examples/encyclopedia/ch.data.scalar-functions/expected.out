@@ -1,0 +1,8 @@
+input-rows=4
+output-rows=4
+operations=normalize,round,display,band,localize-truncate,cast-date
+record=D-01|input-name="  Boiler Alpha  "|input-alias=NULL|input-temperature="23.45"|input-last-seen=2026-07-16T15:59:59Z|normalized=boiler alpha|rounded=23.5|display=Boiler Alpha|band=NORMAL|day-start=2026-07-16 00:00:00|local-date=2026-07-16
+record=D-02|input-name="PUMP BETA"|input-alias="  West Pump  "|input-temperature="-2.25"|input-last-seen=2026-07-16T16:00:00Z|normalized=pump beta|rounded=-2.3|display=West Pump|band=FREEZING|day-start=2026-07-17 00:00:00|local-date=2026-07-17
+record=D-03|input-name=" Sensor Three "|input-alias="   "|input-temperature=NULL|input-last-seen=2026-07-17T00:30:00Z|normalized=sensor three|rounded=NULL|display=Sensor Three|band=UNKNOWN|day-start=2026-07-17 00:00:00|local-date=2026-07-17
+record=D-04|input-name="COMPRESSOR DELTA"|input-alias="Delta Main"|input-temperature="30.04"|input-last-seen=2026-07-17T16:00:00Z|normalized=compressor delta|rounded=30.0|display=Delta Main|band=HOT|day-start=2026-07-18 00:00:00|local-date=2026-07-18
+scalar-functions-example=PASS

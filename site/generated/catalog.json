@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "e49422b8f61121d0013cdc5c13760fc8a94acea38a932ee5eafb9ae8ab73cd61",
+  "input_digest": "ac69f84a0d9a4b64d1635fad807d0d0a1879a28a35706b581db8b16095492099",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 199,
-    "drafting": 56,
+    "planned": 187,
+    "drafting": 68,
     "review": 0,
     "verified": 0
   },
@@ -5484,7 +5484,7 @@
           "volume": "04",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
 
           ],
@@ -5576,7 +5576,7 @@
           "volume": "04",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.relational-model",
             "ch.foundations.cli-streams-exit-codes"
@@ -5675,7 +5675,7 @@
           "volume": "04",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.postgresql-psql"
           ],
@@ -5770,7 +5770,7 @@
           "volume": "04",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.data.select-rowsets"
           ],
@@ -7130,7 +7130,7 @@
           "volume": "05",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.api-contract-basics",
             "ch.java-engineering.maven-reproducible-builds"
@@ -7231,7 +7231,7 @@
           "volume": "05",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.interfaces-polymorphism",
             "ch.java.maven-junit-smoke"
@@ -7328,7 +7328,7 @@
           "volume": "05",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.ioc-di"
           ],
@@ -7424,7 +7424,7 @@
           "volume": "05",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.spring.beans-lifecycle-scopes"
           ],
@@ -8962,7 +8962,7 @@
           "volume": "06",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.api-contract-basics",
             "ch.foundations.testing-oracles"
@@ -9055,7 +9055,7 @@
           "volume": "06",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.java-oop.business-value-types",
             "ch.foundations.api-contract-basics"
@@ -9151,7 +9151,7 @@
           "volume": "06",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.identity-password-lifecycle"
           ],
@@ -9246,7 +9246,7 @@
           "volume": "06",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.security.cookie-session-model",
             "ch.security.threat-model-trust-boundaries"

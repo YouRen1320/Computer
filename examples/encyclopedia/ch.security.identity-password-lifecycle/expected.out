@@ -1,0 +1,9 @@
+algorithm=PBKDF2WithHmacSHA256
+iterations=600000
+salt_bytes=16
+same_password_distinct_salt=true
+same_password_distinct_verifier=true
+correct_password_matches=true
+wrong_password_matches=false
+pepper_stored_with_record=false
+secret_material_printed=false

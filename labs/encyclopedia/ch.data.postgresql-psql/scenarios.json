@@ -1,0 +1,38 @@
+[
+  {
+    "name": "ok",
+    "stage": "complete",
+    "connected": true,
+    "statements_before_failure": 0,
+    "exit": 0,
+    "sqlstate": "00000",
+    "committed": true
+  },
+  {
+    "name": "wrong-database",
+    "stage": "connect",
+    "connected": false,
+    "statements_before_failure": 0,
+    "exit": 2,
+    "sqlstate": null,
+    "committed": false
+  },
+  {
+    "name": "missing-script",
+    "stage": "client-file",
+    "connected": false,
+    "statements_before_failure": 0,
+    "exit": 1,
+    "sqlstate": null,
+    "committed": false
+  },
+  {
+    "name": "middle-syntax-error",
+    "stage": "server-sql",
+    "connected": true,
+    "statements_before_failure": 2,
+    "exit": 3,
+    "sqlstate": "42601",
+    "committed": false
+  }
+]

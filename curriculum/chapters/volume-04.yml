@@ -8,7 +8,7 @@ chapters:
   role: foundation
   responsibility: 建立关系数据和键关系心智模型，只观察预建 schema，不提前要求编写 DDL 或修复约束
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: relational-structure
@@ -126,7 +126,7 @@ chapters:
   role: practice
   responsibility: 教授连接目标、会话和脚本执行证据，不提前讲查询语法、角色管理或生产运维
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: postgres-service-connection
@@ -264,7 +264,7 @@ chapters:
   role: concept
   responsibility: 教授从关系中声明式产生确定行集，不在本章引入聚合、连接或写操作
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-select-filter
@@ -392,7 +392,7 @@ chapters:
   role: concept
   responsibility: 教授逐行标量表达式和条件映射，不把标量函数与聚合函数混为一谈
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-scalar-functions

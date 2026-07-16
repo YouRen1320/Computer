@@ -1,0 +1,11 @@
+{
+  "work_order_row_meaning": "one maintenance request",
+  "device_primary_key": ["device_id"],
+  "work_order_primary_key": ["work_order_id"],
+  "foreign_key": {
+    "from": "work_order.device_id",
+    "to": "device.device_id"
+  },
+  "cardinality": "device 1 -> 0..N work_order",
+  "resolved_at_null_means": "unknown until resolved"
+}

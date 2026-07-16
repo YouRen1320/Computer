@@ -1,0 +1,2 @@
+challenge_valid=true origin=true cors=true csrf=true double_submit=true safe_method=true
+EXERCISE PASS jdk=25 mode=offline

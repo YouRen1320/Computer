@@ -1,0 +1,3 @@
+device_id,asset_code,name,area,enabled
+D-01,AC-0001,1号空压机,A-1,true
+D-02,AC-0002,冷却泵,B-2,true

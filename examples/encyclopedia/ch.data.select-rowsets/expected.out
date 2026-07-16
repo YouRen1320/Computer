@@ -1,0 +1,11 @@
+input-rows=7
+eligible-order=D-01,D-02,D-05,D-06
+page-1=D-01,D-02
+page-2=D-05,D-06
+empty-category=0
+single-category=D-02
+multi-category=D-01,D-05,D-06
+null-retired=D-01,D-05,D-06
+distinct-categories=compressor,pump
+repeat-order=PASS
+select-rowsets-example=PASS

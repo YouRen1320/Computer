@@ -1,0 +1,4 @@
+row_no,device_id,device_name,area,work_order_id,summary
+1,D-01,1号空压机,A-1,WO-201,压力异常
+2,D-01,1号空压机,A-9,WO-202,""
+3,D-02,冷却泵,B-2,WO-203,温度过高

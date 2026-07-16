@@ -1,0 +1,8 @@
+nodes=5
+flows=4
+trust_crossings=3
+stride_covered=S,T,R,I,D,E
+required_abuse_cases=4
+control_links=6
+validation_links=6
+model_valid=true

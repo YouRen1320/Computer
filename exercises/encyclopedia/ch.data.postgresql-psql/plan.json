@@ -1,0 +1,9 @@
+{
+  "environment": {},
+  "command": [
+    "psql",
+    "--dbname=postgres",
+    "--file=scripts/inspect-session.sql"
+  ],
+  "transaction_owner": "none"
+}

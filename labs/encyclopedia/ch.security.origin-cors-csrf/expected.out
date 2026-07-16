@@ -1,0 +1,8 @@
+allowed_origin_header=EXACT
+preflight_without_session=true
+unknown_origin_authorized_header=false
+credentialed_post_with_token=true
+missing_token_rejected=true
+cross_site_form_rejected=true
+get_side_effects=0
+verification_report=PASS assertions=8

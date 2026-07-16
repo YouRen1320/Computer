@@ -1,0 +1,8 @@
+[
+  {"output": "normalized_name", "operation": "lower(btrim(raw_name))"},
+  {"output": "temperature_c_1dp", "operation": "round(numeric, 1)"},
+  {"output": "display_name", "operation": "coalesce(nullif(btrim(alias), ''), btrim(raw_name))"},
+  {"output": "temperature_band", "operation": "searched CASE with NULL first"},
+  {"output": "local_day_start", "operation": "AT TIME ZONE then date_trunc(day)"},
+  {"output": "local_date", "operation": "AT TIME ZONE then CAST AS date"}
+]

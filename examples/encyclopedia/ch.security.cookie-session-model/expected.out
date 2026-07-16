@@ -1,0 +1,11 @@
+cookie_policy_valid=true
+https_host_path_match=true
+http_rejected=true
+subdomain_rejected=true
+cross_site_subresource_rejected=true
+login_rotated_id=true
+preauth_id_rejected=true
+authenticated_session_accepted=true
+logout_server_invalidated=true
+expired_session_rejected=true
+secret_material_printed=false

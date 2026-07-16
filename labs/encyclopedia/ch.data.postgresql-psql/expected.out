@@ -1,0 +1,7 @@
+safe-target=factorycare_reader@127.0.0.1:55432/factorycare_training
+ok=complete:0
+wrong-database=connect:2:zero-statements
+missing-script=client-file:1
+middle-syntax-error=server-sql:3:sqlstate-42601:rollback
+copy=client-side:import+export:null-\N
+psql-offline-lab=PASS

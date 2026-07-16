@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: e72c84f518b41ac2869e6af30dc090c144f312df65d19f3cc07a896337ae5697
+generated_spec_digest: 13d94bd1c002c9cb9ce4fa7db2fb57b181ae0bcdd7ceded4bc69c672b679f036
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -7989,7 +7989,7 @@ chapters:
   role: foundation
   responsibility: 建立关系数据和键关系心智模型，只观察预建 schema，不提前要求编写 DDL 或修复约束
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: relational-structure
@@ -8106,7 +8106,7 @@ chapters:
   order: 1
   path: book/volume-04-data-postgresql/chapters/ch.data.relational-model.md
   recommended_after: []
-  spec_digest: 32452f53dfe1051abd77263f50e41a00657a9983768caf59d87eab10cb2fdd04
+  spec_digest: 93fa57fe20fb72793cdcca3054a8737053ab4f0325d771a86ea4dec96a2703cc
   route_tags:
   - zero-base
   - accelerated-48
@@ -8117,7 +8117,7 @@ chapters:
   role: practice
   responsibility: 教授连接目标、会话和脚本执行证据，不提前讲查询语法、角色管理或生产运维
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: postgres-service-connection
@@ -8255,7 +8255,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.postgresql-psql.md
   recommended_after:
   - ch.data.relational-model
-  spec_digest: d0f44009b76980af6907aa48dd83a34d0b57db58b060c138cad678608f72c00a
+  spec_digest: 41533d17853a336e61d33fd49bd34fbfe82b0b9e780392e631168e71b7422937
   route_tags:
   - zero-base
   - accelerated-48
@@ -8266,7 +8266,7 @@ chapters:
   role: concept
   responsibility: 教授从关系中声明式产生确定行集，不在本章引入聚合、连接或写操作
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-select-filter
@@ -8394,7 +8394,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.select-rowsets.md
   recommended_after:
   - ch.data.postgresql-psql
-  spec_digest: ce9172acb68c7f7d94ecceb0c8eb5070ff25ed2aa9f10d343a74487c01631770
+  spec_digest: 057ccf0784e0c474082075697e4ffa02f04474e4c1f32ec317e60037d0259702
   route_tags:
   - zero-base
   - accelerated-48
@@ -8405,7 +8405,7 @@ chapters:
   role: concept
   responsibility: 教授逐行标量表达式和条件映射，不把标量函数与聚合函数混为一谈
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: sql-scalar-functions
@@ -8526,7 +8526,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.scalar-functions.md
   recommended_after:
   - ch.data.select-rowsets
-  spec_digest: 5feb787b18e31ef0436955790b0ae3ad8aa8105ac0390cf9d4da5b33b6443110
+  spec_digest: 0b5c6764ca4d7bdca6693dfe506ce037d39d54ac77a68369c1fcd47fda54bf38
   route_tags:
   - zero-base
   - accelerated-48
@@ -10433,7 +10433,7 @@ chapters:
   role: practice
   responsibility: 把 HTTP 报文落实为 Java Web 请求响应生命周期，不提前引入 Spring IoC、Controller 或安全过滤链
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: servlet-request-response
@@ -10576,7 +10576,7 @@ chapters:
   order: 1
   path: book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md
   recommended_after: []
-  spec_digest: f5636046d88645a3afeeb586d82de5b0ff9042401894caad906a5ce17cd9be6d
+  spec_digest: a5629323eb92e225c3e2680e40cd4b1ddcf034cc44951a48b93135b5dffc7027
   route_tags:
   - zero-base
   - accelerated-48
@@ -10587,7 +10587,7 @@ chapters:
   role: practice
   responsibility: 教授由容器装配依赖与由接口反转方向，不在本章展开 Bean 作用域、自动配置或 AOP
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-ioc
@@ -10722,7 +10722,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.ioc-di.md
   recommended_after:
   - ch.spring.servlet-request-lifecycle
-  spec_digest: 12e12d1dbf50f0ae3ef079e7ee6ce234325bdfa785bb179035e1fb0fe9176085
+  spec_digest: f47371a5fd48465259841ac38088036ddce82f27c5555d79532e5853334634ba
   route_tags:
   - zero-base
   - accelerated-48
@@ -10733,7 +10733,7 @@ chapters:
   role: practice
   responsibility: 教授容器管理对象的创建、作用域和销毁边界，不提前引入配置属性或 Web 请求路由
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-bean-registration
@@ -10860,7 +10860,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.beans-lifecycle-scopes.md
   recommended_after:
   - ch.spring.ioc-di
-  spec_digest: 2f2a354193cd64c8b030c5d34aa4dc731f70e928186a09dfa9680fa8c567a5db
+  spec_digest: 7c1c6e3e2302e626eee96021d8da9849b50286d5227ca4ae687c4b979893125d
   route_tags:
   - zero-base
   - accelerated-48
@@ -10871,7 +10871,7 @@ chapters:
   role: practice
   responsibility: 教授外部配置来源、优先级和类型绑定，不把 Profile 用作任意业务分支或秘密存储
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: spring-configuration
@@ -11003,7 +11003,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.configuration-profiles.md
   recommended_after:
   - ch.spring.beans-lifecycle-scopes
-  spec_digest: 550ce13a6a37fd9e6336f0be1229af8b4ad34cb81726012ab980627a5b4ce78f
+  spec_digest: 4f406cd601ceee0d172e7fa2626be3c4c67b65bc96369d0e0047a991e80708ab
   route_tags:
   - zero-base
   - accelerated-48
@@ -13176,7 +13176,7 @@ chapters:
   role: foundation
   responsibility: 教授先识别资产、攻击者和信任跨越再选控制，不在本章实现登录、Token 或框架过滤链
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-goals-assets
@@ -13307,7 +13307,7 @@ chapters:
   order: 1
   path: book/volume-06-enterprise-architecture/chapters/ch.security.threat-model-trust-boundaries.md
   recommended_after: []
-  spec_digest: 195e783434465c3930d7aa49d707425fb27d4d711cab7efc1d5eb983cb30fac8
+  spec_digest: 5faae9df5b4b5598e0d5ed9620fd9aa934141f161cbb9011cc4d5892fac08556
   route_tags:
   - zero-base
   - accelerated-48
@@ -13318,7 +13318,7 @@ chapters:
   role: concept
   responsibility: 教授身份与凭据从创建到撤销恢复的安全生命周期，不在本章实现 Cookie Session 或 OAuth
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-identity-password
@@ -13456,7 +13456,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.identity-password-lifecycle.md
   recommended_after:
   - ch.security.threat-model-trust-boundaries
-  spec_digest: 5b7de212ba4661c01a5f0e08a838cad038cb22165af21a9162790dbd5b750c1e
+  spec_digest: 7d3215a083070648c23a7ce16adbe4085ba442c5cd26d8c4f25b4157185062f2
   route_tags:
   - zero-base
   - accelerated-48
@@ -13467,7 +13467,7 @@ chapters:
   role: concept
   responsibility: 教授浏览器携带认证状态及 Session 固定风险，不在本章实现 Spring Security 登录流程
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-cookie
@@ -13592,7 +13592,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.cookie-session-model.md
   recommended_after:
   - ch.security.identity-password-lifecycle
-  spec_digest: f872e9ab0f4a52dec9e6496fb71f001510ed0542b57f6fe5ff1c6e18bb24bba4
+  spec_digest: 4ed853f6e25f6a748de1918ac9e8422edebb3ccb55136514880316db29dba1fb
   route_tags:
   - zero-base
   - accelerated-48
@@ -13603,7 +13603,7 @@ chapters:
   role: concept
   responsibility: 教授浏览器来源边界和跨站请求风险，不把 CORS 当作服务端授权或数据隔离
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: security-origin-cors
@@ -13738,7 +13738,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.origin-cors-csrf.md
   recommended_after:
   - ch.security.cookie-session-model
-  spec_digest: 4cff5000482ccaf0497151aa1674e511f7e4c6c4dfbc4221006f9f8b11e5b402
+  spec_digest: 2ad0bcaa0e58c32cb7644851bb4d9045983f57e4b18bc597e1ab4bf8be844beb
   route_tags:
   - zero-base
   - accelerated-48

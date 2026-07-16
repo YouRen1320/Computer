@@ -1,0 +1,8 @@
+device_id,category,enabled,retired_at,created_at
+D-01,pump,true,,2026-07-16T08:00:00Z
+D-02,compressor,true,2026-07-18T00:00:00Z,2026-07-16T08:00:00Z
+D-03,pump,false,,2026-07-16T08:30:00Z
+D-04,sensor,true,2026-07-16T23:59:59Z,2026-07-16T09:00:00Z
+D-05,pump,true,,2026-07-16T08:00:00Z
+D-06,pump,true,,2026-07-16T09:00:00Z
+D-07,valve,false,2026-07-18T00:00:00Z,2026-07-16T07:00:00Z

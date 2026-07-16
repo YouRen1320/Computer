@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "e49422b8f61121d0013cdc5c13760fc8a94acea38a932ee5eafb9ae8ab73cd61",
+  "input_digest": "ac69f84a0d9a4b64d1635fad807d0d0a1879a28a35706b581db8b16095492099",
   "volumes": [
     {
       "id": "00",
@@ -540,7 +540,7 @@
           "title": "数据库、schema、表、行、键与关系模型",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.relational-model.md",
           "publishable": false
         },
@@ -549,7 +549,7 @@
           "title": "PostgreSQL 服务、连接、psql 与脚本执行",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.postgresql-psql.md",
           "publishable": false
         },
@@ -558,7 +558,7 @@
           "title": "SELECT、投影、过滤、NULL、排序与分页",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.select-rowsets.md",
           "publishable": false
         },
@@ -567,7 +567,7 @@
           "title": "数值、文本、日期函数与 CASE",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-04-data-postgresql/chapters/ch.data.scalar-functions.md",
           "publishable": false
         },
@@ -699,7 +699,7 @@
           "title": "HTTP 请求生命周期、Servlet 与线程边界",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md",
           "publishable": false
         },
@@ -708,7 +708,7 @@
           "title": "IoC、构造器注入与依赖反转",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.ioc-di.md",
           "publishable": false
         },
@@ -717,7 +717,7 @@
           "title": "Bean 注册、生命周期、作用域与销毁",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.beans-lifecycle-scopes.md",
           "publishable": false
         },
@@ -726,7 +726,7 @@
           "title": "配置属性、Profile、环境覆盖与敏感配置",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-05-spring-backend/chapters/ch.spring.configuration-profiles.md",
           "publishable": false
         },
@@ -867,7 +867,7 @@
           "title": "安全目标、资产、信任边界与威胁建模",
           "order": 1,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.threat-model-trust-boundaries.md",
           "publishable": false
         },
@@ -876,7 +876,7 @@
           "title": "身份、密码哈希、凭据生命周期与恢复边界",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.identity-password-lifecycle.md",
           "publishable": false
         },
@@ -885,7 +885,7 @@
           "title": "Cookie、Session、认证状态与固定攻击模型",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.cookie-session-model.md",
           "publishable": false
         },
@@ -894,7 +894,7 @@
           "title": "Origin、SameSite、CORS 与 CSRF",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.origin-cors-csrf.md",
           "publishable": false
         },

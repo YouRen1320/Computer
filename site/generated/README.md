@@ -6,7 +6,7 @@
 - 版本：2026.2-draft
 - 章节：255
 - 可发布章节：0
-- 输入摘要：`e49422b8f61121d0013cdc5c13760fc8a94acea38a932ee5eafb9ae8ab73cd61`
+- 输入摘要：`ac69f84a0d9a4b64d1635fad807d0d0a1879a28a35706b581db8b16095492099`
 
 `planned` 占位不会进入 `search-index.json`；只有 `verified` 状态可以进入公开搜索数据。答案目录不属于发布输入或输出。
 

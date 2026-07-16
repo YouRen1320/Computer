@@ -1,0 +1,11 @@
+input-rows=4
+output-rows=4
+timezone-boundary=D-02|wrong=2026-07-16|correct=2026-07-17
+null-boundary=D-03|input=NULL|wrong-default=0|correct-band=UNKNOWN
+cast-boundary=D-03|input=not-a-number|result=REJECTED
+cast-failures=1
+current-timestamp=STABLE:transaction-start
+clock-timestamp=VOLATILE:call-time
+timezone-dependent-immutable=FORBIDDEN
+ordinary-index-matches-expression=false
+scalar-functions-lab=PASS

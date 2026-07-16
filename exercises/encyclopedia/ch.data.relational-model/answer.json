@@ -1,0 +1,11 @@
+{
+  "work_order_row_meaning": "TODO",
+  "device_primary_key": ["name"],
+  "work_order_primary_key": ["device_id"],
+  "foreign_key": {
+    "from": "device.device_id",
+    "to": "work_order.device_id"
+  },
+  "cardinality": "device 1 -> 1 work_order",
+  "resolved_at_null_means": "empty string"
+}

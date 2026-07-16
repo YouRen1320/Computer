@@ -1,0 +1,10 @@
+same_origin_get_status=200
+same_origin_get_writes=0
+allowed_preflight_status=204
+preflight_requires_session=false
+allowed_credentialed_post_status=204
+unknown_origin_authorized_header=false
+cross_site_form_status=403
+missing_csrf_status=403
+wildcard_with_credentials_valid=false
+secret_material_printed=false

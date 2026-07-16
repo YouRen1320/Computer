@@ -1,0 +1,17 @@
+{
+  "environment": {
+    "PGCONNECT_TIMEOUT": "2"
+  },
+  "command": [
+    "psql",
+    "-X",
+    "--no-password",
+    "--set=ON_ERROR_STOP=1",
+    "--host=127.0.0.1",
+    "--port=55432",
+    "--username=factorycare_reader",
+    "--dbname=factorycare_training",
+    "--file=scripts/inspect-session.sql"
+  ],
+  "transaction_owner": "script"
+}

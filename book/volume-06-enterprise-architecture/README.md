@@ -7,10 +7,10 @@
 
 ## 章节
 
-1. [安全目标、资产、信任边界与威胁建模](chapters/ch.security.threat-model-trust-boundaries.md) — `ch.security.threat-model-trust-boundaries` · `planned`
-2. [身份、密码哈希、凭据生命周期与恢复边界](chapters/ch.security.identity-password-lifecycle.md) — `ch.security.identity-password-lifecycle` · `planned`
-3. [Cookie、Session、认证状态与固定攻击模型](chapters/ch.security.cookie-session-model.md) — `ch.security.cookie-session-model` · `planned`
-4. [Origin、SameSite、CORS 与 CSRF](chapters/ch.security.origin-cors-csrf.md) — `ch.security.origin-cors-csrf` · `planned`
+1. [安全目标、资产、信任边界与威胁建模](chapters/ch.security.threat-model-trust-boundaries.md) — `ch.security.threat-model-trust-boundaries` · `drafting`
+2. [身份、密码哈希、凭据生命周期与恢复边界](chapters/ch.security.identity-password-lifecycle.md) — `ch.security.identity-password-lifecycle` · `drafting`
+3. [Cookie、Session、认证状态与固定攻击模型](chapters/ch.security.cookie-session-model.md) — `ch.security.cookie-session-model` · `drafting`
+4. [Origin、SameSite、CORS 与 CSRF](chapters/ch.security.origin-cors-csrf.md) — `ch.security.origin-cors-csrf` · `drafting`
 5. [不可信输入、输出编码、XSS 与 SSRF](chapters/ch.security.untrusted-input-xss-ssrf.md) — `ch.security.untrusted-input-xss-ssrf` · `planned`
 6. [FilterChain、SecurityContext、默认拒绝与异常链](chapters/ch.security.spring-security-architecture.md) — `ch.security.spring-security-architecture` · `planned`
 7. [Spring Security 登录、退出、密码编码与 Session 防护](chapters/ch.security.session-authentication.md) — `ch.security.session-authentication` · `planned`

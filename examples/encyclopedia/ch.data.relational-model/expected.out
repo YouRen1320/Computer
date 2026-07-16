@@ -1,0 +1,9 @@
+tables=device,work_order
+device-rows=2
+work-order-rows=3
+primary-keys=PASS
+foreign-keys=PASS
+cardinality=device 1 -> 0..N work_order
+null-resolved-at=1
+empty-summary=1
+relational-model-example=PASS

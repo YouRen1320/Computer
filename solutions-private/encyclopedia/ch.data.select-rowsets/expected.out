@@ -1,0 +1,4 @@
+page-1=D-01,D-02
+page-2=D-05,D-06
+page-union=D-01,D-02,D-05,D-06
+select-rowsets-solution=PASS

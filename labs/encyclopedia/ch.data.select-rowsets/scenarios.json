@@ -1,0 +1,17 @@
+[
+  {
+    "id": "null-equality",
+    "broken_predicate": "d.retired_at = NULL",
+    "first_evidence": "ordinary equality with NULL is UNKNOWN, and WHERE keeps only TRUE"
+  },
+  {
+    "id": "missing-parentheses",
+    "broken_predicate": "d.enabled IS TRUE AND d.retired_at IS NULL OR d.retired_at > cutoff",
+    "first_evidence": "D-07 is disabled but passes the final OR branch"
+  },
+  {
+    "id": "nonunique-order",
+    "broken_order": "ORDER BY d.created_at ASC",
+    "first_evidence": "D-01, D-02 and D-05 tie, so their relative order is unspecified"
+  }
+]

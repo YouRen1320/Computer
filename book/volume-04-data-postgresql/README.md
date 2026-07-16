@@ -7,10 +7,10 @@
 
 ## 章节
 
-1. [数据库、schema、表、行、键与关系模型](chapters/ch.data.relational-model.md) — `ch.data.relational-model` · `planned`
-2. [PostgreSQL 服务、连接、psql 与脚本执行](chapters/ch.data.postgresql-psql.md) — `ch.data.postgresql-psql` · `planned`
-3. [SELECT、投影、过滤、NULL、排序与分页](chapters/ch.data.select-rowsets.md) — `ch.data.select-rowsets` · `planned`
-4. [数值、文本、日期函数与 CASE](chapters/ch.data.scalar-functions.md) — `ch.data.scalar-functions` · `planned`
+1. [数据库、schema、表、行、键与关系模型](chapters/ch.data.relational-model.md) — `ch.data.relational-model` · `drafting`
+2. [PostgreSQL 服务、连接、psql 与脚本执行](chapters/ch.data.postgresql-psql.md) — `ch.data.postgresql-psql` · `drafting`
+3. [SELECT、投影、过滤、NULL、排序与分页](chapters/ch.data.select-rowsets.md) — `ch.data.select-rowsets` · `drafting`
+4. [数值、文本、日期函数与 CASE](chapters/ch.data.scalar-functions.md) — `ch.data.scalar-functions` · `drafting`
 5. [聚合、GROUP BY 与 HAVING](chapters/ch.data.aggregates.md) — `ch.data.aggregates` · `planned`
 6. [INNER/OUTER JOIN、关系基数与重复行](chapters/ch.data.joins.md) — `ch.data.joins` · `planned`
 7. [子查询、CTE 与集合拆解](chapters/ch.data.subqueries-cte.md) — `ch.data.subqueries-cte` · `planned`

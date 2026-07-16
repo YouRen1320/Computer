@@ -1,0 +1,28 @@
+{
+  "database": "factorycare_training",
+  "schema": "factorycare",
+  "tables": {
+    "device": {
+      "row_meaning": "one managed physical device",
+      "columns": ["device_id", "asset_code", "name", "area", "enabled"],
+      "primary_key": ["device_id"],
+      "candidate_keys": [["device_id"], ["asset_code"]]
+    },
+    "work_order": {
+      "row_meaning": "one maintenance request",
+      "columns": ["work_order_id", "device_id", "summary", "resolved_at"],
+      "primary_key": ["work_order_id"],
+      "candidate_keys": [["work_order_id"]]
+    }
+  },
+  "relationships": [
+    {
+      "from": "work_order.device_id",
+      "to": "device.device_id",
+      "cardinality": "device 1 -> 0..N work_order"
+    }
+  ],
+  "null_contract": {
+    "work_order.resolved_at": "unknown until the work order is resolved"
+  }
+}

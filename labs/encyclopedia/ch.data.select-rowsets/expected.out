@@ -1,0 +1,13 @@
+baseline-empty=0
+baseline-single=D-02
+baseline-multi=D-01,D-05,D-06
+baseline-null=D-01,D-05,D-06
+injection-null-equality=EMPTY
+injection-unparenthesized-leak=D-07
+injection-nonunique-page1=D-01,D-02
+injection-nonunique-page2=D-02,D-06
+injection-duplicate=D-02
+injection-omitted=D-05
+fixed-page-union=D-01,D-02,D-05,D-06
+fixed-repeat=PASS
+select-rowsets-lab=PASS

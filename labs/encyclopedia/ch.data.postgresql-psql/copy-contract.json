@@ -1,0 +1,25 @@
+{
+  "client_command": "\\copy",
+  "format": "csv",
+  "header": true,
+  "null_marker": "\\N",
+  "program_allowed": false,
+  "plans": [
+    {
+      "direction": "import",
+      "table": "factorycare.device_import_staging",
+      "columns": ["device_id", "asset_code", "name"],
+      "client_file": "fixtures/device-import.csv",
+      "expected_rows": 2,
+      "transaction": "required"
+    },
+    {
+      "direction": "export",
+      "table": "factorycare.device",
+      "columns": ["device_id", "asset_code", "name"],
+      "client_file": "artifacts/device-export.csv",
+      "data_classification": "synthetic-only",
+      "overwrite": "refuse"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+work_order_id,device_id,summary,resolved_at
+WO-101,D-01,压力异常,
+WO-102,D-01,"",2026-07-16T09:30:00Z
+WO-103,D-02,温度过高,2026-07-16T10:00:00Z

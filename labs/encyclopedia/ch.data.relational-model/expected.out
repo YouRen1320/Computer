@@ -1,0 +1,9 @@
+wide-rows=3
+d01-wide-copies=2
+d01-conflicting-areas=A-1|A-9
+clean-device-rows=3
+clean-work-order-rows=3
+foreign-key=work_order.device_id->device.device_id
+cardinality=device 1 -> 0..N work_order
+null-vs-empty=PASS
+relational-model-lab=PASS

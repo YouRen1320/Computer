@@ -1,0 +1,8 @@
+target=127.0.0.1:55432/factorycare_training
+role=factorycare_reader
+startup-files=disabled
+password-prompt=disabled
+stop-on-error=enabled
+transaction-owner=script-read-only
+exit-contract=0:complete|1:client|2:connect|3:script
+psql-offline-example=PASS
