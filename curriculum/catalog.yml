@@ -2,11 +2,11 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: c4ab6a6d3852f5df0035931f4368ab3957981daddc02fe9f2212db8bc3e99cca
+generated_spec_digest: b66d0db489d799880e76a4d8bc3d193e7ddec882388ac5f00345f28c107a90f4
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
-status: architecture
+status: authoring
 chapter_count_target: 255
 dependency_semantics:
   prerequisites: hard semantic prerequisite with an explicit rationale
@@ -2094,7 +2094,7 @@ chapters:
   role: foundation
   responsibility: 建立 Java 源码到 JVM 进程的运行链，不提前解释 main 声明内部语法或对象模型
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-platform
@@ -2228,7 +2228,7 @@ chapters:
   order: 1
   path: book/volume-01-java-language/chapters/ch.java.platform-toolchain.md
   recommended_after: []
-  spec_digest: ecc81ee4c860d9c2cd49e2eec039f8a608df4f77e8756df3527b10c1c726509c
+  spec_digest: 3e53b83b778b8c63c930e10d56b71832b308de1b154ee5c81399f8997436a454
   route_tags:
   - zero-base
   - accelerated-48
@@ -2239,7 +2239,7 @@ chapters:
   role: concept
   responsibility: 教授最小 Java 程序的词法和结构规则，不提前要求跨包访问控制或对象实例化
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-lexical-structure
@@ -2360,7 +2360,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.program-structure.md
   recommended_after:
   - ch.java.platform-toolchain
-  spec_digest: 5dcea7c1af626dc1b2c2cd5d18fd78c0697875b57435db3e9e01de357a4b724f
+  spec_digest: 849ad15fa236cc921f6b61ba3e7bf3d2bab7868e7cb6015f44f0d90d59d04a56
   route_tags:
   - zero-base
   - accelerated-48
@@ -2371,7 +2371,7 @@ chapters:
   role: concept
   responsibility: 教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-values-types
@@ -2417,7 +2417,15 @@ chapters:
     - java.values-types-string
     uses:
     - java.platform-entry
-  borrowed_scaffolds: []
+  borrowed_scaffolds:
+  - topic: java.static-field-method
+    later_teacher_chapter_id: ch.java-oop.static-class-state
+    allowed_action: copy-run-only
+    rationale: 只复制固定类字段外壳来观察字段默认值；本章独立任务仍只创建局部变量
+  - topic: java.null-reference
+    later_teacher_chapter_id: ch.java-oop.references-null-identity
+    allowed_action: copy-run-only
+    rationale: 只观察固定引用字段打印出的默认 null，不对 null 或对象身份做独立操作
   lab_requirements:
     required: true
     artifact_paths:
@@ -2499,7 +2507,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.values-variables-types.md
   recommended_after:
   - ch.java.program-structure
-  spec_digest: 453f515df64eab60e143cbed553401342b044e3316b0d09d72f418ba4ebc1e4f
+  spec_digest: 62e46d85979d0d91eb0de6706436484b15922433fdaa97aaa15ffa75b770f771
   route_tags:
   - zero-base
   - accelerated-48
@@ -2510,7 +2518,7 @@ chapters:
   role: concept
   responsibility: 教授表达式求值和数值边界，使用最小货币例子但不引入 BigDecimal 或业务对象
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: java-expressions
@@ -2554,7 +2562,19 @@ chapters:
     teaches: []
     uses:
     - java.values-types-string
-  borrowed_scaffolds: []
+  borrowed_scaffolds:
+  - topic: java.method-declaration-call
+    later_teacher_chapter_id: ch.java.methods
+    allowed_action: copy-run-only
+    rationale: 只复制固定 Math exact API 调用来观察溢出契约，不设计方法声明、参数或返回值
+  - topic: java.static-field-method
+    later_teacher_chapter_id: ch.java-oop.static-class-state
+    allowed_action: copy-run-only
+    rationale: 只复制固定 Math 类方法调用和 Integer.MIN_VALUE 类字段读取，不独立解释或设计 static 成员
+  - topic: java.assertion-logic-failure
+    later_teacher_chapter_id: ch.java.debugging-failures
+    allowed_action: copy-run-only
+    rationale: 只复制固定 assert 与 -ea 验证外壳作为实验预言机，不教授断言失败诊断
   lab_requirements:
     required: true
     artifact_paths:
@@ -2631,7 +2651,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.expressions-conversions.md
   recommended_after:
   - ch.java.values-variables-types
-  spec_digest: d7c0c5b96e43b863070f72f6ff8986301e35ebe09b2ac4fffb14315506bb4b2c
+  spec_digest: 03df38553b01b7408cb56a978b2def785c8dcd2ca791bd8724c168a583ccb4a1
   route_tags:
   - zero-base
   - accelerated-48

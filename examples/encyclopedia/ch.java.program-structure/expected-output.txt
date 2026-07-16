@@ -1,0 +1,2 @@
+FactoryCare structure ready.
+Nested block reached.

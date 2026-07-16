@@ -419,6 +419,34 @@ class CurriculumCompilerTest < Minitest::Test
       spec.input_contents.delete(receipt_path)
     end
     spec.instance_variable_set(:@application_receipt, nil)
+
+    # A ready-migration fixture represents an internally consistent one-time
+    # architecture projection, not the repository's later authoring lifecycle.
+    # Reconstruct an all-planned view and freeze its own projection digest so
+    # lifecycle tests remain independent of legitimate post-apply spec edits.
+    spec.edition["status"] = "architecture"
+    spec.volume_specs.each_value do |volume_spec|
+      Array(volume_spec["chapters"]).each do |raw_chapter|
+        raw_chapter["status"] = "planned" if raw_chapter.is_a?(Hash)
+      end
+    end
+    spec.chapters.each do |chapter|
+      raw = Array(spec.volume_specs.fetch(chapter.fetch("volume"))["chapters"])
+            .find { |entry| entry.is_a?(Hash) && entry["id"] == chapter["id"] }
+      next unless raw
+
+      chapter["status"] = "planned"
+      chapter["spec_digest"] = Digest::SHA256.hexdigest(Psych.dump(raw, nil, line_width: -1))
+    end
+
+    spec.migration["status"] = "applied"
+    compiler = Curriculum::Compiler.new(spec)
+    catalog_body = compiler.render_outputs.fetch("curriculum/catalog.yml")
+    projection_digest = compiler.send(:catalog_projection_digest, catalog_body)
+    spec.migration.fetch("source_rebuilds").each do |rebuild|
+      rebuild["rendered_catalog_projection_digest"] = projection_digest
+    end
+    spec.migration["status"] = "ready"
     spec
   end
 

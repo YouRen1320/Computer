@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "61f591b478106ad97444730ba8726c03b83bf79aa44ff9b1e177e8c3424f6887",
+  "input_digest": "50948649e1cea3a4f0aa43cea19a6fb88e9b0ce9910294370e759df4509a6947",
   "volumes": [
     {
       "id": "00",
@@ -153,7 +153,7 @@
           "title": "JDK、JVM、源码、class 文件、编译与运行",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.platform-toolchain.md",
           "publishable": false
         },
@@ -162,7 +162,7 @@
           "title": "注释、标识符、字面量、语句、代码块、class、main 与 package",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.program-structure.md",
           "publishable": false
         },
@@ -171,7 +171,7 @@
           "title": "值、变量、基本类型、String、作用域与基本输出",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.values-variables-types.md",
           "publishable": false
         },
@@ -180,7 +180,7 @@
           "title": "运算符、表达式、类型转换、溢出与整数分金额",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-01-java-language/chapters/ch.java.expressions-conversions.md",
           "publishable": false
         },

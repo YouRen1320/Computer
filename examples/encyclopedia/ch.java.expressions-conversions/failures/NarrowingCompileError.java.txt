@@ -1,0 +1,7 @@
+public class NarrowingCompileError {
+    public static void main(String[] args) {
+        long measuredCents = 3_000_000_000L;
+        int displayedCents = measuredCents;
+        System.out.println(displayedCents);
+    }
+}

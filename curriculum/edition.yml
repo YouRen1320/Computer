@@ -3,7 +3,7 @@ schema_version: 2
 catalog_id: factorycare-encyclopedia
 edition: 2026.2-draft
 canonical: true
-status: architecture
+status: authoring
 chapter_count_target: 255
 capability_count_target: 94
 volume_ids:

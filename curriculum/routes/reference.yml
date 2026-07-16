@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: c4ab6a6d3852f5df0035931f4368ab3957981daddc02fe9f2212db8bc3e99cca
+generated_spec_digest: b66d0db489d799880e76a4d8bc3d193e7ddec882388ac5f00345f28c107a90f4
 edition: 2026.2-draft
 route_id: reference
 route_kind: reference
