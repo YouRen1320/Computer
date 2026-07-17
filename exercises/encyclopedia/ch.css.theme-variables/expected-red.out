@@ -1,0 +1,8 @@
+ERROR: nested fallback contract missing
+ERROR: local override must be scoped to .danger-zone
+ERROR: dark preference contract missing
+ERROR: explicit light override missing
+ERROR: forced colors system mapping missing
+ERROR: global forced-color-adjust opt-out forbidden
+ERROR: root body contrast 1.2633 is below 4.5
+CSS_THEME_EXERCISE=FAIL (7 violations)

@@ -1,0 +1,34 @@
+{
+  "fault_set": "form-contract-faults-v1",
+  "same_verifier_rerun": true,
+  "real_receiver_unverified": true,
+  "faults": [
+    {
+      "id": "missing-label",
+      "injection": "remove the description label or break its for/id match",
+      "first_evidence": "the description control has no matching visible label association",
+      "stage": "author markup and accessible-name input",
+      "repair": "restore a unique id and an exact visible label for match without changing name",
+      "rerun": "run the unchanged verify.sh and then repeat the browser label task",
+      "residual_risk": "real accessibility name and screen-reader output remain unverified"
+    },
+    {
+      "id": "wrong-name",
+      "injection": "change priority name to severity while leaving id, label and selected value unchanged",
+      "first_evidence": "Network payload contains severity and omits the expected priority entry",
+      "stage": "construct form data entry list",
+      "repair": "restore name=priority and keep for/id unchanged",
+      "rerun": "run the unchanged verify.sh and repeat the same payload capture",
+      "residual_risk": "production JSON adapter mapping remains unverified"
+    },
+    {
+      "id": "validation-bypass",
+      "injection": "send an empty description directly instead of using ordinary interactive submit",
+      "first_evidence": "the receiver observes an invalid request despite the ordinary UI being blocked",
+      "stage": "server trust boundary",
+      "repair": "enforce server validation and return stable fieldErrors.description while retaining required",
+      "rerun": "run the unchanged verify.sh and repeat valid, ordinary-invalid and bypass-invalid cases",
+      "residual_risk": "FactoryCare authorization, upload and idempotency integration remain unverified"
+    }
+  ]
+}

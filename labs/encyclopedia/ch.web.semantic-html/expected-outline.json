@@ -1,0 +1,12 @@
+{
+  "language": "zh-CN",
+  "headings": [
+    [1, "工单 WO-LAB-003"],
+    [2, "故障摘要"],
+    [2, "流转记录"],
+    [3, "已创建"],
+    [3, "处理中"]
+  ],
+  "required_regions": ["header", "nav", "main", "article", "section", "footer"],
+  "required_metadata": ["charset", "viewport", "title", "description", "canonical"]
+}

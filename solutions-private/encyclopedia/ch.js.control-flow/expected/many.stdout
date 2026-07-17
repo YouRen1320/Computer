@@ -1,0 +1,5 @@
+priority=P3
+queue=standard
+retry=1
+retry=2
+retry=3

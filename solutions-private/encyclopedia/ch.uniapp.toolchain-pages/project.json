@@ -1,0 +1,8 @@
+{
+  "devTarget": "mp-weixin",
+  "buildTarget": "mp-weixin",
+  "pages": ["pages/index/index", "pages/work-orders/list", "pages/work-orders/detail"],
+  "files": ["pages/index/index", "pages/work-orders/list", "pages/work-orders/detail"],
+  "directDetailInitializesItself": true,
+  "routeUsesEncodeURIComponent": true
+}

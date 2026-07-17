@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>盒模型与定位练习参考</title>
+  <link rel="stylesheet" href="./answer.css">
+</head>
+<body>
+  <!-- Responsibility: 提供私有参考的固定盒、定位与遮挡目标。 -->
+  <!-- Data source: answer.json 的已纠正手算与静态教学夹具。 -->
+  <!-- Mapping: class 对应 border-box、containing block、stacking 和 overflow 契约。 -->
+  <!-- Side effects: 只加载本地 CSS，不执行脚本或业务写操作。 -->
+  <main>
+    <h1>盒模型与定位练习</h1>
+    <section class="normal-flow"><p>正常流 A</p><p>正常流 B</p></section>
+    <section class="stage"><article class="card">300px card<span class="badge">badge</span></article></section>
+    <section class="stack-stage"><div class="panel-a">A<span class="tooltip">tooltip</span></div><div class="panel-b">B</div></section>
+    <div class="overflow-hidden">hidden content content content</div>
+    <div class="overflow-clip">clip content content content</div>
+  </main>
+</body>
+</html>

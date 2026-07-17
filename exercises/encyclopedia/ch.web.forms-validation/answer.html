@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>表单契约练习｜FactoryCare</title>
+    <meta name="description" content="需要修复的原生表单契约练习。">
+  </head>
+  <body>
+    <!-- Responsibility: 暂时收集教学报修信息。 -->
+    <!-- Data source: 使用 forms-exercise-starter 固定虚构值，不读取真实资产、联系人或文件。 -->
+    <!-- Mapping: starter 故意把 priority 映射为 severity，并错误指向生产 JSON 路径，等待学习者修复。 -->
+    <!-- Side effects: 激活提交会尝试向当前错误 action 导航 POST；离线验证本身不会发请求。 -->
+    <main>
+      <h1>创建教学报修</h1>
+      <form action="/api/v1/reports" method="post" enctype="multipart/form-data" novalidate>
+        <p>
+          <label for="asset-id">设备 ID（必填）</label>
+          <input id="asset-id" name="assetId" type="text" required pattern="[0-9a-fA-F-]{36}">
+        </p>
+        <p>
+          <label for="priority">优先级（必填）</label>
+          <select id="priority" name="severity" required>
+            <option value="">请选择</option>
+            <option value="HIGH">高</option>
+          </select>
+        </p>
+        <p>故障描述（必填）</p>
+        <textarea id="description" name="description" minlength="10" maxlength="5000"></textarea>
+        <p>
+          <label for="observed-date">观察日期（必填、仅教学）</label>
+          <input id="observed-date" name="observedDate" type="date" required min="2026-01-01" max="2026-12-31">
+        </p>
+        <p>
+          <label for="evidence-files">现场图片（可选）</label>
+          <input id="evidence-files" name="evidenceFiles" type="file" accept="image/png,image/jpeg" multiple>
+        </p>
+        <button type="submit">提交</button>
+      </form>
+    </main>
+  </body>
+</html>

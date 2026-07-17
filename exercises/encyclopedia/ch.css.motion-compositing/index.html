@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>待修复动效练习</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 暴露 open 面板、状态反馈和键盘操作的动效故障。 -->
+  <!-- Data source: motion-matrix.json 的固定验收合同。 -->
+  <!-- Mapping: data-state 应映射有限状态，is-updated 应只运行一次，focus 应立即可见。 -->
+  <!-- Side effects: 静态练习不运行脚本；事件取消和真实性能仍需浏览器补测。 -->
+  <main class="exercise-shell">
+    <button class="toggle" type="button" aria-expanded="true" aria-controls="drawer">面板已打开</button>
+    <section id="drawer" class="drawer" data-state="open" aria-labelledby="drawer-title">
+      <h1 id="drawer-title">维修详情 <span class="status is-updated">已更新</span></h1>
+      <a href="#boundary">查看证据边界</a>
+    </section>
+    <p id="boundary">不要把 CSS 属性当作合成层证明。</p>
+  </main>
+</body>
+</html>

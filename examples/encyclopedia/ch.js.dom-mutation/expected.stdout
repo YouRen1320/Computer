@@ -1,0 +1,7 @@
+environment=happy-dom-17.6.3
+initial=count:3,order:WO-1>WO-2>WO-3
+text-safe=true
+selected-property=true,checked-attribute=false
+update=WO-2:IN_PROGRESS,identity:preserved
+remove=count:2,order:WO-2>WO-3
+semantics=main>section>ul>li

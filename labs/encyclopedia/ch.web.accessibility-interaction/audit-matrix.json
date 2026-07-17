@@ -1,0 +1,14 @@
+{
+  "matrix": "a11y-fault-lab-v1",
+  "real_keyboard_observed": false,
+  "real_accessibility_tree_observed": false,
+  "real_screen_reader_observed": false,
+  "steps": [
+    {"id": "forward-tab", "expected": "skip-link,toggle,description,submit,remove-attachment without repeats"},
+    {"id": "reverse-tab", "expected": "reverse path can exit every control"},
+    {"id": "toggle-state", "expected": "aria-expanded equals inverse of panel.hidden"},
+    {"id": "names", "expected": "description and remove button names include purpose/context"},
+    {"id": "error-focus", "expected": "invalid submit focuses error-summary and sets description invalid"},
+    {"id": "remove-restore", "expected": "removing focused attachment restores focus to attachments-heading"}
+  ]
+}

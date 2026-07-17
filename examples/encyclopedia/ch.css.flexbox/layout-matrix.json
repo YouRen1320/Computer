@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "real_browser_computed_style_recorded": false,
+  "real_flex_overlay_recorded": false,
+  "real_keyboard_order_recorded": false,
+  "real_visual_diff_recorded": false,
+  "grow_case": {
+    "container_main": 720,
+    "gap_total": 32,
+    "bases": [160, 240, 200],
+    "grow": [1, 2, 1],
+    "expected_free_space": 88,
+    "expected_targets": [182, 284, 222]
+  },
+  "shrink_case": {
+    "container_main": 500,
+    "gap_total": 20,
+    "bases": [300, 200],
+    "shrink": [1, 2],
+    "expected_negative_space": -20,
+    "expected_targets": [291.428571, 188.571429],
+    "tolerance": 0.00001
+  },
+  "wrap_cases": [
+    {"container_main": 720, "item_outer_hypothetical": 180, "gap": 16, "item_count": 3, "expected_lines": [[0, 1, 2]]},
+    {"container_main": 430, "item_outer_hypothetical": 180, "gap": 16, "item_count": 3, "expected_lines": [[0, 1], [2]]},
+    {"container_main": 350, "item_outer_hypothetical": 180, "gap": 16, "item_count": 3, "expected_lines": [[0], [1], [2]]}
+  ],
+  "order_case": {"dom": ["query", "filter", "reset"], "visual": ["query", "filter", "reset"], "tab": ["query", "filter", "reset"]},
+  "alignment_case": {"justify_content_stage": "after-flexing", "align_content_requires_multiple_lines": true, "auto_margin_precedes_justify_content": true}
+}

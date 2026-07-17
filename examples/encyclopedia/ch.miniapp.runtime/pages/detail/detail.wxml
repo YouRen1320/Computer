@@ -1,0 +1,3 @@
+<view class="page">
+  <text>工单：{{id}}</text>
+</view>

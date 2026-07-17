@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flex 故障实验</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供长文本、可收缩工具栏和键盘同序动作的修复后夹具。 -->
+  <!-- Data source: faults.json 与 observation-matrix.json 的合成场景。 -->
+  <!-- Mapping: DOM 依次为查询、筛选、清除；CSS 不使用 order/reverse 改任务顺序。 -->
+  <!-- Side effects: 静态表单不连接服务端；本页只加载样式并接受本地焦点。 -->
+  <main>
+    <h1>Flex 故障实验</h1>
+    <form class="fault-toolbar">
+      <label class="fault-toolbar__query">设备编码 <input name="asset" value="FACTORYCARE-VERY-LONG-ASSET-CODE-000001"></label>
+      <button type="submit">筛选</button>
+      <button type="reset">清除</button>
+    </form>
+    <section class="fault-cards" aria-label="工单卡片">
+      <article>WO-001 长文本检查</article>
+      <article>WO-002</article>
+      <article>WO-003</article>
+    </section>
+  </main>
+</body>
+</html>

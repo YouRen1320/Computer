@@ -1,0 +1,21 @@
+{
+  "kind": "synthetic-not-browser-recording",
+  "environment": {
+    "browser": "SYNTHETIC",
+    "viewport": "1280x720",
+    "cache": "cold-fixture",
+    "reload": "fixture-navigation"
+  },
+  "events": [
+    {"phase": "navigation", "at_ms": 0},
+    {"phase": "parse-html", "at_ms": 15},
+    {"phase": "style", "at_ms": 23},
+    {"phase": "layout", "at_ms": 27},
+    {"phase": "paint", "at_ms": 31},
+    {"phase": "composite", "at_ms": 34}
+  ],
+  "screenshots": [
+    {"at_ms": 16, "state": "document-partial"},
+    {"at_ms": 35, "state": "styled-composite"}
+  ]
+}

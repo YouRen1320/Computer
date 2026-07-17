@@ -1,0 +1,4 @@
+expected_node_major=24
+observed_node_major=22
+expected_pnpm_major=11
+observed_pnpm_major=10

@@ -1,0 +1,23 @@
+/* Responsibility: 用命名层、低权重边界、继承与最终顺序实现参考修复。 */
+/* Data source: answer.html 的固定 class/data 属性。 */
+/* Mapping: base < components < utilities；critical 状态由后层低权重规则覆盖。 */
+/* Side effects: 只改变教学页呈现，不修改 DOM 或业务数据。 */
+@layer base, components, utilities;
+
+@layer base {
+  :where(#exercise, .shell) .title { color: #166534; }
+}
+
+@layer components {
+  .incident { color: #334155; }
+  .summary { color: inherit; }
+  .code { color: #64748b; }
+}
+
+@layer utilities {
+  .is-critical > .title { color: #b91c1c; }
+}
+
+@layer components {
+  .code { color: #0f172a; }
+}

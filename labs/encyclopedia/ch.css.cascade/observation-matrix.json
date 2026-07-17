@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "real_browser_observations_recorded": false,
+  "real_visual_diff_recorded": false,
+  "cases": [
+    {"id": "priority", "target": ".incident__title", "property": "color", "expected": "#b91c1c", "remove_winner_expected": "#166534"},
+    {"id": "inheritance", "target": ".incident__summary", "property": "color", "expected": "#334155", "remove_winner_expected": "#334155"},
+    {"id": "source-order", "target": ".incident__code", "property": "color", "expected": "#0f172a", "remove_winner_expected": "#64748b"}
+  ],
+  "required_real_evidence": ["browser-name-version", "page-url", "styles-candidates", "computed-value", "remove-rule-rerun", "visual-diff"]
+}

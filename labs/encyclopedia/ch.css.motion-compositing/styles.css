@@ -1,0 +1,61 @@
+/* Responsibility: 表达修复后的 transform/opacity、有限动画、即时焦点与 reduce 合同。 */
+/* Data source: data-state/is-updated 与 prefers-reduced-motion。 */
+/* Mapping: 面板状态只映射 transform/opacity；状态徽标只运行一次；焦点使用 outline。 */
+/* Side effects: transform 仍可能改变 stacking/containing block；真实渲染成本未测。 */
+:root {
+  --focus-ring: #0b5cad;
+}
+
+.lab-shell {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 42rem;
+  margin-inline: auto;
+}
+
+.drawer {
+  opacity: 0;
+  transform: translateX(1rem);
+  transition-property: opacity, transform;
+  transition-duration: 160ms;
+  transition-timing-function: ease-out;
+  padding: 1rem;
+  border: 1px solid currentColor;
+}
+
+.drawer[data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes status-enter {
+  from { opacity: 0; transform: translateY(0.25rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status.is-updated {
+  display: inline-block;
+  animation-name: status-enter;
+  animation-duration: 200ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.toggle:focus-visible,
+.drawer :focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .status.is-updated {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+
+  .drawer[data-state="open"] {
+    opacity: 1;
+  }
+}

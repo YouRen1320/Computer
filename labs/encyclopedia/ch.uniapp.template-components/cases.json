@@ -1,0 +1,47 @@
+[
+  {
+    "name": "valid-contract",
+    "tags": ["view", "text", "input", "button"],
+    "inputValuePath": "detail.value",
+    "spacingUnit": "rpx",
+    "modelProp": "modelValue",
+    "modelEvent": "update:modelValue",
+    "expected": "PASS"
+  },
+  {
+    "name": "dom-select-crosses-target",
+    "tags": ["div", "select"],
+    "inputValuePath": "detail.value",
+    "spacingUnit": "rpx",
+    "modelProp": "modelValue",
+    "modelEvent": "update:modelValue",
+    "expected": "WEB_DOM_COMPONENT"
+  },
+  {
+    "name": "browser-event-shape",
+    "tags": ["view", "input"],
+    "inputValuePath": "target.value",
+    "spacingUnit": "rpx",
+    "modelProp": "modelValue",
+    "modelEvent": "update:modelValue",
+    "expected": "HOST_EVENT_DRIFT"
+  },
+  {
+    "name": "fixed-design-pixels",
+    "tags": ["view", "input"],
+    "inputValuePath": "detail.value",
+    "spacingUnit": "design-px",
+    "modelProp": "modelValue",
+    "modelEvent": "update:modelValue",
+    "expected": "RESPONSIVE_UNIT_DRIFT"
+  },
+  {
+    "name": "model-pair-mismatch",
+    "tags": ["view", "input"],
+    "inputValuePath": "detail.value",
+    "spacingUnit": "rpx",
+    "modelProp": "value",
+    "modelEvent": "update:modelValue",
+    "expected": "MODEL_CONTRACT_DRIFT"
+  }
+]

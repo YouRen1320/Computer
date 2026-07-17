@@ -1,0 +1,39 @@
+{
+  "origin": {
+    "tuple_fields": ["scheme", "host", "port"],
+    "localhost_port_changes_origin": true,
+    "same_site_can_be_cross_origin": true
+  },
+  "sop_cors": {
+    "cors_failure_means_request_never_arrived": false,
+    "cors_is_server_authorization": false
+  },
+  "fetch": {
+    "default_credentials": "same-origin",
+    "cross_origin_cookie_requires_include": true,
+    "credentialed_wildcard_allowed": false,
+    "preflight_uses_target_session_cookie": false
+  },
+  "cookie": {
+    "port_is_cookie_boundary": false,
+    "path_is_security_boundary": false,
+    "domain_omitted_is_host_only": true,
+    "max_age_overrides_expires": true,
+    "same_site_none_requires_secure": true,
+    "http_only_prevents_http_attachment": false
+  },
+  "cache": {
+    "no_cache_means_no_store": false,
+    "no_store_equals_private": false,
+    "status_304_reuses_stored_body": true,
+    "dynamic_acao_requires_vary_origin": true
+  },
+  "factorycare": {
+    "production_cookie_values_already_decided": false,
+    "cors_replaces_java_authorization": false,
+    "redis_cache_is_browser_http_cache": false,
+    "write_concurrency_etag_equals_get_cache_validation": false
+  },
+  "evidence": ["network", "console", "response-headers", "server-log"],
+  "real_browser_behavior_unverified": true
+}

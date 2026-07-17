@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grid 轨道矩阵</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供筛选、列表、主内容和详情的二维区域及自动放置卡片。 -->
+  <!-- Data source: grid-matrix.json 的固定轨道/跨度与本页语义 DOM。 -->
+  <!-- Mapping: DOM 保持任务顺序；areas/lines 仅映射二维呈现，动态卡片按 source auto-place。 -->
+  <!-- Side effects: 只加载本地 CSS，不读取或修改真实工单。 -->
+  <main class="layout">
+    <form class="filters">筛选</form>
+    <section class="list">工单列表</section>
+    <section class="content">主内容</section>
+    <aside class="detail">详情</aside>
+  </main>
+  <section class="auto-board" aria-label="自动放置夹具">
+    <article class="span-two">A span 2</article>
+    <article class="span-two">B span 2</article>
+    <article>C span 1</article>
+  </section>
+</body>
+</html>

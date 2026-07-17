@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>可中断动效证据夹具</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 暴露 closed/open、状态徽标和键盘焦点的静态动效状态。 -->
+  <!-- Data source: motion-matrix.json 的固定状态合同；不模拟业务请求。 -->
+  <!-- Mapping: data-state 控制卡片目标值，is-new 触发一次 keyframes，按钮保留原生焦点。 -->
+  <!-- Side effects: 静态 HTML 不运行脚本；快速切换与事件必须在真实浏览器另测。 -->
+  <main class="demo-shell">
+    <h1>工单状态</h1>
+    <button class="toggle" type="button" aria-expanded="true" aria-controls="motion-panel">当前为展开</button>
+    <section id="motion-panel" class="motion-card" data-state="open" aria-labelledby="panel-title">
+      <h2 id="panel-title">维修进度 <span class="status-badge is-new">新状态</span></h2>
+      <p>语义状态立即成立，视觉插值只是随后反馈。</p>
+      <a href="#evidence">查看证据边界</a>
+    </section>
+    <p id="evidence">离线夹具不证明实际合成层。</p>
+  </main>
+</body>
+</html>

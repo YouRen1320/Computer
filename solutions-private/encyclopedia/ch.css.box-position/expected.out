@@ -1,0 +1,7 @@
+intent-and-semantic-contract: PASS
+box-and-margin-calculation: PASS
+containing-block-contract: PASS
+stacking-context-contract: PASS
+overflow-hidden-clip-contract: PASS
+browser-evidence-boundary: PASS
+CSS_BOX_POSITION_EXERCISE=PASS

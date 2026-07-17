@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "real_browser_box_model_recorded": false,
+  "real_browser_geometry_recorded": false,
+  "real_screenshot_diff_recorded": false,
+  "boxes": [
+    {
+      "id": "content-box",
+      "box_sizing": "content-box",
+      "declared_width": 240,
+      "padding_left": 16,
+      "padding_right": 16,
+      "border_left": 2,
+      "border_right": 2,
+      "margin_left": 8,
+      "margin_right": 8,
+      "expected_content_width": 240,
+      "expected_border_width": 276,
+      "expected_outer_width": 292
+    },
+    {
+      "id": "border-box",
+      "box_sizing": "border-box",
+      "declared_width": 240,
+      "padding_left": 16,
+      "padding_right": 16,
+      "border_left": 2,
+      "border_right": 2,
+      "margin_left": 8,
+      "margin_right": 8,
+      "expected_content_width": 204,
+      "expected_border_width": 240,
+      "expected_outer_width": 256
+    }
+  ],
+  "containing_blocks": [
+    {"target": ".position-card__badge", "position": "absolute", "expected": ".position-card", "establishing_reason": "position-relative"},
+    {"target": ".viewport-help", "position": "fixed", "expected": "layout-viewport", "establishing_reason": "no-fixed-containing-block-ancestor"}
+  ],
+  "stacking_contexts": {
+    "tree": [
+      {"id": "root", "parent": null, "z_index": 0},
+      {"id": "stack-a", "parent": "root", "z_index": 1},
+      {"id": "tooltip", "parent": "stack-a", "z_index": 9999},
+      {"id": "stack-b", "parent": "root", "z_index": 2}
+    ],
+    "expected_front_at_overlap": "stack-b",
+    "reason": "stack-a is atomic below stack-b; tooltip cannot escape its parent context"
+  },
+  "overflow_cases": [
+    {"value": "hidden", "clips": true, "scroll_container": true, "programmatic_scroll": true, "establishes_formatting_context": true},
+    {"value": "clip", "clips": true, "scroll_container": false, "programmatic_scroll": false, "establishes_formatting_context": false}
+  ]
+}

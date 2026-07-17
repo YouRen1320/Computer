@@ -1,0 +1,7 @@
+metadata: PASS
+native-regions: PASS
+explicit-heading-outline: PASS
+text-semantics: PASS
+intent-boundaries: PASS
+offline-scope: PASS (real validator, browser DOM, accessibility tree and screen reader remain unverified)
+SEMANTIC_HTML_EXAMPLE=PASS

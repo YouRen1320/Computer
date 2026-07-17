@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主题变量证据夹具</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 用语义页面暴露默认、局部覆盖和缺失 token 回退场景。 -->
+  <!-- Data source: 固定教学内容和 theme-matrix.json；不读取账号或系统存储。 -->
+  <!-- Mapping: 普通卡片读取根 token，危险区覆盖 accent，fallback-card 故意缺少私有 token。 -->
+  <!-- Side effects: 页面只加载本地 CSS，不请求、保存或修改用户主题。 -->
+  <main class="page-shell">
+    <h1>主题证据面板</h1>
+    <section class="panel" aria-labelledby="normal-title">
+      <h2 id="normal-title">普通表面</h2>
+      <p>正文使用 canvas/text 语义色对。</p>
+      <a class="action" href="#evidence">查看证据</a>
+    </section>
+    <section class="panel danger-zone" aria-labelledby="danger-title">
+      <h2 id="danger-title">危险操作</h2>
+      <p>只有此作用域将 accent 覆盖为危险语义。</p>
+      <button class="action" type="button">删除草稿</button>
+    </section>
+    <section id="evidence" class="fallback-card" aria-labelledby="fallback-title">
+      <h2 id="fallback-title">缺失 token</h2>
+      <p>私有表面 token 缺失时回退到全局 surface，再回退到系统 Canvas。</p>
+    </section>
+  </main>
+</body>
+</html>

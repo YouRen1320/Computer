@@ -1,0 +1,7 @@
+intent-and-normal-flow-fixture: PASS
+box-sizing-and-outer-width: PASS
+margin-collapse-prediction: PASS
+containing-block-repair: PASS
+stacking-context-repair: PASS
+fault-rerun-and-evidence-boundary: PASS
+CSS_BOX_POSITION_LAB=PASS

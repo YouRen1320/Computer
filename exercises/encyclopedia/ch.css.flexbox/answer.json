@@ -1,0 +1,10 @@
+{
+  "positive_free_space": 120,
+  "grow_targets": [190, 260, 230],
+  "grow_factor_is_final_size_ratio": true,
+  "shrink_uses_naked_factor_only": true,
+  "align_content_moves_items_in_single_line": true,
+  "gap_adds_container_edge_spacing": true,
+  "visual_order_changes_default_tab_order": true,
+  "real_browser_keyboard_visual_unverified": false
+}

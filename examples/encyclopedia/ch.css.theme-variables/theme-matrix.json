@@ -1,0 +1,51 @@
+{
+  "verified_on": "2026-07-17",
+  "scenarios": {
+    "light": {
+      "canvas": "#ffffff",
+      "text": "#172033",
+      "surface": "#f4f7fb",
+      "accent": "#0b5cad",
+      "on_accent": "#ffffff"
+    },
+    "dark": {
+      "canvas": "#0f172a",
+      "text": "#f8fafc",
+      "surface": "#1e293b",
+      "accent": "#60a5fa",
+      "on_accent": "#0f172a"
+    },
+    "explicit_override": {
+      "system_dark_plus_data_theme_light_resolves_to": "light",
+      "system_light_plus_data_theme_dark_resolves_to": "dark"
+    },
+    "missing_token": {
+      "expression": "var(--panel-surface, var(--color-surface, Canvas))",
+      "missing_panel_surface_resolves_to": "--color-surface",
+      "missing_both_resolves_to": "Canvas"
+    },
+    "local_override": {
+      "scope": ".danger-zone descendants",
+      "accent": "#b42318",
+      "on_accent": "#ffffff",
+      "sibling_inherits_override": false
+    }
+  },
+  "contrast_cases": [
+    {"id": "light-body", "foreground": "#172033", "background": "#ffffff", "minimum": 4.5},
+    {"id": "dark-body", "foreground": "#f8fafc", "background": "#0f172a", "minimum": 4.5},
+    {"id": "light-action", "foreground": "#ffffff", "background": "#0b5cad", "minimum": 4.5},
+    {"id": "dark-action", "foreground": "#0f172a", "background": "#60a5fa", "minimum": 4.5},
+    {"id": "danger-action", "foreground": "#ffffff", "background": "#b42318", "minimum": 4.5}
+  ],
+  "forced_colors": {
+    "query": "forced-colors: active",
+    "system_colors": ["Canvas", "CanvasText", "LinkText", "ButtonText", "Highlight"],
+    "global_opt_out": false
+  },
+  "real_browser_computed_recorded": false,
+  "real_forced_colors_recorded": false,
+  "real_wide_gamut_recorded": false,
+  "real_screen_reader_recorded": false,
+  "real_visual_review_recorded": false
+}

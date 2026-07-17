@@ -1,0 +1,7 @@
+intent-and-semantic-contract: PASS
+track-gap-and-min-content: PASS
+rectangular-area-and-lines: PASS
+implicit-row-and-order-boundary: PASS
+subgrid-boundary: PASS
+browser-evidence-boundary: PASS
+CSS_GRID_EXERCISE=PASS

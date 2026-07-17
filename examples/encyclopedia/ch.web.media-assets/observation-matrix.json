@@ -1,0 +1,12 @@
+{
+  "matrix": "media-observation-v1",
+  "real_browser_observations_recorded": false,
+  "cases": [
+    {"id": "narrow-1x", "viewport": 360, "dpr": 1, "allowed_current_src": ["pump-narrow.svg"], "expected_access": "informative-alt-and-transcript"},
+    {"id": "narrow-2x", "viewport": 360, "dpr": 2, "allowed_current_src": ["pump-narrow.svg", "pump-wide.svg"], "expected_access": "informative-alt-and-transcript"},
+    {"id": "wide-1x", "viewport": 1280, "dpr": 1, "allowed_current_src": ["pump-wide.svg"], "expected_access": "informative-alt-and-transcript"},
+    {"id": "image-404", "viewport": 800, "dpr": 1, "resource_fault": "selected-image-404", "expected_access": "alt-remains-equivalent"},
+    {"id": "video-mime", "viewport": 960, "dpr": 1, "resource_fault": "video-200-text-html", "expected_access": "external-transcript-remains-reachable"},
+    {"id": "captions-404", "viewport": 960, "dpr": 1, "resource_fault": "track-404", "expected_access": "video-is-not-caption-verified-and-transcript-remains-reachable"}
+  ]
+}

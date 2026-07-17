@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>媒体资源故障实验｜FactoryCare</title>
+  </head>
+  <body>
+    <!-- Responsibility: 提供三类媒体故障修复后的稳定 HTML 基线。 -->
+    <!-- Data source: media-lab-v1 SVG/VTT/文字稿为虚构资产，视频二进制由真实实验环境另配。 -->
+    <!-- Mapping: picture 候选表达同一油迹事实，track 与 transcript 对应同一片段。 -->
+    <!-- Side effects: 浏览器可 GET 资源；离线验证只读文件且无业务写入。 -->
+    <main>
+      <h1>媒体资源故障实验</h1>
+      <picture>
+        <source media="(max-width: 40rem)" srcset="./assets/incident.svg 480w" sizes="100vw">
+        <img id="incident" src="./assets/incident.svg"
+             srcset="./assets/incident.svg 480w"
+             sizes="(max-width: 40rem) 100vw, 40rem"
+             width="480" height="320"
+             alt="泵体接口下方有深色油迹">
+      </picture>
+      <video controls preload="metadata" poster="./assets/poster.svg" width="640" height="360">
+        <source src="./assets/lab.webm" type="video/webm">
+        <source src="./assets/lab.mp4" type="video/mp4">
+        <track kind="captions" src="./assets/lab.zh-CN.vtt" srclang="zh-CN" label="简体中文字幕" default>
+        <p>浏览器不支持 video 元素。</p>
+      </video>
+      <p><a id="transcript" href="./transcript.html">阅读视频文字稿</a></p>
+    </main>
+  </body>
+</html>

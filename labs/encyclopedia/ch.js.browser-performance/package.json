@@ -1,0 +1,8 @@
+{
+  "name": "factorycare-ch-js-browser-performance-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node src/lab.mjs baseline"
+  }
+}

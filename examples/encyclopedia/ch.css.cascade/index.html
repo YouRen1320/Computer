@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>层叠冲突矩阵</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供层叠矩阵所需的最小语义 DOM，不演示页面布局。 -->
+  <!-- Data source: 固定教学夹具 matrix.json；不读取真实设备或工单。 -->
+  <!-- Mapping: data-severity 与 class 只暴露样式匹配状态，告警语义仍由可见文字表达。 -->
+  <!-- Side effects: 加载 styles.css 并渲染；不会写入 DOM、网络业务数据或持久存储。 -->
+  <main id="app">
+    <h1>层叠冲突矩阵</h1>
+    <article class="fault-card text-danger" data-severity="high">
+      <h2 class="fault-card__title">冷却泵温度告警</h2>
+      <p class="fault-card__summary">温度超过教学阈值，请检查候选声明。</p>
+      <button class="fault-card__action" type="button" disabled>已锁定</button>
+    </article>
+  </main>
+</body>
+</html>

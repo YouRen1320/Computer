@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "real_browser_tracks_recorded": false,
+  "real_grid_overlay_recorded": false,
+  "real_subgrid_recorded": false,
+  "real_keyboard_order_recorded": false,
+  "real_visual_diff_recorded": false,
+  "track_case": {
+    "container_content_inline": 960,
+    "fixed_tracks": [240],
+    "gap": 24,
+    "gap_count": 2,
+    "fr_factors": [1, 2],
+    "expected_leftover": 672,
+    "expected_tracks": [240, 224, 448]
+  },
+  "areas": {
+    "rows": [["filters", "filters", "filters"], ["list", "content", "detail"]],
+    "expected": {"filters": [1, 1, 2, 4], "list": [2, 1, 3, 2], "content": [2, 2, 3, 3], "detail": [2, 3, 3, 4]}
+  },
+  "auto_items": [{"id": "A", "span": 2}, {"id": "B", "span": 2}, {"id": "C", "span": 1}],
+  "sparse_expected": [{"id": "A", "row": 1, "column": 1}, {"id": "B", "row": 2, "column": 1}, {"id": "C", "row": 2, "column": 3}],
+  "dense_expected": [{"id": "A", "row": 1, "column": 1}, {"id": "B", "row": 2, "column": 1}, {"id": "C", "row": 1, "column": 3}],
+  "subgrid_boundary": {"adopts_parent_tracks_in_selected_axis": true, "ordinary_nested_grid_shares_parent_tracks": false, "fallback_and_support_unverified": true}
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>表单契约练习｜FactoryCare</title>
+    <meta name="description" content="修复后的原生表单契约练习。">
+  </head>
+  <body>
+    <!-- Responsibility: 演示原生 label、约束与 multipart 教学提交，不实现生产适配。 -->
+    <!-- Data source: exercise-form-v1 固定值，不读取真实资产、联系人或文件。 -->
+    <!-- Mapping: name/value 只映射教学接收端；生产使用 JSON 和已完成 attachmentIds。 -->
+    <!-- Side effects: 提交会向本地教学路径导航 POST；离线验证不会发出请求。 -->
+    <main>
+      <h1>创建教学报修</h1>
+      <form action="/teaching/exercise/report-submissions" method="post" enctype="multipart/form-data">
+        <p>
+          <label for="asset-id">设备 ID（必填）</label>
+          <input id="asset-id" name="assetId" type="text" required pattern="[0-9a-fA-F-]{36}">
+        </p>
+        <p>
+          <label for="priority">优先级（必填）</label>
+          <select id="priority" name="priority" required>
+            <option value="">请选择</option>
+            <option value="HIGH">高</option>
+          </select>
+        </p>
+        <p>
+          <label for="description">故障描述（必填）</label>
+          <textarea id="description" name="description" required minlength="10" maxlength="5000"></textarea>
+        </p>
+        <p>
+          <label for="observed-date">观察日期（必填、仅教学）</label>
+          <input id="observed-date" name="observedDate" type="date" required min="2026-01-01" max="2026-12-31">
+        </p>
+        <p>
+          <label for="evidence-files">现场图片（可选）</label>
+          <input id="evidence-files" name="evidenceFiles" type="file" accept="image/png,image/jpeg" multiple>
+        </p>
+        <button type="submit" name="intent" value="create">提交教学请求</button>
+      </form>
+    </main>
+  </body>
+</html>

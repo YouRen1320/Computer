@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "strict": true,
+    "jsx": "preserve", "isolatedModules": true, "esModuleInterop": true,
+    "lib": ["ES2022", "DOM"], "types": ["vitest/globals", "@playwright/test"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts", "e2e/**/*.ts", "vite.config.ts", "playwright.config.ts"]
+}

@@ -1,0 +1,41 @@
+{
+  "verified_on": "2026-07-17",
+  "normal_mode": {
+    "closed": {"opacity": 0, "transform": "translateY(0.75rem)"},
+    "open": {"opacity": 1, "transform": "translateY(0)"},
+    "transition_properties": ["opacity", "transform"],
+    "duration_ms": 180,
+    "status_animation": {"name": "badge-enter", "duration_ms": 240, "iterations": 1, "fill_mode": "both"}
+  },
+  "reduced_mode": {
+    "open": {"opacity": 1, "transform": "none"},
+    "transition": "none",
+    "animation": "none",
+    "meaning_preserved_by": ["text", "border", "immediate state"]
+  },
+  "focus_contract": {
+    "selector": ":focus-visible",
+    "outline_width_px": 3,
+    "participates_in_transition": false,
+    "must_remain_visible_during_motion": true
+  },
+  "interruptibility": {
+    "semantic_state_updates_before_motion": true,
+    "rapid_sequence": ["open", "close", "open"],
+    "retarget_from_current_sample": true,
+    "transitioncancel_allowed": true,
+    "business_logic_depends_on_transitionend": false
+  },
+  "performance_contract": {
+    "source_candidates": ["opacity", "transform"],
+    "layout_affecting_animated_properties": [],
+    "layer_promotion_guaranteed": false,
+    "will_change_required": false
+  },
+  "real_performance_trace_recorded": false,
+  "real_layer_observation_recorded": false,
+  "real_transition_events_recorded": false,
+  "real_keyboard_focus_recorded": false,
+  "real_screen_reader_recorded": false,
+  "real_user_motion_review_recorded": false
+}

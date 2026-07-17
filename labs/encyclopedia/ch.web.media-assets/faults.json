@@ -1,0 +1,34 @@
+{
+  "fault_set": "media-assets-faults-v1",
+  "same_verifier_rerun": true,
+  "real_browser_unverified": true,
+  "faults": [
+    {
+      "id": "invalid-srcset",
+      "injection": "mix a 480w candidate with a 2x candidate in the same srcset",
+      "first_evidence": "the source candidate contract is invalid before visual output can be trusted",
+      "stage": "candidate parsing and selection",
+      "repair": "use one descriptor family and keep declared widths equal to intrinsic widths",
+      "rerun": "run the unchanged verify.sh and the same viewport/DPR row",
+      "residual_risk": "real browser heuristics and future CSS slot width remain unverified"
+    },
+    {
+      "id": "missing-alt",
+      "injection": "remove alt from the informative incident image",
+      "first_evidence": "the parsed informative img lacks an alt attribute even though pixels still load",
+      "stage": "author semantics",
+      "repair": "restore an equivalent factual alt without asserting an unconfirmed root cause",
+      "rerun": "run the unchanged verify.sh and repeat the screen-reader image task",
+      "residual_risk": "target screen-reader wording remains unverified"
+    },
+    {
+      "id": "mime-mismatch",
+      "injection": "serve the MP4 URL with status 200 and Content-Type text/html",
+      "first_evidence": "Network response headers and body disagree with source type before decode",
+      "stage": "HTTP representation",
+      "repair": "return actual video/mp4 bytes from the same route or correct the manifest and source",
+      "rerun": "run the unchanged verify.sh and repeat the same clean-cache Network row",
+      "residual_risk": "codec, range, CORS and CDN behavior remain unverified"
+    }
+  ]
+}

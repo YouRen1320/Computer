@@ -1,0 +1,7 @@
+input-length=4
+status-order=CREATED>IN_PROGRESS>UNSPECIFIED
+status-counts=CREATED:2|IN_PROGRESS:1|UNSPECIFIED:1
+unique-ids=WO-1>WO-2>WO-3
+outer-new=true
+nested-update-new=true
+input-unchanged=true

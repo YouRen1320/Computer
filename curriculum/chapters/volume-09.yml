@@ -8,7 +8,7 @@ chapters:
     role: practice
     responsibility: "从空目录建立可运行的 Vue 3 + TypeScript + Vite 应用，解释入口、SFC 三段和构建边界，不提前教授指令、响应式或状态库。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-vite-entry
@@ -81,7 +81,7 @@ chapters:
     role: practice
     responsibility: "用模板表达文本、属性、事件、条件和列表渲染，解释 key 的身份作用，不在本章引入 v-model、复杂组件通信或副作用。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-template-binding
@@ -149,7 +149,7 @@ chapters:
     role: practice
     responsibility: "把原生控件的 value/checked、事件与 Vue 状态通过 v-model 建立可追踪契约，区分显示校验、客户端校验和服务端权威校验。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-vmodel-contract
@@ -227,7 +227,7 @@ chapters:
     role: concept
     responsibility: "解释 ref/reactive 的依赖追踪、computed 缓存和解包边界，用派生状态替代重复可变状态，不在本章发起副作用。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-reactive-sources
@@ -295,7 +295,7 @@ chapters:
     role: practice
     responsibility: "在组件生命周期中安排 watch/watchEffect 和外部副作用，使用清理函数保证旧计时器、订阅和异步任务不再更新当前界面。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-watch-effects
@@ -373,7 +373,7 @@ chapters:
     role: practice
     responsibility: "用 Props、emit、Slot 和组件 v-model 建立单向数据流与可组合 UI 合同，禁止子组件直接修改父级所有状态。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-props-emits-model
@@ -441,7 +441,7 @@ chapters:
     role: practice
     responsibility: "把可复用状态和副作用封装为具有所有权/清理合同的 Composable，并在确有跨层依赖时使用 provide/inject，不创建隐式全局单例。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-composable-contract
@@ -509,7 +509,7 @@ chapters:
     role: practice
     responsibility: "用路由记录、参数、嵌套布局和导航守卫表达页面边界，区分路由可达性与真正的服务端授权。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-router-records
@@ -577,7 +577,7 @@ chapters:
     role: practice
     responsibility: "用 Pinia 管理真正跨组件的客户端状态，明确本地状态、派生状态和服务端状态的所有权，不把所有 ref 都搬进 store。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-pinia-store
@@ -645,7 +645,7 @@ chapters:
     role: practice
     responsibility: "在 Vue 中建模 idle/loading/success/error 状态、请求身份、取消和重取，避免陈旧响应覆盖且不把服务器缓存数据当普通 Pinia 客户端状态。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-server-state-machine
@@ -713,7 +713,7 @@ chapters:
     role: practice
     responsibility: "在前端同步认证状态、受保护导航和权限提示，明确隐藏按钮与路由守卫不是服务端授权，所有敏感操作仍由后端默认拒绝。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-auth-session-ui
@@ -791,7 +791,7 @@ chapters:
     role: practice
     responsibility: "用组件测试验证渲染、事件与异步状态，用少量浏览器端到端测试覆盖关键用户路径，明确 Mock、组件和 E2E 各自证据边界。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-component-test
@@ -859,7 +859,7 @@ chapters:
     role: practice
     responsibility: "把原生无障碍原则落实到条件渲染、弹层、路由切换和异步提示，保证组件更新后键盘与屏幕阅读器仍获得正确上下文。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-dynamic-a11y
@@ -932,7 +932,7 @@ chapters:
     role: practice
     responsibility: "用 Vue DevTools、浏览器 trace 和预算定位不必要渲染、过大 chunk 与恢复失败，实施可测优化且不牺牲正确性或无障碍。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: vue-render-bundle-performance
@@ -1000,7 +1000,7 @@ chapters:
     role: practice
     responsibility: "区分 SSR、SSG 与客户端渲染，解释服务端/客户端执行边界、水合一致性和 Nuxt 数据获取，不在本章教授生产部署或完整认证。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: nuxt-rendering-modes

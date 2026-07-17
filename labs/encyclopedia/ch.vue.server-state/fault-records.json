@@ -1,0 +1,11 @@
+{
+  "faults": [
+    {"id": "stale-response-overwrite", "first_evidence": "request 1 commits after current request id became 2", "fix": "guard every commit with request identity and alive state"},
+    {"id": "loading-state-corruption", "first_evidence": "request 1 finally clears loading while request 2 remains pending", "fix": "make loading belong to the current union state/request id"},
+    {"id": "post-unmount-update", "first_evidence": "a promise commits success after dispose", "fix": "abort on dispose and independently reject every post-dispose commit"}
+  ],
+  "same_oracle_rerun": true,
+  "real_vue_runtime_recorded": false,
+  "real_browser_fetch_recorded": false,
+  "real_server_log_recorded": false
+}

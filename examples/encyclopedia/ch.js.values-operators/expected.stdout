@@ -1,0 +1,11 @@
+number=42,type=number
+string=42,type=string
+boolean=false,type=boolean
+null=null,type=object
+undefined=undefined,type=undefined
+nan=NaN,type=number,isNaN=true
+converted=42,type=number
+strictTextVsNumber=false
+nullishZero=0
+separateObjects=false
+sameReference=true

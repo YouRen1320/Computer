@@ -8,7 +8,7 @@ chapters:
     role: foundation
     responsibility: "解释小程序宿主、逻辑/视图层、全局与页面配置以及应用/页面生命周期，区分平台能力与普通浏览器能力，不引入 uni-app。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: miniapp-host-runtime
@@ -76,7 +76,7 @@ chapters:
     role: practice
     responsibility: "从空目录建立可编译到小程序的 uni-app 项目，解释页面清单、路由、入口和构建产物，不在本章教授组件差异或条件编译。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-toolchain-project
@@ -149,7 +149,7 @@ chapters:
     role: practice
     responsibility: "把 Vue 模板、组件和表单合同迁移到 uni-app 的跨端组件集合，明确宿主事件、样式和 API 差异，不处理设备权限。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-template-component
@@ -222,7 +222,7 @@ chapters:
     role: practice
     responsibility: "用 uni.request、受控凭据存储和环境配置访问后端，区分 HTTP、宿主白名单、认证过期与本地存储失败，不实现离线重放。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-network-environment
@@ -295,7 +295,7 @@ chapters:
     role: practice
     responsibility: "在统一业务合同下用条件编译和运行时能力检测隔离平台差异，提供明确降级路径，不散布无法测试的平台分支。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-platform-adaptation
@@ -363,7 +363,7 @@ chapters:
     role: practice
     responsibility: "把上传、扫码和定位封装为显式权限与取消合同，处理拒绝、永久拒绝、不可用和恢复，不把授权弹窗等同于业务同意。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-device-apis
@@ -436,7 +436,7 @@ chapters:
     role: practice
     responsibility: "在 uni-app 中选择纯函数、组件、宿主 Mock、真机和网络调试证据，明确模拟器通过不能代替目标真机验证。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-automated-testing
@@ -509,7 +509,7 @@ chapters:
     role: practice
     responsibility: "用分包、懒加载、资源压缩和版本化缓存控制小程序启动与包体预算，以真实设备指标验证，不引入离线业务队列。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-package-loading
@@ -577,7 +577,7 @@ chapters:
     role: practice
     responsibility: "为离线报修定义持久队列、幂等键、有限重试和冲突决策，保证重放不重复创建且失败可观察，不把缓存等同离线同步。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: mobile-offline-queue
@@ -655,7 +655,7 @@ chapters:
     role: practice
     responsibility: "把权限使用、最小数据、告知同意、日志脱敏和平台隐私声明映射到可审查证据，区分合规材料与真实运行时保护。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: uniapp-privacy-data
@@ -728,7 +728,7 @@ chapters:
     role: practice
     responsibility: "建立可追溯版本、环境构建、体验版验证、灰度发布、回退和客户端错误监控，不在本章设计通用 CI/CD 平台。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: miniapp-release-promotion
@@ -801,7 +801,7 @@ chapters:
     role: project
     responsibility: "把扫码、上传、位置、服务端状态、离线幂等和发布证据集成为 FactoryCare 报修端切片，只验收既定合同，不在本章补教平台基础。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: factorycare-reporter-flow

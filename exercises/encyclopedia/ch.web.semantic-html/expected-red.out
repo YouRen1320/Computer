@@ -1,0 +1,17 @@
+ERROR: root html must declare lang=zh-CN
+ERROR: viewport metadata must use device width and initial scale
+ERROR: title must identify WO-EX-004 and the exercise context
+ERROR: description metadata is required
+ERROR: canonical link metadata is required
+ERROR: missing native header element
+ERROR: missing native nav element
+ERROR: missing native main element
+ERROR: missing native article element
+ERROR: missing native section element
+ERROR: missing native footer element
+ERROR: heading sequence must be h1,h2,h2,h3 with the predicted text
+ERROR: ARIA role must not patch this native-HTML exercise
+ERROR: work-order summary must use a description list
+ERROR: transition history must use an ordered list
+ERROR: machine-readable time requires time[datetime]
+SEMANTIC_HTML_EXERCISE=RED (16 violations)

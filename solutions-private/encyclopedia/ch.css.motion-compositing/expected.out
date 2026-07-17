@@ -1,0 +1,7 @@
+motion-source-and-intent: PASS
+finite-transform-opacity-contract: PASS
+reduced-motion-contract: PASS
+focus-and-interruptibility: PASS
+performance-claim-boundary: PASS
+browser-evidence-boundary: PASS
+CSS_MOTION_EXERCISE=PASS

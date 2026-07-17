@@ -1,0 +1,4 @@
+<view class="page">
+  <text>FactoryCare 报修入口</text>
+  <button bindtap="openDetail">查看示例工单</button>
+</view>

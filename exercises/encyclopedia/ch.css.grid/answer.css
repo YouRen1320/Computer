@@ -1,0 +1,9 @@
+/* Responsibility: 公开 starter 故意保留 min-content、area、implicit track 与 dense 故障。 */
+/* Data source: answer.html 直接子项与静态长标识。 */
+/* Mapping: 当前 details/filter 命名和 dense 是待诊断输入，不代表推荐布局。 */
+/* Side effects: 只改变视觉放置，可能与 DOM/Tab 顺序分裂；不改业务数据。 */
+.layout { display: grid; grid-template-columns: 240px 1fr; grid-template-areas: "filters filter" "orders details"; gap: 16px; inline-size: 800px; }
+.filters { grid-area: filters; }
+.orders { grid-area: orders; }
+.detail { grid-area: detail; }
+.auto-list { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-flow: row dense; }

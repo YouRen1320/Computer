@@ -1,0 +1,5 @@
+calls=direct:WO-1:CREATED|explicit:WO-2:ASSIGNED
+kind=first:urgent|second:work-order
+notes=first:1|second:0
+method=shared
+class=WO-3:CREATED|private:CREATED

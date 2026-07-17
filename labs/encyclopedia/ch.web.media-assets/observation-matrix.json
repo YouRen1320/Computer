@@ -1,0 +1,11 @@
+{
+  "matrix": "media-fault-lab-v1",
+  "browser_observations_are_predictions": true,
+  "cases": [
+    {"id": "baseline-narrow", "expected_stage": "selection", "expected_result": "incident.svg-allowed"},
+    {"id": "invalid-srcset", "expected_stage": "candidate-parse", "first_evidence": "descriptor contract fails before a trustworthy currentSrc prediction"},
+    {"id": "missing-alt", "expected_stage": "author-semantics", "first_evidence": "informative img has no alt attribute in parsed DOM"},
+    {"id": "mime-mismatch", "expected_stage": "http-representation", "first_evidence": "selected video URL returns 200 text/html instead of declared video MIME"},
+    {"id": "captions-unavailable", "expected_stage": "text-track", "first_evidence": "track request or WebVTT parse fails while external transcript remains reachable"}
+  ]
+}

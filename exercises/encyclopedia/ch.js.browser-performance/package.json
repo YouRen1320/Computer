@@ -1,0 +1,8 @@
+{
+  "name": "factorycare-ch-js-browser-performance-exercise",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node src/exercise.mjs"
+  }
+}

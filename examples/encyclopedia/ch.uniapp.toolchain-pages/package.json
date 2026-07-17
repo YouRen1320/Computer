@@ -1,0 +1,11 @@
+{
+  "name": "factorycare-uniapp-toolchain-example",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.0.0",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "typecheck": "vue-tsc --noEmit"
+  }
+}

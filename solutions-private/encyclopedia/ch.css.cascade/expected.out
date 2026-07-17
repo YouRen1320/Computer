@@ -1,0 +1,6 @@
+intent-and-semantic-contract: PASS
+layer-and-low-specificity-contract: PASS
+inheritance-and-source-order: PASS
+cascade-concept-boundaries: PASS
+browser-evidence-boundary: PASS
+CSS_CASCADE_EXERCISE=PASS

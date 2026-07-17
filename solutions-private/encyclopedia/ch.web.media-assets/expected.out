@@ -1,0 +1,8 @@
+picture-srcset-sizes: PASS
+informative-and-decorative-alt: PASS
+video-controls-and-mime: PASS
+captions-and-transcript: PASS
+browser-selection-boundary: PASS
+http-and-download-boundary: PASS
+scope-disclosure: PASS
+MEDIA_ASSETS_EXERCISE=PASS

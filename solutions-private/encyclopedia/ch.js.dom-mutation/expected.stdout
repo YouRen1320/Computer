@@ -1,0 +1,6 @@
+render=count:2,order:WO-1>WO-2
+text=safe
+property=checked:false,attribute:absent
+update=WO-2:IN_PROGRESS,identity:same
+remove=count:1,order:WO-2
+semantics=main>section>ul>li

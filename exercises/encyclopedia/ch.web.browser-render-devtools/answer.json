@@ -1,0 +1,28 @@
+{
+  "expected_requests": ["/index.html", "/styles.css"],
+  "environment": ["viewport"],
+  "fault": {
+    "requested_url": "/assets/styles.css",
+    "status": 404,
+    "first_evidence_panel": "Elements",
+    "dom_status_exists": false,
+    "computed_style_present": true,
+    "diagnosis": "selector-error"
+  },
+  "repair": {
+    "source_file_changed": false,
+    "requested_url": "/styles.css",
+    "status": 200,
+    "computed_style_present": true,
+    "same_inputs_rerun": false
+  },
+  "artifacts": ["screenshot"],
+  "safety": {
+    "synthetic_or_sanitized": false,
+    "secret_fields_absent": false
+  },
+  "boundary": {
+    "does_not_claim_javascript_optimization": false,
+    "real_browser_recording_unverified": false
+  }
+}

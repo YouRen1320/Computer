@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>盒尺寸与层叠树</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供盒模型、定位、溢出和层叠上下文的固定观察目标。 -->
+  <!-- Data source: geometry-matrix.json 中的教学常量，不接入真实设备数据。 -->
+  <!-- Mapping: 每个 data-case 对应一行手算/结构预言，文字标签直接说明职责。 -->
+  <!-- Side effects: 只加载本地 CSS 并渲染，不修改 DOM、业务数据或存储。 -->
+  <main>
+    <h1>盒尺寸与层叠树</h1>
+    <section aria-labelledby="boxes-heading">
+      <h2 id="boxes-heading">盒尺寸</h2>
+      <div class="box box--content" data-case="content-box">content-box</div>
+      <div class="box box--border" data-case="border-box">border-box</div>
+    </section>
+    <section class="position-card" aria-labelledby="position-heading">
+      <h2 id="position-heading">包含块</h2>
+      <span class="position-card__badge">absolute badge</span>
+    </section>
+    <section class="stack-stage" aria-labelledby="stack-heading">
+      <h2 id="stack-heading">层叠上下文</h2>
+      <div class="stack-a">A <span class="stack-a__tooltip">tooltip 9999</span></div>
+      <div class="stack-b">B z=2</div>
+    </section>
+    <section aria-labelledby="overflow-heading">
+      <h2 id="overflow-heading">溢出</h2>
+      <div class="overflow-hidden">hidden：可程序滚动的教学边界</div>
+      <div class="overflow-clip">clip：非滚动容器</div>
+    </section>
+  </main>
+</body>
+</html>

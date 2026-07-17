@@ -1,0 +1,28 @@
+{
+  "expected_requests": ["/index.html", "/styles.css", "/status.svg"],
+  "environment": ["browser-version", "viewport", "cache", "reload"],
+  "fault": {
+    "requested_url": "/assets/styles.css",
+    "status": 404,
+    "first_evidence_panel": "Network",
+    "dom_status_exists": true,
+    "computed_style_present": false,
+    "diagnosis": "resource-path"
+  },
+  "repair": {
+    "source_file_changed": true,
+    "requested_url": "/styles.css",
+    "status": 200,
+    "computed_style_present": true,
+    "same_inputs_rerun": true
+  },
+  "artifacts": ["har", "dom-summary", "timeline", "screenshot"],
+  "safety": {
+    "synthetic_or_sanitized": true,
+    "secret_fields_absent": true
+  },
+  "boundary": {
+    "does_not_claim_javascript_optimization": true,
+    "real_browser_recording_unverified": true
+  }
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>无障碍交互练习｜FactoryCare</title>
+  </head>
+  <body>
+    <!-- Responsibility: 提供需要修复的键盘、名称、状态与动态错误路径。 -->
+    <!-- Data source: a11y-exercise-starter 固定虚构表单与错误。 -->
+    <!-- Mapping: starter 故意让 HTML/ARIA/行为与业务字段映射漂移。 -->
+    <!-- Side effects: 教学脚本只改 DOM/焦点；不调用生产 API。 -->
+    <main>
+      <h1>无障碍交互练习</h1>
+      <div id="toggle" role="button" tabindex="1" aria-expanded="false" aria-controls="panel">显示帮助</div>
+      <section id="panel"><h2>填写帮助</h2><p>描述设备现象。</p></section>
+
+      <div id="error-summary" tabindex="2"><h2>请修正问题</h2><ul></ul></div>
+      <p id="status" aria-live="off"></p>
+      <form id="report-form">
+        <p>故障描述（必填）</p>
+        <textarea id="description" name="description" required></textarea>
+        <button type="submit">提交</button>
+      </form>
+      <ul><li id="attachment">demo.png <button id="remove" type="button"><span aria-hidden="true">×</span></button></li></ul>
+      <h2 id="attachments-heading">教学附件</h2>
+    </main>
+    <script src="./answer.js"></script>
+  </body>
+</html>

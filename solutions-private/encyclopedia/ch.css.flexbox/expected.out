@@ -1,0 +1,7 @@
+intent-and-semantic-contract: PASS
+wrap-gap-and-min-size: PASS
+grow-and-scaled-shrink: PASS
+alignment-boundary: PASS
+dom-visual-tab-order: PASS
+browser-evidence-boundary: PASS
+CSS_FLEXBOX_EXERCISE=PASS

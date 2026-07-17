@@ -1,0 +1,34 @@
+{
+  "lab": "semantic-structure-faults-v1",
+  "same_verifier_rerun": true,
+  "real_browser_unverified": true,
+  "faults": [
+    {
+      "id": "div-soup",
+      "injected_change": "replace nav, main and section with generic div elements while preserving visible text",
+      "predicted_first_evidence": "parsed DOM no longer contains the expected nav and main elements",
+      "failure_stage": "author markup and parsed DOM structure",
+      "repair": "restore native nav, main and section elements according to content responsibility",
+      "rerun": "run the unchanged verify.sh against the repaired page",
+      "residual_risk": "real accessibility-tree landmark mapping remains unverified"
+    },
+    {
+      "id": "heading-skip",
+      "injected_change": "change the first h2 to h3 without changing its text",
+      "predicted_first_evidence": "actual heading sequence starts h1,h3 instead of h1,h2",
+      "failure_stage": "explicit heading hierarchy",
+      "repair": "restore h2 because the summary is a direct child topic of the page",
+      "rerun": "run the unchanged verify.sh and compare the same expected outline",
+      "residual_risk": "screen-reader heading navigation remains unverified"
+    },
+    {
+      "id": "missing-language",
+      "injected_change": "remove lang from the root html element",
+      "predicted_first_evidence": "the parsed root element has no zh-CN language declaration",
+      "failure_stage": "document metadata",
+      "repair": "restore lang=zh-CN and keep foreign-language overrides local",
+      "rerun": "run the unchanged verify.sh against the same metadata prediction",
+      "residual_risk": "target screen-reader pronunciation remains unverified"
+    }
+  ]
+}

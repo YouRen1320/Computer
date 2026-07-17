@@ -1,0 +1,7 @@
+prediction-environment: PASS
+network-first-evidence: PASS
+dom-cssom-difference: PASS
+source-fix-original-rerun: PASS
+four-artifacts-and-safety: PASS
+scope-boundary: PASS
+BROWSER_RENDER_EXERCISE=PASS

@@ -1,0 +1,6 @@
+{
+  "name": "factorycare-vue-auth-permissions-example",
+  "private": true,
+  "type": "module",
+  "scripts": { "verify": "node tests/verify.mjs" }
+}

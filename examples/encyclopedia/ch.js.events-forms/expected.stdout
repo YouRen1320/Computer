@@ -1,0 +1,4 @@
+command=assign:WO-2
+submit=ASSIGNED:true
+submitCanceled=true
+afterDisposeCommands=1

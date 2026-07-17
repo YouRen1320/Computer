@@ -1,0 +1,12 @@
+{
+  "faults": [
+    {"id": "open-redirect", "first_evidence": "an absolute or protocol-relative returnTo survives normalization", "fix": "allow only validated internal router destinations"},
+    {"id": "client-side-authorization-only", "first_evidence": "direct API succeeds after a caller forges the client capability", "fix": "server fixture resolves its own subject/resource policy and denies by default"},
+    {"id": "sensitive-ui-flash", "first_evidence": "sensitiveVisible is true while bootstrap remains unresolved", "fix": "start in unknown/bootstrapping and render only a non-sensitive shell"}
+  ],
+  "same_oracle_rerun": true,
+  "real_browser_recorded": false,
+  "real_cookie_or_token_recorded": false,
+  "real_backend_rbac_recorded": false,
+  "real_security_test_recorded": false
+}

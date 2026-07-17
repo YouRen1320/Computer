@@ -1,0 +1,4 @@
+selected={"id":"WO-7","priority":"high"}
+patched={"id":"WO-7","title":"Replace cartridge","priority":"low","completed":false}
+event=WO-7:high
+GENERICS_UTILITIES_EXAMPLE_PASS

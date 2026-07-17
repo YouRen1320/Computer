@@ -1,0 +1,12 @@
+{
+  "type": "urn:factorycare:problem:validation",
+  "title": "教学请求校验失败",
+  "status": 400,
+  "code": "VALIDATION_FAILED",
+  "message": "请修正字段后重试。",
+  "traceId": "teaching-trace-a11y-001",
+  "fieldErrors": [
+    {"field": "assetId", "code": "UNKNOWN_ASSET", "message": "设备 ID 不在教学夹具中。"},
+    {"field": "description", "code": "TOO_GENERIC", "message": "故障描述还需包含发生位置。"}
+  ]
+}

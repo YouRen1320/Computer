@@ -1,0 +1,9 @@
+{
+  "border_box_content_width": 256,
+  "border_box_outer_width": 316,
+  "collapsed_margin_gap": 24,
+  "dom_parent_always_containing_block": false,
+  "leaf_z_escapes_parent_context": false,
+  "overflow_hidden_equals_clip": false,
+  "real_devtools_and_screenshot_unverified": true
+}

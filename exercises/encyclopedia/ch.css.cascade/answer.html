@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS 层叠练习</title>
+  <link rel="stylesheet" href="./answer.css">
+</head>
+<body>
+  <!-- Responsibility: 提供公开练习的固定层叠目标，不泄露私有修复。 -->
+  <!-- Data source: answer.json 的教学判断与本页静态状态。 -->
+  <!-- Mapping: is-critical/data-state 映射样式状态，可见文字保留业务语义。 -->
+  <!-- Side effects: 只加载本地 answer.css，不写入业务数据。 -->
+  <main id="exercise">
+    <article class="incident is-critical" data-state="open">
+      <h1 class="title">压力异常</h1>
+      <p class="summary">请诊断层叠与继承。</p>
+      <p class="code">EX-CASCADE</p>
+    </article>
+  </main>
+</body>
+</html>

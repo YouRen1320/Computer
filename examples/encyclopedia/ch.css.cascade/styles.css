@@ -1,0 +1,28 @@
+/* Responsibility: 构造可手算的来源内 layer、specificity、inheritance 与 order 冲突。 */
+/* Data source: index.html 的稳定 class/data 属性与 matrix.json 的预言。 */
+/* Mapping: reset < base < components < utilities；未分层普通声明高于所有命名层。 */
+/* Side effects: 只改变呈现；不会修改语义状态、DOM 或业务数据。 */
+@layer reset, base, components, utilities;
+
+@layer reset {
+  :where(button) { font: inherit; }
+}
+
+@layer base {
+  #app { color: #1e3a8a; }
+  main article .fault-card__title { color: #166534; }
+}
+
+@layer components {
+  .fault-card { color: #334155; }
+  .fault-card > .fault-card__title { color: #7c3aed; }
+  .fault-card__action:disabled { cursor: not-allowed; }
+}
+
+@layer utilities {
+  .text-danger > .fault-card__title { color: #b91c1c; }
+}
+
+.fault-card__title { color: #9f1239; }
+.fault-card__summary { color: inherit; }
+.fault-card__summary { color: #475569; }

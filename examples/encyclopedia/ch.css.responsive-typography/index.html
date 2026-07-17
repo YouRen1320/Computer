@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FactoryCare 响应式工单工作台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 主区域保存工单身份、状态和操作；DOM 顺序也是键盘与读屏顺序。 -->
+  <main class="workspace">
+    <header class="page-heading">
+      <!-- Data source: 标题和状态来自服务端工单摘要；状态不只依赖颜色。 -->
+      <div>
+        <p class="eyebrow">FactoryCare / 工单</p>
+        <h1>WO-20260717-000123</h1>
+        <p class="status"><span aria-hidden="true"></span>处理中</p>
+      </div>
+      <nav class="actions" aria-label="工单操作">
+        <button type="button">补充信息</button>
+        <button type="button">查看设备</button>
+      </nav>
+    </header>
+
+    <!-- Mapping: 页面 Grid 只负责区域关系；卡片还会按自己的容器宽度适配。 -->
+    <section class="workspace-grid" aria-label="工单详情">
+      <article class="card-region">
+        <div class="work-order-card">
+          <div>
+            <h2>泵体底部持续渗漏</h2>
+            <p class="description">夜班巡检发现泵体底部持续渗漏并伴随间歇异响，需要确认密封与轴承状态。</p>
+          </div>
+          <dl>
+            <div><dt>优先级</dt><dd>高</dd></div>
+            <div><dt>创建时间</dt><dd>2026-07-17 09:30</dd></div>
+          </dl>
+        </div>
+      </article>
+      <aside class="evidence-card" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">现场证据</h2>
+        <!-- Data source: 同一授权图片的宽度候选；sizes 与当前 CSS slot 共同维护。 -->
+        <img src="pump-640.webp"
+             srcset="pump-480.webp 480w, pump-960.webp 960w, pump-1440.webp 1440w"
+             sizes="(min-width: 64rem) 33vw, 100vw"
+             width="1440" height="960"
+             alt="泵体底部渗漏区域">
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+  "faults": [
+    {
+      "id": "wrong-origin",
+      "injected": {
+        "request_origin": "https://app.factorycare.test:8443",
+        "allowlist_value": "https://app.factorycare.test:8443/",
+        "server_received_request": true,
+        "script_readable": false
+      },
+      "first_evidence": "Request Origin and response ACAO/allowlist differ by a path slash",
+      "repair": "Store and compare a canonical Origin value with no path, then emit exact ACAO and Vary: Origin.",
+      "replay": "Same page, target, credentials and headers become readable without reflecting arbitrary Origin."
+    },
+    {
+      "id": "wrong-samesite-expectation",
+      "injected": {
+        "page_site": "https://factorycare.test",
+        "target_site": "https://vendor.test",
+        "credentials": "include",
+        "cookie_same_site": "Lax",
+        "expected_by_buggy_app": "cookie-sent",
+        "actual": "cookie-not-sent"
+      },
+      "first_evidence": "Network request has no Cookie and the context is cross-site Lax fetch",
+      "repair": "Use the intended same-site topology, or explicitly evaluate None; Secure plus CSRF and browser privacy support.",
+      "replay": "Same matrix distinguishes A/B same-site from A/C cross-site instead of changing assertions after the run."
+    },
+    {
+      "id": "stale-unchanged-url",
+      "injected": {
+        "url": "/app.css",
+        "cache_control": "public, max-age=86400",
+        "cached_version": "v1",
+        "origin_version": "v2",
+        "second_network_request": false,
+        "rendered_version": "v1"
+      },
+      "first_evidence": "Network reports a fresh cache reuse for /app.css while origin content is v2",
+      "repair": "Publish v2 at a content-versioned URL or require validation with a correct ETag strategy.",
+      "replay": "First load stores v1; deployment changes content; repeat must obtain/revalidate v2 without manual cache clearing."
+    },
+    {
+      "id": "missing-vary-origin",
+      "injected": {
+        "dynamic_allow_origin": true,
+        "vary": [],
+        "cached_for": "https://app.factorycare.test:8443",
+        "reused_for": "https://portal.vendor.test"
+      },
+      "first_evidence": "Cached ACAO names A while the current request Origin is C and Vary omits Origin",
+      "repair": "Emit Vary: Origin, use a strict allowlist and invalidate the polluted cache entry.",
+      "replay": "A and C requests select separate cached variants; only allowlisted A is readable."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主题练习参考解</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 展示修复后的普通区、危险区和私有 token 回退。 -->
+  <!-- Data source: theme-matrix.json 的固定主题合同。 -->
+  <!-- Mapping: 根定义语义色，danger-zone 仅覆盖自己的 accent，panel 支持两级回退。 -->
+  <!-- Side effects: 静态参考解不保存主题偏好，也不读取账号数据。 -->
+  <main class="page-shell">
+    <section class="panel sibling"><h1>普通区</h1><a href="#danger">普通操作</a></section>
+    <section id="danger" class="panel danger-zone"><h2>危险区</h2><button type="button">删除</button></section>
+  </main>
+</body>
+</html>

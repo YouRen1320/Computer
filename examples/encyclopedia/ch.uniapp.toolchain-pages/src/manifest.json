@@ -1,0 +1,8 @@
+{
+  "name": "FactoryCare 报修端",
+  "appid": "__UNI__FACTORYCARE_LEARNING",
+  "versionName": "0.1.0",
+  "mp-weixin": {
+    "appid": "touristappid"
+  }
+}

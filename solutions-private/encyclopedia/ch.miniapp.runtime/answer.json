@@ -1,0 +1,7 @@
+{
+  "pages": ["pages/index/index", "pages/detail/detail"],
+  "pageFiles": ["pages/index/index", "pages/detail/detail"],
+  "appHooks": ["onLaunch", "onShow", "onHide"],
+  "logicSource": "wx.navigateTo({ url: '/pages/detail/detail?id=WO-1001' })",
+  "routeTarget": "pages/detail/detail"
+}

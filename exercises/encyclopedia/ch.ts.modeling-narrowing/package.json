@@ -1,0 +1,16 @@
+{
+  "name": "factorycare-ch-ts-modeling-narrowing-exercise",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "check": "tsc --project tsconfig.json --noEmit",
+    "build": "tsc --project tsconfig.emit.json"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}

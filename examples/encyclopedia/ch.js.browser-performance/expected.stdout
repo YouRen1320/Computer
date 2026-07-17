@@ -1,0 +1,7 @@
+baseline.layouts=4
+optimized.layouts=1
+optimized.listenerDelta=0
+optimized.timerDelta=0
+optimized.order=WO-1,WO-2,WO-3,WO-4
+optimized.accessibleNames=Open WO-1|Open WO-2|Open WO-3|Open WO-4
+PERFORMANCE_MODEL_PASS

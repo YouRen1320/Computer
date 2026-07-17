@@ -1,0 +1,8 @@
+{
+  "healthy": {"mockShape": "string-json", "hostShape": "string-json", "buildId": "b1", "mapBuildId": "b1", "claim": "device-passed", "carrier": "physical-device"},
+  "faults": [
+    {"id": "mock-drift", "mockShape": "object", "hostShape": "string-json", "buildId": "b1", "mapBuildId": "b1", "claim": "automated-passed", "carrier": "devtools"},
+    {"id": "map-mismatch", "mockShape": "string-json", "hostShape": "string-json", "buildId": "b2", "mapBuildId": "b1", "claim": "automated-passed", "carrier": "devtools"},
+    {"id": "simulator-claim", "mockShape": "string-json", "hostShape": "string-json", "buildId": "b1", "mapBuildId": "b1", "claim": "device-passed", "carrier": "devtools"}
+  ]
+}

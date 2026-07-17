@@ -1,0 +1,53 @@
+{
+  "matrix": "form-contract-lab-v1",
+  "fixed_clock": "2026-07-17T13:00:00+08:00",
+  "observations_are_predictions_until_browser_run": true,
+  "cases": [
+    {
+      "id": "valid",
+      "validity": "valid",
+      "ordinary_request": true,
+      "content_type": "multipart/form-data; boundary=<browser-generated>",
+      "entry_names": ["assetId", "category", "priority", "description", "observedDate", "evidenceFiles", "intent"],
+      "server_result": "teaching-accept"
+    },
+    {
+      "id": "missing-description",
+      "validity": "description.valueMissing",
+      "ordinary_request": false,
+      "entry_names": [],
+      "server_result": "not-reached"
+    },
+    {
+      "id": "invalid-date",
+      "validity": "observedDate.rangeOverflow",
+      "ordinary_request": false,
+      "entry_names": [],
+      "server_result": "not-reached"
+    },
+    {
+      "id": "wrong-name",
+      "validity": "valid",
+      "ordinary_request": true,
+      "entry_names": ["assetId", "category", "severity", "description", "observedDate", "intent"],
+      "server_result": "reject-field-priority-missing"
+    },
+    {
+      "id": "bypass-invalid",
+      "validity": "description.valueMissing",
+      "ordinary_request": false,
+      "direct_request": true,
+      "entry_names": ["assetId", "category", "priority", "description", "observedDate", "intent"],
+      "server_result": "400-fieldErrors-description"
+    },
+    {
+      "id": "duplicate-same-key",
+      "validity": "valid",
+      "ordinary_request": true,
+      "attempts": 2,
+      "idempotency_key": "lab-fixed-key-001",
+      "entry_names": ["assetId", "category", "priority", "description", "observedDate", "intent"],
+      "server_result": "same-result-no-second-create"
+    }
+  ]
+}

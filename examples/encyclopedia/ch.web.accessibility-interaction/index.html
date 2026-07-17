@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>无障碍报修表单｜FactoryCare 教学</title>
+    <meta name="description" content="键盘、焦点、可访问名称、状态与动态错误的教学表单。">
+  </head>
+  <body>
+    <!-- Responsibility: 提供可用原生键盘完成的教学报修路径与动态错误落点。 -->
+    <!-- Data source: 固定选项与 problem.json 虚构错误，不读取真实资产、联系人或权限。 -->
+    <!-- Mapping: label/id 建立名称，help/error 建立描述，Problem field 通过 JS allowlist 映射控件。 -->
+    <!-- Side effects: 提交被教学脚本拦截并读取本地 problem.json；只更新 DOM/焦点，不创建报修。 -->
+    <a href="#main">跳到主要内容</a>
+    <header><p><strong>FactoryCare 无障碍教学页</strong></p></header>
+    <main id="main" tabindex="-1">
+      <h1>创建教学报修</h1>
+
+      <button id="instructions-toggle" type="button"
+              aria-expanded="false" aria-controls="instructions-panel">
+        显示填写说明
+      </button>
+      <section id="instructions-panel" hidden>
+        <h2>填写说明</h2>
+        <p>描述应包含设备现象和发生位置。</p>
+      </section>
+
+      <div id="error-summary" tabindex="-1" hidden>
+        <h2>请修正以下问题</h2>
+        <ul></ul>
+      </div>
+      <p id="submit-status" aria-live="polite" aria-atomic="true"></p>
+
+      <form id="report-form" action="/teaching/accessibility/reports" method="post">
+        <fieldset>
+          <legend>故障信息</legend>
+          <p>
+            <label for="asset-id">设备 ID（必填）</label>
+            <input id="asset-id" name="assetId" type="text" required
+                   aria-describedby="asset-id-help asset-id-error">
+            <span id="asset-id-help">使用固定教学 UUID。</span>
+            <span id="asset-id-error" hidden></span>
+          </p>
+          <p>
+            <label for="description">故障描述（必填）</label>
+            <textarea id="description" name="description" required minlength="10"
+                      aria-describedby="description-help description-error"></textarea>
+            <span id="description-help">至少 10 个字符，包含现象和位置。</span>
+            <span id="description-error" hidden></span>
+          </p>
+          <button id="submit-report" type="submit">提交教学报修</button>
+        </fieldset>
+      </form>
+    </main>
+    <footer><p><a href="./help.html">查看帮助（教学链接）</a></p></footer>
+    <script src="./interaction.js"></script>
+  </body>
+</html>

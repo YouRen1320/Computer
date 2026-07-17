@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>无障碍交互故障实验｜FactoryCare</title>
+  </head>
+  <body>
+    <!-- Responsibility: 提供焦点、名称与状态故障修复后的稳定任务基线。 -->
+    <!-- Data source: a11y-lab-v1 固定表单、附件名与错误，不读取真实用户/工单。 -->
+    <!-- Mapping: label/id 形成名称，按钮文字包含附件上下文，ARIA 镜像 visible/hidden 状态。 -->
+    <!-- Side effects: 脚本只切换说明、模拟错误和移除虚构列表项，不调用生产 API。 -->
+    <a href="#main">跳到主要内容</a>
+    <main id="main" tabindex="-1">
+      <h1>无障碍交互故障实验</h1>
+      <button id="toggle" type="button" aria-expanded="false" aria-controls="help-panel">显示帮助</button>
+      <section id="help-panel" hidden><h2>填写帮助</h2><p>描述设备现象与位置。</p></section>
+
+      <div id="error-summary" tabindex="-1" hidden><h2>请修正问题</h2><ul></ul></div>
+      <p id="status" aria-live="polite"></p>
+      <form id="report-form" action="/teaching/a11y-lab" method="post">
+        <label for="description">故障描述（必填）</label>
+        <textarea id="description" name="description" required minlength="10" aria-describedby="description-error"></textarea>
+        <p id="description-error" hidden></p>
+        <button type="submit">提交教学报修</button>
+      </form>
+
+      <section aria-labelledby="attachments-heading">
+        <h2 id="attachments-heading" tabindex="-1">教学附件</h2>
+        <ul id="attachments">
+          <li id="attachment-demo">demo.png <button id="remove-attachment" type="button">移除附件 demo.png</button></li>
+        </ul>
+      </section>
+    </main>
+    <script src="./interaction.js"></script>
+  </body>
+</html>

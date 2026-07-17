@@ -1,0 +1,28 @@
+/* Responsibility: 保存三类几何/遮挡故障最小修复后的固定 CSS。 */
+/* Data source: index.html 的稳定 class/data-case 与 observation-matrix.json。 */
+/* Mapping: border-box 对应 300px 边框盒；card 建立 badge 包含块；B 在根上下文高于 A。 */
+/* Side effects: 只改变教学页布局与绘制，不修改 DOM 或外部状态。 */
+.normal-flow { display: flow-root; }
+.flow-item--first { margin-block-end: 24px; }
+.flow-item--second { margin-block-start: 16px; }
+
+.inspection-card {
+  box-sizing: border-box;
+  position: relative;
+  width: 300px;
+  padding-inline: 20px;
+  border-inline: 2px solid #334155;
+  margin-inline: 8px;
+  overflow: visible;
+}
+
+.inspection-card__badge {
+  position: absolute;
+  inset-block-start: 6px;
+  inset-inline-end: 6px;
+}
+
+.stack-stage { position: relative; }
+.panel-a { position: relative; z-index: 1; opacity: 0.99; }
+.panel-a__tooltip { position: absolute; z-index: 9999; }
+.panel-b { position: relative; z-index: 2; }

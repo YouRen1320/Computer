@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主题变量诊断实验</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供普通组件、危险区和缺失私有 token 的最小诊断表面。 -->
+  <!-- Data source: faults.json 中记录的固定故障与修复合同。 -->
+  <!-- Mapping: sibling 保持根 accent；danger-zone 仅覆盖自身后代；panel 触发嵌套回退。 -->
+  <!-- Side effects: 静态夹具不读取系统主题、不保存偏好，也不发网络请求。 -->
+  <main class="page-shell">
+    <article class="panel sibling"><h1>普通工单</h1><a href="#danger">普通链接</a></article>
+    <article id="danger" class="panel danger-zone"><h2>危险区</h2><button type="button">删除</button></article>
+    <article class="panel missing-private-token"><h2>回退区</h2><p>私有 token 缺失。</p></article>
+  </main>
+</body>
+</html>

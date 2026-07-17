@@ -1,0 +1,9 @@
+repaired-responsive-image: PASS
+repaired-video-track-transcript: PASS
+prediction-matrix: PASS
+fault-invalid-srcset: PASS
+fault-missing-alt: PASS
+fault-mime-mismatch: PASS
+same-verifier-rerun: PASS
+scope-disclosure: PASS
+MEDIA_ASSETS_LAB=PASS

@@ -1,0 +1,7 @@
+{
+  "pages": ["pages/index/index", "pages/details/detail"],
+  "pageFiles": ["pages/index/index", "pages/detail/detail"],
+  "appHooks": ["onLaunch", "onLoad", "onShow"],
+  "logicSource": "document.querySelector('#submit').disabled = true",
+  "routeTarget": "pages/details/detail"
+}

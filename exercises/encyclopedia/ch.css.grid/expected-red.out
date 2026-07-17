@@ -1,0 +1,14 @@
+ERROR: layout must use the exact two-column rectangular area contract
+ERROR: orders and detail must allow the content track to shrink
+ERROR: auto-list must allow one explicit and fixed-size implicit rows
+ERROR: dense/order visual reordering is forbidden in this task list
+ERROR: track leftover must subtract fixed track and gap
+ERROR: track sizes must be 240 and 544
+ERROR: two tracks must have three grid lines
+ERROR: 1fr must not be treated as an unconditional 50 percent
+ERROR: negative line -1 must target the explicit grid end
+ERROR: dense placement must not promise visual source order
+ERROR: ordinary nested grid must not be treated as sharing parent tracks
+ERROR: subgrid support and fallback must remain unverified
+ERROR: real browser Grid and visual evidence must remain unverified
+CSS_GRID_EXERCISE=RED (13 violations)

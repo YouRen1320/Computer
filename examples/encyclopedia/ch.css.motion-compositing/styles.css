@@ -1,0 +1,75 @@
+/* Responsibility: 表达有限、可中断的状态过渡、一次动画、焦点和减少动效降级。 */
+/* Data source: data-state/is-new 语义输入与用户的 prefers-reduced-motion 偏好。 */
+/* Mapping: open/closed 映射 opacity/transform；status 映射一次 keyframes；focus 映射即时 outline。 */
+/* Side effects: transform 可创建 stacking context/containing block；实际合成与性能必须实测。 */
+:root {
+  --focus-ring: #0b5cad;
+  --surface: #f4f7fb;
+  --text: #172033;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: #ffffff;
+  font-family: system-ui, sans-serif;
+}
+
+.demo-shell {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 44rem;
+  margin-inline: auto;
+  padding: 2rem;
+}
+
+.motion-card {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition-property: opacity, transform;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+}
+
+.motion-card[data-state="open"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes badge-enter {
+  0% { opacity: 0; transform: translateY(0.4rem); }
+  65% { opacity: 1; transform: translateY(-0.08rem); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.status-badge.is-new {
+  display: inline-block;
+  animation-name: badge-enter;
+  animation-duration: 240ms;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.toggle:focus-visible,
+.motion-card :focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-card,
+  .status-badge.is-new {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+
+  .motion-card[data-state="open"] {
+    opacity: 1;
+  }
+}

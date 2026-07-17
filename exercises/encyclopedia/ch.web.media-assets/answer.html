@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>媒体资源练习｜FactoryCare</title>
+  </head>
+  <body>
+    <!-- Responsibility: 提供需要修复的响应式图片与视频声明。 -->
+    <!-- Data source: media-exercise-starter 固定虚构资源，不含真实附件。 -->
+    <!-- Mapping: starter 故意让候选、alt、MIME 与字幕合同漂移。 -->
+    <!-- Side effects: 浏览器可能请求虚构 URL；离线验证不发网络请求。 -->
+    <main>
+      <h1>媒体资源练习</h1>
+      <picture>
+        <source src="./incident-small.webp" type="image/webp">
+        <img id="incident" src="./incident.jpg"
+             srcset="./incident-small.jpg 480w, ./incident-large.jpg 2x">
+      </picture>
+      <img id="separator" src="./separator.svg" alt="装饰分隔线">
+      <video poster="./poster.jpg">
+        <source src="./inspection.webm" type="video/webm">
+        <source src="./inspection.mp4" type="text/html">
+        <p>资源失败时一定显示这段文字。</p>
+      </video>
+    </main>
+  </body>
+</html>

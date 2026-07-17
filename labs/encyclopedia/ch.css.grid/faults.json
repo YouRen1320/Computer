@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "faults": [
+    {
+      "id": "implicit-column-drift",
+      "injected_change": "给 detail 设置 grid-column:3/4，越过两列 explicit grid",
+      "expected_failure": "生成意外 implicit column 并出现横向滚动",
+      "first_trusted_evidence": "Grid overlay 的 explicit end 外 line/track 与 detail placement longhands",
+      "root_cause": "把最终隐式边界误当成显式 -1/line 2 边界",
+      "repair": "恢复 detail named area，并明确 auto-list 只允许隐式 rows、grid-auto-rows:80px",
+      "rerun": "same verify.sh and same browser overlay/rect matrix",
+      "residual_risk": "未来显式越界 placement 或 auto-flow column 仍可生成隐式列"
+    },
+    {
+      "id": "min-content-overflow",
+      "injected_change": "将内容列写为裸 1fr，并保留不可断长工单标识与 item auto minimum",
+      "expected_failure": "content-based minimum 撑宽轨道并超过 800px content box",
+      "first_trusted_evidence": "Computed track list、item min-content contribution、min-inline-size 与 rect",
+      "root_cause": "误以为 1fr minimum 固定为 0",
+      "repair": "使用 minmax(0,1fr)，在允许收缩的 item 设置 min-inline-size:0 并定义断行",
+      "rerun": "same verify.sh and same long-content browser matrix",
+      "residual_risk": "表格、替换元素、嵌套 flex 和本地化内容可能产生新的 intrinsic minimum"
+    },
+    {
+      "id": "area-name-mismatch",
+      "injected_change": "template 使用 details，而 item 使用 detail",
+      "expected_failure": "item 未进入预期 named area，并可能由 auto-placement/implicit lines 放置",
+      "first_trusted_evidence": "container computed grid-template-areas 与 item grid-area/line longhands",
+      "root_cause": "把 area name 当成可模糊匹配的标签",
+      "repair": "统一 filters/orders/detail 名称并验证每个同名 area 为矩形",
+      "rerun": "same verify.sh and same area/rect/screenshot matrix",
+      "residual_risk": "响应式 template 分支仍可能出现列数、矩形或拼写漂移"
+    }
+  ]
+}

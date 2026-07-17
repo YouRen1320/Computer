@@ -1,0 +1,6 @@
+{
+  "targetsBuilt": ["h5"],
+  "modules": {"h5": ["h5-adapter", "weixin-adapter"], "mp-weixin": []},
+  "branchHits": ["h5:supported"],
+  "fallbacks": {"h5:share": "", "mp-weixin:file": ""}
+}

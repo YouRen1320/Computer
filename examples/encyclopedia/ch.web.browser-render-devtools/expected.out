@@ -1,0 +1,5 @@
+page-inputs: PASS (HTML, CSS, SVG references are stable)
+network-har: PASS (3 expected 200 responses)
+dom-cssom: PASS (live DOM summary matches computed style)
+render-timeline: PASS (parse->style->layout->paint->composite)
+artifact-safety: PASS (synthetic label present, secret fields absent)

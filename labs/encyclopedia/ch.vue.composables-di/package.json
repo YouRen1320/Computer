@@ -1,0 +1,19 @@
+{
+  "name": "factorycare-composables-di-lab",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.18.0",
+  "engines": { "node": ">=20.19" },
+  "scripts": { "build": "vite build", "test": "vitest run", "verify": "./verify.sh" },
+  "dependencies": { "vue": "3.5.35" },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.5",
+    "@vue/test-utils": "2.4.11",
+    "happy-dom": "17.6.3",
+    "typescript": "5.9.3",
+    "vite": "7.3.1",
+    "vitest": "4.0.18"
+  }
+}
+

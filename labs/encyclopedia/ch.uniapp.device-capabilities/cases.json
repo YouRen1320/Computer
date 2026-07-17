@@ -1,0 +1,43 @@
+{
+  "healthy": {
+    "deniedResult": {"kind": "denied", "recovery": "retry"},
+    "locationPayloadCreated": false,
+    "permissionRequestCount": 1,
+    "pageShowCount": 2,
+    "upload": {"attachmentId": "ATT-1", "succeeded": true},
+    "commit": {"succeeded": false, "idempotencyKey": "idem-1"},
+    "finalState": "commit-failed"
+  },
+  "faults": [
+    {
+      "id": "denial-as-empty",
+      "deniedResult": {"kind": "ok", "value": null},
+      "locationPayloadCreated": true,
+      "permissionRequestCount": 1,
+      "pageShowCount": 1,
+      "upload": {"succeeded": false},
+      "commit": {"succeeded": false},
+      "finalState": "idle"
+    },
+    {
+      "id": "permission-loop",
+      "deniedResult": {"kind": "denied", "recovery": "retry"},
+      "locationPayloadCreated": false,
+      "permissionRequestCount": 3,
+      "pageShowCount": 3,
+      "upload": {"succeeded": false},
+      "commit": {"succeeded": false},
+      "finalState": "denied"
+    },
+    {
+      "id": "partial-commit",
+      "deniedResult": {"kind": "denied", "recovery": "retry"},
+      "locationPayloadCreated": false,
+      "permissionRequestCount": 1,
+      "pageShowCount": 1,
+      "upload": {"attachmentId": "ATT-9", "succeeded": true},
+      "commit": {"succeeded": false, "idempotencyKey": "idem-9"},
+      "finalState": "completed"
+    }
+  ]
+}

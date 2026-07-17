@@ -1,0 +1,9 @@
+intent-boundaries: PASS
+form-owner-and-encoding: PASS
+labels-names-and-values: PASS
+native-constraints: PASS
+text-select-date-file-controls: PASS
+server-validation-boundary: PASS
+factorycare-upload-and-idempotency-boundary: PASS
+scope-disclosure: PASS
+FORMS_VALIDATION_EXERCISE=PASS

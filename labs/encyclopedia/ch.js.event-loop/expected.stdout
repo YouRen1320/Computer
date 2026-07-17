@@ -1,0 +1,8 @@
+sync:start
+async:before
+sync:end
+microtask:promise
+microtask:queue
+async:after
+task:timer
+error=ASYNC_BOUNDARY

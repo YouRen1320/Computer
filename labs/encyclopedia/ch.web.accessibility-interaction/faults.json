@@ -1,0 +1,34 @@
+{
+  "fault_set": "accessibility-interaction-faults-v1",
+  "same_task_rerun": true,
+  "real_assistive_technology_unverified": true,
+  "faults": [
+    {
+      "id": "focus-trap",
+      "injection": "intercept Tab and cycle focus between description and submit on the ordinary page",
+      "first_evidence": "the activeElement sequence repeats before the footer or next task target can be reached",
+      "stage": "keyboard behavior and focus order",
+      "repair": "remove the keydown trap and positive tabindex, then rely on logical DOM order",
+      "rerun": "repeat the unchanged forward and reverse keyboard task",
+      "residual_risk": "OS keyboard settings and third-party widgets remain unverified"
+    },
+    {
+      "id": "missing-name",
+      "injection": "replace the visible remove button text with an unlabeled icon",
+      "first_evidence": "Accessibility tree exposes role button with an empty computed name",
+      "stage": "accessible name computation",
+      "repair": "restore visible text that identifies both remove action and demo.png context",
+      "rerun": "repeat the unchanged tree inspection and screen-reader task",
+      "residual_risk": "voice-control and localized names remain unverified"
+    },
+    {
+      "id": "wrong-aria-state",
+      "injection": "show help-panel while leaving aria-expanded=false",
+      "first_evidence": "visible panel state and accessibility expanded state first disagree",
+      "stage": "state synchronization",
+      "repair": "derive hidden, aria-expanded and button text from the same open boolean",
+      "rerun": "repeat the unchanged open-close action and state inspection",
+      "residual_risk": "framework hydration and asynchronous races remain unverified"
+    }
+  ]
+}

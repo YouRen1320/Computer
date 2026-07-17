@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "ac2ce42cf16c68e5d00a536e0effb560205105dbb7df7c4eb04571dc8ee27e50",
+  "input_digest": "2b4eeb90a5eefab272d753e3362075437892fb0532e29081a387e468ab1fc0a6",
   "volumes": [
     {
       "id": "00",
@@ -1044,7 +1044,7 @@
           "title": "浏览器请求、解析、渲染与 DevTools 观察",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.browser-render-devtools.md",
           "publishable": false
         },
@@ -1053,7 +1053,7 @@
           "title": "Origin、同源、Cookie、缓存与 CORS 浏览器模型",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md",
           "publishable": false
         },
@@ -1062,7 +1062,7 @@
           "title": "语义 HTML、文档结构与元数据",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.semantic-html.md",
           "publishable": false
         },
@@ -1071,7 +1071,7 @@
           "title": "表单控件、提交语义与原生校验",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.forms-validation.md",
           "publishable": false
         },
@@ -1080,7 +1080,7 @@
           "title": "图片、响应式资源、音视频与资源边界",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.media-assets.md",
           "publishable": false
         },
@@ -1089,7 +1089,7 @@
           "title": "无障碍、键盘、焦点与屏幕阅读器",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md",
           "publishable": false
         },
@@ -1098,7 +1098,7 @@
           "title": "CSS 语法、选择器、层叠、优先级与继承",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.cascade.md",
           "publishable": false
         },
@@ -1107,7 +1107,7 @@
           "title": "盒模型、display、定位与层叠上下文",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.box-position.md",
           "publishable": false
         },
@@ -1116,7 +1116,7 @@
           "title": "Flexbox 一维布局",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.flexbox.md",
           "publishable": false
         },
@@ -1125,7 +1125,7 @@
           "title": "Grid 二维布局",
           "order": 10,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.grid.md",
           "publishable": false
         },
@@ -1134,7 +1134,7 @@
           "title": "响应式单位、断点、排版与资源适配",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.responsive-typography.md",
           "publishable": false
         },
@@ -1143,7 +1143,7 @@
           "title": "颜色、主题与 CSS 自定义属性",
           "order": 12,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.theme-variables.md",
           "publishable": false
         },
@@ -1152,7 +1152,7 @@
           "title": "过渡、变换、动画、合成与减少动效",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-07-web-platform/chapters/ch.css.motion-compositing.md",
           "publishable": false
         }
@@ -1167,7 +1167,7 @@
           "title": "JavaScript 运行时、Node、pnpm 与 ESM",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.runtime-esm.md",
           "publishable": false
         },
@@ -1176,7 +1176,7 @@
           "title": "源码、语句、变量、表达式、输出与最小预言",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.statements-variables.md",
           "publishable": false
         },
@@ -1185,7 +1185,7 @@
           "title": "值、类型、转换、运算符、相等与空值",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.values-operators.md",
           "publishable": false
         },
@@ -1194,7 +1194,7 @@
           "title": "条件、switch、循环与控制转移",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.control-flow.md",
           "publishable": false
         },
@@ -1203,7 +1203,7 @@
           "title": "函数、参数、返回值与回调入口",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.functions.md",
           "publishable": false
         },
@@ -1212,7 +1212,7 @@
           "title": "词法作用域、闭包与函数状态",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.scope-closures.md",
           "publishable": false
         },
@@ -1221,7 +1221,7 @@
           "title": "数组、对象、Map、Set 与不可变更新",
           "order": 7,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.collections.md",
           "publishable": false
         },
@@ -1230,7 +1230,7 @@
           "title": "this、原型、class 与对象模型",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.object-model.md",
           "publishable": false
         },
@@ -1239,7 +1239,7 @@
           "title": "异常、调试、测试预言与 Vitest",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.testing-debugging.md",
           "publishable": false
         },
@@ -1248,7 +1248,7 @@
           "title": "DOM 树、查询、创建、更新与删除",
           "order": 10,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md",
           "publishable": false
         },
@@ -1257,7 +1257,7 @@
           "title": "事件传播、监听器、表单与默认行为",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md",
           "publishable": false
         },
@@ -1266,7 +1266,7 @@
           "title": "事件循环、任务、Promise 与 async/await",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md",
           "publishable": false
         },
@@ -1275,7 +1275,7 @@
           "title": "Fetch、AbortController、超时、重试与竞态",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md",
           "publishable": false
         },
@@ -1284,7 +1284,7 @@
           "title": "强制重排、任务阻塞、监听清理与内存边界",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md",
           "publishable": false
         },
@@ -1293,7 +1293,7 @@
           "title": "类型标注、推断、数组、对象、元组与函数类型",
           "order": 15,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.ts.foundations.md",
           "publishable": false
         },
@@ -1302,7 +1302,7 @@
           "title": "interface、type、联合、unknown、never 与收窄",
           "order": 16,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.ts.modeling-narrowing.md",
           "publishable": false
         },
@@ -1311,7 +1311,7 @@
           "title": "泛型、约束、工具类型、映射与条件类型",
           "order": 17,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.ts.generics-utilities.md",
           "publishable": false
         },
@@ -1320,7 +1320,7 @@
           "title": "运行时 Schema、类型边界与 TypeScript 质量工具链",
           "order": 18,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-08-javascript-typescript/chapters/ch.ts.runtime-boundaries.md",
           "publishable": false
         }
@@ -1335,7 +1335,7 @@
           "title": "Vite、Vue 应用、SFC 与项目结构",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.vite-sfc.md",
           "publishable": false
         },
@@ -1344,7 +1344,7 @@
           "title": "插值、绑定、事件、条件与列表指令",
           "order": 2,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md",
           "publishable": false
         },
@@ -1353,7 +1353,7 @@
           "title": "表单、v-model、修饰符与校验边界",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md",
           "publishable": false
         },
@@ -1362,7 +1362,7 @@
           "title": "ref、reactive、computed 与响应式边界",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md",
           "publishable": false
         },
@@ -1371,7 +1371,7 @@
           "title": "watch、effect、生命周期与副作用清理",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md",
           "publishable": false
         },
@@ -1380,7 +1380,7 @@
           "title": "Props、事件、Slot 与组件 v-model",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md",
           "publishable": false
         },
@@ -1389,7 +1389,7 @@
           "title": "Composable、依赖注入与模块边界",
           "order": 7,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.composables-di.md",
           "publishable": false
         },
@@ -1398,7 +1398,7 @@
           "title": "Router、导航、布局与页面边界",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.router-navigation.md",
           "publishable": false
         },
@@ -1407,7 +1407,7 @@
           "title": "Pinia 与客户端状态所有权",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.pinia-state.md",
           "publishable": false
         },
@@ -1416,7 +1416,7 @@
           "title": "服务端状态、加载、错误、取消与竞态",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.server-state.md",
           "publishable": false
         },
@@ -1425,7 +1425,7 @@
           "title": "登录态、路由保护、权限 UI 与安全边界",
           "order": 11,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.auth-permissions.md",
           "publishable": false
         },
@@ -1434,7 +1434,7 @@
           "title": "组件测试、Mock、异步断言与端到端边界",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.component-testing.md",
           "publishable": false
         },
@@ -1443,7 +1443,7 @@
           "title": "Vue 组件无障碍、焦点恢复与动态提示",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md",
           "publishable": false
         },
@@ -1452,7 +1452,7 @@
           "title": "渲染分析、懒加载、错误恢复与性能预算",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.performance.md",
           "publishable": false
         },
@@ -1461,7 +1461,7 @@
           "title": "Nuxt SSR、SSG、水合与服务端数据获取",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-09-vue-nuxt/chapters/ch.nuxt.rendering-hydration.md",
           "publishable": false
         }
@@ -1476,7 +1476,7 @@
           "title": "小程序运行模型、配置、生命周期与宿主边界",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md",
           "publishable": false
         },
@@ -1485,7 +1485,7 @@
           "title": "uni-app 工具链、页面、路由与项目结构",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md",
           "publishable": false
         },
@@ -1494,7 +1494,7 @@
           "title": "uni-app 模板、组件、表单与 Vue 差异",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md",
           "publishable": false
         },
@@ -1503,7 +1503,7 @@
           "title": "网络、认证、存储与多环境配置",
           "order": 4,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md",
           "publishable": false
         },
@@ -1512,7 +1512,7 @@
           "title": "平台 API、条件编译与能力检测",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md",
           "publishable": false
         },
@@ -1521,7 +1521,7 @@
           "title": "上传、扫码、定位、权限与失败路径",
           "order": 6,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md",
           "publishable": false
         },
@@ -1530,7 +1530,7 @@
           "title": "单元/组件测试、Mock、真机和网络调试",
           "order": 7,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md",
           "publishable": false
         },
@@ -1539,7 +1539,7 @@
           "title": "分包、启动性能、缓存与资源预算",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md",
           "publishable": false
         },
@@ -1548,7 +1548,7 @@
           "title": "离线队列、重试、冲突与幂等重放",
           "order": 9,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md",
           "publishable": false
         },
@@ -1557,7 +1557,7 @@
           "title": "隐私、安全、平台声明与审核证据",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md",
           "publishable": false
         },
@@ -1566,7 +1566,7 @@
           "title": "构建、版本、灰度、发布与监控",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md",
           "publishable": false
         },
@@ -1575,7 +1575,7 @@
           "title": "FactoryCare 报修端集成与验收",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md",
           "publishable": false
         }

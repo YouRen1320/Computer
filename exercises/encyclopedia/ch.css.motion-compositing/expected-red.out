@@ -1,0 +1,10 @@
+ERROR: explicit transform/opacity transition contract missing
+ERROR: transition all is forbidden
+ERROR: layout-affecting keyframes are forbidden
+ERROR: finite status animation contract missing
+ERROR: infinite animation is forbidden
+ERROR: visible focus outline contract missing
+ERROR: outline suppression is forbidden
+ERROR: reduced motion contract missing
+ERROR: persistent will-change is forbidden without measured lifecycle
+CSS_MOTION_EXERCISE=FAIL (9 violations)

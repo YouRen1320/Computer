@@ -1,0 +1,4 @@
+baseline: PASS (network, DOM and render prediction is fixed)
+wrong-resource-path: RED detected -> repaired -> original oracle replayable
+blocking-stylesheet: RED detected -> repaired -> original oracle replayable
+BROWSER_RENDER_LAB=PASS

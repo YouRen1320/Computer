@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>待修复主题练习</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 暴露普通卡片、兄弟节点和危险区的主题故障。 -->
+  <!-- Data source: theme-matrix.json 的固定验收合同。 -->
+  <!-- Mapping: 普通区应读取根 token，危险区才允许局部覆盖，panel 应支持缺失私有 token。 -->
+  <!-- Side effects: 练习页不读写持久化设置，也不发起网络请求。 -->
+  <main class="page-shell">
+    <section class="panel sibling"><h1>普通区</h1><a href="#danger">普通操作</a></section>
+    <section id="danger" class="panel danger-zone"><h2>危险区</h2><button type="button">删除</button></section>
+  </main>
+</body>
+</html>

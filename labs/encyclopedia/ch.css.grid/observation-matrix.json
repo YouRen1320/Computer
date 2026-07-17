@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "real_browser_tracks_recorded": false,
+  "real_grid_overlay_recorded": false,
+  "real_keyboard_order_recorded": false,
+  "real_visual_diff_recorded": false,
+  "track_case": {"container_content_inline": 800, "fixed": 240, "gap": 16, "expected_flexible": 544, "expected_total": 800},
+  "area_case": {"rows": [["filters", "filters"], ["orders", "detail"]], "expected_positions": {"filters": [1, 1, 2, 3], "orders": [2, 1, 3, 2], "detail": [2, 2, 3, 3]}},
+  "implicit_case": {"explicit_columns": 3, "item_count": 4, "expected_implicit_columns": 0, "expected_implicit_rows": 1, "grid_auto_rows": 80},
+  "required_real_evidence": ["browser-name-version", "container-content-box", "computed-track-list", "grid-overlay", "item-rects", "dom-visual-tab-order", "screenshots", "visual-diff"]
+}

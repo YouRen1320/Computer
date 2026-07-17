@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>工单 WO-LAB-003｜语义结构实验</title>
+    <meta name="description" content="用于注入与修复结构语义故障的静态教学工单。">
+    <link rel="canonical" href="https://docs.factorycare.example/work-orders/WO-LAB-003">
+  </head>
+  <body>
+    <!-- Responsibility: 为三类结构故障提供修复后的稳定基线，不实现业务交互。 -->
+    <!-- Data source: 仅使用 lab-fixture-v1 虚构字段，不连接 FactoryCare API。 -->
+    <!-- Mapping: 工单概要映射到 dl，状态转换按发生顺序映射到 ol。 -->
+    <!-- Side effects: 静态页无脚本和网络写入；验证器只读取本目录文件。 -->
+    <header>
+      <p><strong>FactoryCare 语义结构实验</strong></p>
+      <nav>
+        <p>本页目录</p>
+        <ul>
+          <li><a href="#summary">摘要</a></li>
+          <li><a href="#timeline">流转</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <h1>工单 WO-LAB-003</h1>
+        <section id="summary">
+          <h2>故障摘要</h2>
+          <dl>
+            <dt>状态</dt><dd>处理中</dd>
+            <dt>创建时间</dt><dd><time datetime="2026-07-17T10:00:00+08:00">10:00</time></dd>
+          </dl>
+        </section>
+        <section id="timeline">
+          <h2>流转记录</h2>
+          <ol>
+            <li><h3>已创建</h3><p>教学请求已记录。</p></li>
+            <li><h3>处理中</h3><p>教学技术员已接单。</p></li>
+          </ol>
+        </section>
+        <footer><p>仅供离线实验。</p></footer>
+      </article>
+    </main>
+    <footer><p><small>FactoryCare 学习项目</small></p></footer>
+  </body>
+</html>

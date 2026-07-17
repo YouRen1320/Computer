@@ -1,0 +1,103 @@
+/* Responsibility: 建立亮暗语义 token、显式覆盖、局部覆盖与强制颜色合同。 */
+/* Data source: theme-matrix.json 中经离线对比度计算的固定 sRGB 色对。 */
+/* Mapping: 根 token 供页面继承；媒体偏好次之；data-theme 显式规则最后覆盖。 */
+/* Side effects: 媒体或根属性变化会触发样式重算；CSS 不持久化用户选择。 */
+:root {
+  color-scheme: light dark;
+  --color-canvas: #ffffff;
+  --color-text: #172033;
+  --color-surface: #f4f7fb;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-canvas: #0f172a;
+    --color-text: #f8fafc;
+    --color-surface: #1e293b;
+    --color-accent: #60a5fa;
+    --color-on-accent: #0f172a;
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: #ffffff;
+  --color-text: #172033;
+  --color-surface: #f4f7fb;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-canvas: #0f172a;
+  --color-text: #f8fafc;
+  --color-surface: #1e293b;
+  --color-accent: #60a5fa;
+  --color-on-accent: #0f172a;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+.page-shell {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 48rem;
+  margin-inline: auto;
+  padding: 2rem;
+}
+
+.panel,
+.fallback-card {
+  padding: 1.25rem;
+  color: var(--color-text, CanvasText);
+  background: var(--panel-surface, var(--color-surface, Canvas));
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+}
+
+.action {
+  display: inline-block;
+  padding: 0.65rem 1rem;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 2px solid transparent;
+  border-radius: 0.4rem;
+  font: inherit;
+  text-decoration: none;
+}
+
+.action:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.danger-zone {
+  --color-accent: #b42318;
+  --color-on-accent: #ffffff;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-canvas: Canvas;
+    --color-text: CanvasText;
+    --color-surface: Canvas;
+    --color-accent: LinkText;
+    --color-on-accent: Canvas;
+  }
+
+  .action {
+    border-color: ButtonText;
+  }
+
+  .action:focus-visible {
+    outline-color: Highlight;
+  }
+}

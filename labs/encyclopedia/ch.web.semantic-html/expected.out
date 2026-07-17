@@ -1,0 +1,8 @@
+repaired-structure: PASS
+metadata-and-outline: PASS
+fault-div-soup: PASS
+fault-heading-skip: PASS
+fault-missing-language: PASS
+same-verifier-rerun: PASS
+scope-disclosure: PASS
+SEMANTIC_HTML_LAB=PASS

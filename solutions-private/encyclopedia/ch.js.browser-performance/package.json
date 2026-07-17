@@ -1,0 +1,8 @@
+{
+  "name": "factorycare-ch-js-browser-performance-solution",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node src/solution.mjs"
+  }
+}

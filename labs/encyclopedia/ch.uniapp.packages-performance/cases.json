@@ -1,0 +1,8 @@
+{
+  "healthy": {"graph":{"main":["core"],"reporter":["core"],"history":["core"],"core":[]},"cache":{"schemaVersion":2,"accepted":true},"currentSchemaVersion":2,"preloadBeforeInteractiveBytes":0,"coldStartP50":1250,"coldStartBudget":1300},
+  "faults": [
+    {"id":"package-cycle","graph":{"reporter":["history"],"history":["reporter"]},"cache":{"schemaVersion":2,"accepted":true},"currentSchemaVersion":2,"preloadBeforeInteractiveBytes":0,"coldStartP50":1200,"coldStartBudget":1300},
+    {"id":"stale-cache","graph":{"main":[]},"cache":{"schemaVersion":1,"accepted":true},"currentSchemaVersion":2,"preloadBeforeInteractiveBytes":0,"coldStartP50":1200,"coldStartBudget":1300},
+    {"id":"preload-regression","graph":{"main":[]},"cache":{"schemaVersion":2,"accepted":true},"currentSchemaVersion":2,"preloadBeforeInteractiveBytes":900000,"coldStartP50":1650,"coldStartBudget":1300}
+  ]
+}

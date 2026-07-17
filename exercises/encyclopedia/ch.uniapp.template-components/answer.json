@@ -1,0 +1,7 @@
+{
+  "tags": ["div", "select", "button"],
+  "inputValuePath": "target.value",
+  "spacingUnit": "design-px",
+  "modelProp": "value",
+  "modelEvent": "update:modelValue"
+}

@@ -1,0 +1,12 @@
+/* Responsibility: 用流式容器、可增长控件与局部容器查询满足离线 oracle。 */
+* { box-sizing: border-box; }
+.workspace { inline-size: min(calc(100% - 2rem), 80rem); margin-inline: auto; }
+.card-region { container: responsive-card / inline-size; }
+.card { min-inline-size: 0; }
+h1 { font-size: clamp(1.5rem, 1.1rem + 1.5vi, 2.5rem); overflow-wrap: anywhere; }
+button { min-block-size: 2.75rem; font: inherit; white-space: normal; }
+img { max-inline-size: 100%; block-size: auto; }
+/* Mapping: 组件只在自己的容器有足够空间时改变排列。 */
+@container responsive-card (inline-size >= 32rem) { .card { display: grid; grid-template-columns: minmax(0, 1fr) auto; } }
+/* Side effects: 可见焦点不改变布局，也不依赖 hover。 */
+:focus-visible { outline: 0.2rem solid #2458c6; outline-offset: 0.2rem; }

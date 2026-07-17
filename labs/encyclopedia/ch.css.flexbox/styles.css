@@ -1,0 +1,20 @@
+/* Responsibility: 保存 min-size、shrink 与视觉顺序故障的最小修复。 */
+/* Data source: index.html 的直接子项和 observation-matrix.json 固定宽度。 */
+/* Mapping: query 允许低于 min-content 收缩；动作 DOM/视觉同序；卡片逐行独立伸缩。 */
+/* Side effects: 只改变布局、换行和焦点位置的视觉呈现，不改 DOM 或业务数据。 */
+* { box-sizing: border-box; }
+
+.fault-toolbar {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: end;
+  gap: 12px;
+  padding: 12px;
+}
+
+.fault-toolbar__query { flex: 1 1 240px; min-inline-size: 0; }
+.fault-toolbar__query input { inline-size: 100%; min-inline-size: 0; overflow-wrap: anywhere; }
+.fault-toolbar > button { flex: 0 0 auto; }
+
+.fault-cards { display: flex; flex-wrap: wrap; gap: 12px; }
+.fault-cards > article { flex: 1 1 180px; min-inline-size: 0; padding: 12px; border: 1px solid; }

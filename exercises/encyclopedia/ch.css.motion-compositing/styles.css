@@ -1,0 +1,33 @@
+/* Responsibility: 这是故障注入动效，供学习者诊断而非生产使用。 */
+/* Data source: 人为错误声明；正确合同在 motion-matrix.json。 */
+/* Mapping: 当前错误地让所有属性过渡、用布局属性动画并无限循环。 */
+/* Side effects: 长期 will-change 占资源，outline none 隐藏键盘焦点。 */
+.drawer {
+  opacity: 0;
+  width: 12rem;
+  left: 2rem;
+  transition: all 500ms ease;
+  will-change: transform;
+}
+
+.drawer[data-state="open"] {
+  opacity: 1;
+  width: 30rem;
+  left: 0;
+}
+
+@keyframes status-grow {
+  from { width: 0; left: 1rem; }
+  to { width: 8rem; left: 0; }
+}
+
+.status.is-updated {
+  animation-name: status-grow;
+  animation-duration: 1200ms;
+  animation-iteration-count: infinite;
+}
+
+.toggle:focus-visible,
+.drawer :focus-visible {
+  outline: none;
+}

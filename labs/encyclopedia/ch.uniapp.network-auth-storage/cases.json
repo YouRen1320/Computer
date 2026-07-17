@@ -1,0 +1,47 @@
+[
+  {
+    "name": "valid-test-request",
+    "environment": "test",
+    "apiOrigin": "https://test-api.example.invalid",
+    "allowlistedOrigins": ["https://test-api.example.invalid"],
+    "logText": "status=200 trace=trace-1",
+    "storage": { "schemaVersion": 1, "validJson": true },
+    "expected": "PASS"
+  },
+  {
+    "name": "host-domain-not-allowlisted",
+    "environment": "test",
+    "apiOrigin": "https://unregistered.example.invalid",
+    "allowlistedOrigins": ["https://test-api.example.invalid"],
+    "logText": "request fail",
+    "storage": { "schemaVersion": 1, "validJson": true },
+    "expected": "REQUEST_DOMAIN_NOT_ALLOWLISTED"
+  },
+  {
+    "name": "production-build-uses-test",
+    "environment": "production",
+    "apiOrigin": "https://test-api.example.invalid",
+    "allowlistedOrigins": ["https://test-api.example.invalid"],
+    "logText": "status=200",
+    "storage": { "schemaVersion": 1, "validJson": true },
+    "expected": "ENVIRONMENT_CROSSWIRE"
+  },
+  {
+    "name": "authorization-was-logged",
+    "environment": "test",
+    "apiOrigin": "https://test-api.example.invalid",
+    "allowlistedOrigins": ["https://test-api.example.invalid"],
+    "logText": "Authorization: Bearer SECRET_SENTINEL",
+    "storage": { "schemaVersion": 1, "validJson": true },
+    "expected": "CREDENTIAL_EXPOSURE"
+  },
+  {
+    "name": "storage-is-corrupt",
+    "environment": "test",
+    "apiOrigin": "https://test-api.example.invalid",
+    "allowlistedOrigins": ["https://test-api.example.invalid"],
+    "logText": "storage parse failed",
+    "storage": { "schemaVersion": 0, "validJson": false },
+    "expected": "STORAGE_CORRUPTION"
+  }
+]

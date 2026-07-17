@@ -1,0 +1,12 @@
+{
+  "expected_entry_names": ["assetId", "severity", "description", "observedDate", "evidenceFiles"],
+  "placeholder_is_a_label": true,
+  "client_validation_is_security_boundary": true,
+  "accept_proves_server_file_safe": true,
+  "direct_multipart_matches_factorycare_api": true,
+  "disabled_button_prevents_all_duplicates": true,
+  "bypass_invalid_server_result": "accept",
+  "duplicate_same_key_server_result": "two-created",
+  "real_browser_unverified": false,
+  "production_adapter_unverified": false
+}

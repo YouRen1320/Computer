@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+  <body>
+    <!-- Responsibility: 为 DOM 练习提供固定语义根，不处理事件和网络。 -->
+    <!-- Data source: exercise.mjs 的两条教学工单。 -->
+    <!-- Mapping: main/section/ul 固定，学习者负责安全创建 li 子项。 -->
+    <!-- Side effects: 仅允许修改列表子项和对应文本/property。 -->
+    <main>
+      <h1>FactoryCare 工单队列练习</h1>
+      <section aria-labelledby="queue-title">
+        <h2 id="queue-title">待处理工单</h2>
+        <ul id="work-order-list"></ul>
+      </section>
+    </main>
+  </body>
+</html>

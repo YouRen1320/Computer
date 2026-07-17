@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "real_browser_observations_recorded": false,
+  "real_keyboard_traversal_recorded": false,
+  "real_visual_diff_recorded": false,
+  "cases": [
+    {"id": "wide-short", "container": 720, "content": "short", "expected_lines": 1, "expected_overflow": false},
+    {"id": "narrow-short", "container": 360, "content": "short", "expected_lines": 2, "expected_overflow": false},
+    {"id": "narrow-long", "container": 360, "content": "unbreakable-token", "min_inline_size": 0, "expected_lines": 2, "expected_overflow": false},
+    {"id": "order", "dom": ["query", "filter", "reset"], "visual": ["query", "filter", "reset"], "tab": ["query", "filter", "reset"]}
+  ],
+  "required_real_evidence": ["browser-name-version", "container-content-box", "computed-flex-properties", "flex-overlay", "item-rects", "dom-visual-tab-order", "screenshots", "visual-diff"]
+}

@@ -1,0 +1,9 @@
+{
+  "healthy":{"assetResponseKeys":["assetId","displayName"],"clientContractDigest":"sha256:c1","releaseContractDigest":"sha256:c1","operationId":"op-1","firstKey":"idem-1","retryKey":"idem-1","cameraDenied":true,"manualCodeAvailable":true,"textOnlySubmitAvailable":true,"releaseBuildId":"b-3","evidenceBuildId":"b-3"},
+  "faults":[
+    {"id":"contract-drift","assetResponseKeys":["assetId","display_name"],"clientContractDigest":"sha256:old","releaseContractDigest":"sha256:new","operationId":"op-1","firstKey":"idem-1","retryKey":"idem-1","cameraDenied":false,"manualCodeAvailable":true,"textOnlySubmitAvailable":true,"releaseBuildId":"b-3","evidenceBuildId":"b-3"},
+    {"id":"duplicate-key-change","assetResponseKeys":["assetId","displayName"],"clientContractDigest":"sha256:c1","releaseContractDigest":"sha256:c1","operationId":"op-1","firstKey":"idem-1","retryKey":"idem-2","cameraDenied":false,"manualCodeAvailable":true,"textOnlySubmitAvailable":true,"releaseBuildId":"b-3","evidenceBuildId":"b-3"},
+    {"id":"permission-no-fallback","assetResponseKeys":["assetId","displayName"],"clientContractDigest":"sha256:c1","releaseContractDigest":"sha256:c1","operationId":"op-1","firstKey":"idem-1","retryKey":"idem-1","cameraDenied":true,"manualCodeAvailable":false,"textOnlySubmitAvailable":false,"releaseBuildId":"b-3","evidenceBuildId":"b-3"},
+    {"id":"release-evidence-mismatch","assetResponseKeys":["assetId","displayName"],"clientContractDigest":"sha256:c1","releaseContractDigest":"sha256:c1","operationId":"op-1","firstKey":"idem-1","retryKey":"idem-1","cameraDenied":false,"manualCodeAvailable":true,"textOnlySubmitAvailable":true,"releaseBuildId":"b-4","evidenceBuildId":"b-3"}
+  ]
+}

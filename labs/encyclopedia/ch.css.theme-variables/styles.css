@@ -1,0 +1,74 @@
+/* Responsibility: 表达修复后的主题作用域、嵌套回退、对比度和强制颜色合同。 */
+/* Data source: faults.json 的 expected_fix 与固定 sRGB 主题值。 */
+/* Mapping: 根为亮色，dark 媒体覆盖根，danger-zone 只覆盖局部 accent。 */
+/* Side effects: 样式变化只影响呈现；不修改 DOM、存储或用户设置。 */
+:root {
+  color-scheme: light dark;
+  --color-canvas: #ffffff;
+  --color-text: #172033;
+  --color-surface: #f4f7fb;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-canvas: #0f172a;
+    --color-text: #f8fafc;
+    --color-surface: #1e293b;
+    --color-accent: #60a5fa;
+    --color-on-accent: #0f172a;
+  }
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+.page-shell {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 44rem;
+  margin-inline: auto;
+}
+
+.panel {
+  padding: 1rem;
+  color: var(--color-text, CanvasText);
+  background: var(--panel-surface, var(--color-surface, Canvas));
+  border: 1px solid currentColor;
+}
+
+a,
+button {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 2px solid transparent;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.danger-zone {
+  --color-accent: #b42318;
+  --color-on-accent: #ffffff;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-canvas: Canvas;
+    --color-text: CanvasText;
+    --color-surface: Canvas;
+    --color-accent: LinkText;
+    --color-on-accent: Canvas;
+  }
+
+  a,
+  button {
+    border-color: ButtonText;
+  }
+}

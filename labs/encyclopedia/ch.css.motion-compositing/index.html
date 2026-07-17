@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>动效故障诊断实验</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供 open 面板、一次状态反馈和可聚焦操作的最小诊断表面。 -->
+  <!-- Data source: faults.json 的固定注入/修复记录。 -->
+  <!-- Mapping: data-state 映射面板目标值，is-updated 映射一次反馈，按钮保留焦点。 -->
+  <!-- Side effects: 静态页面不触发脚本或业务请求；真实快速反向需浏览器补测。 -->
+  <main class="lab-shell">
+    <button class="toggle" type="button" aria-expanded="true" aria-controls="drawer">面板已打开</button>
+    <section id="drawer" class="drawer" data-state="open" aria-labelledby="drawer-title">
+      <h1 id="drawer-title">维修详情 <span class="status is-updated">已更新</span></h1>
+      <a href="#record">查看修复记录</a>
+    </section>
+    <p id="record">状态不等待动效结束。</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,11 @@
+prototype-link=true
+lookup-kind=own:false,in:true,value:work-order
+shadow-kind=urgent
+revealed-kind=work-order
+method-shared=true
+call-direct=WO-1:CREATED
+call-explicit=WO-2:ASSIGNED
+call-bound=WO-2:ASSIGNED
+class-private=WO-3:CREATED
+instance-state-isolated=true
+composition-shared=true

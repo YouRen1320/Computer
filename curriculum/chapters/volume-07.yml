@@ -8,7 +8,7 @@ chapters:
     role: foundation
     responsibility: "建立从导航请求到 DOM/CSSOM、布局、绘制和合成的可观察浏览器管线，只做测量与解释，不在本章优化 JavaScript 性能。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-browser-pipeline
@@ -76,7 +76,7 @@ chapters:
     role: concept
     responsibility: "解释浏览器如何按 Origin 隔离读取、携带 Cookie 并复用缓存，区分浏览器 CORS 执行与服务端授权，不进入登录业务实现。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-origin-browser-security
@@ -144,7 +144,7 @@ chapters:
     role: foundation
     responsibility: "用原生元素表达页面结构、内容层级和机器可读元数据，不在本章引入表单交互、CSS 布局或 ARIA 补丁。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-semantic-document
@@ -212,7 +212,7 @@ chapters:
     role: concept
     responsibility: "建立 label、控件、提交编码和原生约束校验的端到端表单契约，不在本章实现 JavaScript 自定义校验或框架双向绑定。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-form-semantics
@@ -285,7 +285,7 @@ chapters:
     role: concept
     responsibility: "为图片、音视频和下载资源选择正确的语义元素、格式与替代内容，只处理资源声明和交付边界，不做 CSS 响应式布局。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-responsive-images
@@ -353,7 +353,7 @@ chapters:
     role: concept
     responsibility: "用原生语义、键盘顺序、焦点管理和必要的 ARIA 建立可操作界面，明确 ARIA 不能修复错误 HTML 或业务流程。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: web-keyboard-focus
@@ -421,7 +421,7 @@ chapters:
     role: foundation
     responsibility: "建立声明、选择器、来源、层叠层、优先级和继承的可计算规则，不在本章教授具体布局算法。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-syntax-selectors
@@ -489,7 +489,7 @@ chapters:
     role: concept
     responsibility: "解释元素尺寸、正常流、display、定位包含块和层叠上下文，不在本章使用 Flexbox 或 Grid 解决整体布局。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-box-formatting
@@ -557,7 +557,7 @@ chapters:
     role: concept
     responsibility: "用主轴、交叉轴、伸缩、换行和对齐解决一维组件布局，不把二维页面网格强塞给 Flexbox。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-flex-axis-sizing
@@ -625,7 +625,7 @@ chapters:
     role: concept
     responsibility: "用轨道、网格线、区域和自动放置表达二维布局，区分 Grid 与 Flexbox 的责任边界。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-grid-tracks-placement
@@ -693,7 +693,7 @@ chapters:
     role: synthesis
     responsibility: "组合流式尺寸、媒体/容器查询、可读排版和响应式资源形成内容驱动适配，不用设备型号堆砌断点。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-responsive-layout
@@ -771,7 +771,7 @@ chapters:
     role: concept
     responsibility: "用设计 token、自定义属性、颜色对比和系统偏好表达主题，不在本章建立完整组件库。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-custom-properties
@@ -839,7 +839,7 @@ chapters:
     role: concept
     responsibility: "用过渡、关键帧与 transform 表达有意义反馈，并依据合成成本和减少动效偏好限制动画，不处理 JavaScript 长任务优化。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: css-motion-primitives

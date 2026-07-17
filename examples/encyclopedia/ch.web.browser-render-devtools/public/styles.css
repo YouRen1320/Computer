@@ -1,0 +1,17 @@
+/* Responsibility: keep the observation page's layout and paint inputs explicit and deterministic. */
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+}
+
+.work-order {
+  max-width: 42rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #94a3b8;
+}
+
+.status {
+  color: #075985;
+  font-weight: 700;
+}

@@ -1,0 +1,7 @@
+metadata: PASS
+intent-comments: PASS
+native-regions: PASS
+explicit-heading-outline: PASS
+text-semantics: PASS
+chapter-boundary: PASS
+SEMANTIC_HTML_EXERCISE=PASS

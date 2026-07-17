@@ -1,0 +1,12 @@
+{
+  "positive_tabindex_is_ok": false,
+  "role_button_has_native_behavior": false,
+  "aria_label_is_always_better_than_visible_text": false,
+  "accessibility_tree_equals_screen_reader_task": false,
+  "zero_scanner_findings_means_wcag_conformance": false,
+  "unknown_server_field_policy": "global-summary",
+  "focus_after_removing_current_attachment": "attachments-heading",
+  "real_keyboard_observed": false,
+  "real_accessibility_tree_observed": false,
+  "real_screen_reader_observed": false
+}

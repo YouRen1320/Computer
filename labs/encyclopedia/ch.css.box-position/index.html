@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>溢出与遮挡实验</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供正常流、绝对定位和多个层叠上下文的修复后实验页。 -->
+  <!-- Data source: faults.json 与 observation-matrix.json 的合成教学输入。 -->
+  <!-- Mapping: data-case/class 对应固定几何、包含块和上下文树节点。 -->
+  <!-- Side effects: 只加载本地 CSS 并渲染，不执行脚本或业务写操作。 -->
+  <main>
+    <h1>溢出与遮挡实验</h1>
+    <section class="normal-flow" aria-labelledby="flow-heading">
+      <h2 id="flow-heading">正常流</h2>
+      <p class="flow-item flow-item--first">第一项</p>
+      <p class="flow-item flow-item--second">第二项</p>
+    </section>
+    <section class="inspection-card" data-case="border-box" aria-labelledby="card-heading">
+      <h2 id="card-heading">检查卡片</h2>
+      <span class="inspection-card__badge">badge</span>
+      <p>固定 300px border box。</p>
+    </section>
+    <section class="stack-stage" aria-labelledby="stack-heading">
+      <h2 id="stack-heading">上下文树</h2>
+      <div class="panel-a">A <span class="panel-a__tooltip">tooltip</span></div>
+      <div class="panel-b">B</div>
+    </section>
+  </main>
+</body>
+</html>

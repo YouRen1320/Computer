@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "faults": [
+    {
+      "id": "auto-min-overflow",
+      "injected_change": "删除 query 的 min-inline-size: 0 并保留不可断长编码",
+      "expected_failure": "query 被 content-based minimum 冻结并挤出动作",
+      "first_trusted_evidence": "目标 flex item 的 computed min-inline-size、overflow 与 rect",
+      "root_cause": "把 flex-shrink:1 误当成可以越过自动最小尺寸",
+      "repair": "只在允许收缩的 query/item 设置 min-inline-size:0，并定义内容断行策略",
+      "rerun": "same verify.sh and same browser width/content matrix",
+      "residual_risk": "本地化、200% 缩放、焦点环和完整编码可达性仍需真实任务验证"
+    },
+    {
+      "id": "scaled-shrink-misread",
+      "injected_change": "按裸 shrink factor 分配负空间，遗漏 basis 与 gap",
+      "expected_failure": "手算 item targets 与浏览器 rect 不一致且总和不能回到容器宽度",
+      "first_trusted_evidence": "negative free space 与 basis×shrink 的 scaled factor 表",
+      "root_cause": "把 shrink 当 grow 的镜像比例而未乘 flex base size",
+      "repair": "从容器减 gap/bases 后按 scaled factors 分配，再应用 min/max 冻结边界",
+      "rerun": "same verify.sh and same browser rect capture",
+      "residual_risk": "浏览器亚像素舍入与 intrinsic min/max 会改变受控公式外的结果"
+    },
+    {
+      "id": "visual-dom-order-mismatch",
+      "injected_change": "给筛选按钮 order:-1 使其视觉第一但 DOM/Tab 仍在查询之后",
+      "expected_failure": "视觉顺序与连续 Tab/朗读顺序分裂",
+      "first_trusted_evidence": "DOM 序列、CSS order 与连续 Tab focus 记录",
+      "root_cause": "使用视觉 order 修复逻辑任务顺序",
+      "repair": "保持逻辑 DOM 顺序并移除 order/reverse；不使用正 tabindex 补丁",
+      "rerun": "same verify.sh and same keyboard traversal",
+      "residual_risk": "响应式样式和未来组件插槽仍可能重新引入视觉重排"
+    }
+  ]
+}

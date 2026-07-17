@@ -1,0 +1,7 @@
+fault-records-and-first-evidence: PASS
+scope-fix-and-sibling-boundary: PASS
+missing-token-nested-fallback: PASS
+fixed-contrast-matrix: PASS
+same-oracle-rerun-contract: PASS
+browser-evidence-boundary: PASS
+CSS_THEME_LAB=PASS

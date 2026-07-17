@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flexbox 练习</title>
+  <link rel="stylesheet" href="./answer.css">
+</head>
+<body>
+  <!-- Responsibility: 提供公开练习的一维工具栏和卡片直接子项。 -->
+  <!-- Data source: answer.json 的教学判断与静态长编码。 -->
+  <!-- Mapping: DOM 依次为查询、筛选、清除；待修 CSS 当前故意制造视觉错序。 -->
+  <!-- Side effects: 表单不连接服务端；只加载 CSS 并接受本地焦点。 -->
+  <main>
+    <form class="toolbar">
+      <label class="query">设备 <input name="asset" value="VERY-LONG-FACTORYCARE-ASSET-CODE"></label>
+      <button type="submit">筛选</button>
+      <button type="reset">清除</button>
+    </form>
+    <section class="cards"><article>一</article><article>二</article><article>三</article></section>
+  </main>
+</body>
+</html>

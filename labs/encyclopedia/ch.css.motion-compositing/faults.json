@@ -1,0 +1,46 @@
+{
+  "verified_on": "2026-07-17",
+  "faults": [
+    {
+      "id": "layout-animation-jank",
+      "injected": "transition-property: width, left",
+      "first_trustworthy_evidence": "source contract names layout-affecting properties; a real Performance trace is still required to quantify cost",
+      "expected_fix": "keep layout state stable and map the visual movement to transform/opacity"
+    },
+    {
+      "id": "motion-accessibility-violation",
+      "injected": "remove the prefers-reduced-motion branch",
+      "first_trustworthy_evidence": "reduce media matches but computed transition/animation remain active",
+      "expected_fix": "explicitly remove non-essential transition, animation and transform while preserving visible state"
+    },
+    {
+      "id": "focus-hidden-during-motion",
+      "injected": ":focus-visible { outline: none; }",
+      "first_trustworthy_evidence": "keyboard active element has no visible outline rule",
+      "expected_fix": "restore an immediate outline that is not in transition-property"
+    },
+    {
+      "id": "transitionend-business-coupling",
+      "injected": "unlock the control only on transitionend",
+      "first_trustworthy_evidence": "rapid reversal produces transitioncancel and the semantic control remains locked",
+      "expected_fix": "update semantic state immediately and make end/cancel cleanup optional"
+    }
+  ],
+  "fixed_contract": {
+    "animated_properties": ["opacity", "transform"],
+    "layout_affecting_animated_properties": [],
+    "status_iterations": 1,
+    "reduce_transition": "none",
+    "reduce_animation": "none",
+    "reduce_transform": "none",
+    "focus_participates_in_transition": false,
+    "transitioncancel_allowed": true,
+    "business_logic_depends_on_transitionend": false
+  },
+  "same_oracle_rerun": true,
+  "real_performance_trace_recorded": false,
+  "real_layer_observation_recorded": false,
+  "real_transition_events_recorded": false,
+  "real_keyboard_focus_recorded": false,
+  "real_screen_reader_recorded": false
+}

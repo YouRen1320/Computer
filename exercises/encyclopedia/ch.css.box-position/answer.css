@@ -1,0 +1,11 @@
+/* Responsibility: 公开 starter 故意保留盒尺寸、包含块、上下文和 overflow 错误。 */
+/* Data source: answer.html 的固定 class 夹具。 */
+/* Mapping: 当前映射是待诊断输入，不代表推荐的几何契约。 */
+/* Side effects: 只改变本地练习页呈现，不修改 DOM 或业务数据。 */
+.card { box-sizing: content-box; width: 300px; padding-inline: 20px; border-inline: 2px solid; margin-inline: 8px; }
+.badge { position: absolute; inset: 6px 6px auto auto; }
+.panel-a { position: relative; z-index: 3; }
+.tooltip { position: absolute; z-index: 9999; }
+.panel-b { position: relative; z-index: 2; }
+.overflow-hidden { overflow: hidden; }
+.overflow-clip { overflow: hidden; }

@@ -1,0 +1,6 @@
+S0=count:0,empty:visible
+S1=count:3,order:WO-1>WO-2>WO-3,text:safe
+S2=count:3,WO-2:IN_PROGRESS,identity:same
+S3=count:2,order:WO-2>WO-3
+structure=main>section>ul>li
+property=checked:true,attribute:absent

@@ -1,0 +1,14 @@
+{
+  "environment": "production",
+  "apiOrigin": "https://api.example.invalid",
+  "allowedOrigin": "https://api.example.invalid",
+  "logText": "status=200 trace=trace-1",
+  "storage": {
+    "schemaVersion": 1,
+    "environment": "production",
+    "subjectHash": "current-user",
+    "expiresAt": "2026-07-18T00:00:00Z"
+  },
+  "currentSubjectHash": "current-user",
+  "now": "2026-07-17T00:00:00Z"
+}

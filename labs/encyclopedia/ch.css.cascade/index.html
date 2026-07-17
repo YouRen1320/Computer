@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>层叠误判实验</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 为三类层叠故障提供固定 DOM 和可观察目标。 -->
+  <!-- Data source: 教学 faults.json 与 observation-matrix.json，不接入生产数据。 -->
+  <!-- Mapping: class/data-state 映射到样式候选；可见文字保留状态语义。 -->
+  <!-- Side effects: 浏览器只加载本地 CSS；页面没有脚本和业务写操作。 -->
+  <main id="lab">
+    <h1>层叠误判实验</h1>
+    <article class="incident is-critical" data-state="open">
+      <h2 class="incident__title">压力异常</h2>
+      <p class="incident__summary">父元素提供可继承前景色。</p>
+      <p class="incident__code">教学编号 LAB-07-CSS</p>
+    </article>
+  </main>
+</body>
+</html>

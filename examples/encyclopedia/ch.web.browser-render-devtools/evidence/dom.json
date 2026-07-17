@@ -1,0 +1,9 @@
+{
+  "captured_after": "synthetic-load-stable",
+  "nodes": [
+    {"selector": "main.work-order", "tag": "main"},
+    {"selector": "main.work-order > h1", "tag": "h1", "text": "工单 WO-DEMO-1001"},
+    {"selector": "p.status", "tag": "p", "text": "状态：处理中", "computed_color": "rgb(7, 89, 133)"},
+    {"selector": "img", "tag": "img", "src": "./status.svg", "alt": "处理中状态示意"}
+  ]
+}

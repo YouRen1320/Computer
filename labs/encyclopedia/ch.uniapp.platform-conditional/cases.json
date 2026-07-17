@@ -1,0 +1,31 @@
+{
+  "healthy": {
+    "targetsBuilt": ["h5", "mp-weixin"],
+    "modules": {"h5": ["h5-adapter"], "mp-weixin": ["weixin-adapter"]},
+    "branchHits": ["h5:supported", "h5:unsupported", "mp-weixin:supported", "mp-weixin:unsupported"],
+    "fallbacks": {"h5:share": "copy-link", "mp-weixin:file": "text-only-report"}
+  },
+  "faults": [
+    {
+      "id": "wrong-macro",
+      "targetsBuilt": ["h5", "mp-weixin"],
+      "modules": {"h5": ["h5-adapter"], "mp-weixin": []},
+      "branchHits": ["h5:supported"],
+      "fallbacks": {"h5:share": "copy-link"}
+    },
+    {
+      "id": "build-only",
+      "targetsBuilt": ["h5", "mp-weixin"],
+      "modules": {"h5": ["h5-adapter"], "mp-weixin": ["weixin-adapter"]},
+      "branchHits": ["h5:supported", "h5:unsupported"],
+      "fallbacks": {"h5:share": "copy-link", "mp-weixin:file": "text-only-report"}
+    },
+    {
+      "id": "missing-fallback",
+      "targetsBuilt": ["h5", "mp-weixin"],
+      "modules": {"h5": ["h5-adapter"], "mp-weixin": ["weixin-adapter"]},
+      "branchHits": ["h5:supported", "h5:unsupported", "mp-weixin:supported", "mp-weixin:unsupported"],
+      "fallbacks": {"h5:share": "", "mp-weixin:file": ""}
+    }
+  ]
+}

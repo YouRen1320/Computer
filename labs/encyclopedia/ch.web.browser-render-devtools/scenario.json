@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "url": "http://127.0.0.1:4173/index.html",
+    "viewport": "1280x720",
+    "cache": "cold-fixture",
+    "requests": [
+      {"path": "/index.html", "status": 200, "mime": "text/html"},
+      {"path": "/styles.css", "status": 200, "mime": "text/css", "wait_ms": 5},
+      {"path": "/status.svg", "status": 200, "mime": "image/svg+xml"}
+    ],
+    "dom_status_exists": true,
+    "computed_status_color": "rgb(7, 89, 133)",
+    "first_paint_ms": 34
+  },
+  "faults": [
+    {
+      "id": "wrong-resource-path",
+      "injected": {
+        "stylesheet_href": "./assets/styles.css",
+        "requested_path": "/assets/styles.css",
+        "status": 404,
+        "dom_status_exists": true,
+        "computed_status_color": "rgb(0, 0, 0)"
+      },
+      "first_evidence": "Network URL /assets/styles.css returned 404",
+      "repair": {
+        "stylesheet_href": "./styles.css",
+        "requested_path": "/styles.css",
+        "status": 200,
+        "computed_status_color": "rgb(7, 89, 133)"
+      },
+      "replay": ["same-url", "same-viewport", "same-cache", "same-dom-and-color-assertions"]
+    },
+    {
+      "id": "blocking-stylesheet",
+      "injected": {
+        "requested_path": "/styles.css",
+        "status": 200,
+        "css_wait_ms": 800,
+        "first_paint_ms": 850
+      },
+      "first_evidence": "Network Timing shows CSS wait 800ms before the styled screenshot",
+      "repair": {
+        "requested_path": "/styles.css",
+        "status": 200,
+        "css_wait_ms": 5,
+        "first_paint_ms": 34
+      },
+      "replay": ["same-url", "same-viewport", "same-cache", "same-timeline-phases"]
+    }
+  ]
+}

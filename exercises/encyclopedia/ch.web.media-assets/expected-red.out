@@ -1,0 +1,20 @@
+ERROR: picture source must use srcset and must not use src
+ERROR: informative incident image needs a factual non-empty alt
+ERROR: incident srcset must use width descriptors only
+ERROR: width-descriptor srcset needs a sizes contract
+ERROR: incident image needs intrinsic width and height
+ERROR: decorative separator must use explicit empty alt
+ERROR: video must expose native controls
+ERROR: video source MIME declarations must be video/webm then video/mp4
+ERROR: video needs a default zh-CN captions track
+ERROR: video needs a visible external transcript link
+ERROR: captions.vtt must exist beside the answer
+ERROR: transcript.html must exist beside the answer
+ERROR: browser, not the author, makes the final currentSrc choice
+ERROR: sizes must not be treated as CSS layout
+ERROR: explicit empty alt must remain distinct from missing alt
+ERROR: file extension must not be trusted as response MIME
+ERROR: video inner fallback must not promise all source-failure recovery
+ERROR: download attribute must not be treated as attachment authorization
+ERROR: real browser, HTTP and codec behavior must remain unverified
+MEDIA_ASSETS_EXERCISE=RED (19 violations)

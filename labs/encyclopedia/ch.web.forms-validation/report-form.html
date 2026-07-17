@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>表单契约故障实验｜FactoryCare</title>
+    <meta name="description" content="用于注入 label、name 与校验绕过故障的原生教学表单。">
+  </head>
+  <body>
+    <!-- Responsibility: 提供故障实验的修复后原生表单基线，不实现自定义 JavaScript 校验。 -->
+    <!-- Data source: lab-form-v1 固定选项和日期范围，不访问真实资产、联系人或文件。 -->
+    <!-- Mapping: HTML entry names 属于教学接收端；生产 API 需转换 JSON 并先完成附件上传。 -->
+    <!-- Side effects: 外部 submitter 会向 /teaching/lab/report-submissions 发 POST；离线验证不会触发它。 -->
+    <header><p><strong>FactoryCare 表单实验</strong></p></header>
+    <main>
+      <h1>创建教学报修</h1>
+      <form id="report-form" action="/teaching/lab/report-submissions" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>报修信息</legend>
+          <p>
+            <label for="asset-id">设备 ID（必填）</label>
+            <input id="asset-id" name="assetId" type="text" required pattern="[0-9a-fA-F-]{36}">
+          </p>
+          <p>
+            <label for="category">类别（必填）</label>
+            <input id="category" name="category" type="text" required minlength="1" maxlength="64">
+          </p>
+          <p>
+            <label for="priority">优先级（必填）</label>
+            <select id="priority" name="priority" required>
+              <option value="">请选择</option>
+              <option value="LOW">低</option>
+              <option value="HIGH">高</option>
+              <option value="CRITICAL">紧急</option>
+            </select>
+          </p>
+          <p>
+            <label for="description">故障描述（必填）</label>
+            <textarea id="description" name="description" required minlength="10" maxlength="5000"></textarea>
+          </p>
+          <p>
+            <label for="observed-date">观察日期（必填、仅教学）</label>
+            <input id="observed-date" name="observedDate" type="date" required min="2026-01-01" max="2026-12-31">
+          </p>
+          <p>
+            <label for="evidence-files">现场图片（可选）</label>
+            <input id="evidence-files" name="evidenceFiles" type="file" accept="image/png,image/jpeg" multiple>
+          </p>
+        </fieldset>
+      </form>
+      <button type="submit" form="report-form" name="intent" value="create">提交教学请求</button>
+    </main>
+    <footer><p><small>虚构夹具；不使用真实个人信息。</small></p></footer>
+  </body>
+</html>

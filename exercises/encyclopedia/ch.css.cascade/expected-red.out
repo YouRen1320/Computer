@@ -1,0 +1,13 @@
+ERROR: explicit layer order must be base, components, utilities
+ERROR: zero-specificity boundary must use :where(#exercise, .shell) .title
+ERROR: critical state must use a direct-child utility selector
+ERROR: !important is forbidden in this architecture exercise
+ERROR: brittle ID-descendant title selector must be removed
+ERROR: summary must explicitly inherit the parent computed color
+ERROR: source-order exercise must end with #0f172a after #64748b
+ERROR: !important must remain separate from specificity
+ERROR: later source must not be treated as unconditional winner
+ERROR: parent specificity must not compete with a child declaration
+ERROR: unset must depend on whether the property naturally inherits
+ERROR: real browser computed style must remain explicitly unverified
+CSS_CASCADE_EXERCISE=RED (12 violations)

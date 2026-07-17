@@ -1,0 +1,28 @@
+/* Responsibility: 保存 implicit-track、min-content 和 area mismatch 的最小修复。 */
+/* Data source: index.html 直接子项与 observation-matrix.json 的 800px content box。 */
+/* Mapping: 240px + minmax(0,1fr)，areas 精确命名，额外卡片只生成 80px 隐式行。 */
+/* Side effects: 只改变二维尺寸与视觉位置，不改变 DOM、Tab 或业务数据。 */
+* { box-sizing: border-box; }
+
+.work-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-areas:
+    "filters filters"
+    "orders  detail";
+  gap: 16px;
+  inline-size: 800px;
+}
+
+.filters { grid-area: filters; }
+.orders { grid-area: orders; min-inline-size: 0; overflow-wrap: anywhere; }
+.detail { grid-area: detail; min-inline-size: 0; }
+
+.auto-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 80px;
+  grid-auto-flow: row;
+  grid-auto-rows: 80px;
+  gap: 12px;
+}

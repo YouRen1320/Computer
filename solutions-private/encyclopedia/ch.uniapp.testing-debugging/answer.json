@@ -1,0 +1,1 @@
+{"mockShape":"string-json","hostShape":"string-json","buildId":"b7","mapBuildId":"b7","claim":"device-passed","carrier":"physical-device","target":"mp-weixin","runtimeVersion":"fixture-1","device":"fixture-phone","os":"fixture-os","commit":"abc123","artifactChecksum":"sha256:fixture","steps":["open","submit"],"expected":"conflict message","actual":"conflict message"}

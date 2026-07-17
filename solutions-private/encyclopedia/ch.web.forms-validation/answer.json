@@ -1,0 +1,12 @@
+{
+  "expected_entry_names": ["assetId", "priority", "description", "observedDate", "evidenceFiles", "intent"],
+  "placeholder_is_a_label": false,
+  "client_validation_is_security_boundary": false,
+  "accept_proves_server_file_safe": false,
+  "direct_multipart_matches_factorycare_api": false,
+  "disabled_button_prevents_all_duplicates": false,
+  "bypass_invalid_server_result": "400-fieldErrors-description",
+  "duplicate_same_key_server_result": "same-result-no-second-create",
+  "real_browser_unverified": true,
+  "production_adapter_unverified": true
+}

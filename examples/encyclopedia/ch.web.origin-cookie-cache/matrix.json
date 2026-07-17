@@ -1,0 +1,140 @@
+{
+  "origins": {
+    "A": {"url": "https://app.factorycare.test:8443", "site": "https://factorycare.test"},
+    "B": {"url": "https://api.factorycare.test:9443", "site": "https://factorycare.test"},
+    "C": {"url": "https://api.vendor.test:9443", "site": "https://vendor.test"}
+  },
+  "requests": [
+    {
+      "id": "same-origin-public",
+      "page": "A",
+      "target": "A",
+      "target_path": "/public",
+      "method": "GET",
+      "headers": [],
+      "credentials": "same-origin",
+      "cookie": null,
+      "cors": null,
+      "expected_cookie": false,
+      "expected_preflight": false,
+      "expected_readable": true
+    },
+    {
+      "id": "cross-origin-default-no-cookie",
+      "page": "A",
+      "target": "B",
+      "target_path": "/session",
+      "method": "GET",
+      "headers": [],
+      "credentials": "same-origin",
+      "cookie": {"host": "api.factorycare.test", "path": "/", "secure": true, "same_site": "Lax"},
+      "cors": {"allow_origin": "https://app.factorycare.test:8443", "allow_credentials": true, "vary": ["Origin"]},
+      "expected_cookie": false,
+      "expected_preflight": false,
+      "expected_readable": true
+    },
+    {
+      "id": "cross-origin-same-site-include",
+      "page": "A",
+      "target": "B",
+      "target_path": "/session",
+      "method": "GET",
+      "headers": [],
+      "credentials": "include",
+      "cookie": {"host": "api.factorycare.test", "path": "/", "secure": true, "same_site": "Lax"},
+      "cors": {"allow_origin": "https://app.factorycare.test:8443", "allow_credentials": true, "vary": ["Origin"]},
+      "expected_cookie": true,
+      "expected_preflight": false,
+      "expected_readable": true
+    },
+    {
+      "id": "credentialed-wildcard-rejected",
+      "page": "A",
+      "target": "B",
+      "target_path": "/session",
+      "method": "GET",
+      "headers": [],
+      "credentials": "include",
+      "cookie": {"host": "api.factorycare.test", "path": "/", "secure": true, "same_site": "Lax"},
+      "cors": {"allow_origin": "*", "allow_credentials": true, "vary": []},
+      "expected_cookie": true,
+      "expected_preflight": false,
+      "expected_readable": false
+    },
+    {
+      "id": "preflight-state-write",
+      "page": "A",
+      "target": "B",
+      "target_path": "/work-orders/WO-DEMO",
+      "method": "PUT",
+      "headers": ["X-CSRF-Token", "Content-Type: application/json"],
+      "credentials": "include",
+      "cookie": {"host": "api.factorycare.test", "path": "/", "secure": true, "same_site": "Lax"},
+      "cors": {
+        "allow_origin": "https://app.factorycare.test:8443",
+        "allow_credentials": true,
+        "allow_methods": ["PUT"],
+        "allow_headers": ["X-CSRF-Token", "Content-Type"],
+        "vary": ["Origin"]
+      },
+      "expected_cookie": true,
+      "expected_preflight": true,
+      "expected_readable": true
+    },
+    {
+      "id": "cross-site-lax-no-cookie",
+      "page": "A",
+      "target": "C",
+      "target_path": "/session",
+      "method": "GET",
+      "headers": [],
+      "credentials": "include",
+      "cookie": {"host": "api.vendor.test", "path": "/", "secure": true, "same_site": "Lax"},
+      "cors": {"allow_origin": "https://app.factorycare.test:8443", "allow_credentials": true, "vary": ["Origin"]},
+      "expected_cookie": false,
+      "expected_preflight": false,
+      "expected_readable": true
+    },
+    {
+      "id": "cross-site-none-secure-cookie",
+      "page": "A",
+      "target": "C",
+      "target_path": "/session",
+      "method": "GET",
+      "headers": [],
+      "credentials": "include",
+      "cookie": {"host": "api.vendor.test", "path": "/", "secure": true, "same_site": "None"},
+      "cors": {"allow_origin": "https://app.factorycare.test:8443", "allow_credentials": true, "vary": ["Origin"]},
+      "expected_cookie": true,
+      "expected_preflight": false,
+      "expected_readable": true
+    }
+  ],
+  "cache": {
+    "first": {
+      "method": "GET",
+      "url": "https://api.factorycare.test:9443/asset.css",
+      "status": 200,
+      "cache_control": "no-cache",
+      "etag": "asset-v1",
+      "body": ".status{color:#075985}",
+      "stored": true
+    },
+    "repeat": {
+      "if_none_match": "asset-v1",
+      "status": 304,
+      "response_body": null,
+      "representation_source": "stored-200-body",
+      "expected_body": ".status{color:#075985}"
+    },
+    "dynamic_cors": {
+      "allow_origin_derived_from_request": true,
+      "vary": ["Origin"]
+    }
+  },
+  "evidence_boundary": {
+    "kind": "synthetic-not-browser-recording",
+    "real_browser_cookie_policy_verified": false,
+    "factorycare_production_values_decided": false
+  }
+}

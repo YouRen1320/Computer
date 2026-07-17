@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+  <body>
+    <!-- Responsibility: 为参考解提供固定语义根，不实现事件或网络。 -->
+    <!-- Data source: solution.mjs 的两条教学工单。 -->
+    <!-- Mapping: main/section/ul 固定，脚本创建语义 li/article 子树。 -->
+    <!-- Side effects: 只更新当前列表子树的文本、dataset 和 checkbox property。 -->
+    <main>
+      <h1>FactoryCare 工单队列参考解</h1>
+      <section aria-labelledby="queue-title">
+        <h2 id="queue-title">待处理工单</h2>
+        <ul id="work-order-list"></ul>
+      </section>
+    </main>
+  </body>
+</html>

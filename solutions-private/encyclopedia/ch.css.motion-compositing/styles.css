@@ -1,0 +1,58 @@
+/* Responsibility: 实现通过公开 oracle 的有限过渡、一次动画、focus 与 reduce 合同。 */
+/* Data source: data-state/is-updated 和 prefers-reduced-motion。 */
+/* Mapping: closed/open 映射 opacity/transform；状态反馈一次；reduce 立即显示最终态。 */
+/* Side effects: transform 的 stacking/containing-block 与实际合成成本仍须实测。 */
+.exercise-shell {
+  display: grid;
+  gap: 1rem;
+  max-inline-size: 42rem;
+  margin-inline: auto;
+}
+
+.drawer {
+  opacity: 0;
+  transform: translateX(1rem);
+  transition-property: opacity, transform;
+  transition-duration: 160ms;
+  transition-timing-function: ease-out;
+  padding: 1rem;
+  border: 1px solid currentColor;
+}
+
+.drawer[data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes status-enter {
+  from { opacity: 0; transform: translateY(0.25rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status.is-updated {
+  display: inline-block;
+  animation-name: status-enter;
+  animation-duration: 200ms;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.toggle:focus-visible,
+.drawer :focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .status.is-updated {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+
+  .drawer[data-state="open"] {
+    opacity: 1;
+  }
+}

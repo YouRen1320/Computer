@@ -1,0 +1,34 @@
+[
+  {
+    "name": "valid-project",
+    "pages": ["pages/index/index", "pages/work-orders/list", "pages/work-orders/detail"],
+    "files": ["pages/index/index", "pages/work-orders/list", "pages/work-orders/detail"],
+    "buildTarget": "mp-weixin",
+    "directDetailInitializesItself": true,
+    "expected": "PASS"
+  },
+  {
+    "name": "pages-path-drift",
+    "pages": ["pages/index/index", "pages/work-order/detail"],
+    "files": ["pages/index/index", "pages/work-orders/detail"],
+    "buildTarget": "mp-weixin",
+    "directDetailInitializesItself": true,
+    "expected": "ROUTE_CONFIG_DRIFT"
+  },
+  {
+    "name": "wrong-build-target",
+    "pages": ["pages/index/index", "pages/work-orders/detail"],
+    "files": ["pages/index/index", "pages/work-orders/detail"],
+    "buildTarget": "h5",
+    "directDetailInitializesItself": true,
+    "expected": "TARGET_BUILD_MISMATCH"
+  },
+  {
+    "name": "detail-needs-list-memory",
+    "pages": ["pages/index/index", "pages/work-orders/detail"],
+    "files": ["pages/index/index", "pages/work-orders/detail"],
+    "buildTarget": "mp-weixin",
+    "directDetailInitializesItself": false,
+    "expected": "DIRECT_ENTRY_BLANK"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "name": "factorycare-ts-runtime-boundaries-example",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "format:check": "node scripts/format-check.mjs",
+    "lint": "node scripts/policy-lint.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

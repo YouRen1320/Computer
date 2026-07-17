@@ -1,0 +1,23 @@
+/* Responsibility: 保存三类故障完成最小修复后的层叠规则。 */
+/* Data source: index.html 的稳定 class/data-state 与实验预言矩阵。 */
+/* Mapping: 命名层确定架构顺序，子元素显式 inherit，源码末项解决最终平局。 */
+/* Side effects: 只改变本地教学页呈现，不写 DOM 或外部状态。 */
+@layer base, components, utilities;
+
+@layer base {
+  #lab article .incident__title { color: #166534; }
+}
+
+@layer components {
+  .incident { color: #334155; }
+  .incident__summary { color: inherit; }
+  .incident__code { color: #64748b; }
+}
+
+@layer utilities {
+  .is-critical > .incident__title { color: #b91c1c; }
+}
+
+@layer components {
+  .incident__code { color: #0f172a; }
+}

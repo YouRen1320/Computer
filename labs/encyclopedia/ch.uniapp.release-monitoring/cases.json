@@ -1,0 +1,9 @@
+{
+  "healthy": {"commit":"abc123","artifactDigest":"sha256:good","environment":"production","apiOrigin":"https://api.factorycare.example","buildId":"b-3","grayBuildId":"b-3","stopCondition":"privacy-event-or-failure-budget","rollbackBuildId":"b-2","eventBuildId":"b-3","event":{"errorCode":"TIMEOUT"}},
+  "faults": [
+    {"id":"environment-mix","commit":"abc123","artifactDigest":"sha256:a","environment":"production","apiOrigin":"http://localhost:8080","buildId":"b-3","grayBuildId":"b-3","stopCondition":"stop","rollbackBuildId":"b-2","eventBuildId":"b-3","event":{}},
+    {"id":"provenance-loss","commit":"","artifactDigest":"","environment":"production","apiOrigin":"https://api.factorycare.example","buildId":"b-3","grayBuildId":"b-3","stopCondition":"stop","rollbackBuildId":"b-2","eventBuildId":"b-3","event":{}},
+    {"id":"no-stop-condition","commit":"abc123","artifactDigest":"sha256:a","environment":"production","apiOrigin":"https://api.factorycare.example","buildId":"b-3","grayBuildId":"b-3","stopCondition":"","rollbackBuildId":"b-2","eventBuildId":"b-3","event":{}},
+    {"id":"sensitive-event","commit":"abc123","artifactDigest":"sha256:a","environment":"production","apiOrigin":"https://api.factorycare.example","buildId":"b-3","grayBuildId":"b-3","stopCondition":"stop","rollbackBuildId":"b-2","eventBuildId":"b-3","event":{"authorization":"Bearer secret"}}
+  ]
+}

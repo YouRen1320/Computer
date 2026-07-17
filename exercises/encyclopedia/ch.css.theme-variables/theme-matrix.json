@@ -1,0 +1,9 @@
+{
+  "light": {"canvas": "#ffffff", "text": "#172033", "surface": "#f4f7fb", "accent": "#0b5cad", "on_accent": "#ffffff"},
+  "dark": {"canvas": "#0f172a", "text": "#f8fafc", "surface": "#1e293b", "accent": "#60a5fa", "on_accent": "#0f172a"},
+  "danger": {"accent": "#b42318", "on_accent": "#ffffff"},
+  "minimum_body_contrast": 4.5,
+  "real_browser_computed_recorded": false,
+  "real_forced_colors_recorded": false,
+  "real_screen_reader_recorded": false
+}

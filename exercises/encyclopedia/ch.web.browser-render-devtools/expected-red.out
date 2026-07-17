@@ -1,0 +1,14 @@
+ERROR: prediction must list HTML, CSS and SVG requests
+ERROR: environment must fix browser version, viewport, cache and reload
+ERROR: first trustworthy panel must be Network
+ERROR: CSS 404 must leave the status DOM node present
+ERROR: CSS 404 must remove the target computed style
+ERROR: diagnosis must identify resource-path
+ERROR: repair must change source and restore /styles.css 200
+ERROR: repair must rerun the same inputs
+ERROR: evidence must include HAR, DOM summary, timeline and screenshot
+ERROR: artifacts must be synthetic or sanitized
+ERROR: secret fields must be absent
+ERROR: chapter must not claim JavaScript optimization
+ERROR: offline answer must mark real browser recording unverified
+BROWSER_RENDER_EXERCISE=RED (13 violations)

@@ -1,0 +1,7 @@
+theme-source-and-intent: PASS
+scope-and-fallback-contract: PASS
+dark-and-explicit-override-contract: PASS
+forced-colors-boundary: PASS
+root-body-contrast: PASS
+browser-evidence-boundary: PASS
+CSS_THEME_EXERCISE=PASS

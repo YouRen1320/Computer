@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>媒体资源证据页｜FactoryCare 教学</title>
+    <meta name="description" content="响应式图片、字幕视频和资源失败回退的静态教学页。">
+  </head>
+  <body>
+    <!-- Responsibility: 声明响应式图片、字幕视频和可见回退，不实现 CSS 布局或播放器。 -->
+    <!-- Data source: SVG/WebVTT/文字稿来自 synthetic-media-v1；视频二进制明确不在离线夹具中。 -->
+    <!-- Mapping: 图片候选映射同一教学故障，track 与 transcript 映射同一检修片段版本。 -->
+    <!-- Side effects: 浏览器打开页面时可能 GET 媒体 URL；本页没有业务写入。 -->
+    <header><p><strong>FactoryCare 媒体教学页</strong></p></header>
+    <main>
+      <h1>冷却泵故障媒体证据</h1>
+      <figure>
+        <picture>
+          <source media="(max-width: 40rem)"
+                  srcset="./assets/pump-narrow.svg 480w"
+                  sizes="100vw">
+          <img id="incident-photo"
+               src="./assets/pump-wide.svg"
+               srcset="./assets/pump-narrow.svg 480w, ./assets/pump-wide.svg 960w"
+               sizes="(max-width: 40rem) 100vw, 40rem"
+               width="960" height="640"
+               alt="冷却泵进水接口下方有一条深色油迹">
+        </picture>
+        <figcaption>教学示意图：油迹位置，不代表已确认故障原因。</figcaption>
+      </figure>
+
+      <img src="./assets/separator.svg" width="320" height="16" alt="">
+
+      <section>
+        <h2>检修片段</h2>
+        <video id="inspection-video" controls preload="metadata"
+               width="960" height="540" poster="./assets/inspection-poster.svg">
+          <source src="./assets/inspection-demo.webm" type="video/webm">
+          <source src="./assets/inspection-demo.mp4" type="video/mp4">
+          <track kind="captions" src="./assets/inspection.zh-CN.vtt"
+                 srclang="zh-CN" label="简体中文字幕" default>
+          <p>此浏览器不支持 video 元素。请阅读下方文字稿。</p>
+        </video>
+        <p><a id="transcript-link" href="./inspection-transcript.html">阅读检修视频文字稿</a></p>
+        <p><a href="./assets/inspection-demo.mp4" download>下载教学视频（需配置真实 fixture）</a></p>
+      </section>
+    </main>
+    <footer><p><small>只含虚构工单媒体。</small></p></footer>
+  </body>
+</html>

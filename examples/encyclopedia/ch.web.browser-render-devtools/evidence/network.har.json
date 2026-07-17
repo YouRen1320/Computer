@@ -1,0 +1,36 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": {"name": "factorycare-synthetic-fixture", "version": "1"},
+    "pages": [
+      {
+        "id": "page_1",
+        "title": "FactoryCare 工单观察页",
+        "startedDateTime": "2026-07-17T03:00:00.000Z"
+      }
+    ],
+    "entries": [
+      {
+        "pageref": "page_1",
+        "request": {"method": "GET", "url": "http://127.0.0.1:4173/index.html", "headers": []},
+        "response": {"status": 200, "content": {"mimeType": "text/html"}, "headers": []},
+        "timings": {"wait": 12, "receive": 2},
+        "_initiator": "navigation"
+      },
+      {
+        "pageref": "page_1",
+        "request": {"method": "GET", "url": "http://127.0.0.1:4173/styles.css", "headers": []},
+        "response": {"status": 200, "content": {"mimeType": "text/css"}, "headers": []},
+        "timings": {"wait": 5, "receive": 1},
+        "_initiator": "link"
+      },
+      {
+        "pageref": "page_1",
+        "request": {"method": "GET", "url": "http://127.0.0.1:4173/status.svg", "headers": []},
+        "response": {"status": 200, "content": {"mimeType": "image/svg+xml"}, "headers": []},
+        "timings": {"wait": 6, "receive": 1},
+        "_initiator": "img"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "faults": [
+    {
+      "id": "box-sizing-overflow",
+      "injected_change": "将 inspection-card 改成 content-box，却仍把 width 300 当作 border width",
+      "expected_failure": "border width 变为 344px、outer width 变为 360px",
+      "first_trusted_evidence": "Computed box-sizing 与 DevTools 的 content/padding/border 四边",
+      "root_cause": "把 content-box 声明 width 误当 border box",
+      "repair": "恢复 box-sizing: border-box 并保留 300px 边框盒契约",
+      "rerun": "same verify.sh and same browser geometry capture",
+      "residual_risk": "真实内容最小尺寸、滚动条与字体仍可能造成溢出"
+    },
+    {
+      "id": "containing-block-drift",
+      "injected_change": "删除 inspection-card 的 position: relative",
+      "expected_failure": "absolute badge 改以更外层或 initial containing block 为参照",
+      "first_trusted_evidence": "沿祖先检查 establishing trigger，并比较 card/badge rect",
+      "root_cause": "把 DOM 父元素误当成自动 containing block",
+      "repair": "在拥有 badge 的 inspection-card 上恢复 position: relative",
+      "rerun": "same verify.sh and same browser geometry capture",
+      "residual_risk": "祖先 transform/contain 等特性仍可能改变其他 positioned 后代"
+    },
+    {
+      "id": "stacking-context-error",
+      "injected_change": "把 tooltip 的 9999 当成可直接压过根上下文中 z-index 2 的 panel-b",
+      "expected_failure": "tooltip 仍随 z-index 1 的 panel-a 整体位于 panel-b 之下",
+      "first_trusted_evidence": "上下文树显示 tooltip 的直接父上下文是 panel-a",
+      "root_cause": "跨 stacking context 比较叶子 z-index",
+      "repair": "比较根上下文的 panel-a/panel-b，保持预期 B 在前；全局 overlay 应迁移到共同 root",
+      "rerun": "same verify.sh and same browser screenshot diff",
+      "residual_risk": "opacity、transform、contain 等新增 trigger 可能重建上下文树"
+    }
+  ]
+}

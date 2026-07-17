@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "real_devtools_box_model_recorded": false,
+  "real_dom_rects_recorded": false,
+  "real_screenshot_diff_recorded": false,
+  "cases": [
+    {"id": "border-box", "declared_width": 300, "padding_inline_each": 20, "border_inline_each": 2, "margin_inline_each": 8, "expected_content_width": 256, "expected_border_width": 300, "expected_outer_width": 316},
+    {"id": "margin-collapse", "first_bottom": 24, "second_top": 16, "expected_gap": 24, "reason": "adjacent-positive-block-margins-collapse-to-maximum"},
+    {"id": "containing-block", "target": ".inspection-card__badge", "expected": ".inspection-card", "reason": "nearest-position-relative-ancestor"},
+    {"id": "stack-front", "leaf": ".panel-a__tooltip", "leaf_z": 9999, "parent_z": 1, "sibling_context": ".panel-b", "sibling_z": 2, "expected_front": ".panel-b"}
+  ],
+  "required_real_evidence": ["browser-name-version", "viewport-zoom-dpr", "computed-style", "box-model", "dom-rects", "scroll-position", "before-after-screenshots", "visual-diff"]
+}

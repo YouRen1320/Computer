@@ -1,0 +1,6 @@
+{
+  "name": "factorycare-vue-server-state-lab",
+  "private": true,
+  "type": "module",
+  "scripts": { "verify": "node tests/verify.mjs" }
+}

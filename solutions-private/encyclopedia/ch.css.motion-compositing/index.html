@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>动效练习参考解</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Responsibility: 展示修复后的 open 面板、一次状态反馈与键盘焦点。 -->
+  <!-- Data source: motion-matrix.json 的固定动效合同。 -->
+  <!-- Mapping: data-state 控制 transform/opacity，is-updated 触发一次动画，focus 使用 outline。 -->
+  <!-- Side effects: 静态参考解不运行脚本；真实取消事件和性能仍需浏览器补证。 -->
+  <main class="exercise-shell">
+    <button class="toggle" type="button" aria-expanded="true" aria-controls="drawer">面板已打开</button>
+    <section id="drawer" class="drawer" data-state="open" aria-labelledby="drawer-title">
+      <h1 id="drawer-title">维修详情 <span class="status is-updated">已更新</span></h1>
+      <a href="#boundary">查看证据边界</a>
+    </section>
+    <p id="boundary">离线绿灯不保证合成层。</p>
+  </main>
+</body>
+</html>

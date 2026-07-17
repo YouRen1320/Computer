@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>原生报修表单｜FactoryCare 教学页</title>
+    <meta name="description" content="用于学习 label、提交编码与原生约束校验的静态表单。">
+  </head>
+  <body>
+    <!-- Responsibility: 演示浏览器原生表单合同，不实现 JavaScript 校验或生产上传。 -->
+    <!-- Data source: 选项与约束来自 teaching-form-v1 固定夹具，不读取真实资产或用户。 -->
+    <!-- Mapping: name/value 只映射教学接收端；生产 JSON 和 upload-intent 需独立适配层。 -->
+    <!-- Side effects: 提交会向 /teaching/report-submissions 导航 POST；没有本地接收端时不会创建数据。 -->
+    <header>
+      <p><strong>FactoryCare 表单教学页</strong></p>
+    </header>
+    <main>
+      <h1>创建教学报修</h1>
+      <p>所有标为“必填”的控件都由浏览器先做原生约束检查，服务器仍须重新校验。</p>
+      <form action="/teaching/report-submissions" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>故障信息</legend>
+
+          <p>
+            <label for="asset-id">设备 ID（必填）</label>
+            <input id="asset-id" name="assetId" type="text" required pattern="[0-9a-fA-F-]{36}">
+          </p>
+
+          <p>
+            <label for="category">故障类别（必填）</label>
+            <select id="category" name="category" required>
+              <option value="">请选择</option>
+              <option value="MECHANICAL">机械</option>
+              <option value="ELECTRICAL">电气</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="priority">优先级（必填）</label>
+            <select id="priority" name="priority" required>
+              <option value="">请选择</option>
+              <option value="LOW">低</option>
+              <option value="MEDIUM">中</option>
+              <option value="HIGH">高</option>
+              <option value="CRITICAL">紧急</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="description">故障描述（必填，10–5000 字符）</label>
+            <textarea id="description" name="description" required minlength="10" maxlength="5000"></textarea>
+          </p>
+
+          <p>
+            <label for="observed-date">观察日期（必填，仅教学字段）</label>
+            <input id="observed-date" name="observedDate" type="date" required min="2026-01-01" max="2026-12-31">
+          </p>
+
+          <p>
+            <label for="evidence-files">现场图片（可选，最多选择三张由服务端复核）</label>
+            <input id="evidence-files" name="evidenceFiles" type="file" accept="image/png,image/jpeg" multiple>
+          </p>
+
+          <p>
+            <label for="contact">联系方式（可选，最多 200 字符）</label>
+            <input id="contact" name="contact" type="text" maxlength="200">
+          </p>
+        </fieldset>
+        <button type="submit" name="intent" value="create">提交教学请求</button>
+      </form>
+    </main>
+    <footer>
+      <p><small>固定夹具；不输入真实个人信息或文件。</small></p>
+    </footer>
+  </body>
+</html>

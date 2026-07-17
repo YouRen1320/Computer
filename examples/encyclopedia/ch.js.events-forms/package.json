@@ -1,0 +1,13 @@
+{
+  "name": "factorycare-ch-js-events-forms-example",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.18.0",
+  "scripts": {
+    "demo": "node src/demo.mjs",
+    "verify": "bash verify.sh"
+  },
+  "dependencies": {
+    "happy-dom": "17.6.3"
+  }
+}

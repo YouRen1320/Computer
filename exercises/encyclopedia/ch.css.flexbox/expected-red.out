@@ -1,0 +1,14 @@
+ERROR: toolbar must use row wrap with a 12px gap
+ERROR: query must allow flex shrink below its automatic minimum
+ERROR: buttons must keep content size without visual reordering
+ERROR: order/reverse must not split visual and DOM order
+ERROR: cards must wrap with a 12px gap
+ERROR: positive free space must subtract bases and gaps
+ERROR: grow targets must be 182, 284, 222
+ERROR: grow factor distributes free space, not final size ratio
+ERROR: shrink must use basis-scaled factors
+ERROR: align-content must not be treated as single-line item alignment
+ERROR: gap must not be treated as container edge padding
+ERROR: visual order must not be treated as default Tab order
+ERROR: real browser, keyboard and visual evidence must remain unverified
+CSS_FLEXBOX_EXERCISE=RED (13 violations)

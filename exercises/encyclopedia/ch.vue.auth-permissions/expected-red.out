@@ -1,0 +1,5 @@
+ERROR: untrusted external return URL was accepted
+ERROR: sensitive UI is visible before bootstrap resolves
+ERROR: direct API trusted a forged client authorization flag
+ERROR: 403 incorrectly expired an authenticated session
+VUE_AUTH_PERMISSIONS_EXERCISE=FAIL (4 violations)

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "layer_order": ["reset", "base", "components", "utilities", "unlayered"],
+  "real_browser_computed_style_recorded": false,
+  "real_visual_diff_recorded": false,
+  "specificity_cases": [
+    {"selector": "*", "expected": [0, 0, 0]},
+    {"selector": "button", "expected": [0, 0, 1]},
+    {"selector": ".fault-card__action:disabled", "expected": [0, 2, 0]},
+    {"selector": "#app .fault-card", "expected": [1, 1, 0]},
+    {"selector": "article::before", "expected": [0, 0, 2]},
+    {"selector": ":where(#app, .shell) .title", "expected": [0, 1, 0]},
+    {"selector": ":is(#app, .shell) .title", "expected": [1, 1, 0]}
+  ],
+  "cascade_cases": [
+    {
+      "id": "normal-layer-before-specificity",
+      "candidates": [
+        {"value": "#166534", "level": "author-normal", "layer": "base", "specificity": [1, 1, 2], "order": 1},
+        {"value": "#7c3aed", "level": "author-normal", "layer": "components", "specificity": [0, 2, 0], "order": 2},
+        {"value": "#b91c1c", "level": "author-normal", "layer": "utilities", "specificity": [0, 2, 0], "order": 3},
+        {"value": "#9f1239", "level": "author-normal", "layer": "unlayered", "specificity": [0, 1, 0], "order": 4}
+      ],
+      "expected": "#9f1239",
+      "after_remove_expected": "#b91c1c"
+    },
+    {
+      "id": "specificity-inside-one-layer",
+      "candidates": [
+        {"value": "navy", "level": "author-normal", "layer": "components", "specificity": [0, 1, 0], "order": 1},
+        {"value": "purple", "level": "author-normal", "layer": "components", "specificity": [0, 2, 0], "order": 2}
+      ],
+      "expected": "purple",
+      "after_remove_expected": "navy"
+    },
+    {
+      "id": "source-order-final-tie",
+      "candidates": [
+        {"value": "inherit", "level": "author-normal", "layer": "unlayered", "specificity": [0, 1, 0], "order": 10},
+        {"value": "#475569", "level": "author-normal", "layer": "unlayered", "specificity": [0, 1, 0], "order": 11}
+      ],
+      "expected": "#475569",
+      "after_remove_expected": "inherit"
+    },
+    {
+      "id": "important-origin-reversal",
+      "candidates": [
+        {"value": "author", "level": "author-important", "layer": "unlayered", "specificity": [1, 0, 0], "order": 20},
+        {"value": "user", "level": "user-important", "layer": "unlayered", "specificity": [0, 0, 1], "order": 1}
+      ],
+      "expected": "user",
+      "after_remove_expected": "author"
+    }
+  ],
+  "defaulting_cases": [
+    {"id": "inherited-color", "property_inherited": true, "parent_computed": "#334155", "initial": "canvastext", "keyword": null, "expected": "#334155"},
+    {"id": "unset-color", "property_inherited": true, "parent_computed": "#334155", "initial": "canvastext", "keyword": "unset", "expected": "#334155"},
+    {"id": "unset-margin", "property_inherited": false, "parent_computed": "8px", "initial": "0px", "keyword": "unset", "expected": "0px"},
+    {"id": "explicit-inherit-margin", "property_inherited": false, "parent_computed": "8px", "initial": "0px", "keyword": "inherit", "expected": "8px"}
+  ]
+}

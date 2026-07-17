@@ -1,0 +1,6 @@
+/* Responsibility: 公开练习故意包含溢出和文字裁切，不是推荐实现。 */
+.workspace { width: 1200px; }
+button { width: 180px; height: 32px; overflow: hidden; font-size: 12px; white-space: nowrap; }
+/* Side effects: 隐藏横向溢出会掩盖不可达内容，学习者必须删除并修复根因。 */
+body { overflow-x: hidden; }
+@media (width: 375px) { .workspace { width: 360px; } }

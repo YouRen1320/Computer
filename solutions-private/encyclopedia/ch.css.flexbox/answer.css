@@ -1,0 +1,11 @@
+/* Responsibility: 用 wrap、gap、可收缩 query 和源顺序一致动作实现参考布局。 */
+/* Data source: answer.html 的直接子项与固定长编码。 */
+/* Mapping: query 1 1 240px；动作 0 0 auto；cards 逐行独立伸缩。 */
+/* Side effects: 只改变布局与换行，不改变 DOM、Tab 或业务状态。 */
+* { box-sizing: border-box; }
+.toolbar { display: flex; flex-flow: row wrap; align-items: end; gap: 12px; padding: 12px; }
+.query { flex: 1 1 240px; min-inline-size: 0; }
+.query input { inline-size: 100%; min-inline-size: 0; overflow-wrap: anywhere; }
+.toolbar > button { flex: 0 0 auto; }
+.cards { display: flex; flex-wrap: wrap; gap: 12px; }
+.cards > article { flex: 1 1 180px; min-inline-size: 0; }

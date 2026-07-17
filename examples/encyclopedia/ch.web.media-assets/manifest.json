@@ -1,0 +1,16 @@
+{
+  "fixture": "synthetic-media-v1",
+  "real_media_binaries_present": false,
+  "real_http_and_codec_unverified": true,
+  "assets": [
+    {"url": "./assets/pump-narrow.svg", "role": "narrow-art-direction", "mime": "image/svg+xml", "width": 480, "height": 640, "offline_present": true},
+    {"url": "./assets/pump-wide.svg", "role": "wide-and-img-fallback", "mime": "image/svg+xml", "width": 960, "height": 640, "offline_present": true},
+    {"url": "./assets/separator.svg", "role": "decorative", "mime": "image/svg+xml", "width": 320, "height": 16, "offline_present": true},
+    {"url": "./assets/inspection-poster.svg", "role": "video-poster", "mime": "image/svg+xml", "width": 960, "height": 540, "offline_present": true},
+    {"url": "./assets/inspection.zh-CN.vtt", "role": "captions", "mime": "text/vtt", "offline_present": true},
+    {"url": "./assets/inspection-demo.webm", "role": "video-source", "mime": "video/webm", "offline_present": false},
+    {"url": "./assets/inspection-demo.mp4", "role": "video-source-fallback", "mime": "video/mp4", "offline_present": false}
+  ],
+  "format_decision": "SVG is used only for deterministic synthetic diagrams; a production photo requires measured AVIF/WebP/JPEG candidates and licensed originals.",
+  "private_attachment_policy": "Object URL and download attribute never replace FactoryCare attachment authorization and AVAILABLE status."
+}

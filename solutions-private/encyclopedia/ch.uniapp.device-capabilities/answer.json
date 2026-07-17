@@ -1,0 +1,11 @@
+{
+  "permissionResult": {"kind": "denied", "recovery": "retry"},
+  "locationPayloadCreated": false,
+  "permissionRequestCount": 1,
+  "pageShowCount": 3,
+  "scanCancelResult": {"kind": "cancelled"},
+  "unavailableLocationResult": {"kind": "unsupported", "fallback": "skip-location"},
+  "upload": {"succeeded": true, "attachmentId": "ATT-1"},
+  "commit": {"succeeded": false, "idempotencyKey": "idem-1"},
+  "finalState": "commit-failed"
+}

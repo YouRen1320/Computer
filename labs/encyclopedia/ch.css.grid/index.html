@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grid 故障实验</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供筛选、列表、详情和自动卡片的修复后二维夹具。 -->
+  <!-- Data source: faults.json 与 observation-matrix.json 的合成工单内容。 -->
+  <!-- Mapping: areas 名称精确对应 DOM class；自动项按源顺序进入允许的隐式行。 -->
+  <!-- Side effects: 只加载本地 CSS，不读取、排序或修改真实工单。 -->
+  <main class="work-layout">
+    <form class="filters">筛选</form>
+    <section class="orders">FACTORYCARE-VERY-LONG-WORK-ORDER-IDENTIFIER-0001</section>
+    <aside class="detail">详情</aside>
+  </main>
+  <section class="auto-list" aria-label="自动卡片"><article>A</article><article>B</article><article>C</article><article>D</article></section>
+</body>
+</html>

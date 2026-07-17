@@ -1,0 +1,14 @@
+{
+  "matrix": "accessible-report-form-v1",
+  "real_keyboard_observed": false,
+  "real_accessibility_tree_observed": false,
+  "real_screen_reader_observed": false,
+  "steps": [
+    {"id": "skip-link", "action": "Tab then Enter", "expected_focus": "main", "expected_name_or_announcement": "创建教学报修"},
+    {"id": "toggle-open", "action": "focus instructions-toggle then Space", "expected_focus": "instructions-toggle", "expected_state": "expanded=true and panel hidden=false"},
+    {"id": "field-names", "action": "Tab through asset-id and description", "expected_names": ["设备 ID（必填）", "故障描述（必填）"]},
+    {"id": "native-invalid", "action": "submit with required value missing", "expected_request": "none", "expected_result": "native invalid is perceivable"},
+    {"id": "server-errors", "action": "submit native-valid values and load problem.json", "expected_focus": "error-summary", "expected_state": "two controls aria-invalid=true"},
+    {"id": "reverse-exit", "action": "Shift+Tab from footer link through page", "expected_result": "no focus trap"}
+  ]
+}

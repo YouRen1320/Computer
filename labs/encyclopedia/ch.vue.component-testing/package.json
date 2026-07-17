@@ -1,0 +1,23 @@
+{
+  "name": "factorycare-component-testing-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:component": "vitest run",
+    "build": "vite build",
+    "verify": "bash verify.sh"
+  },
+  "dependencies": {
+    "vue": "3.5.35"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0",
+    "@vitejs/plugin-vue": "6.0.5",
+    "@vue/test-utils": "2.4.11",
+    "happy-dom": "17.6.3",
+    "typescript": "5.9.3",
+    "vite": "7.3.1",
+    "vitest": "4.0.18"
+  },
+  "packageManager": "pnpm@10.18.0"
+}

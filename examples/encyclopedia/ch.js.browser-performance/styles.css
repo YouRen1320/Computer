@@ -1,0 +1,22 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+}
+
+.work-order-list {
+  position: relative;
+  min-height: 12rem;
+}
+
+.work-order-row {
+  /* Movement uses transform as the compositor-friendly intent; a real trace must confirm target-browser behavior. */
+  position: absolute;
+  transform: translateY(var(--row-offset));
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.work-order-row button:focus-visible {
+  /* Focus visibility is a correctness guard and must survive performance work. */
+  outline: 3px solid #155eef;
+  outline-offset: 3px;
+}

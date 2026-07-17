@@ -1,0 +1,8 @@
+priority=P1
+queue=emergency
+retry=1
+retry=2
+remaining=2
+remaining=1
+code=P
+code=1

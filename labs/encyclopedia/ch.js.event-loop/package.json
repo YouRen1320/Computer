@@ -1,0 +1,10 @@
+{
+  "name": "factorycare-ch-js-event-loop-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.18.0",
+  "scripts": {
+    "lab": "node src/queue-contract.mjs",
+    "verify": "bash verify.sh"
+  }
+}

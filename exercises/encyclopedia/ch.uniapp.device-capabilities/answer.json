@@ -1,0 +1,11 @@
+{
+  "permissionResult": {"kind": "ok", "value": null},
+  "locationPayloadCreated": true,
+  "permissionRequestCount": 3,
+  "pageShowCount": 3,
+  "scanCancelResult": {"kind": "failed"},
+  "unavailableLocationResult": {"kind": "ok", "value": null},
+  "upload": {"succeeded": true, "attachmentId": ""},
+  "commit": {"succeeded": false, "idempotencyKey": ""},
+  "finalState": "completed"
+}

@@ -1,0 +1,25 @@
+ERROR: positive tabindex must be removed
+ERROR: help toggle must be a native type=button
+ERROR: initial aria-expanded=false must match a hidden panel
+ERROR: description needs an explicit visible label
+ERROR: error summary must be tabindex=-1 and initially hidden
+ERROR: remove button needs a visible contextual accessible name
+ERROR: dynamic status must use aria-live=polite
+ERROR: ordinary page must not intercept or trap Tab
+ERROR: toggle must synchronize panel.hidden and aria-expanded
+ERROR: field errors need a fixed allowlist, not a server-field selector
+ERROR: dynamic error text must use textContent, never innerHTML
+ERROR: field errors must synchronize aria-invalid
+ERROR: user-triggered errors must focus the summary
+ERROR: removing the focused attachment must restore a stable focus target
+ERROR: positive tabindex must not be approved
+ERROR: role=button must not be treated as native behavior
+ERROR: visible text must be preferred over blanket aria-label
+ERROR: accessibility tree must remain distinct from a screen-reader task
+ERROR: scanner output must not be treated as WCAG conformance
+ERROR: unknown server fields must degrade to the global summary
+ERROR: attachment removal must restore focus to attachments-heading
+ERROR: real_keyboard_observed must remain false in an offline answer
+ERROR: real_accessibility_tree_observed must remain false in an offline answer
+ERROR: real_screen_reader_observed must remain false in an offline answer
+ACCESSIBILITY_INTERACTION_EXERCISE=RED (24 violations)

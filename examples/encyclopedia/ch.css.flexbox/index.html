@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flex 主轴矩阵</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Responsibility: 提供一维工具栏与卡片行的固定 flex items。 -->
+  <!-- Data source: layout-matrix.json 的合成尺寸和本页 DOM 顺序。 -->
+  <!-- Mapping: 查询项可伸缩，两个动作保持 DOM/视觉/Tab 同序，卡片按容器换行。 -->
+  <!-- Side effects: 只加载本地 CSS；表单按钮不连接业务提交或持久化。 -->
+  <main>
+    <h1>Flex 主轴矩阵</h1>
+    <form class="toolbar">
+      <label class="toolbar__query">工单关键字 <input name="q" value="LONG-EQUIPMENT-CODE-2026"></label>
+      <button type="submit">筛选</button>
+      <button type="reset">清除</button>
+    </form>
+    <section class="card-row" aria-label="教学卡片">
+      <article class="card">待分派</article>
+      <article class="card">处理中</article>
+      <article class="card">待验收</article>
+    </section>
+  </main>
+</body>
+</html>

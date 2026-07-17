@@ -1,0 +1,17 @@
+ERROR: form action must target the teaching receiver, not the production JSON API
+ERROR: novalidate must not disable the ordinary native-validation path
+ERROR: priority name must be priority
+ERROR: description must have a visible explicit label
+ERROR: description must retain required
+ERROR: submitter must explicitly contribute intent=create
+ERROR: predicted request entry names must match the teaching contract
+ERROR: placeholder must not be treated as a label
+ERROR: client validation must not be treated as a security boundary
+ERROR: accept must not be treated as server file validation
+ERROR: direct multipart must remain distinct from FactoryCare JSON plus upload-intent
+ERROR: button disabling must not be treated as complete duplicate prevention
+ERROR: bypassed invalid input must be rejected by server validation
+ERROR: same key and same request must not create a second report
+ERROR: real browser and receiver behavior must remain unverified
+ERROR: production adapter must remain unverified
+FORMS_VALIDATION_EXERCISE=RED (16 violations)

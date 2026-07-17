@@ -1,0 +1,8 @@
+origin-site: PASS
+sop-cors-boundary: PASS
+fetch-credentials-preflight: PASS
+cookie-attachment: PASS
+cache-validation-vary: PASS
+factorycare-boundaries: PASS
+evidence-honesty: PASS
+ORIGIN_COOKIE_CACHE_EXERCISE=PASS

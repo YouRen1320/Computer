@@ -1,0 +1,11 @@
+{
+  "track_leftover": 600,
+  "track_sizes": [240, 560],
+  "two_tracks_have_three_lines": false,
+  "one_fr_is_always_fifty_percent": true,
+  "negative_one_targets_explicit_grid_end": false,
+  "dense_preserves_visual_source_order": true,
+  "ordinary_nested_grid_shares_parent_tracks": true,
+  "subgrid_support_and_fallback_unverified": false,
+  "real_browser_grid_visual_unverified": false
+}

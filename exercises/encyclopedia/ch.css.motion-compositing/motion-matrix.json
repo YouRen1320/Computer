@@ -1,0 +1,14 @@
+{
+  "transition_properties": ["opacity", "transform"],
+  "transition_duration_ms": 160,
+  "status_animation": {"iterations": 1, "fill_mode": "both"},
+  "reduced_mode": {"transition": "none", "animation": "none", "transform": "none", "open_opacity": 1},
+  "focus": {"outline_width_px": 3, "participates_in_transition": false},
+  "interruptibility": {"transitioncancel_allowed": true, "business_logic_depends_on_transitionend": false},
+  "performance": {"layout_affecting_animated_properties": [], "layer_promotion_guaranteed": false},
+  "real_performance_trace_recorded": false,
+  "real_layer_observation_recorded": false,
+  "real_transition_events_recorded": false,
+  "real_keyboard_focus_recorded": false,
+  "real_screen_reader_recorded": false
+}

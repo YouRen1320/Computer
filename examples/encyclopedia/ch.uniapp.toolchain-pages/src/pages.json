@@ -1,0 +1,20 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": { "navigationBarTitleText": "FactoryCare" }
+    },
+    {
+      "path": "pages/work-orders/list",
+      "style": { "navigationBarTitleText": "工单" }
+    },
+    {
+      "path": "pages/work-orders/detail",
+      "style": { "navigationBarTitleText": "工单详情" }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff"
+  }
+}

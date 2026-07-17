@@ -1,0 +1,30 @@
+/* Responsibility: 构造可审计的一维伸缩、换行、gap 与交叉轴对齐。 */
+/* Data source: index.html 直接子项和 layout-matrix.json 固定容器尺寸。 */
+/* Mapping: query 为 1 1 18rem 且允许收缩；动作不视觉重排；卡片 basis 为 180px。 */
+/* Side effects: 只改变布局和视觉顺序，不改变 DOM、Tab、表单或业务数据。 */
+* { box-sizing: border-box; }
+
+.toolbar {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: end;
+  gap: 16px;
+  padding: 16px;
+}
+
+.toolbar__query {
+  flex: 1 1 288px;
+  min-inline-size: 0;
+}
+
+.toolbar__query input { inline-size: 100%; min-inline-size: 0; }
+.toolbar > button { flex: 0 0 auto; }
+
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 16px;
+}
+
+.card { flex: 1 1 180px; min-inline-size: 0; padding: 12px; border: 2px solid #64748b; }

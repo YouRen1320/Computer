@@ -1,0 +1,5 @@
+wrong-origin: RED detected; first evidence, repair and replay are fixed
+wrong-samesite-expectation: RED detected; first evidence, repair and replay are fixed
+stale-unchanged-url: RED detected; first evidence, repair and replay are fixed
+missing-vary-origin: RED detected; first evidence, repair and replay are fixed
+ORIGIN_COOKIE_CACHE_LAB=PASS

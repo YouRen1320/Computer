@@ -1,0 +1,7 @@
+/* Responsibility: 公开 starter 故意保留层叠、继承和顺序错误供诊断。 */
+/* Data source: answer.html 的固定 class/data 属性。 */
+/* Mapping: 当前映射是待修复输入，不代表推荐的覆盖架构。 */
+/* Side effects: 只改变练习页呈现，不修改 DOM 或业务数据。 */
+#exercise article .title { color: #166534 !important; }
+.summary { color: #111827; }
+.code { color: #64748b; }

@@ -1,0 +1,14 @@
+{
+  "environment": "production",
+  "apiOrigin": "https://test-api.example.invalid",
+  "allowedOrigin": "https://api.example.invalid",
+  "logText": "Authorization: Bearer SECRET_SENTINEL",
+  "storage": {
+    "schemaVersion": 0,
+    "environment": "test",
+    "subjectHash": "other-user",
+    "expiresAt": "2026-07-01T00:00:00Z"
+  },
+  "currentSubjectHash": "current-user",
+  "now": "2026-07-17T00:00:00Z"
+}

@@ -1,0 +1,10 @@
+/* Responsibility: 公开 starter 故意保留 min-size、wrap、gap 和 order 故障。 */
+/* Data source: answer.html 的直接子项和静态长编码。 */
+/* Mapping: 当前 order/margin 是待诊断输入，不代表推荐的一维布局契约。 */
+/* Side effects: 只改变练习页布局与视觉顺序，不改变真实 DOM/Tab 顺序。 */
+.toolbar { display: flex; flex-wrap: nowrap; }
+.query { flex: 1 1 240px; }
+.toolbar > button { margin-left: 12px; }
+.toolbar > button[type="submit"] { order: -1; }
+.cards { display: flex; }
+.cards > article { flex: 1 1 180px; }

@@ -1,0 +1,16 @@
+{
+  "h5": {
+    "text": true,
+    "clickEvent": "open",
+    "inputValuePath": "detail.value",
+    "criticalSpacingUnit": "rpx",
+    "visualEvidence": "not-evaluated"
+  },
+  "mp-weixin": {
+    "text": true,
+    "clickEvent": "open",
+    "inputValuePath": "detail.value",
+    "criticalSpacingUnit": "rpx",
+    "visualEvidence": "not-evaluated"
+  }
+}

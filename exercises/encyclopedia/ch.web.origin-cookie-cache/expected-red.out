@@ -1,0 +1,26 @@
+ERROR: HTTP(S) Origin tuple must be scheme, host and port
+ERROR: different localhost ports must be cross-origin
+ERROR: same-site URLs can still be cross-origin
+ERROR: CORS failure does not prove the server never received the request
+ERROR: CORS must not be treated as server authorization
+ERROR: Fetch default credentials mode must be same-origin
+ERROR: cross-origin cookie processing requires include in this matrix
+ERROR: credentialed CORS must reject wildcard ACAO
+ERROR: cross-origin preflight must not authenticate with target session Cookie
+ERROR: Cookie matching must not use port as a boundary
+ERROR: Cookie Path must not be treated as a security boundary
+ERROR: omitting Domain must create a host-only Cookie
+ERROR: Max-Age must take precedence over Expires
+ERROR: SameSite=None must require Secure
+ERROR: HttpOnly must still allow matching HTTP attachment
+ERROR: no-cache must allow storage but require validation
+ERROR: no-store and private must remain distinct
+ERROR: 304 must reuse the stored representation body
+ERROR: dynamic ACAO must require Vary: Origin
+ERROR: FactoryCare production Cookie/CORS/cache values are still undecided
+ERROR: CORS must not replace Java authorization
+ERROR: Redis cache-aside must remain separate from browser HTTP cache
+ERROR: write-concurrency ETag must remain separate from GET cache validation
+ERROR: evidence must combine Network, Console, response headers and server log
+ERROR: offline answer must mark real browser behavior unverified
+ORIGIN_COOKIE_CACHE_EXERCISE=RED (25 violations)

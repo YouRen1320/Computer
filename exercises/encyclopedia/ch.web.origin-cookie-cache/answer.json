@@ -1,0 +1,39 @@
+{
+  "origin": {
+    "tuple_fields": ["host", "path"],
+    "localhost_port_changes_origin": false,
+    "same_site_can_be_cross_origin": false
+  },
+  "sop_cors": {
+    "cors_failure_means_request_never_arrived": true,
+    "cors_is_server_authorization": true
+  },
+  "fetch": {
+    "default_credentials": "include",
+    "cross_origin_cookie_requires_include": false,
+    "credentialed_wildcard_allowed": true,
+    "preflight_uses_target_session_cookie": true
+  },
+  "cookie": {
+    "port_is_cookie_boundary": true,
+    "path_is_security_boundary": true,
+    "domain_omitted_is_host_only": false,
+    "max_age_overrides_expires": false,
+    "same_site_none_requires_secure": false,
+    "http_only_prevents_http_attachment": true
+  },
+  "cache": {
+    "no_cache_means_no_store": true,
+    "no_store_equals_private": true,
+    "status_304_reuses_stored_body": false,
+    "dynamic_acao_requires_vary_origin": false
+  },
+  "factorycare": {
+    "production_cookie_values_already_decided": true,
+    "cors_replaces_java_authorization": true,
+    "redis_cache_is_browser_http_cache": true,
+    "write_concurrency_etag_equals_get_cache_validation": true
+  },
+  "evidence": ["console"],
+  "real_browser_behavior_unverified": false
+}

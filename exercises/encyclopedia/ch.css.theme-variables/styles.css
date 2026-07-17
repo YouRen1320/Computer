@@ -1,0 +1,47 @@
+/* Responsibility: 这是故障注入主题，供学习者定位而非生产复用。 */
+/* Data source: 人为错误值；正确目标在 theme-matrix.json。 */
+/* Mapping: 当前错误地把危险色放到页面根，并让正文使用低对比度色对。 */
+/* Side effects: 强制颜色全局 opt-out 会阻止 UA 调整，是待修复故障。 */
+:root {
+  color-scheme: light dark;
+  --color-canvas: #888888;
+  --color-text: #777777;
+  --color-surface: #999999;
+  --color-accent: #777777;
+  --color-on-accent: #888888;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-canvas: #0f172a;
+  --color-text: #f8fafc;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+.page-shell {
+  --color-accent: #b42318;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  color: var(--color-text);
+  background: var(--panel-surface);
+  border: 1px solid currentColor;
+}
+
+a,
+button {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+}
+
+@media (forced-colors: active) {
+  :root {
+    forced-color-adjust: none;
+  }
+}

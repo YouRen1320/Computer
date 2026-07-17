@@ -1,0 +1,30 @@
+{
+  "contract": "semantic-work-order-v1",
+  "language": "zh-CN",
+  "title": "工单 WO-2026-0717｜FactoryCare 教学页",
+  "description": "用于学习语义 HTML 的静态 FactoryCare 工单详情。",
+  "viewport": "width=device-width, initial-scale=1",
+  "canonical": "https://docs.factorycare.example/work-orders/WO-2026-0717",
+  "headings": [
+    {"level": 1, "text": "工单 WO-2026-0717"},
+    {"level": 2, "text": "故障摘要"},
+    {"level": 2, "text": "流转记录"},
+    {"level": 3, "text": "已创建"},
+    {"level": 3, "text": "已分派"},
+    {"level": 2, "text": "联系信息"}
+  ],
+  "minimum_elements": {
+    "header": 2,
+    "nav": 1,
+    "main": 1,
+    "article": 3,
+    "section": 3,
+    "footer": 2,
+    "dl": 1,
+    "ol": 1,
+    "time": 2,
+    "address": 1
+  },
+  "forbidden_elements": ["style", "script", "form"],
+  "forbidden_attributes": ["role", "class"]
+}

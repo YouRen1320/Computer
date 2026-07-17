@@ -1,0 +1,7 @@
+{
+  "tags": ["view", "text", "input", "button"],
+  "inputValuePath": "detail.value",
+  "spacingUnit": "rpx",
+  "modelProp": "modelValue",
+  "modelEvent": "update:modelValue"
+}

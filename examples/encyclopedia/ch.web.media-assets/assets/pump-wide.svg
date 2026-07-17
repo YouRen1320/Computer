@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">冷却泵和接口教学示意</title>
+  <desc id="desc">车间背景中的冷却泵，接口下方用深色曲线标出油迹位置。</desc>
+  <rect width="960" height="640" fill="#eef2f3"/>
+  <rect x="0" y="480" width="960" height="160" fill="#c9d1d5"/>
+  <circle cx="480" cy="245" r="150" fill="#8797a1"/>
+  <rect x="425" y="360" width="110" height="130" fill="#5c6f78"/>
+  <path d="M440 408 C460 438 500 438 520 486" fill="none" stroke="#5b2c20" stroke-width="18"/>
+</svg>

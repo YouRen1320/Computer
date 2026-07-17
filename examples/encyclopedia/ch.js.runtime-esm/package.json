@@ -1,0 +1,13 @@
+{
+  "name": "factorycare-runtime-esm-example",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "verify": "./verify.sh"
+  }
+}

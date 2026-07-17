@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "ac2ce42cf16c68e5d00a536e0effb560205105dbb7df7c4eb04571dc8ee27e50",
+  "input_digest": "2b4eeb90a5eefab272d753e3362075437892fb0532e29081a387e468ab1fc0a6",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 145,
-    "drafting": 110,
+    "planned": 87,
+    "drafting": 168,
     "review": 0,
     "verified": 0
   },
@@ -10890,7 +10890,7 @@
           "volume": "07",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.http-curl"
           ],
@@ -10991,7 +10991,7 @@
           "volume": "07",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.browser-render-devtools"
           ],
@@ -11096,7 +11096,7 @@
           "volume": "07",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.browser-render-devtools"
           ],
@@ -11196,7 +11196,7 @@
           "volume": "07",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.semantic-html",
             "ch.web.origin-cookie-cache"
@@ -11309,7 +11309,7 @@
           "volume": "07",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.semantic-html"
           ],
@@ -11408,7 +11408,7 @@
           "volume": "07",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.forms-validation"
           ],
@@ -11514,7 +11514,7 @@
           "volume": "07",
           "order": 7,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.semantic-html"
           ],
@@ -11614,7 +11614,7 @@
           "volume": "07",
           "order": 8,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.css.cascade"
           ],
@@ -11719,7 +11719,7 @@
           "volume": "07",
           "order": 9,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.css.box-position"
           ],
@@ -11824,7 +11824,7 @@
           "volume": "07",
           "order": 10,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.css.box-position"
           ],
@@ -11929,7 +11929,7 @@
           "volume": "07",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.web.media-assets",
             "ch.css.flexbox",
@@ -12043,7 +12043,7 @@
           "volume": "07",
           "order": 12,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.css.cascade"
           ],
@@ -12142,7 +12142,7 @@
           "volume": "07",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.css.box-position",
             "ch.web.accessibility-interaction"
@@ -12248,7 +12248,7 @@
           "volume": "08",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.dependencies-build-packages"
           ],
@@ -12347,7 +12347,7 @@
           "volume": "08",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.runtime-esm"
           ],
@@ -12448,7 +12448,7 @@
           "volume": "08",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.statements-variables"
           ],
@@ -12552,7 +12552,7 @@
           "volume": "08",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.values-operators"
           ],
@@ -12656,7 +12656,7 @@
           "volume": "08",
           "order": 5,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.control-flow"
           ],
@@ -12754,7 +12754,7 @@
           "volume": "08",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.functions"
           ],
@@ -12858,7 +12858,7 @@
           "volume": "08",
           "order": 7,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.functions"
           ],
@@ -12962,7 +12962,7 @@
           "volume": "08",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.collections"
           ],
@@ -13065,7 +13065,7 @@
           "volume": "08",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.collections"
           ],
@@ -13174,7 +13174,7 @@
           "volume": "08",
           "order": 10,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.collections",
             "ch.web.semantic-html"
@@ -13277,7 +13277,7 @@
           "volume": "08",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.dom-mutation",
             "ch.js.object-model",
@@ -13390,7 +13390,7 @@
           "volume": "08",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.scope-closures"
           ],
@@ -13495,7 +13495,7 @@
           "volume": "08",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.testing-debugging",
             "ch.js.event-loop",
@@ -13613,7 +13613,7 @@
           "volume": "08",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.events-forms",
             "ch.js.event-loop",
@@ -13722,7 +13722,7 @@
           "volume": "08",
           "order": 15,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.js.collections"
           ],
@@ -13825,7 +13825,7 @@
           "volume": "08",
           "order": 16,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ts.foundations",
             "ch.js.object-model"
@@ -13936,7 +13936,7 @@
           "volume": "08",
           "order": 17,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ts.modeling-narrowing"
           ],
@@ -14037,7 +14037,7 @@
           "volume": "08",
           "order": 18,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ts.modeling-narrowing",
             "ch.js.fetch-cancellation-race"
@@ -14150,7 +14150,7 @@
           "volume": "09",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ts.foundations",
             "ch.css.cascade"
@@ -14256,7 +14256,7 @@
           "volume": "09",
           "order": 2,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.vite-sfc"
           ],
@@ -14360,7 +14360,7 @@
           "volume": "09",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.template-directives",
             "ch.web.forms-validation",
@@ -14478,7 +14478,7 @@
           "volume": "09",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.vite-sfc"
           ],
@@ -14579,7 +14579,7 @@
           "volume": "09",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.reactivity",
             "ch.vue.forms-vmodel",
@@ -14697,7 +14697,7 @@
           "volume": "09",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.effects-lifecycle"
           ],
@@ -14804,7 +14804,7 @@
           "volume": "09",
           "order": 7,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.components-contracts"
           ],
@@ -14906,7 +14906,7 @@
           "volume": "09",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.components-contracts"
           ],
@@ -15009,7 +15009,7 @@
           "volume": "09",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.components-contracts"
           ],
@@ -15116,7 +15116,7 @@
           "volume": "09",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.pinia-state"
           ],
@@ -15227,7 +15227,7 @@
           "volume": "09",
           "order": 11,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.router-navigation",
             "ch.vue.server-state",
@@ -15341,7 +15341,7 @@
           "volume": "09",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.server-state"
           ],
@@ -15458,7 +15458,7 @@
           "volume": "09",
           "order": 13,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.components-contracts",
             "ch.web.accessibility-interaction"
@@ -15565,7 +15565,7 @@
           "volume": "09",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.component-testing"
           ],
@@ -15676,7 +15676,7 @@
           "volume": "09",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.vue.components-contracts"
           ],
@@ -15792,7 +15792,7 @@
           "volume": "10",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -15893,7 +15893,7 @@
           "volume": "10",
           "order": 2,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.miniapp.runtime",
             "ch.vue.vite-sfc"
@@ -16000,7 +16000,7 @@
           "volume": "10",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.toolchain-pages",
             "ch.vue.components-contracts"
@@ -16107,7 +16107,7 @@
           "volume": "10",
           "order": 4,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.toolchain-pages",
             "ch.security.session-authentication"
@@ -16216,7 +16216,7 @@
           "volume": "10",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.template-components"
           ],
@@ -16325,7 +16325,7 @@
           "volume": "10",
           "order": 6,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.network-auth-storage",
             "ch.uniapp.platform-conditional"
@@ -16437,7 +16437,7 @@
           "volume": "10",
           "order": 7,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.template-components",
             "ch.uniapp.network-auth-storage"
@@ -16547,7 +16547,7 @@
           "volume": "10",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.testing-debugging"
           ],
@@ -16652,7 +16652,7 @@
           "volume": "10",
           "order": 9,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.platform-conditional",
             "ch.uniapp.packages-performance",
@@ -16765,7 +16765,7 @@
           "volume": "10",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.device-capabilities",
             "ch.uniapp.testing-debugging"
@@ -16871,7 +16871,7 @@
           "volume": "10",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.packages-performance",
             "ch.uniapp.privacy-review"
@@ -16977,7 +16977,7 @@
           "volume": "10",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.uniapp.offline-idempotency",
             "ch.uniapp.release-monitoring",

@@ -1,0 +1,7 @@
+lookup=kind:prototype
+shadow=kind:instance
+delete=kind:prototype
+calls=direct:WO-1:CREATED|call:WO-2:ASSIGNED|bound:WO-2:ASSIGNED
+identity=method:shared|notes:isolated
+class=WO-3:CREATED|private:CREATED
+composition=formatter:shared

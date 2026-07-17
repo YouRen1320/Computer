@@ -1,0 +1,5 @@
+order=document-capture>button-target>list-bubble
+command=assign:WO-2
+submit=ASSIGNED,true
+canceled=true
+afterDispose=1,1

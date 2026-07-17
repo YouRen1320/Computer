@@ -1,0 +1,33 @@
+{
+  "verified_on": "2026-07-17",
+  "faults": [
+    {
+      "id": "token-scope-error",
+      "injected": ".page-shell { --color-accent: #b42318; }",
+      "first_trustworthy_evidence": ".sibling computed --color-accent inherits from .page-shell",
+      "expected_fix": "move the override to .danger-zone"
+    },
+    {
+      "id": "var-fallback-type-error",
+      "injected": ".missing-private-token { --panel-surface: 12px; }",
+      "first_trustworthy_evidence": "--panel-surface exists, so fallback is not selected and background becomes invalid",
+      "expected_fix": "remove the invalid private token or supply a valid color"
+    },
+    {
+      "id": "insufficient-contrast",
+      "injected": "--color-text: #777777; --color-canvas: #888888",
+      "first_trustworthy_evidence": "the unrounded opaque-sRGB contrast ratio is below 4.5",
+      "expected_fix": "restore the reviewed semantic foreground/background pair"
+    }
+  ],
+  "fixed_contrast_cases": [
+    {"id": "light-body", "foreground": "#172033", "background": "#ffffff", "minimum": 4.5},
+    {"id": "dark-body", "foreground": "#f8fafc", "background": "#0f172a", "minimum": 4.5},
+    {"id": "danger-action", "foreground": "#ffffff", "background": "#b42318", "minimum": 4.5}
+  ],
+  "same_oracle_rerun": true,
+  "real_browser_computed_recorded": false,
+  "real_forced_colors_recorded": false,
+  "real_screen_reader_recorded": false,
+  "real_visual_review_recorded": false
+}

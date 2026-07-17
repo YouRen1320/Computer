@@ -1,0 +1,83 @@
+/* Responsibility: 实现通过公开 oracle 的亮暗、覆盖、回退、对比度与强制颜色合同。 */
+/* Data source: theme-matrix.json 中评审后的不透明 sRGB 色对。 */
+/* Mapping: 默认亮色，系统暗色媒体次之，显式 data-theme 规则最后覆盖。 */
+/* Side effects: 主题输入变化触发样式重算；CSS 不负责持久化。 */
+:root {
+  color-scheme: light dark;
+  --color-canvas: #ffffff;
+  --color-text: #172033;
+  --color-surface: #f4f7fb;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-canvas: #0f172a;
+    --color-text: #f8fafc;
+    --color-surface: #1e293b;
+    --color-accent: #60a5fa;
+    --color-on-accent: #0f172a;
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: #ffffff;
+  --color-text: #172033;
+  --color-surface: #f4f7fb;
+  --color-accent: #0b5cad;
+  --color-on-accent: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-canvas: #0f172a;
+  --color-text: #f8fafc;
+  --color-surface: #1e293b;
+  --color-accent: #60a5fa;
+  --color-on-accent: #0f172a;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+.page-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  color: var(--color-text, CanvasText);
+  background: var(--panel-surface, var(--color-surface, Canvas));
+  border: 1px solid currentColor;
+}
+
+a,
+button {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 2px solid transparent;
+}
+
+.danger-zone {
+  --color-accent: #b42318;
+  --color-on-accent: #ffffff;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-canvas: Canvas;
+    --color-text: CanvasText;
+    --color-surface: Canvas;
+    --color-accent: LinkText;
+    --color-on-accent: Canvas;
+  }
+
+  a,
+  button {
+    border-color: ButtonText;
+  }
+}

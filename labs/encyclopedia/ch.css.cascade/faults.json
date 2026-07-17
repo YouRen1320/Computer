@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "faults": [
+    {
+      "id": "priority-misread",
+      "injected_change": "把 base 层的高 specificity 选择器误判为一定胜过 utilities 层",
+      "expected_failure": "标题被预测为绿色而不是红色",
+      "first_trusted_evidence": "Styles 显示两条均匹配，但 utilities 是更后的 normal layer",
+      "root_cause": "在 layer 之前比较 specificity",
+      "repair": "保留低权重状态类，并以显式 layer 顺序表达覆盖架构",
+      "rerun": "same verify.sh and browser computed color check",
+      "residual_risk": "未分层第三方规则仍可能位于全部命名层之上"
+    },
+    {
+      "id": "inheritance-misread",
+      "injected_change": "给 summary 写入直接 color 后仍期待父元素颜色继承",
+      "expected_failure": "摘要不再使用父元素计算值",
+      "first_trusted_evidence": "Computed 来源指向 summary 自己的声明而非 inherited section",
+      "root_cause": "把继承当成能覆盖子元素层叠值的竞争规则",
+      "repair": "删除不必要直接值并明确写 color: inherit",
+      "rerun": "same verify.sh and browser inherited color check",
+      "residual_risk": "用户来源或状态规则可改变父元素的最终计算值"
+    },
+    {
+      "id": "source-order-misread",
+      "injected_change": "把同层同权重的较早 incident__code 声明误判为胜者",
+      "expected_failure": "编号被预测为 #64748b 而非 #0f172a",
+      "first_trusted_evidence": "Styles 显示相同 selector/layer，后出现的规则胜出",
+      "root_cause": "遗漏最终 order 比较",
+      "repair": "合并重复规则或保留并记录后项为唯一有意覆盖",
+      "rerun": "same verify.sh and browser computed color check",
+      "residual_risk": "构建拼接或运行时注入会改变实际出现顺序"
+    }
+  ]
+}

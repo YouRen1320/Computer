@@ -1,0 +1,6 @@
+origin-site-model: PASS (A/B cross-origin same-site; A/C cross-site)
+request-matrix: PASS (7 cookie/credentials/CORS decisions)
+preflight: PASS (state write requires OPTIONS; GET cases do not)
+cache-validation: PASS (200 stored -> If-None-Match -> 304 reuses body)
+vary-origin: PASS (dynamic ACAO cache key is separated)
+evidence-boundary: PASS (synthetic only; production policy undecided)

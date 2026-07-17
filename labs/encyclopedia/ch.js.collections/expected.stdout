@@ -1,0 +1,6 @@
+case-empty=groups:0,unique:0
+case-duplicate=groups:CREATED:2|IN_PROGRESS:1|UNSPECIFIED:1
+case-missing=status:UNSPECIFIED
+case-update=WO-2:IN_PROGRESS:mobile
+case-identity=outer:new,record:new,metadata:new
+case-input=unchanged

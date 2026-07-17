@@ -1,0 +1,59 @@
+{
+  "contract": "teaching-form-v1",
+  "fixed_clock": "2026-07-17T12:00:00+08:00",
+  "real_browser_unverified": true,
+  "production_adapter_unverified": true,
+  "cases": [
+    {
+      "id": "valid",
+      "browser_valid": true,
+      "validity_flags": [],
+      "ordinary_submit_emits_request": true,
+      "request_entry_names": ["assetId", "category", "priority", "description", "observedDate", "evidenceFiles", "contact", "intent"],
+      "server_outcome": "accept-teaching-only"
+    },
+    {
+      "id": "missing-description",
+      "browser_valid": false,
+      "validity_flags": ["description.valueMissing"],
+      "ordinary_submit_emits_request": false,
+      "request_entry_names": [],
+      "server_outcome": "not-reached-by-ordinary-submit"
+    },
+    {
+      "id": "invalid-date",
+      "browser_valid": false,
+      "validity_flags": ["observedDate.rangeOverflow"],
+      "ordinary_submit_emits_request": false,
+      "request_entry_names": [],
+      "server_outcome": "not-reached-by-ordinary-submit"
+    },
+    {
+      "id": "wrong-name",
+      "browser_valid": true,
+      "validity_flags": [],
+      "ordinary_submit_emits_request": true,
+      "request_entry_names": ["assetId", "category", "severity", "description", "observedDate", "evidenceFiles", "contact", "intent"],
+      "server_outcome": "reject-missing-priority"
+    },
+    {
+      "id": "bypass-invalid",
+      "browser_valid": false,
+      "validity_flags": ["description.valueMissing"],
+      "ordinary_submit_emits_request": false,
+      "bypass_request_emitted": true,
+      "request_entry_names": ["assetId", "category", "priority", "description", "observedDate", "intent"],
+      "server_outcome": "reject-server-validation"
+    },
+    {
+      "id": "duplicate-same-key",
+      "browser_valid": true,
+      "validity_flags": [],
+      "ordinary_submit_emits_request": true,
+      "attempts": 2,
+      "idempotency_key_source": "approved receiver harness, not native HTML",
+      "request_entry_names": ["assetId", "category", "priority", "description", "observedDate", "intent"],
+      "server_outcome": "same-result-no-second-create"
+    }
+  ]
+}

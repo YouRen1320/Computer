@@ -1,0 +1,9 @@
+sync:start
+async:before
+sync:end
+microtask:promise
+microtask:queue
+async:after
+task:timer
+count=3
+rejection=ASYNC_BOUNDARY

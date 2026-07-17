@@ -1,0 +1,13 @@
+ERROR: normal-flow fixture must establish flow-root
+ERROR: card must use the 300px border-box contract
+ERROR: stage must establish the badge containing block
+ERROR: stacking tree must compare panel-a z=1 with panel-b z=2
+ERROR: overflow fixture must contrast hidden with clip plus flow-root
+ERROR: 300px border-box content width must be 256
+ERROR: 300px border-box outer width with 8px margins must be 316
+ERROR: adjacent positive 24px/16px block margins must collapse to 24
+ERROR: DOM parent must not be treated as automatic containing block
+ERROR: leaf z-index must not escape its parent stacking context
+ERROR: overflow hidden must remain distinct from clip
+ERROR: real DevTools and screenshot evidence must remain unverified
+CSS_BOX_POSITION_EXERCISE=RED (12 violations)

@@ -1,0 +1,7 @@
+{
+  "important_is_specificity": true,
+  "later_source_always_wins": true,
+  "parent_specificity_competes_with_child_declaration": true,
+  "unset_always_initial": true,
+  "real_browser_computed_style_unverified": false
+}

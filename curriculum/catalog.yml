@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 3adfe2d91013087abd4d5cb81b4fc2f6587a7bb52af0c0d497f6ba8891f6f14c
+generated_spec_digest: d063db1777fb8ab1c3e68aeb3d705537816c50d7f49eb2b8268246bb5f729443
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -16038,7 +16038,7 @@ chapters:
   role: foundation
   responsibility: 建立从导航请求到 DOM/CSSOM、布局、绘制和合成的可观察浏览器管线，只做测量与解释，不在本章优化 JavaScript 性能。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-browser-pipeline
@@ -16176,7 +16176,7 @@ chapters:
   order: 1
   path: book/volume-07-web-platform/chapters/ch.web.browser-render-devtools.md
   recommended_after: []
-  spec_digest: 0254ff4ee252afb7464ce3134146e0f421910f73a514230df8581c1beff1e17c
+  spec_digest: a411baa0286fc2bff148e1203eaf7597ec2c847a9abd07172ff43531c09655f7
   route_tags:
   - zero-base
   - accelerated-48
@@ -16187,7 +16187,7 @@ chapters:
   role: concept
   responsibility: 解释浏览器如何按 Origin 隔离读取、携带 Cookie 并复用缓存，区分浏览器 CORS 执行与服务端授权，不进入登录业务实现。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-origin-browser-security
@@ -16334,7 +16334,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md
   recommended_after:
   - ch.web.browser-render-devtools
-  spec_digest: 7581c8b113ea2999b00d74849b650f6c1236e16a0343425dd34d5267f80158f6
+  spec_digest: e19e888e505a26ccfab3798499c0c4d6b35a8e8701486826cbfacdc5af805a51
   route_tags:
   - zero-base
   - accelerated-48
@@ -16345,7 +16345,7 @@ chapters:
   role: foundation
   responsibility: 用原生元素表达页面结构、内容层级和机器可读元数据，不在本章引入表单交互、CSS 布局或 ARIA 补丁。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-semantic-document
@@ -16485,7 +16485,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.semantic-html.md
   recommended_after:
   - ch.web.origin-cookie-cache
-  spec_digest: 242af8a825c4f77ef2b6fe83e89a0c1b354ec958a93a1ddb33d7707a4f2f3561
+  spec_digest: de153ea4161e554efb90f1173eb92322ee46d35a6ba80117e511d49ed0184a3c
   route_tags:
   - zero-base
   - accelerated-48
@@ -16496,7 +16496,7 @@ chapters:
   role: concept
   responsibility: 建立 label、控件、提交编码和原生约束校验的端到端表单契约，不在本章实现 JavaScript 自定义校验或框架双向绑定。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-form-semantics
@@ -16663,7 +16663,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.forms-validation.md
   recommended_after:
   - ch.web.semantic-html
-  spec_digest: 340eed6a1340e4ff329aa3d22a685bc4064d7ea195cdc2043a3eed12debe5d57
+  spec_digest: 3ff99ee8f1a5d50b2d47ac6417284736d905549a0dea1eee434e4d462f15a4a6
   route_tags:
   - zero-base
   - accelerated-48
@@ -16674,7 +16674,7 @@ chapters:
   role: concept
   responsibility: 为图片、音视频和下载资源选择正确的语义元素、格式与替代内容，只处理资源声明和交付边界，不做 CSS 响应式布局。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-responsive-images
@@ -16814,7 +16814,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.media-assets.md
   recommended_after:
   - ch.web.forms-validation
-  spec_digest: b337fb21e99f4c5fd4cf1efc25fcb4bc14ac124485279c3761fad5e6e1141801
+  spec_digest: 590033dbc98ed10a23a8062ad04d8768c4797c6a7c7fefd34f7ccdf3edd1a55b
   route_tags:
   - zero-base
   - accelerated-48
@@ -16824,7 +16824,7 @@ chapters:
   role: concept
   responsibility: 用原生语义、键盘顺序、焦点管理和必要的 ARIA 建立可操作界面，明确 ARIA 不能修复错误 HTML 或业务流程。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: web-keyboard-focus
@@ -16974,7 +16974,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md
   recommended_after:
   - ch.web.media-assets
-  spec_digest: bfd1e8e081974fa1fc8da8de9c1ef59d3c80d7b9c9e2371eeaa4ed4dc0ecae76
+  spec_digest: d50f375f7cd9907560f613bd3c8c4c087fab4a04376bb9f918f6cf6b220e6ffe
   route_tags:
   - zero-base
   - accelerated-48
@@ -16985,7 +16985,7 @@ chapters:
   role: foundation
   responsibility: 建立声明、选择器、来源、层叠层、优先级和继承的可计算规则，不在本章教授具体布局算法。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-syntax-selectors
@@ -17121,7 +17121,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.cascade.md
   recommended_after:
   - ch.web.accessibility-interaction
-  spec_digest: 5f7ce4cf0b81396035d7cbe7f64a5c7b1e0dc4715305f071272d739109447425
+  spec_digest: febd09fed84885ab5ca88e4bae83dbe17726db944a824a4bded379fe5ee7b354
   route_tags:
   - zero-base
   - accelerated-48
@@ -17132,7 +17132,7 @@ chapters:
   role: concept
   responsibility: 解释元素尺寸、正常流、display、定位包含块和层叠上下文，不在本章使用 Flexbox 或 Grid 解决整体布局。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-box-formatting
@@ -17282,7 +17282,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.box-position.md
   recommended_after:
   - ch.css.cascade
-  spec_digest: 75274e3fbea78b0cadf8bb228641026c2014dae1b196bbd170c850ca9b8ef71f
+  spec_digest: 4b029a4e2d3d8af6a33ca5f87b37965d2350e807d25f1beee101f4462a96602c
   route_tags:
   - zero-base
   - accelerated-48
@@ -17292,7 +17292,7 @@ chapters:
   role: concept
   responsibility: 用主轴、交叉轴、伸缩、换行和对齐解决一维组件布局，不把二维页面网格强塞给 Flexbox。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-flex-axis-sizing
@@ -17441,7 +17441,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.flexbox.md
   recommended_after:
   - ch.css.box-position
-  spec_digest: 86f113c9e3a15d420df5f78be813880042f0e5ad13075b4f9a0483b381f671c7
+  spec_digest: 52593e81de496f1bd97968f0824e6fb0d73d8cd84e4906ed29416ff16e8a0916
   route_tags:
   - zero-base
   - accelerated-48
@@ -17451,7 +17451,7 @@ chapters:
   role: concept
   responsibility: 用轨道、网格线、区域和自动放置表达二维布局，区分 Grid 与 Flexbox 的责任边界。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-grid-tracks-placement
@@ -17600,7 +17600,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.grid.md
   recommended_after:
   - ch.css.flexbox
-  spec_digest: d943c2893f30e83f96b2f1e2508d47c6316a371ffb725d6b1cbe081d22762f24
+  spec_digest: bca134ec47f312ac980e8066d66838290a8a446a869495c48b14ac8046097233
   route_tags:
   - zero-base
   - accelerated-48
@@ -17610,7 +17610,7 @@ chapters:
   role: synthesis
   responsibility: 组合流式尺寸、媒体/容器查询、可读排版和响应式资源形成内容驱动适配，不用设备型号堆砌断点。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-responsive-layout
@@ -17788,7 +17788,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.responsive-typography.md
   recommended_after:
   - ch.css.grid
-  spec_digest: 007b657271fc17d02ea802a432b7c7548a0436390c9cb03af5eaba5000f4eda8
+  spec_digest: e4c2eadd4cf725f93fa4f3fa90a2fb49c95dc99f73ea580d2b5873e3aa07df42
   route_tags:
   - zero-base
   - accelerated-48
@@ -17798,7 +17798,7 @@ chapters:
   role: concept
   responsibility: 用设计 token、自定义属性、颜色对比和系统偏好表达主题，不在本章建立完整组件库。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-custom-properties
@@ -17934,7 +17934,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.theme-variables.md
   recommended_after:
   - ch.css.responsive-typography
-  spec_digest: 460482b1485e8ee6c6acd8513f0abfac1e28f2df14c2ff716f99f72b49ff09f8
+  spec_digest: 9f5248096790b1b5928e1c847371d22f4f2d76c473f2fa916ea3706734ed0f2b
   route_tags:
   - zero-base
   - accelerated-48
@@ -17944,7 +17944,7 @@ chapters:
   role: concept
   responsibility: 用过渡、关键帧与 transform 表达有意义反馈，并依据合成成本和减少动效偏好限制动画，不处理 JavaScript 长任务优化。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: css-motion-primitives
@@ -18092,7 +18092,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.motion-compositing.md
   recommended_after:
   - ch.css.theme-variables
-  spec_digest: a66ddfd6cdf68986bb6a4789068653f3ea1e61117b9be4021d641a699ce8ca31
+  spec_digest: e7205b738233f1cae819e69e7f79b3dd2c2e526912072f1a9e717651f24ffced
   route_tags:
   - zero-base
   - accelerated-48
@@ -18102,7 +18102,7 @@ chapters:
   role: foundation
   responsibility: 建立浏览器与 Node 运行时、包管理器、package.json 和 ESM 模块解析的最小运行链，不在本章教授语言控制流。
   level: L1
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: js-runtime-hosts
@@ -18240,7 +18240,7 @@ chapters:
   order: 1
   path: book/volume-08-javascript-typescript/chapters/ch.js.runtime-esm.md
   recommended_after: []
-  spec_digest: 792e2a2110fd35dfab57bdcde344395f9510c838c0b7880aa30c7e08b55dae0d
+  spec_digest: a3e6fa14107ad892b096e05efb6dd0494887671270ee3f56b3384b484e483f35
   route_tags:
   - zero-base
   - accelerated-48
@@ -18251,7 +18251,7 @@ chapters:
   role: foundation
   responsibility: 教会读者从上到下阅读 JavaScript 源码，用声明、赋值、表达式和输出验证状态变化，不提前使用分支、循环或函数抽象。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-source-statements
@@ -18395,7 +18395,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.statements-variables.md
   recommended_after:
   - ch.js.runtime-esm
-  spec_digest: 28ada00be1f3a6ffbe55df8459fb1d24fe3a53c4d18dcad3d1fbaaa33740c52b
+  spec_digest: 9cbb9ca5183059c525af14ddba9b3b0e3a9137d1bcfcebe0fc3ea428110ef175
   route_tags:
   - zero-base
   - accelerated-48
@@ -18406,7 +18406,7 @@ chapters:
   role: foundation
   responsibility: 建立 JavaScript 原始值、对象引用、显式/隐式转换、运算优先级和相等规则，不在本章用控制流掩盖类型问题。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-values-types
@@ -18556,7 +18556,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.values-operators.md
   recommended_after:
   - ch.js.statements-variables
-  spec_digest: 627af8db36985baf06d8d2b63a8c2537770cb1548c10e90451f312722249f5e1
+  spec_digest: de05e0a11b2691e6867646c70eb09245a03f133a0067bcfb165a8f54f477f762
   route_tags:
   - zero-base
   - accelerated-48
@@ -18567,7 +18567,7 @@ chapters:
   role: foundation
   responsibility: 用布尔条件、互斥分支和有界循环表达选择与重复，明确 break/continue 的局部控制边界，不引入函数或集合抽象。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-branching
@@ -18714,7 +18714,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.control-flow.md
   recommended_after:
   - ch.js.values-operators
-  spec_digest: 3ab5fcdf402083d93e65e1a9ae1da9714e8201edc0d7fd20c685d40b489588e2
+  spec_digest: a038aa3fb516b47b935a188d56a54ceda4f648ebc216be1b393676b037440d2d
   route_tags:
   - zero-base
   - accelerated-48
@@ -18725,7 +18725,7 @@ chapters:
   role: foundation
   responsibility: 用函数声明/表达式、参数、返回值和函数值封装单一计算，首次认识回调入口但不在本章教授闭包状态。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-function-contract
@@ -18863,7 +18863,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.functions.md
   recommended_after:
   - ch.js.control-flow
-  spec_digest: f9d554139324805379ac8c25a5337641093bf5ccb6a2a9d523c96e8bbf9b842c
+  spec_digest: a45eab8768d195ea654934e59b6452ec1d7648f78ba743bd399686041d00e6ac
   route_tags:
   - zero-base
   - accelerated-48
@@ -18874,7 +18874,7 @@ chapters:
   role: concept
   responsibility: 解释词法环境、遮蔽、生命周期和闭包捕获，用受控闭包封装状态，不把全局可变状态伪装成闭包。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-lexical-scope
@@ -19021,7 +19021,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.scope-closures.md
   recommended_after:
   - ch.js.functions
-  spec_digest: 7443ec60394524d76ae7249d9ee4f04940d721dff13b23ecdc035aa957fe5ee3
+  spec_digest: 8c8d74b33f0ec63a1170b1cf541d55da5a991e386302db834e2b73b34b8ea705
   route_tags:
   - zero-base
   - accelerated-48
@@ -19032,7 +19032,7 @@ chapters:
   role: foundation
   responsibility: 选择数组、普通对象、Map 和 Set 表达顺序、键值和唯一性，并用复制更新保护调用边界，不在本章教授原型继承。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-array-object-data
@@ -19183,7 +19183,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.collections.md
   recommended_after:
   - ch.js.scope-closures
-  spec_digest: 7e8e68d3c8c16f418cb72fb5c9d6376d7886d352d1fc35ea6b098096cdccc909
+  spec_digest: e24e44d3a93f06f8327724be0e1e862900f5494494013e04dda157bddb44e2b8
   route_tags:
   - zero-base
   - accelerated-48
@@ -19194,7 +19194,7 @@ chapters:
   role: concept
   responsibility: 解释属性查找、this 绑定、原型链和 class 语法糖，能在组合与共享方法之间选择，不把 class 等同于 Java 类。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-this-prototype
@@ -19342,7 +19342,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.object-model.md
   recommended_after:
   - ch.js.collections
-  spec_digest: 7a09f0c2b1074830c5327ff0b860d54664c4b4e9acec69303571723a75a80e69
+  spec_digest: 044e4bbc06ac06b5a0a915b4923689292de1d308234a37503a8aff191cbc071f
   route_tags:
   - zero-base
   - accelerated-48
@@ -19352,7 +19352,7 @@ chapters:
   role: practice
   responsibility: 在 JavaScript 中落实异常边界、调试器、AAA、Vitest 断言和可隔离替身，只覆盖语言单元测试，不声称已掌握 Vue 组件或浏览器端到端测试。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: js-errors-debugging
@@ -19507,7 +19507,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.testing-debugging.md
   recommended_after:
   - ch.js.object-model
-  spec_digest: 6e20032fae772ce35eff790321079613a650c5cde9d31a4b15a896094d28732c
+  spec_digest: dd5f7ba57c8eee81f41bfdf4785c004feb01b1b417249120ae3c623390bddd69
   route_tags:
   - zero-base
   - accelerated-48
@@ -19518,7 +19518,7 @@ chapters:
   role: practice
   responsibility: 把已知 HTML 结构映射为 DOM 节点查询和最小变更，区分属性、property、文本与 HTML 注入边界，不在本章处理事件传播。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-dom-tree-query
@@ -19673,7 +19673,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md
   recommended_after:
   - ch.js.testing-debugging
-  spec_digest: b48da97ff55cb381f203d3b8d0169eabe112bf761c6acc7b45bb0849bd570984
+  spec_digest: f9f6a20b3d279072024ab5b4e6ee3170eb30fb1457416af41134331e0cdc6b8d
   route_tags:
   - zero-base
   - accelerated-48
@@ -19683,7 +19683,7 @@ chapters:
   role: practice
   responsibility: 解释捕获、目标、冒泡、默认行为和事件委托，用监听器增强原生表单且保留提交与无障碍语义。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-event-flow
@@ -19859,7 +19859,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md
   recommended_after:
   - ch.js.dom-mutation
-  spec_digest: bd06507ea1f460566802353e0b4ab2c425702021d6eef02a215078a95eec4e52
+  spec_digest: 66925ba512b694bf845a446ebef3a9c7991ac9d2cffd5eac5fe88230f56383b0
   route_tags:
   - zero-base
   - accelerated-48
@@ -19869,7 +19869,7 @@ chapters:
   role: concept
   responsibility: 建立调用栈、任务、微任务、Promise 状态和 async/await 恢复顺序的运行模型，不在本章发起网络请求或设计重试。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: js-event-loop-queues
@@ -20016,7 +20016,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md
   recommended_after:
   - ch.js.events-forms
-  spec_digest: 6a06979a0da460b1d040634f73947fcb72c0548e57856fbd26192cdaeec9e03c
+  spec_digest: 7b71c6e3a447a5f4abe0ecf26afee310da3270ee100f339a368f98ca8d191ff8
   route_tags:
   - zero-base
   - accelerated-48
@@ -20027,7 +20027,7 @@ chapters:
   role: practice
   responsibility: 用 Fetch 和 AbortController 建立请求、响应、超时、有限重试和“最新请求胜出”合同，区分取消 UI 更新与真正取消网络工作。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: js-fetch-http-boundary
@@ -20209,7 +20209,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md
   recommended_after:
   - ch.js.event-loop
-  spec_digest: 7984548f13a7f65091d95f57ec538b477142938a7a40b684c72714c570278399
+  spec_digest: a40404da52dcd4c85b1e2b62dc17b9b2a0c3e47af680c670be9463e044c7850e
   route_tags:
   - zero-base
   - accelerated-48
@@ -20220,7 +20220,7 @@ chapters:
   role: practice
   responsibility: 用浏览器时间线定位 DOM 读写抖动、长任务、重复监听和不可达对象保留，实施最小修复，不把所有慢响应归因于前端。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: js-render-performance
@@ -20391,7 +20391,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md
   recommended_after:
   - ch.js.fetch-cancellation-race
-  spec_digest: 5854db73f115af2569fb6365db31f8b46d0328b5d923a4985b59f5dd59f7fdfc
+  spec_digest: b95b9e6ea0b089bfd61ebeb3104d009e5ba6bff3b7ba4a93e9ad885e26034514
   route_tags:
   - zero-base
   - accelerated-48
@@ -20401,7 +20401,7 @@ chapters:
   role: foundation
   responsibility: 建立 TypeScript 编译时类型、推断、基础标注和函数签名的最小模型，明确类型在运行时会被擦除，不提前教授联合收窄或高级泛型。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ts-basic-types-inference
@@ -20547,7 +20547,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.ts.foundations.md
   recommended_after:
   - ch.js.browser-performance
-  spec_digest: 77d615aaf86af9cc1250faaeb199e0947c0ca515e4c771397f46f2469e10090f
+  spec_digest: 2c66bb67bc43e5c61c6bc056b05d20f6860d9db3d0249425bd1503b9721993a4
   route_tags:
   - zero-base
   - accelerated-48
@@ -20558,7 +20558,7 @@ chapters:
   role: concept
   responsibility: 用 interface/type、判别联合和控制流收窄表达业务状态与不可信输入，禁止用 any 跳过模型缺口。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ts-modeling-unions
@@ -20726,7 +20726,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.ts.modeling-narrowing.md
   recommended_after:
   - ch.ts.foundations
-  spec_digest: 864b3726d88a4e5574b2dc905b9e70e9c4338096606d7856bf54463e9d658705
+  spec_digest: a0d9ce36e2edc544ad26aba1da67cbb4c886f7f076759857665141d2e18edd9e
   route_tags:
   - zero-base
   - accelerated-48
@@ -20736,7 +20736,7 @@ chapters:
   role: concept
   responsibility: 用泛型约束表达跨类型关系，并在有明确收益时使用工具、映射和条件类型，不追求难以诊断的类型体操。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ts-generics-constraints
@@ -20881,7 +20881,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.ts.generics-utilities.md
   recommended_after:
   - ch.ts.modeling-narrowing
-  spec_digest: e1661f9e31556de23238bcb981f710531c83fc6d65087a03f5eee80001fcc8e3
+  spec_digest: fbd4882d579743052dcd92a2c0076897a7069842277f995eb44db4b6543c0c40
   route_tags:
   - zero-base
   - accelerated-48
@@ -20891,7 +20891,7 @@ chapters:
   role: practice
   responsibility: 在网络、存储和环境变量边界执行运行时 Schema 校验，并组合严格编译、lint、格式与测试门禁，不把类型声明当外部数据证据。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ts-runtime-schema
@@ -21049,7 +21049,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.ts.runtime-boundaries.md
   recommended_after:
   - ch.ts.generics-utilities
-  spec_digest: 503b84d0d9fdb3af4b821a798fd72dd0767ea8e1b82441d8ba02acde15771c60
+  spec_digest: 00a1b1e3dc96dfd0a227a1f38b3ff07bd94d9a1382fac41b29057f9e74f3a13f
   route_tags:
   - zero-base
   - accelerated-48
@@ -21059,7 +21059,7 @@ chapters:
   role: practice
   responsibility: 从空目录建立可运行的 Vue 3 + TypeScript + Vite 应用，解释入口、SFC 三段和构建边界，不提前教授指令、响应式或状态库。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-vite-entry
@@ -21213,7 +21213,7 @@ chapters:
   order: 1
   path: book/volume-09-vue-nuxt/chapters/ch.vue.vite-sfc.md
   recommended_after: []
-  spec_digest: d53be89c0009914d6871c8b2c20aa057a5dff51f3ed1562adc07741878e6264a
+  spec_digest: 9dadb43d69d0e82fbf638e029b6ffe29c04e85f7f062affaf44a57dfe0671fd0
   route_tags:
   - zero-base
   - accelerated-48
@@ -21224,7 +21224,7 @@ chapters:
   role: practice
   responsibility: 用模板表达文本、属性、事件、条件和列表渲染，解释 key 的身份作用，不在本章引入 v-model、复杂组件通信或副作用。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-template-binding
@@ -21371,7 +21371,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md
   recommended_after:
   - ch.vue.vite-sfc
-  spec_digest: 0d79d9a9286f3a006629fbdb6058454505a15a60563899f84f78ce6a0343c205
+  spec_digest: a1273385b9ad14dc76cc9ae4cd4e08fa01d64dd72d8c7ced322cb6bb4010a99b
   route_tags:
   - zero-base
   - accelerated-48
@@ -21382,7 +21382,7 @@ chapters:
   role: practice
   responsibility: 把原生控件的 value/checked、事件与 Vue 状态通过 v-model 建立可追踪契约，区分显示校验、客户端校验和服务端权威校验。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-vmodel-contract
@@ -21563,7 +21563,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md
   recommended_after:
   - ch.vue.template-directives
-  spec_digest: 0b36e1324df46614a9d3b98f112cab617d07bd9daa0c0f43e1fa703117f350c7
+  spec_digest: '087baa9afdebec4f2886185a5879222204516bdbf1ac43f5288bc13ff98877be'
   route_tags:
   - zero-base
   - accelerated-48
@@ -21574,7 +21574,7 @@ chapters:
   role: concept
   responsibility: 解释 ref/reactive 的依赖追踪、computed 缓存和解包边界，用派生状态替代重复可变状态，不在本章发起副作用。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-reactive-sources
@@ -21715,7 +21715,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md
   recommended_after:
   - ch.vue.forms-vmodel
-  spec_digest: 90593113be343db14b4631843744b70bd4f07e9ccb63126a8f9f9132f1fe9c90
+  spec_digest: d7789006cdb69eceb34991370c5ce60342203f77c486ae5b1fcfba7da51d17a5
   route_tags:
   - zero-base
   - accelerated-48
@@ -21726,7 +21726,7 @@ chapters:
   role: practice
   responsibility: 在组件生命周期中安排 watch/watchEffect 和外部副作用，使用清理函数保证旧计时器、订阅和异步任务不再更新当前界面。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-watch-effects
@@ -21910,7 +21910,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md
   recommended_after:
   - ch.vue.reactivity
-  spec_digest: cff980dada4d908d4664d71767f7d6f1ffd4cd4e2df62c5d6a466a2d6329d5f1
+  spec_digest: 2b20099a9282f28b959ef0b6f96abbe1cae2ac5700017919e9e88175915c14c0
   route_tags:
   - zero-base
   - accelerated-48
@@ -21921,7 +21921,7 @@ chapters:
   role: practice
   responsibility: 用 Props、emit、Slot 和组件 v-model 建立单向数据流与可组合 UI 合同，禁止子组件直接修改父级所有状态。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-props-emits-model
@@ -22071,7 +22071,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md
   recommended_after:
   - ch.vue.effects-lifecycle
-  spec_digest: 14cf644eb77ca04a3b26478557f8a4c96c55fbfa5b62b9331af48ac01d7ec109
+  spec_digest: c2213370f30560069831a21511a249e1cb6f9b88d62181eb1b2f31f0effe0790
   route_tags:
   - zero-base
   - accelerated-48
@@ -22082,7 +22082,7 @@ chapters:
   role: practice
   responsibility: 把可复用状态和副作用封装为具有所有权/清理合同的 Composable，并在确有跨层依赖时使用 provide/inject，不创建隐式全局单例。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-composable-contract
@@ -22227,7 +22227,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.composables-di.md
   recommended_after:
   - ch.vue.components-contracts
-  spec_digest: a6611ac00b0b32a3f4c0cd7ae57ea53f0966c5d540245ff9cd40fb4309209136
+  spec_digest: c900c41850460023b89ef433ee0b129200b15202758f43bc1b1d5bbcc4c66e4b
   route_tags:
   - zero-base
   - accelerated-48
@@ -22237,7 +22237,7 @@ chapters:
   role: practice
   responsibility: 用路由记录、参数、嵌套布局和导航守卫表达页面边界，区分路由可达性与真正的服务端授权。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-router-records
@@ -22382,7 +22382,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.router-navigation.md
   recommended_after:
   - ch.vue.composables-di
-  spec_digest: 82e3e6f5aa661565fbb307caf61a5b84947c196d0dede960988bc77703a1cdcd
+  spec_digest: 5ec4cc81942aec3a8410f8218f36948d0e084694269511d2a331e94cee5070e0
   route_tags:
   - zero-base
   - accelerated-48
@@ -22393,7 +22393,7 @@ chapters:
   role: practice
   responsibility: 用 Pinia 管理真正跨组件的客户端状态，明确本地状态、派生状态和服务端状态的所有权，不把所有 ref 都搬进 store。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-pinia-store
@@ -22542,7 +22542,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.pinia-state.md
   recommended_after:
   - ch.vue.router-navigation
-  spec_digest: d54a5875568cc9e4316d5eb376c854621c5b81a5dc715f6518265e0b6ea4fc22
+  spec_digest: 3c4ee4bcd9bf147be5e03f90fc1ade4f173589c066da4f93fd186e0c5fc74143
   route_tags:
   - zero-base
   - accelerated-48
@@ -22553,7 +22553,7 @@ chapters:
   role: practice
   responsibility: 在 Vue 中建模 idle/loading/success/error 状态、请求身份、取消和重取，避免陈旧响应覆盖且不把服务器缓存数据当普通 Pinia 客户端状态。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-server-state-machine
@@ -22709,7 +22709,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.server-state.md
   recommended_after:
   - ch.vue.pinia-state
-  spec_digest: 29f2a5647e15b4959c47054393a8dff74775a586e51dab89d0a7d40964751381
+  spec_digest: 7cb68afdb5e57802d97294b4e4a74992f43a1f084a6c6402a3ffba9ecfba50a3
   route_tags:
   - zero-base
   - accelerated-48
@@ -22720,7 +22720,7 @@ chapters:
   role: practice
   responsibility: 在前端同步认证状态、受保护导航和权限提示，明确隐藏按钮与路由守卫不是服务端授权，所有敏感操作仍由后端默认拒绝。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-auth-session-ui
@@ -22896,7 +22896,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.auth-permissions.md
   recommended_after:
   - ch.vue.server-state
-  spec_digest: a63005aa9ac21fd48ddb50fa1b98a47bdb03535a56e4aa540f935c40ea73f138
+  spec_digest: c5d129f261ea7a2b5fbe0c2cebcca5459315176e6adb2965d3a05abbe9487b6e
   route_tags:
   - zero-base
   - accelerated-48
@@ -22906,7 +22906,7 @@ chapters:
   role: practice
   responsibility: 用组件测试验证渲染、事件与异步状态，用少量浏览器端到端测试覆盖关键用户路径，明确 Mock、组件和 E2E 各自证据边界。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-component-test
@@ -23073,7 +23073,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.component-testing.md
   recommended_after:
   - ch.vue.auth-permissions
-  spec_digest: 764320bcfa45b18e37138161cb966015aad308eac4f312e2b6ad0fc69c5b7087
+  spec_digest: d2be4383802fc1780f505b70089bad1d940051804153ee0d192cb250828742c4
   route_tags:
   - zero-base
   - accelerated-48
@@ -23084,7 +23084,7 @@ chapters:
   role: practice
   responsibility: 把原生无障碍原则落实到条件渲染、弹层、路由切换和异步提示，保证组件更新后键盘与屏幕阅读器仍获得正确上下文。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-dynamic-a11y
@@ -23244,7 +23244,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md
   recommended_after:
   - ch.vue.component-testing
-  spec_digest: b14ef8bc02a9c2a93923753ae6e39cb2b3fbba065344b83d1686dfbab760b4c0
+  spec_digest: 85d15934473c8eb90662449ffdd51c3f763e0c584d25610f8ce760b364478de5
   route_tags:
   - zero-base
   - accelerated-48
@@ -23254,7 +23254,7 @@ chapters:
   role: practice
   responsibility: 用 Vue DevTools、浏览器 trace 和预算定位不必要渲染、过大 chunk 与恢复失败，实施可测优化且不牺牲正确性或无障碍。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: vue-render-bundle-performance
@@ -23412,7 +23412,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.performance.md
   recommended_after:
   - ch.vue.accessibility
-  spec_digest: d8033237e9ab6c3bacf59c9a8524a8175f0e496b16d839f71b4732a78e5ad384
+  spec_digest: 8f79a98ee0433b777cc8c0ef284a0bbf849fd218952784ddc99c5130aa31dbb3
   route_tags:
   - zero-base
   - accelerated-48
@@ -23422,7 +23422,7 @@ chapters:
   role: practice
   responsibility: 区分 SSR、SSG 与客户端渲染，解释服务端/客户端执行边界、水合一致性和 Nuxt 数据获取，不在本章教授生产部署或完整认证。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: nuxt-rendering-modes
@@ -23578,7 +23578,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.nuxt.rendering-hydration.md
   recommended_after:
   - ch.vue.performance
-  spec_digest: f259b3bdf677fe299347cd6c36006cac6b0856aafd86af27bd4a9537bf13da94
+  spec_digest: a0d67d6b36ebeb2a04de542e9d0c98c7768343401a562db9ac52955459d2c6d5
   route_tags:
   - zero-base
   - accelerated-48
@@ -23588,7 +23588,7 @@ chapters:
   role: foundation
   responsibility: 解释小程序宿主、逻辑/视图层、全局与页面配置以及应用/页面生命周期，区分平台能力与普通浏览器能力，不引入 uni-app。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: miniapp-host-runtime
@@ -23729,7 +23729,7 @@ chapters:
   order: 1
   path: book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md
   recommended_after: []
-  spec_digest: 6b00e5231bbdaa0cc5301cbe29769cadf887df565a744d5f364f5f56b4db5d04
+  spec_digest: 62adbc061a94da511d1e05a6d3f8fedd89699970f5aa521767854e4986504f82
   route_tags:
   - zero-base
   - accelerated-48
@@ -23740,7 +23740,7 @@ chapters:
   role: practice
   responsibility: 从空目录建立可编译到小程序的 uni-app 项目，解释页面清单、路由、入口和构建产物，不在本章教授组件差异或条件编译。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-toolchain-project
@@ -23896,7 +23896,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md
   recommended_after:
   - ch.miniapp.runtime
-  spec_digest: 730e60aa5cf13fc580c61eac69e319b0d26013b481c841c25cf276ac1d9946c7
+  spec_digest: eed6c1824a6882497ff394b7a75d2436b9a888ea08f7ccddc3b7bed6f73ad680
   route_tags:
   - zero-base
   - accelerated-48
@@ -23907,7 +23907,7 @@ chapters:
   role: practice
   responsibility: 把 Vue 模板、组件和表单合同迁移到 uni-app 的跨端组件集合，明确宿主事件、样式和 API 差异，不处理设备权限。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-template-component
@@ -24066,7 +24066,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md
   recommended_after:
   - ch.uniapp.toolchain-pages
-  spec_digest: c26241502d1b847b7ce0583145bbbd8f59a80b9e53d693d134c589f2a8cdb899
+  spec_digest: 8ee396f7ae026794b66a948bddc895297f833ebb419ebdd9b40cd6fb5ef25ce5
   route_tags:
   - zero-base
   - accelerated-48
@@ -24077,7 +24077,7 @@ chapters:
   role: practice
   responsibility: 用 uni.request、受控凭据存储和环境配置访问后端，区分 HTTP、宿主白名单、认证过期与本地存储失败，不实现离线重放。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-network-environment
@@ -24238,7 +24238,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md
   recommended_after:
   - ch.uniapp.template-components
-  spec_digest: c5d1cf8ac282972fc9206a37c72a9be546dc25e6b3a692d12cc1c7c4b877bcb1
+  spec_digest: 9e1c99f2889e98083ed7b0352e4dc7c1d04fe59054df475b66aa04a666f2f85a
   route_tags:
   - zero-base
   - accelerated-48
@@ -24249,7 +24249,7 @@ chapters:
   role: practice
   responsibility: 在统一业务合同下用条件编译和运行时能力检测隔离平台差异，提供明确降级路径，不散布无法测试的平台分支。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-platform-adaptation
@@ -24402,7 +24402,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md
   recommended_after:
   - ch.uniapp.network-auth-storage
-  spec_digest: b1379c7c31278f6a97778d0f2c36fabdf11933fa758631c409e7ada0a0e6fc56
+  spec_digest: 7dd0aa84a53f40978180107dd18abef5ee0e652812b9be68ff11233cd05126f0
   route_tags:
   - zero-base
   - accelerated-48
@@ -24413,7 +24413,7 @@ chapters:
   role: practice
   responsibility: 把上传、扫码和定位封装为显式权限与取消合同，处理拒绝、永久拒绝、不可用和恢复，不把授权弹窗等同于业务同意。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-device-apis
@@ -24580,7 +24580,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md
   recommended_after:
   - ch.uniapp.platform-conditional
-  spec_digest: cab4c6edf9c50347853c6f744b3af1f67ee1c41dc2bc5486a004f67d412fb186
+  spec_digest: c633587fff9752c77ead4ff145b45a649a2e17aa68ea537fc64ab916268ffb61
   route_tags:
   - zero-base
   - accelerated-48
@@ -24591,7 +24591,7 @@ chapters:
   role: practice
   responsibility: 在 uni-app 中选择纯函数、组件、宿主 Mock、真机和网络调试证据，明确模拟器通过不能代替目标真机验证。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-automated-testing
@@ -24755,7 +24755,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md
   recommended_after:
   - ch.uniapp.device-capabilities
-  spec_digest: 5908b245e855493a45ab9df78a148c084db856638c239a611a8cd676736a39bc
+  spec_digest: 26e66c5869186f7b456e02a4cc15fa0377916606641301c22f1f4ac2c4bc1581
   route_tags:
   - zero-base
   - accelerated-48
@@ -24766,7 +24766,7 @@ chapters:
   role: practice
   responsibility: 用分包、懒加载、资源压缩和版本化缓存控制小程序启动与包体预算，以真实设备指标验证，不引入离线业务队列。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-package-loading
@@ -24916,7 +24916,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md
   recommended_after:
   - ch.uniapp.testing-debugging
-  spec_digest: 2af7ee4a2a758c8046289c33a6e175d95ff9a995833e3d3f41b7e0b604b7ec2d
+  spec_digest: 62d5d881de61ace8a0bf189b65432ed81de68ebe952378b9406d8f1a31919a89
   route_tags:
   - zero-base
   - accelerated-48
@@ -24927,7 +24927,7 @@ chapters:
   role: practice
   responsibility: 为离线报修定义持久队列、幂等键、有限重试和冲突决策，保证重放不重复创建且失败可观察，不把缓存等同离线同步。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: mobile-offline-queue
@@ -25105,7 +25105,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md
   recommended_after:
   - ch.uniapp.packages-performance
-  spec_digest: 5b4a9185a4a7dfddca95b27d96a3c34b3228b19100575644ce02188877d47c8e
+  spec_digest: 48d7dbb74cf5901593cda1998a34e0e969527d69c02e28d3550401e2371ebe12
   route_tags:
   - zero-base
   - accelerated-48
@@ -25116,7 +25116,7 @@ chapters:
   role: practice
   responsibility: 把权限使用、最小数据、告知同意、日志脱敏和平台隐私声明映射到可审查证据，区分合规材料与真实运行时保护。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: uniapp-privacy-data
@@ -25273,7 +25273,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md
   recommended_after:
   - ch.uniapp.offline-idempotency
-  spec_digest: 4133d8d4798482a1d823f6ea6c044bbe846a2e11b0fb347177d5e95545a1439f
+  spec_digest: eea8357a326bab1372b5016e1988e436d4395bc8d135b75553afa940f3c40b06
   route_tags:
   - zero-base
   - accelerated-48
@@ -25284,7 +25284,7 @@ chapters:
   role: practice
   responsibility: 建立可追溯版本、环境构建、体验版验证、灰度发布、回退和客户端错误监控，不在本章设计通用 CI/CD 平台。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: miniapp-release-promotion
@@ -25441,7 +25441,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md
   recommended_after:
   - ch.uniapp.privacy-review
-  spec_digest: b7d56ffec6b2de38b624b72b78af86ec33930320dc77c7ff7b0d9d503100dd20
+  spec_digest: 9ba931662e5083437a1c782c1a81bfa9f24601cfc599a5e8b50b3677c78af8df
   route_tags:
   - zero-base
   - accelerated-48
@@ -25452,7 +25452,7 @@ chapters:
   role: project
   responsibility: 把扫码、上传、位置、服务端状态、离线幂等和发布证据集成为 FactoryCare 报修端切片，只验收既定合同，不在本章补教平台基础。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: factorycare-reporter-flow
@@ -25624,7 +25624,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md
   recommended_after:
   - ch.uniapp.release-monitoring
-  spec_digest: 58c539763ce9d81fedb1e9413400feda07476b8f5e8c0f89f05746edf1265295
+  spec_digest: 8ca9b95e48ab28688077542db935307b0e98b0a8d1359a3a6247804d1c55b232
   route_tags:
   - zero-base
   - accelerated-48
