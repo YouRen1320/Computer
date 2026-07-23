@@ -1,0 +1,7 @@
+name: factorycare_toolchain_example
+description: Minimal reproducible Dart CLI package for FactoryCare learning.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"

@@ -1,0 +1,11 @@
+{
+  "python": "3.14.x",
+  "lock_required": true,
+  "venv_committed": false,
+  "ci_commands": [
+    "uv lock --check",
+    "uv sync --locked",
+    "uv run --locked python -m factorycare_runtime_lab"
+  ],
+  "live_uv_sync": "unverified"
+}

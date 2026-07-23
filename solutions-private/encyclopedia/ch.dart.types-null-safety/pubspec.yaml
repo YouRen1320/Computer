@@ -1,0 +1,7 @@
+name: factorycare_types_solution
+description: Safe nullable normalization solution.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"

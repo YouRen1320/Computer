@@ -1,0 +1,35 @@
+schema: factorycare.layout-a11y-matrix/v1
+cases:
+  - id: narrow-long-text
+    width: 320
+    text_scale: 2.0
+    direction: ltr
+    assertions: [no-overflow, primary-action-reachable, critical-text-readable]
+    execution: unverified
+  - id: wide
+    width: 1024
+    text_scale: 1.0
+    direction: ltr
+    assertions: [two-pane-at-content-breakpoint, bounded-line-length]
+    execution: unverified
+  - id: rtl
+    width: 390
+    text_scale: 1.5
+    direction: rtl
+    assertions: [directional-spacing, logical-focus-order]
+    execution: unverified
+  - id: keyboard
+    width: 1024
+    text_scale: 1.0
+    direction: ltr
+    assertions: [visible-focus, enter-activates, no-focus-trap]
+    execution: unverified
+  - id: screen-reader
+    width: 390
+    text_scale: 1.0
+    direction: ltr
+    assertions: [name-role-state-action, no-duplicate-reading]
+    execution: unverified
+evidence_boundary:
+  offline: matrix-structure-only
+  live_required: [flutter-widget-test, device-smoke, talkback-or-voiceover]

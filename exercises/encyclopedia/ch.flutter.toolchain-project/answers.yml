@@ -1,0 +1,13 @@
+answers:
+  wrong-sdk:
+    first_stage: TODO
+    first_evidence: TODO
+    recovery: TODO
+  missing-device:
+    first_stage: TODO
+    first_evidence: TODO
+    recovery: TODO
+  changed-native-permission-after-reload:
+    first_stage: TODO
+    first_evidence: TODO
+    recovery: TODO

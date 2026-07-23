@@ -1,0 +1,13 @@
+answers:
+  wrong-sdk:
+    first_stage: sdk-resolution
+    first_evidence: type-a-and-version
+    recovery: align-terminal-ide-ci-sdk
+  missing-device:
+    first_stage: target-selection
+    first_evidence: flutter-devices
+    recovery: select-valid-device-id
+  changed-native-permission-after-reload:
+    first_stage: platform-runtime
+    first_evidence: platform-config-and-run-log
+    recovery: full-rebuild

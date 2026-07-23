@@ -1,0 +1,22 @@
+{
+  "openapi": "3.1.0",
+  "operationId": "getInternalSuggestionLab",
+  "security": [
+    {
+      "TrainingBearer": []
+    }
+  ],
+  "responseCodes": [
+    "200",
+    "401",
+    "403",
+    "404",
+    "422"
+  ],
+  "securityScheme": {
+    "type": "http",
+    "description": "Local opaque token used only by this executable lab.",
+    "scheme": "bearer",
+    "bearerFormat": "opaque-training-token"
+  }
+}

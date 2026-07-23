@@ -1,0 +1,17 @@
+viewport:
+  min_width: 320
+  max_width: 320
+padding:
+  start: 16
+  end: 16
+row:
+  gap: 8
+  fixed_children:
+    - id: status
+      reported_width: 72
+  flex_child:
+    id: title
+    reported_width: 208
+oracle:
+  row_width: 288
+  title_max_width: 208

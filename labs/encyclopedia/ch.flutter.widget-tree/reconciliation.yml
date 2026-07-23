@@ -1,0 +1,17 @@
+before:
+  - order_id: 101
+    expanded: true
+  - order_id: 102
+    expanded: false
+after_order: [102, 101]
+expectations:
+  without_key:
+    - order_id: 102
+      expanded: true
+    - order_id: 101
+      expanded: false
+  with_value_key:
+    - order_id: 102
+      expanded: false
+    - order_id: 101
+      expanded: true

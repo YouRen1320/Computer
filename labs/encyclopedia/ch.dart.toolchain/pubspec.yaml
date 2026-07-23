@@ -1,0 +1,7 @@
+name: factorycare_toolchain_lab
+description: Reproducible Dart toolchain fault lab.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"

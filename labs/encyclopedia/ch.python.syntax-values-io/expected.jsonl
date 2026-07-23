@@ -1,0 +1,5 @@
+{"name": "unit_price_text", "type": "str", "value": "1999"}
+{"name": "quantity_text", "type": "str", "value": "3"}
+{"name": "unit_price_cents", "type": "int", "value": 1999}
+{"name": "quantity", "type": "int", "value": 3}
+{"name": "total_cents", "type": "int", "value": 5997}

@@ -8,7 +8,7 @@ chapters:
     role: foundation
     responsibility: "建立 CPython、uv、虚拟环境、pyproject 与锁文件的可重复运行链，区分解释器、环境和包来源，不教授 Python 语法。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: python-runtime-environment
@@ -76,7 +76,7 @@ chapters:
     role: foundation
     responsibility: "教会读者按缩进读取 Python 语句，用名称绑定、基础对象、表达式、print/input 和类型观察验证程序，不提前使用条件或函数。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-syntax-bindings
@@ -144,7 +144,7 @@ chapters:
     role: foundation
     responsibility: "用布尔条件、if/elif/else、for/while、range 和 break/continue 表达选择与重复，不使用函数或推导式隐藏控制流程。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-branching
@@ -212,7 +212,7 @@ chapters:
     role: foundation
     responsibility: "用函数、位置/关键字参数、默认值、返回和 LEGB 作用域封装单一规则，不引入装饰器、生成器或类。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-function-contract
@@ -280,7 +280,7 @@ chapters:
     role: foundation
     responsibility: "选择 list/tuple/dict/set 表达顺序、不可变记录、映射和唯一性，用切片、遍历和可读推导式转换数据，整合 Python 基础语言能力。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-core-collections
@@ -348,7 +348,7 @@ chapters:
     role: concept
     responsibility: "为函数和集合边界添加基础类型标注、联合和 Optional，并用类型检查器定位静态错误，明确标注不是运行时校验。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: python-type-annotations
@@ -416,7 +416,7 @@ chapters:
     role: foundation
     responsibility: "用模块、包、绝对/相对导入和 main 入口组织代码，解释导入执行与循环导入，不在本章读写文件。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-module-import
@@ -484,7 +484,7 @@ chapters:
     role: concept
     responsibility: "用 pathlib 和显式编码读写文本/JSON，执行原子写入并规范化时区感知时间，不在本章定义异常转换策略。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-files-json
@@ -552,7 +552,7 @@ chapters:
     role: concept
     responsibility: "用类、构造、封装、dataclass 和 enum 表达具有不变量的数据对象，理解方法解析和组合边界，不提前教授 Protocol 或泛型。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-class-model
@@ -620,7 +620,7 @@ chapters:
     role: concept
     responsibility: "用 TypeVar/泛型、Protocol 和 Callable 表达可替换依赖与输入输出关系，整合 Python 语言、类型和对象能力，不依赖继承注册。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-generics-callable
@@ -688,7 +688,7 @@ chapters:
     role: concept
     responsibility: "区分业务失败与异常，定义抛出、转换、链式和清理边界，并用 with/contextmanager 保证文件等资源释放，整合 IO 与错误能力。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-exception-contract
@@ -761,7 +761,7 @@ chapters:
     role: concept
     responsibility: "解释 iterable/iterator/generator 的惰性与一次性消费，并用保持元数据的装饰器包装函数合同，不把装饰器作为隐藏依赖容器。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-iterator-generator
@@ -829,7 +829,7 @@ chapters:
     role: practice
     responsibility: "用 pytest、fixture、参数化和受控替身建立可信单元测试，并用结构化日志、调试器和 traceback 定位失败，不提前教授 asyncio 测试。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: python-pytest
@@ -897,7 +897,7 @@ chapters:
     role: concept
     responsibility: "解释 coroutine、event loop、Task、TaskGroup、超时和取消传播，保证子任务有所有者且取消后执行清理，不把线程阻塞代码直接放入事件循环。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: python-asyncio-task
@@ -965,7 +965,7 @@ chapters:
     role: practice
     responsibility: "用 Pydantic 模型在不可信输入边界执行类型转换、字段/模型校验、序列化和稳定错误映射，区分 Python 类型标注与运行时验证。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: pydantic-model-validation
@@ -1033,7 +1033,7 @@ chapters:
     role: practice
     responsibility: "用 FastAPI 建立路由、参数/Body、依赖、状态码和错误合同，理解 sync/async 处理边界，不在本章接入完整认证。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: fastapi-routing-dependency
@@ -1106,7 +1106,7 @@ chapters:
     role: practice
     responsibility: "集成认证/授权依赖、异步测试和 OpenAPI 合同，覆盖未认证、越权与错误 Schema，不重教通用身份或 Web 威胁模型。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: fastapi-security-testing
@@ -1189,7 +1189,7 @@ chapters:
     role: practice
     responsibility: "用 ndarray、dtype、shape、轴、切片、广播和向量化处理数值数据，识别 view/copy 与数值稳定边界，不在本章做表格业务清洗。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: numpy-array-shape
@@ -1257,7 +1257,7 @@ chapters:
     role: practice
     responsibility: "用 Series/DataFrame、索引、缺失值、groupby、merge 和类型转换清洗表格数据，整合 Python 与 NumPy 能力，防止静默行数膨胀。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: pandas-frame-clean

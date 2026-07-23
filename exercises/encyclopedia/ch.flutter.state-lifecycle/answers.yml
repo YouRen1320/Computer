@@ -1,0 +1,9 @@
+answers:
+  mounted_is_boolean: TODO
+  mounted_means_route_is_visible: TODO
+  mounted_cancels_http: TODO
+  mounted_prevents_duplicate_calls: TODO
+  mounted_can_guard_post_dispose_set_state: TODO
+  finally_needs_operation_identity_check: TODO
+  dispose_should_release_owned_resources: TODO
+  stable_key_keeps_state_with_business_item: TODO

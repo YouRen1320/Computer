@@ -1,0 +1,7 @@
+name: factorycare_control_example
+description: Dart control-flow and function-contract example.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"

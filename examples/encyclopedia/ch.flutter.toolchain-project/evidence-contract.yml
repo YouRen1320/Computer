@@ -1,0 +1,29 @@
+schema: factorycare.flutter-toolchain-evidence/v1
+version_surface:
+  flutter: 3.44.x
+  dart: 3.12.x-with-flutter
+required_evidence:
+  - id: sdk-resolution
+    command: type -a flutter dart && flutter --version
+    proves: shell解析路径、Flutter渠道与捆绑Dart
+  - id: doctor
+    command: flutter doctor -v
+    proves: 当前机器各平台工具链能力与明确限制
+  - id: devices
+    command: flutter devices
+    proves: 实际可选择目标及device-id
+  - id: analyze-test
+    command: flutter analyze && flutter test
+    proves: 静态分析和自动测试结果
+  - id: run
+    command: flutter run -d <device-id>
+    proves: 指定目标的调试运行闭环
+  - id: reload-contrast
+    command: record hot-reload, hot-restart and full-restart
+    proves: build、initState和平台变化分别采用正确刷新层级
+actual: pending
+limitations:
+  - 默认仓库验证未启动设备
+  - 未实际运行的平台必须标记为unverified
+redaction:
+  forbidden_fields: [token, password, cookie, private_key]

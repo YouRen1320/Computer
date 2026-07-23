@@ -1,0 +1,7 @@
+name: factorycare_types_lab
+description: Positive and negative Dart null-safety fixtures.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"

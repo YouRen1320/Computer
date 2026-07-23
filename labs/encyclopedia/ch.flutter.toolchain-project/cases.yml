@@ -1,0 +1,13 @@
+cases:
+  - change: build-method-text
+    minimum_action: hot-reload
+    preserves_dart_state: true
+  - change: initState-initial-value
+    minimum_action: hot-restart
+    preserves_dart_state: false
+  - change: android-manifest-permission
+    minimum_action: full-rebuild
+    preserves_dart_state: false
+  - change: native-plugin-registration
+    minimum_action: full-rebuild
+    preserves_dart_state: false

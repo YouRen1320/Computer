@@ -1,0 +1,8 @@
+String decision(bool? assigned) => switch (assigned) {
+  true => 'assigned',
+  false => 'unassigned',
+};
+
+void main() {
+  print(decision(null));
+}

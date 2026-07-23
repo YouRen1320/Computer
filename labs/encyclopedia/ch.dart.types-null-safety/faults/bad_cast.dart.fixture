@@ -1,0 +1,4 @@
+void main() {
+  Object rawPriority = '4';
+  print(rawPriority as int);
+}

@@ -1,0 +1,9 @@
+name: dart_testing_lints_solution
+description: Private reference solution for Dart testing gates.
+publish_to: none
+version: 0.0.1
+environment:
+  sdk: '>=3.9.0 <4.0.0'
+dev_dependencies:
+  lints: 6.1.0
+  test: 1.31.0

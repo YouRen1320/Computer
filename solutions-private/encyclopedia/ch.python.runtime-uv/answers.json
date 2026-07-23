@@ -1,0 +1,5 @@
+{
+  "global_vs_project": {"first_evidence": "sys-executable-prefix", "fix": "run-via-uv-and-align-ide"},
+  "stale_lock": {"first_evidence": "uv-lock-check", "fix": "update-and-review-lock"},
+  "module_shadowing": {"first_evidence": "module-file", "fix": "rename-local-module"}
+}

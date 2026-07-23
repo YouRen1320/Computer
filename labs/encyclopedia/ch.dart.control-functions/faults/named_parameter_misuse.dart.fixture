@@ -1,0 +1,5 @@
+String schedule({required int priority}) => 'priority=$priority';
+
+void main() {
+  print(schedule(4));
+}

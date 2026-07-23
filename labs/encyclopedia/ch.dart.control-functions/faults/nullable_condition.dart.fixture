@@ -1,0 +1,6 @@
+void main() {
+  bool? assigneeAvailable;
+  if (assigneeAvailable) {
+    print('dispatch');
+  }
+}

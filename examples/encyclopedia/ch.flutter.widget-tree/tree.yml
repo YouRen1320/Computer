@@ -1,0 +1,33 @@
+nodes:
+  - id: app
+    widget: MaterialApp
+    element: StatelessElement
+    parent:
+    state: false
+  - id: page
+    widget: WorkOrderPage
+    element: StatelessElement
+    parent: app
+    state: false
+  - id: scaffold
+    widget: Scaffold
+    element: StatefulElement
+    parent: page
+    state: true
+  - id: details
+    widget: WorkOrderDetails
+    element: StatelessElement
+    parent: scaffold
+    state: false
+  - id: description
+    widget: ExpandableDescription
+    element: StatefulElement
+    parent: details
+    state: true
+lookups:
+  - from: description
+    ancestor: app
+    expected: found
+  - from: page
+    ancestor: scaffold
+    expected: not-found

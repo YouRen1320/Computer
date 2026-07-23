@@ -1,0 +1,6 @@
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    discarded_futures: true
+    avoid_catches_without_on_clauses: true

@@ -1,0 +1,27 @@
+events:
+  - seq: 1
+    type: mount
+  - seq: 2
+    type: start
+    operation: A
+  - seq: 3
+    type: cancel
+    operation: A
+    reason: superseded
+  - seq: 4
+    type: start
+    operation: B
+  - seq: 5
+    type: complete
+    operation: A
+    commit_ui: false
+  - seq: 6
+    type: dispose
+  - seq: 7
+    type: cancel
+    operation: B
+    reason: owner-disposed
+  - seq: 8
+    type: complete
+    operation: B
+    commit_ui: false

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+cleanup() { rm -rf .dart_tool; }
+trap cleanup EXIT
+dart pub get
+dart format --output=none --set-exit-if-changed .
+dart analyze --fatal-infos
+dart test --reporter expanded --test-randomize-ordering-seed=20260724
+printf '%s\n' 'DART_TESTING_LINTS_LAB_PASS gates=4 faults=4'

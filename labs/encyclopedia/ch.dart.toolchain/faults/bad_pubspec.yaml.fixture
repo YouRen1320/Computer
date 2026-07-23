@@ -1,0 +1,7 @@
+name: factorycare_bad_pubspec
+environment:
+ sdk: ">=3.9.0 <4.0.0"
+dependencies:
+  broken:
+   path: missing
+    version: 1.0.0

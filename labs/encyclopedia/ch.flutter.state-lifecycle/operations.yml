@@ -1,0 +1,19 @@
+initial_mounted: true
+events:
+  - type: start
+    operation: A
+    filter: ASSIGNED
+  - type: start
+    operation: B
+    filter: IN_PROGRESS
+  - type: complete
+    operation: B
+    result: [WO-B]
+  - type: complete
+    operation: A
+    result: [WO-A]
+  - type: dispose
+oracle:
+  visible_items: [WO-B]
+  committed_operations: [B]
+  ignored_operations: [A]

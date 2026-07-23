@@ -1,0 +1,5 @@
+import 'package:factorycare_toolchain_lab/does_not_exist.dart';
+
+void main() {
+  print(missingSymbol);
+}

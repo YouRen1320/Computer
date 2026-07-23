@@ -8,7 +8,7 @@ chapters:
     role: foundation
     responsibility: "建立 Dart SDK、dart CLI、pubspec、依赖锁定和源码入口的可重复运行链，不在本章教授语言类型或 Flutter。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: dart-sdk-cli
@@ -76,7 +76,7 @@ chapters:
     role: foundation
     responsibility: "建立 Dart 值、变量、静态类型、类型推断、运算和 sound null safety 模型，不提前使用集合、类或异步。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-values-types
@@ -144,7 +144,7 @@ chapters:
     role: foundation
     responsibility: "用分支、模式化 switch、有界循环和函数合同表达同步规则，不在本章引入集合高阶操作或类。"
     level: L1
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-control-flow
@@ -212,7 +212,7 @@ chapters:
     role: foundation
     responsibility: "选择 List/Map/Set/record 表达顺序、映射、唯一性与多值结果，并用模式匹配安全解构，不引入类继承。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-collections
@@ -280,7 +280,7 @@ chapters:
     role: concept
     responsibility: "用类、构造器、封装、接口/组合、泛型、mixin 和 extension 建立对象边界，整合前置类型与集合能力但不教授异步。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-object-model
@@ -348,7 +348,7 @@ chapters:
     role: concept
     responsibility: "区分可预期业务失败与异常，定义抛出/转换/捕获边界并用 finally 释放资源，不吞错、不在本章引入 Future。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-error-contract
@@ -416,7 +416,7 @@ chapters:
     role: concept
     responsibility: "解释 Future 完成/失败、async/await 恢复、超时和协作式取消，明确丢弃结果不等于取消底层工作，不教授 Stream。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-future-async
@@ -484,7 +484,7 @@ chapters:
     role: concept
     responsibility: "处理单订阅/广播 Stream、订阅取消、事件速率和 Isolate 消息边界，区分并发事件流与 CPU 隔离，不承诺不存在的通用背压。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: dart-stream-lifecycle
@@ -552,7 +552,7 @@ chapters:
     role: practice
     responsibility: "用 dart test、可信断言、可控替身和静态分析验证同步/异常合同，组合 format/analyze/test 门禁，不在本章测试 Flutter Widget。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: dart-unit-testing
@@ -620,7 +620,7 @@ chapters:
     role: practice
     responsibility: "建立 Flutter SDK、项目目录、目标设备、run/build、hot reload/restart 与 DevTools 观察链，不在本章教授 Widget 组合。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-sdk-project
@@ -688,7 +688,7 @@ chapters:
     role: practice
     responsibility: "用 MaterialApp、Stateless/Stateful Widget、组合和 BuildContext 构建可解释 Widget 树，整合工具链与 Dart 对象能力，不提前教授复杂布局或异步生命周期。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-widget-composition
@@ -756,7 +756,7 @@ chapters:
     role: practice
     responsibility: "按 constraints-down/sizes-up 建立 Row/Column/Flex/Stack/滚动布局，适配尺寸和文本缩放，并落实语义、键盘/触控与减少动效。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-constraint-layout
@@ -829,7 +829,7 @@ chapters:
     role: practice
     responsibility: "管理 State 生命周期、本地状态、mounted、Key 和异步回调所有权，保证销毁后不更新 UI，并明确 mounted 不能取消请求。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-state-lifecycle
@@ -902,7 +902,7 @@ chapters:
     role: practice
     responsibility: "建立页面路由、参数、返回结果、表单状态和校验合同，处理深链接与返回栈，不在本章选择全局状态库。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-navigation
@@ -970,7 +970,7 @@ chapters:
     role: practice
     responsibility: "按 presentation/application/domain/data 划分依赖方向，为本地、共享与服务端状态选择所有者和可替换接口，不绑定单一状态管理品牌。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-layer-boundary
@@ -1038,7 +1038,7 @@ chapters:
     role: practice
     responsibility: "在 Flutter 中实现可取消 HTTP、认证安全存储、版本化缓存和幂等离线队列，复用服务端幂等合同而不依赖 uni-app 实现。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-network-storage
@@ -1111,7 +1111,7 @@ chapters:
     role: practice
     responsibility: "通过插件与平台通道使用相机、扫码和定位，显式建模授权、拒绝、取消和不可用路径，不把平台异常泄漏为任意字符串。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-device-permission
@@ -1184,7 +1184,7 @@ chapters:
     role: practice
     responsibility: "组合 Dart 单元、Widget、集成和 Golden 测试保护行为，用 DevTools 定位重建、掉帧和内存保留，控制 Golden 与设备差异。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-test-levels
@@ -1257,7 +1257,7 @@ chapters:
     role: practice
     responsibility: "生成可追溯 Android/iOS 制品，管理签名与环境配置，保存符号并验证崩溃监控和回退，不在本章教授通用 CI。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: flutter-build-sign-release
