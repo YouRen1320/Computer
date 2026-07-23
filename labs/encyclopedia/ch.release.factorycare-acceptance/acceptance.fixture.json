@@ -1,0 +1,19 @@
+{
+  "release_id": "factorycare-local-fixture-1",
+  "api_contract": "factorycare-v1",
+  "artifacts": {
+    "java-api": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "web": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "python-derived": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "clients": {
+    "web": {"contract": "factorycare-v1", "result": "pass"},
+    "miniapp": {"contract": "factorycare-v1", "result": "pass"},
+    "flutter": {"contract": "factorycare-v1", "result": "pass"}
+  },
+  "security": {"tenant_pairs": 2, "cross_tenant_leaks": 0},
+  "ai_outage": {"core_flow": "pass", "degraded_feature": "retryable"},
+  "canary": {"identity_match": true, "result": "pass"},
+  "rollback": {"previous_digest_restored": true, "smoke": "pass"},
+  "restore": {"integrity": "pass", "rto_measured": true, "rpo_measured": true}
+}

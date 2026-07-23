@@ -8,7 +8,7 @@ chapters:
     role: practice
     responsibility: "在固定 Ubuntu Server 基线中管理用户、文件权限、进程、信号和 systemd 服务，区分可移植 Linux 原理与发行版实现，不教授网络诊断。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ops-linux-identity-files
@@ -76,7 +76,7 @@ chapters:
     role: practice
     responsibility: "按名称解析、路由、监听端口、TCP、TLS、代理和 HTTP 层次定位网络故障，优先收集证据而非反复重启服务。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ops-network-path
@@ -149,7 +149,7 @@ chapters:
     role: practice
     responsibility: "把应用构建为最小、非 root、不可变且可复现的容器镜像，明确进程、文件系统、卷和网络边界，不编排多服务。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-container-image
@@ -222,7 +222,7 @@ chapters:
     role: practice
     responsibility: "用 Compose 声明应用、数据库和代理的网络、卷、配置和健康合同，区分启动顺序与真正就绪，不把 Compose 当生产编排器。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-compose-topology
@@ -290,7 +290,7 @@ chapters:
     role: practice
     responsibility: "使用 Nginx 终止 TLS、托管版本化静态资源并代理 API，正确传递客户端和关联信息，不承担应用授权。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-nginx-proxy
@@ -358,7 +358,7 @@ chapters:
     role: practice
     responsibility: "把格式、静态检查、单元/集成/安全测试和构建组织为可重复 CI 门禁，保存失败证据且禁止失败后继续发布。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: release-ci-pipeline
@@ -431,7 +431,7 @@ chapters:
     role: synthesis
     responsibility: "一次构建并以 digest、SBOM、测试证据和来源元数据晋级同一制品，通过 Compose/Nginx smoke 验证容器到代理的交付链，不按环境重编译。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     scope_exception:
       reason: "本章是容器、代理与交付制品 capability 的唯一教师，制品身份、Compose 拓扑、Nginx smoke 与晋级必须联合验证。"
@@ -508,7 +508,7 @@ chapters:
     role: synthesis
     responsibility: "分离代码、非敏感配置与密钥，校验依赖来源和 SBOM，建立轮换与泄漏响应，不把任何 secret 写入镜像、仓库或日志。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-config-secret
@@ -586,7 +586,7 @@ chapters:
     role: practice
     responsibility: "用结构化日志、关联 ID 和分层健康检查暴露系统状态，区分存活、就绪和依赖退化，不记录敏感业务正文。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-structured-logging
@@ -659,7 +659,7 @@ chapters:
     role: synthesis
     responsibility: "从用户可感知目标定义 SLI/SLO，使用低基数指标和分布式 trace 诊断错误与延迟，以燃尽率告警控制噪声。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-metrics-traces
@@ -727,7 +727,7 @@ chapters:
     role: practice
     responsibility: "根据业务 RPO/RTO 设计 PostgreSQL 备份、校验、保留和恢复演练，用恢复后的业务不变量证明备份可用。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ops-backup-policy
@@ -805,7 +805,7 @@ chapters:
     role: synthesis
     responsibility: "从业务峰值和增长假设建立负载模型，使用受控性能测试、指标、trace 与查询计划定位瓶颈，不以单机最高 QPS 代替容量结论。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ops-capacity-model
@@ -883,7 +883,7 @@ chapters:
     role: synthesis
     responsibility: "以不可变制品和 expand-contract 数据迁移执行可观测部署，分别定义应用回滚与数据库前向修复，不承诺不可逆迁移可一键回滚。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: release-deployment-strategy
@@ -961,7 +961,7 @@ chapters:
     role: synthesis
     responsibility: "用严重度、角色、时间线和证据组织事故响应，执行已演练恢复/部署决策并把复盘行动转为可验证工程门禁。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     scope_exception:
       reason: "本章是恢复与部署 capability 的唯一教师，事故指挥、灾难恢复、发布处置和复盘改进必须在同一演练闭环验收。"
@@ -1038,7 +1038,7 @@ chapters:
     role: synthesis
     responsibility: "从功能/非功能需求、数据与流量约束推导边界、容量、可靠性和一致性方案，明确取舍和演进路径，不把技术清单当设计。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: architecture-requirements-boundaries
@@ -1106,7 +1106,7 @@ chapters:
     role: project
     responsibility: "在路线门禁集中验收 FactoryCare 的 Web、小程序、Flutter、Java 后端、Python/AI 和生产交付，证明安全隔离、故障恢复与可回滚发布。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: factorycare-business-e2e
@@ -1210,7 +1210,7 @@ chapters:
     role: review
     responsibility: "把真实可验证的学习和项目证据整理为作品集、岗位匹配叙事与面试复盘，准确区分本人贡献、AI 辅助和未验证部分，不包装虚假经历。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: portfolio-evidence-story

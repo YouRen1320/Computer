@@ -1,0 +1,80 @@
+{
+  "manifest": {
+    "evidence_kind": "synthetic-design-review",
+    "real_load_test_verified": false,
+    "production_metrics_used": false,
+    "packet_version": "nanchang-field-service-v1"
+  },
+  "requirements": [
+    {"id": "FR-1", "kind": "functional", "text": "technician updates a work order with tenant-scoped authorization"},
+    {"id": "FR-2", "kind": "functional", "text": "dispatcher assigns work orders and sees auditable transitions"},
+    {"id": "QA-1", "kind": "quality-attribute", "text": "write API monthly availability objective is 99.9%"},
+    {"id": "QA-2", "kind": "quality-attribute", "text": "accepted writes preserve idempotency and tenant isolation"},
+    {"id": "QA-3", "kind": "quality-attribute", "text": "derived AI suggestions may be rebuilt without losing business facts"}
+  ],
+  "system_context": {
+    "actors": ["technician", "dispatcher", "tenant-admin"],
+    "external_systems": ["identity-provider", "notification-provider"],
+    "system_of_record": "factorycare-java-api-and-postgresql"
+  },
+  "data_flows": [
+    {"id": "DF-1", "from": "vue/uniapp/flutter", "to": "java-api", "business_authority": "java-api-postgresql", "python_ai_data": "none"},
+    {"id": "DF-2", "from": "java-api", "to": "python-ai", "business_authority": "java-api-postgresql", "python_ai_data": "rebuildable-derived"},
+    {"id": "DF-3", "from": "python-ai", "to": "java-api", "business_authority": "java-api-postgresql", "python_ai_data": "rebuildable-derived"}
+  ],
+  "components": [
+    {"id": "client-apps", "requirement_ids": ["FR-1", "FR-2"]},
+    {"id": "java-modular-monolith", "requirement_ids": ["FR-1", "FR-2", "QA-1", "QA-2", "QA-3"]},
+    {"id": "postgresql", "requirement_ids": ["FR-1", "FR-2", "QA-2"]},
+    {"id": "python-ai-derived-service", "requirement_ids": ["QA-3"]},
+    {"id": "observability-pipeline", "requirement_ids": ["QA-1", "QA-2"]}
+  ],
+  "capacity_assumptions": {
+    "organizations": 120,
+    "technicians_per_organization": 25,
+    "requests_per_technician_per_day": 80,
+    "active_seconds_per_day": 36000,
+    "peak_factor": 6.0,
+    "request_bytes": 1200,
+    "response_bytes": 2800,
+    "records_per_day": 60000,
+    "record_bytes": 1500,
+    "retention_days": 365,
+    "replication_copies": 2
+  },
+  "capacity_units": {
+    "organizations": "count",
+    "technicians_per_organization": "count/org",
+    "requests_per_technician_per_day": "request/technician/day",
+    "active_seconds_per_day": "second/day",
+    "peak_factor": "ratio",
+    "request_bytes": "byte/request",
+    "response_bytes": "byte/request",
+    "records_per_day": "record/day",
+    "record_bytes": "byte/record",
+    "retention_days": "day",
+    "replication_copies": "copy"
+  },
+  "capacity_results": {
+    "daily_requests": 240000,
+    "peak_requests_per_second": 40.0,
+    "traffic_bytes_per_second": 160000.0,
+    "retained_bytes_including_replication": 65700000000
+  },
+  "failure_modes": [
+    {"id": "FM-1-db-unavailable", "detect": "write SLI and database probe", "mitigate": "reject writes clearly and preserve idempotency keys", "recover": "approved database recovery runbook", "residual_risk": "accepted but unreplicated commits may follow declared RPO"},
+    {"id": "FM-2-bad-release", "detect": "canary functional and error-budget signals", "mitigate": "stop promotion and drain canary", "recover": "promote last verified artifact or complete forward fix", "residual_risk": "schema compatibility can make rollback unsafe"},
+    {"id": "FM-3-ai-unavailable", "detect": "derived suggestion latency and error SLI", "mitigate": "serve business workflow without suggestions", "recover": "restart/rebuild derived index after Java API authorizes data", "residual_risk": "suggestions may be temporarily stale"}
+  ],
+  "slos": [
+    {"id": "SLO-1", "indicator": "authorized work-order writes returning intended outcome", "objective": "99.9%", "window": "rolling 30 days", "error_budget_policy": "freeze risky promotion when burn policy is breached"}
+  ],
+  "adr": {
+    "requirement_ids": ["FR-1", "FR-2", "QA-1", "QA-2", "QA-3"],
+    "decision": "begin with a Java modular monolith and PostgreSQL business authority; keep Python AI derived and rebuildable",
+    "consequences": ["single transactional boundary for core workflow", "module boundaries and observability are mandatory", "AI failure does not own or corrupt work-order truth"],
+    "rejected_options": ["microservices now: team and independent scaling evidence absent", "Python as business system of record: conflicts with authorization and audit boundary"],
+    "evolution_triggers": ["at least four independently deploying teams for two quarters", "one module needs independently proven 10x load isolation", "measured release coupling violates SLO despite modular remediation"],
+    "rollback": "retain module contracts and deploy as one artifact if extraction fails acceptance gates"
+  }
+}

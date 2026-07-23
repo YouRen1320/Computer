@@ -1,0 +1,9 @@
+{
+  "hostname": "factorycare.example.test",
+  "certificate_file": "fullchain.pem",
+  "chain_order": [
+    "leaf:factorycare.example.test",
+    "intermediate:fixture-ca"
+  ],
+  "private_key_file": "privkey.pem"
+}

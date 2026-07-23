@@ -1,0 +1,40 @@
+{
+  "fixture_notice": "CONTROLLED MODEL; no Prometheus, OpenTelemetry Collector, trace backend or production traffic",
+  "slo": {"availability_objective": 0.99, "latency_objective": 0.95, "latency_threshold_ms": 300},
+  "metric_contract": [
+    {"name": "factorycare_http_requests_total", "type": "counter", "labels": ["service", "route", "method", "status_class"]},
+    {"name": "factorycare_http_request_duration_seconds", "type": "histogram", "labels": ["service", "route", "method"]},
+    {"name": "factorycare_inflight_requests", "type": "gauge", "labels": ["service"]}
+  ],
+  "normal": {
+    "short": {"total": 100, "bad": 0},
+    "long": {"total": 1000, "bad": 2},
+    "durations_ms": [80, 90, 100, 110, 120, 130, 140, 150, 180, 240, 260, 280, 290, 295, 300, 100, 120, 140, 160, 180]
+  },
+  "fault": {
+    "short": {"total": 100, "bad": 8},
+    "long": {"total": 1000, "bad": 30},
+    "durations_ms": [80, 90, 100, 110, 120, 130, 140, 150, 180, 240, 260, 280, 700, 850, 1000, 1200, 1300, 1400, 1500, 1600]
+  },
+  "alert": {"short_burn_threshold": 4.0, "long_burn_threshold": 2.0, "runbook": "runbooks/work-order-create-slo.md"},
+  "traces": [
+    {
+      "name": "slow-query",
+      "expected_cause": "postgresql.query",
+      "spans": [
+        {"span_id": "s1", "parent_span_id": null, "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "name": "POST /work-orders", "status": "OK", "duration_ms": 1320},
+        {"span_id": "s2", "parent_span_id": "s1", "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "name": "java.create-work-order", "status": "OK", "duration_ms": 1280},
+        {"span_id": "s3", "parent_span_id": "s2", "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "name": "postgresql.query", "status": "OK", "duration_ms": 1210}
+      ]
+    },
+    {
+      "name": "upstream-5xx",
+      "expected_cause": "inventory.http",
+      "spans": [
+        {"span_id": "e1", "parent_span_id": null, "trace_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "name": "POST /work-orders", "status": "ERROR", "duration_ms": 190},
+        {"span_id": "e2", "parent_span_id": "e1", "trace_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "name": "java.create-work-order", "status": "ERROR", "duration_ms": 170},
+        {"span_id": "e3", "parent_span_id": "e2", "trace_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "name": "inventory.http", "status": "ERROR", "duration_ms": 140}
+      ]
+    }
+  ]
+}

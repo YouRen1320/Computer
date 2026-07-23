@@ -1,0 +1,76 @@
+name: factorycare-fixture
+services:
+  db:
+    image: postgres:18@sha256:1111111111111111111111111111111111111111111111111111111111111111
+    environment:
+      POSTGRES_DB: factorycare
+      POSTGRES_USER: factorycare
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U factorycare -d factorycare"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - data
+    restart: unless-stopped
+  api:
+    image: factorycare-api:fixture@sha256:2222222222222222222222222222222222222222222222222222222222222222
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      DB_HOST: db
+      DB_NAME: factorycare
+      DB_USER: factorycare
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/actuator/health/readiness"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+    networks:
+      - data
+      - edge
+    restart: unless-stopped
+  proxy:
+    image: nginx:fixture@sha256:3333333333333333333333333333333333333333333333333333333333333333
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8443:8443"
+    networks:
+      - edge
+    restart: unless-stopped
+  toolbox:
+    image: busybox:fixture@sha256:4444444444444444444444444444444444444444444444444444444444444444
+    command: ["true"]
+    profiles: ["debug"]
+    networks:
+      - data
+networks:
+  data:
+    internal: true
+  edge: {}
+volumes:
+  db-data: {}
+secrets:
+  db_password:
+    environment: FACTORYCARE_DB_PASSWORD

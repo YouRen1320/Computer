@@ -1,0 +1,7 @@
+{
+  "user": "factorycare",
+  "group": "factorycare",
+  "executable": "/opt/factorycare/api/bin/start",
+  "working_directory": "/opt/factorycare/api",
+  "writable_paths": ["/var/lib/factorycare", "/var/log/factorycare"]
+}

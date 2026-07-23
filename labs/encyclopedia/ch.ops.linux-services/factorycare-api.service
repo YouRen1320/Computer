@@ -1,0 +1,19 @@
+[Unit]
+Description=FactoryCare API controlled fixture
+After=network.target
+
+[Service]
+Type=simple
+User=factorycare
+Group=factorycare
+WorkingDirectory=/opt/factorycare/api
+ExecStart=/opt/factorycare/api/bin/start
+ReadWritePaths=/var/lib/factorycare /var/log/factorycare
+NoNewPrivileges=true
+PrivateTmp=true
+KillSignal=SIGTERM
+TimeoutStopSec=20s
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

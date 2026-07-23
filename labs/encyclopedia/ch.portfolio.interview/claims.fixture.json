@@ -1,0 +1,28 @@
+{
+  "claims": [
+    {
+      "id": "FC-TENANT-01",
+      "text_zh": "在本地合成环境验证 FactoryCare 双租户查询零泄漏",
+      "text_en": "Verified zero cross-tenant results in a controlled local FactoryCare fixture",
+      "project_kind": "learning-project",
+      "ownership": "defined the boundary, reviewed AI-assisted code, injected a cache-key failure",
+      "ai_assisted": true,
+      "human_verification": "fixture://reviews/FC-TENANT-01",
+      "evidence": ["fixture://commits/tenant", "fixture://reports/tenant-tests"],
+      "verification_level": "verified-local",
+      "production": false
+    },
+    {
+      "id": "FC-DR-01",
+      "text_zh": "已编写灾备验收计划，真实 PostgreSQL 恢复演练尚未执行",
+      "text_en": "Prepared a DR acceptance plan; a real PostgreSQL restore drill remains unverified",
+      "project_kind": "learning-project",
+      "ownership": "authored the oracle and unverified boundary",
+      "ai_assisted": true,
+      "human_verification": "fixture://reviews/FC-DR-01",
+      "evidence": ["fixture://plans/dr"],
+      "verification_level": "unverified-external",
+      "production": false
+    }
+  ]
+}

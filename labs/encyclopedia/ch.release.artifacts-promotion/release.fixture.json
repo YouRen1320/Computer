@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_id": "factorycare-2026.07.24.1-fixture",
+  "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "workflow_run": "fixture://runs/1001",
+  "quality_gates": {
+    "java-test": "success",
+    "web-test": "success",
+    "python-test": "success",
+    "security": "success"
+  },
+  "artifacts": {
+    "java-api": {
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sbom_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "provenance_uri": "fixture://attestations/java-api"
+    },
+    "web": {
+      "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "sbom_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "provenance_uri": "fixture://attestations/web"
+    }
+  },
+  "environments": {
+    "test": {
+      "java-api": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "web": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "production-candidate": {
+      "java-api": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "web": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  },
+  "smoke": {
+    "tls": "pass",
+    "static": "pass",
+    "api": "pass",
+    "reported_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  }
+}

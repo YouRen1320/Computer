@@ -1,0 +1,20 @@
+{
+  "fixture_notice": "CONTROLLED MODEL; no production telemetry and no sensitive business body",
+  "request": {
+    "correlation_id": "request-demo-0001",
+    "trace_id": "11111111111111111111111111111111",
+    "route": "/work-orders/{id}"
+  },
+  "logs": [
+    {"timestamp": "2026-07-24T08:00:00Z", "severity": "INFO", "service": "nginx", "event": "http.received", "correlation_id": "request-demo-0001", "trace_id": "11111111111111111111111111111111", "span_id": "1111111111111111", "attributes": {"route": "/work-orders/{id}", "method": "GET"}},
+    {"timestamp": "2026-07-24T08:00:00Z", "severity": "INFO", "service": "java-api", "event": "work-order.loaded", "correlation_id": "request-demo-0001", "trace_id": "11111111111111111111111111111111", "span_id": "2222222222222222", "attributes": {"route": "/work-orders/{id}", "status": 200}},
+    {"timestamp": "2026-07-24T08:00:00Z", "severity": "DEBUG", "service": "postgresql", "event": "query.completed", "correlation_id": "request-demo-0001", "trace_id": "11111111111111111111111111111111", "span_id": "3333333333333333", "attributes": {"operation": "SELECT", "duration_bucket": "lt-100ms"}}
+  ],
+  "health_scenarios": [
+    {"name": "starting", "process_ok": true, "startup_complete": false, "postgres_ok": false, "optional_provider_ok": true, "expected": {"state": "STARTING", "live": true, "ready": false, "liveness_http": 200, "readiness_http": 503}},
+    {"name": "healthy", "process_ok": true, "startup_complete": true, "postgres_ok": true, "optional_provider_ok": true, "expected": {"state": "UP", "live": true, "ready": true, "liveness_http": 200, "readiness_http": 200}},
+    {"name": "critical-dependency-down", "process_ok": true, "startup_complete": true, "postgres_ok": false, "optional_provider_ok": true, "expected": {"state": "NOT_READY", "live": true, "ready": false, "liveness_http": 200, "readiness_http": 503}},
+    {"name": "optional-dependency-down", "process_ok": true, "startup_complete": true, "postgres_ok": true, "optional_provider_ok": false, "expected": {"state": "DEGRADED", "live": true, "ready": true, "liveness_http": 200, "readiness_http": 200}},
+    {"name": "process-deadlocked", "process_ok": false, "startup_complete": true, "postgres_ok": true, "optional_provider_ok": true, "expected": {"state": "DOWN", "live": false, "ready": false, "liveness_http": 503, "readiness_http": 503}}
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "manifest": {
+    "evidence_kind": "synthetic-tabletop",
+    "live_drill_verified": false,
+    "real_rto_rpo_verified": false,
+    "commands_executed": false,
+    "artifact_identity": "factorycare-api@sha256:demo-20260724",
+    "configuration_id": "drill-config-v1"
+  },
+  "severity": "SEV-1",
+  "roles": {
+    "incident_commander": "oncall-a",
+    "operations": "database-oncall",
+    "communications": "support-lead",
+    "scribe": "engineer-b"
+  },
+  "timeline": [
+    {"at": "2026-07-24T10:00:00+08:00", "kind": "incident_declared", "evidence_ids": ["alert-db-17", "trace-api-88"]},
+    {"at": "2026-07-24T10:03:00+08:00", "kind": "bad_release_identified", "evidence_ids": ["deploy-manifest-41", "image-digest-demo"]},
+    {"at": "2026-07-24T10:05:00+08:00", "kind": "checkpoint", "evidence_ids": ["synthetic-snapshot-42", "timeline-export-1"]},
+    {"at": "2026-07-24T10:08:00+08:00", "kind": "recovery_started", "evidence_ids": ["approval-ic-7", "runbook-v4"]},
+    {"at": "2026-07-24T10:23:00+08:00", "kind": "service_restored", "evidence_ids": ["synthetic-smoke-9", "synthetic-query-10"]}
+  ],
+  "communications": [
+    {"at": "2026-07-24T10:02:00+08:00", "audience": "internal", "message_id": "comms-1"},
+    {"at": "2026-07-24T10:12:00+08:00", "audience": "affected-users", "message_id": "comms-2"},
+    {"at": "2026-07-24T10:24:00+08:00", "audience": "affected-users", "message_id": "comms-3"}
+  ],
+  "recovery": {
+    "failure_at": "2026-07-24T10:00:00+08:00",
+    "declared_at": "2026-07-24T10:00:00+08:00",
+    "latest_recoverable_at": "2026-07-24T09:56:00+08:00",
+    "service_restored_at": "2026-07-24T10:23:00+08:00",
+    "rto_target_minutes": 30,
+    "rpo_target_minutes": 5,
+    "authorized_by": "incident_commander:oncall-a",
+    "overwrites_source": false,
+    "decision": "restore isolated target, validate, then redirect synthetic traffic"
+  },
+  "postmortem": {
+    "blames_person": false,
+    "contributing_conditions": ["artifact promotion lacked migration compatibility gate", "restore runbook lacked quarterly rehearsal evidence"]
+  },
+  "corrective_actions": [
+    {"id": "CA-1", "owner": "database-team", "due_at": "2026-08-01", "acceptance": "isolated restore completes within 25 minutes with at most five minutes synthetic loss", "verification_command": "./verify-restore-drill.sh", "regression_test": "quarterly-dr-restore"},
+    {"id": "CA-2", "owner": "release-team", "due_at": "2026-08-03", "acceptance": "incompatible migration artifact is rejected before promotion", "verification_command": "./verify-artifact-gate.sh", "regression_test": "migration-compatibility-gate"},
+    {"id": "CA-3", "owner": "observability-team", "due_at": "2026-08-05", "acceptance": "database page carries dashboard and runbook links", "verification_command": "./verify-alert-route.sh", "regression_test": "alert-context-contract"}
+  ]
+}

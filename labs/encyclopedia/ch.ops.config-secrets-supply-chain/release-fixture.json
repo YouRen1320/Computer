@@ -1,0 +1,41 @@
+{
+  "fixture_notice": "CONTROLLED MODEL; contains identifiers and booleans, never credential values",
+  "config": {
+    "defaults": {"profile": "local", "log_level": "INFO"},
+    "environment": {"profile": "production"},
+    "allowed": ["profile", "log_level"],
+    "required": ["profile", "log_level"]
+  },
+  "secret_reference": {"name": "factorycare-database", "version": "v7"},
+  "surface_reports": [
+    {"surface": "git-history", "secret_marker_present": false},
+    {"surface": "image-layer", "secret_marker_present": false},
+    {"surface": "ci-log", "secret_marker_present": false}
+  ],
+  "rotation": {
+    "old_credential_id": "credential-old",
+    "new_credential_id": "credential-v7",
+    "old_valid_after_cutover": false,
+    "new_valid_after_cutover": true
+  },
+  "lock": {"java-api": "1.0.0", "vue-web": "1.0.0"},
+  "sbom": {
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.7",
+    "fixture_only": true,
+    "components": [
+      {"name": "java-api", "version": "1.0.0", "purl": "pkg:maven/example/java-api@1.0.0", "hashes": ["sha256:fixture-java"]},
+      {"name": "vue-web", "version": "1.0.0", "purl": "pkg:npm/example-vue-web@1.0.0", "hashes": ["sha256:fixture-vue"]}
+    ]
+  },
+  "release_manifest": {
+    "artifact_digest": "sha256:fixture-release",
+    "sbom_path": "evidence/sbom.fixture.json",
+    "sbom_digest": "sha256:fixture-sbom",
+    "provenance_path": "evidence/provenance.fixture.json"
+  },
+  "vulnerabilities": [
+    {"id": "ADV-DEMO-001", "severity": "HIGH", "reachable": true, "known_exploited": true},
+    {"id": "ADV-DEMO-002", "severity": "CRITICAL", "reachable": false, "known_exploited": false}
+  ]
+}
