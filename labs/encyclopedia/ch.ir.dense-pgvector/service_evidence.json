@@ -1,0 +1,19 @@
+{
+  "evidence_kind": "controlled_fixture_manifest",
+  "real_service_verified": false,
+  "postgresql_target": "18.4",
+  "pgvector_target": "0.8.2",
+  "verified_here": [
+    "distance_math",
+    "embedding_space_filter",
+    "sql_contract_text",
+    "exact_vs_fixture_ann_recall"
+  ],
+  "not_verified_here": [
+    "extension_installation",
+    "real_query_plan",
+    "real_ann_index",
+    "wall_clock_latency",
+    "production_recall"
+  ]
+}

@@ -8,7 +8,7 @@ chapters:
     role: concept
     responsibility: "建立 Token、上下文窗口、Embedding 和 Transformer 推理的数据流心智模型，区分训练与生成，不调用供应商 API。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: llm-token-context
@@ -81,7 +81,7 @@ chapters:
     role: practice
     responsibility: "通过官方 SDK 调用模型 API，建立消息、模型、Token、延迟、成本和提供方错误合同，不把提示技巧当业务正确性证明。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: llm-api-contract
@@ -159,7 +159,7 @@ chapters:
     role: practice
     responsibility: "把模型文本约束为版本化 Schema 并用运行时校验拒绝缺失、越界和额外字段，不允许校验失败结果进入业务层。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: llm-structured-schema
@@ -232,7 +232,7 @@ chapters:
     role: practice
     responsibility: "为模型流式响应实现有界超时、取消、可重试分类和降级，区分部分输出与完整承诺，不重复提交副作用。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: llm-stream-state
@@ -305,7 +305,7 @@ chapters:
     role: synthesis
     responsibility: "把模型提出的工具意图视为不可信输入，经白名单、Schema、授权和人工确认后执行，隔离读操作与高风险副作用。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     scope_exception:
       reason: "本章是结构化输出与工具调用 capability 的唯一教师，参数合同和信任边界必须在同一红队实验中验证。"
@@ -387,7 +387,7 @@ chapters:
     role: practice
     responsibility: "把异构文档转换为可追溯规范文本与权限元数据，保存来源、版本、哈希和解析错误，不在本章切块或向量化。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: rag-document-normalization
@@ -460,7 +460,7 @@ chapters:
     role: practice
     responsibility: "根据文档结构和检索目标生成可追溯 chunk，批量计算 Embedding 并处理维度、重试和版本，不选择检索索引。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: rag-chunking
@@ -528,7 +528,7 @@ chapters:
     role: concept
     responsibility: "从分词和倒排表推导 TF-IDF/BM25 稀疏检索得分，解释词频、文档频率和长度归一化，不调用向量数据库。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ir-index-terms
@@ -601,7 +601,7 @@ chapters:
     role: concept
     responsibility: "建立冻结查询集和相关性判断，计算检索 Precision、Recall、MRR 与 nDCG 并分析切片，不用生成答案掩盖检索缺陷。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ir-judgment-dataset
@@ -674,7 +674,7 @@ chapters:
     role: practice
     responsibility: "在 PostgreSQL/pgvector 中持久化版本化向量并比较精确与近似检索、距离度量和索引计划，不混合不同 Embedding 空间。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ir-vector-distance
@@ -747,7 +747,7 @@ chapters:
     role: synthesis
     responsibility: "融合词法与向量候选并用可解释规则或重排模型排序，在冻结评估集上证明增益和代价，不直接生成答案。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     scope_exception:
       reason: "本章是 RAG 摄取检索 capability 的唯一教师，候选融合、重排和消融评估不可拆开授予能力。"
@@ -824,7 +824,7 @@ chapters:
     role: synthesis
     responsibility: "把检索证据与生成答案绑定为可核验引用，分别评估检索、回答和引用一致性，允许证据不足时拒答。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: rag-answer-citation
@@ -897,7 +897,7 @@ chapters:
     role: synthesis
     responsibility: "把 RAG 摄取、检索、生成和工具链路纳入租户/资源授权、注入防护、PII 最小化和可观测性，不以提示词替代访问控制。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     scope_exception:
       reason: "本章是 RAG 评估安全 capability 的唯一教师，ACL、租户隔离、PII 与 trace 必须作为一个系统门禁验证。"
@@ -979,7 +979,7 @@ chapters:
     role: practice
     responsibility: "在先掌握官方 SDK 后，用 LangChain 组合模型、提示、解析器和 Retriever，并通过直接 SDK 对照识别抽象收益与泄漏。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: agent-langchain-components
@@ -1052,7 +1052,7 @@ chapters:
     role: practice
     responsibility: "用显式状态图建模多步 Agent 的节点、边、检查点、恢复和人工审批，使重试可恢复且副作用不重复。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: agent-graph-state
@@ -1125,7 +1125,7 @@ chapters:
     role: synthesis
     responsibility: "以 MCP 协议定义受控工具与资源边界，比较 Agent/确定性工作流及 Java/Python 职责，只有无法用普通代码表达时才引入自主循环。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     scope_exception:
       reason: "本章是 Agent 图与 MCP capability 的唯一教师，协议、执行预算和 Java/Python 权威边界必须联合验收。"
