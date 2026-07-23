@@ -8,7 +8,7 @@ chapters:
     role: foundation
     responsibility: "建立从数量、比例和单位到代数式与一元方程的可验证计算基础，只处理确定性标量关系，不提前引入函数图像或概率。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: math-quantities-units
@@ -72,7 +72,7 @@ chapters:
     role: foundation
     responsibility: "把输入输出关系表示为函数、表格、公式和图像，并用斜率、指数、对数与求和解释变化，不教授矩阵或导数。"
     level: L1-L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: math-function-representations
@@ -140,7 +140,7 @@ chapters:
     role: concept
     responsibility: "用向量、矩阵和张量表达批量数值数据，验证形状、点积、矩阵乘法与线性变换，不引入梯度或框架自动求导。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: math-vector-matrix
@@ -208,7 +208,7 @@ chapters:
     role: concept
     responsibility: "用概率空间、描述统计、条件概率和常见分布量化不确定性与样本差异，不把相关性解释为因果。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: math-probability-distribution
@@ -276,7 +276,7 @@ chapters:
     role: concept
     responsibility: "把导数与梯度解释为局部变化率，用链式法则和有限差分验证优化方向，不教授具体深度学习框架。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: math-derivative-gradient
@@ -344,7 +344,7 @@ chapters:
     role: concept
     responsibility: "把业务目标转换为监督信号、样本单位和离线实验合同，建立训练/验证/测试划分并识别泄漏，不选择具体模型。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-problem-contract
@@ -417,7 +417,7 @@ chapters:
     role: practice
     responsibility: "在训练折内拟合清洗、编码、缩放和特征步骤并封装可复现 Pipeline，不在本章比较模型优劣。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: ml-clean-encode
@@ -485,7 +485,7 @@ chapters:
     role: concept
     responsibility: "用回归和分类模型学习有标签映射，解释损失、正则化与决策边界，不把训练分数当作泛化结论。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-regression
@@ -558,7 +558,7 @@ chapters:
     role: concept
     responsibility: "使用聚类与降维探索无标签结构，区分算法目标、可视化和业务解释，不把簇编号当真实类别。"
     level: L2
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-clustering
@@ -631,7 +631,7 @@ chapters:
     role: synthesis
     responsibility: "根据业务代价选择回归/分类指标，用基线、交叉验证和分组误差分析形成可信模型结论，不教授神经网络。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     scope_exception:
       reason: "本章是经典机器学习 capability 的唯一教师，必须把指标选择、验证设计与误差分析保持在同一可判定实验中。"
@@ -703,7 +703,7 @@ chapters:
     role: concept
     responsibility: "从线性单元构造前馈神经网络，手算前向、损失和反向传播，解释优化器作用，不依赖 PyTorch API。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-neural-forward
@@ -776,7 +776,7 @@ chapters:
     role: concept
     responsibility: "用序列位置、Softmax 和 Q/K/V 矩阵解释自注意力与 Transformer 数据流，只建立模型心智桥，不训练大模型。"
     level: L2+
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-sequence-attention
@@ -844,7 +844,7 @@ chapters:
     role: practice
     responsibility: "把神经网络数学映射到 PyTorch Tensor、Dataset、Module 和 Autograd 合同，区分数据、参数、梯度和设备，不实现完整训练流程。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: pytorch-tensor-data
@@ -922,7 +922,7 @@ chapters:
     role: practice
     responsibility: "实现可复现的 PyTorch 训练与验证循环，识别欠拟合和过拟合并保存检查点，不把测试集用于调参。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: pytorch-training-loop
@@ -990,7 +990,7 @@ chapters:
     role: practice
     responsibility: "把训练产物转换为版本化、可批处理和可服务的推理合同，验证预处理一致性、无梯度模式和错误输入，不部署生产服务。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: false
     topic_groups:
       - id: pytorch-model-artifact
@@ -1058,7 +1058,7 @@ chapters:
     role: synthesis
     responsibility: "为上线模型定义输入、性能和公平性监控及人工兜底边界，区分漂移信号与真实质量，不在本章实施部署平台。"
     level: L3
-    status: planned
+    status: drafting
     stable_core: true
     topic_groups:
       - id: ml-monitoring-drift

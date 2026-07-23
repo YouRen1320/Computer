@@ -1,0 +1,17 @@
+{
+  "model_name": "factorycare-priority-hint-training-fixture",
+  "model_version": "synthetic-1",
+  "intended_use": "Offline drill for a non-binding work-order priority hint",
+  "prohibited_uses": [
+    "Automatically close or reassign work orders",
+    "Make employment or disciplinary decisions",
+    "Use outside the reviewed synthetic drill"
+  ],
+  "known_limitations": [
+    "Synthetic data only",
+    "No real population or production monitoring evidence"
+  ],
+  "human_override": "A trained operator may reject every hint and can escalate or appeal.",
+  "monitoring_plan": "Track schema, fixed-bin input TV, label maturity, overall and subgroup metrics.",
+  "owner": "training-only"
+}
