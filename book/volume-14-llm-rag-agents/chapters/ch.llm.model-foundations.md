@@ -415,3 +415,11 @@ Tokenizer测试包括：空串、已知词、未知字符、空格、混合语�
 Tokenizer→ID→Embedding→Transformer→logits→采样、自回归、上下文有限和训练/推理区分是稳定心智模型；具体分词、窗口、采样参数和架构是模型版本表面。本章只运行本地玩具模拟，不调用供应商API、不验证真实token数、模型质量、成本或数据政策。
 
 真实接入必须重新记录模型快照、Tokenizer、消息模板、输入输出上限、停止原因与usage，并以官方当前文档和实际响应为证据。玩具实验的绿色结果只能证明所附算法与断言，不应包装成任何线上模型已经通过验收。
+
+资料链接复核日期：**2026-07-24**。下列原始论文用于追溯核心思想，不代表所有当前商用模型都采用相同架构、词表或采样实现。
+
+- [Vaswani 等《Attention Is All You Need》](https://arxiv.org/abs/1706.03762)：Transformer、自注意力、位置表示和编码器/解码器架构的原始论文；
+- [Sennrich 等《Neural Machine Translation of Rare Words with Subword Units》](https://aclanthology.org/P16-1162/)：子词切分用于开放词表建模的原始论文记录；
+- [PyTorch `softmax`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.softmax.html)：核对教材玩具 logits 转概率步骤所对应的当前框架 API。
+
+论文提供概念来源，PyTorch 文档提供一个实现表面；真实模型的 token 计数、上下文窗口、缓存、价格、数据政策和确定性只能由目标供应商当期文档与实际响应确认。

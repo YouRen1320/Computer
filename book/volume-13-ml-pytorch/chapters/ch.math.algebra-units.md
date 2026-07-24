@@ -384,3 +384,11 @@ labor_cost(duration_minutes, rate_cents_per_hour) -> cost_cents
 ## 20. 稳定性与资料边界
 
 本章的四则运算、比例、量纲、等式变形和估算方法属于稳定数学核心，不绑定某个库版本。资产使用 Python 标准库只是为了给出可执行证据，并不把 Python 语法作为本章考核重点。真实财税、计费和测量系统还受法律口径、货币舍入、传感器误差与合同影响；本章没有验证任何外部财务平台，也不替代领域规则确认。
+
+资料链接复核日期：**2026-07-24**。
+
+- [BIPM《The International System of Units (SI Brochure)》](https://www.bipm.org/en/publications/si-brochure)：量、单位、SI 单位和前缀的国际计量局权威入口；
+- [NIST Guide to the SI — Rules and Style Conventions](https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values)：核对量值、单位符号及无量纲表达；
+- [NIST Guide to the SI — Conversion Factors](https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors)：核对换算因子的来源与精度边界。
+
+这些资料支持计量表达和换算规则，不提供 FactoryCare 的价格、折扣、税费或舍入口径；业务常量仍须由真实合同和权威业务规则确认。

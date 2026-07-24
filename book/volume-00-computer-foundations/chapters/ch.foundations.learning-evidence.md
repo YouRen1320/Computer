@@ -488,9 +488,9 @@ FactoryCare 是贯穿课程的工业设备运维与智能工单平台。每个�
 
 本章稳定核心是“主张必须由匹配证据支持、主动检索优于只重复输入、复习应跨时间重新取回”。具体 `1/3/7/21` 日是本课程的可调整教学节奏，不是对所有人的固定医学结论。
 
-- 复核日期：2026-07-16。
-- Dunlosky 等，[Improving Students’ Learning With Effective Learning Techniques](https://doi.org/10.1177/1529100612453266)：综述检索练习、分散练习等学习技术的效用与边界。
-- Roediger 与 Karpicke，[Test-Enhanced Learning](https://doi.org/10.1111/j.1467-9280.2006.01693.x)：支持延迟测试中主动检索相较重复学习的优势。
+- 复核日期：2026-07-24。
+- Dunlosky 等，[Improving Students’ Learning With Effective Learning Techniques](https://pubmed.ncbi.nlm.nih.gov/26173288/)：NIH/PubMed 书目与摘要入口，综述检索练习、分散练习等学习技术的效用与边界。
+- Roediger 与 Karpicke，[Test-Enhanced Learning](https://pubmed.ncbi.nlm.nih.gov/16507066/)：NIH/PubMed 书目与摘要入口，支持延迟测试中主动检索相较重复学习的优势。
 - The Learning Scientists，[Retrieval Practice](https://www.learningscientists.org/retrieval-practice)：提供面向学习者的检索练习说明和实践建议。
 - The Learning Scientists，[Spaced Practice](https://www.learningscientists.org/spaced-practice)：支持把练习分散到不同时间，而不是一次集中完成。
 - Bjork Learning and Forgetting Lab，[Making Things Hard on Yourself, But in a Good Way](https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/07/EBjork_RBjork_2011.pdf)：支持“合意困难”与长期保持的讨论。

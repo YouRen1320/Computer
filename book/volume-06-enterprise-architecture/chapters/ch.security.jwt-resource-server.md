@@ -318,10 +318,10 @@ JWT payload 可含 subject、email、tenant hint、scope 等敏感元数据。�
 
 ## 21. 标准、OWASP 建议与框架行为
 
-截至 2026-07-17：
+截至 2026-07-24：
 
 - [RFC 7519 JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html) 定义 JWT 与 registered claims；[RFC 7515 JSON Web Signature](https://www.rfc-editor.org/rfc/rfc7515.html) 定义 JWS；[RFC 6750 Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750.html) 定义 Authorization Header、challenge 与错误；[RFC 8725 JWT Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html) 是更新 RFC 7519 的 BCP，强调算法、issuer/audience、typing 与互斥规则。它们是标准/BCP 层。
-- [OWASP JSON Web Token for Java Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html) 与 [REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html) 是 Java/REST 工程建议，不替代 RFC 或具体 Provider profile。
+- [OWASP REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html) 包含 JWT 完整性、标准 claims 与 REST 资源服务器的工程建议，不替代 RFC 或具体 Provider profile。原 Java JWT 专项页面已于本次复核时失效，因此不再保留断链。
 - [Spring Security OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)、[JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html) 与 [Bearer Tokens](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/bearer-tokens.html) 描述当前 Filter、JwtDecoder、validators、JWK rotation、authority mapping 和错误响应，属于版本相关框架行为。
 - [Testcontainers for Java](https://java.testcontainers.org/) 可用于真实 Provider/依赖集成。版本登记仍为 `provisional`，离线资产不声称完成容器验证。
 

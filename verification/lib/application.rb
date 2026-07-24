@@ -11,8 +11,8 @@ module Verification
     module_function
 
     def run(argv, root: File.expand_path("../..", __dir__), stdout: $stdout, stderr: $stderr,
-            command_runner: LocalCommandRunner.new, evidence_writer: nil)
-      options = parse_options(argv, stderr)
+            command_runner: nil, evidence_writer: nil, environment: ENV)
+      options = parse_options(argv, stderr, environment)
       return 64 unless options
 
       loader = ManifestLoader.new(root)
@@ -32,8 +32,10 @@ module Verification
         runner = Runner.new(
           root: root,
           loader: loader,
-          command_runner: command_runner,
-          evidence_writer: evidence_writer
+          command_runner: command_runner || LocalCommandRunner.new(timeout_seconds: options.fetch(:timeout_seconds)),
+          evidence_writer: evidence_writer,
+          cache_overrides: options.fetch(:cache_overrides),
+          environment: environment
         )
         result = runner.run(write_evidence: true)
         summary = result.reject { |key, _value| key == "evidence" }.merge(
@@ -52,13 +54,34 @@ module Verification
       64
     end
 
-    def parse_options(argv, stderr)
-      options = { check: false, json: false, require_complete: false }
+    def parse_options(argv, stderr, environment = ENV)
+      options = {
+        check: false,
+        json: false,
+        require_complete: false,
+        timeout_seconds: positive_timeout(environment.fetch("FACTORYCARE_VERIFICATION_TIMEOUT", "300")),
+        cache_overrides: {}
+      }
       parser = OptionParser.new do |value|
         value.banner = usage
         value.on("--check", "validate schema, semantics, paths, modes, and input digests without executing") { options[:check] = true }
         value.on("--json", "emit a machine-readable safe summary") { options[:json] = true }
         value.on("--require-complete", "fail unless all 255 catalog chapters have final manifests") { options[:require_complete] = true }
+        value.on("--timeout SECONDS", Float, "per-command timeout (default: 300 or FACTORYCARE_VERIFICATION_TIMEOUT)") do |seconds|
+          options[:timeout_seconds] = positive_timeout(seconds)
+        end
+        value.on("--pnpm-store PATH", "fixed pnpm store (or FACTORYCARE_PNPM_STORE_DIR)") do |path|
+          options[:cache_overrides][:pnpm_store] = path
+        end
+        value.on("--dart-pub-cache PATH", "fixed Dart Pub cache (or FACTORYCARE_DART_PUB_CACHE)") do |path|
+          options[:cache_overrides][:dart_pub_cache] = path
+        end
+        value.on("--uv-cache PATH", "fixed uv cache (or FACTORYCARE_UV_CACHE_DIR)") do |path|
+          options[:cache_overrides][:uv_cache] = path
+        end
+        value.on("--maven-repo PATH", "fixed Maven local repository (or FACTORYCARE_MAVEN_REPO)") do |path|
+          options[:cache_overrides][:maven_repo] = path
+        end
       end
       parser.parse!(argv)
       unless argv.empty?
@@ -67,6 +90,17 @@ module Verification
         return nil
       end
       options
+    end
+
+    def positive_timeout(value)
+      number = Float(value)
+      unless number.positive? && number.finite?
+        raise OptionParser::InvalidArgument, "timeout must be a positive finite number"
+      end
+
+      number
+    rescue ArgumentError, TypeError
+      raise OptionParser::InvalidArgument, "timeout must be a positive finite number"
     end
 
     def emit(summary, json, stdout)
@@ -89,7 +123,8 @@ module Verification
     end
 
     def usage
-      "Usage: ruby scripts/run-verification.rb [--check] [--require-complete] [--json]"
+      "Usage: ruby scripts/run-verification.rb [--check] [--require-complete] [--json] " \
+        "[--timeout SECONDS] [--pnpm-store PATH] [--dart-pub-cache PATH] [--uv-cache PATH] [--maven-repo PATH]"
     end
   end
 end

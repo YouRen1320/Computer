@@ -449,3 +449,11 @@ shape未变但预测异常。比较`feature_names_out`哈希和逐列值。修�
 fit/transform隔离、模式合同、血缘和训练/推理一致性是稳定原则；pandas/NumPy/pytest具体API会变化，应锁定版本并查官方文档。本章资产用合成数据验证管线不变量，没有比较真实模型、验证生产特征库、线上序列化兼容或隐私合规。
 
 真正上线前还要在目标运行时复验工件加载、并发安全、延迟、内存、回滚和跨服务契约。教材中的绿色结果只覆盖本地小样本，不应外推为真实流量已经可靠；任何新增特征都必须重新经过时点可用性、隐私和血缘审查。
+
+资料链接复核日期：**2026-07-24**。复核日官方 stable 文档展示的版本表面会继续变化，工程实现应锁定依赖并保存环境证据。
+
+- [scikit-learn：Common pitfalls and recommended practices](https://scikit-learn.org/stable/common_pitfalls.html)：核对一致预处理、先划分以及只在训练数据上 `fit` 的防泄漏原则；
+- [scikit-learn `Pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)：核对按顺序组合变换与最终估计器的官方合同；
+- [scikit-learn `StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)：核对均值、方差等状态由训练样本学习的 API 语义。
+
+官方 API 不替代特征可用时点、业务含义、隐私和线上奇偶性审查；这些仍需对目标数据与部署链逐项取证。

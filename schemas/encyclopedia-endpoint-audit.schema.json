@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/encyclopedia-endpoint-audit.schema.json",
+  "title": "FactoryCare clean-copy endpoint audit report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "audit_id", "generated_by", "chapter_count", "endpoint_count",
+    "repeat_policy", "expected_red_repeat_policy", "execution_copy_policy",
+    "output_closure_policy", "cache_policy", "pnpm_runtime_policy", "docker_compose_runtime_policy", "pnpm_store_inventory", "dart_pub_cache_inventory", "infrastructure_failures", "diagnostic_normalization", "generated_output_classification", "passed_count",
+    "failed_count", "role_counts", "status", "results"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "audit_id": { "const": "p9-encyclopedia-endpoints" },
+    "generated_by": { "const": "scripts/audit-encyclopedia-endpoints.rb" },
+    "chapter_count": { "const": 255 },
+    "endpoint_count": { "const": 1020 },
+    "repeat_policy": { "type": "string", "minLength": 1 },
+    "expected_red_repeat_policy": { "type": "string", "minLength": 1 },
+    "execution_copy_policy": { "type": "string", "minLength": 1 },
+    "output_closure_policy": { "type": "string", "minLength": 1 },
+    "cache_policy": { "$ref": "#/$defs/cache_policy" },
+    "pnpm_runtime_policy": { "$ref": "#/$defs/pnpm_runtime_policy" },
+    "docker_compose_runtime_policy": { "$ref": "#/$defs/docker_compose_runtime_policy" },
+    "pnpm_store_inventory": { "$ref": "#/$defs/pnpm_store_inventory" },
+    "dart_pub_cache_inventory": { "$ref": "#/$defs/dart_pub_cache_inventory" },
+    "infrastructure_failures": {
+      "type": "array", "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "diagnostic_normalization": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "generated_output_classification": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "passed_count": { "type": "integer", "minimum": 0 },
+    "failed_count": { "type": "integer", "minimum": 0 },
+    "role_counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["example", "exercise", "lab", "private-solution"],
+      "properties": {
+        "example": { "$ref": "#/$defs/counts" },
+        "exercise": { "$ref": "#/$defs/counts" },
+        "lab": { "$ref": "#/$defs/counts" },
+        "private-solution": { "$ref": "#/$defs/counts" }
+      }
+    },
+    "status": { "enum": ["passed", "failed"] },
+    "results": {
+      "type": "array", "minItems": 1020, "maxItems": 1020, "uniqueItems": true,
+      "items": { "$ref": "#/$defs/result" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "chapter_id": { "type": "string", "pattern": "^ch\\.[a-z0-9]+(?:-[a-z0-9]+)*\\.[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["total", "passed", "failed"],
+      "properties": {
+        "total": { "const": 255 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "cache_location": {
+      "type": "object", "additionalProperties": false, "required": ["location_sha256"],
+      "properties": { "location_sha256": { "$ref": "#/$defs/sha256" } }
+    },
+    "cache_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy", "network_mode", "content_identity", "configured"],
+      "properties": {
+        "policy": { "type": "string", "minLength": 1 },
+        "network_mode": { "type": "string", "minLength": 1 },
+        "content_identity": { "type": "string", "minLength": 1 },
+        "configured": { "type": "object", "additionalProperties": { "$ref": "#/$defs/cache_location" } }
+      }
+    },
+    "pnpm_runtime_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "policy", "network_mode", "location_sha256", "pnpm_entry_sha256", "cli_file_count", "cli_tree_sha256",
+        "available_versions", "available_version_set_sha256"
+      ],
+      "properties": {
+        "policy": { "type": "string", "minLength": 1 },
+        "network_mode": { "type": "string", "minLength": 1 },
+        "location_sha256": { "$ref": "#/$defs/sha256" },
+        "pnpm_entry_sha256": { "$ref": "#/$defs/sha256" },
+        "cli_file_count": { "type": "integer", "minimum": 0 },
+        "cli_tree_sha256": { "$ref": "#/$defs/sha256" },
+        "available_versions": {
+          "type": "array", "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }
+        },
+        "available_version_set_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "docker_compose_runtime_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy", "discovery_mode", "location_sha256", "plugin_sha256", "plugin_size_bytes", "staged_plugin_sha256"],
+      "properties": {
+        "policy": { "type": "string", "minLength": 1 },
+        "discovery_mode": { "type": "string", "minLength": 1 },
+        "location_sha256": { "$ref": "#/$defs/sha256" },
+        "plugin_sha256": { "$ref": "#/$defs/sha256" },
+        "plugin_size_bytes": { "type": "integer", "minimum": 0 },
+        "staged_plugin_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "pnpm_store_inventory": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "policy", "content_file_count", "index_file_count", "inventory_sha256",
+        "excluded_mutable_scope", "snapshot_phase", "post_run_matches_pre_run"
+      ],
+      "properties": {
+        "policy": { "type": "string", "minLength": 1 },
+        "content_file_count": { "type": "integer", "minimum": 0 },
+        "index_file_count": { "type": "integer", "minimum": 0 },
+        "inventory_sha256": { "$ref": "#/$defs/sha256" },
+        "excluded_mutable_scope": { "type": "string", "minLength": 1 },
+        "snapshot_phase": { "type": "string", "minLength": 1 },
+        "post_run_matches_pre_run": { "type": "boolean" }
+      }
+    },
+    "dart_pub_cache_inventory": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "policy", "included_roots", "excluded_mutable_roots", "file_count", "directory_count",
+        "inventory_sha256", "snapshot_phase", "post_run_matches_pre_run"
+      ],
+      "properties": {
+        "policy": { "type": "string", "minLength": 1 },
+        "included_roots": {
+          "type": "array", "uniqueItems": true,
+          "items": { "enum": ["hosted", "hosted-hashes", "git/cache"] }
+        },
+        "excluded_mutable_roots": {
+          "type": "array", "uniqueItems": true,
+          "items": { "enum": ["_temp", "active_roots", "log"] }
+        },
+        "file_count": { "type": "integer", "minimum": 0 },
+        "directory_count": { "type": "integer", "minimum": 0 },
+        "inventory_sha256": { "$ref": "#/$defs/sha256" },
+        "snapshot_phase": { "type": "string", "minLength": 1 },
+        "post_run_matches_pre_run": { "type": "boolean" }
+      }
+    },
+    "run": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "attempted", "exit_code", "timed_out", "stdout_bytes", "stdout_sha256",
+        "stderr_bytes", "stderr_sha256", "normalized_stdout_sha256",
+        "normalized_stderr_sha256", "normalized_diagnostic_set_sha256",
+        "generated_output_count", "generated_output_set_sha256", "generated_output_sha256",
+        "tool_owned_runtime_scratch_count", "tool_owned_runtime_scratch_set_sha256",
+        "tool_owned_runtime_scratch_sha256", "output_closure_status"
+      ],
+      "properties": {
+        "attempted": { "type": "boolean" },
+        "exit_code": true,
+        "timed_out": { "type": "boolean" },
+        "stdout_bytes": { "type": "integer", "minimum": 0 },
+        "stdout_sha256": { "$ref": "#/$defs/sha256" },
+        "stderr_bytes": { "type": "integer", "minimum": 0 },
+        "stderr_sha256": { "$ref": "#/$defs/sha256" },
+        "normalized_stdout_sha256": { "$ref": "#/$defs/sha256" },
+        "normalized_stderr_sha256": { "$ref": "#/$defs/sha256" },
+        "normalized_diagnostic_set_sha256": { "$ref": "#/$defs/sha256" },
+        "generated_output_count": { "type": "integer", "minimum": 0 },
+        "generated_output_set_sha256": { "$ref": "#/$defs/sha256" },
+        "generated_output_sha256": { "$ref": "#/$defs/sha256" },
+        "tool_owned_runtime_scratch_count": { "type": "integer", "minimum": 0 },
+        "tool_owned_runtime_scratch_set_sha256": { "$ref": "#/$defs/sha256" },
+        "tool_owned_runtime_scratch_sha256": { "$ref": "#/$defs/sha256" },
+        "output_closure_status": { "enum": ["closed", "failed"] }
+      }
+    },
+    "result": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "chapter_id", "role", "verify_path", "status", "expected_exit_code", "command",
+        "expected_red_marker_observed", "expected_red_marker_first_run",
+        "expected_red_marker_repeat_run", "first_run", "repeat_run", "failures", "diagnostic_excerpt"
+      ],
+      "properties": {
+        "chapter_id": { "$ref": "#/$defs/chapter_id" },
+        "role": { "enum": ["example", "exercise", "lab", "private-solution"] },
+        "verify_path": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["passed", "failed"] },
+        "expected_exit_code": { "enum": [0, "nonzero"] },
+        "command": {
+          "type": "array", "minItems": 1, "maxItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "expected_red_marker_observed": { "type": "boolean" },
+        "expected_red_marker_first_run": { "type": "boolean" },
+        "expected_red_marker_repeat_run": { "enum": [true, false, null] },
+        "first_run": { "$ref": "#/$defs/run" },
+        "repeat_run": true,
+        "failures": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "diagnostic_excerpt": { "const": null }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["role"],
+            "properties": { "role": { "const": "private-solution" } }
+          },
+          "then": { "properties": { "repeat_run": { "const": null } } }
+        },
+        {
+          "if": {
+            "required": ["role"],
+            "properties": { "role": { "enum": ["example", "exercise", "lab"] } }
+          },
+          "then": { "properties": { "repeat_run": { "$ref": "#/$defs/run" } } }
+        }
+      ]
+    }
+  }
+}

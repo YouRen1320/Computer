@@ -1,5 +1,7 @@
 # 48 周学习计划最终验收记录
 
+> 历史范围说明：本文记录的是 **2026-07-16 的 48 周计划验收**，不是 2026.2 百科全书的当前 P9 结论。百科的最新机器审计、出版物、未关闭人工门和发布边界以 [`records/encyclopedia/reviews/P9-technical-audit-2026-07-24.md`](./records/encyclopedia/reviews/P9-technical-audit-2026-07-24.md) 为准；本文以下数字不随百科建设追写。
+
 - 最终执行：2026-07-16 00:16 CST
 - 结论：`PASS`
 - 范围：48 周路线、Week 00—48 逐周计划、Week 00—08 深度教学包、阶段考核、学习教练 Skill、现有设计/岗位资产与 Java 烟雾工程

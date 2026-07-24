@@ -1,0 +1,22 @@
+@page {
+  size: A4;
+  margin: 18mm 17mm 20mm;
+  @top-center { content: "FactoryCare 编程百科 · 内部完整候选物"; font-size: 8.5pt; color: #555; }
+  @bottom-center { content: counter(page) " / " counter(pages); font-size: 8.5pt; color: #555; }
+}
+html { font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif; font-size: 10.5pt; line-height: 1.55; color: #111; }
+body { margin: 0; }
+.skip-link, .site-header, .table-of-contents, .chapter-navigation { display: none; }
+footer, .publication-notice { padding: 0.6rem 0.8rem; border: 1px solid #777; }
+.review-badge, .publication-notice { font-weight: 700; }
+.chapter { break-before: page; }
+.chapter:first-of-type { break-before: auto; }
+h1, h2, h3, h4 { break-after: avoid-page; orphans: 3; widows: 3; }
+pre, table, blockquote { break-inside: avoid-page; }
+pre, code, kbd, samp { font-family: "SFMono-Regular", "Noto Sans Mono CJK SC", monospace; }
+pre { padding: 0.7rem; border: 1px solid #999; white-space: pre-wrap; overflow-wrap: anywhere; }
+h3 code { overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; }
+thead { display: table-header-group; }
+th, td { padding: 0.35rem 0.45rem; border: 1px solid #777; vertical-align: top; }
+a { color: inherit; text-decoration: underline; }

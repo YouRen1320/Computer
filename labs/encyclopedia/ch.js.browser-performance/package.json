@@ -2,6 +2,7 @@
   "name": "factorycare-ch-js-browser-performance-lab",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.18.0",
   "scripts": {
     "verify": "node src/lab.mjs baseline"
   }

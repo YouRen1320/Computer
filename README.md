@@ -27,7 +27,7 @@ Java 是业务事实和写操作的中心；Python 只提供 AI 建议、草稿�
 5. [旧 48 周兼容索引](./weeks/README.md)：只保存 `PROGRESS.md` 的 Week 00—48 语义，并映射到权威章节和考核。
 6. [阶段考核](./ASSESSMENTS.md)：G0—G8 的编码、口述、排错和项目标准。
 7. [技术栈与版本策略](./TECH_STACK.md)：2026 稳定基线、安装时机和升级规则。
-8. [旗舰项目说明](./PROJECT_SPEC.md)：FactoryCare 多租户设备运维与智能工单平台。
+8. [旗舰项目规格](./PROJECT_SPEC.md)：学习者将在后续周次按八阶段路线实现的 FactoryCare 多租户设备运维与智能工单平台；规格存在不等于系统已经实现。
 9. [AI 协作规范](./AI_WORKFLOW.md)：教学、生成、审查、测试与无 AI 验收边界。
 10. [学习进度总表](./PROGRESS.md)：真实状态、证据、阶段门和累计指标。
 11. [求职并行线](./JOB_SEARCH.md)：恢复求职后使用的岗位、简历和投递规则。
@@ -40,7 +40,8 @@ Java 是业务事实和写操作的中心；Python 只提供 AI 建议、草稿�
 | [南昌岗位市场样本](./job-market/README.md) | 可追溯职位卡、技能频率和检索手册 | 样本不代表整个市场，也会过期 |
 | [FactoryCare 施工前设计](./factorycare-design/README.md) | 数据、OpenAPI、事件、安全、测试、种子数据和 ADR | 候选设计不等于系统已经实现 |
 | [专属学习教练 Skill](/Users/youren/.codex/skills/factorycare-learning-coach/SKILL.md) | 教学、陪练、审查、考试、批改、面试和复盘 | 只按真实证据更新进度 |
-| [课程资产验收](./VALIDATION.md) | 结构检查、已知限制和验证记录 | 资产通过不代表学习者掌握 |
+| [百科 P9 当前审计](./records/encyclopedia/reviews/P9-technical-audit-2026-07-24.md) | 255 章、出版、验证与发布边界的当前结论 | 机器通过不替代试读、读屏或独立复现 |
+| [48 周计划历史验收](./VALIDATION.md) | 2026-07-16 的旧范围验收记录 | 历史数字不代表当前百科规模 |
 
 推荐入口：`使用 $factorycare-learning-coach，判断当前周，按老师模式带我开始今天的学习。`
 

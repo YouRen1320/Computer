@@ -1,20 +1,118 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "open3"
 require "rbconfig"
+require "tempfile"
+require "timeout"
 require "tmpdir"
 
 require_relative "atomic_evidence_writer"
+require_relative "cache_policy"
 
 module Verification
-  CommandResult = Struct.new(:stdout, :stderr, :exit_code, keyword_init: true)
+  CommandResult = Struct.new(:stdout, :stderr, :exit_code, :timed_out, keyword_init: true)
 
   class LocalCommandRunner
+    DEFAULT_TIMEOUT_SECONDS = 300.0
+    DEFAULT_TERMINATION_GRACE_SECONDS = 2.0
+
+    attr_reader :timeout_seconds, :termination_grace_seconds
+
+    def initialize(timeout_seconds: DEFAULT_TIMEOUT_SECONDS,
+                   termination_grace_seconds: DEFAULT_TERMINATION_GRACE_SECONDS)
+      @timeout_seconds = positive_number!(timeout_seconds, "timeout")
+      @termination_grace_seconds = positive_number!(termination_grace_seconds, "termination grace")
+    end
+
+    def execution_policy
+      {
+        "timeout_seconds" => timeout_seconds,
+        "termination_grace_seconds" => termination_grace_seconds
+      }
+    end
+
     def call(env:, argv:, chdir:)
-      stdout, stderr, status = Open3.capture3(env, *argv, chdir: chdir)
-      exit_code = status.exitstatus || (128 + status.termsig.to_i)
-      CommandResult.new(stdout: stdout.b, stderr: stderr.b, exit_code: exit_code)
+      stdout_file = Tempfile.new("factorycare-command-stdout")
+      stderr_file = Tempfile.new("factorycare-command-stderr")
+      [stdout_file, stderr_file].each(&:binmode)
+      pid = Process.spawn(
+        env, *argv,
+        chdir: chdir,
+        out: stdout_file,
+        err: stderr_file,
+        pgroup: true,
+        unsetenv_others: true
+      )
+      timed_out = false
+      status = nil
+      begin
+        Timeout.timeout(@timeout_seconds) { _waited, status = Process.wait2(pid) }
+      rescue Timeout::Error
+        timed_out = true
+        terminate_process_group(pid)
+        begin
+          _waited, status = Process.wait2(pid)
+        rescue Errno::ECHILD
+          status = nil
+        end
+      ensure
+        terminate_process_group(pid) if process_group_alive?(pid)
+      end
+      stdout_file.flush
+      stderr_file.flush
+      stdout_file.rewind
+      stderr_file.rewind
+      exit_code = if timed_out
+                    nil
+                  elsif status
+                    status.exitstatus || (128 + status.termsig.to_i)
+                  end
+      CommandResult.new(
+        stdout: stdout_file.read.b,
+        stderr: stderr_file.read.b,
+        exit_code: exit_code,
+        timed_out: timed_out
+      )
+    ensure
+      stdout_file&.close!
+      stderr_file&.close!
+    end
+
+    private
+
+    def positive_number!(value, label)
+      number = Float(value)
+      raise ArgumentError, "#{label} must be positive" unless number.positive? && number.finite?
+
+      number
+    rescue ArgumentError, TypeError
+      raise ArgumentError, "#{label} must be a positive number"
+    end
+
+    def terminate_process_group(pid)
+      signal_group("TERM", pid)
+      deadline = monotonic_time + @termination_grace_seconds
+      sleep(0.01) while process_group_alive?(pid) && monotonic_time < deadline
+      signal_group("KILL", pid) if process_group_alive?(pid)
+    end
+
+    def signal_group(signal, pid)
+      Process.kill(signal, -pid)
+    rescue Errno::ESRCH, Errno::EPERM
+      nil
+    end
+
+    def process_group_alive?(pid)
+      Process.kill(0, -pid)
+      true
+    rescue Errno::ESRCH
+      false
+    rescue Errno::EPERM
+      true
+    end
+
+    def monotonic_time
+      Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
   end
 
@@ -35,20 +133,28 @@ module Verification
     ].freeze
     CONTROL_PLANE_PATHS = %w[
       schemas/verification-manifest.schema.json
+      scripts/lib/chapter_prerequisite_block.rb
+      scripts/lib/factorycare_status_contract.rb
       scripts/run-verification.rb
+      scripts/validate-encyclopedia.rb
       verification/lib/application.rb
       verification/lib/atomic_evidence_writer.rb
+      verification/lib/cache_policy.rb
       verification/lib/contract.rb
+      verification/lib/coverage_audit.rb
       verification/lib/runner.rb
     ].freeze
 
-    attr_reader :root, :loader, :command_runner, :evidence_writer
+    attr_reader :root, :loader, :command_runner, :evidence_writer, :cache_overrides, :environment
 
-    def initialize(root:, loader: nil, command_runner: LocalCommandRunner.new, evidence_writer: nil)
+    def initialize(root:, loader: nil, command_runner: LocalCommandRunner.new, evidence_writer: nil,
+                   cache_overrides: {}, environment: ENV)
       @root = File.realpath(root)
       @loader = loader || ManifestLoader.new(@root)
       @command_runner = command_runner
       @evidence_writer = evidence_writer || AtomicEvidenceWriter.new(@root)
+      @cache_overrides = cache_overrides
+      @environment = environment
     end
 
     def validate_contracts
@@ -57,6 +163,12 @@ module Verification
 
     def run(write_evidence: true)
       manifests = loader.discover
+      @cache_policy = CachePolicy.resolve(
+        root: root,
+        tool_ids: manifests.flat_map { |manifest| manifest.data.fetch("tools").map { |tool| tool.fetch("id") } },
+        overrides: cache_overrides,
+        env: environment
+      )
       tools = probe_tools(manifests)
       results = manifests.flat_map do |manifest|
         manifest.data.fetch("recipes").map { |recipe| run_recipe(manifest, recipe) }
@@ -81,27 +193,35 @@ module Verification
     def probe_tools(manifests)
       declared = manifests.flat_map { |manifest| manifest.data.fetch("tools") }
       by_id = declared.group_by { |tool| tool.fetch("id") }
-      by_id.keys.sort.map do |id|
-        variants = by_id.fetch(id).uniq
-        unless variants.length == 1
-          raise ContractError.new("tool", "E_TOOL_DECLARATION_DRIFT", "tool declarations differ between manifests", path: id)
+      Dir.mktmpdir("factorycare-verification-probe-") do |directory|
+        runtime_tmp = File.join(directory, "tmp")
+        runtime_home = File.join(directory, "home")
+        [runtime_tmp, runtime_home].each { |path| Dir.mkdir(path, 0o700) }
+        by_id.keys.sort.map do |id|
+          variants = by_id.fetch(id).uniq
+          unless variants.length == 1
+            raise ContractError.new("tool", "E_TOOL_DECLARATION_DRIFT", "tool declarations differ between manifests", path: id)
+          end
+          declaration = variants.first
+          argv = declaration.fetch("version_argv")
+          result = command_runner.call(env: probe_environment(runtime_tmp, runtime_home), argv: argv, chdir: root)
+          if result.timed_out
+            raise ContractError.new("tool", "E_TOOL_TIMEOUT", "tool version probe exceeded its timeout", path: id)
+          end
+          unless result.exit_code&.zero?
+            raise ContractError.new("tool", "E_TOOL_PROBE_EXIT", "tool version probe returned a nonzero exit", path: id)
+          end
+          combined = result.stdout + result.stderr
+          version = first_nonempty_line(combined)
+          unless version == declaration.fetch("expected_version")
+            raise ContractError.new("tool", "E_TOOL_VERSION", "observed tool version differs from the manifest", path: id)
+          end
+          {
+            "id" => id,
+            "version" => version,
+            "version_output_sha256" => Canonical.sha256(combined)
+          }
         end
-        declaration = variants.first
-        argv = declaration.fetch("version_argv")
-        result = command_runner.call(env: probe_environment, argv: argv, chdir: root)
-        unless result.exit_code.zero?
-          raise ContractError.new("tool", "E_TOOL_PROBE_EXIT", "tool version probe returned a nonzero exit", path: id)
-        end
-        combined = result.stdout + result.stderr
-        version = first_nonempty_line(combined)
-        unless version == declaration.fetch("expected_version")
-          raise ContractError.new("tool", "E_TOOL_VERSION", "observed tool version differs from the manifest", path: id)
-        end
-        {
-          "id" => id,
-          "version" => version,
-          "version_output_sha256" => Canonical.sha256(combined)
-        }
       end
     end
 
@@ -244,6 +364,9 @@ module Verification
       unless result.is_a?(CommandResult)
         raise ContractError.new("execution", "E_COMMAND_RESULT", "command runner returned an invalid result", path: recipe.fetch("id"))
       end
+      if result.timed_out
+        raise ContractError.new("execution", "E_RECIPE_TIMEOUT", "recipe exceeded its timeout", path: recipe.fetch("id"))
+      end
       unless result.exit_code == recipe.fetch("expected_exit_code")
         raise ContractError.new("execution", "E_EXIT_MISMATCH", "actual exit code differs from the manifest", path: recipe.fetch("id"))
       end
@@ -277,10 +400,14 @@ module Verification
           "arch" => RbConfig::CONFIG.fetch("host_cpu"),
           "locale" => FIXED_ENVIRONMENT.fetch("LC_ALL"),
           "timezone" => FIXED_ENVIRONMENT.fetch("TZ"),
+          "runner_runtime" => runner_runtime,
           "network_isolation" => "not-os-enforced",
           "filesystem_isolation" => "clean-copy-not-os-sandboxed"
         },
+        "execution_policy" => command_execution_policy,
+        "cache_policy" => @cache_policy.evidence_summary,
         "limitations" => LIMITATIONS,
+        "control_plane_count" => control_plane.length,
         "control_plane_digest" => Canonical.path_bytes_digest(control_plane),
         "control_plane" => control_plane.map { |entry| entry.reject { |key, _value| key == "bytes" } },
         "manifest_count" => manifests.length,
@@ -305,13 +432,43 @@ module Verification
         "TMPDIR" => runtime_tmp,
         "HOME" => runtime_home,
         "PATH" => sanitized_path
-      )
-      environment["JAVA_HOME"] = ENV.fetch("JAVA_HOME") if ENV["JAVA_HOME"] && !ENV.fetch("JAVA_HOME").empty?
+      ).merge(@cache_policy.execution_environment)
+      environment["JAVA_HOME"] = self.environment.fetch("JAVA_HOME") if self.environment["JAVA_HOME"] && !self.environment.fetch("JAVA_HOME").empty?
       environment
     end
 
-    def probe_environment
-      FIXED_ENVIRONMENT.merge("PATH" => sanitized_path)
+    def runner_runtime
+      {
+        "ruby_engine" => RUBY_ENGINE,
+        "ruby_version" => RUBY_VERSION,
+        "ruby_patchlevel" => RUBY_PATCHLEVEL,
+        "ruby_platform" => RUBY_PLATFORM,
+        "ruby_description" => RUBY_DESCRIPTION
+      }
+    end
+
+    def command_execution_policy
+      unless command_runner.respond_to?(:execution_policy)
+        raise ContractError.new(
+          "evidence", "E_EXECUTION_POLICY",
+          "command runner must disclose its effective timeout and termination grace"
+        )
+      end
+
+      policy = command_runner.execution_policy
+      expected_keys = %w[termination_grace_seconds timeout_seconds]
+      unless policy.is_a?(Hash) && policy.keys.sort == expected_keys &&
+             expected_keys.all? { |key| policy.fetch(key).is_a?(Numeric) && policy.fetch(key).positive? && policy.fetch(key).finite? }
+        raise ContractError.new(
+          "evidence", "E_EXECUTION_POLICY",
+          "command runner disclosed an invalid execution policy"
+        )
+      end
+      policy
+    end
+
+    def probe_environment(runtime_tmp, runtime_home)
+      execution_environment(runtime_tmp, runtime_home)
     end
 
     def sanitized_path
@@ -323,7 +480,7 @@ module Verification
     end
 
     def executable_directory(command)
-      ENV.fetch("PATH", "").split(File::PATH_SEPARATOR).each do |directory|
+      environment.fetch("PATH", "").split(File::PATH_SEPARATOR).each do |directory|
         next if directory.empty? || !Pathname(directory).absolute?
 
         candidate = File.join(directory, command)

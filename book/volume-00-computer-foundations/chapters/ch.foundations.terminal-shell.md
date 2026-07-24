@@ -581,7 +581,7 @@ ruby verify.rb
 - [The Open Group `pwd`](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html)：当前工作目录观察语义。
 - [zsh Expansion](https://zsh.sourceforge.io/Doc/Release/Expansion.html)：zsh 引用、文件名生成与展开顺序的实现文档。
 - [zsh Shell Builtin Commands](https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html)：`cd` 等内建命令的实现文档。
-- [Ruby 预定义全局常量：`ARGV`](https://docs.ruby-lang.org/en/master/globals_rdoc.html)：配套探针所观察命令行参数的 Ruby 文档入口；正文不依赖 Ruby 高级语法。
+- [Ruby 3.4 预定义全局变量：`ARGV`](https://docs.ruby-lang.org/en/3.4/globals_rdoc.html)：配套探针所观察命令行参数的 Ruby 文档入口；正文不依赖 Ruby 高级语法。
 
 POSIX 描述可移植核心，zsh 文档描述本章运行环境，两者不完全等价。未验证 Bash、fish、PowerShell、Windows 路径、个人 zsh 插件与远程 Shell；不得把固定示例结果外推为这些环境的保证。
 

@@ -18,14 +18,14 @@
 
 1. **零基础路线**：解释文件、路径、终端和程序执行等隐藏前置，再逐步进入各语言与框架。
 2. **48 模块加速路线**：与原有 48 周 `weeks/` 和 `learning-kits/` 建立映射，但能力模块不强制等于日历周。
-3. **FactoryCare 项目路线**：围绕设备、工单、维修、权限、数据分析和 AI 助手持续交付。
+3. **FactoryCare 项目路线**：课程提供设备、工单、维修、权限、数据分析和 AI 助手的设计合同、阶段 gate 与验收框架；学习者到达对应阶段后持续实现真实切片并留下自己的证据。
 4. **参考路线**：通过概念、错误信息、API、版本和术语索引反向查阅。
 
 ## 当前状态
 
 百科重建按 P0—P9 推进。16 卷、255 章正文及配套资产已经进入 `drafting`；旧 48 周长页已迁移为到权威章节的兼容适配层，学习进度、学时和测评分数保持原语义且不会被课程工程自动修改。章节仍未因自动化通过而晋升 `verified`，正式发布还受人工试读、版式和无障碍门禁约束。阶段契约见 [`records/encyclopedia/IMPLEMENTATION-CONTRACT.md`](records/encyclopedia/IMPLEMENTATION-CONTRACT.md)，P9 机器收口结果与尚未关闭的人工门见 [`P9-technical-audit-2026-07-24.md`](records/encyclopedia/reviews/P9-technical-audit-2026-07-24.md)。
 
-自 2026-07-16 起采用[内容优先执行策略](records/encyclopedia/CONTENT-FIRST-EXECUTION.md)：P3—P8 连续建设正文、示例、实验、练习和项目，只保留 schema、链接、边界、编译、运行及已有测试等必要自动检查；独立全面复审、人工版式与无障碍评估、零基础读者试读和全仓回归集中到 P9。延期不代表通过，相关证据完成前章节不得因此晋升 `verified` 或正式公开发布。
+自 2026-07-16 起采用[内容优先执行策略](records/encyclopedia/CONTENT-FIRST-EXECUTION.md)：P3—P8 连续建设正文、示例、实验、练习、FactoryCare 项目教学路线和验收框架，只保留 schema、链接、边界、编译、运行及已有测试等必要自动检查；独立全面复审、人工版式与无障碍评估、零基础读者试读和全仓回归集中到 P9。延期不代表通过，相关证据完成前章节不得因此晋升 `verified` 或正式公开发布。`evidence/factorycare/**` 是学习者在未来周次产生的真实工件，不是课程建设阶段应预制的发布资产。
 
 ## 内容原则
 

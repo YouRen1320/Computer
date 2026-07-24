@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 cleanup() { rm -rf .dart_tool; }
 trap cleanup EXIT
-dart pub get
+dart pub get --offline
 dart format --output=none --set-exit-if-changed .
 dart analyze --fatal-infos
 dart test --reporter expanded --test-randomize-ordering-seed=20260724

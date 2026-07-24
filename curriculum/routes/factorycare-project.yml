@@ -2,12 +2,17 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 558c2404ef63a5640d3b72b4feb13590911ccfeff046d3d59930bf3930839e3a
+generated_spec_digest: '0840ae52f6eefa12b4d9bab4b0f61d025119b58aee96eeb5e8fd767c0f4399ac'
 edition: 2026.2-draft
 route_id: factorycare-project
 route_kind: project
 coverage: selective
 navigation_semantics: stage-gated-with-generated-support-closure
+artifact_policy:
+  owner: learner
+  lifecycle: produced-during-study
+  prepopulation: forbidden
+  absence_before_stage: expected
 stages:
 - id: fc-01-foundation
   title: 工程底座与可运行骨架

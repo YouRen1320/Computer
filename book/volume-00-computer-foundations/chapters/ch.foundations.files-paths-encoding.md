@@ -556,8 +556,8 @@ Java 后端、Vue 管理端、uni-app、Flutter 与 Python 服务之间通过 HT
 
 本章只覆盖稳定心智模型，不把某个编辑器菜单名称当作永久规范。VS Code、IntelliJ 的界面可能随版本变化，实际操作以当前状态栏和官方文档为准。
 
-- 复核日期：2026-07-16。
-- Unicode Consortium，[Unicode Standard](https://www.unicode.org/versions/latest/)：支持抽象字符、码点、编码形式与 Unicode 术语。
+- 复核日期：2026-07-24。
+- Unicode Consortium，[The Unicode Standard, Version 17.0.0](https://www.unicode.org/versions/Unicode17.0.0/)：支持抽象字符、码点、编码形式与 Unicode 术语；该固定版本链接避免 `latest` 入口的协议降级重定向。
 - Unicode Consortium，[Unicode Standard Annex #29: Unicode Text Segmentation](https://www.unicode.org/reports/tr29/)：支持码点与用户感知字素边界不能简单等同。
 - IETF，[RFC 3629: UTF-8, a transformation format of ISO 10646](https://www.rfc-editor.org/rfc/rfc3629)：支持现代 UTF-8 一至四字节结构与有效范围。
 - WHATWG，[Encoding Standard](https://encoding.spec.whatwg.org/)：支持 Web 平台编码、解码和错误处理的规范背景。

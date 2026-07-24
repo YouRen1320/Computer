@@ -47,4 +47,4 @@ void main() {
 DART
 
 dart analyze "$tmp_dir/main.dart"
-exec dart run "$tmp_dir/main.dart"
+dart run "$tmp_dir/main.dart"

@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/publication-plan-v2.schema.json",
+  "title": "FactoryCare internal complete publication plan v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "plan_id", "profile_id", "site_id", "edition", "publication_mode",
+    "visibility", "distribution_allowed", "language", "deterministic", "generated_by",
+    "output_root", "source_date_epoch", "resource_policy", "notice", "digest_algorithm",
+    "profile", "catalog", "toolchain_lock", "tool_requirements", "chapters", "volumes",
+    "companions", "inputs", "input_count", "content_input_digest", "publisher_input_digest",
+    "build_input_digest", "planned_outputs", "security"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "plan_id": { "const": "publication-plan.internal-complete" },
+    "profile_id": { "const": "internal-complete" },
+    "site_id": { "const": "factorycare-encyclopedia" },
+    "edition": { "type": "string", "minLength": 1 },
+    "publication_mode": { "const": "internal-complete-preview" },
+    "visibility": { "const": "internal" },
+    "distribution_allowed": { "const": false },
+    "language": { "const": "zh-CN" },
+    "deterministic": { "const": true },
+    "generated_by": { "const": "scripts/build-complete-publication-plan.rb" },
+    "output_root": { "const": "build/publication/internal-complete" },
+    "source_date_epoch": { "type": "integer", "minimum": 0 },
+    "resource_policy": { "type": "object", "additionalProperties": true },
+    "notice": { "type": "object", "additionalProperties": true },
+    "digest_algorithm": { "const": "sha256-path-nul-bytes-nul-v1" },
+    "profile": { "$ref": "#/$defs/path_digest" },
+    "catalog": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "source_sha256", "selected_projection_sha256", "chapter_count"],
+      "properties": {
+        "path": { "const": "curriculum/catalog.yml" },
+        "source_sha256": { "$ref": "#/$defs/sha256" },
+        "selected_projection_sha256": { "$ref": "#/$defs/sha256" },
+        "chapter_count": { "const": 255 }
+      }
+    },
+    "toolchain_lock": { "$ref": "#/$defs/path_digest" },
+    "tool_requirements": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
+    "chapters": { "type": "array", "minItems": 255, "maxItems": 255, "uniqueItems": true, "items": { "$ref": "#/$defs/chapter" } },
+    "volumes": { "type": "array", "minItems": 16, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/volume" } },
+    "companions": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/companion" } },
+    "inputs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/input" } },
+    "input_count": { "type": "integer", "minimum": 1 },
+    "content_input_digest": { "$ref": "#/$defs/sha256" },
+    "publisher_input_digest": { "$ref": "#/$defs/sha256" },
+    "build_input_digest": { "$ref": "#/$defs/sha256" },
+    "planned_outputs": { "type": "array", "minItems": 345, "maxItems": 345, "uniqueItems": true, "items": { "$ref": "#/$defs/output" } },
+    "security": {
+      "type": "object", "additionalProperties": false,
+      "required": ["private_input_count", "private_canary_count", "absolute_input_path_count", "symlink_input_count", "untracked_companion_count", "generated_input_count"],
+      "properties": {
+        "private_input_count": { "const": 0 },
+        "private_canary_count": { "const": 0 },
+        "absolute_input_path_count": { "const": 0 },
+        "symlink_input_count": { "const": 0 },
+        "untracked_companion_count": { "const": 0 },
+        "generated_input_count": { "const": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "repository_path": { "type": "string", "pattern": "^[^/\\\\\\u0000-\\u001f\\u007f]+(?:/[^/\\\\\\u0000-\\u001f\\u007f]+)*$" },
+    "output_path": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:/[a-zA-Z0-9_][a-zA-Z0-9._-]*)*$" },
+    "path_digest": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+      "properties": { "path": { "$ref": "#/$defs/repository_path" }, "sha256": { "$ref": "#/$defs/sha256" } }
+    },
+    "tool": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "command", "expected_version_prefix"],
+      "properties": {
+        "id": { "enum": ["pandoc", "python", "ruby", "weasyprint"] },
+        "command": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "expected_version_prefix": { "type": "string", "minLength": 1 }
+      }
+    },
+    "chapter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "volume", "order", "status", "source_path", "source_sha256", "companion_count"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "volume": { "type": "string", "pattern": "^[0-1][0-9]$" },
+        "order": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["drafting", "review", "verified"] },
+        "source_path": { "$ref": "#/$defs/repository_path" },
+        "source_sha256": { "$ref": "#/$defs/sha256" },
+        "companion_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "volume": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "title", "chapter_ids", "chapter_count"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-1][0-9]$" },
+        "title": { "type": "string", "minLength": 1 },
+        "chapter_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" } },
+        "chapter_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "companion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["chapter_id", "kind", "path", "git_mode", "git_blob", "sha256", "size_bytes"],
+      "properties": {
+        "chapter_id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "kind": { "enum": ["example", "lab", "exercise"] },
+        "path": { "$ref": "#/$defs/repository_path" },
+        "git_mode": { "enum": ["100644", "100755"] },
+        "git_blob": { "type": "string", "pattern": "^[0-9a-f]{40,64}$" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "scope", "role", "sha256", "size_bytes"],
+      "properties": {
+        "path": { "$ref": "#/$defs/repository_path" },
+        "scope": { "enum": ["content", "companion-index", "publisher-contract"] },
+        "role": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "output": {
+      "type": "object", "additionalProperties": false, "required": ["path", "kind", "format", "distribution"],
+      "properties": {
+        "path": { "$ref": "#/$defs/output_path" },
+        "kind": { "type": "string", "minLength": 1 },
+        "format": { "enum": ["internal", "html", "epub", "pdf"] },
+        "distribution": { "const": "internal-review-candidate" }
+      }
+    }
+  }
+}

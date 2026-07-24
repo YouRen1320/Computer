@@ -411,3 +411,11 @@ CI可以对manifest运行模式、唯一性、交集、时间边界、标签成�
 ## 26. 版本与验证边界
 
 问题定义、预测时刻、样本单位和防泄漏原则是稳定核心。pandas/NumPy/pytest的具体API和随机实现会变化，应以锁定环境与官方文档为准。本章资产使用合成数据验证划分不变量，没有训练真实模型，也没有验证生产数据库、隐私合规或线上干预效果。
+
+资料链接复核日期：**2026-07-24**。
+
+- [scikit-learn `train_test_split`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)：核对随机划分、`random_state`、shuffle 与 stratify 的当前 API；
+- [scikit-learn cross-validation 指南](https://scikit-learn.org/stable/modules/cross_validation.html)：核对训练/测试职责以及分组、时间序列等划分器的官方入口；
+- [scikit-learn：Common pitfalls and recommended practices](https://scikit-learn.org/stable/common_pitfalls.html)：核对测试集不得参与模型选择或预处理 `fit` 的泄漏边界。
+
+这些 API 只能执行所选策略，不能替你确定预测时点、实体边界、标签成熟期或错误代价。固定 seed 也不等于保存了可审计的样本清单。

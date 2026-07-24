@@ -273,6 +273,33 @@ class CurriculumCompilerTest < Minitest::Test
     assert_includes spec.collector.errors.map(&:code), "E_FACTORYCARE_PATH"
   end
 
+  def test_factorycare_artifacts_are_learner_owned_and_created_during_study
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    expected = {
+      "owner" => "learner",
+      "lifecycle" => "produced-during-study",
+      "prepopulation" => "forbidden",
+      "absence_before_stage" => "expected"
+    }
+
+    assert_equal expected, spec.factorycare_plan.dig("stage_defaults", "artifact_policy")
+
+    rendered = Curriculum::Compiler.new(spec).render_outputs.fetch("curriculum/routes/factorycare-project.yml")
+    route = Curriculum::StrictYaml.load(rendered, display_path: "curriculum/routes/factorycare-project.yml")
+    assert_equal expected, route.fetch("artifact_policy")
+  end
+
+  def test_factorycare_artifact_policy_cannot_be_redefined_as_prebuilt
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec.factorycare_plan.dig("stage_defaults", "artifact_policy")["lifecycle"] = "prebuilt-by-course"
+    spec.collector.errors.clear
+
+    spec.send(:validate_route_plan_shapes!)
+
+    messages = spec.collector.errors.map(&:message).join("\n")
+    assert_includes messages, "/stage_defaults/artifact_policy/lifecycle expected \"produced-during-study\""
+  end
+
   def test_route_plan_rejects_unknown_fields_and_wrong_identity
     spec = Curriculum::SpecSet.new(ROOT).load!
     spec.accelerated_plan["route_id"] = "wrong"

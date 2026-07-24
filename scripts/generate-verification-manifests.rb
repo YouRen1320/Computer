@@ -2,12 +2,16 @@
 # frozen_string_literal: true
 
 require "digest"
+require "fileutils"
 require "optparse"
 require "tempfile"
 require "yaml"
 
 require File.expand_path("../verification/lib/contract", __dir__)
 require File.expand_path("../verification/lib/coverage_audit", __dir__)
+require File.expand_path("../verification/lib/endpoint_report_guard", __dir__)
+require File.expand_path("../verification/lib/machine_report_schema", __dir__)
+require File.expand_path("../verification/lib/tool_probe", __dir__)
 
 module Verification
   # This helper intentionally does not infer commands, exit codes, observations,
@@ -26,8 +30,42 @@ module Verification
         return report.fetch("contract_complete") ? 0 : 1
       end
       if options.fetch(:bootstrap)
-        catalog = CoverageAudit.new(root, loader: loader).candidate_catalog
-        stdout.write(Canonical.json(catalog))
+        report_path = options.fetch(:endpoint_report)
+        unless report_path
+          raise OptionParser::MissingArgument, "--endpoint-report is required for observed candidate v2"
+        end
+        report_bytes = File.binread(File.expand_path(report_path))
+        endpoint_report = StrictJson.parse(report_bytes)
+        MachineReportSchema.validate!(
+          root: root,
+          schema_path: "schemas/encyclopedia-endpoint-audit.schema.json",
+          document: endpoint_report
+        )
+        EndpointReportGuard.require_full_pass!(endpoint_report)
+        audit = CoverageAudit.new(root, loader: loader)
+        static_candidates = audit.candidates
+        tool_ids = static_candidates.flat_map do |candidate|
+          candidate.fetch("endpoints").flat_map { |endpoint| endpoint.fetch("tool_hints") }
+        end
+        probes = ObservedToolProbe.new(root: root).call(tool_ids)
+        catalog = audit.candidate_catalog_v2(
+          endpoint_report: endpoint_report,
+          tool_probes: probes,
+          source_endpoint_report_sha256: Canonical.sha256(report_bytes)
+        )
+        catalog["endpoint_observation_set_sha256"] = audit.observation_set_sha256(endpoint_report)
+        MachineReportSchema.validate!(
+          root: root,
+          schema_path: "schemas/observed-verification-candidates-v2.schema.json",
+          document: catalog
+        )
+        bytes = Canonical.json(catalog)
+        if options[:output]
+          atomic_output(options.fetch(:output), bytes)
+          stdout.puts("OBSERVED CANDIDATE V2 WRITE OK candidates=#{catalog.fetch('candidate_count')} endpoints=#{catalog.fetch('endpoint_count')}")
+        else
+          stdout.write(bytes)
+        end
         return 0
       end
       if options.fetch(:check)
@@ -72,19 +110,24 @@ module Verification
     end
 
     def parse_options(argv)
-      options = { check: false, write: false, coverage: false, bootstrap: false, json: false }
+      options = { check: false, write: false, coverage: false, bootstrap: false, json: false, endpoint_report: nil, output: nil }
       OptionParser.new do |parser|
         parser.banner = usage
         parser.on("--check", "validate existing manifests without changing bytes") { options[:check] = true }
         parser.on("--write", "refresh only modes and digests in reviewed existing manifests") { options[:write] = true }
         parser.on("--coverage", "compare final manifests with all canonical chapters; incomplete coverage exits 1") { options[:coverage] = true }
         parser.on("--bootstrap-candidates", "emit per-chapter unreviewed candidate inventory without writing") { options[:bootstrap] = true }
+        parser.on("--endpoint-report PATH", "deterministic clean-copy endpoint observations for candidate v2") { |value| options[:endpoint_report] = value }
+        parser.on("--output PATH", "atomically write observed candidate v2 JSON") { |value| options[:output] = value }
         parser.on("--json", "emit JSON for coverage or candidates") { options[:json] = true }
       end.parse!(argv)
       primary = %i[check write coverage bootstrap].count { |key| options.fetch(key) }
       raise OptionParser::InvalidOption, "choose exactly one primary operation" unless primary == 1
       if options.fetch(:json) && !(options.fetch(:coverage) || options.fetch(:bootstrap))
         raise OptionParser::InvalidOption, "--json is only valid with --coverage or --bootstrap-candidates"
+      end
+      if (options[:endpoint_report] || options[:output]) && !options.fetch(:bootstrap)
+        raise OptionParser::InvalidOption, "--endpoint-report and --output are only valid with --bootstrap-candidates"
       end
       raise OptionParser::InvalidOption, "unexpected arguments: #{argv.join(' ')}" unless argv.empty?
 
@@ -116,6 +159,23 @@ module Verification
       nil
     end
 
+    def atomic_output(path, bytes)
+      absolute = File.expand_path(path)
+      directory = File.dirname(absolute)
+      FileUtils.mkdir_p(directory)
+      Tempfile.create([".observed-candidate-v2-", ".json"], directory) do |file|
+        file.binmode
+        file.write(bytes)
+        file.flush
+        file.fsync
+        File.chmod(0o644, file.path)
+        File.rename(file.path, absolute)
+      end
+      File.open(directory, File::RDONLY) { |dir| dir.fsync }
+    rescue Errno::EINVAL, Errno::EISDIR
+      nil
+    end
+
     def emit_coverage(report, json, stdout)
       if json
         stdout.write(Canonical.json(report))
@@ -131,7 +191,8 @@ module Verification
 
     def usage
       "Usage: ruby scripts/generate-verification-manifests.rb " \
-        "(--check|--write|--coverage|--bootstrap-candidates) [--json]"
+        "(--check|--write|--coverage|--bootstrap-candidates) [--json] " \
+        "[--endpoint-report PATH] [--output PATH]"
     end
   end
 end

@@ -1,0 +1,61 @@
+schema_version: 2
+profile_id: internal-complete
+edition: 2026.2-draft
+publication_mode: internal-complete-preview
+visibility: internal
+language: zh-CN
+distribution_allowed: false
+source_date_epoch: 1784160000
+selection:
+  kind: catalog-all
+  expected_chapter_count: 255
+  expected_volume_ids:
+  - '00'
+  - '01'
+  - '02'
+  - '03'
+  - '04'
+  - '05'
+  - '06'
+  - '07'
+  - '08'
+  - '09'
+  - '10'
+  - '11'
+  - '12'
+  - '13'
+  - '14'
+  - '15'
+  expected_status_counts:
+    drafting: 255
+    review: 0
+    verified: 0
+products:
+- site
+- whole-book
+- per-volume
+target_formats:
+- html
+- epub
+- pdf
+toolchain_lock: publication/toolchain.yml
+companion_inventory:
+  source: git-tracked-only
+  presentation: digest-index-only
+  roots:
+  - examples/encyclopedia
+  - labs/encyclopedia
+  - exercises/encyclopedia
+resource_policy:
+  build_network: forbidden
+  remote_resources: link-only
+  allowed_local_schemes:
+  - file
+  - data
+notice:
+  text: 内部完整候选物，255 章仍为 drafting，尚未完成正式评审、无障碍与复现门禁，不得公开发布
+  placements:
+  - document-title
+  - document-opening
+  - metadata
+  robots: noindex,nofollow

@@ -109,6 +109,56 @@ R2 回归测试入口是：
 ruby tests/publication/test_renderer.rb
 ```
 
+## P8 内部完整出版 v2
+
+P8 在不改变上述 `p3-gold` v1 合同的前提下增加了独立的
+`internal-complete` v2 管线。它只接受 canonical catalog 的全部 255 章和固定
+16 卷，不提供按 glob、状态或任意路径删减正文的入口。所有章节保持目录中的真实
+状态；当前 profile 明确锁定 `drafting: 255`，构建成功不会把任何章节提升为
+`review` 或 `verified`。
+
+完整计划与实体构建入口是：
+
+```bash
+ruby scripts/build-complete-publication-plan.rb
+ruby scripts/build-complete-publication-plan.rb --check
+ruby scripts/build-complete-publication.rb
+ruby scripts/build-complete-publication.rb --check
+```
+
+输出仅位于被 Git 忽略的 `build/publication/internal-complete/`。计划的写入与检查
+只原子更新或比对 `publication-plan-v2.json`，不会删除同目录下已有的渲染树；实体
+构建则在同级 staging 树完成精确文件集、链接、摘要、私有标记和文件类型检查后，
+再整体替换旧树。
+
+v2 只让 Pandoc 读取一次按 canonical catalog 顺序排列的 255 个 Markdown，得到一份 canonical full
+AST。整书、16 卷和 255 个章节页面都从该 AST 的确定性投影生成；分章投影只复制
+当前章的块，分卷投影只复制当前卷的块，不再为每章深拷整本 AST。网站同时生成
+整书 HTML、16 个卷页面、255 个章页面、导航索引和含正文文本的 255 条搜索索引。
+
+`examples/encyclopedia`、`labs/encyclopedia` 与 `exercises/encyclopedia` 的公开配套
+工件只通过 `git ls-files -s -z` 纳入。计划和 `companions.json` 记录每个已跟踪普通
+文件的路径、Git mode/blob、SHA-256 与字节数；正文只显示每章数量摘要，不内联
+4,123 个文件。未跟踪文件不会进入清单，常见 generated/build 输出目录即使被误跟踪
+也会拒绝；symlink、私有根、越界路径、private canary 和非普通 Git mode 同样
+fail-closed。`solutions-private` 与本机 `/Users/...` 引用在
+AST 投影中移除，任何此类标记若仍进入计划或输出则拒绝提交。
+
+v2 计划固定 345 个路径；输出 manifest 不自我摘要，因此记录其中 344 个实体。
+实体包括 canonical AST、16 份卷 AST、整书/分卷打印 HTML、网站、导航/搜索/配套
+索引、整书与 16 卷 EPUB，以及整书与 16 卷带标签 PDF 候选。`--check` 是非变异的
+生产集成门；测试入口是：
+
+```bash
+ruby tests/publication/test_complete_publication_v2.rb
+FACTORYCARE_REBUILD_COMPLETE_PUBLICATION=1 ruby tests/publication/test_complete_publication_v2.rb \
+  -n test_full_production_entity_generation_when_explicitly_requested
+```
+
+第二条命令会真实重建全量实体，耗时和内存显著高于普通测试，故必须显式启用。
+HTML/EPUB/PDF 的存在、标签和基本结构仍不等于 WCAG、EPUB Accessibility 或
+PDF/UA 合规，也不构成人工教学评审、零基础试读、跨平台复现或公开发布授权。
+
 ## 当前能证明与不能证明的事
 
 R1-A 可以证明 profile/status allowlist、文件所有权、普通文件与 symlink 边界、
@@ -129,7 +179,7 @@ schema-valid 的内部候选 manifest 与 HTML/EPUB/PDF 实体，但它不能证
 符合该 schema 的实例。它明确记录 `network_policy: forbidden` 只是策略，同时要求
 `network_isolation: not-os-enforced`，避免把无网络调用冒充 OS 级断网沙箱。
 
-当前本机固定工具链下，两个干净目录的连续构建已观察到 AST、HTML、打印 HTML、
+当前本机固定工具链下，P3 两个干净目录的连续构建已观察到 AST、HTML、打印 HTML、
 EPUB 和 PDF 逐字节一致。这只能称为**本机字节重复性证据**；在独立执行方按声明环境
 复现之前，仍不能声称 reproducible build 或跨平台可复现。PDF 也仍只是 PDF/UA-1
 候选文件，标签存在、字节稳定或机器检查通过都不能替代完整机器门和人工无障碍评估。

@@ -11,8 +11,8 @@ NODE_MINOR_OK="$(node -e 'const [a,b]=process.versions.node.split(".").map(Numbe
 [[ "$NODE_MINOR_OK" == "true" ]] || { echo "FAIL unsupported Node $NODE_VERSION" >&2; exit 2; }
 
 cd "$ROOT"
-pnpm install --offline --frozen-lockfile --ignore-scripts
-pnpm exec vite build --outDir "$TMP_DIR/dist" --emptyOutDir
+pnpm install --offline --frozen-lockfile --ignore-scripts --reporter=silent
+pnpm exec vite build --outDir "$TMP_DIR/dist" --emptyOutDir --logLevel silent
 
 grep -Fq 'id="app"' index.html
 grep -Fq "mount('#app')" src/main.ts

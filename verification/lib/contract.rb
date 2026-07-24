@@ -11,6 +11,7 @@ module Verification
   SCHEMA_PATH = "schemas/verification-manifest.schema.json"
   MANIFEST_DIRECTORY = "verification/manifests"
   EVIDENCE_DIRECTORY = "verification/evidence/last-run"
+  PRIVATE_EVIDENCE_DIRECTORY = "verification/private-evidence/last-run"
   DIGEST_ALGORITHM = "sha256-path-nul-bytes-nul-v1"
   PRIVATE_PREFIXES = %w[solutions-private/ sources/private/].freeze
   PRIVATE_CANARY = /PRIVATE_SOLUTION_DO_NOT_PUBLISH_[A-Z0-9_-]+/.freeze
@@ -32,6 +33,7 @@ module Verification
     "node" => ["node", "--version"],
     "pnpm" => ["pnpm", "--version"],
     "python" => ["python3", "--version"],
+    "rg" => ["rg", "--version"],
     "ruby" => ["ruby", "--version"],
     "uv" => ["uv", "--version"]
   }.freeze

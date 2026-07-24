@@ -4,6 +4,7 @@ require "digest"
 require "fileutils"
 require "json"
 require "minitest/autorun"
+require "open3"
 require "pathname"
 require "stringio"
 require "tmpdir"
@@ -14,15 +15,29 @@ require_relative "../../scripts/generate-verification-manifests"
 
 class VerificationRunnerTest < Minitest::Test
   SOURCE_ROOT = Pathname(File.expand_path("../..", __dir__)).freeze
+  PUBLIC_CONTROL_PLANE = %w[
+    schemas/verification-manifest.schema.json
+    scripts/lib/chapter_prerequisite_block.rb
+    scripts/lib/factorycare_status_contract.rb
+    scripts/run-verification.rb
+    scripts/validate-encyclopedia.rb
+    verification/lib/application.rb
+    verification/lib/atomic_evidence_writer.rb
+    verification/lib/cache_policy.rb
+    verification/lib/contract.rb
+    verification/lib/coverage_audit.rb
+    verification/lib/runner.rb
+  ].freeze
 
   class FakeCommandRunner
     attr_reader :calls
 
-    def initialize(version: "fake bash 1", exit_code: 0, stdout: "PASS\n", stderr: "", &action)
+    def initialize(version: "fake bash 1", exit_code: 0, stdout: "PASS\n", stderr: "", timed_out: false, &action)
       @version = version
       @exit_code = exit_code
       @stdout = stdout
       @stderr = stderr
+      @timed_out = timed_out
       @action = action
       @calls = []
     end
@@ -34,8 +49,40 @@ class VerificationRunnerTest < Minitest::Test
       end
 
       @action.call(Pathname(chdir)) if @action
-      Verification::CommandResult.new(stdout: @stdout, stderr: @stderr, exit_code: @exit_code)
+      Verification::CommandResult.new(
+        stdout: @stdout,
+        stderr: @stderr,
+        exit_code: @timed_out ? nil : @exit_code,
+        timed_out: @timed_out
+      )
     end
+
+    def execution_policy
+      { "timeout_seconds" => 17.0, "termination_grace_seconds" => 0.25 }
+    end
+  end
+
+  def test_control_plane_exactly_matches_fresh_process_local_require_closure
+    script = <<~'RUBY'
+      require "json"
+      root = File.realpath(ARGV.fetch(0))
+      require File.join(root, "verification/lib/application")
+      prefix = root + File::SEPARATOR
+      loaded = $LOADED_FEATURES.map do |feature|
+        feature.delete_prefix(prefix) if feature.start_with?(prefix)
+      end.compact
+      STDOUT.write(JSON.generate(loaded.sort))
+    RUBY
+    stdout, stderr, status = Open3.capture3(RbConfig.ruby, "-e", script, SOURCE_ROOT.to_s)
+
+    assert status.success?, stderr
+    require_closure = JSON.parse(stdout)
+    closure = (require_closure + %w[
+      schemas/verification-manifest.schema.json
+      scripts/run-verification.rb
+    ]).uniq.sort
+    assert_equal PUBLIC_CONTROL_PLANE.sort, closure
+    assert_equal PUBLIC_CONTROL_PLANE, Verification::Runner::CONTROL_PLANE_PATHS
   end
 
   def test_valid_contract_loads_and_check_mode_executes_no_commands
@@ -151,8 +198,36 @@ class VerificationRunnerTest < Minitest::Test
       assert_equal 1, result.fetch("recipe_count")
       assert_equal 0, result.fetch("expected_nonzero_count")
       assert_equal "succeeded", evidence.fetch("result")
-      assert_equal 6, evidence.fetch("control_plane").length
+      assert_equal 11, evidence.fetch("control_plane").length
+      assert_equal 11, evidence.fetch("control_plane_count")
+      assert_equal PUBLIC_CONTROL_PLANE, evidence.fetch("control_plane").map { |entry| entry.fetch("path") }
+      expected_control_entries = PUBLIC_CONTROL_PLANE.map do |relative|
+        payload = root.join(relative).binread
+        {
+          "path" => relative,
+          "sha256" => Digest::SHA256.hexdigest(payload),
+          "size_bytes" => payload.bytesize
+        }
+      end
+      assert_equal expected_control_entries, evidence.fetch("control_plane")
+      assert_equal(
+        Verification::Canonical.path_bytes_digest(
+          PUBLIC_CONTROL_PLANE.map { |relative| { "path" => relative, "bytes" => root.join(relative).binread } }
+        ),
+        evidence.fetch("control_plane_digest")
+      )
+      assert_equal({}, evidence.fetch("cache_policy").fetch("configured"))
       assert_match(/\A[0-9a-f]{64}\z/, evidence.fetch("control_plane_digest"))
+      runtime = evidence.fetch("environment").fetch("runner_runtime")
+      assert_equal RUBY_ENGINE, runtime.fetch("ruby_engine")
+      assert_equal RUBY_VERSION, runtime.fetch("ruby_version")
+      assert_equal RUBY_PATCHLEVEL, runtime.fetch("ruby_patchlevel")
+      assert_equal RUBY_PLATFORM, runtime.fetch("ruby_platform")
+      assert_equal RUBY_DESCRIPTION, runtime.fetch("ruby_description")
+      assert_equal(
+        { "termination_grace_seconds" => 0.25, "timeout_seconds" => 17.0 },
+        evidence.fetch("execution_policy")
+      )
       assert_equal 2, evidence.fetch("recipes").first.fetch("output_count")
       assert_equal Digest::SHA256.hexdigest(bytes), result.fetch("evidence_sha256")
       refute_match(%r{/(?:Users|home|private|tmp|var/folders)/}, bytes)
@@ -222,6 +297,189 @@ class VerificationRunnerTest < Minitest::Test
       end
       assert_equal "E_OBSERVATION", error.code
     end
+  end
+
+  def test_recipe_timeout_fails_without_evidence
+    with_fixture do |root|
+      commands = FakeCommandRunner.new(timed_out: true)
+
+      error = assert_raises(Verification::ContractError) do
+        Verification::Runner.new(root: root, command_runner: commands).run
+      end
+
+      assert_equal "E_RECIPE_TIMEOUT", error.code
+      refute root.join("verification/evidence/last-run").exist?
+    end
+  end
+
+  def test_local_command_timeout_kills_the_entire_process_group
+    Dir.mktmpdir("verification-timeout-") do |directory|
+      heartbeat = File.join(directory, "heartbeat")
+      script = <<~'BASH'
+        trap '' TERM
+        (
+          trap '' TERM
+          while :; do
+            printf x >> "$1"
+            /bin/sleep 0.02
+          done
+        ) &
+        while :; do /bin/sleep 1; done
+      BASH
+      runner = Verification::LocalCommandRunner.new(
+        timeout_seconds: 0.12,
+        termination_grace_seconds: 0.05
+      )
+
+      assert_equal(
+        { "timeout_seconds" => 0.12, "termination_grace_seconds" => 0.05 },
+        runner.execution_policy
+      )
+
+      result = runner.call(
+        env: { "PATH" => "/usr/bin:/bin" },
+        argv: ["/bin/bash", "-c", script, "timeout-test", heartbeat],
+        chdir: directory
+      )
+      size_after_return = File.size?(heartbeat).to_i
+      sleep 0.12
+
+      assert_equal true, result.timed_out
+      assert_nil result.exit_code
+      assert_operator size_after_return, :>, 0
+      assert_equal size_after_return, File.size?(heartbeat).to_i
+    end
+  end
+
+  def test_fixed_cache_policy_is_required_validated_and_redacted
+    Dir.mktmpdir("verification-cache-") do |directory|
+      base = Pathname(directory)
+      root = base.join("repository")
+      root.mkdir
+
+      error = assert_raises(Verification::ContractError) do
+        Verification::CachePolicy.resolve(root: root, tool_ids: ["maven"], env: {})
+      end
+      assert_equal "E_CACHE_REQUIRED", error.code
+
+      relative_error = assert_raises(Verification::ContractError) do
+        Verification::CachePolicy.resolve(
+          root: root,
+          tool_ids: ["uv"],
+          overrides: { uv_cache: "relative-cache" },
+          env: {}
+        )
+      end
+      assert_equal "E_CACHE_ABSOLUTE", relative_error.code
+
+      cache = base.join("fixed-cache")
+      cache.mkdir
+      real_cache = File.realpath(cache)
+      cache.join("hosted/pub.dev/example-1.0.0/lib").mkpath
+      cache.join("hosted/pub.dev/example-1.0.0/lib/example.dart").write("library example;\n")
+      cache.join("hosted-hashes").mkpath
+      cache.join("hosted-hashes/example.sha256").write("abc123\n")
+      cache.join("active_roots").mkpath
+      cache.join("active_roots/mutable").write("first\n")
+      link = base.join("cache-link")
+      File.symlink(cache, link)
+      symlink_error = assert_raises(Verification::ContractError) do
+        Verification::CachePolicy.resolve(
+          root: root,
+          tool_ids: ["pnpm"],
+          overrides: { pnpm_store: link.to_s },
+          env: {}
+        )
+      end
+      assert_equal "E_CACHE_SYMLINK", symlink_error.code
+
+      policy = Verification::CachePolicy.resolve(
+        root: root,
+        tool_ids: %w[bash dart-pub maven pnpm uv],
+        overrides: {
+          dart_pub_cache: real_cache,
+          maven_repo: real_cache,
+          pnpm_store: real_cache,
+          uv_cache: real_cache
+        },
+        env: {}
+      )
+      environment = policy.execution_environment
+      summary = policy.evidence_summary
+
+      assert_equal real_cache, environment.fetch("PUB_CACHE")
+      assert_includes environment.fetch("MAVEN_ARGS"), "-Dmaven.repo.local=#{real_cache}"
+      assert_equal real_cache, environment.fetch("pnpm_config_store_dir")
+      assert_equal real_cache, environment.fetch("npm_config_store_dir")
+      assert_equal "true", environment.fetch("pnpm_config_offline")
+      assert_equal "true", environment.fetch("npm_config_offline")
+      assert_equal "silent", environment.fetch("pnpm_config_reporter")
+      assert_equal "silent", environment.fetch("npm_config_reporter")
+      assert_equal "false", environment.fetch("pnpm_config_enable_global_virtual_store")
+      assert_equal real_cache, environment.fetch("UV_CACHE_DIR")
+      refute_includes JSON.generate(summary), real_cache
+      assert_equal %w[dart-pub maven pnpm uv], summary.fetch("configured").keys
+      assert_equal "location-only-in-this-summary; caller-must-record-bounded-pnpm-or-dart-pub-inventories-when-claimed", summary.fetch("content_identity")
+      dart_inventory = policy.dart_pub_cache_inventory_summary
+      cache.join("active_roots/mutable").write("second\n")
+      assert_equal dart_inventory, policy.dart_pub_cache_inventory_summary
+      assert_equal %w[hosted hosted-hashes], dart_inventory.fetch("included_roots")
+      assert_equal %w[_temp active_roots log], dart_inventory.fetch("excluded_mutable_roots")
+      assert_operator dart_inventory.fetch("file_count"), :>, 0
+      package_link = cache.join("hosted/pub.dev/example-1.0.0/lib/escape")
+      package_link.make_symlink("/tmp")
+      inventory_error = assert_raises(Verification::ContractError) do
+        policy.dart_pub_cache_inventory_summary
+      end
+      assert_equal "E_CACHE_INVENTORY_KIND", inventory_error.code
+      package_link.delete
+
+      dangling_cache = base.join("dangling-dart-cache")
+      dangling_cache.mkdir
+      dangling_cache.join("hosted").make_symlink(dangling_cache.join("missing"))
+      dangling_policy = Verification::CachePolicy.resolve(
+        root: root,
+        tool_ids: ["dart-pub"],
+        overrides: { dart_pub_cache: File.realpath(dangling_cache) },
+        env: {}
+      )
+      dangling_error = assert_raises(Verification::ContractError) do
+        dangling_policy.dart_pub_cache_inventory_summary
+      end
+      assert_equal "E_CACHE_INVENTORY_KIND", dangling_error.code
+
+      inventory = policy.pnpm_store_inventory_summary
+      assert_equal 0, inventory.fetch("content_file_count")
+      assert_equal 0, inventory.fetch("index_file_count")
+      assert_match(/\A[0-9a-f]{64}\z/, inventory.fetch("inventory_sha256"))
+    end
+  end
+
+  def test_invalid_timeout_option_is_usage_error
+    with_fixture do |root|
+      stderr = StringIO.new
+      status = Verification::Application.run(
+        ["--timeout", "0"],
+        root: root,
+        stdout: StringIO.new,
+        stderr: stderr,
+        command_runner: FakeCommandRunner.new
+      )
+
+      assert_equal 64, status
+      assert_includes stderr.string, "timeout must be a positive finite number"
+    end
+  end
+
+  def test_public_cli_accepts_explicit_dart_pub_cache_override
+    options = Verification::Application.parse_options(
+      ["--check", "--dart-pub-cache", "/tmp/factorycare-dart-pub"],
+      StringIO.new,
+      {}
+    )
+
+    assert_equal "/tmp/factorycare-dart-pub", options.fetch(:cache_overrides).fetch(:dart_pub_cache)
+    assert_includes Verification::Application.usage, "--dart-pub-cache PATH"
   end
 
   def test_arbitrary_interpreter_is_rejected_by_semantic_contract

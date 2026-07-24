@@ -495,6 +495,14 @@ score = 3.0 * title_score
 
 正文没有宣称某个搜索引擎的默认 BM25 公式与本章完全相同。若以后接入 PostgreSQL 全文检索、Lucene、Elasticsearch 或 OpenSearch，必须查其对应版本的官方文档，记录分词器、相似度、字段统计和默认参数，再用本章手算夹具做差异说明。
 
+本次直接复核的一手资料：
+
+- [Apache Lucene 10.3.0 similarities 包说明](https://lucene.apache.org/core/10_3_0/core/org/apache/lucene/search/similarities/package-summary.html)：核对 Lucene 对 BM25、`k1`、`b`、长度归一化和相似度切换的当前实现说明；
+- [Apache Lucene 10.3.0 `BM25Similarity`](https://lucene.apache.org/core/10_3_0/core/org/apache/lucene/search/similarities/BM25Similarity.html)：核对该版本类级 API 与评分组件；
+- [NIST TREC-3 Proceedings](https://trec.nist.gov/pubs/trec3/t3_proceedings.html)：BM25 文献所引用的 TREC-3 官方论文集入口。
+
+Lucene 的实现说明只支持“具体引擎有自己的版本表面”这一边界；本章 Python 公式仍是教学模型，不冒充 Lucene 10.3.0 的逐字节等价实现。
+
 ## 21. 章末检查
 
 你应能回答：

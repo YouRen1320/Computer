@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/publication-output-manifest-v2.schema.json",
+  "title": "FactoryCare internal complete publication output manifest v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "manifest_id", "profile_id", "plan_id", "plan_sha256",
+    "build_input_digest", "build_status", "generated_by", "source_date_epoch",
+    "environment", "tools_observed", "commands", "output_count", "output_set_digest", "outputs"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "manifest_id": { "const": "publication-output.internal-complete" },
+    "profile_id": { "const": "internal-complete" },
+    "plan_id": { "const": "publication-plan.internal-complete" },
+    "plan_sha256": { "$ref": "#/$defs/sha256" },
+    "build_input_digest": { "$ref": "#/$defs/sha256" },
+    "build_status": { "const": "succeeded" },
+    "generated_by": { "const": "scripts/build-complete-publication.rb" },
+    "source_date_epoch": { "type": "integer", "minimum": 0 },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "arch", "locale", "timezone", "network_policy", "network_isolation"],
+      "properties": {
+        "os": { "type": "string", "minLength": 1 },
+        "arch": { "type": "string", "minLength": 1 },
+        "locale": { "const": "C.UTF-8" },
+        "timezone": { "const": "UTC" },
+        "network_policy": { "const": "forbidden" },
+        "network_isolation": { "const": "not-os-enforced" }
+      }
+    },
+    "tools_observed": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
+    "commands": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/command" } },
+    "output_count": { "type": "integer", "minimum": 1 },
+    "output_set_digest": { "$ref": "#/$defs/sha256" },
+    "outputs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/output" } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "output_path": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:/[a-zA-Z0-9_][a-zA-Z0-9._-]*)*$" },
+    "tool": {
+      "type": "object", "additionalProperties": false, "required": ["id", "version", "version_output_sha256"],
+      "properties": {
+        "id": { "enum": ["pandoc", "python", "ruby", "weasyprint"] },
+        "version": { "type": "string", "minLength": 1 },
+        "version_output_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "command": {
+      "type": "object", "additionalProperties": false, "required": ["id", "argv", "exit_code"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "argv": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "exit_code": { "const": 0 }
+      }
+    },
+    "output": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "kind", "format", "media_type", "distribution", "sha256", "size_bytes"],
+      "properties": {
+        "path": { "$ref": "#/$defs/output_path" },
+        "kind": { "type": "string", "minLength": 1 },
+        "format": { "enum": ["internal", "html", "epub", "pdf"] },
+        "media_type": { "type": "string", "minLength": 1 },
+        "distribution": { "const": "internal-review-candidate" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

@@ -41,7 +41,7 @@ module Curriculum
     "curriculum/catalog.yml" => %w[schema_version generated generated_by generated_spec_digest edition catalog_id canonical status chapter_count_target dependency_semantics chapters],
     "curriculum/routes/zero-base.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind title coverage navigation_semantics waiver_policy units],
     "curriculum/routes/accelerated-48.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics module_count modules],
-    "curriculum/routes/factorycare-project.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics stages],
+    "curriculum/routes/factorycare-project.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics artifact_policy stages],
     "curriculum/routes/reference.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics facets chapter_index],
     "curriculum/gates.yml" => %w[schema_version generated generated_by generated_spec_digest edition gates_id canonical_source policy gates]
   }.freeze
@@ -1598,9 +1598,19 @@ module Curriculum
       reject_unknown_keys(support, %w[include_hard_prerequisite_closure primary_owner_unique_across_stages supporting_chapters_may_repeat require_teacher_before_use_within_stage], factory_path, "/support_policy")
       validate_boolean_fields(support, %w[include_hard_prerequisite_closure primary_owner_unique_across_stages supporting_chapters_may_repeat require_teacher_before_use_within_stage], factory_path, "/support_policy")
       stage_defaults = factorycare_plan["stage_defaults"]
-      reject_unknown_keys(stage_defaults, %w[artifact_root required_evidence_kinds], factory_path, "/stage_defaults")
+      reject_unknown_keys(stage_defaults, %w[artifact_root artifact_policy required_evidence_kinds], factory_path, "/stage_defaults")
       expect_equal(stage_defaults["artifact_root"], "evidence/factorycare", factory_path, "/stage_defaults/artifact_root") if stage_defaults.is_a?(Hash)
-      validate_unique_string_array(stage_defaults["required_evidence_kinds"], factory_path, "/stage_defaults/required_evidence_kinds", nonempty: true) if stage_defaults.is_a?(Hash)
+      if stage_defaults.is_a?(Hash)
+        artifact_policy = stage_defaults["artifact_policy"]
+        reject_unknown_keys(artifact_policy, %w[owner lifecycle prepopulation absence_before_stage], factory_path, "/stage_defaults/artifact_policy")
+        if artifact_policy.is_a?(Hash)
+          expect_equal(artifact_policy["owner"], "learner", factory_path, "/stage_defaults/artifact_policy/owner")
+          expect_equal(artifact_policy["lifecycle"], "produced-during-study", factory_path, "/stage_defaults/artifact_policy/lifecycle")
+          expect_equal(artifact_policy["prepopulation"], "forbidden", factory_path, "/stage_defaults/artifact_policy/prepopulation")
+          expect_equal(artifact_policy["absence_before_stage"], "expected", factory_path, "/stage_defaults/artifact_policy/absence_before_stage")
+        end
+        validate_unique_string_array(stage_defaults["required_evidence_kinds"], factory_path, "/stage_defaults/required_evidence_kinds", nonempty: true)
+      end
       array(factorycare_plan["stages"]).each_with_index do |stage, index|
         pointer = "/stages/#{index}"
         reject_unknown_keys(stage, %w[id title required_capabilities primary_anchor_chapter_ids business_deliverables negative_scenarios gate_contract], factory_path, pointer)
@@ -2052,6 +2062,7 @@ module Curriculum
         "route_kind" => "project",
         "coverage" => "selective",
         "navigation_semantics" => "stage-gated-with-generated-support-closure",
+        "artifact_policy" => deep_copy(plan.fetch("stage_defaults").fetch("artifact_policy")),
         "stages" => stages
       )
     rescue KeyError => e

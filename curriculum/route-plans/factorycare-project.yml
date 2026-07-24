@@ -11,6 +11,11 @@ support_policy:
   require_teacher_before_use_within_stage: true
 stage_defaults:
   artifact_root: evidence/factorycare
+  artifact_policy:
+    owner: learner
+    lifecycle: produced-during-study
+    prepopulation: forbidden
+    absence_before_stage: expected
   required_evidence_kinds: [runnable-slice, negative-path, decision-record, teach-back]
 stages:
   - id: fc-01-foundation

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="$if(lang)$$lang$$else$zh-CN$endif$">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="$if(robots)$$robots$$else$noindex,nofollow$endif$">
+  <meta name="description" content="$if(description)$$description$$else$内部完整候选物$endif$">
+  <title>$if(title)$$title$$else$FactoryCare 编程百科$endif$</title>
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header">
+    <p class="review-badge">$if(notice)$$notice$$else$内部完整候选物，不得公开发布$endif$</p>
+    <p class="site-name">$if(publication-label)$$publication-label$$else$FactoryCare 编程百科 · 内部完整候选物$endif$</p>
+  </header>
+$if(toc)$
+  <nav class="table-of-contents" aria-label="本页目录">
+$table-of-contents$
+  </nav>
+$endif$
+  <main id="main-content">
+$body$
+  </main>
+$if(previous-url)$
+  <nav class="chapter-navigation" aria-label="章节导航">
+    <a rel="prev" href="$previous-url$">上一章：$previous-title$</a>
+$if(next-url)$
+    <a rel="next" href="$next-url$">下一章：$next-title$</a>
+$endif$
+  </nav>
+$else$
+$if(next-url)$
+  <nav class="chapter-navigation" aria-label="章节导航">
+    <a rel="next" href="$next-url$">下一章：$next-title$</a>
+  </nav>
+$endif$
+$endif$
+  <footer>
+    <p>内部构建候选物；章节状态未提升，尚未完成人工评审、WCAG、EPUB Accessibility、PDF/UA 与独立复现门禁。</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,23 @@
+---
+schema_version: 1
+contract_id: verification.private-solutions
+visibility: internal-only
+catalog_path: curriculum/catalog.yml
+source_root: solutions-private/encyclopedia
+expected_chapter_count: 255
+entrypoint_name: verify.sh
+entrypoint_policy: exactly-one-recursive
+expected_exit_code: 0
+generated_output_policy: opaque-delta-inside-clean-copy
+evidence_disclosure: hashes-counts-and-public-chapter-ids-only
+ignored_generated_names:
+- .dart_tool
+- .venv
+- .verify.log
+- __pycache__
+- build
+- build-evidence
+- coverage
+- dist
+- node_modules
+- target

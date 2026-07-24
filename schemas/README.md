@@ -35,6 +35,16 @@ P3-R1-A 已把出版控制面实现为独立 sidecar：`publication-profile.sche
 R1-A 还不是完整 D5 生命周期门：`review/verified` 的 verification manifest、干净临时目录统一 Runner、测试数量/预期失败/未声明输出校验，以及 `edition.status` 枚举与 phase/status 合法组合属于 R1-B；HTML/EPUB/PDF 实体属于 R2；P2 的递归公共输入与双摘要迁移仍须在四章晋升 `review` 前单独完成。因此当前四章继续为 `drafting`，不能用 sidecar plan 或自动化测试手工绕过状态门。
 
 `verification-manifest.schema.json` 定义 P9 D5 的章级机器验证合同。manifest 逐文件锁定 SHA-256 与模式，命令只能在独立临时副本中通过固定解释器执行，并声明工具版本、精确退出码、输出观察和完整文件系统增量。统一 Runner 对绝对路径、私有目录、符号链接、输入漂移、工具漂移、输入修改和未声明输出 fail-closed；成功证据通过 staging/rename 原子替换 `verification/evidence/last-run/`。它不提供 OS 级网络或文件系统沙箱，也不把机器通过自动解释为人工教学、无障碍、跨平台或正式发布证据。
+该 schema 只约束输入 manifest，不约束 `evidence.json` 输出元数据；后者当前由生成器与回归测试固定，包括 Runner 的 Ruby 身份、实际执行策略和完整控制面摘要。若未来为 evidence 新增独立 schema，应作为单独合同设计，并同步重新定义控制面闭包，不能把输出字段误塞进输入 manifest schema。
+
+P9 的大规模机械审计另有三个不可晋升的报告契约：
+`encyclopedia-endpoint-audit.schema.json` 约束 1020 个端点的 fresh-copy 执行与输出闭包；
+`exercise-contract-audit.schema.json` 约束 255 个练习的双运行、可空精确退出码、
+可空 SHA-256 观察、完整来源 endpoint 文件摘要和 `EXPECTED_RED` 观察；
+`observed-verification-candidates-v2.schema.json` 约束缺少 final
+manifest 章节的完整静态输入闭包、生成时工具探针、双运行候选与完整来源文件摘要。
+它们都只是脱敏机器观察，
+不得写入 `verification/manifests/`、不得代替学习者证据或人工 final 审查。
 
 七个门是 `technical`、`pedagogical`、`code`、`security`、`accessibility`、`version_sources` 和 `publication_navigation`。最后一门还必须分别给出链接、键盘/语义和实际渲染审查覆盖；键盘/语义确实不适用时仍需证据和具体理由。所有门及版本证据只能引用 `records/encyclopedia/evidence/<chapter-id>/` 下的真实非空白普通文件。作者和 reviewer 去除 Unicode 空白并做 NFKC+casefold 后都至少两字符，且不能相同。
 
@@ -43,3 +53,11 @@ R1-A 还不是完整 D5 生命周期门：`review/verified` 的 verification man
 私有解析只允许位于 `solutions-private/encyclopedia/<chapter-id>/`，发布构建和 manifest 会显式排除整个 `solutions-private/` 子树。这只证明构建隔离，不证明 Git 历史或仓库存储隔离。开发权威仓保持私有；若建立公共发行入口，必须使用不携带 `solutions-private` 历史的新公共发行仓。历史重写不能撤回第三方已经取得的副本。
 
 P3 黄金样章的阶段门另要求正式 HTML/EPUB/PDF 预览和至少一轮符合 P3-R0 定义的编程零基础读者试读。当前只验证了章节代码/JDK 的 macOS arm64 + Temurin 25.0.3 基线；正式出版构建仅为 `smoke_observed`，浏览器/阅读器/辅助技术为 `not_evaluated`，必须由 R2/R3 产生各自证据。P3 完成时四章只进入 `review`；Windows、Linux、其他 JDK 和阅读系统是明确披露的 P4 follow-up，不能写成已验证。
+
+P8 的内部完整出版使用独立 v2 合同：`publication-profile-v2.schema.json` 把选择固定为
+catalog 全部 255 章与 16 卷；`publication-plan-v2.schema.json` 约束章节、卷、Git 已
+跟踪公开配套工件摘要、精确 345 项计划输出和零安全计数；
+`publication-output-manifest-v2.schema.json` 约束 344 个非自引用实体的摘要及实际
+命令记录。v2 不替代或放宽 P3 v1，也没有 public/release 模式。其完整构建成功只证明
+当前输入和工具链下生成了内部候选实体，不改变 255 章的 `drafting` 状态，不关闭
+人工评审、无障碍、阅读器互操作、独立复现和公开发布门。

@@ -431,7 +431,7 @@ AI 可以找 API、生成数据流草案和日志扫描器，但可能使用旧�
 
 直接来源：
 
-- 中国网信网转引中国人大网，[《中华人民共和国个人信息保护法》](https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm)：目的明确、影响最小、最小范围、公开透明与敏感个人信息等法律文本。
+- 国家法律法规数据库，[《中华人民共和国个人信息保护法》](https://flk.npc.gov.cn/detail?id=ff8081817b6472a3017b656cc2040044)：目的明确、影响最小、最小范围、公开透明与敏感个人信息等法律文本。
 - 国家互联网信息办公室，[个人信息保护政策法规问答（2026 年 1 月）](https://www.cac.gov.cn/2026-01/09/c_1769688003183197.htm)：个人信息、敏感个人信息与保护责任的官方解释材料。
 - 微信开放文档，[用户隐私保护指引填写说明](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/)：小程序平台声明表面；后台实际配置仍须按发布候选核验。
 - 微信开放文档，[`wx.getPrivacySetting`](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/privacy/wx.getPrivacySetting.html) 与 [`wx.requirePrivacyAuthorize`](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/privacy/wx.requirePrivacyAuthorize.html)：隐私授权状态与触发接口表面。

@@ -458,3 +458,11 @@ run开始按实际token样本估算上限，设置最大调用token/费用/重�
 若上述证据缺失，正确结论是“管线局部逻辑已验证、外部模型语义与运营边界未验证”，而不是用一次Mock成功补齐空白。
 
 这种证据分级必须保留到最终验收报告。
+
+资料链接复核日期：**2026-07-24**。原始论文只支持“检索表示与生成组合”及稠密检索的研究来源，不给出适用于所有语料的固定 chunk 大小、overlap 或生产阈值。
+
+- [Lewis 等《Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks》](https://arxiv.org/abs/2005.11401)：RAG 把参数化生成模型与可检索的非参数记忆结合的原始论文；
+- [Karpukhin 等《Dense Passage Retrieval for Open-Domain Question Answering》](https://arxiv.org/abs/2004.04906)：双编码器稠密段落检索与向量相似度训练的原始论文；
+- [PyTorch `CosineSimilarity`](https://docs.pytorch.org/docs/stable/generated/torch.nn.CosineSimilarity.html)：核对余弦相似度的当前框架定义与维度参数。
+
+供应商模型 ID、Tokenizer、输入上限、向量维度、批量顺序、计费和数据保留仍是外部版本表面，必须在授权接入时重新核验。

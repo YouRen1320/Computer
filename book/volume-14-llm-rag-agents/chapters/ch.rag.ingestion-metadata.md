@@ -447,3 +447,11 @@ A和B上传完全相同手册，内容hash相同。存储层可去重blob，但�
 ## 27. 版本与验证边界
 
 来源、版本、hash、ACL、血缘、隔离和幂等是稳定合同；Python/pandas/pytest及具体解析器会变化。资产只验证Markdown/“PDF抽取文本”/CSV样式合成夹具，没有实际解析PDF字节、OCR、外部知识库、生产ACL或恶意文件沙箱。
+
+资料链接复核日期：**2026-07-24**。
+
+- [W3C PROV-O Recommendation](https://www.w3.org/TR/prov-o/)：核对 Entity、Activity、Agent 及派生/来源关系的标准化 provenance 语义；
+- [NIST FIPS 180-4 Secure Hash Standard](https://csrc.nist.gov/pubs/fips/180-4/upd1/final)：核对 SHA 系列摘要算法的标准来源与“检测摘要生成后内容是否改变”的用途边界；
+- [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)：核对外部文件的类型、大小、存储、权限与恶意内容防护清单。
+
+哈希只能比较内容摘要，不能证明来源真实、解析正确、文件无害或访问已获授权；W3C provenance 模型也不会替应用自动执行租户 ACL。真实 PDF/OCR 与权限系统仍需单独测试。

@@ -414,3 +414,11 @@ L(h)=200+130(h-2)                 h>2
 ## 23. 稳定性与边界
 
 函数、坐标、斜率、指数、对数和求和是稳定数学核心，不绑定库版本。章节资产仅用标准库验证关键数值，没有声称实际图形渲染、生产数据、监控平台或业务计费已经验证。矩阵、导数、概率与因果推断分别在后续章节展开。
+
+资料链接复核日期：**2026-07-24**。
+
+- [NIST Digital Library of Mathematical Functions — Algebraic and Analytic Methods](https://dlmf.nist.gov/1)：核对变量、函数及常见数学记号的权威参考入口；
+- [NIST DLMF — Elementary Functions](https://dlmf.nist.gov/4)：核对指数、对数及其定义域与反函数关系；
+- [NIST Guide to the SI — Logarithmic Quantities and Units](https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-8)：核对工程量使用对数时必须形成无量纲比值的边界。
+
+这些资料支持稳定数学定义，不为任何业务趋势、预测参数、图表轴选择或因果结论背书；教材中的 FactoryCare 数字仍是教学夹具。

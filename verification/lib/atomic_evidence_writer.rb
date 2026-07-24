@@ -8,16 +8,20 @@ module Verification
   # The previous successful evidence tree remains visible until a complete new
   # tree has been written, checked, fsynced, and promoted by rename.
   class AtomicEvidenceWriter
-    attr_reader :root, :renamer
+    attr_reader :root, :renamer, :evidence_directory
 
-    def initialize(root, renamer: nil)
+    def initialize(root, renamer: nil, evidence_directory: EVIDENCE_DIRECTORY)
       @root = File.realpath(root)
       @renamer = renamer || lambda { |source, destination| File.rename(source, destination) }
+      unless [EVIDENCE_DIRECTORY, PRIVATE_EVIDENCE_DIRECTORY].include?(evidence_directory)
+        raise ArgumentError, "unsupported evidence directory"
+      end
+      @evidence_directory = evidence_directory
     end
 
     def write(bytes)
       parent = prepare_parent
-      output = File.join(root, EVIDENCE_DIRECTORY)
+      output = File.join(root, evidence_directory)
       token = "#{$$}-#{rand(1_000_000)}"
       staging = File.join(parent, ".last-run.stage-#{token}")
       backup = File.join(parent, ".last-run.backup-#{token}")
@@ -116,14 +120,14 @@ module Verification
           end
         end
       end
-      File.join(EVIDENCE_DIRECTORY, "evidence.json")
+      File.join(evidence_directory, "evidence.json")
     end
 
     private
 
     def prepare_parent
       cursor = root
-      %w[verification evidence].each do |component|
+      File.dirname(evidence_directory).split("/").each do |component|
         cursor = File.join(cursor, component)
         if File.exist?(cursor) || File.symlink?(cursor)
           stat = File.lstat(cursor)

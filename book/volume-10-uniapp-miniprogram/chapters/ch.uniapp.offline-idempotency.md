@@ -477,3 +477,11 @@ assertions:
 本章稳定核心来自分布式系统幂等、至少一次投递、退避、冲突和 durable queue 原理；目标平台仅影响持久化、网络/生命周期触发和后台能力。实施时仍需核对 uni-app/微信当前 storage、网络状态和任务限制。
 
 当前未验证：真实 storage 原子性/配额/加密、微信进程恢复、后台执行、网络事件、服务端幂等表与事务、附件依赖、真实 401/409/429、跨版本迁移和 FactoryCare 数据。配套模型不支持发布。
+
+### 25.1 官方一手资料
+
+资料链接复核日期：**2026-07-24**。这些链接只支持平台 API 表面与 HTTP 幂等语义；不证明本章离线队列已经在任一真机或生产服务通过验收。
+
+- [uni-app API 概述](https://uniapp.dcloud.net.cn/api/index.html)：核对 `uni.request`、本地数据缓存和网络状态 API 的官方入口；
+- [uni-app 网络状态](https://uniapp.dcloud.net.cn/api/system/network.html)：核对监听、取消监听及平台兼容性；
+- [RFC 9110 §9.2.2 Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2)：核对 HTTP 方法幂等的协议定义。业务命令的幂等键、原子记录和重放合同仍是应用层设计，不能由网络事件自动保证。

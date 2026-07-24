@@ -288,3 +288,13 @@ AI 分支先讲 Python 数据处理和模型基本概念，再讲检索评估、
 教材与随附资产不会替你生成真实工作证明、企业生产指标、同事评审、微信审核、应用商店发布或目标城市最新 JD 数据。它们也不宣称完成本章就一定获得岗位。实际求职前要重新采集当期岗位、选择公开范围、核对个人材料并由本人演练。
 
 本章的通过条件是：每条技术主张能回到提交、测试、验收或明确的人工评审；能在限时内解释一个架构取舍和三段失败；AI、团队和本人贡献可区分；真实经历、项目性质和验证等级不矛盾。若证据不足，就缩小主张或补实验，而不是扩大措辞。
+
+## 20. 官方资料与时效边界
+
+资料链接复核日期：**2026-07-24**。
+
+- [GitHub Docs：About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)：核对仓库 README 的用途、常见内容与相对链接行为；
+- [GitHub Docs：About your profile](https://docs.github.com/en/account-and-profile/concepts/personal-profile)：核对 profile README、贡献记录和 pinned items 的公开展示边界；
+- [GitHub Docs：Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)：核对作品集误提交敏感信息后的撤销、历史清理与协作影响。
+
+这些资料只支持 GitHub 展示与安全操作，不支持任何个人能力、任职时间或求职成功率主张。岗位市场与招聘平台会变化；实际求职前必须按目标城市、日期和岗位重新采样，且不能把教材生成记录当成学习完成或工作经历。

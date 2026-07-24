@@ -163,7 +163,7 @@ class ExecutableJsonSchema
     unknown = schema.keys.reject { |key| SUPPORTED_KEYWORDS.include?(key) }
     unknown.each { |key| definition_errors << "#{@label} #{path}: unsupported schema keyword #{key}" }
 
-    if schema.key?("type") && !SUPPORTED_TYPES.include?(schema["type"])
+    if schema.key?("type") && !valid_type_definition?(schema["type"])
       definition_errors << "#{@label} #{path}: unsupported type #{schema["type"].inspect}"
     end
     if schema.key?("required") && !(schema["required"].is_a?(Array) && schema["required"].all? { |item| item.is_a?(String) })
@@ -324,6 +324,8 @@ class ExecutableJsonSchema
   end
 
   def type_matches?(type, value)
+    return type.any? { |candidate| type_matches?(candidate, value) } if type.is_a?(Array)
+
     case type
     when "object" then value.is_a?(Hash)
     when "array" then value.is_a?(Array)
@@ -334,6 +336,13 @@ class ExecutableJsonSchema
     when "null" then value.nil?
     else false
     end
+  end
+
+  def valid_type_definition?(type)
+    return SUPPORTED_TYPES.include?(type) if type.is_a?(String)
+
+    type.is_a?(Array) && !type.empty? && type.uniq.length == type.length &&
+      type.all? { |candidate| candidate.is_a?(String) && SUPPORTED_TYPES.include?(candidate) }
   end
 
   def ruby_type(value)

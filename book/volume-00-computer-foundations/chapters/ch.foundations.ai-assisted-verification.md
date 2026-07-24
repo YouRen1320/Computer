@@ -635,9 +635,9 @@ Unverified boundary:
 
 ## 十八、官方一手资料与时效说明
 
-以下资料均于 **2026-07-16** 核对；产品行为与政策可能在此后变化。正文中的供应商细节以这些当日页面为依据，通用流程则是本课程的工程化教学设计。
+以下资料均于 **2026-07-24** 核对；产品行为与政策可能在此后变化。正文中的供应商细节以这些当日页面为依据，通用流程则是本课程的工程化教学设计。
 
-- OpenAI，[Codex Best practices](https://learn.chatgpt.com/guides/best-practices.md)：任务上下文、`AGENTS.md`、审批 / 沙箱、测试与 diff 审查。
+- OpenAI，[Codex Best practices](https://learn.chatgpt.com/guides/best-practices)：任务上下文、`AGENTS.md`、审批 / 沙箱、测试与 diff 审查。
 - OpenAI，[Prompting](https://learn.chatgpt.com/docs/prompting.md)：Goal、Context、Output、Boundaries 与最终检查。
 - OpenAI，[How your data is used to improve model performance / API data controls](https://developers.openai.com/api/docs/guides/your-data)：API 训练选择、滥用监控、应用状态、ZDR / MAM 边界。
 - Anthropic，[Best practices for Claude Code](https://code.claude.com/docs/en/best-practices)：给代理可运行的验证信号、上下文与确定性 hook。
