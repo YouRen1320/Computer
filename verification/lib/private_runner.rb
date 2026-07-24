@@ -17,6 +17,7 @@ module Verification
       scripts/lib/factorycare_status_contract.rb
       scripts/run-private-verification.rb
       scripts/validate-encyclopedia.rb
+      schemas/private-public-input-closures.schema.json
       verification/lib/atomic_evidence_writer.rb
       verification/lib/cache_policy.rb
       verification/lib/contract.rb
@@ -24,6 +25,7 @@ module Verification
       verification/lib/private_runner.rb
       verification/lib/runner.rb
       verification/private-contract.yml
+      verification/private-public-input-closures.yml
     ].freeze
     LIMITATIONS = [
       "internal-only-not-public-d5-evidence",
@@ -81,16 +83,19 @@ module Verification
     def run_chapter(chapter)
       Dir.mktmpdir("factorycare-private-verification-") do |directory|
         sandbox = File.realpath(directory)
-        repository = File.join(sandbox, "answer")
+        repository = File.join(sandbox, "repository")
+        recipe_root = File.join(repository, "inputs", "recipes", chapter.chapter_id)
         runtime_tmp = File.join(sandbox, "tmp")
         runtime_home = File.join(sandbox, "home")
         [repository, runtime_tmp, runtime_home].each { |path| Dir.mkdir(path, 0o700) }
-        copy_inputs!(chapter, repository)
+        FileUtils.mkdir_p(recipe_root, mode: 0o700)
+        copy_inputs!(chapter.inputs, recipe_root)
+        copy_inputs!(chapter.public_inputs, repository)
         before = snapshot(repository, sandbox)
         result = command_runner.call(
           env: execution_environment(runtime_tmp, runtime_home),
           argv: ["bash", chapter.verify_relative],
-          chdir: repository
+          chdir: recipe_root
         )
         validate_result!(result, chapter.chapter_id)
         after = snapshot(repository, sandbox)
@@ -102,8 +107,12 @@ module Verification
           "status" => "succeeded",
           "expected_exit_code" => 0,
           "actual_exit_code" => result.exit_code,
-          "input_count" => chapter.inputs.length,
-          "input_set_sha256" => input_set_digest(chapter.inputs),
+          "input_count" => chapter.inputs.length + chapter.public_inputs.length,
+          "private_input_count" => chapter.inputs.length,
+          "public_input_count" => chapter.public_inputs.length,
+          "input_set_sha256" => contracted_input_set_digest(chapter),
+          "private_input_set_sha256" => input_set_digest(chapter.inputs),
+          "public_input_set_sha256" => input_set_digest(chapter.public_inputs),
           "entrypoint_sha256" => Canonical.sha256(
             chapter.inputs.find { |entry| entry.fetch("relative") == chapter.verify_relative }.fetch("bytes")
           ),
@@ -126,8 +135,8 @@ module Verification
       )
     end
 
-    def copy_inputs!(chapter, destination_root)
-      chapter.inputs.each do |entry|
+    def copy_inputs!(inputs, destination_root)
+      inputs.each do |entry|
         destination = File.join(destination_root, entry.fetch("relative"))
         FileUtils.mkdir_p(File.dirname(destination), mode: 0o755)
         mode = entry.fetch("mode").to_i(8)
@@ -206,6 +215,16 @@ module Verification
       Canonical.path_bytes_digest(
         inputs.map { |entry| { "path" => entry.fetch("relative"), "bytes" => entry.fetch("bytes") } }
       )
+    end
+
+    def contracted_input_set_digest(chapter)
+      entries = chapter.inputs.map do |entry|
+        { "path" => "recipe/#{entry.fetch('relative')}", "bytes" => entry.fetch("bytes") }
+      end
+      entries.concat(chapter.public_inputs.map do |entry|
+        { "path" => "public/#{entry.fetch('relative')}", "bytes" => entry.fetch("bytes") }
+      end)
+      Canonical.path_bytes_digest(entries)
     end
 
     def opaque_output_digest(outputs)

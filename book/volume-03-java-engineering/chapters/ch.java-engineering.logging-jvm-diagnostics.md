@@ -16,7 +16,9 @@ prerequisites:
 version_surfaces:
 - jdk-25
 - maven-3
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-java
 route_tags:
 - zero-base
 - accelerated-48

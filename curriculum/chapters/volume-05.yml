@@ -87,7 +87,7 @@ chapters:
     oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
   version_surfaces:
   - jdk-25
-  - jakarta-ee
+  - jakarta-servlet-6.1
   - maven-3
   outcomes:
   - id: explain
@@ -774,7 +774,7 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jakarta-ee
+  - jakarta-servlet-6.1
   - jdk-25
   outcomes:
   - id: explain
@@ -1052,7 +1052,7 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jakarta-ee
+  - jakarta-validation-3.1
   - jdk-25
   outcomes:
   - id: explain
@@ -1476,7 +1476,8 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jdbc
+  - jdbc-api-jdk-25
+  - pgjdbc
   - flyway
   - postgresql-18
   outcomes:
@@ -2498,7 +2499,9 @@ chapters:
     oracle: 真实框架或依赖边界由可重复集成测试验证，负向用例能定位首个失败层
   version_surfaces:
   - spring-boot-4.1
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-java
   - testcontainers
   outcomes:
   - id: explain

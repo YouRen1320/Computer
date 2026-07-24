@@ -1,10 +1,15 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "site_id": "factorycare-encyclopedia",
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "da6b1ed40c57aaf02d094145aa043dfb593bbbea94df691bb2b3c582e460d48d",
+  "input_digests": {
+    "content": "3b35ff432687ce9d120a30b19f0a1b0a4fffa349290b1fa164d8f814dffa296a",
+    "audit_security": "9f36349da35a67f02043acad7a06dc860a884f593bc04b349bf6664ea5569e0d",
+    "build_control": "755d4a82266164766ad0e72bffeab428e3f6db9c4d005b7a1712d546b6c39830",
+    "total": "e3663b801b45d43df87b4c4a8bc522af4ffa1b8a2b4f6b73d963da3db4d10585"
+  },
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
@@ -576,7 +581,7 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "zsh",
+            "zsh-5.9",
             "macos-26"
           ],
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md",
@@ -668,7 +673,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "toolchains"
+            "vscode-stable",
+            "intellij-idea-2026.1"
           ],
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md",
           "publishable": false
@@ -1248,7 +1254,9 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "toolchains"
+            "maven-3",
+            "pnpm",
+            "uv"
           ],
           "path": "book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md",
           "publishable": false
@@ -1653,7 +1661,7 @@
         {
           "id": "ch.java.values-variables-types",
           "title": "值、变量、基本类型、String、作用域与基本输出",
-          "responsibility": "教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份",
+          "responsibility": "教授值在局部作用域中的类型与命名，并完成 String 的基础观察、正规化、分割与拼接，不涉及运算转换或对象身份",
           "volume": "01",
           "order": 3,
           "level": "L1",
@@ -1665,7 +1673,7 @@
             {
               "id": "explain",
               "kind": "concept",
-              "text": "在 120 秒内解释值、变量、基本类型、String、作用域与基本输出的职责、适用边界与一个会失败的反例",
+              "text": "在 120 秒内解释值、变量、基本类型、String 字面量与不可变性、长度与空白、正规化、正则分割、拼接取舍和局部作用域，并给出一个会失败的边界反例",
               "covers_topic_groups": [
                 "java-values-types",
                 "java-variables-scope"
@@ -1673,6 +1681,11 @@
               "covers_topics": [
                 "java.primitive-types",
                 "java.string-value",
+                "java.string-literal-immutability",
+                "java.string-length-empty-blank",
+                "java.string-normalization",
+                "java.string-split-regex",
+                "java.string-concatenation-builder",
                 "java.default-vs-local-initialization",
                 "java.variable-declaration",
                 "java.assignment",
@@ -1688,7 +1701,7 @@
             {
               "id": "build",
               "kind": "independent-build",
-              "text": "编写打印设备名称、数量、启用状态和局部作用域变量的程序，显式选择 primitive、String 与初始化时机",
+              "text": "编写设备标签处理程序：保存基本类型与 String，观察 length/isEmpty/isBlank，用 strip 和 Locale.ROOT 做可预测正规化，按正则与 limit 分割，并比较少量 + 与重复 StringBuilder 拼接的责任边界",
               "covers_topic_groups": [
                 "java-values-types",
                 "java-variables-scope"
@@ -1696,6 +1709,11 @@
               "covers_topics": [
                 "java.primitive-types",
                 "java.string-value",
+                "java.string-literal-immutability",
+                "java.string-length-empty-blank",
+                "java.string-normalization",
+                "java.string-split-regex",
+                "java.string-concatenation-builder",
                 "java.default-vs-local-initialization",
                 "java.variable-declaration",
                 "java.assignment",
@@ -1711,7 +1729,7 @@
             {
               "id": "diagnose",
               "kind": "fault-diagnosis",
-              "text": "注入局部变量未初始化、作用域外访问和错误类型赋值，读取编译位置后做最小修复",
+              "text": "注入局部变量未初始化、作用域外访问和错误类型赋值的编译故障，再注入丢弃 strip/toUpperCase 返回值、把 split 参数误当字面文本和丢失尾部空列的行为故障，从编译日志或输出差异定位并做最小修复",
               "covers_topic_groups": [
                 "java-values-types",
                 "java-variables-scope"
@@ -1719,6 +1737,11 @@
               "covers_topics": [
                 "java.primitive-types",
                 "java.string-value",
+                "java.string-literal-immutability",
+                "java.string-length-empty-blank",
+                "java.string-normalization",
+                "java.string-split-regex",
+                "java.string-concatenation-builder",
                 "java.default-vs-local-initialization",
                 "java.variable-declaration",
                 "java.assignment",
@@ -2537,7 +2560,7 @@
         {
           "id": "ch.java-oop.references-null-identity",
           "title": "引用、对象身份、null 与内存心智模型",
-          "responsibility": "区分值、引用、对象身份与空引用，不把示意图等同于 JVM 真实物理布局",
+          "responsibility": "区分值、引用、对象身份与空引用，明确 String 的身份/内容相等与 null/空/空白文本边界，不把示意图等同于 JVM 真实物理布局",
           "volume": "02",
           "order": 1,
           "level": "L1",
@@ -2549,7 +2572,7 @@
             {
               "id": "explain",
               "kind": "concept",
-              "text": "在 120 秒内解释引用、对象身份、null 与内存心智模型的职责、适用边界与一个会失败的反例",
+              "text": "在 120 秒内解释引用、对象身份、String 的 ==/内容相等、null/空字符串/空白字符串与内存心智模型的边界，并给出一个会失败的反例",
               "covers_topic_groups": [
                 "java-reference-model",
                 "java-null-model"
@@ -2558,7 +2581,9 @@
                 "java.reference-value",
                 "java.object-identity",
                 "java.aliasing",
+                "java.string-identity-content-equality",
                 "java.null-reference",
+                "java.null-vs-empty-string",
                 "java.null-dereference",
                 "java.stack-heap-mental-model"
               ],
@@ -2573,7 +2598,7 @@
             {
               "id": "build",
               "kind": "independent-build",
-              "text": "完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，画出赋值前后别名与身份变化并打印验证，并生成记录输入、操作与结果的验证报告",
+              "text": "完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，对比 String 的身份与内容相等，区分 null、空与空白文本，画出赋值前后别名与身份变化，打印验证并生成一页引用与文本边界验证报告",
               "covers_topic_groups": [
                 "java-reference-model",
                 "java-null-model"
@@ -2582,7 +2607,9 @@
                 "java.reference-value",
                 "java.object-identity",
                 "java.aliasing",
+                "java.string-identity-content-equality",
                 "java.null-reference",
+                "java.null-vs-empty-string",
                 "java.null-dereference",
                 "java.stack-heap-mental-model"
               ],
@@ -2597,7 +2624,7 @@
             {
               "id": "diagnose",
               "kind": "fault-diagnosis",
-              "text": "注入把 == 当值相等和未判 null 解引用的故障，区分身份判断与空引用异常后修复",
+              "text": "注入把 String 的 == 当内容相等、把 null 当空字符串和未判 null 解引用的故障，区分身份、内容、缺失与空白语义后最小修复",
               "covers_topic_groups": [
                 "java-reference-model",
                 "java-null-model"
@@ -2606,7 +2633,9 @@
                 "java.reference-value",
                 "java.object-identity",
                 "java.aliasing",
+                "java.string-identity-content-equality",
                 "java.null-reference",
+                "java.null-vs-empty-string",
                 "java.null-dereference",
                 "java.stack-heap-mental-model"
               ],
@@ -5466,7 +5495,9 @@
           "version_surfaces": [
             "jdk-25",
             "maven-3",
-            "observability"
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-java"
           ],
           "path": "book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md",
           "publishable": false
@@ -7009,7 +7040,8 @@
           "version_surfaces": [
             "jdk-25",
             "maven-3",
-            "jdbc",
+            "jdbc-api-jdk-25",
+            "pgjdbc",
             "postgresql-18"
           ],
           "path": "book/volume-04-data-postgresql/chapters/ch.data.jdbc.md",
@@ -7218,7 +7250,7 @@
           "stable_core": true,
           "version_surfaces": [
             "jdk-25",
-            "jakarta-ee",
+            "jakarta-servlet-6.1",
             "maven-3"
           ],
           "path": "book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md",
@@ -7721,7 +7753,7 @@
           "version_surfaces": [
             "spring-boot-4.1",
             "spring-framework-7",
-            "jakarta-ee",
+            "jakarta-servlet-6.1",
             "jdk-25"
           ],
           "path": "book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md",
@@ -7923,7 +7955,7 @@
           "version_surfaces": [
             "spring-boot-4.1",
             "spring-framework-7",
-            "jakarta-ee",
+            "jakarta-validation-3.1",
             "jdk-25"
           ],
           "path": "book/volume-05-spring-backend/chapters/ch.spring.validation.md",
@@ -8228,7 +8260,8 @@
           "version_surfaces": [
             "spring-boot-4.1",
             "spring-framework-7",
-            "jdbc",
+            "jdbc-api-jdk-25",
+            "pgjdbc",
             "flyway",
             "postgresql-18"
           ],
@@ -8943,7 +8976,9 @@
           "stable_core": true,
           "version_surfaces": [
             "spring-boot-4.1",
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-java",
             "testcontainers"
           ],
           "path": "book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md",
@@ -10151,7 +10186,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
             "spring-security"
           ],
           "path": "book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md",
@@ -10871,7 +10907,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
             "spring-boot-4.1"
           ],
           "path": "book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md",
@@ -10976,8 +11013,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "html-living-standard",
             "css"
           ],
@@ -11083,8 +11120,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md",
           "publishable": false
@@ -11183,8 +11220,8 @@
           "stable_core": true,
           "version_surfaces": [
             "html-living-standard",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.web.semantic-html.md",
           "publishable": false
@@ -11296,8 +11333,8 @@
           "stable_core": true,
           "version_surfaces": [
             "html-living-standard",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.web.forms-validation.md",
           "publishable": false
@@ -11395,8 +11432,8 @@
           "stable_core": true,
           "version_surfaces": [
             "html-living-standard",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.web.media-assets.md",
           "publishable": false
@@ -11501,8 +11538,8 @@
           "stable_core": true,
           "version_surfaces": [
             "html-living-standard",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md",
           "publishable": false
@@ -11601,8 +11638,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.cascade.md",
           "publishable": false
@@ -11706,8 +11743,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.box-position.md",
           "publishable": false
@@ -11811,8 +11848,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.flexbox.md",
           "publishable": false
@@ -11916,8 +11953,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.grid.md",
           "publishable": false
@@ -12030,8 +12067,8 @@
           "version_surfaces": [
             "css",
             "html-living-standard",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.responsive-typography.md",
           "publishable": false
@@ -12129,8 +12166,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.theme-variables.md",
           "publishable": false
@@ -12229,8 +12266,8 @@
           "stable_core": true,
           "version_surfaces": [
             "css",
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-07-web-platform/chapters/ch.css.motion-compositing.md",
           "publishable": false
@@ -13263,8 +13300,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "html-living-standard"
           ],
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md",
@@ -13376,8 +13413,8 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "html-living-standard"
           ],
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md",
@@ -13483,7 +13520,7 @@
           "stable_core": true,
           "version_surfaces": [
             "node-24-lts",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md",
           "publishable": false
@@ -13598,8 +13635,8 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "node-24-lts",
             "vitest"
           ],
@@ -13709,8 +13746,8 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "browser",
-            "browser-devtools"
+            "chrome-stable",
+            "chrome-devtools"
           ],
           "path": "book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md",
           "publishable": false
@@ -14348,7 +14385,7 @@
             "vue-3",
             "vite",
             "typescript",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md",
           "publishable": false
@@ -14466,7 +14503,7 @@
             "vue-3",
             "vite",
             "typescript",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md",
           "publishable": false
@@ -14567,7 +14604,7 @@
             "vue-3",
             "vite",
             "typescript",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md",
           "publishable": false
@@ -14685,7 +14722,7 @@
             "vue-3",
             "vite",
             "typescript",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md",
           "publishable": false
@@ -14792,7 +14829,7 @@
             "vue-3",
             "vite",
             "typescript",
-            "browser"
+            "chrome-stable"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md",
           "publishable": false
@@ -15551,8 +15588,8 @@
           "stable_core": false,
           "version_surfaces": [
             "vue-3",
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "vitest"
           ],
           "path": "book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md",
@@ -15661,8 +15698,8 @@
           "version_surfaces": [
             "vue-3",
             "vite",
-            "browser",
-            "browser-devtools",
+            "chrome-stable",
+            "chrome-devtools",
             "vitest",
             "playwright"
           ],
@@ -15881,7 +15918,8 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "wechat-miniprogram"
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md",
           "publishable": false
@@ -15983,8 +16021,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "vue-3",
             "vite",
             "node-24-lts",
@@ -16093,8 +16133,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "vue-3"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md",
@@ -16203,8 +16245,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md",
           "publishable": false
@@ -16311,8 +16355,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "vue-3"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md",
@@ -16424,8 +16470,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md",
           "publishable": false
@@ -16533,8 +16581,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "vitest"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md",
@@ -16639,8 +16689,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md",
           "publishable": false
@@ -16752,8 +16804,10 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md",
           "publishable": false
@@ -16858,8 +16912,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md",
           "publishable": false
@@ -16964,8 +17020,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram"
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md",
           "publishable": false
@@ -17074,8 +17132,10 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "vue-3"
           ],
           "path": "book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md",
@@ -22826,7 +22886,9 @@
             "numpy",
             "pandas",
             "pytorch-stable",
-            "observability"
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-python"
           ],
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md",
           "publishable": false
@@ -23044,7 +23106,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "pytest"
           ],
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md",
@@ -23148,7 +23210,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "pydantic-2",
             "pytest"
           ],
@@ -23256,7 +23318,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "pytest"
           ],
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md",
@@ -23367,7 +23429,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "pydantic-2",
             "pytest"
           ],
@@ -23581,7 +23643,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "numpy",
             "pytest"
           ],
@@ -24123,7 +24185,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "pydantic-2",
             "pytest"
           ],
@@ -24241,10 +24303,12 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "postgresql-18",
             "pgvector",
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-python",
             "pytest"
           ],
           "path": "book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md",
@@ -24351,7 +24415,7 @@
           "stable_core": false,
           "version_surfaces": [
             "python-3.14",
-            "model-api",
+            "openai-api",
             "langchain",
             "pytest"
           ],
@@ -24577,7 +24641,7 @@
             "mcp",
             "langgraph",
             "langchain",
-            "model-api",
+            "openai-api",
             "pytest"
           ],
           "path": "book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md",
@@ -25216,7 +25280,7 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "ci",
+            "github-actions-hosted-runner",
             "git"
           ],
           "path": "book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md",
@@ -25328,7 +25392,7 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "ci",
+            "github-actions-hosted-runner",
             "git",
             "docker",
             "docker-compose",
@@ -25441,7 +25505,7 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "ci",
+            "github-actions-hosted-runner",
             "git",
             "docker",
             "ubuntu-server-26.04"
@@ -25549,7 +25613,9 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector",
             "docker",
             "docker-compose",
             "nginx",
@@ -25654,7 +25720,9 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector",
             "docker",
             "docker-compose",
             "ubuntu-server-26.04"
@@ -25872,7 +25940,9 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector",
             "postgresql-18",
             "docker",
             "ubuntu-server-26.04"
@@ -25984,13 +26054,15 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "ci",
+            "github-actions-hosted-runner",
             "docker",
             "docker-compose",
             "nginx",
             "postgresql-18",
             "flyway",
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector",
             "ubuntu-server-26.04"
           ],
           "path": "book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md",
@@ -26102,7 +26174,9 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector",
             "postgresql-18",
             "docker",
             "docker-compose",
@@ -26214,7 +26288,9 @@
           ],
           "stable_core": true,
           "version_surfaces": [
-            "observability"
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-collector"
           ],
           "path": "book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md",
           "publishable": false
@@ -26369,7 +26445,7 @@
           ],
           "stable_core": false,
           "version_surfaces": [
-            "ci",
+            "github-actions-hosted-runner",
             "git",
             "docker",
             "docker-compose",
@@ -26377,13 +26453,19 @@
             "postgresql-18",
             "spring-boot-4.1",
             "vue-3",
-            "uni-app",
-            "wechat-miniprogram",
+            "uni-app-cli-vue3",
+            "uni-app-mp-weixin-compiler",
+            "wechat-miniprogram-base-library",
+            "wechat-developer-tools",
             "flutter-stable",
             "python-3.14",
-            "model-api",
+            "openai-api",
             "mcp",
-            "observability",
+            "opentelemetry-specification",
+            "opentelemetry-semantic-conventions",
+            "opentelemetry-java",
+            "opentelemetry-python",
+            "opentelemetry-collector",
             "ubuntu-server-26.04"
           ],
           "path": "book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md",

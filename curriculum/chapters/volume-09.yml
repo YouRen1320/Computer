@@ -118,7 +118,7 @@ chapters:
       test_level: T1
       methods: ["render-case-matrix", "dom-inspection", "console-warning-check"]
       oracle: "空/单项/多项列表、条件切换和事件输入下的 DOM 文本、属性、节点身份与预期矩阵一致，控制台无 key 警告。"
-    version_surfaces: ["vue-3", "vite", "typescript", "browser"]
+    version_surfaces: ["vue-3", "vite", "typescript", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -196,7 +196,7 @@ chapters:
       test_level: T1
       methods: ["form-state-matrix", "dom-value-check", "submission-payload-check"]
       oracle: "初始、输入、重置、非法和提交场景中的 DOM 控件值、Vue 状态、错误信息和请求负载逐项一致。"
-    version_surfaces: ["vue-3", "vite", "typescript", "browser"]
+    version_surfaces: ["vue-3", "vite", "typescript", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -264,7 +264,7 @@ chapters:
       test_level: T1
       methods: ["state-transition-table", "render-count-observation", "identity-check"]
       oracle: "源状态变化、computed 求值次数和 DOM 派生结果与状态转换表一致；解构失去响应性可被稳定复现。"
-    version_surfaces: ["vue-3", "vite", "typescript", "browser"]
+    version_surfaces: ["vue-3", "vite", "typescript", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -342,7 +342,7 @@ chapters:
       test_level: T1
       methods: ["lifecycle-trace", "cleanup-counter", "stale-callback-injection"]
       oracle: "挂载、更新、依赖变化和卸载序列中的 effect 次数、清理次序及最终 DOM 与事件轨迹一致，卸载后无更新。"
-    version_surfaces: ["vue-3", "vite", "typescript", "browser"]
+    version_surfaces: ["vue-3", "vite", "typescript", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -410,7 +410,7 @@ chapters:
       test_level: T1
       methods: ["parent-child-state-matrix", "event-payload-check", "slot-render-check"]
       oracle: "父状态、Prop、emit payload、组件 v-model 和 Slot 输出在各交互场景中保持单向且可追踪，直接修改 Prop 会被负例发现。"
-    version_surfaces: ["vue-3", "vite", "typescript", "browser"]
+    version_surfaces: ["vue-3", "vite", "typescript", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -901,7 +901,7 @@ chapters:
       test_level: T3
       methods: ["keyboard-component-check", "accessibility-tree", "screen-reader-announcement"]
       oracle: "打开/关闭弹层、校验错误、异步完成和路由切换后，焦点目标、键盘路径与动态提示逐项符合检查表。"
-    version_surfaces: ["vue-3", "browser", "browser-devtools", "vitest"]
+    version_surfaces: ["vue-3", "chrome-stable", "chrome-devtools", "vitest"]
     outcomes:
       - id: explain
         kind: concept
@@ -969,7 +969,7 @@ chapters:
       test_level: T4
       methods: ["bundle-analysis", "browser-trace", "regression-suite"]
       oracle: "同一场景优化后 chunk、渲染次数或交互延迟达到预算，组件/E2E 和无障碍检查均无回退。"
-    version_surfaces: ["vue-3", "vite", "browser", "browser-devtools", "vitest", "playwright"]
+    version_surfaces: ["vue-3", "vite", "chrome-stable", "chrome-devtools", "vitest", "playwright"]
     outcomes:
       - id: explain
         kind: concept

@@ -27,9 +27,12 @@ module PublicationFixture
     "schemas/publication-plan.schema.json",
     "schemas/publication-profile.schema.json",
     "schemas/publication-toolchain.schema.json",
+    "schemas/site-publication-manifest-v3.schema.json",
     "scripts/build-publication-plan.rb",
     "scripts/build-publication.rb",
+    "scripts/check-publication-output.rb",
     "scripts/lib/chapter_prerequisite_block.rb",
+    "scripts/lib/factorycare_status_contract.rb",
     "scripts/validate-encyclopedia.rb",
     "site/generated"
   ].freeze

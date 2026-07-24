@@ -14,7 +14,9 @@ prerequisites:
 - ch.ops.compose-services
 - ch.architecture.observability-slo
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 - docker
 - docker-compose
 - nginx

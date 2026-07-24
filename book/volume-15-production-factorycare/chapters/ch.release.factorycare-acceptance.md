@@ -19,7 +19,7 @@ prerequisites:
 - ch.flutter.device-apis
 - ch.agent.mcp-boundaries
 version_surfaces:
-- ci
+- github-actions-hosted-runner
 - git
 - docker
 - docker-compose
@@ -27,13 +27,19 @@ version_surfaces:
 - postgresql-18
 - spring-boot-4.1
 - vue-3
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 - flutter-stable
 - python-3.14
-- model-api
+- openai-api
 - mcp
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-java
+- opentelemetry-python
+- opentelemetry-collector
 - ubuntu-server-26.04
 route_tags:
 - zero-base

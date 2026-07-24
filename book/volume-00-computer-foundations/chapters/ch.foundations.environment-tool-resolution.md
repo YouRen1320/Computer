@@ -13,7 +13,7 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.foundations.cli-streams-exit-codes
 version_surfaces:
-- zsh
+- zsh-5.9
 - macos-26
 route_tags:
 - zero-base
@@ -530,7 +530,7 @@ mvn -v
 
 ## 一手资料与复核边界
 
-本章版本面为 `zsh` 与 `macos-26`；稳定核心是父子进程环境、PATH 有序查找和来源取证。资料链接复核日期：**2026-07-16**。本次网络检索受限，因此链接和稳定语义依据仓库既有一手资料记录整理，页面当日可达性与 patch 文案未重新验证。
+本章版本面为 `zsh-5.9` 与 `macos-26`；稳定核心是父子进程环境、PATH 有序查找和来源取证。资料链接复核日期：**2026-07-24**。上游 zsh 资料只支持语言与手册基线，不能证明 macOS 实际捆绑的 shell 版本；本机结论仍须由命令输出证明。
 
 - [Apple《Use environment variables in Terminal on Mac》](https://support.apple.com/guide/terminal/use-environment-variables-apd382cc5fa/mac)：macOS Terminal 环境变量的用户级入口。
 - [Apple《Change the default shell in Terminal on Mac》](https://support.apple.com/guide/terminal/change-the-default-shell-trml113/mac)：Terminal 启动 Shell 与默认 Shell 配置边界。

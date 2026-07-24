@@ -220,7 +220,7 @@ module Publication
       write_volume_asts!(staging, plan, canonical, divisions)
       render_whole_and_volume_html!(staging, plan, environment)
       render_epubs!(staging, plan, canonical, divisions, environment)
-      render_print_and_pdfs!(staging, plan, canonical, divisions, environment)
+      render_print_and_pdfs!(staging, work, plan, canonical, divisions, environment)
       render_chapter_html!(staging, work, plan, canonical, divisions, environment)
     ensure
       FileUtils.rm_rf(work) if work && File.directory?(work) && !File.symlink?(work)
@@ -577,7 +577,7 @@ module Publication
       )
     end
 
-    def render_print_and_pdfs!(staging, plan, canonical, divisions, environment)
+    def render_print_and_pdfs!(staging, work, plan, canonical, divisions, environment)
       # Produce all 16 bounded volume candidates before attempting the much
       # heavier whole-book PDF. A failure remains a failed atomic build.
       plan.fetch("volumes").each do |volume|
@@ -585,20 +585,22 @@ module Publication
         print = staged_path(staging, "intermediate/print/volumes/volume-#{volume.fetch('id')}.html")
         render_print_html!("pandoc-print-volume-#{volume.fetch('id')}", ast, print, environment)
         render_pdf!(
-          "weasyprint-pdf-volume-#{volume.fetch('id')}",
-          print,
+          "typst-pdf-volume-#{volume.fetch('id')}",
+          ast,
           staged_path(staging, "output/pdf/volumes/factorycare-volume-#{volume.fetch('id')}.pdf"),
-          "urn:factorycare:publication:internal-complete:volume-#{volume.fetch('id')}:#{plan.fetch('edition')}",
+          work,
+          plan,
           environment
         )
       end
       whole_print = staged_path(staging, "intermediate/print/book.html")
       render_print_html!("pandoc-print-whole-book", staged_path(staging, "ast/book.json"), whole_print, environment)
       render_pdf!(
-        "weasyprint-pdf-whole-book",
-        whole_print,
+        "typst-pdf-whole-book",
+        staged_path(staging, "ast/book.json"),
         staged_path(staging, "output/pdf/factorycare-internal-complete.pdf"),
-        "urn:factorycare:publication:internal-complete:#{plan.fetch('edition')}",
+        work,
+        plan,
         environment
       )
     end
@@ -607,19 +609,68 @@ module Publication
       run_render_command!(id, pandoc_html_command(ast, output, PRINT_CSS, toc: false), environment: environment, expected_output: output)
     end
 
-    def render_pdf!(id, input, output, identifier, environment)
+    def render_pdf!(id, input, output, work, plan, environment)
+      adapted = typst_pdf_ast(StrictJson.parse(File.binread(input)))
+      adapted_path = File.join(work, "#{id}.json")
+      write_file!(adapted_path, Canonical.json(adapted))
       run_render_command!(
         id,
         [
-          "dpy", File.join(root, "publication/lib/deterministic_weasyprint.py"),
-          "--encoding", "UTF-8", "--media-type", "print", "--pdf-identifier", identifier,
-          "--pdf-variant", "pdf/ua-1", "--pdf-tags", "--custom-metadata",
-          "--allowed-protocols", "file,data", "--no-http-redirects", "--fail-on-http-errors",
-          input, output
+          "pandoc", "--sandbox", "--from=json", "--to=typst", "--standalone",
+          "--metadata", "papersize=a4", "--pdf-engine=typst",
+          "--pdf-engine-opt=--pdf-standard=ua-1",
+          "--pdf-engine-opt=--creation-timestamp=#{plan.fetch('source_date_epoch')}",
+          "--output", output, adapted_path
         ],
         environment: environment,
         expected_output: output
       )
+    rescue JSON::ParserError, StrictJson::DuplicateMemberError => e
+      raise ContractError.new("pdf-adapter", "E_TYPST_AST_PARSE", e.message.lines.first.to_s.strip)
+    end
+
+    # Pandoc's Typst writer emits both a Div label and the identical first
+    # heading label for our chapter wrapper. Typst correctly rejects that
+    # duplicate. Keep the semantic heading target, remove only the generated
+    # wrapper ID, and render Markdown @-tokens as their literal inline text
+    # when Pandoc parsed them as bibliography citations without a bibliography.
+    def typst_pdf_ast(document)
+      adapted = deep_copy(document)
+      before_links = node_count(adapted, "Link")
+      before_images = node_count(adapted, "Image")
+      chapter_ids = []
+      walk_nodes(adapted) do |node|
+        if node["t"] == "Div" && Array(node.dig("c", 0, 1)).include?("chapter")
+          id = node.dig("c", 0, 0).to_s
+          header = Array(node.dig("c", 1)).find { |child| child.is_a?(Hash) && child["t"] == "Header" }
+          unless !id.empty? && header && header.dig("c", 1, 0) == id
+            raise ContractError.new("pdf-adapter", "E_TYPST_CHAPTER_LABEL", "chapter wrapper and semantic heading labels differ")
+          end
+          chapter_ids << id
+          node["c"][0][0] = ""
+        elsif node["t"] == "Cite"
+          visible = node.dig("c", 1)
+          unless visible.is_a?(Array) && !visible.empty?
+            raise ContractError.new("pdf-adapter", "E_TYPST_CITATION", "citation has no literal visible fallback")
+          end
+          node["t"] = "Span"
+          node["c"] = [["", ["literal-citation"], []], visible]
+        end
+      end
+      if chapter_ids.empty? || chapter_ids.uniq.length != chapter_ids.length
+        raise ContractError.new("pdf-adapter", "E_TYPST_CHAPTER_SET", "Typst projection must contain unique chapter wrappers")
+      end
+      unless node_count(adapted, "Link") == before_links && node_count(adapted, "Image") == before_images
+        raise ContractError.new("pdf-adapter", "E_TYPST_LINK_LOSS", "Typst adaptation must preserve every final Link and Image node")
+      end
+      adapted.fetch("meta")["papersize"] = meta_string("a4")
+      adapted
+    end
+
+    def node_count(value, type)
+      count = 0
+      walk_nodes(value) { |node| count += 1 if node["t"] == type }
+      count
     end
 
     def pandoc_html_command(input, output, stylesheet, toc: true)
@@ -981,9 +1032,9 @@ module Publication
       ids.concat(plan.fetch("volumes").map { |volume| "pandoc-epub-volume-#{volume.fetch('id')}" })
       plan.fetch("volumes").each do |volume|
         ids << "pandoc-print-volume-#{volume.fetch('id')}"
-        ids << "weasyprint-pdf-volume-#{volume.fetch('id')}"
+        ids << "typst-pdf-volume-#{volume.fetch('id')}"
       end
-      ids.concat(%w[pandoc-print-whole-book weasyprint-pdf-whole-book])
+      ids.concat(%w[pandoc-print-whole-book typst-pdf-whole-book])
       ids.concat(plan.fetch("chapters").map { |chapter| "pandoc-html-chapter-#{chapter.fetch('id')}" })
       ids
     end

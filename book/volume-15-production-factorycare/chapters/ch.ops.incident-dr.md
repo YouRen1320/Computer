@@ -14,7 +14,9 @@ prerequisites:
 - ch.ops.metrics-traces-slo
 - ch.release.deployment-migrations
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 - postgresql-18
 - docker
 - docker-compose

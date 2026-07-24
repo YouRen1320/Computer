@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/chapter-pandoc-link-audit-v2.schema.json",
+  "title": "FactoryCare P9 canonical Pandoc AST link audit v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "audit_id", "generated_by", "observation_date", "mode", "status",
+    "evidence_classification", "publication_binding", "summary", "node_kind_counts",
+    "target_scope_counts", "http_status_counts", "outcome_counts", "probe_policy",
+    "extraction_policy", "manual_review_items", "failed_items", "targets",
+    "replay_commands", "evidence_boundary"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "audit_id": { "const": "p9-pandoc-ast-link-audit" },
+    "generated_by": { "const": "scripts/audit-chapter-markdown-links.rb" },
+    "observation_date": { "type": "string", "format": "date" },
+    "mode": { "enum": ["structure-only", "live"] },
+    "status": { "enum": ["passed", "needs-review", "failed"] },
+    "evidence_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "kind", "promotion"],
+      "properties": {
+        "state": { "const": "observed-unreviewed" },
+        "kind": { "const": "machine-only-not-learner-evidence" },
+        "promotion": { "const": "forbidden-without-human-review" }
+      }
+    },
+    "publication_binding": { "$ref": "#/$defs/publication_binding" },
+    "summary": { "$ref": "#/$defs/summary" },
+    "node_kind_counts": { "$ref": "#/$defs/node_kind_counts" },
+    "target_scope_counts": { "$ref": "#/$defs/target_scope_counts" },
+    "http_status_counts": { "$ref": "#/$defs/count_map" },
+    "outcome_counts": { "$ref": "#/$defs/outcome_counts" },
+    "probe_policy": { "$ref": "#/$defs/probe_policy" },
+    "extraction_policy": { "$ref": "#/$defs/extraction_policy" },
+    "manual_review_items": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+    "failed_items": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+    "targets": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/target" } },
+    "replay_commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structure_only", "live"],
+      "properties": {
+        "structure_only": { "type": "string", "minLength": 1 },
+        "live": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence_boundary": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "repository_path": {
+      "type": "string",
+      "pattern": "^[^/\\\\\\u0000-\\u001f\\u007f]+(?:/[^/\\\\\\u0000-\\u001f\\u007f]+)*$"
+    },
+    "count_map": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "node_kind_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Link", "Image"],
+      "properties": {
+        "Link": { "type": "integer", "minimum": 0 },
+        "Image": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "target_scope_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["external-https", "internal-reference", "relative-reference", "embedded-resource", "invalid-external"],
+      "properties": {
+        "external-https": { "type": "integer", "minimum": 0 },
+        "internal-reference": { "type": "integer", "minimum": 0 },
+        "relative-reference": { "type": "integer", "minimum": 0 },
+        "embedded-resource": { "type": "integer", "minimum": 0 },
+        "invalid-external": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "outcome_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "manual-review", "failed", "not-probed", "not-applicable"],
+      "properties": {
+        "passed": { "type": "integer", "minimum": 0 },
+        "manual-review": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "not-probed": { "type": "integer", "minimum": 0 },
+        "not-applicable": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "publication_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id", "plan_path", "plan_sha256", "output_manifest_path",
+        "output_manifest_sha256", "manifest_plan_sha256", "canonical_ast", "pandoc_api_version"
+      ],
+      "properties": {
+        "profile_id": { "const": "internal-complete" },
+        "plan_path": { "const": "build/publication/internal-complete/publication-plan-v2.json" },
+        "plan_sha256": { "$ref": "#/$defs/sha256" },
+        "output_manifest_path": { "const": "build/publication/internal-complete/publication-output-manifest-v2.json" },
+        "output_manifest_sha256": { "$ref": "#/$defs/sha256" },
+        "manifest_plan_sha256": { "$ref": "#/$defs/sha256" },
+        "canonical_ast": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository_path", "output_path", "kind", "format", "media_type", "distribution", "sha256", "size_bytes"],
+          "properties": {
+            "repository_path": { "const": "build/publication/internal-complete/ast/book.json" },
+            "output_path": { "const": "ast/book.json" },
+            "kind": { "const": "canonical-ast" },
+            "format": { "const": "internal" },
+            "media_type": { "const": "application/json" },
+            "distribution": { "const": "internal-review-candidate" },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "size_bytes": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "pandoc_api_version": { "type": "string", "pattern": "^[0-9]+(?:\\.[0-9]+)+$" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planned_chapter_count", "ast_chapter_count", "ast_node_count", "ast_link_node_count",
+        "ast_image_node_count", "external_https_occurrence_count", "unique_target_count",
+        "unique_external_https_target_count", "internal_reference_target_count",
+        "relative_reference_target_count", "embedded_resource_target_count", "host_count",
+        "structure_invalid_count", "http_200_count", "http_206_count", "passed_count",
+        "failure_count", "manual_review_count", "transport_inconclusive_count",
+        "not_probed_count", "not_applicable_count"
+      ],
+      "properties": {
+        "planned_chapter_count": { "type": "integer", "minimum": 1 },
+        "ast_chapter_count": { "type": "integer", "minimum": 1 },
+        "ast_node_count": { "type": "integer", "minimum": 1 },
+        "ast_link_node_count": { "type": "integer", "minimum": 0 },
+        "ast_image_node_count": { "type": "integer", "minimum": 0 },
+        "external_https_occurrence_count": { "type": "integer", "minimum": 0 },
+        "unique_target_count": { "type": "integer", "minimum": 1 },
+        "unique_external_https_target_count": { "type": "integer", "minimum": 0 },
+        "internal_reference_target_count": { "type": "integer", "minimum": 0 },
+        "relative_reference_target_count": { "type": "integer", "minimum": 0 },
+        "embedded_resource_target_count": { "type": "integer", "minimum": 0 },
+        "host_count": { "type": "integer", "minimum": 0 },
+        "structure_invalid_count": { "type": "integer", "minimum": 0 },
+        "http_200_count": { "type": "integer", "minimum": 0 },
+        "http_206_count": { "type": "integer", "minimum": 0 },
+        "passed_count": { "type": "integer", "minimum": 0 },
+        "failure_count": { "type": "integer", "minimum": 0 },
+        "manual_review_count": { "type": "integer", "minimum": 0 },
+        "transport_inconclusive_count": { "type": "integer", "minimum": 0 },
+        "not_probed_count": { "type": "integer", "minimum": 0 },
+        "not_applicable_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "probe_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation", "total_concurrency_limit", "per_host_concurrency_limit",
+        "connect_timeout_seconds", "max_time_seconds", "primary_request",
+        "get_fallback_http_statuses", "accepted_http_statuses", "manual_review_http_statuses",
+        "transport_inconclusive_http_statuses", "transport_inconclusive_curl_exit_codes",
+        "certificate_hard_failure_curl_exit_codes", "redirect_protocol_policy"
+      ],
+      "properties": {
+        "implementation": { "type": ["string", "null"] },
+        "total_concurrency_limit": { "type": "integer", "minimum": 1 },
+        "per_host_concurrency_limit": { "type": "integer", "minimum": 1 },
+        "connect_timeout_seconds": { "type": "integer", "minimum": 1 },
+        "max_time_seconds": { "type": "integer", "minimum": 1 },
+        "primary_request": { "type": "string", "minLength": 1 },
+        "get_fallback_http_statuses": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 100 } },
+        "accepted_http_statuses": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 100 } },
+        "manual_review_http_statuses": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 100 } },
+        "transport_inconclusive_http_statuses": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 100 } },
+        "transport_inconclusive_curl_exit_codes": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
+        "certificate_hard_failure_curl_exit_codes": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
+        "redirect_protocol_policy": { "type": "string", "minLength": 1 }
+      }
+    },
+    "extraction_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "traversal", "deduplication", "network_probe_scope", "source_markdown_reparse", "image_node_semantics"],
+      "properties": {
+        "source": { "const": "bound P8 canonical Pandoc AST output" },
+        "traversal": { "type": "string", "minLength": 1 },
+        "deduplication": { "type": "string", "minLength": 1 },
+        "network_probe_scope": { "const": "valid external HTTPS targets only" },
+        "source_markdown_reparse": { "const": "forbidden" },
+        "image_node_semantics": { "type": "string", "minLength": 1 }
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_kind", "source_chapter_id", "ast_pointer"],
+      "properties": {
+        "node_kind": { "enum": ["Link", "Image"] },
+        "source_chapter_id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "ast_pointer": { "type": "string", "pattern": "^/blocks/[0-9]+(?:/[^/]+)*$" }
+      }
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "http_status", "curl_exit_code", "ssl_verify_result", "request_mode",
+        "effective_url", "effective_https", "error_present", "error_sha256"
+      ],
+      "properties": {
+        "http_status": { "type": "integer", "minimum": 0 },
+        "curl_exit_code": { "type": "integer", "minimum": 0 },
+        "ssl_verify_result": { "type": "integer", "minimum": 0 },
+        "request_mode": { "type": "string", "minLength": 1 },
+        "effective_url": { "type": ["string", "null"] },
+        "effective_https": { "type": "boolean" },
+        "error_present": { "type": "boolean" },
+        "error_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target", "target_sha256", "target_scope", "query_redacted", "fragment_redacted",
+        "host", "occurrence_count", "node_kinds", "occurrences", "structure_valid",
+        "structure_error", "outcome", "reason", "probe"
+      ],
+      "properties": {
+        "target": { "type": "string", "minLength": 1 },
+        "target_sha256": { "$ref": "#/$defs/sha256" },
+        "target_scope": { "enum": ["external-https", "internal-reference", "relative-reference", "embedded-resource", "invalid-external"] },
+        "query_redacted": { "type": "boolean" },
+        "fragment_redacted": { "type": "boolean" },
+        "host": { "type": ["string", "null"] },
+        "occurrence_count": { "type": "integer", "minimum": 1 },
+        "node_kinds": { "type": "array", "minItems": 1, "maxItems": 2, "uniqueItems": true, "items": { "enum": ["Link", "Image"] } },
+        "occurrences": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/occurrence" } },
+        "structure_valid": { "type": "boolean" },
+        "structure_error": { "type": ["string", "null"] },
+        "outcome": { "enum": ["passed", "manual-review", "failed", "not-probed", "not-applicable"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "probe": { "type": ["object", "null"], "allOf": [{ "if": { "type": "object" }, "then": { "$ref": "#/$defs/probe" } }] }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "target_sha256", "target_scope", "host", "reason", "http_status", "curl_exit_code", "node_kinds", "chapter_ids"],
+      "properties": {
+        "target": { "type": "string", "minLength": 1 },
+        "target_sha256": { "$ref": "#/$defs/sha256" },
+        "target_scope": { "enum": ["external-https", "internal-reference", "relative-reference", "embedded-resource", "invalid-external"] },
+        "host": { "type": ["string", "null"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "http_status": { "type": ["integer", "null"] },
+        "curl_exit_code": { "type": ["integer", "null"] },
+        "node_kinds": { "type": "array", "minItems": 1, "maxItems": 2, "uniqueItems": true, "items": { "enum": ["Link", "Image"] } },
+        "chapter_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" } }
+      }
+    }
+  }
+}

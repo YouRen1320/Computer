@@ -15,7 +15,9 @@ prerequisites:
 - ch.ops.backup-recovery
 - ch.data.indexes-explain
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 - postgresql-18
 - docker
 - ubuntu-server-26.04

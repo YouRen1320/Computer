@@ -14,8 +14,10 @@ prerequisites:
 - ch.uniapp.packages-performance
 - ch.uniapp.privacy-review
 version_surfaces:
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 route_tags:
 - zero-base
 - accelerated-48

@@ -1,7 +1,7 @@
 schema_version: 1
 toolchain_id: p3-publication
 scope: macos-arm64-p3
-observed_on: '2026-07-16'
+observed_on: '2026-07-24'
 tools:
 - id: bash
   state: observed-current
@@ -66,7 +66,15 @@ tools:
   - weasyprint
   - --version
   expected_version_prefix: WeasyPrint version 68.1
-  note: R2 只把输出称为 PDF/UA-1 候选文件
+  note: P3 黄金样章继续使用的冻结渲染器；P8 已迁移到 Typst，不再把此工具用于完整 PDF
+- id: typst
+  state: observed-current
+  required_from: R2
+  command:
+  - typst
+  - --version
+  expected_version_prefix: typst 0.15.1
+  note: P8 完整 PDF 使用的 PDF/UA-1 渲染器；编译器检查和 veraPDF 机器通过仍不能替代人工辅助技术验收
 - id: ace
   state: deferred
   required_from: R3

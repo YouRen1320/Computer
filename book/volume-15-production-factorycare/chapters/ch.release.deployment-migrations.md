@@ -15,13 +15,15 @@ prerequisites:
 - ch.ops.backup-recovery
 - ch.architecture.observability-slo
 version_surfaces:
-- ci
+- github-actions-hosted-runner
 - docker
 - docker-compose
 - nginx
 - postgresql-18
 - flyway
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 - ubuntu-server-26.04
 route_tags:
 - zero-base

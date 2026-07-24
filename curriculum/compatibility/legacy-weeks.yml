@@ -1,426 +1,2185 @@
-schema_version: 1
-source_edition: 2026.1
+---
+schema_version: 2
+source_edition: '2026.1'
 target_edition: 2026.2-draft
-policy: thin-adapter
+policy: outcome-slice-adapter
 rollback_tag: pre-encyclopedia-2026-07-16
+outcome_ref_format: chapter-id#outcome-id
+section_roles:
+  required: primary
+  practice_diagnosis: primary
+  review: refresh
+  support: support
+budget_policy:
+  unit: hour
+  week_00:
+    minimum: 8
+    maximum: 12
+  standard_weeks:
+    minimum: 15
+    maximum: 18
+  section_keys:
+  - required
+  - practice_diagnosis
+  - review
+  - support
+mastery_policy:
+  reference_depth_source: curriculum/catalog.yml#/chapters/*/level
+  route_required_mastery_field: required_mastery
+  profiles:
+    L1-L2:
+    - timed-teach-back
+    - guided-experiment
+    - boundary-diagnosis
+    L2:
+    - timed-teach-back
+    - runnable-artifact
+    - boundary-test
+    L2+:
+    - timed-teach-back
+    - runnable-artifact
+    - fault-diagnosis
+    - requirement-change
+    L3:
+    - timed-teach-back
+    - independent-build
+    - fault-diagnosis
+    - requirement-change
+    - tradeoff-defense
+  required_assignments:
+    machine_learning:
+      weeks:
+      - 39
+      required_mastery: L1-L2
+    artificial_intelligence:
+      weeks:
+      - 40
+      - 41
+      - 42
+      - 43
+      required_mastery: L2+
 weeks:
-  - week: 0
-    title: 环境、基线、Git 与项目约束
-    chapter_ids:
-      - ch.foundations.learning-evidence
-      - ch.foundations.files-paths-encoding
-      - ch.foundations.terminal-shell
-      - ch.foundations.computer-process-model
-      - ch.foundations.cli-streams-exit-codes
-      - ch.foundations.environment-tool-resolution
-      - ch.foundations.editor-project-navigation
-      - ch.foundations.git-collaboration-security
-      - ch.foundations.network-layers
-      - ch.foundations.http-curl
-      - ch.foundations.api-contract-basics
-      - ch.foundations.testing-oracles
-      - ch.foundations.dependencies-build-packages
-      - ch.foundations.docker-basics
-      - ch.foundations.ai-assisted-verification
-  - week: 1
-    title: Java 程序结构、控制台 I/O、类型、运算、方法与 JUnit
-    chapter_ids:
-      - ch.java.platform-toolchain
-      - ch.java.program-structure
-      - ch.java.values-variables-types
-      - ch.java.expressions-conversions
-      - ch.java.console-input-validation
-      - ch.java.methods
-      - ch.java.maven-junit-smoke
-      - ch.java.debugging-failures
-  - week: 2
-    title: String、null、数组、条件、循环与方法设计
-    chapter_ids:
-      - ch.java.branching
-      - ch.java.loops
-      - ch.java.arrays-command-args
-      - ch.java.console-input-validation
-      - ch.java.methods
-      - ch.java-oop.references-null-identity
-  - week: 3
-    title: 类、对象、构造器、封装、static 与 final
-    chapter_ids:
-      - ch.java-oop.classes-objects
-      - ch.java-oop.constructors-invariants
-      - ch.java-oop.encapsulation-packages
-      - ch.java-oop.static-class-state
-      - ch.java-oop.final-immutability
-  - week: 4
-    title: 继承、接口、抽象、多态、组合、record 与 enum
-    chapter_ids:
-      - ch.java-oop.inheritance-composition
-      - ch.java-oop.interfaces-polymorphism
-      - ch.java-oop.enum-record-sealed
-      - ch.java-oop.object-contracts
-      - ch.java-oop.business-value-types
-  - week: 5
-    title: 集合、泛型与 equals/hashCode
-    chapter_ids:
-      - ch.java-engineering.generics-type-safety
-      - ch.java-engineering.sequential-collections
-      - ch.java-engineering.associative-collections
-      - ch.java-engineering.sorting-comparators
-      - ch.java-engineering.complexity-algorithms
-      - ch.java-oop.object-contracts
-  - week: 6
-    title: 异常、I/O、时间与 JSON
-    chapter_ids:
-      - ch.java-oop.exceptions-failure-contracts
-      - ch.java-engineering.io-resource-lifecycle
-      - ch.java-engineering.nio-files-charsets
-      - ch.java-engineering.json-mapping
-  - week: 7
-    title: Lambda、Stream 与 Optional
-    chapter_ids:
-      - ch.java-engineering.lambdas-functional-interfaces
-      - ch.java-engineering.functional-pipelines
-  - week: 8
-    title: 并发、虚拟线程、JVM 与 Java 阶段考核
-    chapter_ids:
-      - ch.java-engineering.threads-jmm
-      - ch.java-engineering.executors-virtual-threads
-      - ch.java-engineering.logging-jvm-diagnostics
-  - week: 9
-    title: Maven 与 Spring Core
-    chapter_ids:
-      - ch.java-engineering.maven-reproducible-builds
-      - ch.spring.servlet-request-lifecycle
-      - ch.spring.ioc-di
-      - ch.spring.beans-lifecycle-scopes
-      - ch.spring.configuration-profiles
-      - ch.spring.boot-autoconfiguration
-  - week: 10
-    title: Spring Boot Web、REST、DTO、校验与错误
-    chapter_ids:
-      - ch.spring.mvc-routing-binding
-      - ch.spring.dto-json-content-negotiation
-      - ch.spring.validation
-      - ch.spring.problem-details-errors
-      - ch.spring.service-use-cases
-  - week: 11
-    title: Java 测试体系、Testcontainers 与 OpenAPI
-    chapter_ids:
-      - ch.java-engineering.testing-test-doubles
-      - ch.spring.testing-testcontainers
-      - ch.spring.openapi-contracts
-      - ch.spring.actuator-health-metrics
-  - week: 12
-    title: SQL 语法、查询、聚合、JOIN 与数据修改
-    chapter_ids:
-      - ch.data.relational-model
-      - ch.data.postgresql-psql
-      - ch.data.select-rowsets
-      - ch.data.scalar-functions
-      - ch.data.aggregates
-      - ch.data.joins
-      - ch.data.subqueries-cte
-      - ch.data.window-functions
-      - ch.data.dml
-  - week: 13
-    title: PostgreSQL 关系建模、约束与迁移
-    chapter_ids:
-      - ch.data.relational-model
-      - ch.data.ddl-constraints
-      - ch.data.normalization-modeling
-      - ch.data.postgresql-types
-      - ch.data.schema-migrations
-  - week: 14
-    title: 索引、执行计划、事务隔离与锁
-    chapter_ids:
-      - ch.data.indexes-explain
-      - ch.data.transactions-locking
-  - week: 15
-    title: MyBatis、Flyway、持久化垂直切片与阶段考核
-    chapter_ids:
-      - ch.data.jdbc
-      - ch.data.mybatis-core
-      - ch.data.schema-migrations
-      - ch.spring.datasource-pooling
-      - ch.spring.mybatis-repositories
-      - ch.spring.transactions
-  - week: 16
-    title: Spring Security、Session、JWT 与 OIDC
-    chapter_ids:
-      - ch.security.threat-model-trust-boundaries
-      - ch.security.identity-password-lifecycle
-      - ch.security.cookie-session-model
-      - ch.security.origin-cors-csrf
-      - ch.security.untrusted-input-xss-ssrf
-      - ch.security.spring-security-architecture
-      - ch.security.session-authentication
-      - ch.security.jwt-resource-server
-      - ch.security.oauth2-oidc
-  - week: 17
-    title: RBAC、多租户、数据权限与审计
-    chapter_ids:
-      - ch.security.authorization-rbac-abac
-      - ch.security.multitenancy-data-isolation
-      - ch.security.audit-events-privacy
-  - week: 18
-    title: 领域模型、工单状态机、SLA 与乐观锁
-    chapter_ids:
-      - ch.architecture.domain-modeling
-      - ch.architecture.workflow-state-sla
-      - ch.architecture.idempotency-concurrency
-  - week: 19
-    title: Redis、缓存、幂等、限流与一致性
-    chapter_ids:
-      - ch.distributed.redis-cache-rate-limit
-      - ch.architecture.idempotency-concurrency
-  - week: 20
-    title: 异步、领域事件、Outbox 与 RabbitMQ 概念
-    chapter_ids:
-      - ch.architecture.domain-events-outbox
-      - ch.distributed.messaging-delivery
-  - week: 21
-    title: 模块化单体、Spring Modulith 与阶段考核
-    chapter_ids:
-      - ch.architecture.modular-monolith
-      - ch.architecture.observability-slo
-  - week: 22
-    title: HTML、表单、可访问性与 CSS 布局基础
-    chapter_ids:
-      - ch.web.browser-render-devtools
-      - ch.web.origin-cookie-cache
-      - ch.web.semantic-html
-      - ch.web.forms-validation
-      - ch.web.media-assets
-      - ch.web.accessibility-interaction
-      - ch.css.cascade
-      - ch.css.box-position
-      - ch.css.flexbox
-      - ch.css.grid
-      - ch.css.responsive-typography
-  - week: 23
-    title: JavaScript 值、作用域、函数、对象、原型与模块
-    chapter_ids:
-      - ch.js.runtime-esm
-      - ch.js.statements-variables
-      - ch.js.values-operators
-      - ch.js.control-flow
-      - ch.js.functions
-      - ch.js.scope-closures
-      - ch.js.collections
-      - ch.js.object-model
-  - week: 24
-    title: DOM、事件循环、Promise、Fetch、取消与浏览器安全
-    chapter_ids:
-      - ch.js.dom-mutation
-      - ch.js.events-forms
-      - ch.js.event-loop
-      - ch.js.fetch-cancellation-race
-      - ch.js.browser-performance
-      - ch.web.origin-cookie-cache
-      - ch.security.origin-cors-csrf
-      - ch.security.untrusted-input-xss-ssrf
-  - week: 25
-    title: TypeScript 类型系统、泛型、收窄与运行时边界
-    chapter_ids:
-      - ch.ts.foundations
-      - ch.ts.modeling-narrowing
-      - ch.ts.generics-utilities
-      - ch.ts.runtime-boundaries
-  - week: 26
-    title: Vue3 SFC、模板、响应式、组件、生命周期与 Composable
-    chapter_ids:
-      - ch.vue.vite-sfc
-      - ch.vue.template-directives
-      - ch.vue.forms-vmodel
-      - ch.vue.reactivity
-      - ch.vue.effects-lifecycle
-      - ch.vue.components-contracts
-      - ch.vue.composables-di
-  - week: 27
-    title: Vite、Router、Pinia、服务端状态与企业后台
-    chapter_ids:
-      - ch.vue.router-navigation
-      - ch.vue.pinia-state
-      - ch.vue.server-state
-      - ch.vue.auth-permissions
-      - ch.vue.component-testing
-  - week: 28
-    title: Nuxt 4、SSR/CSR/SSG、Hydration、认证与部署
-    chapter_ids:
-      - ch.nuxt.rendering-hydration
-      - ch.vue.auth-permissions
-      - ch.vue.performance
-      - ch.vue.accessibility
-  - week: 29
-    title: Web 测试、SSE、错误恢复、性能与阶段考核
-    chapter_ids:
-      - ch.vue.component-testing
-      - ch.vue.server-state
-      - ch.vue.accessibility
-      - ch.vue.performance
-      - ch.js.browser-performance
-  - week: 30
-    title: uni-app 运行模型与扫码报修
-    chapter_ids:
-      - ch.miniapp.runtime
-      - ch.uniapp.toolchain-pages
-      - ch.uniapp.template-components
-      - ch.uniapp.network-auth-storage
-      - ch.uniapp.factorycare-reporter
-  - week: 31
-    title: uni-app 真机、权限、上传、缓存与发布
-    chapter_ids:
-      - ch.uniapp.platform-conditional
-      - ch.uniapp.device-capabilities
-      - ch.uniapp.testing-debugging
-      - ch.uniapp.packages-performance
-      - ch.uniapp.offline-idempotency
-      - ch.uniapp.privacy-review
-      - ch.uniapp.release-monitoring
-  - week: 32
-    title: Dart 语法、类型、空安全、控制流、函数与集合
-    chapter_ids:
-      - ch.dart.toolchain
-      - ch.dart.types-null-safety
-      - ch.dart.control-functions
-      - ch.dart.collections-patterns
-  - week: 33
-    title: Dart 类、泛型、异常、Future、Stream 与测试
-    chapter_ids:
-      - ch.dart.oop-generics
-      - ch.dart.exceptions-resources
-      - ch.dart.future-cancellation
-      - ch.dart.streams-isolates
-      - ch.dart.testing-lints
-  - week: 34
-    title: Flutter Widget、布局、导航、表单与状态
-    chapter_ids:
-      - ch.flutter.toolchain-project
-      - ch.flutter.widget-tree
-      - ch.flutter.layout-accessibility
-      - ch.flutter.state-lifecycle
-      - ch.flutter.navigation-forms
-      - ch.flutter.architecture-state
-  - week: 35
-    title: Flutter 架构、API、离线、设备能力、测试与构建
-    chapter_ids:
-      - ch.flutter.architecture-state
-      - ch.flutter.network-storage-offline
-      - ch.flutter.device-apis
-      - ch.flutter.testing-performance
-      - ch.flutter.release-monitoring
-  - week: 36
-    title: Python 语法、类型、控制流、集合、函数与模块
-    chapter_ids:
-      - ch.python.runtime-uv
-      - ch.python.syntax-values-io
-      - ch.python.control-flow
-      - ch.python.functions-scope
-      - ch.python.collections
-      - ch.python.typing-foundations
-      - ch.python.modules-packages
-  - week: 37
-    title: Python 类、数据模型、异常、文件、typing、pytest 与 uv
-    chapter_ids:
-      - ch.python.files-json-time
-      - ch.python.classes-dataclass
-      - ch.python.protocol-generics
-      - ch.python.exceptions-context
-      - ch.python.iterators-decorators
-      - ch.python.testing-logging-debug
-  - week: 38
-    title: Python async、FastAPI、Pydantic、配置、日志与服务测试
-    chapter_ids:
-      - ch.python.asyncio-cancellation
-      - ch.python.pydantic-validation
-      - ch.fastapi.web-foundations
-      - ch.fastapi.security-testing-openapi
-  - week: 39
-    title: 机器学习、深度学习与 PyTorch 概念
-    chapter_ids:
-      - ch.math.algebra-units
-      - ch.math.functions-graphs
-      - ch.math.linear-algebra
-      - ch.math.probability-statistics
-      - ch.math.gradients
-      - ch.ml.problem-data-split
-      - ch.ml.preprocessing-features
-      - ch.ml.supervised-learning
-      - ch.ml.unsupervised-learning
-      - ch.ml.metrics-validation
-      - ch.ml.neural-networks
-      - ch.ml.attention-sequences
-      - ch.pytorch.foundations
-      - ch.pytorch.training
-      - ch.pytorch.inference
-      - ch.ml.monitoring-ethics
-  - week: 40
-    title: 模型 API、结构化输出、流与工具调用
-    chapter_ids:
-      - ch.llm.model-foundations
-      - ch.llm.api-prompts-cost
-      - ch.llm.structured-output
-      - ch.llm.streaming-resilience
-      - ch.llm.tool-calling
-  - week: 41
-    title: 文档管线、pgvector、混合检索与带引用 RAG
-    chapter_ids:
-      - ch.rag.ingestion-metadata
-      - ch.rag.chunking-embeddings
-      - ch.ir.lexical-retrieval
-      - ch.ir.evaluation
-      - ch.ir.dense-pgvector
-      - ch.ir.hybrid-rerank
-      - ch.rag.citations-evaluation
-  - week: 42
-    title: RAG 评估、安全、成本、降级与观测
-    chapter_ids:
-      - ch.rag.citations-evaluation
-      - ch.rag.security-observability
-      - ch.llm.api-prompts-cost
-      - ch.llm.streaming-resilience
-  - week: 43
-    title: LangChain、LangGraph、HITL、MCP 与阶段考核
-    chapter_ids:
-      - ch.agent.langchain
-      - ch.agent.langgraph
-      - ch.agent.mcp-boundaries
-  - week: 44
-    title: Java、Python、Web、App、小程序契约联调
-    chapter_ids:
-      - ch.architecture.system-design
-      - ch.release.factorycare-acceptance
-      - ch.spring.openapi-contracts
-      - ch.ts.runtime-boundaries
-      - ch.fastapi.security-testing-openapi
-  - week: 45
-    title: Linux、Docker、Nginx/TLS 与 CI/CD
-    chapter_ids:
-      - ch.ops.linux-services
-      - ch.ops.network-diagnostics
-      - ch.ops.docker-production
-      - ch.ops.compose-services
-      - ch.ops.nginx-tls
-      - ch.release.ci-quality
-      - ch.release.artifacts-promotion
-  - week: 46
-    title: 可观测、备份恢复、性能、安全与故障演练
-    chapter_ids:
-      - ch.ops.config-secrets-supply-chain
-      - ch.ops.logs-health
-      - ch.ops.metrics-traces-slo
-      - ch.ops.backup-recovery
-      - ch.ops.capacity-performance
-      - ch.release.deployment-migrations
-      - ch.ops.incident-dr
-  - week: 47
-    title: 作品集、系统设计、项目表达与模拟面试
-    chapter_ids:
-      - ch.architecture.system-design
-      - ch.portfolio.interview
-  - week: 48
-    title: 发布候选、最终考核与下一阶段
-    chapter_ids:
-      - ch.release.factorycare-acceptance
-      - ch.release.artifacts-promotion
-      - ch.release.deployment-migrations
-      - ch.portfolio.interview
+- week: 0
+  title: 环境、基线、Git 与项目约束
+  progress_theme: 环境、基线、Git、项目词汇
+  budget_hours:
+    minimum: 8
+    target: 10
+    maximum: 12
+    allocation:
+      required: 4
+      practice_diagnosis: 6
+      review: 0
+      support: 0
+  required_mastery: L2
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
+  required:
+  - ch.foundations.learning-evidence#explain
+  - ch.foundations.files-paths-encoding#explain
+  - ch.foundations.terminal-shell#explain
+  - ch.foundations.cli-streams-exit-codes#explain
+  - ch.foundations.environment-tool-resolution#explain
+  - ch.foundations.editor-project-navigation#explain
+  - ch.foundations.git-collaboration-security#explain
+  - ch.foundations.testing-oracles#explain
+  practice_diagnosis:
+  - ch.foundations.learning-evidence#build
+  - ch.foundations.learning-evidence#diagnose
+  - ch.foundations.terminal-shell#build
+  - ch.foundations.cli-streams-exit-codes#build
+  - ch.foundations.environment-tool-resolution#build
+  - ch.foundations.environment-tool-resolution#diagnose
+  - ch.foundations.git-collaboration-security#build
+  - ch.foundations.git-collaboration-security#diagnose
+  review: []
+  support: []
+- week: 1
+  title: Java 程序结构、控制台 I/O、类型、运算、方法与 JUnit
+  progress_theme: Java 程序结构、I/O、类型、方法、JUnit
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.foundations.dependencies-build-packages#explain
+  - ch.java.platform-toolchain#explain
+  - ch.java.program-structure#explain
+  - ch.java.values-variables-types#explain
+  - ch.java.expressions-conversions#explain
+  - ch.java.methods#explain
+  - ch.java.console-input-validation#explain
+  - ch.java.maven-junit-smoke#explain
+  - ch.java.debugging-failures#explain
+  practice_diagnosis:
+  - ch.foundations.files-paths-encoding#build
+  - ch.foundations.editor-project-navigation#build
+  - ch.foundations.testing-oracles#build
+  - ch.foundations.dependencies-build-packages#build
+  - ch.java.platform-toolchain#build
+  - ch.java.platform-toolchain#diagnose
+  - ch.java.program-structure#build
+  - ch.java.program-structure#diagnose
+  - ch.java.expressions-conversions#build
+  - ch.java.expressions-conversions#diagnose
+  - ch.java.maven-junit-smoke#build
+  - ch.java.maven-junit-smoke#diagnose
+  - ch.java.debugging-failures#build
+  - ch.java.debugging-failures#diagnose
+  review:
+  - ch.foundations.git-collaboration-security#build
+  - ch.foundations.git-collaboration-security#diagnose
+  support:
+  - ch.foundations.environment-tool-resolution#explain
+  - ch.foundations.testing-oracles#explain
+  - ch.foundations.editor-project-navigation#explain
+  - ch.foundations.files-paths-encoding#explain
+- week: 2
+  title: String、null、数组、条件、循环与方法设计
+  progress_theme: String、null、数组、条件、循环
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java.branching#explain
+  - ch.java.loops#explain
+  - ch.java.arrays-command-args#explain
+  - ch.java-oop.references-null-identity#explain
+  practice_diagnosis:
+  - ch.java.values-variables-types#build
+  - ch.java.values-variables-types#diagnose
+  - ch.java.branching#build
+  - ch.java.branching#diagnose
+  - ch.java.loops#build
+  - ch.java.loops#diagnose
+  - ch.java.arrays-command-args#build
+  - ch.java.arrays-command-args#diagnose
+  - ch.java.methods#build
+  - ch.java.methods#diagnose
+  - ch.java.console-input-validation#build
+  - ch.java.console-input-validation#diagnose
+  - ch.java-oop.references-null-identity#build
+  - ch.java-oop.references-null-identity#diagnose
+  review:
+  - ch.java.debugging-failures#build
+  - ch.java.debugging-failures#diagnose
+  support:
+  - ch.java.values-variables-types#explain
+  - ch.java.expressions-conversions#explain
+  - ch.java.methods#explain
+- week: 3
+  title: 类、对象、构造器、封装、static 与 final
+  progress_theme: 类、对象、构造器、封装
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-oop.classes-objects#explain
+  - ch.java-oop.constructors-invariants#explain
+  - ch.java-oop.encapsulation-packages#explain
+  - ch.java-oop.static-class-state#explain
+  - ch.java-oop.final-immutability#explain
+  practice_diagnosis:
+  - ch.java-oop.classes-objects#build
+  - ch.java-oop.classes-objects#diagnose
+  - ch.java-oop.constructors-invariants#build
+  - ch.java-oop.constructors-invariants#diagnose
+  - ch.java-oop.encapsulation-packages#build
+  - ch.java-oop.encapsulation-packages#diagnose
+  - ch.java-oop.static-class-state#build
+  - ch.java-oop.static-class-state#diagnose
+  - ch.java-oop.final-immutability#build
+  - ch.java-oop.final-immutability#diagnose
+  review:
+  - ch.java-oop.references-null-identity#build
+  - ch.java-oop.references-null-identity#diagnose
+  support:
+  - ch.java-oop.references-null-identity#explain
+- week: 4
+  title: 继承、接口、抽象、多态、组合、record 与 enum
+  progress_theme: 继承、接口、多态、组合、record、enum
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-oop.inheritance-composition#explain
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-oop.enum-record-sealed#explain
+  - ch.java-oop.object-contracts#explain
+  - ch.java-oop.business-value-types#explain
+  practice_diagnosis:
+  - ch.java-oop.inheritance-composition#build
+  - ch.java-oop.inheritance-composition#diagnose
+  - ch.java-oop.interfaces-polymorphism#build
+  - ch.java-oop.interfaces-polymorphism#diagnose
+  - ch.java-oop.enum-record-sealed#build
+  - ch.java-oop.enum-record-sealed#diagnose
+  - ch.java-oop.business-value-types#build
+  - ch.java-oop.business-value-types#diagnose
+  review:
+  - ch.java-oop.final-immutability#build
+  - ch.java-oop.final-immutability#diagnose
+  support:
+  - ch.java-oop.final-immutability#explain
+- week: 5
+  title: 集合、泛型与 equals/hashCode
+  progress_theme: 集合、泛型、equals/hashCode
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-engineering.generics-type-safety#explain
+  - ch.java-engineering.sequential-collections#explain
+  - ch.java-engineering.associative-collections#explain
+  - ch.java-engineering.sorting-comparators#explain
+  - ch.java-engineering.complexity-algorithms#explain
+  practice_diagnosis:
+  - ch.java-oop.object-contracts#build
+  - ch.java-oop.object-contracts#diagnose
+  - ch.java-engineering.generics-type-safety#build
+  - ch.java-engineering.generics-type-safety#diagnose
+  - ch.java-engineering.sequential-collections#build
+  - ch.java-engineering.sequential-collections#diagnose
+  - ch.java-engineering.associative-collections#build
+  - ch.java-engineering.associative-collections#diagnose
+  - ch.java-engineering.sorting-comparators#build
+  - ch.java-engineering.sorting-comparators#diagnose
+  - ch.java-engineering.complexity-algorithms#build
+  - ch.java-engineering.complexity-algorithms#diagnose
+  review:
+  - ch.java-oop.business-value-types#build
+  - ch.java-oop.business-value-types#diagnose
+  support:
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-oop.object-contracts#explain
+  - ch.java-oop.final-immutability#explain
+- week: 6
+  title: 异常、I/O、时间与 JSON
+  progress_theme: 异常、I/O、时间、JSON
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-oop.exceptions-failure-contracts#explain
+  - ch.java-engineering.io-resource-lifecycle#explain
+  - ch.java-engineering.nio-files-charsets#explain
+  - ch.java-engineering.json-mapping#explain
+  practice_diagnosis:
+  - ch.foundations.files-paths-encoding#diagnose
+  - ch.java-oop.exceptions-failure-contracts#build
+  - ch.java-oop.exceptions-failure-contracts#diagnose
+  - ch.java-engineering.io-resource-lifecycle#build
+  - ch.java-engineering.io-resource-lifecycle#diagnose
+  - ch.java-engineering.nio-files-charsets#build
+  - ch.java-engineering.nio-files-charsets#diagnose
+  - ch.java-engineering.json-mapping#build
+  - ch.java-engineering.json-mapping#diagnose
+  review:
+  - ch.java-engineering.complexity-algorithms#build
+  - ch.java-engineering.complexity-algorithms#diagnose
+  support:
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-oop.enum-record-sealed#explain
+- week: 7
+  title: Lambda、Stream 与 Optional
+  progress_theme: Lambda、Stream、Optional
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-engineering.lambdas-functional-interfaces#explain
+  - ch.java-engineering.functional-pipelines#explain
+  practice_diagnosis:
+  - ch.java-engineering.lambdas-functional-interfaces#build
+  - ch.java-engineering.lambdas-functional-interfaces#diagnose
+  - ch.java-engineering.functional-pipelines#build
+  - ch.java-engineering.functional-pipelines#diagnose
+  review:
+  - ch.java-engineering.json-mapping#build
+  - ch.java-engineering.json-mapping#diagnose
+  support:
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-engineering.associative-collections#explain
+- week: 8
+  title: 并发、虚拟线程、JVM 与 Java 阶段考核
+  progress_theme: 并发、虚拟线程、JVM、G1
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.foundations.computer-process-model#explain
+  - ch.java-engineering.threads-jmm#explain
+  - ch.java-engineering.executors-virtual-threads#explain
+  - ch.java-engineering.annotations-metadata#explain
+  - ch.java-engineering.reflection-classloading-proxies#explain
+  - ch.java-engineering.network-programming#explain
+  - ch.java-engineering.logging-jvm-diagnostics#explain
+  practice_diagnosis:
+  - ch.foundations.computer-process-model#build
+  - ch.java-engineering.threads-jmm#build
+  - ch.java-engineering.threads-jmm#diagnose
+  - ch.java-engineering.executors-virtual-threads#build
+  - ch.java-engineering.executors-virtual-threads#diagnose
+  - ch.java-engineering.annotations-metadata#build
+  - ch.java-engineering.annotations-metadata#diagnose
+  - ch.java-engineering.reflection-classloading-proxies#build
+  - ch.java-engineering.reflection-classloading-proxies#diagnose
+  - ch.java-engineering.logging-jvm-diagnostics#build
+  - ch.java-engineering.logging-jvm-diagnostics#diagnose
+  review:
+  - ch.java-engineering.functional-pipelines#build
+  - ch.java-engineering.functional-pipelines#diagnose
+  support:
+  - ch.foundations.terminal-shell#explain
+  - ch.java-oop.static-class-state#explain
+  - ch.java-engineering.io-resource-lifecycle#explain
+  - ch.java-oop.classes-objects#explain
+- week: 9
+  title: Maven 与 Spring Core
+  progress_theme: Maven、Spring Core、DI
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-engineering.maven-reproducible-builds#explain
+  - ch.spring.servlet-request-lifecycle#explain
+  - ch.spring.ioc-di#explain
+  - ch.spring.beans-lifecycle-scopes#explain
+  - ch.spring.configuration-profiles#explain
+  - ch.spring.boot-autoconfiguration#explain
+  - ch.spring.aop-proxy-model#explain
+  practice_diagnosis:
+  - ch.java-engineering.maven-reproducible-builds#build
+  - ch.java-engineering.maven-reproducible-builds#diagnose
+  - ch.spring.servlet-request-lifecycle#build
+  - ch.spring.servlet-request-lifecycle#diagnose
+  - ch.spring.ioc-di#build
+  - ch.spring.ioc-di#diagnose
+  - ch.spring.beans-lifecycle-scopes#build
+  - ch.spring.beans-lifecycle-scopes#diagnose
+  - ch.spring.configuration-profiles#build
+  - ch.spring.configuration-profiles#diagnose
+  - ch.spring.boot-autoconfiguration#build
+  - ch.spring.boot-autoconfiguration#diagnose
+  review:
+  - ch.java-engineering.logging-jvm-diagnostics#build
+  - ch.java-engineering.logging-jvm-diagnostics#diagnose
+  support:
+  - ch.java.maven-junit-smoke#explain
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-engineering.reflection-classloading-proxies#explain
+- week: 10
+  title: Spring Boot Web、REST、DTO、校验与错误
+  progress_theme: Spring Boot Web、REST、DTO、校验
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.foundations.http-curl#explain
+  - ch.foundations.api-contract-basics#explain
+  - ch.spring.mvc-routing-binding#explain
+  - ch.spring.dto-json-content-negotiation#explain
+  - ch.spring.validation#explain
+  - ch.spring.problem-details-errors#explain
+  - ch.spring.service-use-cases#explain
+  practice_diagnosis:
+  - ch.foundations.http-curl#build
+  - ch.foundations.api-contract-basics#build
+  - ch.java-engineering.network-programming#build
+  - ch.java-engineering.network-programming#diagnose
+  - ch.spring.mvc-routing-binding#build
+  - ch.spring.mvc-routing-binding#diagnose
+  - ch.spring.dto-json-content-negotiation#build
+  - ch.spring.dto-json-content-negotiation#diagnose
+  - ch.spring.validation#build
+  - ch.spring.validation#diagnose
+  - ch.spring.problem-details-errors#build
+  - ch.spring.problem-details-errors#diagnose
+  - ch.spring.service-use-cases#build
+  - ch.spring.service-use-cases#diagnose
+  review:
+  - ch.spring.boot-autoconfiguration#build
+  - ch.spring.boot-autoconfiguration#diagnose
+  support:
+  - ch.spring.servlet-request-lifecycle#explain
+  - ch.spring.boot-autoconfiguration#explain
+  - ch.java-engineering.json-mapping#explain
+  - ch.java-engineering.io-resource-lifecycle#explain
+- week: 11
+  title: Java 测试体系、Testcontainers 与 OpenAPI
+  progress_theme: Java 测试、Testcontainers、OpenAPI
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.java-engineering.testing-test-doubles#explain
+  - ch.spring.testing-testcontainers#explain
+  - ch.spring.openapi-contracts#explain
+  - ch.spring.actuator-health-metrics#explain
+  practice_diagnosis:
+  - ch.foundations.testing-oracles#diagnose
+  - ch.java-engineering.testing-test-doubles#build
+  - ch.java-engineering.testing-test-doubles#diagnose
+  - ch.spring.testing-testcontainers#build
+  - ch.spring.testing-testcontainers#diagnose
+  - ch.spring.actuator-health-metrics#build
+  - ch.spring.actuator-health-metrics#diagnose
+  review:
+  - ch.spring.service-use-cases#build
+  - ch.spring.service-use-cases#diagnose
+  support:
+  - ch.java-engineering.maven-reproducible-builds#explain
+  - ch.java-oop.exceptions-failure-contracts#explain
+  - ch.spring.mvc-routing-binding#explain
+  - ch.spring.problem-details-errors#explain
+- week: 12
+  title: SQL 语法、查询、聚合、JOIN 与数据修改
+  progress_theme: SQL 基础、JOIN、聚合、CTE、窗口
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.data.relational-model#explain
+  - ch.data.postgresql-psql#explain
+  - ch.data.select-rowsets#explain
+  - ch.data.scalar-functions#explain
+  - ch.data.aggregates#explain
+  - ch.data.joins#explain
+  - ch.data.subqueries-cte#explain
+  - ch.data.window-functions#explain
+  - ch.data.dml#explain
+  practice_diagnosis:
+  - ch.data.postgresql-psql#build
+  - ch.data.postgresql-psql#diagnose
+  - ch.data.select-rowsets#build
+  - ch.data.select-rowsets#diagnose
+  - ch.data.scalar-functions#build
+  - ch.data.scalar-functions#diagnose
+  - ch.data.aggregates#build
+  - ch.data.aggregates#diagnose
+  - ch.data.joins#build
+  - ch.data.joins#diagnose
+  - ch.data.subqueries-cte#build
+  - ch.data.subqueries-cte#diagnose
+  - ch.data.window-functions#build
+  - ch.data.window-functions#diagnose
+  - ch.data.dml#build
+  - ch.data.dml#diagnose
+  review:
+  - ch.spring.actuator-health-metrics#build
+  - ch.spring.actuator-health-metrics#diagnose
+  support:
+  - ch.foundations.cli-streams-exit-codes#explain
+- week: 13
+  title: PostgreSQL 关系建模、约束与迁移
+  progress_theme: PostgreSQL 建模、约束、迁移
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.data.ddl-constraints#explain
+  - ch.data.normalization-modeling#explain
+  - ch.data.postgresql-types#explain
+  - ch.data.schema-migrations#explain
+  practice_diagnosis:
+  - ch.data.relational-model#build
+  - ch.data.relational-model#diagnose
+  - ch.data.ddl-constraints#build
+  - ch.data.ddl-constraints#diagnose
+  - ch.data.normalization-modeling#build
+  - ch.data.normalization-modeling#diagnose
+  - ch.data.postgresql-types#build
+  - ch.data.postgresql-types#diagnose
+  review:
+  - ch.data.dml#build
+  - ch.data.dml#diagnose
+  support:
+  - ch.data.postgresql-psql#explain
+  - ch.foundations.dependencies-build-packages#explain
+- week: 14
+  title: 索引、执行计划、事务隔离与锁
+  progress_theme: 索引、EXPLAIN、事务与锁
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.data.indexes-explain#explain
+  - ch.data.transactions-locking#explain
+  practice_diagnosis:
+  - ch.data.indexes-explain#build
+  - ch.data.indexes-explain#diagnose
+  - ch.data.transactions-locking#build
+  - ch.data.transactions-locking#diagnose
+  review:
+  - ch.data.postgresql-types#build
+  - ch.data.postgresql-types#diagnose
+  support:
+  - ch.data.select-rowsets#explain
+  - ch.data.ddl-constraints#explain
+  - ch.foundations.testing-oracles#explain
+  - ch.data.dml#explain
+- week: 15
+  title: MyBatis、Flyway、持久化垂直切片与阶段考核
+  progress_theme: MyBatis、Flyway、持久化、G2
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.data.jdbc#explain
+  - ch.data.mybatis-core#explain
+  - ch.spring.datasource-pooling#explain
+  - ch.spring.mybatis-repositories#explain
+  - ch.spring.transactions#explain
+  practice_diagnosis:
+  - ch.data.schema-migrations#build
+  - ch.data.schema-migrations#diagnose
+  - ch.data.jdbc#build
+  - ch.data.jdbc#diagnose
+  - ch.data.mybatis-core#build
+  - ch.data.mybatis-core#diagnose
+  - ch.spring.datasource-pooling#build
+  - ch.spring.datasource-pooling#diagnose
+  - ch.spring.mybatis-repositories#build
+  - ch.spring.mybatis-repositories#diagnose
+  - ch.spring.aop-proxy-model#build
+  - ch.spring.aop-proxy-model#diagnose
+  - ch.spring.transactions#build
+  - ch.spring.transactions#diagnose
+  review:
+  - ch.data.transactions-locking#build
+  - ch.data.transactions-locking#diagnose
+  support:
+  - ch.java-engineering.maven-reproducible-builds#explain
+  - ch.java-engineering.io-resource-lifecycle#explain
+  - ch.data.transactions-locking#explain
+  - ch.java-engineering.generics-type-safety#explain
+- week: 16
+  title: Spring Security、Session、JWT 与 OIDC
+  progress_theme: Spring Security、Session、JWT、OIDC
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.foundations.network-layers#explain
+  - ch.security.threat-model-trust-boundaries#explain
+  - ch.security.identity-password-lifecycle#explain
+  - ch.security.cookie-session-model#explain
+  - ch.security.origin-cors-csrf#explain
+  - ch.security.untrusted-input-xss-ssrf#explain
+  - ch.security.spring-security-architecture#explain
+  - ch.security.session-authentication#explain
+  - ch.security.jwt-resource-server#explain
+  - ch.security.oauth2-oidc#explain
+  practice_diagnosis:
+  - ch.foundations.network-layers#build
+  - ch.security.threat-model-trust-boundaries#build
+  - ch.security.threat-model-trust-boundaries#diagnose
+  - ch.security.identity-password-lifecycle#build
+  - ch.security.identity-password-lifecycle#diagnose
+  - ch.security.cookie-session-model#build
+  - ch.security.cookie-session-model#diagnose
+  - ch.security.spring-security-architecture#build
+  - ch.security.spring-security-architecture#diagnose
+  - ch.security.session-authentication#build
+  - ch.security.session-authentication#diagnose
+  - ch.security.jwt-resource-server#build
+  - ch.security.jwt-resource-server#diagnose
+  - ch.security.oauth2-oidc#build
+  - ch.security.oauth2-oidc#diagnose
+  review:
+  - ch.spring.transactions#build
+  - ch.spring.transactions#diagnose
+  support:
+  - ch.foundations.cli-streams-exit-codes#explain
+  - ch.foundations.api-contract-basics#explain
+  - ch.foundations.testing-oracles#explain
+  - ch.java-oop.business-value-types#explain
+- week: 17
+  title: RBAC、多租户、数据权限与审计
+  progress_theme: RBAC、多租户、数据权限、审计
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.security.authorization-rbac-abac#explain
+  - ch.security.multitenancy-data-isolation#explain
+  - ch.security.audit-events-privacy#explain
+  practice_diagnosis:
+  - ch.security.authorization-rbac-abac#build
+  - ch.security.authorization-rbac-abac#diagnose
+  - ch.security.multitenancy-data-isolation#build
+  - ch.security.multitenancy-data-isolation#diagnose
+  - ch.security.audit-events-privacy#build
+  - ch.security.audit-events-privacy#diagnose
+  review:
+  - ch.security.oauth2-oidc#build
+  - ch.security.oauth2-oidc#diagnose
+  support:
+  - ch.security.jwt-resource-server#explain
+  - ch.spring.transactions#explain
+  - ch.java-engineering.logging-jvm-diagnostics#explain
+- week: 18
+  title: 领域模型、工单状态机、SLA 与乐观锁
+  progress_theme: 领域模型、状态机、SLA、乐观锁
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.architecture.domain-modeling#explain
+  - ch.architecture.workflow-state-sla#explain
+  - ch.architecture.idempotency-concurrency#explain
+  practice_diagnosis:
+  - ch.architecture.domain-modeling#build
+  - ch.architecture.domain-modeling#diagnose
+  - ch.architecture.workflow-state-sla#build
+  - ch.architecture.workflow-state-sla#diagnose
+  review:
+  - ch.security.audit-events-privacy#build
+  - ch.security.audit-events-privacy#diagnose
+  support:
+  - ch.java-oop.interfaces-polymorphism#explain
+  - ch.java-oop.business-value-types#explain
+  - ch.data.transactions-locking#explain
+  - ch.spring.transactions#explain
+- week: 19
+  title: Redis、缓存、幂等、限流与一致性
+  progress_theme: Redis、缓存、幂等、限流、一致性
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.distributed.redis-cache-rate-limit#explain
+  practice_diagnosis:
+  - ch.architecture.idempotency-concurrency#build
+  - ch.architecture.idempotency-concurrency#diagnose
+  - ch.distributed.redis-cache-rate-limit#build
+  - ch.distributed.redis-cache-rate-limit#diagnose
+  review:
+  - ch.architecture.workflow-state-sla#build
+  - ch.architecture.workflow-state-sla#diagnose
+  support:
+  - ch.architecture.idempotency-concurrency#explain
+  - ch.architecture.workflow-state-sla#explain
+  - ch.spring.transactions#explain
+  - ch.java-engineering.threads-jmm#explain
+- week: 20
+  title: 异步、领域事件、Outbox 与 RabbitMQ 概念
+  progress_theme: 异步、事件、Outbox、RabbitMQ 概念
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.architecture.domain-events-outbox#explain
+  - ch.distributed.messaging-delivery#explain
+  practice_diagnosis:
+  - ch.architecture.domain-events-outbox#build
+  - ch.architecture.domain-events-outbox#diagnose
+  - ch.distributed.messaging-delivery#build
+  - ch.distributed.messaging-delivery#diagnose
+  review:
+  - ch.distributed.redis-cache-rate-limit#build
+  - ch.distributed.redis-cache-rate-limit#diagnose
+  support:
+  - ch.architecture.idempotency-concurrency#explain
+- week: 21
+  title: 模块化单体、Spring Modulith 与阶段考核
+  progress_theme: 模块化单体、Spring Modulith、G3
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.architecture.modular-monolith#explain
+  - ch.architecture.observability-slo#explain
+  practice_diagnosis:
+  - ch.architecture.modular-monolith#build
+  - ch.architecture.modular-monolith#diagnose
+  - ch.architecture.observability-slo#build
+  - ch.architecture.observability-slo#diagnose
+  review:
+  - ch.distributed.messaging-delivery#build
+  - ch.distributed.messaging-delivery#diagnose
+  support:
+  - ch.distributed.messaging-delivery#explain
+  - ch.spring.actuator-health-metrics#explain
+  - ch.security.audit-events-privacy#explain
+- week: 22
+  title: HTML、表单、可访问性与 CSS 布局基础
+  progress_theme: HTML、表单、可访问性、CSS 布局
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.web.browser-render-devtools#explain
+  - ch.web.origin-cookie-cache#explain
+  - ch.web.semantic-html#explain
+  - ch.web.forms-validation#explain
+  - ch.web.media-assets#explain
+  - ch.web.accessibility-interaction#explain
+  - ch.css.cascade#explain
+  - ch.css.box-position#explain
+  - ch.css.flexbox#explain
+  - ch.css.grid#explain
+  - ch.css.responsive-typography#explain
+  - ch.css.theme-variables#explain
+  - ch.css.motion-compositing#explain
+  practice_diagnosis:
+  - ch.web.semantic-html#build
+  - ch.web.forms-validation#build
+  - ch.web.media-assets#build
+  - ch.web.accessibility-interaction#build
+  review:
+  - ch.architecture.observability-slo#build
+  - ch.architecture.observability-slo#diagnose
+  support:
+  - ch.foundations.http-curl#explain
+- week: 23
+  title: JavaScript 值、作用域、函数、对象、原型与模块
+  progress_theme: JavaScript 语言核心
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.js.runtime-esm#explain
+  - ch.js.statements-variables#explain
+  - ch.js.values-operators#explain
+  - ch.js.control-flow#explain
+  - ch.js.functions#explain
+  - ch.js.scope-closures#explain
+  - ch.js.collections#explain
+  - ch.js.object-model#explain
+  practice_diagnosis:
+  - ch.css.cascade#build
+  - ch.css.box-position#build
+  - ch.css.flexbox#build
+  - ch.css.grid#build
+  - ch.js.runtime-esm#build
+  - ch.js.runtime-esm#diagnose
+  - ch.js.statements-variables#build
+  - ch.js.statements-variables#diagnose
+  - ch.js.values-operators#build
+  - ch.js.values-operators#diagnose
+  - ch.js.control-flow#build
+  - ch.js.control-flow#diagnose
+  - ch.js.functions#build
+  - ch.js.functions#diagnose
+  - ch.js.scope-closures#build
+  - ch.js.scope-closures#diagnose
+  - ch.js.collections#build
+  - ch.js.collections#diagnose
+  - ch.js.object-model#build
+  - ch.js.object-model#diagnose
+  review:
+  - ch.web.media-assets#build
+  - ch.web.accessibility-interaction#build
+  support:
+  - ch.foundations.dependencies-build-packages#explain
+  - ch.web.semantic-html#explain
+  - ch.css.cascade#explain
+  - ch.css.box-position#explain
+- week: 24
+  title: DOM、事件循环、Promise、Fetch、取消与浏览器安全
+  progress_theme: DOM、事件循环、异步、Fetch、浏览器安全
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.js.dom-mutation#explain
+  - ch.js.events-forms#explain
+  - ch.js.event-loop#explain
+  - ch.js.fetch-cancellation-race#explain
+  - ch.js.browser-performance#explain
+  practice_diagnosis:
+  - ch.foundations.computer-process-model#diagnose
+  - ch.security.origin-cors-csrf#build
+  - ch.security.origin-cors-csrf#diagnose
+  - ch.security.untrusted-input-xss-ssrf#build
+  - ch.security.untrusted-input-xss-ssrf#diagnose
+  - ch.web.browser-render-devtools#build
+  - ch.web.browser-render-devtools#diagnose
+  - ch.web.origin-cookie-cache#build
+  - ch.web.origin-cookie-cache#diagnose
+  - ch.js.dom-mutation#build
+  - ch.js.dom-mutation#diagnose
+  - ch.js.events-forms#build
+  - ch.js.events-forms#diagnose
+  - ch.js.event-loop#build
+  - ch.js.event-loop#diagnose
+  - ch.js.fetch-cancellation-race#build
+  - ch.js.fetch-cancellation-race#diagnose
+  review:
+  - ch.js.object-model#build
+  - ch.js.object-model#diagnose
+  support:
+  - ch.js.collections#explain
+  - ch.web.semantic-html#explain
+  - ch.js.object-model#explain
+  - ch.web.forms-validation#explain
+- week: 25
+  title: TypeScript 类型系统、泛型、收窄与运行时边界
+  progress_theme: TypeScript 类型系统与运行时边界
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.ts.foundations#explain
+  - ch.ts.modeling-narrowing#explain
+  - ch.ts.generics-utilities#explain
+  - ch.ts.runtime-boundaries#explain
+  practice_diagnosis:
+  - ch.css.responsive-typography#build
+  - ch.ts.foundations#build
+  - ch.ts.foundations#diagnose
+  - ch.ts.modeling-narrowing#build
+  - ch.ts.modeling-narrowing#diagnose
+  - ch.ts.generics-utilities#build
+  - ch.ts.generics-utilities#diagnose
+  review:
+  - ch.js.fetch-cancellation-race#build
+  - ch.js.fetch-cancellation-race#diagnose
+  support:
+  - ch.js.collections#explain
+  - ch.js.object-model#explain
+  - ch.js.fetch-cancellation-race#explain
+  - ch.web.media-assets#explain
+- week: 26
+  title: Vue3 SFC、模板、响应式、组件、生命周期与 Composable
+  progress_theme: Vue3 核心、响应式、组件、Composable
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.vue.vite-sfc#explain
+  - ch.vue.template-directives#explain
+  - ch.vue.forms-vmodel#explain
+  - ch.vue.reactivity#explain
+  - ch.vue.effects-lifecycle#explain
+  - ch.vue.components-contracts#explain
+  - ch.vue.composables-di#explain
+  practice_diagnosis:
+  - ch.css.cascade#diagnose
+  - ch.css.box-position#diagnose
+  - ch.css.flexbox#diagnose
+  - ch.css.theme-variables#build
+  - ch.vue.vite-sfc#build
+  - ch.vue.vite-sfc#diagnose
+  - ch.vue.template-directives#build
+  - ch.vue.template-directives#diagnose
+  - ch.vue.forms-vmodel#build
+  - ch.vue.forms-vmodel#diagnose
+  - ch.vue.reactivity#build
+  - ch.vue.reactivity#diagnose
+  - ch.vue.effects-lifecycle#build
+  - ch.vue.effects-lifecycle#diagnose
+  - ch.vue.components-contracts#build
+  - ch.vue.components-contracts#diagnose
+  - ch.vue.composables-di#build
+  - ch.vue.composables-di#diagnose
+  review:
+  - ch.ts.generics-utilities#build
+  - ch.ts.generics-utilities#diagnose
+  support:
+  - ch.ts.foundations#explain
+  - ch.css.cascade#explain
+  - ch.web.forms-validation#explain
+  - ch.js.scope-closures#explain
+- week: 27
+  title: Vite、Router、Pinia、服务端状态与企业后台
+  progress_theme: Vite、Router、Pinia、企业后台
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.vue.router-navigation#explain
+  - ch.vue.pinia-state#explain
+  - ch.vue.server-state#explain
+  - ch.vue.auth-permissions#explain
+  - ch.vue.component-testing#explain
+  practice_diagnosis:
+  - ch.css.grid#diagnose
+  - ch.vue.router-navigation#build
+  - ch.vue.router-navigation#diagnose
+  - ch.vue.pinia-state#build
+  - ch.vue.pinia-state#diagnose
+  review:
+  - ch.vue.composables-di#build
+  - ch.vue.composables-di#diagnose
+  support:
+  - ch.vue.components-contracts#explain
+  - ch.security.authorization-rbac-abac#explain
+  - ch.css.box-position#explain
+- week: 28
+  title: Nuxt 4、SSR/CSR/SSG、Hydration、认证与部署
+  progress_theme: Nuxt 4、渲染、Hydration、部署
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.vue.accessibility#explain
+  - ch.vue.performance#explain
+  - ch.nuxt.rendering-hydration#explain
+  practice_diagnosis:
+  - ch.css.responsive-typography#diagnose
+  - ch.css.theme-variables#diagnose
+  - ch.css.motion-compositing#build
+  - ch.vue.auth-permissions#build
+  - ch.vue.auth-permissions#diagnose
+  - ch.nuxt.rendering-hydration#build
+  - ch.nuxt.rendering-hydration#diagnose
+  review:
+  - ch.vue.pinia-state#build
+  - ch.vue.pinia-state#diagnose
+  support:
+  - ch.vue.components-contracts#explain
+  - ch.web.accessibility-interaction#explain
+  - ch.vue.component-testing#explain
+  - ch.web.media-assets#explain
+- week: 29
+  title: Web 测试、SSE、错误恢复、性能与阶段考核
+  progress_theme: Web 测试、SSE、恢复、性能、G4
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.js.testing-debugging#explain
+  practice_diagnosis:
+  - ch.web.semantic-html#diagnose
+  - ch.web.forms-validation#diagnose
+  - ch.web.media-assets#diagnose
+  - ch.web.accessibility-interaction#diagnose
+  - ch.css.motion-compositing#diagnose
+  - ch.js.testing-debugging#build
+  - ch.js.testing-debugging#diagnose
+  - ch.js.browser-performance#build
+  - ch.js.browser-performance#diagnose
+  - ch.vue.server-state#build
+  - ch.vue.server-state#diagnose
+  - ch.vue.component-testing#build
+  - ch.vue.component-testing#diagnose
+  - ch.vue.accessibility#build
+  - ch.vue.accessibility#diagnose
+  - ch.vue.performance#build
+  - ch.vue.performance#diagnose
+  review:
+  - ch.nuxt.rendering-hydration#build
+  - ch.nuxt.rendering-hydration#diagnose
+  support:
+  - ch.js.collections#explain
+  - ch.web.browser-render-devtools#explain
+  - ch.web.semantic-html#explain
+  - ch.web.origin-cookie-cache#explain
+- week: 30
+  title: uni-app 运行模型与扫码报修
+  progress_theme: uni-app 运行模型与扫码报修
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.miniapp.runtime#explain
+  - ch.uniapp.toolchain-pages#explain
+  - ch.uniapp.template-components#explain
+  - ch.uniapp.network-auth-storage#explain
+  - ch.uniapp.factorycare-reporter#explain
+  practice_diagnosis:
+  - ch.miniapp.runtime#build
+  - ch.miniapp.runtime#diagnose
+  - ch.uniapp.toolchain-pages#build
+  - ch.uniapp.toolchain-pages#diagnose
+  - ch.uniapp.template-components#build
+  - ch.uniapp.template-components#diagnose
+  - ch.uniapp.network-auth-storage#build
+  - ch.uniapp.network-auth-storage#diagnose
+  - ch.uniapp.factorycare-reporter#build
+  - ch.uniapp.factorycare-reporter#diagnose
+  review:
+  - ch.vue.performance#build
+  - ch.vue.performance#diagnose
+  support:
+  - ch.foundations.cli-streams-exit-codes#explain
+  - ch.vue.vite-sfc#explain
+  - ch.vue.components-contracts#explain
+  - ch.security.session-authentication#explain
+- week: 31
+  title: uni-app 真机、权限、上传、缓存与发布
+  progress_theme: uni-app 真机、权限、上传、缓存、发布
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.uniapp.platform-conditional#explain
+  - ch.uniapp.device-capabilities#explain
+  - ch.uniapp.testing-debugging#explain
+  - ch.uniapp.packages-performance#explain
+  - ch.uniapp.offline-idempotency#explain
+  - ch.uniapp.privacy-review#explain
+  - ch.uniapp.release-monitoring#explain
+  practice_diagnosis:
+  - ch.uniapp.platform-conditional#build
+  - ch.uniapp.platform-conditional#diagnose
+  - ch.uniapp.device-capabilities#build
+  - ch.uniapp.device-capabilities#diagnose
+  - ch.uniapp.testing-debugging#build
+  - ch.uniapp.testing-debugging#diagnose
+  - ch.uniapp.packages-performance#build
+  - ch.uniapp.packages-performance#diagnose
+  - ch.uniapp.offline-idempotency#build
+  - ch.uniapp.offline-idempotency#diagnose
+  - ch.uniapp.privacy-review#build
+  - ch.uniapp.privacy-review#diagnose
+  - ch.uniapp.release-monitoring#build
+  - ch.uniapp.release-monitoring#diagnose
+  review:
+  - ch.uniapp.factorycare-reporter#build
+  - ch.uniapp.factorycare-reporter#diagnose
+  support:
+  - ch.uniapp.template-components#explain
+  - ch.uniapp.network-auth-storage#explain
+  - ch.architecture.idempotency-concurrency#explain
+- week: 32
+  title: Dart 语法、类型、空安全、控制流、函数与集合
+  progress_theme: Dart 语法、类型、空安全、控制流、集合
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.dart.toolchain#explain
+  - ch.dart.types-null-safety#explain
+  - ch.dart.control-functions#explain
+  - ch.dart.collections-patterns#explain
+  practice_diagnosis:
+  - ch.dart.toolchain#build
+  - ch.dart.toolchain#diagnose
+  - ch.dart.types-null-safety#build
+  - ch.dart.types-null-safety#diagnose
+  - ch.dart.control-functions#build
+  - ch.dart.control-functions#diagnose
+  - ch.dart.collections-patterns#build
+  - ch.dart.collections-patterns#diagnose
+  review:
+  - ch.uniapp.release-monitoring#build
+  - ch.uniapp.release-monitoring#diagnose
+  support:
+  - ch.foundations.dependencies-build-packages#explain
+- week: 33
+  title: Dart 类、泛型、异常、Future、Stream 与测试
+  progress_theme: Dart OOP、泛型、Future、Stream、测试
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.dart.oop-generics#explain
+  - ch.dart.exceptions-resources#explain
+  - ch.dart.future-cancellation#explain
+  - ch.dart.streams-isolates#explain
+  - ch.dart.testing-lints#explain
+  practice_diagnosis:
+  - ch.dart.oop-generics#build
+  - ch.dart.oop-generics#diagnose
+  - ch.dart.exceptions-resources#build
+  - ch.dart.exceptions-resources#diagnose
+  - ch.dart.future-cancellation#build
+  - ch.dart.future-cancellation#diagnose
+  - ch.dart.streams-isolates#build
+  - ch.dart.streams-isolates#diagnose
+  - ch.dart.testing-lints#build
+  - ch.dart.testing-lints#diagnose
+  review:
+  - ch.dart.collections-patterns#build
+  - ch.dart.collections-patterns#diagnose
+  support:
+  - ch.dart.collections-patterns#explain
+- week: 34
+  title: Flutter Widget、布局、导航、表单与状态
+  progress_theme: Flutter Widget、布局、导航、状态
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.flutter.toolchain-project#explain
+  - ch.flutter.widget-tree#explain
+  - ch.flutter.layout-accessibility#explain
+  - ch.flutter.state-lifecycle#explain
+  - ch.flutter.navigation-forms#explain
+  - ch.flutter.architecture-state#explain
+  practice_diagnosis:
+  - ch.flutter.toolchain-project#build
+  - ch.flutter.toolchain-project#diagnose
+  - ch.flutter.widget-tree#build
+  - ch.flutter.widget-tree#diagnose
+  - ch.flutter.layout-accessibility#build
+  - ch.flutter.layout-accessibility#diagnose
+  - ch.flutter.state-lifecycle#build
+  - ch.flutter.state-lifecycle#diagnose
+  - ch.flutter.navigation-forms#build
+  - ch.flutter.navigation-forms#diagnose
+  review:
+  - ch.dart.testing-lints#build
+  - ch.dart.testing-lints#diagnose
+  support:
+  - ch.dart.oop-generics#explain
+  - ch.web.accessibility-interaction#explain
+  - ch.dart.future-cancellation#explain
+- week: 35
+  title: Flutter 架构、API、离线、设备能力、测试与构建
+  progress_theme: Flutter 架构、API、离线、设备、构建、G5
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.flutter.network-storage-offline#explain
+  - ch.flutter.device-apis#explain
+  - ch.flutter.testing-performance#explain
+  - ch.flutter.release-monitoring#explain
+  practice_diagnosis:
+  - ch.flutter.architecture-state#build
+  - ch.flutter.architecture-state#diagnose
+  - ch.flutter.network-storage-offline#build
+  - ch.flutter.network-storage-offline#diagnose
+  - ch.flutter.device-apis#build
+  - ch.flutter.device-apis#diagnose
+  - ch.flutter.testing-performance#build
+  - ch.flutter.testing-performance#diagnose
+  - ch.flutter.release-monitoring#build
+  - ch.flutter.release-monitoring#diagnose
+  review:
+  - ch.flutter.navigation-forms#build
+  - ch.flutter.navigation-forms#diagnose
+  support:
+  - ch.flutter.state-lifecycle#explain
+  - ch.architecture.idempotency-concurrency#explain
+  - ch.security.untrusted-input-xss-ssrf#explain
+  - ch.dart.testing-lints#explain
+- week: 36
+  title: Python 语法、类型、控制流、集合、函数与模块
+  progress_theme: Python 语法、类型、控制流、函数、模块
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.python.runtime-uv#explain
+  - ch.python.syntax-values-io#explain
+  - ch.python.control-flow#explain
+  - ch.python.functions-scope#explain
+  - ch.python.collections#explain
+  - ch.python.typing-foundations#explain
+  - ch.python.modules-packages#explain
+  practice_diagnosis:
+  - ch.python.runtime-uv#build
+  - ch.python.runtime-uv#diagnose
+  - ch.python.syntax-values-io#build
+  - ch.python.syntax-values-io#diagnose
+  - ch.python.control-flow#build
+  - ch.python.control-flow#diagnose
+  - ch.python.functions-scope#build
+  - ch.python.functions-scope#diagnose
+  - ch.python.collections#build
+  - ch.python.collections#diagnose
+  - ch.python.typing-foundations#build
+  - ch.python.typing-foundations#diagnose
+  - ch.python.modules-packages#build
+  - ch.python.modules-packages#diagnose
+  review:
+  - ch.flutter.release-monitoring#build
+  - ch.flutter.release-monitoring#diagnose
+  support:
+  - ch.foundations.dependencies-build-packages#explain
+- week: 37
+  title: Python 类、数据模型、异常、文件、typing、pytest 与 uv
+  progress_theme: Python OOP、异常、文件、typing、pytest、uv
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.python.files-json-time#explain
+  - ch.python.classes-dataclass#explain
+  - ch.python.protocol-generics#explain
+  - ch.python.exceptions-context#explain
+  - ch.python.iterators-decorators#explain
+  - ch.python.testing-logging-debug#explain
+  - ch.data.numpy#explain
+  - ch.data.pandas#explain
+  practice_diagnosis:
+  - ch.python.files-json-time#build
+  - ch.python.files-json-time#diagnose
+  - ch.python.classes-dataclass#build
+  - ch.python.classes-dataclass#diagnose
+  - ch.python.protocol-generics#build
+  - ch.python.protocol-generics#diagnose
+  - ch.python.exceptions-context#build
+  - ch.python.exceptions-context#diagnose
+  - ch.python.iterators-decorators#build
+  - ch.python.iterators-decorators#diagnose
+  - ch.python.testing-logging-debug#build
+  - ch.python.testing-logging-debug#diagnose
+  review:
+  - ch.python.modules-packages#build
+  - ch.python.modules-packages#diagnose
+  support:
+  - ch.python.modules-packages#explain
+  - ch.python.typing-foundations#explain
+  - ch.python.collections#explain
+- week: 38
+  title: Python async、FastAPI、Pydantic、配置、日志与服务测试
+  progress_theme: Python async、FastAPI、Pydantic、日志
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.python.asyncio-cancellation#explain
+  - ch.python.pydantic-validation#explain
+  - ch.fastapi.web-foundations#explain
+  - ch.fastapi.security-testing-openapi#explain
+  practice_diagnosis:
+  - ch.python.asyncio-cancellation#build
+  - ch.python.asyncio-cancellation#diagnose
+  - ch.python.pydantic-validation#build
+  - ch.python.pydantic-validation#diagnose
+  - ch.fastapi.web-foundations#build
+  - ch.fastapi.web-foundations#diagnose
+  review:
+  - ch.python.testing-logging-debug#build
+  - ch.python.testing-logging-debug#diagnose
+  support:
+  - ch.python.exceptions-context#explain
+  - ch.foundations.http-curl#explain
+  - ch.python.testing-logging-debug#explain
+  - ch.security.session-authentication#explain
+- week: 39
+  title: 机器学习、深度学习与 PyTorch 概念
+  progress_theme: ML/DL 与 PyTorch 概念
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L1-L2
+  evidence_requirements:
+  - timed-teach-back
+  - guided-experiment
+  - boundary-diagnosis
+  required:
+  - ch.math.algebra-units#explain
+  - ch.math.functions-graphs#explain
+  - ch.math.linear-algebra#explain
+  - ch.math.probability-statistics#explain
+  - ch.math.gradients#explain
+  - ch.ml.problem-data-split#explain
+  - ch.ml.preprocessing-features#explain
+  - ch.ml.supervised-learning#explain
+  - ch.ml.unsupervised-learning#explain
+  - ch.ml.metrics-validation#explain
+  - ch.ml.neural-networks#explain
+  - ch.ml.attention-sequences#explain
+  - ch.pytorch.foundations#explain
+  - ch.pytorch.training#explain
+  - ch.pytorch.inference#explain
+  - ch.ml.monitoring-ethics#explain
+  practice_diagnosis:
+  - ch.data.numpy#build
+  - ch.data.numpy#diagnose
+  - ch.data.pandas#build
+  - ch.data.pandas#diagnose
+  - ch.math.algebra-units#build
+  - ch.math.functions-graphs#build
+  - ch.math.linear-algebra#build
+  - ch.math.probability-statistics#build
+  - ch.math.gradients#build
+  - ch.ml.problem-data-split#build
+  - ch.ml.preprocessing-features#build
+  - ch.ml.supervised-learning#build
+  - ch.ml.unsupervised-learning#build
+  - ch.ml.metrics-validation#build
+  review:
+  - ch.fastapi.web-foundations#build
+  - ch.fastapi.web-foundations#diagnose
+  support:
+  - ch.data.pandas#explain
+  - ch.python.classes-dataclass#explain
+  - ch.python.collections#explain
+  - ch.python.files-json-time#explain
+- week: 40
+  title: 模型 API、结构化输出、流与工具调用
+  progress_theme: 模型 API、结构化输出、流、工具调用
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.foundations.ai-assisted-verification#explain
+  - ch.llm.model-foundations#explain
+  - ch.llm.api-prompts-cost#explain
+  - ch.llm.structured-output#explain
+  - ch.llm.streaming-resilience#explain
+  - ch.llm.tool-calling#explain
+  practice_diagnosis:
+  - ch.foundations.ai-assisted-verification#build
+  - ch.math.algebra-units#diagnose
+  - ch.math.functions-graphs#diagnose
+  - ch.math.linear-algebra#diagnose
+  - ch.math.probability-statistics#diagnose
+  - ch.math.gradients#diagnose
+  - ch.ml.neural-networks#build
+  - ch.ml.attention-sequences#build
+  - ch.pytorch.foundations#build
+  - ch.pytorch.training#build
+  - ch.pytorch.inference#build
+  - ch.llm.model-foundations#build
+  - ch.llm.model-foundations#diagnose
+  - ch.llm.structured-output#build
+  - ch.llm.structured-output#diagnose
+  - ch.llm.tool-calling#build
+  - ch.llm.tool-calling#diagnose
+  review:
+  - ch.ml.unsupervised-learning#build
+  - ch.ml.metrics-validation#build
+  support:
+  - ch.foundations.git-collaboration-security#explain
+  - ch.foundations.dependencies-build-packages#explain
+  - ch.ml.attention-sequences#explain
+  - ch.python.collections#explain
+- week: 41
+  title: 文档管线、pgvector、混合检索与带引用 RAG
+  progress_theme: RAG、pgvector、混合检索、引用
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.rag.ingestion-metadata#explain
+  - ch.rag.chunking-embeddings#explain
+  - ch.ir.lexical-retrieval#explain
+  - ch.ir.evaluation#explain
+  - ch.ir.dense-pgvector#explain
+  - ch.ir.hybrid-rerank#explain
+  - ch.rag.citations-evaluation#explain
+  practice_diagnosis:
+  - ch.rag.ingestion-metadata#build
+  - ch.rag.ingestion-metadata#diagnose
+  - ch.rag.chunking-embeddings#build
+  - ch.rag.chunking-embeddings#diagnose
+  - ch.ir.lexical-retrieval#build
+  - ch.ir.lexical-retrieval#diagnose
+  - ch.ir.evaluation#build
+  - ch.ir.evaluation#diagnose
+  - ch.ir.dense-pgvector#build
+  - ch.ir.dense-pgvector#diagnose
+  - ch.ir.hybrid-rerank#build
+  - ch.ir.hybrid-rerank#diagnose
+  review:
+  - ch.llm.tool-calling#build
+  - ch.llm.tool-calling#diagnose
+  support:
+  - ch.python.exceptions-context#explain
+  - ch.llm.api-prompts-cost#explain
+  - ch.python.collections#explain
+  - ch.math.functions-graphs#explain
+- week: 42
+  title: RAG 评估、安全、成本、降级与观测
+  progress_theme: AI 评估、安全、成本、降级、观测
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.rag.security-observability#explain
+  practice_diagnosis:
+  - ch.ml.problem-data-split#diagnose
+  - ch.ml.preprocessing-features#diagnose
+  - ch.ml.supervised-learning#diagnose
+  - ch.ml.unsupervised-learning#diagnose
+  - ch.ml.metrics-validation#diagnose
+  - ch.ml.neural-networks#diagnose
+  - ch.ml.attention-sequences#diagnose
+  - ch.pytorch.foundations#diagnose
+  - ch.pytorch.training#diagnose
+  - ch.pytorch.inference#diagnose
+  - ch.ml.monitoring-ethics#build
+  - ch.ml.monitoring-ethics#diagnose
+  - ch.llm.api-prompts-cost#build
+  - ch.llm.api-prompts-cost#diagnose
+  - ch.llm.streaming-resilience#build
+  - ch.llm.streaming-resilience#diagnose
+  - ch.rag.citations-evaluation#build
+  - ch.rag.citations-evaluation#diagnose
+  - ch.rag.security-observability#build
+  - ch.rag.security-observability#diagnose
+  review:
+  - ch.ir.hybrid-rerank#build
+  - ch.ir.hybrid-rerank#diagnose
+  support:
+  - ch.llm.tool-calling#explain
+  - ch.rag.citations-evaluation#explain
+  - ch.architecture.observability-slo#explain
+  - ch.math.probability-statistics#explain
+- week: 43
+  title: LangChain、LangGraph、HITL、MCP 与阶段考核
+  progress_theme: LangChain、LangGraph、HITL、MCP、G6
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L2+
+  evidence_requirements:
+  - timed-teach-back
+  - runnable-artifact
+  - fault-diagnosis
+  - requirement-change
+  required:
+  - ch.agent.langchain#explain
+  - ch.agent.langgraph#explain
+  - ch.agent.mcp-boundaries#explain
+  practice_diagnosis:
+  - ch.agent.langchain#build
+  - ch.agent.langchain#diagnose
+  - ch.agent.langgraph#build
+  - ch.agent.langgraph#diagnose
+  - ch.agent.mcp-boundaries#build
+  - ch.agent.mcp-boundaries#diagnose
+  review:
+  - ch.rag.security-observability#build
+  - ch.rag.security-observability#diagnose
+  support:
+  - ch.llm.streaming-resilience#explain
+  - ch.rag.citations-evaluation#explain
+  - ch.llm.tool-calling#explain
+  - ch.rag.security-observability#explain
+- week: 44
+  title: Java、Python、Web、App、小程序契约联调
+  progress_theme: 全链路契约联调
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.architecture.system-design#explain
+  practice_diagnosis:
+  - ch.foundations.http-curl#diagnose
+  - ch.foundations.api-contract-basics#diagnose
+  - ch.spring.openapi-contracts#build
+  - ch.spring.openapi-contracts#diagnose
+  - ch.ts.runtime-boundaries#build
+  - ch.ts.runtime-boundaries#diagnose
+  - ch.fastapi.security-testing-openapi#build
+  - ch.fastapi.security-testing-openapi#diagnose
+  review:
+  - ch.agent.mcp-boundaries#build
+  - ch.agent.mcp-boundaries#diagnose
+  support:
+  - ch.foundations.network-layers#explain
+  - ch.foundations.http-curl#explain
+  - ch.spring.problem-details-errors#explain
+  - ch.ts.modeling-narrowing#explain
+- week: 45
+  title: Linux、Docker、Nginx/TLS 与 CI/CD
+  progress_theme: Linux、Docker、Nginx/TLS、CI/CD
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.foundations.docker-basics#explain
+  - ch.ops.linux-services#explain
+  - ch.ops.network-diagnostics#explain
+  - ch.ops.docker-production#explain
+  - ch.ops.compose-services#explain
+  - ch.ops.nginx-tls#explain
+  - ch.release.ci-quality#explain
+  practice_diagnosis:
+  - ch.foundations.terminal-shell#diagnose
+  - ch.foundations.cli-streams-exit-codes#diagnose
+  - ch.foundations.network-layers#diagnose
+  - ch.foundations.dependencies-build-packages#diagnose
+  - ch.foundations.docker-basics#build
+  - ch.foundations.docker-basics#diagnose
+  - ch.ops.linux-services#build
+  - ch.ops.linux-services#diagnose
+  - ch.ops.network-diagnostics#build
+  - ch.ops.network-diagnostics#diagnose
+  - ch.ops.docker-production#build
+  - ch.ops.docker-production#diagnose
+  - ch.ops.compose-services#build
+  - ch.ops.compose-services#diagnose
+  - ch.ops.nginx-tls#build
+  - ch.ops.nginx-tls#diagnose
+  - ch.release.ci-quality#build
+  - ch.release.ci-quality#diagnose
+  review:
+  - ch.fastapi.security-testing-openapi#build
+  - ch.fastapi.security-testing-openapi#diagnose
+  support:
+  - ch.foundations.network-layers#explain
+  - ch.foundations.testing-oracles#explain
+  - ch.foundations.cli-streams-exit-codes#explain
+  - ch.foundations.http-curl#explain
+- week: 46
+  title: 可观测、备份恢复、性能、安全与故障演练
+  progress_theme: 可观测、备份恢复、性能、安全、故障、G7
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.ops.config-secrets-supply-chain#explain
+  - ch.ops.logs-health#explain
+  - ch.ops.metrics-traces-slo#explain
+  - ch.ops.backup-recovery#explain
+  - ch.ops.capacity-performance#explain
+  - ch.ops.incident-dr#explain
+  practice_diagnosis:
+  - ch.ops.config-secrets-supply-chain#build
+  - ch.ops.config-secrets-supply-chain#diagnose
+  - ch.ops.logs-health#build
+  - ch.ops.logs-health#diagnose
+  - ch.ops.metrics-traces-slo#build
+  - ch.ops.metrics-traces-slo#diagnose
+  - ch.ops.backup-recovery#build
+  - ch.ops.backup-recovery#diagnose
+  - ch.ops.capacity-performance#build
+  - ch.ops.capacity-performance#diagnose
+  - ch.ops.incident-dr#build
+  - ch.ops.incident-dr#diagnose
+  review:
+  - ch.release.ci-quality#build
+  - ch.release.ci-quality#diagnose
+  support:
+  - ch.ops.docker-production#explain
+  - ch.release.ci-quality#explain
+  - ch.security.untrusted-input-xss-ssrf#explain
+  - ch.ops.compose-services#explain
+- week: 47
+  title: 作品集、系统设计、项目表达与模拟面试
+  progress_theme: 作品集、系统设计、表达、模拟面试
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 0
+      practice_diagnosis: 12
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required: []
+  practice_diagnosis:
+  - ch.foundations.editor-project-navigation#diagnose
+  - ch.foundations.ai-assisted-verification#diagnose
+  - ch.architecture.system-design#build
+  - ch.architecture.system-design#diagnose
+  review:
+  - ch.ops.incident-dr#build
+  - ch.ops.incident-dr#diagnose
+  support:
+  - ch.foundations.files-paths-encoding#explain
+  - ch.foundations.git-collaboration-security#explain
+  - ch.foundations.dependencies-build-packages#explain
+  - ch.ops.capacity-performance#explain
+- week: 48
+  title: 发布候选、最终考核与下一阶段
+  progress_theme: 发布、最终考核、复盘、G8
+  budget_hours:
+    minimum: 15
+    target: 16
+    maximum: 18
+    allocation:
+      required: 4
+      practice_diagnosis: 8
+      review: 2
+      support: 2
+  required_mastery: L3
+  evidence_requirements:
+  - timed-teach-back
+  - independent-build
+  - fault-diagnosis
+  - requirement-change
+  - tradeoff-defense
+  required:
+  - ch.release.artifacts-promotion#explain
+  - ch.release.deployment-migrations#explain
+  - ch.release.factorycare-acceptance#explain
+  - ch.portfolio.interview#explain
+  practice_diagnosis:
+  - ch.release.artifacts-promotion#build
+  - ch.release.artifacts-promotion#diagnose
+  - ch.release.deployment-migrations#build
+  - ch.release.deployment-migrations#diagnose
+  - ch.release.factorycare-acceptance#build
+  - ch.release.factorycare-acceptance#diagnose
+  - ch.portfolio.interview#build
+  - ch.portfolio.interview#diagnose
+  review:
+  - ch.architecture.system-design#build
+  - ch.architecture.system-design#diagnose
+  support:
+  - ch.ops.nginx-tls#explain
+  - ch.release.ci-quality#explain
+  - ch.ops.backup-recovery#explain
+  - ch.architecture.observability-slo#explain

@@ -14,7 +14,7 @@ prerequisites:
 - ch.rag.ingestion-metadata
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - numpy
 - pytest
 route_tags:

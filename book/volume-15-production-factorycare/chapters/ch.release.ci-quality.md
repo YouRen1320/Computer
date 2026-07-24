@@ -14,7 +14,7 @@ prerequisites:
 - ch.foundations.git-collaboration-security
 - ch.foundations.dependencies-build-packages
 version_surfaces:
-- ci
+- github-actions-hosted-runner
 - git
 route_tags:
 - zero-base

@@ -95,7 +95,21 @@ for source in "$LAB_DIR"/diagnostics/*.java; do
     echo "PASS: $name 按预期编译失败，证据=$expected"
 done
 
-echo "LAB HARNESS PASS: diagnostics are reproducible javac=$JAVAC_VERSION java=$JAVA_VERSION"
+BEHAVIOR_CLASSES="$TMP_DIR/behavior-classes"
+mkdir -p "$BEHAVIOR_CLASSES"
+javac --release 25 -d "$BEHAVIOR_CLASSES" "$LAB_DIR"/behavior-failures/*.java
+
+java -cp "$BEHAVIOR_CLASSES" DiscardedNormalization >"$TMP_DIR/discarded-normalization.out"
+printf '%s\n' '[  pump-a  ]' >"$TMP_DIR/discarded-normalization.expected"
+diff -u "$TMP_DIR/discarded-normalization.expected" "$TMP_DIR/discarded-normalization.out"
+echo "PASS: DiscardedNormalization reproduces a successful run with an unchanged String"
+
+java -cp "$BEHAVIOR_CLASSES" RegexSplitBoundary >"$TMP_DIR/regex-split.out"
+printf '%s\n' 'dotParts=0' 'csvParts=1' >"$TMP_DIR/regex-split.expected"
+diff -u "$TMP_DIR/regex-split.expected" "$TMP_DIR/regex-split.out"
+echo "PASS: RegexSplitBoundary reproduces regex-dot and trailing-empty loss"
+
+echo "LAB HARNESS PASS: compile diagnostics and String behavior failures are reproducible javac=$JAVAC_VERSION java=$JAVA_VERSION"
 if [ "$STARTER_COMPLETE" -eq 0 ]; then
     echo "UNVERIFIED: public starter output remains incomplete; only the lab harness and compile-error diagnostics passed"
     exit 0

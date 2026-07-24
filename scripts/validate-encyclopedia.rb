@@ -21,6 +21,7 @@ SITE_CONFIG_RELATIVE = "site/config.yml"
 CHAPTER_SCHEMA_RELATIVE = "schemas/chapter.schema.json"
 REGISTRY_SCHEMA_RELATIVE = "schemas/version-registry.schema.json"
 SITE_CONFIG_SCHEMA_RELATIVE = "schemas/site-config.schema.json"
+SITE_GENERATED_SCHEMA_RELATIVE = "schemas/site-publication-manifest-v3.schema.json"
 GENERATED_FILES = %w[catalog.json navigation.json publication-manifest.json README.md search-index.json].freeze
 CHAPTER_ID_PATTERN = /\Ach\.[a-z0-9]+(?:-[a-z0-9]+)*\.[a-z0-9]+(?:-[a-z0-9]+)*\z/.freeze
 LEGACY_CHAPTER_ID_PATTERN = /v\d{2}\.c\d{2}\.[a-z0-9-]+/.freeze
@@ -148,6 +149,17 @@ class ExecutableJsonSchema
     errors = []
     evaluate(@schema, instance, "$", errors)
     errors
+  end
+
+  # Some contracts keep closely related generated documents in one schema.
+  # Validate a named local definition without weakening the schema subset or
+  # introducing cross-file references.
+  def validate_subschema(reference, instance)
+    errors = []
+    evaluate(resolve_reference(reference), instance, "$", errors)
+    errors
+  rescue KeyError, TypeError
+    ["#{reference}: unresolved local schema reference"]
   end
 
   private
@@ -519,9 +531,54 @@ class RepositoryPathPolicy
 end
 
 module EncyclopediaInputSet
+  class ContractError < StandardError; end
+
+  CATEGORY_ORDER = %w[content audit_security build_control].freeze
+  CATEGORY_DIGEST_ALGORITHM = "sha256-path-nul-content-sha256-nul-v1"
+  TOTAL_DIGEST_ALGORITHM = "sha256-category-nul-digest-nul-v1"
+  PUBLIC_ARTIFACT_SCHEMA_RELATIVE = "schemas/public-artifact-manifest.schema.json"
+  PUBLIC_ARTIFACT_MANIFEST_ROOT = "publication/manifests/public-artifacts"
+  GENERATED_COMPONENTS = %w[
+    build target dist out work coverage node_modules .gradle .idea .venv
+    __pycache__ .dart_tool generated
+  ].freeze
+  GENERATED_SUFFIX = /(?:\.(?:class|jar|log|tmp|swp)|~)\z/i
+
   module_function
 
+  # Return one authoritative, disjoint input inventory. Callers must not
+  # rebuild these categories from path guesses because the category names and
+  # aggregate digest order are part of the P2 schema-v3 contract.
+  def inventory(root, catalog)
+    expected = base_inputs(root, catalog)
+    public = public_review_partition(root, catalog)
+    validate_explicit_partition!(public)
+    expected.concat(public.values.flatten)
+    expected.reject! { |path| path.start_with?("solutions-private/") }
+    expected = expected.uniq.sort
+
+    categories = CATEGORY_ORDER.to_h { |category| [category, []] }
+    expected.each do |path|
+      category = explicit_public_category(path, public) || category_for(path)
+      raise ContractError, "E_INPUT_CATEGORY_UNKNOWN #{path}: no P2 input category" unless category
+
+      categories.fetch(category) << path
+    end
+    categories.transform_values! { |paths| paths.uniq.sort }
+    validate_partition!(categories, expected)
+    validate_tracked!(root, expected)
+    { categories: categories, expected: expected }
+  end
+
   def files(root, catalog)
+    inventory(root, catalog).fetch(:expected)
+  end
+
+  def categories(root, catalog)
+    inventory(root, catalog).fetch(:categories)
+  end
+
+  def base_inputs(root, catalog)
     paths = [
       "ASSESSMENTS.md",
       "PROGRESS.md",
@@ -531,6 +588,8 @@ module EncyclopediaInputSet
       CHAPTER_SCHEMA_RELATIVE,
       REGISTRY_SCHEMA_RELATIVE,
       SITE_CONFIG_SCHEMA_RELATIVE,
+      SITE_GENERATED_SCHEMA_RELATIVE,
+      PUBLIC_ARTIFACT_SCHEMA_RELATIVE,
       "curriculum/gates.yml",
       "curriculum/validate_catalog.rb",
       "scripts/build-book.rb",
@@ -553,8 +612,6 @@ module EncyclopediaInputSet
       memo << chapter["path"] if chapter.is_a?(Hash) && chapter["path"].is_a?(String)
     end
     paths.concat(chapter_paths)
-    paths.concat(public_review_inputs(root, catalog))
-    paths.reject! { |path| path.start_with?("solutions-private/") }
     paths.uniq.sort
   end
 
@@ -566,7 +623,14 @@ module EncyclopediaInputSet
 
     ledger_path = File.join(root, ledger_relative)
     ledger = StrictYaml.safe_load(File.read(ledger_path, encoding: "UTF-8"), label: ledger_relative)
-    paths = [ledger["mapping_audit_path"]]
+    # These two files are read directly by Curriculum::SpecSet while the P2
+    # validator checks the canonical catalog. Keep them in the P2 closure even
+    # though they live outside curriculum/ and the core site schemas.
+    paths = [
+      "schemas/factorycare-stage-gates.schema.json",
+      "factorycare-design/testing/acceptance-catalog.md",
+      ledger["mapping_audit_path"]
+    ]
     Array(ledger["source_rebuilds"]).each do |rebuild|
       next unless rebuild.is_a?(Hash)
 
@@ -577,16 +641,19 @@ module EncyclopediaInputSet
     paths.select { |path| path.is_a?(String) }
   end
 
-  def public_review_inputs(root, catalog)
-    Array(catalog["chapters"]).each_with_object([]) do |chapter, memo|
+  def public_review_partition(root, catalog)
+    partition = CATEGORY_ORDER.to_h { |category| [category, []] }
+    Array(catalog["chapters"]).each do |chapter|
       next unless chapter.is_a?(Hash) && %w[review verified].include?(chapter["status"])
 
       metadata = chapter_metadata(root, chapter["path"])
-      %w[examples labs exercises].each do |field|
-        Array(metadata[field]).each { |path| memo.concat(expand_public_path(root, path)) if path.is_a?(String) }
-      end
+      public = explicit_public_artifacts(root, chapter, metadata)
+      partition.fetch("content").concat(public.fetch(:artifacts))
+      partition.fetch("build_control") << public.fetch(:manifest)
+      partition.fetch("build_control").concat(public.fetch(:repository_metadata))
+
       Array(metadata["verified_versions"]).each do |entry|
-        memo.concat(expand_public_path(root, entry["evidence"])) if entry.is_a?(Hash) && entry["evidence"].is_a?(String)
+        partition.fetch("audit_security") << entry["evidence"] if entry.is_a?(Hash) && entry["evidence"].is_a?(String)
       end
       verification = metadata["verification"]
       next unless verification.is_a?(Hash)
@@ -594,17 +661,18 @@ module EncyclopediaInputSet
       verification.each_value do |gate|
         next unless gate.is_a?(Hash)
 
-        Array(gate["evidence"]).each { |path| memo.concat(expand_public_path(root, path)) if path.is_a?(String) }
+        Array(gate["evidence"]).each { |path| partition.fetch("audit_security") << path if path.is_a?(String) }
         coverage = gate["coverage"]
         next unless coverage.is_a?(Hash)
 
         coverage.each_value do |check|
           next unless check.is_a?(Hash)
 
-          Array(check["evidence"]).each { |path| memo.concat(expand_public_path(root, path)) if path.is_a?(String) }
+          Array(check["evidence"]).each { |path| partition.fetch("audit_security") << path if path.is_a?(String) }
         end
       end
     end
+    partition.transform_values { |paths| paths.uniq.sort }
   end
 
   def chapter_metadata(root, relative)
@@ -613,35 +681,233 @@ module EncyclopediaInputSet
     return {} unless match
 
     StrictYaml.safe_load(match[1], label: relative) || {}
-  rescue StandardError
-    {}
+  rescue Psych::Exception, StrictYaml::DuplicateKeyError, StrictYaml::UnsupportedKeyError => e
+    raise ContractError, "E_CHAPTER_METADATA #{relative}: #{e.message.lines.first.to_s.strip}"
   end
 
-  def expand_public_path(root, relative)
-    return [] unless relative.is_a?(String)
-    return [] if relative.start_with?("solutions-private/")
+  def explicit_public_artifacts(root, chapter, metadata)
+    id = chapter.fetch("id")
+    manifest_relative = "#{PUBLIC_ARTIFACT_MANIFEST_ROOT}/#{id}.yml"
+    manifest_path = File.join(root, manifest_relative)
+    unless File.file?(manifest_path) && !File.symlink?(manifest_path)
+      raise ContractError, "E_PUBLIC_MANIFEST_MISSING #{manifest_relative}: review/verified chapter requires an explicit public artifact manifest"
+    end
 
-    absolute = File.join(root, relative)
-    return [relative] if File.file?(absolute) || File.symlink?(absolute)
-    return [] unless File.directory?(absolute)
+    manifest = StrictYaml.safe_load(File.read(manifest_path, encoding: "UTF-8"), label: manifest_relative)
+    unless manifest.is_a?(Hash)
+      raise ContractError, "E_PUBLIC_MANIFEST_SCHEMA #{manifest_relative}: root must be a mapping"
+    end
+    schema_path = File.join(root, PUBLIC_ARTIFACT_SCHEMA_RELATIVE)
+    schema = StrictJson.parse(File.read(schema_path, encoding: "UTF-8"))
+    evaluator = ExecutableJsonSchema.new(schema, PUBLIC_ARTIFACT_SCHEMA_RELATIVE)
+    definition_error = evaluator.definition_errors.first
+    raise ContractError, "E_PUBLIC_MANIFEST_SCHEMA #{definition_error}" if definition_error
+    instance_error = evaluator.validate(manifest).first
+    raise ContractError, "E_PUBLIC_MANIFEST_SCHEMA #{manifest_relative}: #{instance_error}" if instance_error
 
-    Dir.glob(File.join(absolute, "**", "*"), File::FNM_DOTMATCH).sort.each_with_object([]) do |path, memo|
-      next unless File.file?(path) || File.symlink?(path)
+    expected_identity = {
+      "manifest_id" => "public-artifacts.#{id}",
+      "edition" => chapter.fetch("edition", metadata["edition"]),
+      "chapter_id" => id,
+      "chapter_path" => chapter.fetch("path")
+    }
+    expected_identity.each do |field, value|
+      unless manifest[field] == value
+        raise ContractError, "E_PUBLIC_MANIFEST_IDENTITY #{manifest_relative}: #{field} must equal #{value.inspect}"
+      end
+    end
 
-      memo << self.relative(root, path)
+    expected_roots = %w[examples labs exercises].map { |kind| "#{kind}/encyclopedia/#{id}" }
+    %w[examples labs exercises].zip(expected_roots).each do |field, expected_root|
+      unless metadata[field] == [expected_root]
+        raise ContractError, "E_PUBLIC_ROOT_DECLARATION #{chapter.fetch('path')}: #{field} must explicitly declare only #{expected_root}"
+      end
+    end
+    unless manifest.fetch("managed_roots") == expected_roots
+      raise ContractError, "E_PUBLIC_ROOT_DECLARATION #{manifest_relative}: managed_roots must use canonical examples/labs/exercises order"
+    end
+
+    artifact_paths = manifest.fetch("artifacts").map { |artifact| artifact.fetch("source_path") }
+    metadata_paths = manifest.fetch("repository_metadata")
+    duplicate = duplicate_value(artifact_paths + metadata_paths)
+    raise ContractError, "E_PUBLIC_INPUT_DUPLICATE #{duplicate}: public input is declared more than once" if duplicate
+    (artifact_paths + metadata_paths).each do |path|
+      unless expected_roots.any? { |managed_root| path.start_with?(managed_root + "/") }
+        raise ContractError, "E_PUBLIC_INPUT_OWNER #{path}: public input is outside the chapter managed roots"
+      end
+      validate_not_generated!(path)
+    end
+
+    actual = expected_roots.flat_map { |managed_root| managed_root_inventory(root, managed_root) }.sort
+    declared = (artifact_paths + metadata_paths).sort
+    extra = actual - declared
+    missing = declared - actual
+    raise ContractError, "E_PUBLIC_INPUT_OMITTED #{extra.first}: managed root contains an undeclared file" unless extra.empty?
+    raise ContractError, "E_PUBLIC_INPUT_MISSING #{missing.first}: manifest declares a missing file" unless missing.empty?
+
+    { manifest: manifest_relative, artifacts: artifact_paths.sort, repository_metadata: metadata_paths.sort }
+  rescue JSON::ParserError, StrictJson::DuplicateMemberError => e
+    raise ContractError, "E_PUBLIC_MANIFEST_SCHEMA #{PUBLIC_ARTIFACT_SCHEMA_RELATIVE}: #{e.message.lines.first.to_s.strip}"
+  rescue Psych::Exception, StrictYaml::DuplicateKeyError, StrictYaml::UnsupportedKeyError => e
+    raise ContractError, "E_PUBLIC_MANIFEST_SCHEMA #{manifest_relative}: #{e.message.lines.first.to_s.strip}"
+  end
+
+  def managed_root_inventory(root, relative_root)
+    absolute_root = File.join(root, relative_root)
+    stat = File.lstat(absolute_root)
+    raise ContractError, "E_PUBLIC_ROOT_SYMLINK #{relative_root}: symbolic links are forbidden" if stat.symlink?
+    raise ContractError, "E_PUBLIC_ROOT_TYPE #{relative_root}: managed root must be a directory" unless stat.directory?
+
+    paths = Dir.glob(File.join(absolute_root, "**", "*"), File::FNM_DOTMATCH).sort.each_with_object([]) do |path, memo|
+      relative_path = relative(root, path)
+      entry_stat = File.lstat(path)
+      next if entry_stat.directory? && !entry_stat.symlink?
+      if entry_stat.symlink?
+        raise ContractError, "E_PUBLIC_INPUT_SYMLINK #{relative_path}: symbolic links are forbidden"
+      end
+      unless entry_stat.file?
+        raise ContractError, "E_PUBLIC_INPUT_TYPE #{relative_path}: managed roots may contain only regular files"
+      end
+      memo << relative_path
+    end
+    collision = paths.group_by(&:downcase).values.find { |items| items.length > 1 }
+    raise ContractError, "E_PUBLIC_INPUT_CASE #{collision.sort.first}: case-folded paths collide" if collision
+    paths
+  rescue Errno::ENOENT
+    raise ContractError, "E_PUBLIC_ROOT_MISSING #{relative_root}: managed root is missing"
+  end
+
+  def category_for(path)
+    case path
+    when %r{\Abook/}, %r{\Aversions/}
+      "content"
+    when %r{\A(?:examples|labs|exercises)/encyclopedia/}
+      "content"
+    when "ASSESSMENTS.md", "PROGRESS.md", "curriculum/gates.yml", "curriculum/route-plans/gates.yml",
+         "curriculum/review-p1.md"
+      "audit_security"
+    when %r{\Acurriculum/migrations/}, %r{\Arecords/encyclopedia/(?:evidence|reviews)/}
+      "audit_security"
+    when "factorycare-design/testing/acceptance-catalog.md"
+      "audit_security"
+    when %r{\Acurriculum/}
+      path.end_with?(".rb") ? "build_control" : "content"
+    when %r{\A(?:schemas|scripts|site)/}, %r{\Apublication/manifests/public-artifacts/}
+      "build_control"
     end
   end
 
-  def digest(root, paths)
+  def explicit_public_category(path, partition)
+    CATEGORY_ORDER.find { |category| partition.fetch(category).include?(path) }
+  end
+
+  def validate_explicit_partition!(partition)
+    owners = Hash.new { |hash, key| hash[key] = [] }
+    partition.each { |category, paths| paths.each { |path| owners[path] << category } }
+    overlap = owners.find { |_path, categories| categories.uniq.length > 1 }
+    return true unless overlap
+
+    raise ContractError,
+          "E_INPUT_CATEGORY_OVERLAP #{overlap.first}: explicitly declared in #{overlap.last.uniq.join(', ')}"
+  end
+
+  def validate_partition!(categories, expected)
+    unless categories.is_a?(Hash) && categories.keys == CATEGORY_ORDER
+      raise ContractError, "E_INPUT_CATEGORY_SET: categories must appear exactly as #{CATEGORY_ORDER.join(', ')}"
+    end
+    categories.each do |category, paths|
+      unless paths.is_a?(Array) && paths.all? { |path| path.is_a?(String) }
+        raise ContractError, "E_INPUT_CATEGORY_SHAPE #{category}: category must be an array of repository paths"
+      end
+      duplicate = duplicate_value(paths)
+      raise ContractError, "E_INPUT_CATEGORY_DUPLICATE #{duplicate}: duplicate path inside #{category}" if duplicate
+    end
+
+    owners = Hash.new { |hash, key| hash[key] = [] }
+    categories.each { |category, paths| paths.each { |path| owners[path] << category } }
+    overlap = owners.find { |_path, category_names| category_names.length > 1 }
+    if overlap
+      raise ContractError, "E_INPUT_CATEGORY_OVERLAP #{overlap.first}: appears in #{overlap.last.join(', ')}"
+    end
+
+    actual = owners.keys.sort
+    expected = expected.uniq.sort
+    missing = expected - actual
+    extra = actual - expected
+    raise ContractError, "E_INPUT_CATEGORY_OMISSION #{missing.first}: expected input is uncategorized" unless missing.empty?
+    raise ContractError, "E_INPUT_CATEGORY_EXTRA #{extra.first}: categorized input is outside the authoritative inventory" unless extra.empty?
+
+    collision = actual.group_by(&:downcase).values.find { |items| items.length > 1 }
+    raise ContractError, "E_INPUT_CASE_COLLISION #{collision.sort.first}: case-folded paths collide" if collision
+    actual.each do |path|
+      raise ContractError, "E_PRIVATE_INPUT #{path}: private inputs are forbidden" if path.start_with?("solutions-private/")
+      validate_not_generated!(path)
+    end
+    true
+  end
+
+  def validate_tracked!(root, paths)
+    stdout, stderr, status = Open3.capture3("git", "-C", root, "ls-files", "-z", "--")
+    raise ContractError, "E_GIT_INDEX: cannot enumerate tracked P2 inputs: #{stderr.lines.first.to_s.strip}" unless status.success?
+
+    tracked = stdout.split("\0").to_set
+    untracked = paths.find { |path| !tracked.include?(path) }
+    raise ContractError, "E_INPUT_UNTRACKED #{untracked}: P2 inputs must be Git tracked" if untracked
+    true
+  end
+
+  def snapshots(root, categories)
+    categories.values.flatten.sort.to_h do |path|
+      [path, File.binread(File.join(root, path)).b.freeze]
+    end
+  end
+
+  def file_digests(categories, snapshots)
+    CATEGORY_ORDER.to_h do |category|
+      entries = categories.fetch(category).sort.to_h do |path|
+        [path, Digest::SHA256.hexdigest(snapshots.fetch(path))]
+      end
+      [category, entries]
+    end
+  end
+
+  def category_digests(file_digests)
+    CATEGORY_ORDER.to_h do |category|
+      sha = Digest::SHA256.new
+      file_digests.fetch(category).sort.each do |path, content_sha256|
+        sha << path << "\0" << content_sha256 << "\0"
+      end
+      [category, sha.hexdigest]
+    end
+  end
+
+  def total_digest(category_digests)
     sha = Digest::SHA256.new
-    paths.each do |relative|
-      sha << relative << "\0" << File.binread(File.join(root, relative)) << "\0"
+    CATEGORY_ORDER.each do |category|
+      sha << category << "\0" << category_digests.fetch(category) << "\0"
     end
     sha.hexdigest
   end
 
-  def digests(root, paths)
-    paths.each_with_object({}) { |relative, memo| memo[relative] = Digest::SHA256.file(File.join(root, relative)).hexdigest }
+  def validate_snapshots!(root, snapshots)
+    changed = snapshots.find do |path, bytes|
+      absolute = File.join(root, path)
+      !File.file?(absolute) || File.symlink?(absolute) || File.binread(absolute).b != bytes
+    end
+    raise ContractError, "E_INPUT_CHANGED #{changed.first}: input changed during P2 build" if changed
+    true
+  end
+
+  def validate_not_generated!(path)
+    components = path.split("/")
+    if (components & GENERATED_COMPONENTS).any? || path.match?(GENERATED_SUFFIX) || components.include?(".DS_Store")
+      raise ContractError, "E_INPUT_TEMPORARY #{path}: generated, cache, log and temporary inputs are forbidden"
+    end
+  end
+
+  def duplicate_value(values)
+    seen = Set.new
+    values.find { |value| !seen.add?(value) }
   end
 
   def relative(root, path)
@@ -704,6 +970,8 @@ class EncyclopediaValidator
       versions/registry.yml
       site/config.yml
       schemas/chapter.schema.json
+      schemas/public-artifact-manifest.schema.json
+      schemas/site-publication-manifest-v3.schema.json
       schemas/version-registry.schema.json
       schemas/site-config.schema.json
       scripts/build-book.rb
@@ -738,7 +1006,11 @@ class EncyclopediaValidator
   end
 
   def validate_canonical_input_set(catalog)
-    EncyclopediaInputSet.files(@root, catalog).each { |relative| validate_canonical_regular_file(relative) }
+    inventory = EncyclopediaInputSet.inventory(@root, catalog)
+    inventory.fetch(:expected).each { |relative| validate_canonical_regular_file(relative) }
+    stats[:p2_input_categories] = inventory.fetch(:categories).transform_values(&:length)
+  rescue EncyclopediaInputSet::ContractError => e
+    errors << "P2 input contract: #{e.message}"
   end
 
   def validate_canonical_regular_file(relative)
@@ -808,7 +1080,9 @@ class EncyclopediaValidator
     {
       CHAPTER_SCHEMA_RELATIVE => "https://factorycare.local/schemas/chapter.schema.json",
       REGISTRY_SCHEMA_RELATIVE => "https://factorycare.local/schemas/version-registry.schema.json",
-      SITE_CONFIG_SCHEMA_RELATIVE => "https://factorycare.local/schemas/site-config.schema.json"
+      SITE_CONFIG_SCHEMA_RELATIVE => "https://factorycare.local/schemas/site-config.schema.json",
+      EncyclopediaInputSet::PUBLIC_ARTIFACT_SCHEMA_RELATIVE => "https://factorycare.local/schemas/public-artifact-manifest.schema.json",
+      SITE_GENERATED_SCHEMA_RELATIVE => "https://factorycare.local/schemas/site-publication-manifest-v3.schema.json"
     }.each do |relative, expected_id|
       schema = load_json(relative)
       next unless schema
@@ -837,17 +1111,32 @@ class EncyclopediaValidator
   def validate_registry
     registry = load_yaml(REGISTRY_RELATIVE)
     apply_schema(REGISTRY_SCHEMA_RELATIVE, registry, REGISTRY_RELATIVE)
-    validate_date(registry["verified_at"], "#{REGISTRY_RELATIVE}: verified_at")
+    validate_date(registry["reviewed_at"], "#{REGISTRY_RELATIVE}: reviewed_at")
     entries = registry["entries"].is_a?(Array) ? registry["entries"] : []
     ids = entries.select { |entry| entry.is_a?(Hash) }.map { |entry| entry["id"] }.compact
     duplicate_values(ids).each { |id| errors << "#{REGISTRY_RELATIVE}: duplicate entry id #{id}" }
     entries.each_with_index do |entry, index|
       next unless entry.is_a?(Hash)
 
-      validate_date(entry["verified_at"], "#{REGISTRY_RELATIVE}: entry ##{index + 1} verified_at")
-      validate_https_source_url(entry["source_url"], "#{REGISTRY_RELATIVE}: entry ##{index + 1} source_url")
+      entry_label = "#{REGISTRY_RELATIVE}: entry ##{index + 1}"
+      validate_date(entry["reviewed_at"], "#{entry_label} reviewed_at")
+      validate_date_not_after(entry["reviewed_at"], registry["reviewed_at"], "#{entry_label} reviewed_at", "registry reviewed_at")
+      sources = entry["sources"].is_a?(Array) ? entry["sources"] : []
+      source_ids = sources.select { |source| source.is_a?(Hash) }.map { |source| source["id"] }.compact
+      duplicate_values(source_ids).each { |source_id| errors << "#{entry_label} has duplicate source id #{source_id}" }
+      sources.each_with_index do |source, source_index|
+        next unless source.is_a?(Hash)
+
+        source_label = "#{entry_label} source ##{source_index + 1}"
+        validate_date(source["checked_at"], "#{source_label} checked_at")
+        validate_date_not_after(source["checked_at"], entry["reviewed_at"], "#{source_label} checked_at", "entry reviewed_at")
+        validate_https_source_url(source["url"], "#{source_label} url")
+      end
     end
     stats[:registry_entries] = entries.length
+    stats[:registry_sources] = entries.sum do |entry|
+      entry.is_a?(Hash) && entry["sources"].is_a?(Array) ? entry["sources"].length : 0
+    end
     registry.merge("entries" => entries)
   end
 
@@ -1335,6 +1624,16 @@ class EncyclopediaValidator
     errors << "#{label} is not a valid ISO date"
   end
 
+  def validate_date_not_after(value, boundary, label, boundary_label)
+    return unless value.is_a?(String) && boundary.is_a?(String)
+
+    parsed = Date.iso8601(value)
+    parsed_boundary = Date.iso8601(boundary)
+    errors << "#{label} cannot be after #{boundary_label}" if parsed > parsed_boundary
+  rescue ArgumentError
+    # validate_date reports malformed dates with the more useful field label.
+  end
+
   def validate_identity(value, label)
     errors << "#{label} must contain at least two non-whitespace characters" unless valid_identity?(value)
   end
@@ -1389,6 +1688,7 @@ class EncyclopediaValidator
       puts "status_#{status}=#{stats.fetch(:status_counts, {}).fetch(status, 0)}"
     end
     puts "registry_entries=#{stats.fetch(:registry_entries, 0)}"
+    puts "registry_sources=#{stats.fetch(:registry_sources, 0)}"
     puts "referenced_version_surfaces=#{stats.fetch(:referenced_surfaces, 0)}"
     puts "supplemental_registry_entries=#{stats.fetch(:unreferenced_registry_entries, 0)}"
     puts "factorycare_status_files=#{stats.fetch(:factorycare_status_files, 0)}"

@@ -265,12 +265,65 @@ class CurriculumCompilerTest < Minitest::Test
 
   def test_factorycare_artifact_paths_cannot_escape_evidence_root
     spec = Curriculum::SpecSet.new(ROOT).load!
-    spec.factorycare_plan.fetch("stages").first.fetch("gate_contract")["artifact_paths"] = ["../../secrets/"]
+    spec.factorycare_gate_registry.fetch("gates").first["artifact_paths"] = ["../../secrets/"]
     spec.collector.errors.clear
 
-    spec.send(:validate_route_plans!)
+    spec.send(:validate_factorycare_gate_registry!)
 
     assert_includes spec.collector.errors.map(&:code), "E_FACTORYCARE_PATH"
+  end
+
+  def test_factorycare_stage_registry_owns_all_ninety_three_acceptance_ids_once
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    gates = spec.factorycare_gate_registry.fetch("gates")
+    primary_ids = gates.flat_map { |gate| gate.fetch("primary_acceptance_ids") }
+
+    assert_equal (1..8).map { |number| format("fc-stage-%02d", number) }, gates.map { |gate| gate.fetch("id") }
+    assert_equal 93, primary_ids.length
+    assert_equal 93, primary_ids.uniq.length
+
+    rendered = Curriculum::Compiler.new(spec).render_outputs.fetch("curriculum/routes/factorycare-project.yml")
+    route = Curriculum::StrictYaml.load(rendered, display_path: "curriculum/routes/factorycare-project.yml")
+    assert_equal "factorycare-project-stage-gates", route.fetch("gate_registry_id")
+    assert_equal "factorycare-design/testing/acceptance-catalog.md", route.fetch("acceptance_catalog_path")
+    assert_equal 93, route.fetch("stages").sum { |stage| stage.dig("stage_gate", "primary_acceptance_ids").length }
+    route.fetch("stages").each do |stage|
+      gate = stage.fetch("stage_gate")
+      assert_equal stage.fetch("negative_scenarios"), gate.fetch("negative_scenarios")
+      assert_equal %w[runnable-slice negative-path decision-record teach-back], gate.fetch("required_evidence_kinds")
+      assert_operator gate.fetch("artifact_paths").length, :>=, 1
+      refute stage.key?("stage_gate_id")
+    end
+  end
+
+  def test_factorycare_stage_registry_fails_closed_for_missing_duplicate_and_unknown_acceptance_ids
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    gates = spec.factorycare_gate_registry.fetch("gates")
+    removed = gates.first.fetch("primary_acceptance_ids").shift
+    gates[1].fetch("primary_acceptance_ids") << gates[1].fetch("primary_acceptance_ids").first
+    gates[2].fetch("secondary_acceptance_ids") << "FC-UNKNOWN-999"
+    spec.collector.errors.clear
+
+    spec.send(:validate_factorycare_gate_registry!)
+
+    codes = spec.collector.errors.map(&:code)
+    assert_includes codes, "E_FACTORYCARE_GATE_SCHEMA"
+    assert_includes codes, "E_FACTORYCARE_ACCEPTANCE_COVERAGE"
+    assert_includes codes, "E_FACTORYCARE_ACCEPTANCE_UNKNOWN"
+    assert spec.collector.errors.any? { |issue| issue.message.include?(removed) }
+  end
+
+  def test_factorycare_stage_registry_rejects_route_gate_mismatch_and_illegal_evidence_kind
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec.factorycare_plan.fetch("stages").first["gate_id"] = "fc-stage-02"
+    spec.factorycare_gate_registry.fetch("gates").first["required_evidence_kinds"] = ["screenshot"]
+    spec.collector.errors.clear
+
+    spec.send(:validate_factorycare_gate_registry!)
+
+    codes = spec.collector.errors.map(&:code)
+    assert_includes codes, "E_FACTORYCARE_GATE_ROUTE"
+    assert_includes codes, "E_FACTORYCARE_EVIDENCE_KIND"
   end
 
   def test_factorycare_artifacts_are_learner_owned_and_created_during_study
@@ -311,6 +364,86 @@ class CurriculumCompilerTest < Minitest::Test
     messages = spec.collector.errors.map(&:message).join("\n")
     assert_includes messages, "unknown fields mystery_policy"
     assert_includes messages, "/route_id expected \"accelerated-48\""
+  end
+
+  def test_accelerated_route_keeps_reference_depth_separate_from_required_mastery
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    outputs = Curriculum::Compiler.new(spec).render_outputs
+    route = Curriculum::StrictYaml.load(
+      outputs.fetch("curriculum/routes/accelerated-48.yml"),
+      display_path: "curriculum/routes/accelerated-48.yml"
+    )
+
+    assert_equal "curriculum/catalog.yml#/chapters/*/level", route.dig("mastery_policy", "reference_depth_source")
+    assert_equal "encyclopedia-reference-depth", route.dig("mastery_policy", "depth_semantics", "chapter_level")
+    assert_equal "route-minimum-exit-evidence", route.dig("mastery_policy", "depth_semantics", "required_mastery")
+
+    by_id = route.fetch("modules").each_with_object({}) { |mod, result| result[mod.fetch("id")] = mod }
+    %w[m37 m38 m39].each do |id|
+      assert_equal "L1-L2", by_id.fetch(id).fetch("required_mastery")
+      assert_equal Curriculum::ACCELERATED_MASTERY_PROFILES.fetch("L1-L2"), by_id.fetch(id).fetch("completion_evidence")
+    end
+    %w[m40 m41 m42 m43 m44].each do |id|
+      assert_equal "L2+", by_id.fetch(id).fetch("required_mastery")
+      assert_equal Curriculum::ACCELERATED_MASTERY_PROFILES.fetch("L2+"), by_id.fetch(id).fetch("completion_evidence")
+    end
+
+    ai_primary_ids = %w[m40 m41 m42 m43 m44].flat_map { |id| by_id.fetch(id).fetch("primary_chapter_ids") }
+    ai_reference_levels = ai_primary_ids.map { |chapter_id| spec.chapter_by_id.fetch(chapter_id).fetch("level") }
+    assert_includes ai_reference_levels, "L3", "L2+ route mastery must not downgrade L3 encyclopedia chapters"
+  end
+
+  def test_accelerated_route_fails_closed_when_module_mastery_is_missing
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec.accelerated_plan.fetch("modules").first.delete("required_mastery")
+    spec.collector.errors.clear
+
+    spec.send(:validate_route_plan_shapes!)
+
+    issue = spec.collector.errors.find { |entry| entry.code == "E_ROUTE_MASTERY" }
+    refute_nil issue
+    assert_includes issue.message, "/modules/0/required_mastery"
+  end
+
+  def test_accelerated_route_fails_closed_when_evidence_does_not_match_mastery
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    module_plan = spec.accelerated_plan.fetch("modules").find { |mod| mod.fetch("id") == "m40" }
+    module_plan["evidence_requirements"] = Curriculum::ACCELERATED_MASTERY_PROFILES.fetch("L1-L2")
+    spec.collector.errors.clear
+
+    spec.send(:validate_route_plan_shapes!)
+
+    issue = spec.collector.errors.find { |entry| entry.code == "E_ROUTE_MASTERY_EVIDENCE" && entry.message.include?("/modules/39") }
+    refute_nil issue
+    assert_includes issue.message, "must match L2+ profile exactly"
+  end
+
+  def test_accelerated_route_fails_closed_when_ai_or_ml_assignment_is_lowered
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    module_plan = spec.accelerated_plan.fetch("modules").find { |mod| mod.fetch("id") == "m40" }
+    module_plan["required_mastery"] = "L1-L2"
+    module_plan["evidence_requirements"] = Curriculum::ACCELERATED_MASTERY_PROFILES.fetch("L1-L2")
+    spec.collector.errors.clear
+
+    spec.send(:validate_route_plan_shapes!)
+
+    issue = spec.collector.errors.find { |entry| entry.code == "E_ROUTE_MASTERY_ASSIGNMENT" && entry.message.include?("m40=L2+") }
+    refute_nil issue
+    assert_includes issue.message, "got \"L1-L2\""
+  end
+
+  def test_accelerated_mastery_profile_cannot_be_redefined_with_weaker_evidence
+    spec = Curriculum::SpecSet.new(ROOT).load!
+    spec.accelerated_plan.dig("mastery_policy", "profiles")["L2+"] = ["timed-teach-back"]
+    spec.collector.errors.clear
+
+    spec.send(:validate_route_plan_shapes!)
+
+    issue = spec.collector.errors.find do |entry|
+      entry.code == "E_ROUTE_MASTERY_EVIDENCE" && entry.message.include?("/mastery_policy/profiles/L2+")
+    end
+    refute_nil issue
+    assert_includes issue.message, "must equal"
   end
 
   def test_migration_ledger_matches_independent_audit_exactly
@@ -620,6 +753,15 @@ class CurriculumCompilerTest < Minitest::Test
       target = File.join(workspace, relative)
       FileUtils.mkdir_p(File.dirname(target))
       FileUtils.cp(source, target)
+    end
+    %w[
+      schemas/accelerated-route-plan.schema.json
+      schemas/factorycare-stage-gates.schema.json
+      factorycare-design/testing/acceptance-catalog.md
+    ].each do |relative|
+      target = File.join(workspace, relative)
+      FileUtils.mkdir_p(File.dirname(target))
+      FileUtils.cp(File.join(ROOT, relative), target)
     end
     migration = "curriculum/migrations/2026.1-to-2026.2.yml"
     FileUtils.mkdir_p(File.dirname(File.join(workspace, migration)))

@@ -14,7 +14,8 @@ prerequisites:
 - ch.security.multitenancy-data-isolation
 - ch.java-engineering.logging-jvm-diagnostics
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
 - spring-security
 route_tags:
 - zero-base

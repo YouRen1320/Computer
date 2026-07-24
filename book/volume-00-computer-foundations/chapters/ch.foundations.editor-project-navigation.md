@@ -13,7 +13,8 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.foundations.files-paths-encoding
 version_surfaces:
-- toolchains
+- vscode-stable
+- intellij-idea-2026.1
 route_tags:
 - zero-base
 - accelerated-48
@@ -495,7 +496,7 @@ book/examples/formatStatus.md
 
 ## 一手资料与版本边界
 
-本章版本面标记为 `toolchains`，因为具体菜单、界面和快捷键会随 VS Code、IntelliJ IDEA、操作系统、扩展和键位方案变化。稳定核心是项目根、文件角色、搜索范围、符号关系、诊断生产者与运行配置输入。资料链接复核日期：**2026-07-16**。
+本章版本面分别标记为 `vscode-stable` 与 `intellij-idea-2026.1`，因为具体菜单、界面和快捷键会随编辑器、操作系统、扩展和键位方案变化。稳定核心是项目根、文件角色、搜索范围、符号关系、诊断生产者与运行配置输入。资料链接复核日期：**2026-07-24**。
 
 - [VS Code：What is a workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces)：单文件夹与多根工作区的官方定义。
 - [VS Code：Basic Editing](https://code.visualstudio.com/docs/editing/codebasics)：保存、全文搜索、排除范围、编码与编辑基础。

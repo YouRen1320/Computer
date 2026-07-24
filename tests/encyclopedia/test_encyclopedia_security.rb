@@ -15,7 +15,7 @@ require_relative "../../scripts/lib/chapter_prerequisite_block"
 
 class EncyclopediaSecurityTest < Minitest::Test
   ROOT = Pathname(__dir__).join("../..").expand_path.freeze
-  FIXTURE_PATHS = %w[book curriculum schemas versions site scripts records ASSESSMENTS.md PROGRESS.md].freeze
+  FIXTURE_PATHS = %w[book curriculum factorycare-design schemas versions site scripts records ASSESSMENTS.md PROGRESS.md].freeze
   GENERATED_NAMES = %w[README.md catalog.json navigation.json publication-manifest.json search-index.json].freeze
   RunResult = Struct.new(:output, :success, :exitstatus, keyword_init: true)
 
@@ -33,7 +33,9 @@ class EncyclopediaSecurityTest < Minitest::Test
       begin
         FIXTURE_PATHS.each { |relative| FileUtils.cp_r(ROOT.join(relative), temporary_root.join(relative)) }
         attach_git_object_database!(temporary_root)
+        initialize_fixture_index!(temporary_root)
         prepare_applied_fixture!(temporary_root)
+        refresh_fixture_index!(temporary_root)
       rescue StandardError
         FileUtils.remove_entry(temporary_parent) if temporary_parent.exist?
         raise
@@ -59,6 +61,22 @@ class EncyclopediaSecurityTest < Minitest::Test
       raise "cannot locate fixture Git object database: #{git_error}" unless git_status.success?
 
       File.binwrite(root.join(".git"), "gitdir: #{git_dir.strip}\n")
+    end
+
+    def fixture_git_environment(root)
+      { "GIT_INDEX_FILE" => root.parent.join("#{root.basename}.index").to_s }
+    end
+
+    def initialize_fixture_index!(root)
+      environment = fixture_git_environment(root)
+      _stdout, stderr, status = Open3.capture3(environment, "git", "read-tree", "--empty", chdir: root.to_s)
+      raise "cannot initialize isolated fixture index: #{stderr}" unless status.success?
+      refresh_fixture_index!(root)
+    end
+
+    def refresh_fixture_index!(root)
+      _stdout, stderr, status = Open3.capture3(fixture_git_environment(root), "git", "add", "--all", chdir: root.to_s)
+      raise "cannot populate isolated fixture index: #{stderr}" unless status.success?
     end
 
     def restore_frozen_ready_tree!(root)
@@ -133,7 +151,7 @@ class EncyclopediaSecurityTest < Minitest::Test
     end
 
     def run_required!(root, *arguments)
-      stdout, stderr, status = Open3.capture3(*arguments, chdir: root.to_s)
+      stdout, stderr, status = Open3.capture3(fixture_git_environment(root), *arguments, chdir: root.to_s)
       return if status.success?
 
       raise "fixture command failed in #{root}: #{arguments.join(' ')}\n#{stdout}\n#{stderr}"
@@ -153,12 +171,14 @@ class EncyclopediaSecurityTest < Minitest::Test
       raise "cannot locate fixture Git object database: #{git_error}" unless git_status.success?
 
       File.binwrite(root.join(".git"), "gitdir: #{git_dir.strip}\n")
+      self.class.send(:initialize_fixture_index!, root)
       yield root
     end
   end
 
   def run_command(root, *arguments)
-    stdout, stderr, status = Open3.capture3(*arguments, chdir: root.to_s)
+    environment = { "GIT_INDEX_FILE" => root.parent.join("#{root.basename}.index").to_s }
+    stdout, stderr, status = Open3.capture3(environment, *arguments, chdir: root.to_s)
     RunResult.new(output: [stdout, stderr].join, success: status.success?, exitstatus: status.exitstatus)
   end
 
@@ -272,9 +292,11 @@ class EncyclopediaSecurityTest < Minitest::Test
     id = chapter.fetch("id")
     today = Date.today.iso8601
     example_directory = "examples/encyclopedia/#{id}"
-    write_file(root, "#{example_directory}/example.txt", "public example\n")
-    lab = write_file(root, "labs/encyclopedia/#{id}/lab.md", "# Reproducible lab\n")
-    exercise = write_file(root, "exercises/encyclopedia/#{id}/exercise.md", "# Independent exercise\n")
+    lab_directory = "labs/encyclopedia/#{id}"
+    exercise_directory = "exercises/encyclopedia/#{id}"
+    example = write_file(root, "#{example_directory}/example.txt", "public example\n")
+    lab = write_file(root, "#{lab_directory}/lab.md", "# Reproducible lab\n")
+    exercise = write_file(root, "#{exercise_directory}/exercise.md", "# Independent exercise\n")
     secret = "PRIVATE_SOLUTION_DO_NOT_PUBLISH_#{id}"
     solution = write_file(root, "solutions-private/encyclopedia/#{id}/solution.md", secret)
 
@@ -340,8 +362,8 @@ class EncyclopediaSecurityTest < Minitest::Test
         "supports" => ["fixture claim"]
       }],
       "examples" => [example_directory],
-      "labs" => [lab],
-      "exercises" => [exercise],
+      "labs" => [lab_directory],
+      "exercises" => [exercise_directory],
       "solutions_private" => [solution],
       "author" => "author-a",
       "last_reviewed" => today,
@@ -362,6 +384,7 @@ class EncyclopediaSecurityTest < Minitest::Test
 
       实验保存命令、源码和结果，练习要求独立完成，解析位于私有目录。复核者检查技术、教学、代码、安全、无障碍、版本来源以及发布导航，实际渲染证据与链接和键盘语义检查分别保存。#{"修复后必须重跑原验证并保留证据。" * 4}
     MARKDOWN
+    public_manifest_path = "publication/manifests/public-artifacts/#{id}.yml"
     context = {
       chapter: chapter,
       metadata: metadata,
@@ -369,11 +392,57 @@ class EncyclopediaSecurityTest < Minitest::Test
       chapter_path: chapter.fetch("path"),
       solution_path: solution,
       solution_secret: secret,
-      evidence: evidence
+      evidence: evidence,
+      public_artifacts: { example: example, lab: lab, exercise: exercise },
+      public_manifest_path: public_manifest_path
     }
+    public_manifest = {
+      "schema_version" => 1,
+      "manifest_id" => "public-artifacts.#{id}",
+      "edition" => catalog.fetch("edition"),
+      "chapter_id" => id,
+      "chapter_path" => chapter.fetch("path"),
+      "managed_roots" => [example_directory, lab_directory, exercise_directory],
+      "artifacts" => [
+        {
+          "artifact_id" => "fixture-example",
+          "role" => "example-source",
+          "source_path" => example,
+          "media_type" => "text/plain",
+          "presentation" => "listing",
+          "target_formats" => %w[html epub pdf]
+        },
+        {
+          "artifact_id" => "fixture-lab",
+          "role" => "lab-source",
+          "source_path" => lab,
+          "media_type" => "text/markdown",
+          "presentation" => "listing",
+          "target_formats" => %w[html epub pdf]
+        },
+        {
+          "artifact_id" => "fixture-exercise",
+          "role" => "exercise-source",
+          "source_path" => exercise,
+          "media_type" => "text/markdown",
+          "presentation" => "listing",
+          "target_formats" => %w[html epub pdf]
+        }
+      ],
+      "repository_metadata" => []
+    }
+    FileUtils.mkdir_p(root.join(public_manifest_path).dirname)
+    write_yaml(root.join(public_manifest_path), public_manifest)
+    track_fixture_paths(root, [example, lab, exercise, public_manifest_path] + evidence.values)
     yield context if block_given?
     save_chapter(root, context)
     context
+  end
+
+  def track_fixture_paths(root, paths)
+    environment = { "GIT_INDEX_FILE" => root.parent.join("#{root.basename}.index").to_s }
+    _stdout, stderr, status = Open3.capture3(environment, "git", "add", "--", *paths, chdir: root.to_s)
+    raise "cannot track fixture inputs: #{stderr}" unless status.success?
   end
 
   def save_chapter(root, context)
@@ -619,13 +688,31 @@ class EncyclopediaSecurityTest < Minitest::Test
     with_fixture do |root|
       path = root.join("versions/registry.yml")
       registry = load_yaml(path)
-      registry["verified_at"] = "2999-12-31"
-      registry.fetch("entries").first["verified_at"] = "2999-12-31"
+      registry["reviewed_at"] = "2999-12-31"
+      registry.fetch("entries").first["reviewed_at"] = "2999-12-31"
+      registry.fetch("entries").first.fetch("sources").first["checked_at"] = "2999-12-31"
       write_yaml(path, registry)
 
       result = validator(root)
-      assert_failed result, /verified_at cannot be in the future/
-      assert_match(/entry #1 verified_at cannot be in the future/, result.output)
+      assert_failed result, /reviewed_at cannot be in the future/
+      assert_match(/entry #1 reviewed_at cannot be in the future/, result.output)
+      assert_match(/source #1 checked_at cannot be in the future/, result.output)
+    end
+  end
+
+  def test_registry_review_dates_form_a_monotonic_evidence_chain
+    with_fixture do |root|
+      path = root.join("versions/registry.yml")
+      registry = load_yaml(path)
+      registry["reviewed_at"] = "2026-07-22"
+      entry = registry.fetch("entries").first
+      entry["reviewed_at"] = "2026-07-23"
+      entry.fetch("sources").first["checked_at"] = "2026-07-24"
+      write_yaml(path, registry)
+
+      result = validator(root)
+      assert_failed result, /entry #1 reviewed_at cannot be after registry reviewed_at/
+      assert_match(/source #1 checked_at cannot be after entry reviewed_at/, result.output)
     end
   end
 
@@ -644,21 +731,59 @@ class EncyclopediaSecurityTest < Minitest::Test
     with_fixture do |root|
       path = root.join("versions/registry.yml")
       registry = load_yaml(path)
-      registry.fetch("entries").first["source_url"] = "https://"
+      registry.fetch("entries").first.fetch("sources").first["url"] = "https://"
       write_yaml(path, registry)
 
-      assert_failed validator(root), /entry #1 source_url must be an absolute HTTPS URI with a non-empty host/
+      assert_failed validator(root), /entry #1 source #1 url must be an absolute HTTPS URI with a non-empty host/
     end
 
     with_fixture do |root|
       path = root.join("versions/registry.yml")
       registry = load_yaml(path)
-      registry.fetch("entries").first["source_url"] = "https://example.invalid/docs#precise-section"
+      registry.fetch("entries").first.fetch("sources").first["url"] = "https://example.invalid/docs#precise-section"
       write_yaml(path, registry)
       render_curriculum_outputs(root)
 
       result = validator(root)
       assert result.success, result.output
+    end
+  end
+
+  def test_registry_forbids_legacy_source_url_and_duplicate_source_ids
+    with_fixture do |root|
+      path = root.join("versions/registry.yml")
+      registry = load_yaml(path)
+      registry.fetch("entries").first["source_url"] = "https://example.invalid/legacy"
+      write_yaml(path, registry)
+
+      assert_failed validator(root), /additional property source_url is not allowed/
+    end
+
+    with_fixture do |root|
+      path = root.join("versions/registry.yml")
+      registry = load_yaml(path)
+      first = registry.fetch("entries").first
+      first.fetch("sources") << first.fetch("sources").first.dup
+      write_yaml(path, registry)
+
+      assert_failed validator(root), /entry #1 has duplicate source id/
+    end
+  end
+
+  def test_registry_requires_manual_only_promotion_and_primary_source_claims
+    with_fixture do |root|
+      path = root.join("versions/registry.yml")
+      registry = load_yaml(path)
+      registry.fetch("policy")["automatic_promotion"] = true
+      source = registry.fetch("entries").first.fetch("sources").first
+      source["authority"] = "secondary"
+      source["claim"] = "short"
+      write_yaml(path, registry)
+
+      result = validator(root)
+      assert_failed result, /automatic_promotion: must equal false/
+      assert_match(/authority: must equal "official-or-primary"/, result.output)
+      assert_match(/claim: must contain at least 12 character/, result.output)
     end
   end
 
@@ -845,13 +970,13 @@ class EncyclopediaSecurityTest < Minitest::Test
   def test_artifact_and_evidence_files_must_contain_non_whitespace_content
     with_fixture do |root|
       context = promote_first_chapter(root)
-      lab = context.fetch(:metadata).fetch("labs").first
+      lab = context.fetch(:public_artifacts).fetch(:lab)
       File.binwrite(root.join(lab), " \n\t　")
       technical_evidence = context.fetch(:evidence).fetch("technical")
       File.binwrite(root.join(technical_evidence), " \n\t　")
 
       result = validator(root)
-      assert_failed result, /labs #1: artifact file must contain non-whitespace content/
+      assert_failed result, /labs #1: artifact directory must contain a non-hidden, non-whitespace regular file/
       assert_match(/verification technical evidence #1: file must contain non-whitespace content/, result.output)
     end
   end
@@ -913,14 +1038,14 @@ class EncyclopediaSecurityTest < Minitest::Test
       context = promote_first_chapter(root)
       catalog_path = root.join("curriculum/catalog.yml")
       catalog = load_yaml(catalog_path)
-      catalog.fetch("chapters").first["version_surfaces"] = ["browser"]
+      catalog.fetch("chapters").first["version_surfaces"] = ["chrome-stable"]
       write_yaml(catalog_path, catalog)
 
       metadata = context.fetch(:metadata)
-      metadata["version_surfaces"] = ["browser"]
+      metadata["version_surfaces"] = ["chrome-stable"]
       metadata["verified_versions"] = [{
-        "id" => "browser",
-        "constraint" => "current stable",
+        "id" => "chrome-stable",
+        "constraint" => "current stable channel; record the complete browser version and operating system per experiment",
         "verified_at" => Date.today.iso8601,
         "evidence" => "records/encyclopedia/evidence/#{context.fetch(:chapter).fetch("id")}/missing-version.txt"
       }]
@@ -939,13 +1064,13 @@ class EncyclopediaSecurityTest < Minitest::Test
       context = promote_first_chapter(root)
       catalog_path = root.join("curriculum/catalog.yml")
       catalog = load_yaml(catalog_path)
-      catalog.fetch("chapters").first["version_surfaces"] = ["browser"]
+      catalog.fetch("chapters").first["version_surfaces"] = ["chrome-stable"]
       write_yaml(catalog_path, catalog)
 
       metadata = context.fetch(:metadata)
-      metadata["version_surfaces"] = ["browser"]
+      metadata["version_surfaces"] = ["chrome-stable"]
       metadata["verified_versions"] = [{
-        "id" => "browser",
+        "id" => "chrome-stable",
         "constraint" => "whatever-latest",
         "verified_at" => Date.today.iso8601,
         "evidence" => context.fetch(:evidence).fetch("version-sources")
@@ -979,6 +1104,33 @@ class EncyclopediaSecurityTest < Minitest::Test
       assert result.success, result.output
       assert_match(/status_verified=1/, result.output)
       refute_match(/content_truth=verified/, result.output)
+    end
+  end
+
+  def test_public_manifest_rejects_undeclared_temporary_and_declared_untracked_files
+    with_fixture do |root|
+      context = promote_first_chapter(root)
+      write_file(root, "#{context.fetch(:metadata).fetch('examples').first}/session.tmp", "temporary\n")
+
+      assert_failed validator(root), /E_PUBLIC_INPUT_OMITTED .*session\.tmp: managed root contains an undeclared file/
+    end
+
+    with_fixture do |root|
+      context = promote_first_chapter(root)
+      extra = write_file(root, "#{context.fetch(:metadata).fetch('examples').first}/extra.md", "# extra\n")
+      manifest_path = root.join(context.fetch(:public_manifest_path))
+      manifest = load_yaml(manifest_path)
+      manifest.fetch("artifacts") << {
+        "artifact_id" => "fixture-untracked",
+        "role" => "example-source",
+        "source_path" => extra,
+        "media_type" => "text/markdown",
+        "presentation" => "listing",
+        "target_formats" => %w[html epub pdf]
+      }
+      write_yaml(manifest_path, manifest)
+
+      assert_failed validator(root), /E_INPUT_UNTRACKED .*extra\.md: P2 inputs must be Git tracked/
     end
   end
 
@@ -1129,7 +1281,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       result = builder(root)
       assert result.success, result.output
       manifest = JSON.parse(File.read(root.join("site/generated/publication-manifest.json"), encoding: "UTF-8"))
-      input_names = manifest.fetch("inputs").keys
+      input_names = manifest.fetch("inputs").values.flat_map(&:keys)
       refute input_names.any? { |name| name.start_with?("solutions-private/") }
       assert input_names.any? { |name| name.start_with?("examples/encyclopedia/") }
       assert input_names.any? { |name| name.start_with?("labs/encyclopedia/") }
@@ -1172,7 +1324,7 @@ class EncyclopediaSecurityTest < Minitest::Test
       manifest = JSON.parse(File.read(manifest_path, encoding: "UTF-8"))
       readme = Dir.glob(root.join("book/volume-00-*/README.md").to_s).first
       relative = Pathname(readme).relative_path_from(root).to_s
-      assert_includes manifest.fetch("inputs").keys, relative
+      assert_includes manifest.fetch("inputs").fetch("content").keys, relative
       File.open(readme, "ab") { |file| file.write("\n<!-- manifest digest mutation -->\n") }
 
       assert_failed builder(root), /strict curriculum validation failed.*E_GENERATED_DRIFT/m
@@ -1184,11 +1336,13 @@ class EncyclopediaSecurityTest < Minitest::Test
       result = builder(root)
       assert result.success, result.output
       manifest = JSON.parse(File.read(root.join("site/generated/publication-manifest.json"), encoding: "UTF-8"))
-      assert_includes manifest.fetch("inputs").keys, "ASSESSMENTS.md"
-      assert_includes manifest.fetch("inputs").keys, "PROGRESS.md"
-      assert_includes manifest.fetch("inputs").keys, "curriculum/migrations/migration.schema.json"
-      assert_includes manifest.fetch("inputs").keys, "scripts/lib/curriculum_compiler.rb"
-      assert_includes manifest.fetch("inputs").keys, "records/encyclopedia/reviews/P1R-migration-ledger-audit.md"
+      assert_includes manifest.fetch("inputs").fetch("audit_security").keys, "ASSESSMENTS.md"
+      assert_includes manifest.fetch("inputs").fetch("audit_security").keys, "PROGRESS.md"
+      assert_includes manifest.fetch("inputs").fetch("audit_security").keys, "curriculum/migrations/migration.schema.json"
+      assert_includes manifest.fetch("inputs").fetch("build_control").keys, "scripts/lib/curriculum_compiler.rb"
+      assert_includes manifest.fetch("inputs").fetch("build_control").keys, "schemas/factorycare-stage-gates.schema.json"
+      assert_includes manifest.fetch("inputs").fetch("audit_security").keys, "factorycare-design/testing/acceptance-catalog.md"
+      assert_includes manifest.fetch("inputs").fetch("audit_security").keys, "records/encyclopedia/reviews/P1R-migration-ledger-audit.md"
 
       File.open(root.join("PROGRESS.md"), "ab") { |file| file.write("\n<!-- fixture-only digest change -->\n") }
       assert_failed builder(root, "--check"), /stale site\/generated\/(?:README|catalog|navigation|publication-manifest)/

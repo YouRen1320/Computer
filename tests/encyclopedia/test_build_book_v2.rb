@@ -4,13 +4,15 @@ require "digest"
 require "fileutils"
 require "json"
 require "minitest/autorun"
+require "open3"
 require "pathname"
 require "tmpdir"
 require "yaml"
 
 require_relative "../../scripts/build-book"
 
-class BuildBookV2Test < Minitest::Test
+class BuildBookV3Test < Minitest::Test
+  ROOT = Pathname(__dir__).join("../..").expand_path.freeze
   EDITION = "2026.2-draft"
   GENERATED_NAMES = %w[README.md catalog.json navigation.json publication-manifest.json search-index.json].freeze
 
@@ -18,8 +20,9 @@ class BuildBookV2Test < Minitest::Test
   # validator. This seam keeps the unit fixture small while exercising the
   # same path checks, hashing, rendering and atomic output switch.
   class FixtureBookBuilder < BookBuilder
-    def initialize(root, inputs:, fail_on_rename: nil, **options)
+    def initialize(root, inputs:, categories: nil, fail_on_rename: nil, **options)
       @fixture_inputs = inputs
+      @fixture_categories = categories
       @fail_on_rename = fail_on_rename
       @rename_count = 0
       super(root, **options)
@@ -31,8 +34,17 @@ class BuildBookV2Test < Minitest::Test
       true
     end
 
-    def manifest_inputs(_catalog)
-      @fixture_inputs.sort
+    def manifest_input_inventory(_catalog)
+      categories = @fixture_categories || @fixture_inputs.each_with_object(
+        EncyclopediaInputSet::CATEGORY_ORDER.to_h { |category| [category, []] }
+      ) do |path, memo|
+        category = EncyclopediaInputSet.category_for(path)
+        raise "fixture input lacks a category: #{path}" unless category
+
+        memo.fetch(category) << path
+      end
+      categories = categories.transform_values(&:sort)
+      { categories: categories, expected: @fixture_inputs.sort }
     end
 
     def rename_directory(source, destination)
@@ -44,10 +56,11 @@ class BuildBookV2Test < Minitest::Test
   end
 
   def with_fixture
-    Dir.mktmpdir("build-book-v2-") do |directory|
+    Dir.mktmpdir("build-book-v3-") do |directory|
       root = Pathname(directory).join("repository")
       FileUtils.mkdir_p(root.join("site"))
       inputs = write_fixture(root)
+      track_fixture(root)
       yield root, inputs
     end
   end
@@ -69,7 +82,7 @@ class BuildBookV2Test < Minitest::Test
       "schema_version" => 1,
       "registry_id" => "factorycare-version-registry",
       "edition" => EDITION,
-      "verified_at" => "2026-07-16",
+      "reviewed_at" => "2026-07-24",
       "entries" => [{ "id" => "ruby", "name" => "Ruby" }]
     }
     config = {
@@ -123,6 +136,8 @@ class BuildBookV2Test < Minitest::Test
     # The production manifest covers the builder itself because changing the
     # renderer changes every output contract.
     write(root, "scripts/build-book.rb", "# fixture renderer input\n")
+    write(root, "schemas/public-artifact-manifest.schema.json", File.binread(ROOT.join("schemas/public-artifact-manifest.schema.json")))
+    write(root, "schemas/site-publication-manifest-v3.schema.json", File.binread(ROOT.join("schemas/site-publication-manifest-v3.schema.json")))
 
     [
       "book/volume-00-foundations/README.md",
@@ -132,17 +147,26 @@ class BuildBookV2Test < Minitest::Test
       "curriculum/migrations/application-receipt.schema.json",
       "curriculum/migrations/receipts/2026.2-application.yml",
       "records/encyclopedia/reviews/P1R-migration-ledger-audit.md",
+      "schemas/public-artifact-manifest.schema.json",
+      "schemas/site-publication-manifest-v3.schema.json",
       "scripts/build-book.rb",
       "site/config.yml",
       "versions/registry.yml"
     ]
   end
 
+  def track_fixture(root)
+    _stdout, stderr, status = Open3.capture3("git", "init", "--quiet", chdir: root.to_s)
+    raise "fixture git init failed: #{stderr}" unless status.success?
+    _stdout, stderr, status = Open3.capture3("git", "add", "--all", chdir: root.to_s)
+    raise "fixture git add failed: #{stderr}" unless status.success?
+  end
+
   def chapter(id, order, status, path, outcomes, version_surfaces)
     {
       "id" => id,
       "title" => "#{status} chapter",
-      "responsibility" => "用隔离 fixture 验证站点 v2 的确定性公共契约",
+      "responsibility" => "用隔离 fixture 验证站点 v3 的确定性公共契约",
       "volume" => "00",
       "order" => order,
       "level" => "L1",
@@ -209,10 +233,10 @@ class BuildBookV2Test < Minitest::Test
     JSON.parse(File.read(root.join("site/generated", name), encoding: "UTF-8"))
   end
 
-  def run_builder(root, inputs, **options)
+  def run_builder(root, inputs, categories: nil, **options)
     result = nil
     stdout, stderr = capture_io do
-      result = FixtureBookBuilder.new(root.to_s, inputs: inputs, **options).run
+      result = FixtureBookBuilder.new(root.to_s, inputs: inputs, categories: categories, **options).run
     end
     [result, stdout, stderr]
   end
@@ -223,7 +247,7 @@ class BuildBookV2Test < Minitest::Test
     end
   end
 
-  def test_builds_schema_v2_runtime_without_legacy_compatibility_and_excludes_planned_search
+  def test_builds_schema_v3_runtime_with_disjoint_inputs_and_excludes_planned_search
     with_fixture do |root, inputs|
       result, _stdout, stderr = run_builder(root, inputs)
       assert result, stderr
@@ -232,7 +256,7 @@ class BuildBookV2Test < Minitest::Test
       navigation = load_json(root, "navigation.json")
       search = load_json(root, "search-index.json")
       manifest = load_json(root, "publication-manifest.json")
-      [catalog, navigation, search, manifest].each { |document| assert_equal 2, document.fetch("schema_version") }
+      [catalog, navigation, search, manifest].each { |document| assert_equal 3, document.fetch("schema_version") }
 
       source = load_yaml(root, "curriculum/catalog.yml").fetch("chapters").first
       record = catalog.fetch("volumes").first.fetch("chapters").first
@@ -242,8 +266,20 @@ class BuildBookV2Test < Minitest::Test
 
       assert_equal 1, search.fetch("record_count")
       assert_equal ["ch.foundations.verified"], search.fetch("records").map { |entry| entry.fetch("id") }
-      assert_equal inputs.sort, manifest.fetch("inputs").keys.sort
-      assert_equal inputs.length, manifest.fetch("input_count")
+      categorized_paths = manifest.fetch("inputs").values.flat_map(&:keys)
+      assert_equal inputs.sort, categorized_paths.sort
+      assert_equal inputs.length, manifest.fetch("input_counts").fetch("total")
+      assert_equal categorized_paths.length, categorized_paths.uniq.length
+      assert_equal EncyclopediaInputSet::CATEGORY_ORDER, manifest.fetch("inputs").keys
+      assert_equal EncyclopediaInputSet::CATEGORY_DIGEST_ALGORITHM,
+                   manifest.fetch("digest_algorithms").fetch("category")
+      assert_equal EncyclopediaInputSet::TOTAL_DIGEST_ALGORITHM,
+                   manifest.fetch("digest_algorithms").fetch("total")
+      refute manifest.key?("input_digest")
+      [catalog, navigation, search].each do |document|
+        assert_equal manifest.fetch("input_digests"), document.fetch("input_digests")
+        refute document.key?("input_digest")
+      end
 
       public_bytes = GENERATED_NAMES.map { |name| File.binread(root.join("site/generated", name)) }.join("\n")
       refute_match(/v\d{2}\.c\d{2}\.[a-z0-9-]+/, public_bytes)
@@ -259,17 +295,20 @@ class BuildBookV2Test < Minitest::Test
     end
   end
 
-  def test_manifest_digest_changes_when_a_real_input_changes
+  def test_only_the_owning_category_and_total_digest_change_for_an_input
     with_fixture do |root, inputs|
       result, _stdout, stderr = run_builder(root, inputs)
       assert result, stderr
-      before = load_json(root, "publication-manifest.json").fetch("input_digest")
+      before = load_json(root, "publication-manifest.json").fetch("input_digests")
 
       File.open(root.join("book/volume-00-foundations/README.md"), "ab") { |file| file.write("\n<!-- changed input -->\n") }
       result, _stdout, stderr = run_builder(root, inputs)
       assert result, stderr
-      after = load_json(root, "publication-manifest.json").fetch("input_digest")
-      refute_equal before, after
+      after = load_json(root, "publication-manifest.json").fetch("input_digests")
+      refute_equal before.fetch("content"), after.fetch("content")
+      assert_equal before.fetch("audit_security"), after.fetch("audit_security")
+      assert_equal before.fetch("build_control"), after.fetch("build_control")
+      refute_equal before.fetch("total"), after.fetch("total")
     end
   end
 
@@ -360,7 +399,7 @@ class BuildBookV2Test < Minitest::Test
       write_yaml(root, "curriculum/catalog.yml", catalog)
       result, _stdout, stderr = run_builder(root, inputs)
       refute result
-      assert_match(/catalog\.json contains retired alias\/redirect fields: alias/, stderr)
+      assert_match(/catalog\.json: schema v3 violation: .*additional property alias is not allowed/, stderr)
     end
   end
 
@@ -368,6 +407,8 @@ class BuildBookV2Test < Minitest::Test
     with_fixture do |root, inputs|
       untrusted = "records/encyclopedia/reviews/untrusted.md"
       write(root, untrusted, "# Not a canonical migration audit\n")
+      _stdout, git_stderr, git_status = Open3.capture3("git", "add", untrusted, chdir: root.to_s)
+      assert git_status.success?, git_stderr
       result, _stdout, stderr = run_builder(root, inputs + [untrusted])
       refute result
       assert_match(/manifest input .*untrusted\.md: path is outside its allowed directory/, stderr)
@@ -376,9 +417,103 @@ class BuildBookV2Test < Minitest::Test
     with_fixture do |root, inputs|
       private_record = "records/encyclopedia/private/operator-notes.md"
       write(root, private_record, "private notes\n")
-      result, _stdout, stderr = run_builder(root, inputs + [private_record])
+      _stdout, git_stderr, git_status = Open3.capture3("git", "add", private_record, chdir: root.to_s)
+      assert git_status.success?, git_stderr
+      categories = categories_for(inputs)
+      categories.fetch("audit_security") << private_record
+      result, _stdout, stderr = run_builder(root, inputs + [private_record], categories: categories)
       refute result
       assert_match(/manifest input .*operator-notes\.md: path is outside its allowed directory/, stderr)
     end
+  end
+
+  def test_rejects_category_overlap_and_omission_before_hashing
+    with_fixture do |root, inputs|
+      categories = categories_for(inputs)
+      overlap = categories.fetch("content").first
+      categories.fetch("audit_security") << overlap
+      result, _stdout, stderr = run_builder(root, inputs, categories: categories)
+      refute result
+      assert_match(/E_INPUT_CATEGORY_OVERLAP.*#{Regexp.escape(overlap)}/, stderr)
+    end
+
+    with_fixture do |root, inputs|
+      categories = categories_for(inputs)
+      omitted = categories.fetch("content").first
+      categories.fetch("content").delete(omitted)
+      result, _stdout, stderr = run_builder(root, inputs, categories: categories)
+      refute result
+      assert_match(/E_INPUT_CATEGORY_OMISSION.*#{Regexp.escape(omitted)}/, stderr)
+    end
+  end
+
+  def test_rejects_untracked_temporary_and_symbolic_link_inputs
+    with_fixture do |root, inputs|
+      untracked = "book/volume-00-foundations/chapters/ch.foundations.untracked.md"
+      write(root, untracked, "# untracked\n")
+      result, _stdout, stderr = run_builder(root, inputs + [untracked])
+      refute result
+      assert_match(/E_INPUT_UNTRACKED.*untracked\.md/, stderr)
+    end
+
+    with_fixture do |root, inputs|
+      temporary = "book/volume-00-foundations/build/cache.tmp"
+      write(root, temporary, "temporary\n")
+      _stdout, stderr, status = Open3.capture3("git", "add", temporary, chdir: root.to_s)
+      assert status.success?, stderr
+      result, _stdout, stderr = run_builder(root, inputs + [temporary])
+      refute result
+      assert_match(/E_INPUT_TEMPORARY.*cache\.tmp/, stderr)
+    end
+
+    with_fixture do |root, inputs|
+      linked = "book/volume-00-foundations/chapters/ch.foundations.linked.md"
+      File.symlink("ch.foundations.verified.md", root.join(linked))
+      _stdout, stderr, status = Open3.capture3("git", "add", linked, chdir: root.to_s)
+      assert status.success?, stderr
+      result, _stdout, stderr = run_builder(root, inputs + [linked])
+      refute result
+      assert_match(/symbolic links are forbidden/, stderr)
+    end
+  end
+
+  def test_rejects_category_and_digest_drift_in_schema_v3_outputs
+    with_fixture do |root, inputs|
+      builder = FixtureBookBuilder.new(root.to_s, inputs: inputs)
+      catalog = builder.send(:load_yaml, "curriculum/catalog.yml")
+      registry = builder.send(:load_yaml, "versions/registry.yml")
+      config = builder.send(:load_yaml, "site/config.yml")
+      inventory = builder.send(:manifest_input_inventory, catalog)
+      rendered = builder.send(:render_files, catalog, registry, config)
+
+      manifest = JSON.parse(rendered.fetch("publication-manifest.json"))
+      path, sha256 = manifest.fetch("inputs").fetch("content").first
+      manifest.fetch("inputs").fetch("content").delete(path)
+      manifest.fetch("inputs").fetch("audit_security")[path] = sha256
+      rendered["publication-manifest.json"] = JSON.pretty_generate(manifest) + "\n"
+      error = assert_raises(RuntimeError) do
+        builder.send(:validate_runtime_outputs!, rendered, inventory: inventory)
+      end
+      assert_match(/input categories differ from the authoritative inventory/, error.message)
+
+      rendered = builder.send(:render_files, catalog, registry, config)
+      documents = %w[catalog.json navigation.json search-index.json publication-manifest.json].to_h do |name|
+        [name, JSON.parse(rendered.fetch(name))]
+      end
+      documents.each_value { |document| document.fetch("input_digests")["total"] = "0" * 64 }
+      documents.each { |name, document| rendered[name] = JSON.pretty_generate(document) + "\n" }
+      error = assert_raises(RuntimeError) do
+        builder.send(:validate_runtime_outputs!, rendered, inventory: inventory)
+      end
+      assert_match(/input digests are not recomputable/, error.message)
+    end
+  end
+
+  private
+
+  def categories_for(inputs)
+    categories = EncyclopediaInputSet::CATEGORY_ORDER.to_h { |category| [category, []] }
+    inputs.each { |path| categories.fetch(EncyclopediaInputSet.category_for(path)) << path }
+    categories.transform_values(&:sort)
   end
 end

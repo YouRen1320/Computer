@@ -6,9 +6,9 @@ require "digest"
 require "json"
 require "open3"
 require "optparse"
-require "psych"
 require "tempfile"
 require "uri"
+require_relative "validate-encyclopedia"
 
 module VersionSourceAudit
   class AuditError < StandardError; end
@@ -58,9 +58,7 @@ module VersionSourceAudit
         "--write-out", FORMAT,
         url
       ])
-      stdout, stderr, status = Open3.capture3(
-        *arguments
-      )
+      stdout, stderr, status = Open3.capture3(*arguments)
       fields = stdout.to_s.strip.split("\t", 3)
       ProbeResult.new(
         exit_code: status.exitstatus,
@@ -82,6 +80,10 @@ module VersionSourceAudit
 
   class Auditor
     SUCCESS_STATUSES = [200, 206].freeze
+    REGISTRY_RELATIVE = "versions/registry.yml"
+    REGISTRY_SCHEMA_RELATIVE = "schemas/version-registry.schema.json"
+    ID_PATTERN = /\A[a-z0-9][a-z0-9.-]*\z/.freeze
+    SOURCE_TYPES = %w[compatibility distribution documentation lifecycle release specification status].freeze
 
     attr_reader :root, :probe, :workers
 
@@ -94,68 +96,214 @@ module VersionSourceAudit
 
     def report(checked_at:)
       date = Date.iso8601(checked_at.to_s).iso8601
-      registry_path = File.join(root, "versions/registry.yml")
+      registry_path = File.join(root, REGISTRY_RELATIVE)
       registry_bytes = File.binread(registry_path)
-      registry = Psych.safe_load(registry_bytes.force_encoding(Encoding::UTF_8), aliases: false)
-      entries = registry.fetch("entries")
-      raise AuditError, "versions/registry.yml entries must be an array" unless entries.is_a?(Array)
+      registry = StrictYaml.safe_load(
+        registry_bytes.force_encoding(Encoding::UTF_8),
+        label: REGISTRY_RELATIVE
+      )
+      validate_registry_schema(registry)
+      validate_registry_header(registry)
+      registry_reviewed_at = iso_date(registry.fetch("reviewed_at"), "registry reviewed_at")
+      audit_date = Date.iso8601(date)
+      raise AuditError, "registry reviewed_at cannot be after audit checked_at" if registry_reviewed_at > audit_date
+
+      jobs, registry_status_counts = jobs_for(
+        registry.fetch("entries"),
+        audit_date: audit_date,
+        registry_reviewed_at: registry_reviewed_at
+      )
 
       queue = Queue.new
-      entries.each_with_index { |entry, index| queue << [index, validate_entry(entry, index)] }
-      results = Array.new(entries.length)
-      threads = [workers, entries.length].min.times.map do
+      jobs.each_with_index { |job, index| queue << [index, job] }
+      results = Array.new(jobs.length)
+      threads = [workers, jobs.length].min.times.map do
         Thread.new do
           loop do
-            index, entry = queue.pop(true)
-            results[index] = result_for(entry, probe.call(entry.fetch("source_url")))
+            index, job = queue.pop(true)
+            results[index] = result_for(job, probe.call(job.fetch("registered_url")))
           rescue ThreadError
             break
+          rescue StandardError => e
+            raise AuditError,
+                  "probe failed for #{job&.fetch('entry_id', 'unknown')}/#{job&.fetch('source_id', 'unknown')}: #{e.message.lines.first.to_s.strip}"
           end
         end.tap { |thread| thread.report_on_exception = false }
       end
       threads.each(&:value)
 
       failures = results.reject { |item| item.fetch("reachable") }
-      status_counts = results.group_by { |item| item.fetch("http_status").to_s }
-                             .transform_values(&:length)
-                             .sort.to_h
+      http_status_counts = results.group_by { |item| item.fetch("http_status").to_s }
+                                  .transform_values(&:length)
+                                  .sort.to_h
       {
-        "schema_version" => 1,
-        "audit_id" => "p9-version-source-reachability",
+        "schema_version" => 2,
+        "audit_id" => "p9-version-source-reachability-v2",
         "checked_at" => date,
-        "registry_path" => "versions/registry.yml",
+        "registry_path" => REGISTRY_RELATIVE,
         "registry_sha256" => Digest::SHA256.hexdigest(registry_bytes),
-        "entry_count" => results.length,
+        "registry_schema_version" => registry.fetch("schema_version"),
+        "registry_entry_count" => registry.fetch("entries").length,
+        "source_count" => results.length,
         "reachable_count" => results.length - failures.length,
         "failure_count" => failures.length,
-        "http_status_counts" => status_counts,
+        "http_status_counts" => http_status_counts,
+        "registry_status_counts" => registry_status_counts,
         "status" => failures.empty? ? "passed" : "failed",
-        "entries" => results,
-        "evidence_boundary" => "A successful probe proves only that the registered HTTPS URL returned HTTP 200/206 on the stated date; it does not verify source authority, page meaning, version compatibility, or chapter truth."
+        "policy_snapshot" => {
+          "source_authority" => registry.dig("policy", "source_authority"),
+          "promotion_mode" => registry.dig("policy", "promotion_mode"),
+          "automatic_promotion" => registry.dig("policy", "automatic_promotion")
+        },
+        "sources" => results,
+        "evidence_classification" => {
+          "state" => "observed",
+          "kind" => "network-reachability-only",
+          "promotion" => "forbidden-without-human-review"
+        },
+        "evidence_boundary" => "A successful probe proves only that every registered official-or-primary HTTPS source returned HTTP 200/206 on the stated date. It does not verify a claim's meaning, compatibility, chapter truth, or justify changing conceptual/provisional status to verified."
       }
     rescue ArgumentError => e
       raise AuditError, "checked-at must be an ISO date: #{e.message.lines.first.to_s.strip}"
-    rescue KeyError, Psych::Exception, Errno::ENOENT => e
+    rescue KeyError, TypeError, JSON::ParserError, StrictJson::DuplicateMemberError,
+           Psych::Exception, StrictYaml::DuplicateKeyError, StrictYaml::UnsupportedKeyError,
+           Errno::ENOENT => e
       raise AuditError, e.message.lines.first.to_s.strip
     end
 
     private
 
-    def validate_entry(entry, index)
-      raise AuditError, "entry ##{index + 1} must be a mapping" unless entry.is_a?(Hash)
-
-      id = entry.fetch("id")
-      url = entry.fetch("source_url")
-      uri = URI.parse(url)
-      unless uri.is_a?(URI::HTTPS) && uri.host && !uri.host.empty? && uri.userinfo.nil?
-        raise AuditError, "entry #{id} source_url must be an absolute HTTPS URL without userinfo"
+    def validate_registry_schema(registry)
+      schema_path = File.join(root, REGISTRY_SCHEMA_RELATIVE)
+      schema = StrictJson.parse(File.read(schema_path, encoding: "UTF-8"))
+      evaluator = ExecutableJsonSchema.new(schema, REGISTRY_SCHEMA_RELATIVE)
+      unless evaluator.definition_errors.empty?
+        raise AuditError, "invalid registry schema: #{evaluator.definition_errors.first}"
       end
-      { "id" => id, "source_url" => url }
-    rescue URI::InvalidURIError => e
-      raise AuditError, "entry ##{index + 1} source_url is invalid: #{e.message.lines.first.to_s.strip}"
+
+      instance_errors = evaluator.validate(registry)
+      raise AuditError, "registry schema violation: #{instance_errors.first}" unless instance_errors.empty?
     end
 
-    def result_for(entry, result)
+    def validate_registry_header(registry)
+      raise AuditError, "#{REGISTRY_RELATIVE} must be a mapping" unless registry.is_a?(Hash)
+      raise AuditError, "#{REGISTRY_RELATIVE} schema_version must equal 2" unless registry["schema_version"] == 2
+      unless registry["registry_id"] == "factorycare-version-registry"
+        raise AuditError, "#{REGISTRY_RELATIVE} registry_id must equal factorycare-version-registry"
+      end
+
+      policy = registry.fetch("policy")
+      unless policy.is_a?(Hash) && policy["source_authority"] == "official-or-primary-only" &&
+             policy["promotion_mode"] == "manual-only" && policy["automatic_promotion"] == false
+        raise AuditError, "#{REGISTRY_RELATIVE} must enforce official-or-primary sources and manual-only promotion"
+      end
+      entries = registry.fetch("entries")
+      raise AuditError, "#{REGISTRY_RELATIVE} entries must be a non-empty array" unless entries.is_a?(Array) && !entries.empty?
+    end
+
+    def jobs_for(entries, audit_date:, registry_reviewed_at:)
+      entry_ids = {}
+      jobs = []
+      statuses = Hash.new(0)
+      entries.each_with_index do |entry, entry_index|
+        raise AuditError, "entry ##{entry_index + 1} must be a mapping" unless entry.is_a?(Hash)
+
+        id = required_string(entry, "id", "entry ##{entry_index + 1}")
+        raise AuditError, "entry ##{entry_index + 1} id has invalid syntax" unless id.match?(ID_PATTERN)
+        raise AuditError, "duplicate entry id #{id}" if entry_ids.key?(id)
+        raise AuditError, "entry #{id} uses forbidden legacy source_url" if entry.key?("source_url")
+
+        entry_ids[id] = true
+        status = required_string(entry, "status", "entry #{id}")
+        unless %w[verified provisional conceptual].include?(status)
+          raise AuditError, "entry #{id} has unsupported status #{status.inspect}"
+        end
+        statuses[status] += 1
+        reviewed_at = iso_date(entry.fetch("reviewed_at"), "entry #{id} reviewed_at")
+        if reviewed_at > registry_reviewed_at
+          raise AuditError, "entry #{id} reviewed_at cannot be after registry reviewed_at"
+        end
+        if reviewed_at > audit_date
+          raise AuditError, "entry #{id} reviewed_at cannot be after audit checked_at"
+        end
+        sources = entry.fetch("sources")
+        raise AuditError, "entry #{id} sources must be a non-empty array" unless sources.is_a?(Array) && !sources.empty?
+
+        source_ids = {}
+        sources.each_with_index do |source, source_index|
+          job = validate_source(
+            source,
+            entry_id: id,
+            entry_status: status,
+            entry_reviewed_at: reviewed_at,
+            source_index: source_index
+          )
+          source_id = job.fetch("source_id")
+          raise AuditError, "entry #{id} has duplicate source id #{source_id}" if source_ids.key?(source_id)
+
+          source_ids[source_id] = true
+          jobs << job
+        end
+      end
+      [jobs, statuses.sort.to_h]
+    end
+
+    def validate_source(source, entry_id:, entry_status:, entry_reviewed_at:, source_index:)
+      label = "entry #{entry_id} source ##{source_index + 1}"
+      raise AuditError, "#{label} must be a mapping" unless source.is_a?(Hash)
+
+      source_id = required_string(source, "id", label)
+      raise AuditError, "#{label} id has invalid syntax" unless source_id.match?(ID_PATTERN)
+      source_type = required_string(source, "type", label)
+      raise AuditError, "#{label} type is unsupported" unless SOURCE_TYPES.include?(source_type)
+      publisher = required_string(source, "publisher", label)
+      claim = required_string(source, "claim", label)
+      raise AuditError, "#{label} publisher must contain at least two characters" if publisher.strip.length < 2
+      raise AuditError, "#{label} claim must contain at least twelve characters" if claim.strip.length < 12
+      authority = required_string(source, "authority", label)
+      raise AuditError, "#{label} authority must equal official-or-primary" unless authority == "official-or-primary"
+      checked_at = iso_date(source.fetch("checked_at"), "#{label} checked_at")
+      raise AuditError, "#{label} checked_at cannot be after entry reviewed_at" if checked_at > entry_reviewed_at
+
+      url = required_string(source, "url", label)
+      uri = URI.parse(url)
+      unless uri.is_a?(URI::HTTPS) && uri.host && !uri.host.empty? && uri.userinfo.nil?
+        raise AuditError, "#{label} url must be an absolute HTTPS URL without userinfo"
+      end
+      {
+        "entry_id" => entry_id,
+        "entry_status" => entry_status,
+        "source_id" => source_id,
+        "source_type" => source_type,
+        "publisher" => publisher,
+        "authority" => authority,
+        "source_checked_at" => checked_at.iso8601,
+        "claim" => claim,
+        "registered_url" => url
+      }
+    rescue URI::InvalidURIError => e
+      raise AuditError, "#{label} url is invalid: #{e.message.lines.first.to_s.strip}"
+    end
+
+    def required_string(mapping, key, label)
+      value = mapping.fetch(key)
+      raise AuditError, "#{label} #{key} must be a non-empty string" unless value.is_a?(String) && !value.strip.empty?
+
+      value
+    end
+
+    def iso_date(value, label)
+      raise AuditError, "#{label} must be a quoted ISO date" unless value.is_a?(String)
+
+      parsed = Date.iso8601(value)
+      raise AuditError, "#{label} must use YYYY-MM-DD" unless parsed.iso8601 == value
+
+      parsed
+    rescue ArgumentError
+      raise AuditError, "#{label} is not a valid ISO date"
+    end
+
+    def result_for(job, result)
       effective_https = begin
         uri = URI.parse(result.effective_url.to_s)
         uri.is_a?(URI::HTTPS) && uri.host && !uri.host.empty? && uri.userinfo.nil?
@@ -164,9 +312,7 @@ module VersionSourceAudit
       end
       reachable = result.exit_code.zero? && SUCCESS_STATUSES.include?(result.http_status) &&
                   result.ssl_verify_result.zero? && effective_https
-      {
-        "id" => entry.fetch("id"),
-        "source_url" => entry.fetch("source_url"),
+      job.merge(
         "effective_url" => result.effective_url,
         "effective_https" => effective_https,
         "http_status" => result.http_status,
@@ -175,7 +321,7 @@ module VersionSourceAudit
         "curl_exit_code" => result.exit_code,
         "reachable" => reachable,
         "error" => result.error
-      }
+      )
     end
   end
 

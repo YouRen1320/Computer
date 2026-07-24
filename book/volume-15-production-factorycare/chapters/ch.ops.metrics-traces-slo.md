@@ -13,7 +13,9 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.ops.logs-health
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 - docker
 - docker-compose
 - ubuntu-server-26.04

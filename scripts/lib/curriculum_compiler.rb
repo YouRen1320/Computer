@@ -27,6 +27,22 @@ module Curriculum
     "release-candidate" => %w[review verified].freeze,
     "published" => %w[verified].freeze
   }.freeze
+  ACCELERATED_MASTERY_PROFILES = {
+    "L1-L2" => %w[timed-teach-back guided-experiment boundary-diagnosis].freeze,
+    "L2" => %w[timed-teach-back runnable-artifact boundary-test].freeze,
+    "L2+" => %w[timed-teach-back runnable-artifact fault-diagnosis requirement-change].freeze,
+    "L3" => %w[timed-teach-back independent-build fault-diagnosis requirement-change tradeoff-defense].freeze
+  }.freeze
+  ACCELERATED_MASTERY_ASSIGNMENTS = {
+    "machine_learning" => {
+      "modules" => %w[m37 m38 m39].freeze,
+      "required_mastery" => "L1-L2"
+    }.freeze,
+    "artificial_intelligence" => {
+      "modules" => %w[m40 m41 m42 m43 m44].freeze,
+      "required_mastery" => "L2+"
+    }.freeze
+  }.freeze
   STATIC_GENERATED_OUTPUTS = %w[
     curriculum/catalog.yml
     curriculum/routes/zero-base.yml
@@ -40,8 +56,8 @@ module Curriculum
   GENERATED_YAML_KEYS = {
     "curriculum/catalog.yml" => %w[schema_version generated generated_by generated_spec_digest edition catalog_id canonical status chapter_count_target dependency_semantics chapters],
     "curriculum/routes/zero-base.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind title coverage navigation_semantics waiver_policy units],
-    "curriculum/routes/accelerated-48.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics module_count modules],
-    "curriculum/routes/factorycare-project.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics artifact_policy stages],
+    "curriculum/routes/accelerated-48.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics mastery_policy module_count modules],
+    "curriculum/routes/factorycare-project.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics artifact_policy gate_registry_id acceptance_catalog_path stages],
     "curriculum/routes/reference.yml" => %w[schema_version generated generated_by generated_spec_digest edition route_id route_kind coverage navigation_semantics facets chapter_index],
     "curriculum/gates.yml" => %w[schema_version generated generated_by generated_spec_digest edition gates_id canonical_source policy gates]
   }.freeze
@@ -95,14 +111,16 @@ module Curriculum
       id_registry: "curriculum/id-registry.yml",
       accelerated_plan: "curriculum/route-plans/accelerated-48.yml",
       factorycare_plan: "curriculum/route-plans/factorycare-project.yml",
+      factorycare_gate_registry: "curriculum/factorycare-stage-gates.yml",
       gates_plan: "curriculum/route-plans/gates.yml",
       versions: "versions/registry.yml"
     }.freeze
 
     attr_reader :root, :edition, :volumes, :capabilities, :topics, :id_registry,
-                :accelerated_plan, :factorycare_plan, :gates_plan, :migration,
+                :accelerated_plan, :factorycare_plan, :factorycare_gate_registry, :gates_plan, :migration,
                 :legacy_manifest, :migration_audit, :versions, :volume_specs, :chapters, :collector, :input_paths,
-                :migration_schema, :application_receipt_schema, :application_receipt, :input_contents
+                :migration_schema, :application_receipt_schema, :application_receipt, :input_contents,
+                :accelerated_route_schema, :factorycare_gate_schema, :factorycare_acceptance_catalog_source
 
     def initialize(root)
       @root = File.expand_path(root)
@@ -115,6 +133,9 @@ module Curriculum
 
     def load!
       load_base_documents!
+      load_accelerated_route_schema!
+      load_factorycare_gate_schema!
+      load_factorycare_acceptance_catalog!
       load_migration_schema!
       load_application_receipt_schema!
       load_migration!
@@ -185,6 +206,43 @@ module Curriculum
       BASE_PATHS.each do |name, relative|
         value = load_yaml(relative)
         instance_variable_set("@#{name}", value)
+      end
+    rescue DiagnosticError => e
+      raise ValidationFailure.new([Issue.new(e.code, e.path, e.message)])
+    end
+
+    def load_factorycare_gate_schema!
+      relative = "schemas/factorycare-stage-gates.schema.json"
+      source = read_input(relative).dup.force_encoding(Encoding::UTF_8)
+      @factorycare_gate_schema = StrictJson.load(source)
+    rescue JSON::ParserError, StrictJson::DuplicateKeyError => e
+      raise ValidationFailure.new([Issue.new("E_FACTORYCARE_GATE_SCHEMA", relative, e.message)])
+    rescue DiagnosticError => e
+      raise ValidationFailure.new([Issue.new(e.code, e.path, e.message)])
+    end
+
+    def load_accelerated_route_schema!
+      relative = "schemas/accelerated-route-plan.schema.json"
+      source = read_input(relative).dup.force_encoding(Encoding::UTF_8)
+      @accelerated_route_schema = StrictJson.load(source)
+    rescue JSON::ParserError, StrictJson::DuplicateKeyError => e
+      raise ValidationFailure.new([Issue.new("E_ACCELERATED_ROUTE_SCHEMA", relative, e.message)])
+    rescue DiagnosticError => e
+      raise ValidationFailure.new([Issue.new(e.code, e.path, e.message)])
+    end
+
+    def load_factorycare_acceptance_catalog!
+      relative = factorycare_gate_registry.is_a?(Hash) ? factorycare_gate_registry["acceptance_catalog_path"] : nil
+      unless relative == "factorycare-design/testing/acceptance-catalog.md"
+        raise ValidationFailure.new([Issue.new(
+          "E_FACTORYCARE_ACCEPTANCE_CATALOG",
+          "curriculum/factorycare-stage-gates.yml",
+          "acceptance_catalog_path must name the canonical FactoryCare acceptance catalog"
+        )])
+      end
+      @factorycare_acceptance_catalog_source = read_input(relative).dup.force_encoding(Encoding::UTF_8)
+      unless @factorycare_acceptance_catalog_source.valid_encoding?
+        raise ValidationFailure.new([Issue.new("E_FACTORYCARE_ACCEPTANCE_CATALOG", relative, "catalog must be valid UTF-8")])
       end
     rescue DiagnosticError => e
       raise ValidationFailure.new([Issue.new(e.code, e.path, e.message)])
@@ -1455,6 +1513,7 @@ module Curriculum
 
     def validate_route_plans!
       validate_route_plan_shapes!
+      validate_factorycare_gate_registry!
       known_chapters = chapter_by_id.keys.to_set
       {
         "curriculum/route-plans/accelerated-48.yml" => accelerated_plan,
@@ -1498,17 +1557,11 @@ module Curriculum
             primary_owner[id] = stage["id"]
           end
         end
-        gate_contract = stage["gate_contract"]
-        unless gate_contract.is_a?(Hash) && nonempty_string?(gate_contract["id"])
-          collector.error("E_FACTORYCARE_PLAN", "curriculum/route-plans/factorycare-project.yml", "#{pointer}/gate_contract must name an id")
+        gate_id = stage["gate_id"]
+        if nonempty_string?(gate_id)
+          factory_gate_ids << gate_id
         else
-          factory_gate_ids << gate_contract["id"]
-          validate_unique_string_array(gate_contract["artifact_paths"], "curriculum/route-plans/factorycare-project.yml", "#{pointer}/gate_contract/artifact_paths", nonempty: true)
-          array(gate_contract["artifact_paths"]).each do |artifact_path|
-            unless valid_contract_path?(artifact_path) && artifact_path.start_with?("evidence/factorycare/")
-              collector.error("E_FACTORYCARE_PATH", "curriculum/route-plans/factorycare-project.yml", "#{pointer}/gate_contract/artifact_paths must stay under evidence/factorycare/")
-            end
-          end
+          collector.error("E_FACTORYCARE_PLAN", "curriculum/route-plans/factorycare-project.yml", "#{pointer}/gate_id must name a stage gate")
         end
       end
       duplicate_values(factory_gate_ids).each do |id|
@@ -1564,9 +1617,104 @@ module Curriculum
       end
     end
 
+    def validate_factorycare_gate_registry!
+      registry_path = "curriculum/factorycare-stage-gates.yml"
+      schema_path = "schemas/factorycare-stage-gates.schema.json"
+      begin
+        JsonSchema.new(factorycare_gate_schema).validate(factorycare_gate_registry).each do |error|
+          collector.error("E_FACTORYCARE_GATE_SCHEMA", registry_path, "#{error.pointer} #{error.message}")
+        end
+      rescue ArgumentError => e
+        collector.error("E_FACTORYCARE_GATE_SCHEMA", schema_path, e.message)
+      end
+      return unless factorycare_gate_registry.is_a?(Hash)
+
+      expected_gate_ids = (1..8).map { |number| format("fc-stage-%02d", number) }
+      expected_stage_ids = %w[
+        fc-01-foundation fc-02-users fc-03-devices fc-04-work-orders
+        fc-05-sla-events fc-06-multiclient fc-07-ai fc-08-deploy
+      ]
+      gates = array(factorycare_gate_registry["gates"])
+      collector.error("E_FACTORYCARE_GATE_SET", registry_path, "gate ids must remain fc-stage-01..fc-stage-08") unless gates.map { |gate| gate["id"] } == expected_gate_ids
+      collector.error("E_FACTORYCARE_GATE_SET", registry_path, "route stage ids must match the eight business stages in order") unless gates.map { |gate| gate["route_stage_id"] } == expected_stage_ids
+
+      catalog_ids = factorycare_acceptance_catalog_source.to_s.each_line.each_with_object([]) do |line, ids|
+        match = /^\| (FC-[A-Z]+-[0-9]{3}) \|/.match(line)
+        ids << match[1] if match
+      end
+      duplicate_values(catalog_ids).each do |id|
+        collector.error("E_FACTORYCARE_ACCEPTANCE_DUPLICATE", factorycare_gate_registry["acceptance_catalog_path"], "duplicate acceptance id #{id}")
+      end
+      unless catalog_ids.length == 93 && catalog_ids.uniq.length == 93
+        collector.error("E_FACTORYCARE_ACCEPTANCE_COUNT", factorycare_gate_registry["acceptance_catalog_path"], "acceptance catalog must contain exactly 93 unique FC ids")
+      end
+      known_acceptance_ids = catalog_ids.to_set
+      allowed_evidence_kinds = array(factorycare_gate_registry["allowed_evidence_kinds"])
+      expected_evidence_kinds = %w[runnable-slice negative-path decision-record teach-back]
+      unless allowed_evidence_kinds == expected_evidence_kinds
+        collector.error("E_FACTORYCARE_EVIDENCE_KIND", registry_path, "allowed_evidence_kinds must use the fixed ordered four-kind contract")
+      end
+
+      route_stages = array(factorycare_plan["stages"])
+      route_by_id = route_stages.each_with_object({}) do |stage, result|
+        result[stage["id"]] = stage if stage.is_a?(Hash) && nonempty_string?(stage["id"])
+      end
+      primary_owner = {}
+      gates.each_with_index do |gate, index|
+        next unless gate.is_a?(Hash)
+
+        pointer = "/gates/#{index}"
+        route_stage_id = gate["route_stage_id"]
+        route_stage = route_by_id[route_stage_id]
+        if route_stage.nil?
+          collector.error("E_FACTORYCARE_GATE_ROUTE", registry_path, "#{pointer}/route_stage_id references no project stage")
+        elsif route_stage["gate_id"] != gate["id"]
+          collector.error("E_FACTORYCARE_GATE_ROUTE", "curriculum/route-plans/factorycare-project.yml", "stage #{route_stage_id} must reference #{gate['id']}")
+        end
+
+        primary_ids = array(gate["primary_acceptance_ids"])
+        secondary_ids = array(gate["secondary_acceptance_ids"])
+        validate_unique_string_array(primary_ids, registry_path, "#{pointer}/primary_acceptance_ids", nonempty: true)
+        validate_unique_string_array(secondary_ids, registry_path, "#{pointer}/secondary_acceptance_ids")
+        overlap = primary_ids & secondary_ids
+        collector.error("E_FACTORYCARE_ACCEPTANCE_SECONDARY", registry_path, "#{pointer} repeats primary ids as secondary #{overlap.join(',')}") unless overlap.empty?
+        unknown = (primary_ids + secondary_ids).uniq.reject { |id| known_acceptance_ids.include?(id) }
+        collector.error("E_FACTORYCARE_ACCEPTANCE_UNKNOWN", registry_path, "#{pointer} references unknown acceptance ids #{unknown.join(',')}") unless unknown.empty?
+        primary_ids.each do |id|
+          if primary_owner.key?(id)
+            collector.error("E_FACTORYCARE_ACCEPTANCE_PRIMARY", registry_path, "#{id} has primary stages #{primary_owner[id]} and #{gate['id']}")
+          else
+            primary_owner[id] = gate["id"]
+          end
+        end
+
+        evidence_kinds = array(gate["required_evidence_kinds"])
+        validate_unique_string_array(evidence_kinds, registry_path, "#{pointer}/required_evidence_kinds", nonempty: true)
+        unless evidence_kinds == expected_evidence_kinds
+          collector.error("E_FACTORYCARE_EVIDENCE_KIND", registry_path, "#{pointer}/required_evidence_kinds must require all four fixed kinds in order")
+        end
+        validate_unique_string_array(gate["negative_scenarios"], registry_path, "#{pointer}/negative_scenarios", nonempty: true)
+        validate_unique_string_array(gate["artifact_paths"], registry_path, "#{pointer}/artifact_paths", nonempty: true)
+        artifact_root = route_stage_id.to_s.sub(/\Afc-/, "")
+        array(gate["artifact_paths"]).each do |artifact_path|
+          unless valid_contract_path?(artifact_path) && artifact_path.start_with?("evidence/factorycare/#{artifact_root}/")
+            collector.error("E_FACTORYCARE_PATH", registry_path, "#{pointer}/artifact_paths must stay under evidence/factorycare/#{artifact_root}/")
+          end
+        end
+      end
+
+      missing = known_acceptance_ids - primary_owner.keys.to_set
+      extra = primary_owner.keys.to_set - known_acceptance_ids
+      collector.error("E_FACTORYCARE_ACCEPTANCE_COVERAGE", registry_path, "missing primary acceptance ids #{missing.to_a.sort.join(',')}") unless missing.empty?
+      collector.error("E_FACTORYCARE_ACCEPTANCE_UNKNOWN", registry_path, "unknown primary acceptance ids #{extra.to_a.sort.join(',')}") unless extra.empty?
+      unless primary_owner.length == 93
+        collector.error("E_FACTORYCARE_ACCEPTANCE_COVERAGE", registry_path, "primary stage ownership must cover 93/93 acceptance ids, got #{primary_owner.length}")
+      end
+    end
+
     def validate_route_plan_shapes!
       accelerated_path = "curriculum/route-plans/accelerated-48.yml"
-      reject_unknown_keys(accelerated_plan, %w[schema_version edition route_id route_kind module_count ownership_policy module_defaults modules], accelerated_path, "/")
+      reject_unknown_keys(accelerated_plan, %w[schema_version edition route_id route_kind module_count ownership_policy mastery_policy module_defaults modules], accelerated_path, "/")
       expect_equal(accelerated_plan["route_id"], "accelerated-48", accelerated_path, "/route_id")
       expect_equal(accelerated_plan["route_kind"], "accelerated", accelerated_path, "/route_kind")
       ownership = accelerated_plan["ownership_policy"]
@@ -1577,15 +1725,15 @@ module Curriculum
       validate_unique_string_array(ownership["chapter_roles"], accelerated_path, "/ownership_policy/chapter_roles", nonempty: true) if ownership.is_a?(Hash)
 
       defaults = accelerated_plan["module_defaults"]
-      reject_unknown_keys(defaults, %w[diagnostic_policy waiver_policy evidence_requirements retest_policy], accelerated_path, "/module_defaults")
+      reject_unknown_keys(defaults, %w[diagnostic_policy waiver_policy retest_policy], accelerated_path, "/module_defaults")
       if defaults.is_a?(Hash)
         reject_unknown_keys(defaults["diagnostic_policy"], %w[pass_threshold valid_for_days evidence_kinds], accelerated_path, "/module_defaults/diagnostic_policy")
         reject_unknown_keys(defaults["waiver_policy"], %w[allowed scope required_evidence], accelerated_path, "/module_defaults/waiver_policy")
         reject_unknown_keys(defaults["retest_policy"], %w[delay_hours new_variant max_attempts], accelerated_path, "/module_defaults/retest_policy")
-        validate_unique_string_array(defaults["evidence_requirements"], accelerated_path, "/module_defaults/evidence_requirements", nonempty: true)
       end
+      validate_accelerated_mastery_policy!
       array(accelerated_plan["modules"]).each_with_index do |mod, index|
-        reject_unknown_keys(mod, %w[id title required_capabilities anchor_chapter_ids], accelerated_path, "/modules/#{index}")
+        reject_unknown_keys(mod, %w[id title required_mastery evidence_requirements required_capabilities anchor_chapter_ids], accelerated_path, "/modules/#{index}")
         collector.error("E_SCHEMA", accelerated_path, "/modules/#{index}/title must be non-empty") unless mod.is_a?(Hash) && nonempty_string?(mod["title"])
       end
 
@@ -1598,7 +1746,7 @@ module Curriculum
       reject_unknown_keys(support, %w[include_hard_prerequisite_closure primary_owner_unique_across_stages supporting_chapters_may_repeat require_teacher_before_use_within_stage], factory_path, "/support_policy")
       validate_boolean_fields(support, %w[include_hard_prerequisite_closure primary_owner_unique_across_stages supporting_chapters_may_repeat require_teacher_before_use_within_stage], factory_path, "/support_policy")
       stage_defaults = factorycare_plan["stage_defaults"]
-      reject_unknown_keys(stage_defaults, %w[artifact_root artifact_policy required_evidence_kinds], factory_path, "/stage_defaults")
+      reject_unknown_keys(stage_defaults, %w[artifact_root artifact_policy], factory_path, "/stage_defaults")
       expect_equal(stage_defaults["artifact_root"], "evidence/factorycare", factory_path, "/stage_defaults/artifact_root") if stage_defaults.is_a?(Hash)
       if stage_defaults.is_a?(Hash)
         artifact_policy = stage_defaults["artifact_policy"]
@@ -1609,14 +1757,12 @@ module Curriculum
           expect_equal(artifact_policy["prepopulation"], "forbidden", factory_path, "/stage_defaults/artifact_policy/prepopulation")
           expect_equal(artifact_policy["absence_before_stage"], "expected", factory_path, "/stage_defaults/artifact_policy/absence_before_stage")
         end
-        validate_unique_string_array(stage_defaults["required_evidence_kinds"], factory_path, "/stage_defaults/required_evidence_kinds", nonempty: true)
       end
       array(factorycare_plan["stages"]).each_with_index do |stage, index|
         pointer = "/stages/#{index}"
-        reject_unknown_keys(stage, %w[id title required_capabilities primary_anchor_chapter_ids business_deliverables negative_scenarios gate_contract], factory_path, pointer)
-        %w[business_deliverables negative_scenarios].each { |field| validate_unique_string_array(stage[field], factory_path, "#{pointer}/#{field}", nonempty: true) } if stage.is_a?(Hash)
-        gate_contract = stage.is_a?(Hash) ? stage["gate_contract"] : nil
-        reject_unknown_keys(gate_contract, %w[id artifact_paths], factory_path, "#{pointer}/gate_contract")
+        reject_unknown_keys(stage, %w[id title required_capabilities primary_anchor_chapter_ids business_deliverables gate_id], factory_path, pointer)
+        validate_unique_string_array(stage["business_deliverables"], factory_path, "#{pointer}/business_deliverables", nonempty: true) if stage.is_a?(Hash)
+        collector.error("E_SCHEMA", factory_path, "#{pointer}/gate_id must be non-empty") unless stage.is_a?(Hash) && nonempty_string?(stage["gate_id"])
       end
 
       gates_path = "curriculum/route-plans/gates.yml"
@@ -1650,6 +1796,130 @@ module Curriculum
       end
       array(gates_plan["gates"]).each_with_index do |gate, index|
         reject_unknown_keys(gate, %w[id title level prerequisite_gate_ids required_capabilities assessment_anchor artifact_focus rubric_focus coverage], gates_path, "/gates/#{index}")
+      end
+    end
+
+    def validate_accelerated_mastery_policy!
+      path = "curriculum/route-plans/accelerated-48.yml"
+      schema_path = "schemas/accelerated-route-plan.schema.json"
+      begin
+        JsonSchema.new(accelerated_route_schema).validate(accelerated_plan).each do |error|
+          collector.error("E_ACCELERATED_ROUTE_SCHEMA", path, "#{error.pointer} #{error.message}")
+        end
+      rescue ArgumentError => e
+        collector.error("E_ACCELERATED_ROUTE_SCHEMA", schema_path, e.message)
+      end
+
+      policy = accelerated_plan["mastery_policy"]
+      unless policy.is_a?(Hash)
+        collector.error("E_ROUTE_MASTERY_POLICY", path, "/mastery_policy must be a mapping")
+        return
+      end
+
+      reject_unknown_keys(
+        policy,
+        %w[reference_depth_source route_required_mastery_field profiles required_assignments],
+        path,
+        "/mastery_policy"
+      )
+      unless policy["reference_depth_source"] == "curriculum/catalog.yml#/chapters/*/level"
+        collector.error(
+          "E_ROUTE_MASTERY_POLICY",
+          path,
+          "/mastery_policy/reference_depth_source must preserve chapter level as encyclopedia reference depth"
+        )
+      end
+      unless policy["route_required_mastery_field"] == "required_mastery"
+        collector.error(
+          "E_ROUTE_MASTERY_POLICY",
+          path,
+          "/mastery_policy/route_required_mastery_field must be required_mastery"
+        )
+      end
+
+      profiles = policy["profiles"]
+      unless profiles.is_a?(Hash)
+        collector.error("E_ROUTE_MASTERY_POLICY", path, "/mastery_policy/profiles must be a mapping")
+        profiles = {}
+      end
+      extra_profiles = profiles.keys - ACCELERATED_MASTERY_PROFILES.keys
+      missing_profiles = ACCELERATED_MASTERY_PROFILES.keys - profiles.keys
+      unless extra_profiles.empty? && missing_profiles.empty?
+        collector.error(
+          "E_ROUTE_MASTERY_POLICY",
+          path,
+          "/mastery_policy/profiles must define exactly #{ACCELERATED_MASTERY_PROFILES.keys.join(',')}"
+        )
+      end
+      ACCELERATED_MASTERY_PROFILES.each do |level, expected_evidence|
+        next if profiles[level] == expected_evidence
+
+        collector.error(
+          "E_ROUTE_MASTERY_EVIDENCE",
+          path,
+          "/mastery_policy/profiles/#{level} must equal #{expected_evidence.join(',')} in order"
+        )
+      end
+
+      assignments = policy["required_assignments"]
+      unless assignments.is_a?(Hash)
+        collector.error("E_ROUTE_MASTERY_POLICY", path, "/mastery_policy/required_assignments must be a mapping")
+        assignments = {}
+      end
+      reject_unknown_keys(assignments, ACCELERATED_MASTERY_ASSIGNMENTS.keys, path, "/mastery_policy/required_assignments")
+      ACCELERATED_MASTERY_ASSIGNMENTS.each do |domain, expected|
+        actual = assignments[domain]
+        unless actual.is_a?(Hash)
+          collector.error("E_ROUTE_MASTERY_ASSIGNMENT", path, "/mastery_policy/required_assignments/#{domain} must be a mapping")
+          next
+        end
+        reject_unknown_keys(actual, %w[modules required_mastery], path, "/mastery_policy/required_assignments/#{domain}")
+        unless actual["modules"] == expected["modules"] && actual["required_mastery"] == expected["required_mastery"]
+          collector.error(
+            "E_ROUTE_MASTERY_ASSIGNMENT",
+            path,
+            "/mastery_policy/required_assignments/#{domain} must assign #{expected['modules'].join(',')} to #{expected['required_mastery']}"
+          )
+        end
+      end
+
+      modules = array(accelerated_plan["modules"])
+      modules.each_with_index do |mod, index|
+        pointer = "/modules/#{index}"
+        unless mod.is_a?(Hash) && ACCELERATED_MASTERY_PROFILES.key?(mod["required_mastery"])
+          collector.error(
+            "E_ROUTE_MASTERY",
+            path,
+            "#{pointer}/required_mastery must be one of #{ACCELERATED_MASTERY_PROFILES.keys.join(',')}"
+          )
+          next
+        end
+        evidence = mod["evidence_requirements"]
+        validate_unique_string_array(evidence, path, "#{pointer}/evidence_requirements", nonempty: true)
+        expected_evidence = ACCELERATED_MASTERY_PROFILES.fetch(mod["required_mastery"])
+        next if evidence == expected_evidence
+
+        collector.error(
+          "E_ROUTE_MASTERY_EVIDENCE",
+          path,
+          "#{pointer}/evidence_requirements must match #{mod['required_mastery']} profile exactly"
+        )
+      end
+
+      by_id = modules.each_with_object({}) do |mod, result|
+        result[mod["id"]] = mod if mod.is_a?(Hash) && nonempty_string?(mod["id"])
+      end
+      ACCELERATED_MASTERY_ASSIGNMENTS.each do |domain, assignment|
+        assignment["modules"].each do |module_id|
+          actual = by_id.dig(module_id, "required_mastery")
+          next if actual == assignment["required_mastery"]
+
+          collector.error(
+            "E_ROUTE_MASTERY_ASSIGNMENT",
+            path,
+            "#{domain} requires #{module_id}=#{assignment['required_mastery']}, got #{actual.inspect}"
+          )
+        end
       end
     end
 
@@ -1980,6 +2250,7 @@ module Curriculum
         rendered << {
           "id" => mod.fetch("id"),
           "title" => mod.fetch("title"),
+          "required_mastery" => mod.fetch("required_mastery"),
           "required_capabilities" => required,
           "anchor_chapter_ids" => anchors,
           "primary_chapter_ids" => primary,
@@ -1991,7 +2262,7 @@ module Curriculum
             "assessment_path" => "assessments/accelerated/#{mod.fetch('id')}/diagnostic.md"
           ),
           "waiver" => plan.fetch("module_defaults").fetch("waiver_policy"),
-          "completion_evidence" => plan.fetch("module_defaults").fetch("evidence_requirements"),
+          "completion_evidence" => mod.fetch("evidence_requirements"),
           "retest" => plan.fetch("module_defaults").fetch("retest_policy").merge(
             "assessment_id" => "retest-#{mod.fetch('id')}",
             "evidence_path" => "evidence/accelerated/#{mod.fetch('id')}/retest/"
@@ -2004,6 +2275,12 @@ module Curriculum
         "route_kind" => "accelerated",
         "coverage" => "complete-with-support-repetition",
         "navigation_semantics" => "ordered-anchor-boundaries",
+        "mastery_policy" => deep_copy(plan.fetch("mastery_policy")).merge(
+          "depth_semantics" => {
+            "chapter_level" => "encyclopedia-reference-depth",
+            "required_mastery" => "route-minimum-exit-evidence"
+          }
+        ),
         "module_count" => plan.fetch("module_count"),
         "modules" => rendered
       )
@@ -2013,6 +2290,10 @@ module Curriculum
 
     def render_factorycare
       plan = spec.factorycare_plan
+      gate_registry = spec.factorycare_gate_registry
+      gate_by_id = gate_registry.fetch("gates").each_with_object({}) do |gate, result|
+        result[gate.fetch("id")] = gate
+      end
       position = {}
       spec.chapters.each_with_index { |chapter, index| position[chapter["id"]] = index }
       primary_seen = Set.new
@@ -2031,6 +2312,17 @@ module Curriculum
         all_ids = (support + primary).uniq.sort_by { |id| position.fetch(id) }
         factorycare_ids.merge(all_ids)
         root = format("%02d-%s", index + 1, stage.fetch("id").sub(/\Afc-\d{2}-/, ""))
+        gate = gate_by_id.fetch(stage.fetch("gate_id"))
+        evidence_paths = gate.fetch("required_evidence_kinds").map do |kind|
+          case kind
+          when "runnable-slice" then "evidence/factorycare/#{root}/run/"
+          when "negative-path" then "evidence/factorycare/#{root}/negative/"
+          when "decision-record" then "evidence/factorycare/#{root}/decision-record.md"
+          when "teach-back" then "evidence/factorycare/#{root}/teach-back.md"
+          else
+            raise DiagnosticError.new("E_FACTORYCARE_EVIDENCE_KIND", "unknown evidence kind #{kind}", path: "curriculum/factorycare-stage-gates.yml")
+          end
+        end
         {
           "id" => stage.fetch("id"),
           "title" => stage.fetch("title"),
@@ -2038,20 +2330,24 @@ module Curriculum
           "primary_chapter_ids" => primary,
           "supporting_chapter_ids" => support,
           "business_deliverables" => stage.fetch("business_deliverables"),
-          "negative_scenarios" => stage.fetch("negative_scenarios"),
-          "project_artifacts" => stage.fetch("gate_contract").fetch("artifact_paths").each_with_index.map do |path, artifact_index|
+          "negative_scenarios" => gate.fetch("negative_scenarios"),
+          "project_artifacts" => gate.fetch("artifact_paths").each_with_index.map do |path, artifact_index|
             {
               "id" => "#{stage.fetch('id')}-artifact-#{artifact_index + 1}",
               "path" => path,
               "acceptance" => "可从空环境复现 #{stage.fetch('business_deliverables').join('、')}，并保留成功与负向路径证据"
             }
           end,
-          "evidence_paths" => [
-            "evidence/factorycare/#{root}/run.log",
-            "evidence/factorycare/#{root}/tests/",
-            "evidence/factorycare/#{root}/teach-back.md"
-          ],
-          "stage_gate_id" => stage.fetch("gate_contract").fetch("id")
+          "evidence_paths" => evidence_paths,
+          "stage_gate" => {
+            "id" => gate.fetch("id"),
+            "acceptance_catalog_path" => gate_registry.fetch("acceptance_catalog_path"),
+            "primary_acceptance_ids" => gate.fetch("primary_acceptance_ids"),
+            "secondary_acceptance_ids" => gate.fetch("secondary_acceptance_ids"),
+            "required_evidence_kinds" => gate.fetch("required_evidence_kinds"),
+            "negative_scenarios" => gate.fetch("negative_scenarios"),
+            "artifact_paths" => gate.fetch("artifact_paths")
+          }
         }
       end
       if factorycare_ids.length >= spec.chapters.length
@@ -2063,6 +2359,8 @@ module Curriculum
         "coverage" => "selective",
         "navigation_semantics" => "stage-gated-with-generated-support-closure",
         "artifact_policy" => deep_copy(plan.fetch("stage_defaults").fetch("artifact_policy")),
+        "gate_registry_id" => gate_registry.fetch("registry_id"),
+        "acceptance_catalog_path" => gate_registry.fetch("acceptance_catalog_path"),
         "stages" => stages
       )
     rescue KeyError => e

@@ -13,8 +13,8 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.foundations.http-curl
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - html-living-standard
 - css
 route_tags:

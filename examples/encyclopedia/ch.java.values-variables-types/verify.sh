@@ -13,8 +13,11 @@ mvn -q -f "$ROOT_DIR/pom.xml" clean package
 java -cp "$ROOT_DIR/target/classes" com.factorycare.learning.DeviceSnapshot >"$WORK_DIR/snapshot.txt"
 diff -u "$ROOT_DIR/expected-output.txt" "$WORK_DIR/snapshot.txt"
 
+java -cp "$ROOT_DIR/target/classes" com.factorycare.learning.StringFoundations >"$WORK_DIR/string-foundations.txt"
+diff -u "$ROOT_DIR/string-expected-output.txt" "$WORK_DIR/string-foundations.txt"
+
 java -cp "$ROOT_DIR/target/classes" com.factorycare.learning.FieldDefaultBoundary >"$WORK_DIR/defaults.txt"
 printf '%s\n' 'ticketCount=0, enabled=false, note=null' >"$WORK_DIR/defaults-expected.txt"
 diff -u "$WORK_DIR/defaults-expected.txt" "$WORK_DIR/defaults.txt"
 
-echo "EXAMPLE_GREEN: Maven build, snapshot output, scope blocks, and field defaults are verified."
+echo "EXAMPLE_GREEN: Maven build, values/scope output, String boundaries, and field defaults are verified."

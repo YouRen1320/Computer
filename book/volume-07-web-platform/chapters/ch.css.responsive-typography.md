@@ -17,8 +17,8 @@ prerequisites:
 version_surfaces:
 - css
 - html-living-standard
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 route_tags:
 - zero-base
 - accelerated-48

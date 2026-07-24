@@ -27,8 +27,8 @@ class CompletePublicationV2Test < Minitest::Test
     assert_equal builder.render(first).b, builder.render(second).b
     assert_equal 255, first.fetch("chapters").length
     assert_equal 16, first.fetch("volumes").length
-    assert_equal 4_123, first.fetch("companions").length
-    assert_equal 4_398, first.fetch("inputs").length
+    assert_equal 4_127, first.fetch("companions").length
+    assert_equal 4_401, first.fetch("inputs").length
     assert_equal 345, first.fetch("planned_outputs").length
     assert_equal ["drafting"], first.fetch("chapters").map { |chapter| chapter.fetch("status") }.uniq
     assert_equal false, first.fetch("distribution_allowed")
@@ -199,6 +199,57 @@ class CompletePublicationV2Test < Minitest::Test
     refute metadata.key?("certifiedBy")
     refute metadata.key?("certifierCredential")
     refute metadata.key?("certifierReport")
+  end
+
+  def test_typst_pdf_adapter_removes_only_duplicate_wrapper_labels_and_preserves_links
+    renderer = Publication::CompleteRenderer.new(PublicationFixture::ROOT.to_s)
+    document = {
+      "pandoc-api-version" => [1, 23, 1],
+      "meta" => {},
+      "blocks" => [{
+        "t" => "Div",
+        "c" => [
+          ["ch.fixture", ["chapter"], [["data-chapter-id", "ch.fixture"]]],
+          [
+            { "t" => "Header", "c" => [1, ["ch.fixture", [], []], [{ "t" => "Str", "c" => "Fixture" }]] },
+            { "t" => "Para", "c" => [
+              { "t" => "Link", "c" => [["", [], []], [{ "t" => "Str", "c" => "source" }], ["https://example.test", ""]] },
+              { "t" => "Space" },
+              { "t" => "Cite", "c" => [[{ "citationId" => "Test" }], [{ "t" => "Str", "c" => "@Test" }]] }
+            ] }
+          ]
+        ]
+      }]
+    }
+
+    adapted = renderer.send(:typst_pdf_ast, document)
+
+    assert_equal "ch.fixture", document.dig("blocks", 0, "c", 0, 0), "adapter must not mutate canonical AST"
+    assert_equal "", adapted.dig("blocks", 0, "c", 0, 0)
+    assert_equal "ch.fixture", adapted.dig("blocks", 0, "c", 1, 0, "c", 1, 0)
+    assert_equal 1, renderer.send(:node_count, adapted, "Link")
+    assert_equal "Span", adapted.dig("blocks", 0, "c", 1, 1, "c", 2, "t")
+    assert_equal "a4", adapted.dig("meta", "papersize", "c")
+  end
+
+  def test_typst_pdf_adapter_rejects_mismatched_or_duplicate_chapter_wrappers
+    renderer = Publication::CompleteRenderer.new(PublicationFixture::ROOT.to_s)
+    wrapper = lambda do |div_id, heading_id|
+      {
+        "t" => "Div",
+        "c" => [
+          [div_id, ["chapter"], []],
+          [{ "t" => "Header", "c" => [1, [heading_id, [], []], [{ "t" => "Str", "c" => "Fixture" }]] }]
+        ]
+      }
+    end
+
+    assert_contract_code("E_TYPST_CHAPTER_LABEL") do
+      renderer.send(:typst_pdf_ast, { "meta" => {}, "blocks" => [wrapper.call("ch.one", "ch.two")] })
+    end
+    assert_contract_code("E_TYPST_CHAPTER_SET") do
+      renderer.send(:typst_pdf_ast, { "meta" => {}, "blocks" => [wrapper.call("ch.one", "ch.one"), wrapper.call("ch.one", "ch.one")] })
+    end
   end
 
   def test_existing_production_tree_passes_the_full_non_mutating_gate

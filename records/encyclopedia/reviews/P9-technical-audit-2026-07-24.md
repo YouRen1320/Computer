@@ -99,6 +99,10 @@ FactoryCare 路线在合同中明确为 `selective`，205/255 是设计结果；
 
 这只是 2026-07-24 的传输可达性观察，**不是真实性证据**；它不证明页面语义、版本选择、发布日期、兼容性或教材陈述正确。
 
+后续的注册表 v2 迁移由 `version-registry-v2-2026-07-24.md` 单独记录。对应的 `version-sources-v2-2026-07-24.json` 绑定注册表原始字节 SHA-256 `bf683ed8c1bf9495c6015ef6ffa8527c1ef66b7089d0e427c210b3f52f944cd7`，逐条探测 71 个原子技术条目的 93 个来源：93/93 可达，33 个 HTTP 200、60 个 HTTP 206、失败 0。v1 数字保留为历史快照，不再代表当前注册表。
+
+v2 结果仍然只属于网络可达性证据；审计程序禁止据此自动把 `provisional` 或 `conceptual` 提升为 `verified`，状态提升必须经过人工审查。
+
 ### 章节 Markdown 链接
 
 `chapter-live-links-2026-07-24.json` 已在最终正文修订后重新执行，SHA-256 为 `b9065150462915cdaeed56e6d916362bcc24fdc98fde24e304d0289bd33a8526`。审计统计：
@@ -190,7 +194,7 @@ marker 缺失是需要人工确认或规范化的机械缺口，不是 endpoint 
 
 ### 冻结输入与 fail-closed 重建
 
-最终 P8 v2 plan 包含 16 卷、255 章、4,123 个 Git 已跟踪公共 companion，共 4,398 个输入；private solution、未跟踪 companion、symlink、绝对输入路径和生成输入均为 0。plan 声明 345 个计划路径，其中一个是 output manifest 自身；最终 manifest 为避免自引用，只枚举其余 344 个输出工件。
+最终 P8 v2 plan 包含 16 卷、255 章、4,127 个 Git 已跟踪公共 companion，共 4,401 个输入；private solution、未跟踪 companion、symlink、绝对输入路径和生成输入均为 0。plan 声明 345 个计划路径，其中一个是 output manifest 自身；最终 manifest 为避免自引用，只枚举其余 344 个输出工件。
 
 本轮构建曾因公共 companion 在渲染过程中发生变化而以 `E_PLAN_STALE` fail closed，没有沿用过期产物。输入冻结后重新生成 plan 并完整重建，随后 plan check、output check 与结构检查通过。
 

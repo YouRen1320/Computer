@@ -2398,7 +2398,9 @@ chapters:
   version_surfaces:
   - jdk-25
   - maven-3
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-java
   outcomes:
   - id: explain
     kind: concept

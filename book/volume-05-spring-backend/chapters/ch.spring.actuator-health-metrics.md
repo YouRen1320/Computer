@@ -14,7 +14,9 @@ prerequisites:
 - ch.spring.testing-testcontainers
 version_surfaces:
 - spring-boot-4.1
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-java
 - testcontainers
 route_tags:
 - zero-base

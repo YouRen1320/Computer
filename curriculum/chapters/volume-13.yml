@@ -1095,7 +1095,7 @@ chapters:
       test_level: T4
       methods: ["drift-simulation","delayed-label-backfill","fairness-slice-review"]
       oracle: "合成分布变化触发预期信号但不被误称为精度下降；标签回填后可计算真实指标，受影响分组与人工处置可追踪。"
-    version_surfaces: ["python-3.14","numpy","pandas","pytorch-stable","observability"]
+    version_surfaces: ["python-3.14", "numpy", "pandas", "pytorch-stable", "opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-python"]
     outcomes:
       - id: explain
         kind: concept

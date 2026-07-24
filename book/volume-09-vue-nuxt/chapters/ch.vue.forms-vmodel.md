@@ -18,7 +18,7 @@ version_surfaces:
 - vue-3
 - vite
 - typescript
-- browser
+- chrome-stable
 route_tags:
 - zero-base
 - accelerated-48

@@ -13,8 +13,8 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.web.browser-render-devtools
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 route_tags:
 - zero-base
 - accelerated-48

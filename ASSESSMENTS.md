@@ -23,8 +23,9 @@ AI可以让代码很快运行，但无法证明你理解了数据、权限、事
 - Java/Spring/SQL/权限/测试：至少L3；
 - Vue3/TypeScript：保持L3—L4；
 - Nuxt、uni-app、Flutter：至少L2，主链路达到L3；
-- Python AI/RAG：至少L2—L3；
-- 微服务、Kafka、Kubernetes、训练：L1概念即可。
+- Python 服务与 AI/RAG/Agent 主链路：至少 L2+，即能借助资料/AI 构建、验证、诊断并完成一次需求变更；
+- 数学、经典机器学习、神经网络与 PyTorch 训练：L1—L2，以能解释边界、运行导引实验并诊断错误结论为必达；
+- 微服务、Kafka、Kubernetes：L1 概念即可。
 
 ## 3. 每周验收结构
 

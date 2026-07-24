@@ -76,6 +76,34 @@ module Publication
       result.merge("manifest_path" => File.join(OUTPUT_ROOT, "publication-output-manifest.json"))
     end
 
+    # Validates the already-rendered P3 tree without invoking a renderer,
+    # writing evidence, touching mtimes, or replacing any output. This gate is
+    # deliberately separate from AtomicTreeWriter#check, whose R1-A contract
+    # remains the exact one-file publication-plan sidecar.
+    def check
+      @command_records = []
+      plan, plan_bytes, snapshots = load_and_validate_plan!
+      validate_exact_plan_input_set!(plan)
+      renderer_snapshots = validate_renderer_inputs!(snapshots)
+      output = checked_output_root!
+      tree_snapshots = snapshot_checked_tree!(output, plan)
+      manifest = parse_checked_manifest!(tree_snapshots)
+      validate_checked_manifest!(manifest, plan, plan_bytes, tree_snapshots)
+      validate_rendered_outputs!(output, plan)
+      validate_checked_tree_unchanged!(output, tree_snapshots)
+      validate_renderer_inputs_unchanged!(renderer_snapshots)
+      validate_plan_inputs_unchanged!(plan, snapshots)
+      {
+        "profile_id" => manifest.fetch("profile_id"),
+        "output_count" => manifest.fetch("output_count"),
+        "manifest_sha256" => Canonical.sha256(tree_snapshots.fetch("publication-output-manifest.json"))
+      }
+    rescue Errno::ENOENT
+      raise ContractError.new("output-check", "E_OUTPUT_MISSING", "P3 publication output is missing")
+    rescue JSON::ParserError, StrictJson::DuplicateMemberError => e
+      raise ContractError.new("output-check", "E_MANIFEST_PARSE", e.message.lines.first.to_s.strip)
+    end
+
     private
 
     def load_and_validate_plan!
@@ -979,6 +1007,171 @@ module Publication
         reject_private_or_absolute!(File.binread(path), phase: "stage-validation", code: "E_STAGE_LEAK")
       end
       fsync_tree(staging)
+    end
+
+    def checked_output_root!
+      absolute = File.join(root, OUTPUT_ROOT)
+      cursor = root
+      OUTPUT_ROOT.split("/").each do |component|
+        cursor = File.join(cursor, component)
+        stat = File.lstat(cursor)
+        if stat.symlink?
+          raise ContractError.new("output-check", "E_OUTPUT_SYMLINK", "P3 output path contains a symbolic link")
+        end
+        unless stat.directory?
+          raise ContractError.new("output-check", "E_OUTPUT_UNSAFE", "P3 output path must contain only real directories")
+        end
+      end
+      absolute
+    end
+
+    def snapshot_checked_tree!(output, plan)
+      expected_files = (["publication-plan.json"] + plan.fetch("planned_outputs").map { |entry| entry.fetch("path") }).sort
+      expected_directories = expected_files.flat_map do |relative|
+        parts = relative.split("/")
+        (1...parts.length).map { |length| parts.first(length).join("/") }
+      end.uniq.sort
+      actual_files = []
+      actual_directories = []
+      walk_checked_tree!(output, "", actual_files, actual_directories)
+
+      extra = (actual_files - expected_files) + (actual_directories - expected_directories)
+      missing = (expected_files - actual_files) + (expected_directories - actual_directories)
+      unless extra.empty?
+        raise ContractError.new("output-check", "E_OUTPUT_EXTRA", "P3 output contains an unexpected entry", path: extra.sort.first)
+      end
+      unless missing.empty?
+        raise ContractError.new("output-check", "E_OUTPUT_MISSING", "P3 output is missing a required entry", path: missing.sort.first)
+      end
+
+      collision = (actual_files + actual_directories).group_by(&:downcase).values.find { |entries| entries.length > 1 }
+      if collision
+        raise ContractError.new("output-check", "E_OUTPUT_CASE_COLLISION", "case-folded P3 output paths collide", path: collision.sort.first)
+      end
+
+      actual_files.each_with_object({}) do |relative, memo|
+        repository_relative = File.join(OUTPUT_ROOT, relative)
+        bytes, = guard.read(
+          repository_relative,
+          label: "P3 publication output",
+          patterns: [exact(repository_relative)]
+        )
+        reject_private_or_absolute!(bytes, phase: "output-check", code: "E_OUTPUT_LEAK")
+        memo[relative] = bytes.b.freeze
+      end.freeze
+    end
+
+    def walk_checked_tree!(directory, prefix, files, directories)
+      Dir.children(directory).sort.each do |name|
+        relative = prefix.empty? ? name : File.join(prefix, name)
+        guard.validate_shape!(relative, "P3 output entry")
+        absolute = File.join(directory, name)
+        stat = File.lstat(absolute)
+        if stat.symlink?
+          raise ContractError.new("output-check", "E_OUTPUT_SYMLINK", "P3 output contains a symbolic link", path: relative)
+        elsif stat.directory?
+          directories << relative
+          walk_checked_tree!(absolute, relative, files, directories)
+        elsif stat.file?
+          unless stat.size.positive?
+            raise ContractError.new("output-check", "E_OUTPUT_UNSAFE", "P3 output files must be non-empty", path: relative)
+          end
+          files << relative
+        else
+          raise ContractError.new("output-check", "E_OUTPUT_UNSAFE", "P3 output contains a special filesystem entry", path: relative)
+        end
+      end
+    end
+
+    def parse_checked_manifest!(tree_snapshots)
+      bytes = tree_snapshots.fetch("publication-output-manifest.json")
+      manifest = StrictJson.parse(bytes.dup)
+      loader.validate_value!(manifest, OUTPUT_SCHEMA, "#{OUTPUT_ROOT}/publication-output-manifest.json")
+      unless bytes == Canonical.json(manifest).b
+        raise ContractError.new("output-check", "E_MANIFEST_NONCANONICAL", "P3 output manifest bytes are not canonical")
+      end
+      manifest
+    end
+
+    def validate_checked_manifest!(manifest, plan, plan_bytes, tree_snapshots)
+      fixed = {
+        "manifest_id" => "publication-output.p3-gold",
+        "profile_id" => PROFILE_ID,
+        "plan_id" => plan.fetch("plan_id"),
+        "plan_sha256" => Canonical.sha256(plan_bytes),
+        "build_input_digest" => plan.fetch("build_input_digest"),
+        "build_status" => "succeeded",
+        "generated_by" => "scripts/build-publication.rb",
+        "source_date_epoch" => plan.fetch("source_date_epoch")
+      }
+      fixed.each do |field, expected|
+        next if manifest.fetch(field) == expected
+
+        raise ContractError.new("output-check", "E_MANIFEST_PLAN", "P3 output manifest does not bind the checked plan")
+      end
+
+      tools = manifest.fetch("tools_observed").map { |tool| tool.fetch("id") }
+      unless tools == TOOL_IDS.sort && tools.uniq.length == tools.length
+        raise ContractError.new("output-check", "E_MANIFEST_TOOLS", "P3 output manifest tool inventory differs from the fixed renderer")
+      end
+      command_ids = manifest.fetch("commands").map { |command| command.fetch("id") }
+      unless command_ids == expected_checked_command_ids(plan)
+        raise ContractError.new("output-check", "E_MANIFEST_COMMANDS", "P3 output manifest command inventory differs from the fixed renderer")
+      end
+
+      outputs = manifest.fetch("outputs")
+      unless manifest.fetch("output_count") == outputs.length
+        raise ContractError.new("output-check", "E_MANIFEST_OUTPUT_COUNT", "P3 output manifest count differs from its records")
+      end
+      paths = outputs.map { |output| output.fetch("path") }
+      unless paths == paths.sort && paths.uniq.length == paths.length
+        raise ContractError.new("output-check", "E_MANIFEST_OUTPUT_ORDER", "P3 output manifest paths must be sorted and unique")
+      end
+
+      planned = plan.fetch("planned_outputs").reject { |output| output.fetch("kind") == "output-manifest" }.sort_by do |output|
+        output.fetch("path")
+      end
+      projection = outputs.map { |output| output.slice("path", "kind", "format", "distribution") }
+      unless projection == planned
+        raise ContractError.new("output-check", "E_MANIFEST_OUTPUT_SET", "P3 output manifest differs from the planned artifact set")
+      end
+
+      outputs.each do |output|
+        relative = output.fetch("path")
+        bytes = tree_snapshots.fetch(relative)
+        unless output.fetch("media_type") == MEDIA_TYPES.fetch(output.fetch("kind"))
+          raise ContractError.new("output-check", "E_MANIFEST_MEDIA_TYPE", "P3 artifact media type differs from its fixed kind", path: relative)
+        end
+        unless output.fetch("size_bytes") == bytes.bytesize && output.fetch("sha256") == Canonical.sha256(bytes)
+          raise ContractError.new("output-check", "E_MANIFEST_DIGEST", "P3 artifact SHA or size differs from the manifest", path: relative)
+        end
+      end
+
+      expected_digest = Canonical.path_bytes_digest(outputs, ->(path) { tree_snapshots.fetch(path) })
+      unless manifest.fetch("output_set_digest") == expected_digest
+        raise ContractError.new("output-check", "E_MANIFEST_SET_DIGEST", "P3 output-set digest differs from checked artifact bytes")
+      end
+    end
+
+    def expected_checked_command_ids(plan)
+      ids = ["pandoc-epub", "pandoc-html-index", "pandoc-parse-canonical-ast", "pandoc-print-html", "weasyprint-pdf-candidate"]
+      ids.concat(plan.fetch("chapters").map { |chapter| "pandoc-html-chapter-#{chapter.fetch('id')}" })
+      ids.sort
+    end
+
+    def validate_checked_tree_unchanged!(output, snapshots)
+      snapshots.each do |relative, expected|
+        repository_relative = File.join(OUTPUT_ROOT, relative)
+        current, = guard.read(
+          repository_relative,
+          label: "P3 publication output",
+          patterns: [exact(repository_relative)]
+        )
+        next if current.b == expected
+
+        raise ContractError.new("output-check", "E_OUTPUT_CHANGED", "P3 output changed while it was being checked", path: relative)
+      end
+      true
     end
 
     def staged_files(staging)

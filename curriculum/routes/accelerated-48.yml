@@ -2,16 +2,58 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: '0840ae52f6eefa12b4d9bab4b0f61d025119b58aee96eeb5e8fd767c0f4399ac'
+generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
 edition: 2026.2-draft
 route_id: accelerated-48
 route_kind: accelerated
 coverage: complete-with-support-repetition
 navigation_semantics: ordered-anchor-boundaries
+mastery_policy:
+  reference_depth_source: curriculum/catalog.yml#/chapters/*/level
+  route_required_mastery_field: required_mastery
+  profiles:
+    L1-L2:
+    - timed-teach-back
+    - guided-experiment
+    - boundary-diagnosis
+    L2:
+    - timed-teach-back
+    - runnable-artifact
+    - boundary-test
+    L2+:
+    - timed-teach-back
+    - runnable-artifact
+    - fault-diagnosis
+    - requirement-change
+    L3:
+    - timed-teach-back
+    - independent-build
+    - fault-diagnosis
+    - requirement-change
+    - tradeoff-defense
+  required_assignments:
+    machine_learning:
+      modules:
+      - m37
+      - m38
+      - m39
+      required_mastery: L1-L2
+    artificial_intelligence:
+      modules:
+      - m40
+      - m41
+      - m42
+      - m43
+      - m44
+      required_mastery: L2+
+  depth_semantics:
+    chapter_level: encyclopedia-reference-depth
+    required_mastery: route-minimum-exit-evidence
 module_count: 48
 modules:
 - id: m01
   title: 学习证据与文件基础
+  required_mastery: L2
   required_capabilities:
   - foundation.learning-evidence
   - foundation.files-path-encoding
@@ -45,9 +87,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
   retest:
     delay_hours: 24
     new_variant: true
@@ -56,6 +98,7 @@ modules:
     evidence_path: evidence/accelerated/m01/retest/
 - id: m02
   title: 终端、进程与标准流
+  required_mastery: L2
   required_capabilities:
   - foundation.shell-command-stream
   - foundation.os-process-memory
@@ -95,9 +138,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
   retest:
     delay_hours: 24
     new_variant: true
@@ -106,6 +149,7 @@ modules:
     evidence_path: evidence/accelerated/m02/retest/
 - id: m03
   title: Git 与网络分层
+  required_mastery: L2
   required_capabilities:
   - foundation.git-security
   - foundation.network-transport
@@ -157,9 +201,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
   retest:
     delay_hours: 24
     new_variant: true
@@ -168,6 +212,7 @@ modules:
     evidence_path: evidence/accelerated/m03/retest/
 - id: m04
   title: HTTP 与验证预言
+  required_mastery: L2
   required_capabilities:
   - foundation.http-message
   - foundation.verification-debug-test
@@ -219,9 +264,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
   retest:
     delay_hours: 24
     new_variant: true
@@ -230,6 +275,7 @@ modules:
     evidence_path: evidence/accelerated/m04/retest/
 - id: m05
   title: 构建工具与容器基线
+  required_mastery: L2
   required_capabilities:
   - foundation.toolchain-env-build
   - foundation.docker-runtime
@@ -284,9 +330,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - runnable-artifact
+  - boundary-test
   retest:
     delay_hours: 24
     new_variant: true
@@ -295,6 +341,7 @@ modules:
     evidence_path: evidence/accelerated/m05/retest/
 - id: m06
   title: Java 平台、值与类型
+  required_mastery: L3
   required_capabilities:
   - java.platform-entry
   - java.values-types-string
@@ -358,9 +405,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -369,6 +418,7 @@ modules:
     evidence_path: evidence/accelerated/m06/retest/
 - id: m07
   title: Java 控制流与数组
+  required_mastery: L3
   required_capabilities:
   - java.control-flow
   - java.arrays
@@ -438,9 +488,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -449,6 +501,7 @@ modules:
     evidence_path: evidence/accelerated/m07/retest/
 - id: m08
   title: Java 方法、构建与测试
+  required_mastery: L3
   required_capabilities:
   - java.methods
   - java.build-testing
@@ -527,9 +580,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -538,6 +593,7 @@ modules:
     evidence_path: evidence/accelerated/m08/retest/
 - id: m09
   title: Java 引用、封装与不变量
+  required_mastery: L3
   required_capabilities:
   - java.references-objects
   - java.encapsulation-immutability
@@ -637,9 +693,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -648,6 +706,7 @@ modules:
     evidence_path: evidence/accelerated/m09/retest/
 - id: m10
   title: Java 继承、组合、接口与多态
+  required_mastery: L3
   required_capabilities:
   - java.inheritance-polymorphism
   anchor_chapter_ids:
@@ -739,9 +798,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -750,6 +811,7 @@ modules:
     evidence_path: evidence/accelerated/m10/retest/
 - id: m11
   title: Java 集合、资源生命周期、IO 与 JSON
+  required_mastery: L3
   required_capabilities:
   - java.collections-generics
   - java.exceptions-resources
@@ -893,9 +955,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -904,6 +968,7 @@ modules:
     evidence_path: evidence/accelerated/m11/retest/
 - id: m12
   title: Java 并发与运行时诊断
+  required_mastery: L3
   required_capabilities:
   - java.concurrency-runtime
   anchor_chapter_ids:
@@ -1007,9 +1072,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1018,6 +1085,7 @@ modules:
     evidence_path: evidence/accelerated/m12/retest/
 - id: m13
   title: 关系模型与 SQL 查询
+  required_mastery: L3
   required_capabilities:
   - data.relational-schema
   - data.sql-query
@@ -1162,9 +1230,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1173,6 +1243,7 @@ modules:
     evidence_path: evidence/accelerated/m13/retest/
 - id: m14
   title: 聚合连接、索引与计划
+  required_mastery: L3
   required_capabilities:
   - data.sql-aggregate-join
   - data.index-plan
@@ -1254,9 +1325,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1265,6 +1338,7 @@ modules:
     evidence_path: evidence/accelerated/m14/retest/
 - id: m15
   title: 事务、持久化与迁移
+  required_mastery: L3
   required_capabilities:
   - data.transactions-locks
   - data.persistence-access
@@ -1396,9 +1470,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1407,6 +1483,7 @@ modules:
     evidence_path: evidence/accelerated/m15/retest/
 - id: m16
   title: Servlet、Spring DI 与配置
+  required_mastery: L3
   required_capabilities:
   - backend.servlet-request
   - backend.spring-di-config
@@ -1563,9 +1640,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1574,6 +1653,7 @@ modules:
     evidence_path: evidence/accelerated/m16/retest/
 - id: m17
   title: Spring MVC、领域不变量、持久化与事务
+  required_mastery: L3
   required_capabilities:
   - backend.spring-mvc-contract
   - architecture.domain-invariants
@@ -1792,9 +1872,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -1803,6 +1885,7 @@ modules:
     evidence_path: evidence/accelerated/m17/retest/
 - id: m18
   title: 认证与 Web 威胁
+  required_mastery: L3
   required_capabilities:
   - security.authentication
   - security.web-threat
@@ -2031,9 +2114,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -2042,6 +2127,7 @@ modules:
     evidence_path: evidence/accelerated/m18/retest/
 - id: m19
   title: 授权策略与租户隔离
+  required_mastery: L3
   required_capabilities:
   - security.authorization-policy
   - security.multitenancy-isolation
@@ -2291,9 +2377,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -2302,6 +2390,7 @@ modules:
     evidence_path: evidence/accelerated/m19/retest/
 - id: m20
   title: 幂等一致性与事件 Outbox
+  required_mastery: L3
   required_capabilities:
   - architecture.idempotency-consistency
   - architecture.events-outbox
@@ -2575,9 +2664,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -2586,6 +2677,7 @@ modules:
     evidence_path: evidence/accelerated/m20/retest/
 - id: m21
   title: 可观测性闭环
+  required_mastery: L3
   required_capabilities:
   - architecture.observability
   anchor_chapter_ids:
@@ -2863,9 +2955,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -2874,6 +2968,7 @@ modules:
     evidence_path: evidence/accelerated/m21/retest/
 - id: m22
   title: 浏览器、Origin 与语义表单
+  required_mastery: L3
   required_capabilities:
   - web.browser-rendering
   - web.browser-origin-state
@@ -2933,9 +3028,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -2944,6 +3041,7 @@ modules:
     evidence_path: evidence/accelerated/m22/retest/
 - id: m23
   title: 无障碍与 CSS 布局
+  required_mastery: L3
   required_capabilities:
   - web.accessibility
   - web.css-foundations
@@ -3023,9 +3121,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3034,6 +3134,7 @@ modules:
     evidence_path: evidence/accelerated/m23/retest/
 - id: m24
   title: JavaScript 语言、对象与单元测试
+  required_mastery: L3
   required_capabilities:
   - web.javascript-language
   - web.javascript-functions-closures
@@ -3158,9 +3259,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3169,6 +3272,7 @@ modules:
     evidence_path: evidence/accelerated/m24/retest/
 - id: m25
   title: DOM、事件与异步网络
+  required_mastery: L3
   required_capabilities:
   - web.javascript-dom
   - web.javascript-async-runtime
@@ -3276,9 +3380,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3287,6 +3393,7 @@ modules:
     evidence_path: evidence/accelerated/m25/retest/
 - id: m26
   title: TypeScript 类型建模
+  required_mastery: L3
   required_capabilities:
   - web.typescript-types
   anchor_chapter_ids:
@@ -3405,9 +3512,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3416,6 +3525,7 @@ modules:
     evidence_path: evidence/accelerated/m26/retest/
 - id: m27
   title: Vue 模板与响应式生命周期
+  required_mastery: L3
   required_capabilities:
   - web.vue-template
   - web.vue-reactivity-lifecycle
@@ -3545,9 +3655,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3556,6 +3668,7 @@ modules:
     evidence_path: evidence/accelerated/m27/retest/
 - id: m28
   title: Vue 组件、路由、状态与组件测试
+  required_mastery: L3
   required_capabilities:
   - web.vue-components-contracts
   - web.vue-router-navigation
@@ -3887,9 +4000,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -3898,6 +4013,7 @@ modules:
     evidence_path: evidence/accelerated/m28/retest/
 - id: m29
   title: 小程序运行时与 uni-app
+  required_mastery: L3
   required_capabilities:
   - mobile.miniprogram-runtime
   - mobile.uniapp-platform
@@ -4222,9 +4338,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -4233,6 +4351,7 @@ modules:
     evidence_path: evidence/accelerated/m29/retest/
 - id: m30
   title: 移动权限、离线与重放
+  required_mastery: L2+
   required_capabilities:
   - mobile.uniapp-device-permissions
   - mobile.uniapp-offline-idempotency
@@ -4575,9 +4694,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -4586,6 +4706,7 @@ modules:
     evidence_path: evidence/accelerated/m30/retest/
 - id: m31
   title: Dart 语言、Future、Stream 与 Isolate
+  required_mastery: L2+
   required_capabilities:
   - mobile.dart-language
   - mobile.dart-future-cancellation
@@ -4969,9 +5090,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -4980,6 +5102,7 @@ modules:
     evidence_path: evidence/accelerated/m31/retest/
 - id: m32
   title: Flutter Widget、布局、离线网络与设备权限
+  required_mastery: L2+
   required_capabilities:
   - mobile.flutter-tooling-widget
   - mobile.flutter-layout-lifecycle
@@ -5290,9 +5413,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -5301,6 +5425,7 @@ modules:
     evidence_path: evidence/accelerated/m32/retest/
 - id: m33
   title: Python 语言、类型、文件与异常
+  required_mastery: L2+
   required_capabilities:
   - python.language
   - python.typing-oop
@@ -5453,9 +5578,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -5464,6 +5590,7 @@ modules:
     evidence_path: evidence/accelerated/m33/retest/
 - id: m34
   title: Python 测试、调试、异步与取消
+  required_mastery: L2+
   required_capabilities:
   - python.testing-debugging
   - python.asyncio-cancellation
@@ -5551,9 +5678,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -5562,6 +5690,7 @@ modules:
     evidence_path: evidence/accelerated/m34/retest/
 - id: m35
   title: NumPy 与 Pandas
+  required_mastery: L2+
   required_capabilities:
   - data.numpy-pandas
   anchor_chapter_ids:
@@ -5833,9 +5962,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -5844,6 +5974,7 @@ modules:
     evidence_path: evidence/accelerated/m35/retest/
 - id: m36
   title: 代数函数与概率统计
+  required_mastery: L2+
   required_capabilities:
   - math.algebra-functions
   - math.probability-statistics
@@ -5883,9 +6014,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -5894,6 +6026,7 @@ modules:
     evidence_path: evidence/accelerated/m36/retest/
 - id: m37
   title: 线性代数、微积分与梯度
+  required_mastery: L1-L2
   required_capabilities:
   - math.linear-calculus
   anchor_chapter_ids:
@@ -5931,9 +6064,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - guided-experiment
+  - boundary-diagnosis
   retest:
     delay_hours: 24
     new_variant: true
@@ -5942,6 +6075,7 @@ modules:
     evidence_path: evidence/accelerated/m37/retest/
 - id: m38
   title: 经典机器学习与评估
+  required_mastery: L1-L2
   required_capabilities:
   - ml.problem-classical-evaluation
   anchor_chapter_ids:
@@ -6045,9 +6179,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - guided-experiment
+  - boundary-diagnosis
   retest:
     delay_hours: 24
     new_variant: true
@@ -6056,6 +6190,7 @@ modules:
     evidence_path: evidence/accelerated/m38/retest/
 - id: m39
   title: 神经网络、PyTorch、训练与推理
+  required_mastery: L1-L2
   required_capabilities:
   - ml.neural-pytorch
   - ml.training-inference
@@ -6179,9 +6314,9 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
-  - fault-diagnosis
-  - teach-back
+  - timed-teach-back
+  - guided-experiment
+  - boundary-diagnosis
   retest:
     delay_hours: 24
     new_variant: true
@@ -6190,6 +6325,7 @@ modules:
     evidence_path: evidence/accelerated/m39/retest/
 - id: m40
   title: LLM 模型与 API
+  required_mastery: L2+
   required_capabilities:
   - ai.llm-model-api
   anchor_chapter_ids:
@@ -6326,9 +6462,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -6337,6 +6474,7 @@ modules:
     evidence_path: evidence/accelerated/m40/retest/
 - id: m41
   title: 结构化输出与工具调用
+  required_mastery: L2+
   required_capabilities:
   - ai.structured-tool-calling
   anchor_chapter_ids:
@@ -6596,9 +6734,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -6607,6 +6746,7 @@ modules:
     evidence_path: evidence/accelerated/m41/retest/
 - id: m42
   title: RAG 摄取、检索与重排
+  required_mastery: L2+
   required_capabilities:
   - ai.rag-ingestion-retrieval
   anchor_chapter_ids:
@@ -6770,9 +6910,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -6781,6 +6922,7 @@ modules:
     evidence_path: evidence/accelerated/m42/retest/
 - id: m43
   title: RAG 评估、安全与可观测
+  required_mastery: L2+
   required_capabilities:
   - ai.rag-evaluation-security
   anchor_chapter_ids:
@@ -7178,9 +7320,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -7189,6 +7332,7 @@ modules:
     evidence_path: evidence/accelerated/m43/retest/
 - id: m44
   title: Agent 图与 MCP 边界
+  required_mastery: L2+
   required_capabilities:
   - ai.agent-graph-mcp
   anchor_chapter_ids:
@@ -7598,9 +7742,10 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - runnable-artifact
   - fault-diagnosis
-  - teach-back
+  - requirement-change
   retest:
     delay_hours: 24
     new_variant: true
@@ -7609,6 +7754,7 @@ modules:
     evidence_path: evidence/accelerated/m44/retest/
 - id: m45
   title: Linux 服务与网络诊断
+  required_mastery: L3
   required_capabilities:
   - ops.linux-service-network
   anchor_chapter_ids:
@@ -7658,9 +7804,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -7669,6 +7817,7 @@ modules:
     evidence_path: evidence/accelerated/m45/retest/
 - id: m46
   title: 容器、代理与交付
+  required_mastery: L3
   required_capabilities:
   - ops.container-proxy-delivery
   anchor_chapter_ids:
@@ -7748,9 +7897,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -7759,6 +7910,7 @@ modules:
     evidence_path: evidence/accelerated/m46/retest/
 - id: m47
   title: 恢复、部署与事故闭环
+  required_mastery: L3
   required_capabilities:
   - ops.recovery-deployment
   anchor_chapter_ids:
@@ -8084,9 +8236,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true
@@ -8095,6 +8249,7 @@ modules:
     evidence_path: evidence/accelerated/m47/retest/
 - id: m48
   title: FactoryCare 端到端综合验收
+  required_mastery: L3
   required_capabilities:
   - architecture.domain-invariants
   - security.authorization-policy
@@ -8738,9 +8893,11 @@ modules:
     - runnable-artifact
     - teach-back
   completion_evidence:
-  - build
+  - timed-teach-back
+  - independent-build
   - fault-diagnosis
-  - teach-back
+  - requirement-change
+  - tradeoff-defense
   retest:
     delay_hours: 24
     new_variant: true

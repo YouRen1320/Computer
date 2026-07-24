@@ -10,6 +10,21 @@ ownership_policy:
   support_closure_may_repeat: true
   unanchored_tail_owner: m48
   chapter_roles: [teach, practice, diagnose, refresh, support]
+mastery_policy:
+  reference_depth_source: curriculum/catalog.yml#/chapters/*/level
+  route_required_mastery_field: required_mastery
+  profiles:
+    L1-L2: [timed-teach-back, guided-experiment, boundary-diagnosis]
+    L2: [timed-teach-back, runnable-artifact, boundary-test]
+    L2+: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
+    L3: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
+  required_assignments:
+    machine_learning:
+      modules: [m37, m38, m39]
+      required_mastery: L1-L2
+    artificial_intelligence:
+      modules: [m40, m41, m42, m43, m44]
+      required_mastery: L2+
 module_defaults:
   diagnostic_policy:
     pass_threshold: 85
@@ -19,7 +34,6 @@ module_defaults:
     allowed: true
     scope: instruction-only
     required_evidence: [diagnostic-score, runnable-artifact, teach-back]
-  evidence_requirements: [build, fault-diagnosis, teach-back]
   retest_policy:
     delay_hours: 24
     new_variant: true
@@ -27,193 +41,289 @@ module_defaults:
 modules:
   - id: m01
     title: 学习证据与文件基础
+    required_mastery: L2
+    evidence_requirements: [timed-teach-back, runnable-artifact, boundary-test]
     required_capabilities: ["foundation.learning-evidence","foundation.files-path-encoding"]
     anchor_chapter_ids: ["ch.foundations.learning-evidence","ch.foundations.files-paths-encoding"]
   - id: m02
     title: 终端、进程与标准流
+    required_mastery: L2
+    evidence_requirements: [timed-teach-back, runnable-artifact, boundary-test]
     required_capabilities: ["foundation.shell-command-stream","foundation.os-process-memory"]
     anchor_chapter_ids: ["ch.foundations.computer-process-model","ch.foundations.cli-streams-exit-codes"]
   - id: m03
     title: Git 与网络分层
+    required_mastery: L2
+    evidence_requirements: [timed-teach-back, runnable-artifact, boundary-test]
     required_capabilities: ["foundation.git-security","foundation.network-transport"]
     anchor_chapter_ids: ["ch.foundations.git-collaboration-security","ch.foundations.network-layers"]
   - id: m04
     title: HTTP 与验证预言
+    required_mastery: L2
+    evidence_requirements: [timed-teach-back, runnable-artifact, boundary-test]
     required_capabilities: ["foundation.http-message","foundation.verification-debug-test"]
     anchor_chapter_ids: ["ch.foundations.http-curl","ch.foundations.testing-oracles"]
   - id: m05
     title: 构建工具与容器基线
+    required_mastery: L2
+    evidence_requirements: [timed-teach-back, runnable-artifact, boundary-test]
     required_capabilities: ["foundation.toolchain-env-build","foundation.docker-runtime"]
     anchor_chapter_ids: ["ch.foundations.dependencies-build-packages","ch.foundations.docker-basics"]
   - id: m06
     title: Java 平台、值与类型
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.platform-entry","java.values-types-string"]
     anchor_chapter_ids: ["ch.java.platform-toolchain","ch.java.values-variables-types"]
   - id: m07
     title: Java 控制流与数组
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.control-flow","java.arrays"]
     anchor_chapter_ids: ["ch.java.loops","ch.java.arrays-command-args"]
   - id: m08
     title: Java 方法、构建与测试
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.methods","java.build-testing"]
     anchor_chapter_ids: ["ch.java.methods","ch.java.maven-junit-smoke"]
   - id: m09
     title: Java 引用、封装与不变量
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.references-objects","java.encapsulation-immutability"]
     anchor_chapter_ids: ["ch.java-oop.references-null-identity","ch.java-oop.final-immutability"]
   - id: m10
     title: Java 继承、组合、接口与多态
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.inheritance-polymorphism"]
     anchor_chapter_ids: ["ch.java-oop.interfaces-polymorphism"]
   - id: m11
     title: Java 集合、资源生命周期、IO 与 JSON
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.collections-generics","java.exceptions-resources","java.io-json"]
     anchor_chapter_ids: ["ch.java-engineering.associative-collections","ch.java-engineering.io-resource-lifecycle","ch.java-engineering.json-mapping"]
   - id: m12
     title: Java 并发与运行时诊断
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["java.concurrency-runtime"]
     anchor_chapter_ids: ["ch.java-engineering.threads-jmm"]
   - id: m13
     title: 关系模型与 SQL 查询
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["data.relational-schema","data.sql-query"]
     anchor_chapter_ids: ["ch.data.relational-model","ch.data.select-rowsets"]
   - id: m14
     title: 聚合连接、索引与计划
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["data.sql-aggregate-join","data.index-plan"]
     anchor_chapter_ids: ["ch.data.joins","ch.data.indexes-explain"]
   - id: m15
     title: 事务、持久化与迁移
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["data.transactions-locks","data.persistence-access","data.schema-migration"]
     anchor_chapter_ids: ["ch.data.transactions-locking","ch.data.schema-migrations","ch.data.jdbc"]
   - id: m16
     title: Servlet、Spring DI 与配置
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["backend.servlet-request","backend.spring-di-config"]
     anchor_chapter_ids: ["ch.spring.servlet-request-lifecycle","ch.spring.boot-autoconfiguration"]
   - id: m17
     title: Spring MVC、领域不变量、持久化与事务
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["backend.spring-mvc-contract","architecture.domain-invariants","backend.spring-persistence-tx"]
     anchor_chapter_ids: ["ch.spring.mvc-routing-binding","ch.architecture.domain-modeling","ch.spring.transactions"]
   - id: m18
     title: 认证与 Web 威胁
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["security.authentication","security.web-threat"]
     anchor_chapter_ids: ["ch.security.untrusted-input-xss-ssrf","ch.security.session-authentication"]
   - id: m19
     title: 授权策略与租户隔离
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["security.authorization-policy","security.multitenancy-isolation"]
     anchor_chapter_ids: ["ch.security.authorization-rbac-abac","ch.security.multitenancy-data-isolation"]
   - id: m20
     title: 幂等一致性与事件 Outbox
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["architecture.idempotency-consistency","architecture.events-outbox"]
     anchor_chapter_ids: ["ch.architecture.idempotency-concurrency","ch.distributed.messaging-delivery"]
   - id: m21
     title: 可观测性闭环
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["architecture.observability"]
     anchor_chapter_ids: ["ch.architecture.observability-slo"]
   - id: m22
     title: 浏览器、Origin 与语义表单
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.browser-rendering","web.browser-origin-state","web.html-semantic-form"]
     anchor_chapter_ids: ["ch.web.browser-render-devtools","ch.web.origin-cookie-cache","ch.web.forms-validation"]
   - id: m23
     title: 无障碍与 CSS 布局
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.accessibility","web.css-foundations","web.css-flex-layout","web.css-grid-layout"]
     anchor_chapter_ids: ["ch.web.accessibility-interaction","ch.css.box-position","ch.css.flexbox","ch.css.grid"]
   - id: m24
     title: JavaScript 语言、对象与单元测试
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.javascript-language","web.javascript-functions-closures","web.javascript-objects","web.javascript-testing-debugging"]
     anchor_chapter_ids: ["ch.js.control-flow","ch.js.scope-closures","ch.js.object-model","ch.js.testing-debugging"]
   - id: m25
     title: DOM、事件与异步网络
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.javascript-dom","web.javascript-async-runtime","web.javascript-network-race"]
     anchor_chapter_ids: ["ch.js.events-forms","ch.js.event-loop","ch.js.fetch-cancellation-race"]
   - id: m26
     title: TypeScript 类型建模
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.typescript-types"]
     anchor_chapter_ids: ["ch.ts.modeling-narrowing"]
   - id: m27
     title: Vue 模板与响应式生命周期
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.vue-template","web.vue-reactivity-lifecycle"]
     anchor_chapter_ids: ["ch.vue.forms-vmodel","ch.vue.effects-lifecycle"]
   - id: m28
     title: Vue 组件、路由、状态与组件测试
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["web.vue-components-contracts","web.vue-router-navigation","web.vue-client-state","web.component-e2e-testing"]
     anchor_chapter_ids: ["ch.vue.components-contracts","ch.vue.router-navigation","ch.vue.pinia-state","ch.vue.component-testing"]
   - id: m29
     title: 小程序运行时与 uni-app
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["mobile.miniprogram-runtime","mobile.uniapp-platform"]
     anchor_chapter_ids: ["ch.miniapp.runtime","ch.uniapp.platform-conditional"]
   - id: m30
     title: 移动权限、离线与重放
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["mobile.uniapp-device-permissions","mobile.uniapp-offline-idempotency"]
     anchor_chapter_ids: ["ch.uniapp.device-capabilities","ch.uniapp.offline-idempotency"]
   - id: m31
     title: Dart 语言、Future、Stream 与 Isolate
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["mobile.dart-language","mobile.dart-future-cancellation","mobile.dart-streams-isolates"]
     anchor_chapter_ids: ["ch.dart.oop-generics","ch.dart.future-cancellation","ch.dart.streams-isolates"]
   - id: m32
     title: Flutter Widget、布局、离线网络与设备权限
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["mobile.flutter-tooling-widget","mobile.flutter-layout-lifecycle","mobile.flutter-network-offline","mobile.flutter-device-permissions"]
     anchor_chapter_ids: ["ch.flutter.widget-tree","ch.flutter.state-lifecycle","ch.flutter.network-storage-offline","ch.flutter.device-apis"]
   - id: m33
     title: Python 语言、类型、文件与异常
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["python.language","python.typing-oop","python.io-errors"]
     anchor_chapter_ids: ["ch.python.collections","ch.python.protocol-generics","ch.python.exceptions-context"]
   - id: m34
     title: Python 测试、调试、异步与取消
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["python.testing-debugging","python.asyncio-cancellation"]
     anchor_chapter_ids: ["ch.python.testing-logging-debug","ch.python.asyncio-cancellation"]
   - id: m35
     title: NumPy 与 Pandas
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["data.numpy-pandas"]
     anchor_chapter_ids: ["ch.data.pandas"]
   - id: m36
     title: 代数函数与概率统计
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["math.algebra-functions","math.probability-statistics"]
     anchor_chapter_ids: ["ch.math.functions-graphs","ch.math.probability-statistics"]
   - id: m37
     title: 线性代数、微积分与梯度
+    required_mastery: L1-L2
+    evidence_requirements: [timed-teach-back, guided-experiment, boundary-diagnosis]
     required_capabilities: ["math.linear-calculus"]
     anchor_chapter_ids: ["ch.math.gradients"]
   - id: m38
     title: 经典机器学习与评估
+    required_mastery: L1-L2
+    evidence_requirements: [timed-teach-back, guided-experiment, boundary-diagnosis]
     required_capabilities: ["ml.problem-classical-evaluation"]
     anchor_chapter_ids: ["ch.ml.metrics-validation"]
   - id: m39
     title: 神经网络、PyTorch、训练与推理
+    required_mastery: L1-L2
+    evidence_requirements: [timed-teach-back, guided-experiment, boundary-diagnosis]
     required_capabilities: ["ml.neural-pytorch","ml.training-inference"]
     anchor_chapter_ids: ["ch.pytorch.foundations","ch.pytorch.inference"]
   - id: m40
     title: LLM 模型与 API
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["ai.llm-model-api"]
     anchor_chapter_ids: ["ch.llm.api-prompts-cost"]
   - id: m41
     title: 结构化输出与工具调用
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["ai.structured-tool-calling"]
     anchor_chapter_ids: ["ch.llm.tool-calling"]
   - id: m42
     title: RAG 摄取、检索与重排
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["ai.rag-ingestion-retrieval"]
     anchor_chapter_ids: ["ch.ir.hybrid-rerank"]
   - id: m43
     title: RAG 评估、安全与可观测
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["ai.rag-evaluation-security"]
     anchor_chapter_ids: ["ch.rag.security-observability"]
   - id: m44
     title: Agent 图与 MCP 边界
+    required_mastery: L2+
+    evidence_requirements: [timed-teach-back, runnable-artifact, fault-diagnosis, requirement-change]
     required_capabilities: ["ai.agent-graph-mcp"]
     anchor_chapter_ids: ["ch.agent.mcp-boundaries"]
   - id: m45
     title: Linux 服务与网络诊断
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["ops.linux-service-network"]
     anchor_chapter_ids: ["ch.ops.network-diagnostics"]
   - id: m46
     title: 容器、代理与交付
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["ops.container-proxy-delivery"]
     anchor_chapter_ids: ["ch.release.artifacts-promotion"]
   - id: m47
     title: 恢复、部署与事故闭环
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["ops.recovery-deployment"]
     anchor_chapter_ids: ["ch.ops.incident-dr"]
   - id: m48
     title: FactoryCare 端到端综合验收
+    required_mastery: L3
+    evidence_requirements: [timed-teach-back, independent-build, fault-diagnosis, requirement-change, tradeoff-defense]
     required_capabilities: ["architecture.domain-invariants","security.authorization-policy","security.multitenancy-isolation","web.vue-components-contracts","web.vue-router-navigation","web.vue-client-state","mobile.uniapp-device-permissions","mobile.uniapp-offline-idempotency","mobile.flutter-network-offline","mobile.flutter-device-permissions","mobile.flutter-layout-lifecycle","ai.agent-graph-mcp","ops.recovery-deployment"]
     anchor_chapter_ids: ["ch.release.factorycare-acceptance"]

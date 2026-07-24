@@ -15,7 +15,8 @@ prerequisites:
 - ch.architecture.modular-monolith
 - ch.security.audit-events-privacy
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
 - spring-boot-4.1
 route_tags:
 - zero-base

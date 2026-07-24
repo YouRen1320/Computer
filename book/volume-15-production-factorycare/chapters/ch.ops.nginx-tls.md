@@ -137,9 +137,9 @@ proxy_pass可以带URI或不带。Nginx官方proxy模块文档说明：若proxy_
 
 ## 4. Host与关联信息
 
-默认代理Host行为可能与客户端期望不同，因此显式proxy_set_header Host $host，让Java知道经过验证的站点名。若上游需要原始端口，可设计X-Forwarded-Host/Port，但字段集合与Java框架配置要一致。
+默认代理Host行为可能与客户端期望不同，因此显式 `proxy_set_header Host $host`，让Java知道经过验证的站点名。若上游需要原始端口，可设计X-Forwarded-Host/Port，但字段集合与Java框架配置要一致。
 
-X-Request-ID应由可信入口生成或验证长度/字符后规范化。Nginx内置$request_id可传给Java；Java日志继续同一ID。不要接受任意巨大客户端ID进入日志，也不要把它当认证凭据。
+X-Request-ID应由可信入口生成或验证长度/字符后规范化。Nginx内置 `$request_id` 可传给Java；Java日志继续同一ID。不要接受任意巨大客户端ID进入日志，也不要把它当认证凭据。
 
 关联ID用于追踪，不保证幂等。关闭工单等写动作仍需业务idempotency key、认证和事务。
 
@@ -151,13 +151,13 @@ Host、X-Forwarded-*都是输入数据。Java只有在请求确实来自受信�
 
 官方realip文档说明set_real_ip_from定义“已知会发送正确替换地址”的可信地址；real_ip_recursive on时，从链中选择最后一个非可信地址。这个模块需要在构建中启用，真实nginx -V要确认。
 
-本章fixture表示Nginx位于受信172.16.0.0/12 ingress之后。realip完成后，向Java发送规范化X-Forwarded-For $remote_addr，而不是原样转发$http_x_forwarded_for。若Nginx本身是第一公网边缘，则不需要信任客户端XFF，直接以连接地址重建。
+本章fixture表示Nginx位于受信172.16.0.0/12 ingress之后。realip完成后，向Java发送规范化的 `X-Forwarded-For $remote_addr`，而不是原样转发 `$http_x_forwarded_for`。若Nginx本身是第一公网边缘，则不需要信任客户端XFF，直接以连接地址重建。
 
 不同云负载均衡器的代理网段会变化，可信CIDR应由平台配置与自动测试维护。不能复制教程私网段到生产。
 
 ## 6. X-Forwarded-Proto与安全链接
 
-Nginx终止TLS后，Java到Nginx的内部连接可能是HTTP。proxy_set_header X-Forwarded-Proto $scheme让Java生成https外链、设置安全cookie并判断原始方案。
+Nginx终止TLS后，Java到Nginx的内部连接可能是HTTP。`proxy_set_header X-Forwarded-Proto $scheme` 让Java生成https外链、设置安全cookie并判断原始方案。
 
 Java/Spring不能对所有来源无条件信任forwarded headers。只从反向代理网络接收，配置框架的forward-header策略，并做直接访问拒绝测试。否则攻击者传X-Forwarded-Proto:http/https会影响重定向和安全判断。
 
@@ -227,7 +227,7 @@ Nginx静态服务只负责文件与缓存头，不修复前端XSS、CSP或依赖
 
 ## 13. SPA fallback与API隔离
 
-Vue history路由访问/orders/7时磁盘无该文件，需要location /的try_files $uri $uri/ /index.html回退。它只适用于前端路由。
+Vue history路由访问 `/orders/7` 时磁盘无该文件，需要 `location /` 的 `try_files $uri $uri/ /index.html` 回退。它只适用于前端路由。
 
 若/api/也落入location /，Java 404、502甚至拼写错误可能返回200 index.html。前端随后报Unexpected token <，排错人员误查JSON。显式^~ /api/且API块无try_files可阻止。
 
@@ -273,7 +273,7 @@ Nginx返回502表示上游路径失败，不应创建或回滚工单。若Java�
 |/api被index吞|location|路径矩阵、Content-Type|^~ /api/独立块|
 |proxy_pass斜杠改错路径|代理URI|Java回显path|按官方替换规则固定并测试|
 |信任0.0.0.0/0 XFF|realip|最终配置与伪造请求|只信平台代理CIDR并规范化|
-|Proto丢失|代理头|Java生成http链接|传$scheme且Java仅信代理|
+|Proto丢失|代理头|Java生成http链接|传 `$scheme` 且Java仅信代理|
 |API 500被缓存|缓存|响应Cache-Control与重复请求|API no-store、assets独立|
 |证书缺中间链|TLS|s_client chain|leaf后接intermediate fullchain|
 |证书主机名错|TLS|verify_hostname/curl|签发正确SAN并SNI测试|

@@ -14,7 +14,7 @@ prerequisites:
 - ch.ops.nginx-tls
 - ch.release.ci-quality
 version_surfaces:
-- ci
+- github-actions-hosted-runner
 - git
 - docker
 - docker-compose

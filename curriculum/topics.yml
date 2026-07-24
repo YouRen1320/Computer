@@ -2,7 +2,7 @@
 schema_version: 2
 edition: 2026.2-draft
 registry_id: factorycare-topics
-topic_count: 1893
+topic_count: 1900
 policy:
   canonical_ids_only: true
   aliases_are_not_ids: true
@@ -646,6 +646,7 @@ topics:
   - java.null-dereference
   - java.null-ordering
   - java.null-reference
+  - java.null-vs-empty-string
   - java.numeric-promotion-cast
   - java.object-identity
   - java.object-state-change
@@ -695,6 +696,12 @@ topics:
   - java.stream-lazy-pipeline
   - java.stream-map-filter-reduce
   - java.stream-side-effect
+  - java.string-concatenation-builder
+  - java.string-identity-content-equality
+  - java.string-length-empty-blank
+  - java.string-literal-immutability
+  - java.string-normalization
+  - java.string-split-regex
   - java.string-value
   - java.structured-log
   - java.substitution

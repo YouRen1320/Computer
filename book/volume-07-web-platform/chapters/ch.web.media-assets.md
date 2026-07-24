@@ -14,8 +14,8 @@ prerequisites:
 - ch.web.semantic-html
 version_surfaces:
 - html-living-standard
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 route_tags:
 - zero-base
 - accelerated-48

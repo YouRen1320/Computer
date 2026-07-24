@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/publication-accessibility-audit.schema.json",
+  "title": "FactoryCare P9 publication accessibility machine audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "report_id", "profile_id", "status", "claim_boundary",
+    "publication_binding", "toolchain_binding", "audit_contract", "summary",
+    "artifacts", "checks", "check_set_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "report_id": { "const": "publication-accessibility.internal-complete" },
+    "profile_id": { "const": "internal-complete" },
+    "status": { "enum": ["machine-passed", "machine-findings"] },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_classification", "certification_status", "human_review", "promotion_policy"],
+      "properties": {
+        "evidence_classification": { "const": "machine-only-not-certification" },
+        "certification_status": { "const": "not-certified" },
+        "human_review": { "const": "required" },
+        "promotion_policy": { "const": "forbidden-without-human-review" }
+      }
+    },
+    "publication_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_path", "plan_sha256", "output_manifest_path", "output_manifest_sha256",
+        "manifest_plan_sha256", "artifact_count", "artifact_set_sha256"
+      ],
+      "properties": {
+        "plan_path": { "const": "build/publication/internal-complete/publication-plan-v2.json" },
+        "plan_sha256": { "$ref": "#/$defs/sha256" },
+        "output_manifest_path": { "const": "build/publication/internal-complete/publication-output-manifest-v2.json" },
+        "output_manifest_sha256": { "$ref": "#/$defs/sha256" },
+        "manifest_plan_sha256": { "$ref": "#/$defs/sha256" },
+        "artifact_count": { "const": 307 },
+        "artifact_set_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "toolchain_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "toolchain_id", "tool_count", "tool_identity_set_sha256", "tools"],
+      "properties": {
+        "path": { "const": "publication/accessibility-toolchain.yml" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "toolchain_id": { "const": "p9-publication-accessibility" },
+        "tool_count": { "const": 6 },
+        "tool_identity_set_sha256": { "$ref": "#/$defs/sha256" },
+        "tools": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/tool_observation" }
+        }
+      }
+    },
+    "audit_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_count", "artifacts_by_format", "check_count", "checks_by_engine",
+        "formula", "unselected_manifest_output_count", "input_drift_policy",
+        "duplicate_policy", "parse_failure_policy", "raw_log_retention",
+        "transient_tool_output_limit_bytes",
+        "execution_policy"
+      ],
+      "properties": {
+        "artifact_count": { "const": 307 },
+        "artifacts_by_format": { "$ref": "#/$defs/artifact_counts" },
+        "check_count": { "const": 324 },
+        "checks_by_engine": { "$ref": "#/$defs/check_counts" },
+        "formula": { "const": "273 axe + 17 EPUBCheck + 17 Ace + 17 veraPDF = 324 checks over 307 artifacts" },
+        "unselected_manifest_output_count": { "const": 37 },
+        "input_drift_policy": { "const": "fail-closed" },
+        "duplicate_policy": { "const": "fail-closed" },
+        "parse_failure_policy": { "const": "fail-closed" },
+        "raw_log_retention": { "const": "forbidden" },
+        "transient_tool_output_limit_bytes": { "const": 268435456 },
+        "execution_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["jobs", "per_invocation_timeout_seconds", "axe_rule_tags"],
+          "properties": {
+            "jobs": { "type": "integer", "minimum": 1 },
+            "per_invocation_timeout_seconds": { "type": "integer", "minimum": 1 },
+            "axe_rule_tags": {
+              "const": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22a", "wcag22aa"]
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_count", "check_count", "passed_count", "failed_count",
+        "manual_review_required_count", "manual_review_signal_count"
+      ],
+      "properties": {
+        "artifact_count": { "const": 307 },
+        "check_count": { "const": 324 },
+        "passed_count": { "type": "integer", "minimum": 0 },
+        "failed_count": { "type": "integer", "minimum": 0 },
+        "manual_review_required_count": { "type": "integer", "minimum": 0 },
+        "manual_review_signal_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 307,
+      "maxItems": 307,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 324,
+      "maxItems": 324,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "check_set_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "path": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:/[a-zA-Z0-9_][a-zA-Z0-9._-]*)*$" },
+    "artifact_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["html", "epub", "pdf"],
+      "properties": {
+        "html": { "const": 273 },
+        "epub": { "const": 17 },
+        "pdf": { "const": 17 }
+      }
+    },
+    "check_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axe-core", "epubcheck", "ace", "verapdf"],
+      "properties": {
+        "axe-core": { "const": 273 },
+        "epubcheck": { "const": 17 },
+        "ace": { "const": 17 },
+        "verapdf": { "const": 17 }
+      }
+    },
+    "tool_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "version", "version_output_sha256", "entrypoint_sha256", "identity_sha256"],
+      "properties": {
+        "id": { "enum": ["axe-core", "epubcheck", "ace", "verapdf", "chrome", "chromedriver"] },
+        "role": { "enum": ["audit-engine", "runtime-dependency"] },
+        "version": { "type": "string", "pattern": "^[^\\r\\n]{1,160}$" },
+        "version_output_sha256": { "$ref": "#/$defs/sha256" },
+        "entrypoint_sha256": { "$ref": "#/$defs/sha256" },
+        "identity_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind", "format", "media_type", "distribution", "sha256", "size_bytes", "identity_sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "kind": { "enum": ["html-index", "whole-html", "volume-html", "chapter-html", "whole-epub", "volume-epub", "whole-pdf-candidate", "volume-pdf-candidate"] },
+        "format": { "enum": ["html", "epub", "pdf"] },
+        "media_type": { "enum": ["text/html; charset=utf-8", "application/epub+zip", "application/pdf"] },
+        "distribution": { "const": "internal-review-candidate" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 1 },
+        "identity_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id", "engine_id", "artifact_path", "artifact_identity_sha256",
+        "outcome", "finding_count", "manual_review_signal_count", "finding_ids",
+        "result_sha256"
+      ],
+      "properties": {
+        "check_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*:[a-zA-Z0-9][a-zA-Z0-9._/-]*$" },
+        "engine_id": { "enum": ["axe-core", "epubcheck", "ace", "verapdf"] },
+        "artifact_path": { "$ref": "#/$defs/path" },
+        "artifact_identity_sha256": { "$ref": "#/$defs/sha256" },
+        "outcome": { "enum": ["passed", "failed", "manual-review-required"] },
+        "finding_count": { "type": "integer", "minimum": 0 },
+        "manual_review_signal_count": { "type": "integer", "minimum": 0 },
+        "finding_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,159}$" }
+        },
+        "result_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

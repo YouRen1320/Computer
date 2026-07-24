@@ -15,7 +15,8 @@
 | 来源 | 旧仓库逐节登记，按官方资料原创重写 | 防遗漏，同时控制陈旧、安全和版权风险 |
 | 答案 | 开发权威仓保持私有；公共发行不携带 private Git 历史 | 构建排除不等于存储隔离；若公开源码，使用新的公共发行仓并把答案留在独立私有存储 |
 | 进度 | 保留当前 Week 00 证据 | 课程建设不等于学习完成 |
-| 默认深度 | Java/Spring/PostgreSQL/Vue L3；uni-app/Flutter/Python/AI L2+；ML L1—L2 | 对齐全栈就业主线并控制非主线深度 |
+| 百科参考深度 | 章节 `level` 继续保留完整 L1—L3 参考内容 | 参考书深度不被短期路线退出要求截断 |
+| 48 模块路线必达 | Java/Spring/PostgreSQL/Vue 主线 L3；uni-app/Flutter/Python 主要模块 L2+；AI L2+；ML L1—L2 | `required_mastery` 与固定证据 profile 定义学习者退出标准，不改写章节 `level` |
 | P3 出版 | Ruby 门禁 + canonical Pandoc JSON AST + WeasyPrint | HTML/EPUB/打印 HTML 同源；PDF 只消费打印 HTML；P8 再按真实用户证据评估网站增强 |
 | P3 生命周期（R0 历史方案） | 原计划四章在 P3 进入 `review`，不直接追求 `verified` | 2026-07-16 后续决定不再把阶段性人工/独立审查作为 P3—P8 前置门；四章保持不可公开，最终审查与状态晋升集中到 P9 |
 | P3—P8 执行节奏 | 内容生产优先，只保留必要自动检查 | 减少阶段性审查开销；人工/独立全面审查不取消，统一在 P9 完成并回修 |

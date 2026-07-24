@@ -21,6 +21,11 @@ sameState.sameFields=true
 primary.statusAfterAliasWrite=RUNNING
 missing.isNull=true
 missing.label=<missing>
+text.sameIdentity=false
+text.sameContent=true
+text.missing=true
+text.empty=true
+text.blank=true
 EXPECTED
 cmp -s "$BUILD_DIR/expected.out" "$BUILD_DIR/demo.out"
 
@@ -34,4 +39,4 @@ grep -Fq "NullDereferenceFailure.java" "$BUILD_DIR/null.err"
 
 cat "$BUILD_DIR/demo.out"
 echo "EXPECTED_FAILURE NullDereferenceFailure status=$null_status evidence=NullPointerException"
-echo "EXAMPLE PASS lines=6 javac=$JAVAC_VERSION java=$JAVA_VERSION"
+echo "EXAMPLE PASS lines=11 javac=$JAVAC_VERSION java=$JAVA_VERSION"

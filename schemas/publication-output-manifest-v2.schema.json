@@ -32,7 +32,7 @@
         "network_isolation": { "const": "not-os-enforced" }
       }
     },
-    "tools_observed": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
+    "tools_observed": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
     "commands": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/command" } },
     "output_count": { "type": "integer", "minimum": 1 },
     "output_set_digest": { "$ref": "#/$defs/sha256" },
@@ -44,7 +44,7 @@
     "tool": {
       "type": "object", "additionalProperties": false, "required": ["id", "version", "version_output_sha256"],
       "properties": {
-        "id": { "enum": ["pandoc", "python", "ruby", "weasyprint"] },
+        "id": { "enum": ["pandoc", "ruby", "typst"] },
         "version": { "type": "string", "minLength": 1 },
         "version_output_sha256": { "$ref": "#/$defs/sha256" }
       }

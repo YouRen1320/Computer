@@ -258,7 +258,7 @@ class PublicationRendererTest < Minitest::Test
       assert_includes serialized, "公开工件附录"
       assert_includes serialized, "examples/encyclopedia/ch.java.platform-toolchain/README.md"
       assert_includes serialized, "artifact-ch.java.platform-toolchain-example-readme"
-      assert_equal 54, serialized.scan(/data-source-path/).length
+      assert_equal 58, serialized.scan(/data-source-path/).length
       refute_includes serialized, "../../../examples/encyclopedia"
       assert_equal "succeeded", result.fetch("manifest").fetch("build_status")
     end
@@ -326,6 +326,75 @@ class PublicationRendererTest < Minitest::Test
       second = tree_digests(root.join("build/publication/p3-gold"))
 
       assert_equal first, second
+    end
+  end
+
+  def test_full_output_check_is_non_mutating_and_invokes_no_tools
+    with_renderer_fixture do |root, plan_bytes|
+      Publication::Renderer.new(root.to_s, command_runner: FakeCommandRunner.new).build
+      before = tree_digests(root.join("build/publication/p3-gold"))
+      runner = FakeCommandRunner.new
+
+      result = Publication::Renderer.new(root.to_s, command_runner: runner).check
+
+      assert_equal "p3-gold", result.fetch("profile_id")
+      assert_equal 9, result.fetch("output_count")
+      assert_match(/\A[0-9a-f]{64}\z/, result.fetch("manifest_sha256"))
+      assert_empty runner.calls
+      assert_equal before, tree_digests(root.join("build/publication/p3-gold"))
+      assert_contract_code("E_OUTPUT_EXTRA") do
+        Publication::AtomicTreeWriter.new(root.to_s).check(Publication::Renderer::PROFILE_ID, plan_bytes)
+      end
+    end
+  end
+
+  def test_full_output_check_rejects_missing_extra_drift_and_symlink_entries
+    cases = {
+      "E_OUTPUT_MISSING" => lambda do |root|
+        root.join("build/publication/p3-gold/output/html/index.html").delete
+      end,
+      "E_OUTPUT_EXTRA" => lambda do |root|
+        root.join("build/publication/p3-gold/unplanned").mkpath
+      end,
+      "E_MANIFEST_DIGEST" => lambda do |root|
+        path = root.join("build/publication/p3-gold/output/html/index.html")
+        bytes = path.binread
+        path.binwrite(bytes.sub("fixture", "fixturE"))
+      end,
+      "E_OUTPUT_SYMLINK" => lambda do |root|
+        target = root.join("build/publication/p3-gold/output/html/index.html")
+        link = root.join("build/publication/p3-gold/output/html/linked.html")
+        File.symlink(target, link)
+      end
+    }
+
+    cases.each do |expected, mutation|
+      with_renderer_fixture do |root, _plan_bytes|
+        Publication::Renderer.new(root.to_s, command_runner: FakeCommandRunner.new).build
+        mutation.call(root)
+
+        assert_contract_code(expected) do
+          Publication::Renderer.new(root.to_s, command_runner: FakeCommandRunner.new).check
+        end
+      end
+    end
+  end
+
+  def test_full_output_check_cli_validates_existing_tree_without_rebuild
+    with_renderer_fixture do |root, _plan_bytes|
+      Publication::Renderer.new(root.to_s, command_runner: FakeCommandRunner.new).build
+      before = tree_digests(root.join("build/publication/p3-gold"))
+
+      stdout, stderr, status = Open3.capture3(
+        RbConfig.ruby,
+        root.join("scripts/check-publication-output.rb").to_s,
+        chdir: root.to_s
+      )
+
+      assert status.success?, stderr
+      assert_includes stdout, "PUBLICATION OUTPUT CHECK OK"
+      assert_includes stdout, "profile=p3-gold outputs=9"
+      assert_equal before, tree_digests(root.join("build/publication/p3-gold"))
     end
   end
 

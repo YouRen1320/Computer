@@ -15,8 +15,8 @@ prerequisites:
 - ch.js.event-loop
 - ch.css.motion-compositing
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 route_tags:
 - zero-base
 - accelerated-48

@@ -15,8 +15,8 @@ prerequisites:
 - ch.js.event-loop
 - ch.web.origin-cookie-cache
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - node-24-lts
 - vitest
 route_tags:

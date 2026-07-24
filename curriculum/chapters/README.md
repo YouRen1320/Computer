@@ -30,7 +30,7 @@ chapters: []
 | `title` | string | 准确描述本章职责；标题所声明的一级主题必须能由 `topic_groups` 和 outcomes 追踪。 |
 | `role` | enum | `foundation\|concept\|practice\|synthesis\|review\|project\|reference`。 |
 | `responsibility` | string | 一句话说明本章唯一职责和明确边界，不能只复述标题。 |
-| `level` | enum | `L1\|L2\|L2+\|L3\|L1-L2`。 |
+| `level` | enum | `L1\|L2\|L2+\|L3\|L1-L2`；表示百科参考内容深度，不是某条学习路线的必达退出要求。路线掌握度在 route plan 中单独声明。 |
 | `status` | enum | `planned\|drafting\|review\|verified`。当前正文均为 `drafting`；只有具备对应人工、独立复审和运行证据后，才可晋升为 `review` 或 `verified`。 |
 | `stable_core` | boolean | 稳定原理为 `true`；以具体版本 API 为主则为 `false`。 |
 | `topic_groups` | array<object> | 普通章最多 2 组；`synthesis/review/project` 最多 4 组。每组含 `id`、`title`、`topics`。 |

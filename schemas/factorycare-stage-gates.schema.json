@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/factorycare-stage-gates.schema.json",
+  "title": "FactoryCare project stage gate registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "edition",
+    "registry_id",
+    "acceptance_catalog_path",
+    "policy",
+    "allowed_evidence_kinds",
+    "gates"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "edition": { "const": "2026.2-draft" },
+    "registry_id": { "const": "factorycare-project-stage-gates" },
+    "acceptance_catalog_path": { "const": "factorycare-design/testing/acceptance-catalog.md" },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "every_acceptance_has_one_primary_stage",
+        "secondary_references_may_repeat",
+        "learner_evidence_prepopulation",
+        "generated_route_embeds_gate_contract"
+      ],
+      "properties": {
+        "every_acceptance_has_one_primary_stage": { "const": true },
+        "secondary_references_may_repeat": { "const": true },
+        "learner_evidence_prepopulation": { "const": "forbidden" },
+        "generated_route_embeds_gate_contract": { "const": true }
+      }
+    },
+    "allowed_evidence_kinds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["runnable-slice", "negative-path", "decision-record", "teach-back"]
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/gate" }
+    }
+  },
+  "$defs": {
+    "acceptanceIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^FC-[A-Z]+-[0-9]{3}$"
+      }
+    },
+    "nonemptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "route_stage_id",
+        "primary_acceptance_ids",
+        "secondary_acceptance_ids",
+        "required_evidence_kinds",
+        "negative_scenarios",
+        "artifact_paths"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^fc-stage-0[1-8]$" },
+        "route_stage_id": { "type": "string", "pattern": "^fc-0[1-8]-[a-z0-9-]+$" },
+        "primary_acceptance_ids": {
+          "allOf": [
+            { "$ref": "#/$defs/acceptanceIds" },
+            { "minItems": 1 }
+          ]
+        },
+        "secondary_acceptance_ids": { "$ref": "#/$defs/acceptanceIds" },
+        "required_evidence_kinds": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["runnable-slice", "negative-path", "decision-record", "teach-back"]
+          }
+        },
+        "negative_scenarios": { "$ref": "#/$defs/nonemptyStrings" },
+        "artifact_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^evidence/factorycare/[0-9]{2}-[a-z0-9-]+/(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]*/?$"
+          }
+        }
+      }
+    }
+  }
+}

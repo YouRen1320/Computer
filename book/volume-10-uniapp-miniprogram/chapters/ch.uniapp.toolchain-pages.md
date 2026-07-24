@@ -14,8 +14,10 @@ prerequisites:
 - ch.miniapp.runtime
 - ch.vue.vite-sfc
 version_surfaces:
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 - vue-3
 - vite
 - node-24-lts

@@ -13,8 +13,10 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.uniapp.testing-debugging
 version_surfaces:
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 route_tags:
 - zero-base
 - accelerated-48

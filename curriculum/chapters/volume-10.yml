@@ -45,7 +45,7 @@ chapters:
       test_level: T0
       methods: ["lifecycle-trace", "config-inspection", "host-log"]
       oracle: "启动、前后台切换、页面进入/离开和配置错误时的回调顺序与宿主日志、页面栈和预期轨迹一致。"
-    version_surfaces: ["wechat-miniprogram"]
+    version_surfaces: ["wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -118,7 +118,7 @@ chapters:
       test_level: T1
       methods: ["target-build", "emulator-smoke", "route-matrix"]
       oracle: "开发与生产构建均生成目标产物；首页、列表、详情的直接进入和参数导航与 pages 配置及页面栈矩阵一致。"
-    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3", "vite", "node-24-lts", "pnpm"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "vue-3", "vite", "node-24-lts", "pnpm"]
     outcomes:
       - id: explain
         kind: concept
@@ -191,7 +191,7 @@ chapters:
       test_level: T1
       methods: ["cross-target-render-matrix", "form-state-check", "host-event-log"]
       oracle: "同一组件在 H5 与小程序目标的文本、事件、表单值和关键样式与差异清单一致，非支持特性明确失败。"
-    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "vue-3"]
     outcomes:
       - id: explain
         kind: concept
@@ -264,7 +264,7 @@ chapters:
       test_level: T2
       methods: ["mock-server", "environment-matrix", "expired-credential-fixture"]
       oracle: "开发/测试环境、成功、超时、HTTP 错误、过期凭据和损坏存储场景映射到确定状态，敏感值不出现在日志。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -332,7 +332,7 @@ chapters:
       test_level: T2
       methods: ["multi-target-build", "capability-fixture", "fallback-assertion"]
       oracle: "至少两个目标分别编译并执行对应分支；支持、拒绝和无能力场景均命中预期适配器或降级 UI，不出现死分支。"
-    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "vue-3"]
     outcomes:
       - id: explain
         kind: concept
@@ -405,7 +405,7 @@ chapters:
       test_level: T3
       methods: ["permission-state-matrix", "device-mock", "upload-fault-injection"]
       oracle: "首次授权、拒绝、永久拒绝、取消、无设备能力和成功场景均进入确定状态；失败后可恢复且不重复弹窗。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -478,7 +478,7 @@ chapters:
       test_level: T3
       methods: ["unit-component-test", "platform-mock", "device-repro"]
       oracle: "同一故障能由自动化测试或最小真机复现包稳定重现；日志标明目标、版本、环境和首个可信失败证据。"
-    version_surfaces: ["uni-app", "wechat-miniprogram", "vitest"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "vitest"]
     outcomes:
       - id: explain
         kind: concept
@@ -546,7 +546,7 @@ chapters:
       test_level: T4
       methods: ["package-report", "cold-start-measurement", "regression-suite"]
       oracle: "主包/分包大小和冷启动指标达到预算；清缓存、缓存升级和弱网场景功能正确且回归测试不退化。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -624,7 +624,7 @@ chapters:
       test_level: T4
       methods: ["offline-online-simulation", "duplicate-replay-test", "conflict-fixture"]
       oracle: "断网创建、进程重启、重复重放、401、409 和毒消息场景中，每个业务命令至多生效一次，队列状态和人工处置可追踪。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -697,7 +697,7 @@ chapters:
       test_level: T4
       methods: ["data-flow-audit", "permission-review-matrix", "negative-device-test"]
       oracle: "每项敏感数据和权限都有目的、来源、保留、删除和审核页面证据；拒绝权限后核心非敏感流程仍可使用。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -770,7 +770,7 @@ chapters:
       test_level: T4
       methods: ["release-checklist", "trial-build-smoke", "rollback-drill"]
       oracle: "同一 commit 可生成带版本证据的体验版；灰度错误可关联版本并在回退演练后恢复，监控不含敏感原值。"
-    version_surfaces: ["uni-app", "wechat-miniprogram"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools"]
     outcomes:
       - id: explain
         kind: concept
@@ -848,7 +848,7 @@ chapters:
       test_level: T4
       methods: ["end-to-end-device-test", "offline-replay-test", "release-evidence-review"]
       oracle: "扫码到提交、权限拒绝、上传失败、断网重放、重复点击、状态刷新和版本回退场景均满足 FactoryCare API 与 UI 合同。"
-    version_surfaces: ["uni-app", "wechat-miniprogram", "vue-3"]
+    version_surfaces: ["uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "vue-3"]
     outcomes:
       - id: explain
         kind: concept

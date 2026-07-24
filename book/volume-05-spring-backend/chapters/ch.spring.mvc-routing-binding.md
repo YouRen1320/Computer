@@ -16,7 +16,7 @@ prerequisites:
 version_surfaces:
 - spring-boot-4.1
 - spring-framework-7
-- jakarta-ee
+- jakarta-servlet-6.1
 - jdk-25
 route_tags:
 - zero-base

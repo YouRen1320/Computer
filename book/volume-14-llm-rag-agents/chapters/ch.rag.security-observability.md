@@ -16,10 +16,12 @@ prerequisites:
 - ch.architecture.observability-slo
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - postgresql-18
 - pgvector
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-python
 - pytest
 route_tags:
 - zero-base

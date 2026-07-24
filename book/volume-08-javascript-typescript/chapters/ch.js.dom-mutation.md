@@ -14,8 +14,8 @@ prerequisites:
 - ch.js.collections
 - ch.web.semantic-html
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - html-living-standard
 route_tags:
 - zero-base

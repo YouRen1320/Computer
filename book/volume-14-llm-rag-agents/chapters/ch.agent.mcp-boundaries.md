@@ -19,7 +19,7 @@ version_surfaces:
 - mcp
 - langgraph
 - langchain
-- model-api
+- openai-api
 - pytest
 route_tags:
 - zero-base

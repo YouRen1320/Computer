@@ -20,7 +20,7 @@ module Publication
     CATALOG_PATH = "curriculum/catalog.yml"
     OUTPUT_ROOT = "build/publication/internal-complete"
     PLAN_PATH = "#{OUTPUT_ROOT}/publication-plan-v2.json"
-    REQUIRED_TOOLS = %w[pandoc python ruby weasyprint].freeze
+    REQUIRED_TOOLS = %w[pandoc ruby typst].freeze
     COMPANION_KIND = {
       "examples/encyclopedia" => "example",
       "labs/encyclopedia" => "lab",
@@ -56,7 +56,6 @@ module Publication
       publication/lib/contract.rb
       publication/lib/complete_plan_builder.rb
       publication/lib/complete_renderer.rb
-      publication/lib/deterministic_weasyprint.py
       publication/templates/internal-complete.html5
       publication/styles/internal-complete-screen.css
       publication/styles/internal-complete-print.css

@@ -16,7 +16,7 @@ prerequisites:
 - ch.security.untrusted-input-xss-ssrf
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - pydantic-2
 - pytest
 route_tags:

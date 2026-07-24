@@ -45,6 +45,9 @@ legacy_mapping = YAML.safe_load(
 )
 catalog = YAML.safe_load(ROOT.join("curriculum/catalog.yml").read(encoding: "UTF-8"), aliases: false)
 chapters_by_id = catalog.fetch("chapters").to_h { |chapter| [chapter.fetch("id"), chapter] }
+outcomes_by_chapter_id = chapters_by_id.transform_values do |chapter|
+  chapter.fetch("outcomes").to_h { |outcome| [outcome.fetch("id"), outcome] }
+end
 mapped_weeks = legacy_mapping.fetch("weeks")
 check.call(mapped_weeks.map { |week| week.fetch("week") } == (0..48).to_a,
            "legacy week mapping must contain Week 00—48 exactly once and in order")
@@ -63,12 +66,27 @@ mapped_weeks.each do |mapping|
              "Week #{week} adapter heading is incorrect")
   check.call(source.include?("PROGRESS.md") && source.include?("curriculum/catalog.yml"),
              "Week #{week} adapter does not preserve progress/catalog authority boundaries")
-  ids = mapping.fetch("chapter_ids")
-  check.call(!ids.empty? && ids.uniq == ids, "Week #{week} chapter mapping is empty or duplicated")
-  ids.each do |id|
-    chapter = chapters_by_id[id]
-    check.call(!chapter.nil?, "Week #{week} references unknown canonical chapter #{id}")
-    check.call(source.include?("(`#{id}`)"), "Week #{week} adapter omits canonical chapter #{id}")
+  refs_by_section = {
+    "required" => [mapping.fetch("required"), "primary"],
+    "practice_diagnosis" => [mapping.fetch("practice_diagnosis"), "primary"],
+    "review" => [mapping.fetch("review"), "refresh"],
+    "support" => [mapping.fetch("support"), "support"]
+  }
+  outcome_refs = refs_by_section.values.flat_map(&:first)
+  primary_refs = mapping.fetch("required") + mapping.fetch("practice_diagnosis")
+  check.call(!primary_refs.empty?, "Week #{week} primary outcome mapping is empty")
+  check.call(outcome_refs.uniq == outcome_refs, "Week #{week} outcome mapping is duplicated")
+
+  refs_by_section.each_value do |refs, rendered_role|
+    refs.each do |outcome_ref|
+      chapter_id, outcome_id = outcome_ref.split("#", 2)
+      chapter = chapters_by_id[chapter_id]
+      outcome = outcomes_by_chapter_id.fetch(chapter_id, {})[outcome_id]
+      check.call(!chapter.nil?, "Week #{week} references unknown canonical chapter #{chapter_id}")
+      check.call(!outcome.nil?, "Week #{week} references unknown canonical outcome #{outcome_ref}")
+      check.call(source.include?("`#{outcome_ref}` · `#{rendered_role}`"),
+                 "Week #{week} adapter omits #{outcome_ref} as #{rendered_role}")
+    end
   end
 end
 

@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: '0840ae52f6eefa12b4d9bab4b0f61d025119b58aee96eeb5e8fd767c0f4399ac'
+generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
 edition: 2026.2-draft
 route_id: reference
 route_kind: reference
@@ -98,7 +98,7 @@ chapter_index:
     - foundation.shell-command-stream
     - foundation.os-process-memory
     versions:
-    - zsh
+    - zsh-5.9
     - macos-26
   ch.foundations.editor-project-navigation:
     title: 编辑器、IDE、项目导航与源码定位
@@ -113,7 +113,8 @@ chapter_index:
     capabilities:
     - foundation.files-path-encoding
     versions:
-    - toolchains
+    - vscode-stable
+    - intellij-idea-2026.1
   ch.foundations.git-collaboration-security:
     title: Git 状态模型、远程协作、冲突与凭据处置
     path: book/volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md
@@ -202,7 +203,9 @@ chapter_index:
     - foundation.shell-command-stream
     - foundation.verification-debug-test
     versions:
-    - toolchains
+    - maven-3
+    - pnpm
+    - uv
   ch.foundations.docker-basics:
     title: 镜像、容器、卷、端口与容器网络
     path: book/volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md
@@ -271,6 +274,11 @@ chapter_index:
     topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -417,7 +425,9 @@ chapter_index:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     capabilities:
@@ -891,7 +901,9 @@ chapter_index:
     versions:
     - jdk-25
     - maven-3
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-java
   ch.data.relational-model:
     title: 数据库、schema、表、行、键与关系模型
     path: book/volume-04-data-postgresql/chapters/ch.data.relational-model.md
@@ -1138,7 +1150,8 @@ chapter_index:
     versions:
     - jdk-25
     - maven-3
-    - jdbc
+    - jdbc-api-jdk-25
+    - pgjdbc
     - postgresql-18
   ch.data.mybatis-core:
     title: MyBatis 映射、参数绑定、结果映射与动态 SQL
@@ -1175,7 +1188,7 @@ chapter_index:
     - java.build-testing
     versions:
     - jdk-25
-    - jakarta-ee
+    - jakarta-servlet-6.1
     - maven-3
   ch.spring.ioc-di:
     title: IoC、构造器注入与依赖反转
@@ -1265,7 +1278,7 @@ chapter_index:
     versions:
     - spring-boot-4.1
     - spring-framework-7
-    - jakarta-ee
+    - jakarta-servlet-6.1
     - jdk-25
   ch.spring.dto-json-content-negotiation:
     title: DTO、JSON、内容协商与兼容边界
@@ -1302,7 +1315,7 @@ chapter_index:
     versions:
     - spring-boot-4.1
     - spring-framework-7
-    - jakarta-ee
+    - jakarta-validation-3.1
     - jdk-25
   ch.spring.problem-details-errors:
     title: 异常映射、Problem Details 与稳定错误契约
@@ -1355,7 +1368,8 @@ chapter_index:
     versions:
     - spring-boot-4.1
     - spring-framework-7
-    - jdbc
+    - jdbc-api-jdk-25
+    - pgjdbc
     - flyway
     - postgresql-18
   ch.spring.mybatis-repositories:
@@ -1487,7 +1501,9 @@ chapter_index:
     - foundation.verification-debug-test
     versions:
     - spring-boot-4.1
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-java
     - testcontainers
   ch.security.threat-model-trust-boundaries:
     title: 安全目标、资产、信任边界与威胁建模
@@ -1690,7 +1706,8 @@ chapter_index:
     - java.exceptions-resources
     - foundation.verification-debug-test
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
     - spring-security
   ch.architecture.workflow-state-sla:
     title: 状态机、状态转换、SLA 与超时语义
@@ -1818,7 +1835,8 @@ chapter_index:
     - architecture.events-outbox
     - security.multitenancy-isolation
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
     - spring-boot-4.1
   ch.web.browser-render-devtools:
     title: 浏览器请求、解析、渲染与 DevTools 观察
@@ -1835,8 +1853,8 @@ chapter_index:
     - web.browser-rendering
     - foundation.http-message
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - html-living-standard
     - css
   ch.web.origin-cookie-cache:
@@ -1856,8 +1874,8 @@ chapter_index:
     - web.browser-rendering
     - foundation.http-message
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.web.semantic-html:
     title: 语义 HTML、文档结构与元数据
     path: book/volume-07-web-platform/chapters/ch.web.semantic-html.md
@@ -1874,8 +1892,8 @@ chapter_index:
     - foundation.http-message
     versions:
     - html-living-standard
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.web.forms-validation:
     title: 表单控件、提交语义与原生校验
     path: book/volume-07-web-platform/chapters/ch.web.forms-validation.md
@@ -1896,8 +1914,8 @@ chapter_index:
     - foundation.http-message
     versions:
     - html-living-standard
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.web.media-assets:
     title: 图片、响应式资源、音视频与资源边界
     path: book/volume-07-web-platform/chapters/ch.web.media-assets.md
@@ -1914,8 +1932,8 @@ chapter_index:
     - foundation.http-message
     versions:
     - html-living-standard
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.web.accessibility-interaction:
     title: 无障碍、键盘、焦点与屏幕阅读器
     path: book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md
@@ -1934,8 +1952,8 @@ chapter_index:
     - web.html-semantic-form
     versions:
     - html-living-standard
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.cascade:
     title: CSS 语法、选择器、层叠、优先级与继承
     path: book/volume-07-web-platform/chapters/ch.css.cascade.md
@@ -1951,8 +1969,8 @@ chapter_index:
     capabilities: []
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.box-position:
     title: 盒模型、display、定位与层叠上下文
     path: book/volume-07-web-platform/chapters/ch.css.box-position.md
@@ -1971,8 +1989,8 @@ chapter_index:
     - web.browser-rendering
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.flexbox:
     title: Flexbox 一维布局
     path: book/volume-07-web-platform/chapters/ch.css.flexbox.md
@@ -1991,8 +2009,8 @@ chapter_index:
     - web.css-foundations
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.grid:
     title: Grid 二维布局
     path: book/volume-07-web-platform/chapters/ch.css.grid.md
@@ -2011,8 +2029,8 @@ chapter_index:
     - web.css-foundations
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.responsive-typography:
     title: 响应式单位、断点、排版与资源适配
     path: book/volume-07-web-platform/chapters/ch.css.responsive-typography.md
@@ -2034,8 +2052,8 @@ chapter_index:
     versions:
     - css
     - html-living-standard
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.theme-variables:
     title: 颜色、主题与 CSS 自定义属性
     path: book/volume-07-web-platform/chapters/ch.css.theme-variables.md
@@ -2051,8 +2069,8 @@ chapter_index:
     capabilities: []
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.css.motion-compositing:
     title: 过渡、变换、动画、合成与减少动效
     path: book/volume-07-web-platform/chapters/ch.css.motion-compositing.md
@@ -2069,8 +2087,8 @@ chapter_index:
     - web.accessibility
     versions:
     - css
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.js.runtime-esm:
     title: JavaScript 运行时、Node、pnpm 与 ESM
     path: book/volume-08-javascript-typescript/chapters/ch.js.runtime-esm.md
@@ -2248,8 +2266,8 @@ chapter_index:
     capabilities:
     - web.javascript-language
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - html-living-standard
   ch.js.events-forms:
     title: 事件传播、监听器、表单与默认行为
@@ -2270,8 +2288,8 @@ chapter_index:
     - web.html-semantic-form
     - web.javascript-objects
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - html-living-standard
   ch.js.event-loop:
     title: 事件循环、任务、Promise 与 async/await
@@ -2291,7 +2309,7 @@ chapter_index:
     - web.javascript-functions-closures
     versions:
     - node-24-lts
-    - browser
+    - chrome-stable
   ch.js.fetch-cancellation-race:
     title: Fetch、AbortController、超时、重试与竞态
     path: book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md
@@ -2312,8 +2330,8 @@ chapter_index:
     - web.browser-origin-state
     - foundation.http-message
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - node-24-lts
     - vitest
   ch.js.browser-performance:
@@ -2334,8 +2352,8 @@ chapter_index:
     - web.javascript-functions-closures
     - web.accessibility
     versions:
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
   ch.ts.foundations:
     title: 类型标注、推断、数组、对象、元组与函数类型
     path: book/volume-08-javascript-typescript/chapters/ch.ts.foundations.md
@@ -2455,7 +2473,7 @@ chapter_index:
     - vue-3
     - vite
     - typescript
-    - browser
+    - chrome-stable
   ch.vue.forms-vmodel:
     title: 表单、v-model、修饰符与校验边界
     path: book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md
@@ -2479,7 +2497,7 @@ chapter_index:
     - vue-3
     - vite
     - typescript
-    - browser
+    - chrome-stable
   ch.vue.reactivity:
     title: ref、reactive、computed 与响应式边界
     path: book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md
@@ -2498,7 +2516,7 @@ chapter_index:
     - vue-3
     - vite
     - typescript
-    - browser
+    - chrome-stable
   ch.vue.effects-lifecycle:
     title: watch、effect、生命周期与副作用清理
     path: book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md
@@ -2522,7 +2540,7 @@ chapter_index:
     - vue-3
     - vite
     - typescript
-    - browser
+    - chrome-stable
   ch.vue.components-contracts:
     title: Props、事件、Slot 与组件 v-model
     path: book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md
@@ -2543,7 +2561,7 @@ chapter_index:
     - vue-3
     - vite
     - typescript
-    - browser
+    - chrome-stable
   ch.vue.composables-di:
     title: Composable、依赖注入与模块边界
     path: book/volume-09-vue-nuxt/chapters/ch.vue.composables-di.md
@@ -2692,8 +2710,8 @@ chapter_index:
     - web.accessibility
     versions:
     - vue-3
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - vitest
   ch.vue.performance:
     title: 渲染分析、懒加载、错误恢复与性能预算
@@ -2715,8 +2733,8 @@ chapter_index:
     versions:
     - vue-3
     - vite
-    - browser
-    - browser-devtools
+    - chrome-stable
+    - chrome-devtools
     - vitest
     - playwright
   ch.nuxt.rendering-hydration:
@@ -2758,7 +2776,8 @@ chapter_index:
     - mobile.miniprogram-runtime
     - foundation.shell-command-stream
     versions:
-    - wechat-miniprogram
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.toolchain-pages:
     title: uni-app 工具链、页面、路由与项目结构
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md
@@ -2775,8 +2794,10 @@ chapter_index:
     - mobile.miniprogram-runtime
     - foundation.toolchain-env-build
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - vue-3
     - vite
     - node-24-lts
@@ -2798,8 +2819,10 @@ chapter_index:
     - mobile.miniprogram-runtime
     - web.vue-template
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - vue-3
   ch.uniapp.network-auth-storage:
     title: 网络、认证、存储与多环境配置
@@ -2819,8 +2842,10 @@ chapter_index:
     - security.authentication
     - security.web-threat
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.platform-conditional:
     title: 平台 API、条件编译与能力检测
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md
@@ -2839,8 +2864,10 @@ chapter_index:
     - mobile.miniprogram-runtime
     - web.vue-template
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - vue-3
   ch.uniapp.device-capabilities:
     title: 上传、扫码、定位、权限与失败路径
@@ -2861,8 +2888,10 @@ chapter_index:
     - security.authentication
     - security.web-threat
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.testing-debugging:
     title: 单元/组件测试、Mock、真机和网络调试
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md
@@ -2881,8 +2910,10 @@ chapter_index:
     - web.vue-template
     - mobile.miniprogram-runtime
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - vitest
   ch.uniapp.packages-performance:
     title: 分包、启动性能、缓存与资源预算
@@ -2901,8 +2932,10 @@ chapter_index:
     - mobile.miniprogram-runtime
     - web.javascript-testing-debugging
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.offline-idempotency:
     title: 离线队列、重试、冲突与幂等重放
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md
@@ -2922,8 +2955,10 @@ chapter_index:
     - mobile.uniapp-platform
     - architecture.idempotency-consistency
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.privacy-review:
     title: 隐私、安全、平台声明与审核证据
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md
@@ -2941,8 +2976,10 @@ chapter_index:
     - web.javascript-testing-debugging
     - security.web-threat
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.release-monitoring:
     title: 构建、版本、灰度、发布与监控
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md
@@ -2960,8 +2997,10 @@ chapter_index:
     - web.javascript-testing-debugging
     - mobile.uniapp-device-permissions
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
   ch.uniapp.factorycare-reporter:
     title: FactoryCare 报修端集成与验收
     path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md
@@ -2980,8 +3019,10 @@ chapter_index:
     - mobile.uniapp-platform
     - web.javascript-network-race
     versions:
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - vue-3
   ch.dart.toolchain:
     title: Dart SDK、CLI、pubspec 与包工具
@@ -4023,7 +4064,9 @@ chapter_index:
     - numpy
     - pandas
     - pytorch-stable
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-python
   ch.llm.model-foundations:
     title: Transformer、Token、上下文与 Embedding 心智模型
     path: book/volume-14-llm-rag-agents/chapters/ch.llm.model-foundations.md
@@ -4060,7 +4103,7 @@ chapter_index:
     - foundation.http-message
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - pytest
   ch.llm.structured-output:
     title: 结构化输出、Schema 与运行时校验
@@ -4079,7 +4122,7 @@ chapter_index:
     - python.io-errors
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - pydantic-2
     - pytest
   ch.llm.streaming-resilience:
@@ -4100,7 +4143,7 @@ chapter_index:
     - foundation.http-message
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - pytest
   ch.llm.tool-calling:
     title: 工具调用、参数验证与信任边界
@@ -4121,7 +4164,7 @@ chapter_index:
     - python.asyncio-cancellation
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - pydantic-2
     - pytest
   ch.rag.ingestion-metadata:
@@ -4162,7 +4205,7 @@ chapter_index:
     - data.numpy-pandas
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - numpy
     - pytest
   ch.ir.lexical-retrieval:
@@ -4267,7 +4310,7 @@ chapter_index:
     - math.probability-statistics
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - pydantic-2
     - pytest
   ch.rag.security-observability:
@@ -4291,10 +4334,12 @@ chapter_index:
     - architecture.observability
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - postgresql-18
     - pgvector
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-python
     - pytest
   ch.agent.langchain:
     title: LangChain 组件、直接 SDK 对照与边界
@@ -4314,7 +4359,7 @@ chapter_index:
     - python.asyncio-cancellation
     versions:
     - python-3.14
-    - model-api
+    - openai-api
     - langchain
     - pytest
   ch.agent.langgraph:
@@ -4361,7 +4406,7 @@ chapter_index:
     - mcp
     - langgraph
     - langchain
-    - model-api
+    - openai-api
     - pytest
   ch.ops.linux-services:
     title: Linux 用户、文件、权限、进程与服务
@@ -4479,7 +4524,7 @@ chapter_index:
     - foundation.toolchain-env-build
     - foundation.verification-debug-test
     versions:
-    - ci
+    - github-actions-hosted-runner
     - git
   ch.release.artifacts-promotion:
     title: 制品、来源证明、环境晋级与发布元数据
@@ -4500,7 +4545,7 @@ chapter_index:
     - foundation.toolchain-env-build
     - foundation.verification-debug-test
     versions:
-    - ci
+    - github-actions-hosted-runner
     - git
     - docker
     - docker-compose
@@ -4524,7 +4569,7 @@ chapter_index:
     - foundation.docker-runtime
     - security.web-threat
     versions:
-    - ci
+    - github-actions-hosted-runner
     - git
     - docker
     - ubuntu-server-26.04
@@ -4545,7 +4590,9 @@ chapter_index:
     - foundation.docker-runtime
     - foundation.http-message
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
     - docker
     - docker-compose
     - nginx
@@ -4566,7 +4613,9 @@ chapter_index:
     - architecture.observability
     - foundation.http-message
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
     - docker
     - docker-compose
     - ubuntu-server-26.04
@@ -4608,7 +4657,9 @@ chapter_index:
     - data.index-plan
     - foundation.verification-debug-test
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
     - postgresql-18
     - docker
     - ubuntu-server-26.04
@@ -4630,13 +4681,15 @@ chapter_index:
     - data.transactions-locks
     - architecture.observability
     versions:
-    - ci
+    - github-actions-hosted-runner
     - docker
     - docker-compose
     - nginx
     - postgresql-18
     - flyway
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
     - ubuntu-server-26.04
   ch.ops.incident-dr:
     title: 事故响应、灾难恢复、复盘与改进闭环
@@ -4657,7 +4710,9 @@ chapter_index:
     - data.transactions-locks
     - data.schema-migration
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
     - postgresql-18
     - docker
     - docker-compose
@@ -4681,7 +4736,9 @@ chapter_index:
     - architecture.observability
     - data.transactions-locks
     versions:
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-collector
   ch.release.factorycare-acceptance:
     title: FactoryCare 端到端验收与可回滚发布
     path: book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md
@@ -4712,7 +4769,7 @@ chapter_index:
     - mobile.flutter-device-permissions
     - ai.agent-graph-mcp
     versions:
-    - ci
+    - github-actions-hosted-runner
     - git
     - docker
     - docker-compose
@@ -4720,13 +4777,19 @@ chapter_index:
     - postgresql-18
     - spring-boot-4.1
     - vue-3
-    - uni-app
-    - wechat-miniprogram
+    - uni-app-cli-vue3
+    - uni-app-mp-weixin-compiler
+    - wechat-miniprogram-base-library
+    - wechat-developer-tools
     - flutter-stable
     - python-3.14
-    - model-api
+    - openai-api
     - mcp
-    - observability
+    - opentelemetry-specification
+    - opentelemetry-semantic-conventions
+    - opentelemetry-java
+    - opentelemetry-python
+    - opentelemetry-collector
     - ubuntu-server-26.04
   ch.portfolio.interview:
     title: 作品集、技术表达、岗位映射与面试复盘

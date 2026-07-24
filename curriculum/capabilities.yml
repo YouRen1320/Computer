@@ -185,6 +185,11 @@ capabilities:
     required_topic_ids:
       - java.primitive-types
       - java.string-value
+      - java.string-literal-immutability
+      - java.string-length-empty-blank
+      - java.string-normalization
+      - java.string-split-regex
+      - java.string-concatenation-builder
       - java.default-vs-local-initialization
       - java.variable-declaration
       - java.assignment
@@ -246,7 +251,9 @@ capabilities:
       - java.reference-value
       - java.object-identity
       - java.aliasing
+      - java.string-identity-content-equality
       - java.null-reference
+      - java.null-vs-empty-string
       - java.null-dereference
       - java.stack-heap-mental-model
   - id: java.encapsulation-immutability

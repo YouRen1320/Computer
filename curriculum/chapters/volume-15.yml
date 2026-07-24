@@ -400,7 +400,7 @@ chapters:
       test_level: T4
       methods: ["ci-matrix-run","intentional-failure","artifact-retention-check"]
       oracle: "成功提交全部门禁通过；分别注入编译、单测、E2E 和依赖错误时流水线停止在对应阶段并保留可下载证据。"
-    version_surfaces: ["ci","git"]
+    version_surfaces: ["github-actions-hosted-runner", "git"]
     outcomes:
       - id: explain
         kind: concept
@@ -477,7 +477,7 @@ chapters:
       test_level: T4
       methods: ["artifact-identity-check","promotion-dry-run","proxy-end-to-end-smoke"]
       oracle: "构建、测试和发布环境解析到相同 digest；发布清单可追溯源码与门禁，TLS/静态/API smoke 全部指向该制品。"
-    version_surfaces: ["ci","git","docker","docker-compose","nginx","ubuntu-server-26.04"]
+    version_surfaces: ["github-actions-hosted-runner", "git", "docker", "docker-compose", "nginx", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -555,7 +555,7 @@ chapters:
       test_level: T4
       methods: ["secret-scan-fixtures","sbom-diff","rotation-drill"]
       oracle: "已知 canary secret 在仓库、制品和日志扫描中均被阻断；轮换后旧凭据失效，新部署可用且发布清单链接完整 SBOM。"
-    version_surfaces: ["ci","git","docker","ubuntu-server-26.04"]
+    version_surfaces: ["github-actions-hosted-runner", "git", "docker", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -628,7 +628,7 @@ chapters:
       test_level: T4
       methods: ["correlation-trace-test","health-state-matrix","log-schema-audit"]
       oracle: "单次请求可用同一 ID 串联各层；依赖正常、启动中、不可用和退化时健康状态符合矩阵，日志字段无敏感值。"
-    version_surfaces: ["observability","docker","docker-compose","nginx","ubuntu-server-26.04"]
+    version_surfaces: ["opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector", "docker", "docker-compose", "nginx", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -696,7 +696,7 @@ chapters:
       test_level: T4
       methods: ["load-and-fault-injection","trace-continuity","burn-rate-simulation"]
       oracle: "注入故障使预期 SLI/错误预算变化并触发对应告警；trace 指向首个慢/错 span，正常波动不产生持续噪声。"
-    version_surfaces: ["observability","docker","docker-compose","ubuntu-server-26.04"]
+    version_surfaces: ["opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector", "docker", "docker-compose", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -852,7 +852,7 @@ chapters:
       test_level: T4
       methods: ["controlled-load-test","resource-correlation","before-after-regression"]
       oracle: "负载生成器有余量，吞吐与尾延迟随并发曲线可解释；修复只在同一模型和数据下比较且功能门禁仍通过。"
-    version_surfaces: ["observability","postgresql-18","docker","ubuntu-server-26.04"]
+    version_surfaces: ["opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector", "postgresql-18", "docker", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -930,7 +930,7 @@ chapters:
       test_level: T4
       methods: ["mixed-version-test","canary-gate","migration-failure-drill"]
       oracle: "expand 阶段新旧版本均通过契约测试；故障 canary 在阈值内停止并恢复流量，数据库状态由已验证前向修复收敛。"
-    version_surfaces: ["ci","docker","docker-compose","nginx","postgresql-18","flyway","observability","ubuntu-server-26.04"]
+    version_surfaces: ["github-actions-hosted-runner", "docker", "docker-compose", "nginx", "postgresql-18", "flyway", "opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -1007,7 +1007,7 @@ chapters:
       test_level: T4
       methods: ["tabletop-plus-live-drill","timeline-audit","corrective-action-regression"]
       oracle: "演练在声明 RTO 内恢复且数据损失不超过 RPO；时间线可由日志复核，每项改进有负责人、期限、验证和回归测试。"
-    version_surfaces: ["observability","postgresql-18","docker","docker-compose","nginx","ubuntu-server-26.04"]
+    version_surfaces: ["opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector", "postgresql-18", "docker", "docker-compose", "nginx", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept
@@ -1075,7 +1075,7 @@ chapters:
       test_level: T4
       methods: ["assumption-review","back-of-envelope-check","failure-mode-walkthrough"]
       oracle: "每个组件可追溯到需求或约束；容量数字单位可复算，故障模式对应探测/缓解/恢复，ADR 明确被拒方案与触发条件。"
-    version_surfaces: ["observability"]
+    version_surfaces: ["opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-collector"]
     outcomes:
       - id: explain
         kind: concept
@@ -1179,7 +1179,7 @@ chapters:
       test_level: T4
       methods: ["full-system-regression","security-and-failure-injection","release-rollback-drill"]
       oracle: "版本化验收清单全部通过；多客户端共享同一后端合同，跨租户零泄漏，AI 降级不影响核心流程，故障发布在 RTO/RPO 内恢复。"
-    version_surfaces: ["ci","git","docker","docker-compose","nginx","postgresql-18","spring-boot-4.1","vue-3","uni-app","wechat-miniprogram","flutter-stable","python-3.14","model-api","mcp","observability","ubuntu-server-26.04"]
+    version_surfaces: ["github-actions-hosted-runner", "git", "docker", "docker-compose", "nginx", "postgresql-18", "spring-boot-4.1", "vue-3", "uni-app-cli-vue3", "uni-app-mp-weixin-compiler", "wechat-miniprogram-base-library", "wechat-developer-tools", "flutter-stable", "python-3.14", "openai-api", "mcp", "opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-java", "opentelemetry-python", "opentelemetry-collector", "ubuntu-server-26.04"]
     outcomes:
       - id: explain
         kind: concept

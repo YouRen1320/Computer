@@ -20,6 +20,7 @@ class PrivateVerificationRunnerTest < Minitest::Test
     scripts/lib/factorycare_status_contract.rb
     scripts/run-private-verification.rb
     scripts/validate-encyclopedia.rb
+    schemas/private-public-input-closures.schema.json
     verification/lib/atomic_evidence_writer.rb
     verification/lib/cache_policy.rb
     verification/lib/contract.rb
@@ -27,6 +28,7 @@ class PrivateVerificationRunnerTest < Minitest::Test
     verification/lib/private_runner.rb
     verification/lib/runner.rb
     verification/private-contract.yml
+    verification/private-public-input-closures.yml
   ].freeze
 
   class FakeCommandRunner
@@ -74,7 +76,9 @@ class PrivateVerificationRunnerTest < Minitest::Test
     require_closure = JSON.parse(stdout)
     closure = (require_closure + %w[
       scripts/run-private-verification.rb
+      schemas/private-public-input-closures.schema.json
       verification/private-contract.yml
+      verification/private-public-input-closures.yml
     ]).uniq.sort
     assert_equal PRIVATE_CONTROL_PLANE.sort, closure
     assert_equal PRIVATE_CONTROL_PLANE, Verification::PrivateRunner::CONTROL_PLANE_PATHS
@@ -126,7 +130,7 @@ class PrivateVerificationRunnerTest < Minitest::Test
       refute_includes commands.calls.first.fetch(:chdir), "solutions-private"
       refute root.join(fixture.fetch(:chapter_root), "build").exist?
       assert_equal "internal-only", evidence.fetch("visibility")
-      assert_equal 11, evidence.fetch("control_plane_count")
+      assert_equal 13, evidence.fetch("control_plane_count")
       assert_equal PRIVATE_CONTROL_PLANE, evidence.fetch("control_plane").map { |entry| entry.fetch("path") }
       expected_control_entries = PRIVATE_CONTROL_PLANE.map do |relative|
         payload = root.join(relative).binread
@@ -265,9 +269,94 @@ class PrivateVerificationRunnerTest < Minitest::Test
     end
   end
 
+  def test_declared_public_input_is_copied_into_a_minimal_repository_closure
+    public_path = "exercises/encyclopedia/#{CHAPTER_ID}/oracle.rb"
+    with_fixture(public_inputs: { public_path => "puts 'public oracle'\n" }) do |root|
+      commands = FakeCommandRunner.new do |workdir|
+        repository = workdir.join("../../..").cleanpath
+        assert repository.join(public_path).file?
+        refute repository.join("README.md").exist?
+        assert_equal "inputs/recipes/#{CHAPTER_ID}", workdir.relative_path_from(repository).to_s
+      end
+
+      result = Verification::PrivateRunner.new(
+        root: root,
+        command_runner: commands,
+        environment: { "PATH" => ENV.fetch("PATH", "") }
+      ).run(write_evidence: false)
+      recipe = result.fetch("evidence").fetch("recipes").first
+
+      assert_equal 1, recipe.fetch("public_input_count")
+      assert_equal 2, recipe.fetch("private_input_count")
+      assert_equal 3, recipe.fetch("input_count")
+      assert_match(/\A[0-9a-f]{64}\z/, recipe.fetch("public_input_set_sha256"))
+      refute_includes JSON.generate(result.fetch("evidence")), public_path
+    end
+  end
+
+  def test_public_closure_schema_rejects_arbitrary_private_and_unknown_fields
+    invalid_inputs = {
+      "E_PRIVATE_CLOSURE_SCHEMA" => { "path" => "README.md", "sha256" => "0" * 64, "mode" => "0644" },
+      "E_PRIVATE_CLOSURE_LEAK" => {
+        "path" => "solutions-private/encyclopedia/#{CHAPTER_ID}/answer.txt",
+        "sha256" => "0" * 64,
+        "mode" => "0644"
+      }
+    }
+    invalid_inputs.each do |expected_code, input|
+      with_fixture do |root|
+        inventory = read_closure_inventory(root)
+        inventory.fetch("recipes").first["inputs"] = [input]
+        write_closure_inventory(root, inventory)
+
+        error = assert_raises(Verification::ContractError) { Verification::PrivateContractLoader.new(root).discover }
+        assert_equal expected_code, error.code
+      end
+    end
+
+    with_fixture do |root|
+      inventory = read_closure_inventory(root)
+      inventory.fetch("recipes").first["unexpected"] = true
+      write_closure_inventory(root, inventory)
+
+      error = assert_raises(Verification::ContractError) { Verification::PrivateContractLoader.new(root).discover }
+      assert_equal "E_PRIVATE_CLOSURE_SCHEMA", error.code
+    end
+  end
+
+  def test_public_closure_rejects_inventory_mismatch_digest_drift_and_symlink
+    with_fixture do |root|
+      inventory = read_closure_inventory(root)
+      inventory.fetch("recipes").first["chapter_id"] = "ch.java.other-topic"
+      write_closure_inventory(root, inventory)
+
+      error = assert_raises(Verification::ContractError) { Verification::PrivateContractLoader.new(root).discover }
+      assert_equal "E_PRIVATE_CLOSURE_INVENTORY", error.code
+    end
+
+    public_path = "exercises/encyclopedia/#{CHAPTER_ID}/oracle.rb"
+    with_fixture(public_inputs: { public_path => "original\n" }) do |root|
+      root.join(public_path).write("changed\n")
+
+      error = assert_raises(Verification::ContractError) { Verification::PrivateContractLoader.new(root).discover }
+      assert_equal "E_INPUT_DIGEST", error.code
+    end
+
+    with_fixture(public_inputs: { public_path => "original\n" }) do |root|
+      path = root.join(public_path)
+      replacement = root.join("replacement.rb")
+      replacement.write("replacement\n")
+      path.delete
+      File.symlink(replacement, path)
+
+      error = assert_raises(Verification::ContractError) { Verification::PrivateContractLoader.new(root).discover }
+      assert_equal "E_PATH_SYMLINK", error.code
+    end
+  end
+
   private
 
-  def with_fixture(verify_body: "#!/usr/bin/env bash\nprintf 'PRIVATE PASS\\n'\n")
+  def with_fixture(verify_body: "#!/usr/bin/env bash\nprintf 'PRIVATE PASS\\n'\n", public_inputs: {})
     Dir.mktmpdir("private-verification-test-") do |directory|
       root = Pathname(File.realpath(directory))
       Verification::PrivateRunner::CONTROL_PLANE_PATHS.each do |relative|
@@ -293,7 +382,38 @@ class PrivateVerificationRunnerTest < Minitest::Test
       verify.chmod(0o755)
       chapter.join("answer-secret.txt").write("#{PRIVATE_CANARY_TEXT}\n")
 
+      closure_inputs = public_inputs.sort.map do |relative, content|
+        path = root.join(relative)
+        path.dirname.mkpath
+        path.binwrite(content)
+        path.chmod(0o644)
+        {
+          "path" => relative,
+          "sha256" => Digest::SHA256.hexdigest(content),
+          "mode" => "0644"
+        }
+      end
+      write_closure_inventory(
+        root,
+        {
+          "schema_version" => 1,
+          "inventory_id" => "verification.private-public-input-closures",
+          "visibility" => "internal-only",
+          "path_policy" => "exact-public-encyclopedia-regular-files-only",
+          "recipe_count" => 1,
+          "recipes" => [{ "chapter_id" => CHAPTER_ID, "inputs" => closure_inputs }]
+        }
+      )
+
       yield root, { chapter_root: chapter_root }
     end
+  end
+
+  def read_closure_inventory(root)
+    YAML.safe_load(root.join("verification/private-public-input-closures.yml").read)
+  end
+
+  def write_closure_inventory(root, value)
+    root.join("verification/private-public-input-closures.yml").write(YAML.dump(value))
   end
 end

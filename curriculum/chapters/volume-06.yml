@@ -1602,7 +1602,8 @@ chapters:
     - failure-rerun
     oracle: 系统、安全或可靠性场景含可重复故障注入、跨边界预言、修复与原验证重跑
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
   - spring-security
   outcomes:
   - id: explain
@@ -2595,7 +2596,8 @@ chapters:
     - failure-rerun
     oracle: 系统、安全或可靠性场景含可重复故障注入、跨边界预言、修复与原验证重跑
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
   - spring-boot-4.1
   outcomes:
   - id: explain

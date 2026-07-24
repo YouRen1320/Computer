@@ -15,7 +15,7 @@ prerequisites:
 - ch.release.ci-quality
 - ch.security.untrusted-input-xss-ssrf
 version_surfaces:
-- ci
+- github-actions-hosted-runner
 - git
 - docker
 - ubuntu-server-26.04

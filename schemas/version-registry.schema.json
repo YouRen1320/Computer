@@ -1,23 +1,33 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://factorycare.local/schemas/version-registry.schema.json",
-  "title": "FactoryCare encyclopedia version registry",
+  "title": "FactoryCare Version Registry v2",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "registry_id", "edition", "verified_at", "policy", "entries"],
+  "required": ["schema_version", "registry_id", "edition", "reviewed_at", "policy", "entries"],
   "properties": {
-    "schema_version": { "const": 1 },
+    "schema_version": { "const": 2 },
     "registry_id": { "const": "factorycare-version-registry" },
     "edition": { "type": "string", "minLength": 1 },
-    "verified_at": { "type": "string", "format": "date" },
+    "reviewed_at": { "type": "string", "format": "date" },
     "policy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["stable_only", "patch_resolution", "recheck_before_use"],
+      "required": [
+        "stable_only",
+        "patch_resolution",
+        "recheck_before_use",
+        "source_authority",
+        "promotion_mode",
+        "automatic_promotion"
+      ],
       "properties": {
-        "stable_only": { "type": "boolean" },
+        "stable_only": { "const": true },
         "patch_resolution": { "enum": ["at-chapter-verification", "locked"] },
-        "recheck_before_use": { "type": "boolean" }
+        "recheck_before_use": { "const": true },
+        "source_authority": { "const": "official-or-primary-only" },
+        "promotion_mode": { "const": "manual-only" },
+        "automatic_promotion": { "const": false }
       }
     },
     "entries": {
@@ -26,7 +36,17 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "name", "kind", "constraint", "channel", "status", "verified_at", "source_url", "notes"],
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "constraint",
+          "channel",
+          "status",
+          "reviewed_at",
+          "sources",
+          "notes"
+        ],
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
           "name": { "type": "string", "minLength": 1 },
@@ -36,10 +56,29 @@
           "constraint": { "type": "string", "minLength": 1 },
           "channel": { "type": "string", "minLength": 1 },
           "status": { "enum": ["verified", "provisional", "conceptual"] },
-          "verified_at": { "type": "string", "format": "date" },
-          "source_url": {
-            "type": "string",
-            "pattern": "^https://[^/?#@\\s]+(?:[/?#][^\\s]*)?$"
+          "reviewed_at": { "type": "string", "format": "date" },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "type", "publisher", "authority", "checked_at", "claim", "url"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]*$" },
+                "type": {
+                  "enum": ["compatibility", "distribution", "documentation", "lifecycle", "release", "specification", "status"]
+                },
+                "publisher": { "type": "string", "minLength": 2 },
+                "authority": { "const": "official-or-primary" },
+                "checked_at": { "type": "string", "format": "date" },
+                "claim": { "type": "string", "minLength": 12 },
+                "url": {
+                  "type": "string",
+                  "pattern": "^https://[^/?#@\\s]+(?:[/?#][^\\s]*)?$"
+                }
+              }
+            }
           },
           "notes": { "type": "string", "minLength": 1 }
         }

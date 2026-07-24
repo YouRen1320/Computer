@@ -16,7 +16,6 @@ stage_defaults:
     lifecycle: produced-during-study
     prepopulation: forbidden
     absence_before_stage: expected
-  required_evidence_kinds: [runnable-slice, negative-path, decision-record, teach-back]
 stages:
   - id: fc-01-foundation
     title: 工程底座与可运行骨架
@@ -32,10 +31,7 @@ stages:
       - ch.java-engineering.maven-reproducible-builds
       - ch.data.relational-model
     business_deliverables: [可重复启动骨架, 版本与构建证据, 初始关系模型]
-    negative_scenarios: [工具链版本漂移, 密钥误提交, 构建成功但测试未执行]
-    gate_contract:
-      id: fc-stage-01
-      artifact_paths: [evidence/factorycare/01-foundation/vertical-slice/, evidence/factorycare/01-foundation/decision-record.md]
+    gate_id: fc-stage-01
   - id: fc-02-users
     title: 用户、认证与租户入口
     required_capabilities:
@@ -49,10 +45,7 @@ stages:
       - ch.security.spring-security-architecture
       - ch.security.authorization-rbac-abac
     business_deliverables: [用户登录退出, 默认拒绝授权, 租户上下文入口]
-    negative_scenarios: [错误密码, 会话固定, 未认证访问, 越权访问]
-    gate_contract:
-      id: fc-stage-02
-      artifact_paths: [evidence/factorycare/02-users/vertical-slice/, evidence/factorycare/02-users/security-tests/]
+    gate_id: fc-stage-02
   - id: fc-03-devices
     title: 设备台账、停用与持久化
     required_capabilities:
@@ -65,10 +58,7 @@ stages:
       - ch.spring.mybatis-repositories
       - ch.spring.testing-testcontainers
     business_deliverables: [设备建档, 设备停用规则, 数据迁移与集成测试]
-    negative_scenarios: [重复设备标识, 已停用设备被分配, 迁移中断]
-    gate_contract:
-      id: fc-stage-03
-      artifact_paths: [evidence/factorycare/03-devices/vertical-slice/, evidence/factorycare/03-devices/integration-tests/]
+    gate_id: fc-stage-03
   - id: fc-04-work-orders
     title: 工单创建、分配、状态与管理端
     required_capabilities:
@@ -84,10 +74,7 @@ stages:
       - ch.architecture.idempotency-concurrency
       - ch.vue.server-state
     business_deliverables: [工单创建与分配, 合法状态迁移, 管理端列表与详情]
-    negative_scenarios: [非法状态跳转, 重复提交, 过期响应覆盖新状态, 跨租户工单访问]
-    gate_contract:
-      id: fc-stage-04
-      artifact_paths: [evidence/factorycare/04-work-orders/vertical-slice/, evidence/factorycare/04-work-orders/race-tests/]
+    gate_id: fc-stage-04
   - id: fc-05-sla-events
     title: SLA、缓存、事件与消息
     required_capabilities:
@@ -100,10 +87,7 @@ stages:
       - ch.distributed.messaging-delivery
       - ch.architecture.observability-slo
     business_deliverables: [SLA 计算, Outbox 发布, 消费幂等, 可观察告警]
-    negative_scenarios: [重复消息, 乱序消息, 缓存陈旧, 告警静默]
-    gate_contract:
-      id: fc-stage-05
-      artifact_paths: [evidence/factorycare/05-sla-events/vertical-slice/, evidence/factorycare/05-sla-events/message-tests/]
+    gate_id: fc-stage-05
   - id: fc-06-multiclient
     title: Vue、uni-app 与 Flutter 多端协作
     required_capabilities:
@@ -122,10 +106,7 @@ stages:
       - ch.uniapp.factorycare-reporter
       - ch.flutter.release-monitoring
     business_deliverables: [管理端工单流, uni-app 报修端, Flutter 技师端, 跨端契约证据]
-    negative_scenarios: [离线重复重放, 权限拒绝, 页面销毁后更新, 跨端字段漂移]
-    gate_contract:
-      id: fc-stage-06
-      artifact_paths: [evidence/factorycare/06-multiclient/vertical-slices/, evidence/factorycare/06-multiclient/contract-tests/]
+    gate_id: fc-stage-06
   - id: fc-07-ai
     title: AI 知识检索与 Agent 审批
     required_capabilities:
@@ -140,10 +121,7 @@ stages:
       - ch.rag.security-observability
       - ch.agent.mcp-boundaries
     business_deliverables: [知识摄取, 有引用检索回答, 权限过滤, 人工审批 Agent]
-    negative_scenarios: [提示注入, ACL 绕过, 无依据回答, 工具参数越权]
-    gate_contract:
-      id: fc-stage-07
-      artifact_paths: [evidence/factorycare/07-ai/vertical-slice/, evidence/factorycare/07-ai/evaluations/]
+    gate_id: fc-stage-07
   - id: fc-08-deploy
     title: 部署、恢复与端到端验收
     required_capabilities:
@@ -157,7 +135,4 @@ stages:
       - ch.architecture.system-design
       - ch.release.factorycare-acceptance
     business_deliverables: [生产拓扑, 可回滚部署, 恢复演练, 端到端验收报告]
-    negative_scenarios: [部署后迁移失败, 备份不可恢复, 代理配置错误, 关键告警缺失]
-    gate_contract:
-      id: fc-stage-08
-      artifact_paths: [evidence/factorycare/08-deploy/release/, evidence/factorycare/08-deploy/recovery-drill/]
+    gate_id: fc-stage-08

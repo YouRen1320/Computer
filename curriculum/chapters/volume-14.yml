@@ -128,7 +128,7 @@ chapters:
       test_level: T3
       methods: ["official-sdk-call","mock-provider","usage-cost-assertion"]
       oracle: "固定 Mock 请求产生确定消息和成本计算；真实 smoke 记录模型、请求 ID 和实际 usage，HTTP/提供方错误进入独立路径。"
-    version_surfaces: ["python-3.14","model-api","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -201,7 +201,7 @@ chapters:
       test_level: T3
       methods: ["schema-contract-tests","malformed-output-fixtures","provider-mock"]
       oracle: "只有完全通过 Schema 的结果可进入业务函数；每类非法响应产生结构化、可定位且不含敏感原文的错误。"
-    version_surfaces: ["python-3.14","model-api","pydantic-2","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "pydantic-2", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -274,7 +274,7 @@ chapters:
       test_level: T3
       methods: ["scripted-stream-server","cancellation-test","retry-budget-test"]
       oracle: "每种故障在预算内结束且任务无泄漏；部分输出有明确状态，只有可重试错误按上限退避，取消不触发降级副作用。"
-    version_surfaces: ["python-3.14","model-api","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -356,7 +356,7 @@ chapters:
       test_level: T4
       methods: ["adversarial-tool-tests","authorization-matrix","duplicate-call-replay"]
       oracle: "未列入白名单、参数非法、越权或未确认调用均不执行；批准的重复副作用仅生效一次且审计链完整。"
-    version_surfaces: ["python-3.14","model-api","pydantic-2","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "pydantic-2", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -497,7 +497,7 @@ chapters:
       test_level: T3
       methods: ["chunk-golden-tests","embedding-mock","resume-idempotency-test"]
       oracle: "黄金文档 chunk 边界稳定且均可回溯父文档；Embedding 维度与模型版本一致，失败批次可从检查点续跑不重复写入。"
-    version_surfaces: ["python-3.14","model-api","numpy","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "numpy", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -866,7 +866,7 @@ chapters:
       test_level: T4
       methods: ["citation-entailment-audit","frozen-rag-regression","retrieval-generation-separation"]
       oracle: "每个事实可追溯到上下文具体区间；证据不足稳定拒答，检索失败、生成错误与引用错误分别计数。"
-    version_surfaces: ["python-3.14","model-api","pydantic-2","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "pydantic-2", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -948,7 +948,7 @@ chapters:
       test_level: T4
       methods: ["adversarial-rag-suite","tenant-isolation-test","trace-redaction-audit"]
       oracle: "任何跨租户候选在进入模型前即被排除；注入不能扩大工具权限，日志/trace 不含原始 PII，安全回归可重复。"
-    version_surfaces: ["python-3.14","model-api","postgresql-18","pgvector","observability","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "postgresql-18", "pgvector", "opentelemetry-specification", "opentelemetry-semantic-conventions", "opentelemetry-python", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -1021,7 +1021,7 @@ chapters:
       test_level: T3
       methods: ["sdk-parity-test","fake-runnable","trace-comparison"]
       oracle: "两种实现对黄金输入输出和错误分类等价；LangChain 版本可替换且业务 Schema、授权和评估不依赖内部对象。"
-    version_surfaces: ["python-3.14","model-api","langchain","pytest"]
+    version_surfaces: ["python-3.14", "openai-api", "langchain", "pytest"]
     outcomes:
       - id: explain
         kind: concept
@@ -1176,7 +1176,7 @@ chapters:
       test_level: T4
       methods: ["protocol-contract-test","cross-service-authorization-test","budget-kill-switch-test"]
       oracle: "所有业务写入只经 Java 权威 API；工具/资源 Schema 和错误稳定，预算耗尽或总开关关闭会终止全部任务且留有审计证据。"
-    version_surfaces: ["python-3.14","mcp","langgraph","langchain","model-api","pytest"]
+    version_surfaces: ["python-3.14", "mcp", "langgraph", "langchain", "openai-api", "pytest"]
     outcomes:
       - id: explain
         kind: concept

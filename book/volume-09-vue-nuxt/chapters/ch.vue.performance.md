@@ -15,8 +15,8 @@ prerequisites:
 version_surfaces:
 - vue-3
 - vite
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - vitest
 - playwright
 route_tags:

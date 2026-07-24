@@ -4,6 +4,7 @@ contract_id: verification.private-solutions
 visibility: internal-only
 catalog_path: curriculum/catalog.yml
 source_root: solutions-private/encyclopedia
+public_input_closure_path: verification/private-public-input-closures.yml
 expected_chapter_count: 255
 entrypoint_name: verify.sh
 entrypoint_policy: exactly-one-recursive

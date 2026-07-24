@@ -3,7 +3,7 @@ schema_version: 2
 edition: 2026.2-draft
 id: ch.java-oop.references-null-identity
 title: 引用、对象身份、null 与内存心智模型
-responsibility: 区分值、引用、对象身份与空引用，不把示意图等同于 JVM 真实物理布局
+responsibility: 区分值、引用、对象身份与空引用，明确 String 的身份/内容相等与 null/空/空白文本边界，不把示意图等同于 JVM 真实物理布局
 volume: '02'
 order: 1
 level: L1
@@ -23,7 +23,7 @@ stable_core: true
 outcomes:
 - id: explain
   kind: concept
-  text: 在 120 秒内解释引用、对象身份、null 与内存心智模型的职责、适用边界与一个会失败的反例
+  text: 在 120 秒内解释引用、对象身份、String 的 ==/内容相等、null/空字符串/空白字符串与内存心智模型的边界，并给出一个会失败的反例
   covers_topic_groups:
   - java-reference-model
   - java-null-model
@@ -31,7 +31,9 @@ outcomes:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   uses_capabilities:
@@ -42,7 +44,7 @@ outcomes:
   verification_mode: oral-explanation
 - id: build
   kind: independent-build
-  text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，画出赋值前后别名与身份变化并打印验证，并生成记录输入、操作与结果的验证报告
+  text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，对比 String 的身份与内容相等，区分 null、空与空白文本，画出赋值前后别名与身份变化，打印验证并生成一页引用与文本边界验证报告
   covers_topic_groups:
   - java-reference-model
   - java-null-model
@@ -50,7 +52,9 @@ outcomes:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   uses_capabilities:
@@ -61,7 +65,7 @@ outcomes:
   verification_mode: command-output-or-manual-calculation
 - id: diagnose
   kind: fault-diagnosis
-  text: 注入把 == 当值相等和未判 null 解引用的故障，区分身份判断与空引用异常后修复
+  text: 注入把 String 的 == 当内容相等、把 null 当空字符串和未判 null 解引用的故障，区分身份、内容、缺失与空白语义后最小修复
   covers_topic_groups:
   - java-reference-model
   - java-null-model
@@ -69,7 +73,9 @@ outcomes:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   uses_capabilities:
@@ -232,6 +238,8 @@ System.out.println(left == right); // false：两个对象
 
 本章可以说 `left.equals(right)` 比较字符串内容，因为 `String` 已定义该行为；但不要由此推导“所有对象的 `equals` 都自动逐字段比较”。不同类可以定义不同等值语义，完整约束留到对象契约章节。
 
+`left.equals(right)` 还有一个接收者边界：`left` 为 `null` 时无法调用实例方法。两边都允许为空时，可以使用 `java.util.Objects.equals(left, right)`；与固定常量比较时也常写 `"RUNNING".equals(status)`。这些写法只解决技术上的空接收者，不会自动替你决定“两个缺失值是否业务相等”。`equalsIgnoreCase` 也只能在契约明确不区分大小写时使用，不要为了让一个测试通过就改变业务语义。
+
 判断问题时先命名问题：
 
 - 要确认两个变量是不是同一个可变对象：考虑引用 `==`；
@@ -362,9 +370,11 @@ Vue 的 `ref()` 还多包了一层响应式容器：`statusRef.value` 中的 `.v
 引用实验需要稳定断言，而不是肉眼看一串对象打印：
 
 - 身份断言：别名应满足 `a == b`，独立创建应满足 `a != b`；
+- String 断言：独立创建的同内容文本可以身份不同但 `equals` 为真；
 - 状态断言：经别名写入后从另一引用读取指定字段；
 - 隔离断言：独立对象的字段保持原值；
 - 空路径断言：`null` 得到明确业务结果；
+- 文本空值断言：`null`、`""` 和只含空白的文本使用不同 oracle；
 - 失败断言：故障进程非零退出并出现 `NullPointerException` 或自定义故障标记。
 
 不要断言默认 `toString()` 的完整输出、对象哈希码、进程相关地址文本或堆布局，因为它们不是本章契约。固定输入、固定字段、固定行数和固定退出状态才便于重放。
@@ -491,5 +501,7 @@ Vue 的 `ref()` 还多包了一层响应式容器：`statusRef.value` 中的 `.v
 - [JLS 25 §15.21.3 Reference Equality Operators](https://docs.oracle.com/javase/specs/jls/se25/html/jls-15.html#jls-15.21.3)：引用 `==`/`!=` 的身份与 null 语义。
 - [JLS 25 §15.11 Field Access Expressions](https://docs.oracle.com/javase/specs/jls/se25/html/jls-15.html#jls-15.11)：字段访问与空接收者失败边界。
 - [Java SE 25 `Object` API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)：所有类层次的根与对象基础方法；完整对象契约在后章展开。
+- [Java SE 25 `String` API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html)：内容相等、空与空白检查的 API 契约。
+- [Java SE 25 `Objects.equals`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#equals(java.lang.Object,java.lang.Object))：双方均可为 null 时的空安全等值比较。
 
 稳定核心不是某个补丁版本的技巧：变量保存值、引用可能形成别名、对象身份独立于状态、空引用不能解引用，这些原则是后续 Java 工程的基础。版本相关命令仍以本仓库 JDK 25 基线运行结果为准。

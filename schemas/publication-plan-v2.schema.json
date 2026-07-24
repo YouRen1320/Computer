@@ -41,7 +41,7 @@
       }
     },
     "toolchain_lock": { "$ref": "#/$defs/path_digest" },
-    "tool_requirements": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
+    "tool_requirements": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/tool" } },
     "chapters": { "type": "array", "minItems": 255, "maxItems": 255, "uniqueItems": true, "items": { "$ref": "#/$defs/chapter" } },
     "volumes": { "type": "array", "minItems": 16, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/volume" } },
     "companions": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/companion" } },
@@ -76,7 +76,7 @@
       "type": "object", "additionalProperties": false,
       "required": ["id", "command", "expected_version_prefix"],
       "properties": {
-        "id": { "enum": ["pandoc", "python", "ruby", "weasyprint"] },
+        "id": { "enum": ["pandoc", "ruby", "typst"] },
         "command": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
         "expected_version_prefix": { "type": "string", "minLength": 1 }
       }

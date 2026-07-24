@@ -662,7 +662,7 @@ chapters:
       test_level: T1
       methods: ["dom-state-table", "browser-inspection", "mutation-assertions"]
       oracle: "给定初始 DOM 和操作序列，节点数量、顺序、文本、属性和语义结构与预期快照一致。"
-    version_surfaces: ["browser", "browser-devtools", "html-living-standard"]
+    version_surfaces: ["chrome-stable", "chrome-devtools", "html-living-standard"]
     outcomes:
       - id: explain
         kind: concept
@@ -740,7 +740,7 @@ chapters:
       test_level: T1
       methods: ["event-order-trace", "form-request-check", "dom-assertions"]
       oracle: "捕获/冒泡顺序、委托目标、默认提交和取消行为与固定事件追踪表及请求负载一致。"
-    version_surfaces: ["browser", "browser-devtools", "html-living-standard"]
+    version_surfaces: ["chrome-stable", "chrome-devtools", "html-living-standard"]
     outcomes:
       - id: explain
         kind: concept
@@ -808,7 +808,7 @@ chapters:
       test_level: T1
       methods: ["queue-trace", "prediction", "async-assertion-script"]
       oracle: "同步、任务、微任务和 await 的输出顺序与手工队列追踪逐项一致，异常传播路径可重复。"
-    version_surfaces: ["node-24-lts", "browser"]
+    version_surfaces: ["node-24-lts", "chrome-stable"]
     outcomes:
       - id: explain
         kind: concept
@@ -886,7 +886,7 @@ chapters:
       test_level: T2
       methods: ["vitest-fake-server", "request-race-matrix", "injected-delay"]
       oracle: "成功、HTTP 错误、解析错误、超时、取消、重试上限和乱序响应均由确定性测试证明，旧响应不会覆盖新状态。"
-    version_surfaces: ["browser", "browser-devtools", "node-24-lts", "vitest"]
+    version_surfaces: ["chrome-stable", "chrome-devtools", "node-24-lts", "vitest"]
     outcomes:
       - id: explain
         kind: concept
@@ -964,7 +964,7 @@ chapters:
       test_level: T1
       methods: ["performance-trace", "heap-snapshot", "before-after-budget"]
       oracle: "同一交互负载的优化前后 trace 显示长任务、layout 次数或保留对象按预算下降，功能与无障碍行为不回退。"
-    version_surfaces: ["browser", "browser-devtools"]
+    version_surfaces: ["chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept

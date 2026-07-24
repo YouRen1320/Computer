@@ -17,7 +17,9 @@ version_surfaces:
 - numpy
 - pandas
 - pytorch-stable
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-python
 route_tags:
 - zero-base
 - accelerated-48

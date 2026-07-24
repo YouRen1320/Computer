@@ -16,7 +16,7 @@ prerequisites:
 - ch.foundations.http-curl
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - pytest
 route_tags:
 - zero-base

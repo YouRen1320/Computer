@@ -15,8 +15,10 @@ prerequisites:
 - ch.uniapp.release-monitoring
 - ch.vue.server-state
 version_surfaces:
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 - vue-3
 route_tags:
 - zero-base

@@ -262,7 +262,7 @@ chapters:
 - id: ch.java.values-variables-types
   title: 值、变量、基本类型、String、作用域与基本输出
   role: concept
-  responsibility: 教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份
+  responsibility: 教授值在局部作用域中的类型与命名，并完成 String 的基础观察、正规化、分割与拼接，不涉及运算转换或对象身份
   level: L1
   status: drafting
   stable_core: true
@@ -272,6 +272,11 @@ chapters:
     topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
   - id: java-variables-scope
     title: 变量与作用域
@@ -282,6 +287,11 @@ chapters:
   topics_taught:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -289,6 +299,11 @@ chapters:
   topics_used:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -324,7 +339,7 @@ chapters:
     artifact_paths:
     - labs/encyclopedia/ch.java.values-variables-types/
     acceptance:
-    - 各变量输出类型和值正确；内外层同名边界可解释；三种非法写法稳定编译失败
+    - 各变量输出类型和值正确；String 的长度、空白判断、正规化、正则分割和拼接边界可重放；内外层同名边界可解释；非法写法与行为故障都有稳定证据
   gate_requirements:
     gate_ids:
     - G1
@@ -343,13 +358,18 @@ chapters:
   outcomes:
   - id: explain
     kind: concept
-    text: 在 120 秒内解释值、变量、基本类型、String、作用域与基本输出的职责、适用边界与一个会失败的反例
+    text: 在 120 秒内解释值、变量、基本类型、String 字面量与不可变性、长度与空白、正规化、正则分割、拼接取舍和局部作用域，并给出一个会失败的边界反例
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -361,13 +381,18 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 编写打印设备名称、数量、启用状态和局部作用域变量的程序，显式选择 primitive、String 与初始化时机
+    text: 编写设备标签处理程序：保存基本类型与 String，观察 length/isEmpty/isBlank，用 strip 和 Locale.ROOT 做可预测正规化，按正则与 limit 分割，并比较少量 + 与重复 StringBuilder 拼接的责任边界
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -379,13 +404,18 @@ chapters:
     verification_mode: command-output-or-manual-calculation
   - id: diagnose
     kind: fault-diagnosis
-    text: 注入局部变量未初始化、作用域外访问和错误类型赋值，读取编译位置后做最小修复
+    text: 注入局部变量未初始化、作用域外访问和错误类型赋值的编译故障，再注入丢弃 strip/toUpperCase 返回值、把 split 参数误当字面文本和丢失尾部空列的行为故障，从编译日志或输出差异定位并做最小修复
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment

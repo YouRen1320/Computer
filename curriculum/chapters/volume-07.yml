@@ -45,7 +45,7 @@ chapters:
       test_level: T0
       methods: ["prediction", "devtools-observation", "command-exit"]
       oracle: "同一测试页面的请求瀑布、DOM 结构和渲染阶段能由保存的 HAR、截图与时间线重复核对。"
-    version_surfaces: ["browser", "browser-devtools", "html-living-standard", "css"]
+    version_surfaces: ["chrome-stable", "chrome-devtools", "html-living-standard", "css"]
     outcomes:
       - id: explain
         kind: concept
@@ -113,7 +113,7 @@ chapters:
       test_level: T1
       methods: ["prediction", "request-matrix", "header-assertions"]
       oracle: "固定的同源/跨源请求矩阵应得到确定的 Cookie、CORS 与缓存命中结果，并可由响应头和浏览器控制台复核。"
-    version_surfaces: ["browser", "browser-devtools"]
+    version_surfaces: ["chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -181,7 +181,7 @@ chapters:
       test_level: T0
       methods: ["markup-validation", "dom-inspection", "manual-outline"]
       oracle: "HTML 校验器无结构错误，DOM 检查与文档大纲能逐项对应预期的 landmark、标题层级和元数据。"
-    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    version_surfaces: ["html-living-standard", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -254,7 +254,7 @@ chapters:
       test_level: T1
       methods: ["submission-matrix", "native-validity-check", "request-inspection"]
       oracle: "合法、缺失、格式错误与重复提交输入在浏览器校验状态和实际请求负载中得到确定且可重复的结果。"
-    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    version_surfaces: ["html-living-standard", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -322,7 +322,7 @@ chapters:
       test_level: T0
       methods: ["browser-inspection", "network-observation", "fallback-check"]
       oracle: "不同视口和资源可用性下，浏览器选择的候选、替代文本和失败回退与预先记录的矩阵一致。"
-    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    version_surfaces: ["html-living-standard", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -390,7 +390,7 @@ chapters:
       test_level: T1
       methods: ["keyboard-walkthrough", "accessibility-tree-inspection", "screen-reader-check"]
       oracle: "仅用键盘即可完成任务，焦点顺序、可访问名称和动态错误提示与逐项检查表一致。"
-    version_surfaces: ["html-living-standard", "browser", "browser-devtools"]
+    version_surfaces: ["html-living-standard", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -458,7 +458,7 @@ chapters:
       test_level: T0
       methods: ["specificity-calculation", "computed-style-inspection", "visual-diff"]
       oracle: "给定冲突规则时，手算结果与浏览器 computed style 一致，移除规则后差异可预测。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -526,7 +526,7 @@ chapters:
       test_level: T0
       methods: ["box-model-calculation", "layout-inspection", "visual-diff"]
       oracle: "给定尺寸与定位规则时，手算外部尺寸、包含块和遮挡顺序与 DevTools 盒模型及截图一致。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -594,7 +594,7 @@ chapters:
       test_level: T1
       methods: ["layout-matrix", "computed-style-check", "responsive-visual-oracle"]
       oracle: "不同内容长度和容器宽度下，主轴尺寸、换行和对齐结果与预先声明的布局矩阵一致。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -662,7 +662,7 @@ chapters:
       test_level: T1
       methods: ["track-calculation", "layout-matrix", "visual-diff"]
       oracle: "固定内容与视口矩阵下，轨道尺寸、区域位置和自动放置顺序与截图基线及 DevTools 网格叠层一致。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -740,7 +740,7 @@ chapters:
       test_level: T1
       methods: ["viewport-matrix", "visual-regression", "network-resource-check"]
       oracle: "预定义视口、字号偏好和网络资源矩阵下，无横向滚动，文本可读且浏览器选择的资源符合 sizes 规则。"
-    version_surfaces: ["css", "html-living-standard", "browser", "browser-devtools"]
+    version_surfaces: ["css", "html-living-standard", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -808,7 +808,7 @@ chapters:
       test_level: T1
       methods: ["computed-token-check", "contrast-check", "theme-matrix"]
       oracle: "亮色、暗色、缺失 token 与局部覆盖场景中的计算值和对比度均符合预设表格。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept
@@ -881,7 +881,7 @@ chapters:
       test_level: T1
       methods: ["motion-state-matrix", "reduced-motion-check", "performance-timeline-observation"]
       oracle: "普通与 prefers-reduced-motion 场景下，状态转换、焦点和合成时间线与声明的动效合同一致。"
-    version_surfaces: ["css", "browser", "browser-devtools"]
+    version_surfaces: ["css", "chrome-stable", "chrome-devtools"]
     outcomes:
       - id: explain
         kind: concept

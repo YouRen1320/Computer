@@ -1,5 +1,10 @@
 # 版本注册表 2026-07-16 官方来源审查
 
+> 历史冻结说明：本文件保留 v1 的 44 PASS / 13 WARN / 4 FAIL 原始结论。2026-07-24 的
+> 原子 ID、逐来源 claim 与 manual-only 晋升修订见
+> [`version-registry-v2-2026-07-24.md`](version-registry-v2-2026-07-24.md)；不得用 v2 结果
+> 回写或美化本次历史审查。
+
 ## 审查对象与结论
 
 - 审查对象：[versions/registry.yml](../../../versions/registry.yml)

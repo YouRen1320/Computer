@@ -15,7 +15,7 @@ prerequisites:
 - ch.java-engineering.maven-reproducible-builds
 version_surfaces:
 - jdk-25
-- jakarta-ee
+- jakarta-servlet-6.1
 - maven-3
 route_tags:
 - zero-base

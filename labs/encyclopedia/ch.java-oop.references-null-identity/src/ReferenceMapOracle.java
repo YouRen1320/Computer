@@ -30,6 +30,23 @@ public class ReferenceMapOracle {
         assert !"".equals(route(missing));
         assertions++;
 
+        String literalCode = "PUMP-01";
+        String rebuiltCode = new String(new char[]{'P', 'U', 'M', 'P', '-', '0', '1'});
+        assert literalCode != rebuiltCode;
+        assertions++;
+        assert literalCode.equals(rebuiltCode);
+        assertions++;
+
+        String missingText = null;
+        String emptyText = "";
+        String blankText = " \t";
+        assert missingText == null;
+        assertions++;
+        assert emptyText.isEmpty() && emptyText.isBlank();
+        assertions++;
+        assert !blankText.isEmpty() && blankText.isBlank();
+        assertions++;
+
         System.out.println("assertions=" + assertions + " passed");
     }
 

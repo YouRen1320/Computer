@@ -15,8 +15,8 @@ prerequisites:
 - ch.web.accessibility-interaction
 version_surfaces:
 - vue-3
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - vitest
 route_tags:
 - zero-base
@@ -473,7 +473,7 @@ residual-risks.md        # 未覆盖浏览器、AT、嵌套 overlay 等
 
 ## 21. 版本面与官方资料
 
-本章工件固定 Vue `3.5.35`、Vue Test Utils `2.4.11`、Vitest `4.0.18`、happy-dom `17.6.3`、Vite `7.3.1`、TypeScript `5.9.3`。`browser` 与 `browser-devtools` 是必须补证的版本面，不是锁文件依赖；执行时记录实际浏览器和 Accessibility Tree 工具版本。
+本章工件固定 Vue `3.5.35`、Vue Test Utils `2.4.11`、Vitest `4.0.18`、happy-dom `17.6.3`、Vite `7.3.1`、TypeScript `5.9.3`。`chrome-stable` 与 `chrome-devtools` 是必须补证的版本面，不是锁文件依赖；执行时记录完整浏览器版本、操作系统和 Accessibility Tree 工具版本。
 
 官方资料（复核于 2026-07-17）：
 

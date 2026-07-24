@@ -25,6 +25,7 @@
 | [security/permission-matrix.csv](./security/permission-matrix.csv) | 角色、权限、数据范围和高风险确认 | Week 17、20 |
 | [testing/test-strategy.md](./testing/test-strategy.md) | 测试层、风险映射、故障与质量门 | Week 11、18、22、29、35、43、46 |
 | [testing/acceptance-catalog.md](./testing/acceptance-catalog.md) | 主链路与失败链路的稳定验收编号 | 全程 |
+| [../curriculum/factorycare-stage-gates.yml](../curriculum/factorycare-stage-gates.yml) | 93 个验收编号到八个项目阶段的唯一 primary 门禁映射、负向场景与学习者证据路径 | 每次生成路线和阶段验收时 |
 | [seed/seed-data-plan.md](./seed/seed-data-plan.md) | 无隐私、可重置、可重复的演示数据 | Week 13、44 |
 | [adrs](./adrs/README.md) | 关键架构决策及备选方案 | 对应阶段 |
 | [scripts/validate-design.rb](./scripts/validate-design.rb) | 只读验证YAML、JSON、CSV和唯一事件目录 | 修改设计资产后 |
@@ -56,6 +57,8 @@
 ## 契约能力与证据落点
 
 OpenAPI定义路由和DTO，验收目录定义可观察行为，seed计划定义可重现资源图；三者不相互复制字段。
+
+验收目录只定义稳定 `FC-*` 行为身份；阶段归属由独立的 [FactoryCare 门禁注册表](../curriculum/factorycare-stage-gates.yml) 定义。全部 93 个编号必须各有且只有一个 primary 阶段。生成后的项目路线会嵌入完整门禁投影供学习使用，但它是派生物，不能反向成为权威来源；任何阶段证据都必须由学习者在对应阶段真实产生，课程仓库不得预填通过结果。
 
 | 契约能力 | 验收组 | seed落点 |
 | --- | --- | --- |

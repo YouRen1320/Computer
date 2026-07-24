@@ -1,0 +1,6 @@
+rawLength=14
+normalized=PUMP-A.01.
+empty=false, blank=true
+parts=3, tailEmpty=true
+summary=PUMP-A|01|<empty>
+rawUnchanged=[  pump-a.01.  ]

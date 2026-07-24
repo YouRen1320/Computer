@@ -14,7 +14,9 @@ prerequisites:
 - ch.foundations.environment-tool-resolution
 - ch.foundations.testing-oracles
 version_surfaces:
-- toolchains
+- maven-3
+- pnpm
+- uv
 route_tags:
 - zero-base
 - accelerated-48

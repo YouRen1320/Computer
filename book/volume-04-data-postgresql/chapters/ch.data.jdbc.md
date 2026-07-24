@@ -17,7 +17,8 @@ prerequisites:
 version_surfaces:
 - jdk-25
 - maven-3
-- jdbc
+- jdbc-api-jdk-25
+- pgjdbc
 - postgresql-18
 route_tags:
 - zero-base

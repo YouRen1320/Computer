@@ -15,7 +15,7 @@ prerequisites:
 - ch.rag.citations-evaluation
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - langchain
 - pytest
 route_tags:

@@ -23,7 +23,7 @@ peer.status=IDLE
 missing.route=REJECT_MISSING_DEVICE
 EXPECTED
 cmp -s "$BUILD_DIR/expected.out" "$BUILD_DIR/lab.out"
-grep -Fqx "assertions=10 passed" "$BUILD_DIR/oracle.out"
+grep -Fqx "assertions=15 passed" "$BUILD_DIR/oracle.out"
 
 set +e
 java -cp "$CLASSES_DIR" IdentityMistakeFailure > "$BUILD_DIR/identity.out" 2> "$BUILD_DIR/identity.err"
@@ -40,4 +40,4 @@ cat "$BUILD_DIR/lab.out"
 cat "$BUILD_DIR/oracle.out"
 echo "EXPECTED_FAILURE IdentityMistakeFailure status=$identity_status evidence=IDENTITY_MISTAKE"
 echo "EXPECTED_FAILURE NullPathFailure status=$null_status evidence=NullPointerException"
-echo "LAB PASS assertions=10 expected_failures=2 java=$JAVA_VERSION"
+echo "LAB PASS assertions=15 expected_failures=2 java=$JAVA_VERSION"

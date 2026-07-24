@@ -9,6 +9,11 @@ public class ReferenceIdentityDemo {
         sameState.code = "PUMP-01";
         sameState.status = "IDLE";
         Device missing = null;
+        String literalCode = "PUMP-01";
+        String rebuiltCode = new String(new char[]{'P', 'U', 'M', 'P', '-', '0', '1'});
+        String missingText = null;
+        String emptyText = "";
+        String blankText = " \t";
 
         System.out.println("alias.sameIdentity=" + (primary == alias));
         System.out.println("sameState.sameIdentity=" + (primary == sameState));
@@ -18,6 +23,11 @@ public class ReferenceIdentityDemo {
         System.out.println("primary.statusAfterAliasWrite=" + primary.status);
         System.out.println("missing.isNull=" + (missing == null));
         System.out.println("missing.label=" + labelOf(missing));
+        System.out.println("text.sameIdentity=" + (literalCode == rebuiltCode));
+        System.out.println("text.sameContent=" + literalCode.equals(rebuiltCode));
+        System.out.println("text.missing=" + (missingText == null));
+        System.out.println("text.empty=" + emptyText.isEmpty());
+        System.out.println("text.blank=" + blankText.isBlank());
     }
 
     static boolean sameFields(Device left, Device right) {

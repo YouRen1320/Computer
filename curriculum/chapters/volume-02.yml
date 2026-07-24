@@ -6,7 +6,7 @@ chapters:
 - id: ch.java-oop.references-null-identity
   title: 引用、对象身份、null 与内存心智模型
   role: concept
-  responsibility: 区分值、引用、对象身份与空引用，不把示意图等同于 JVM 真实物理布局
+  responsibility: 区分值、引用、对象身份与空引用，明确 String 的身份/内容相等与 null/空/空白文本边界，不把示意图等同于 JVM 真实物理布局
   level: L1
   status: drafting
   stable_core: true
@@ -17,24 +17,30 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
   - id: java-null-model
     title: null 与内存边界
     topics:
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
   topics_taught:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   topics_used:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   prerequisites:
@@ -79,7 +85,7 @@ chapters:
   outcomes:
   - id: explain
     kind: concept
-    text: 在 120 秒内解释引用、对象身份、null 与内存心智模型的职责、适用边界与一个会失败的反例
+    text: 在 120 秒内解释引用、对象身份、String 的 ==/内容相等、null/空字符串/空白字符串与内存心智模型的边界，并给出一个会失败的反例
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -87,7 +93,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:
@@ -98,7 +106,7 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，画出赋值前后别名与身份变化并打印验证，并生成记录输入、操作与结果的验证报告
+    text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，对比 String 的身份与内容相等，区分 null、空与空白文本，画出赋值前后别名与身份变化，打印验证并生成一页引用与文本边界验证报告
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -106,7 +114,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:
@@ -117,7 +127,7 @@ chapters:
     verification_mode: command-output-or-manual-calculation
   - id: diagnose
     kind: fault-diagnosis
-    text: 注入把 == 当值相等和未判 null 解引用的故障，区分身份判断与空引用异常后修复
+    text: 注入把 String 的 == 当内容相等、把 null 当空字符串和未判 null 解引用的故障，区分身份、内容、缺失与空白语义后最小修复
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -125,7 +135,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:

@@ -13,7 +13,8 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.foundations.cli-streams-exit-codes
 version_surfaces:
-- wechat-miniprogram
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 route_tags:
 - zero-base
 - accelerated-48

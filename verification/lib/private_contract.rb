@@ -7,9 +7,10 @@ require_relative "contract"
 
 module Verification
   PRIVATE_CONTRACT_PATH = "verification/private-contract.yml"
+  PRIVATE_CLOSURE_SCHEMA_PATH = "schemas/private-public-input-closures.schema.json"
 
   PrivateChapter = Struct.new(
-    :chapter_id, :root, :verify_relative, :inputs, :cache_tool_ids,
+    :chapter_id, :root, :verify_relative, :inputs, :public_inputs, :cache_tool_ids,
     keyword_init: true
   )
 
@@ -21,7 +22,7 @@ module Verification
       catalog_path contract_id entrypoint_name entrypoint_policy
       evidence_disclosure expected_chapter_count expected_exit_code
       generated_output_policy ignored_generated_names schema_version source_root
-      visibility
+      public_input_closure_path visibility
     ].sort.freeze
     FIXED_VALUES = {
       "schema_version" => 1,
@@ -29,6 +30,7 @@ module Verification
       "visibility" => "internal-only",
       "catalog_path" => "curriculum/catalog.yml",
       "source_root" => "solutions-private/encyclopedia",
+      "public_input_closure_path" => "verification/private-public-input-closures.yml",
       "entrypoint_name" => "verify.sh",
       "entrypoint_policy" => "exactly-one-recursive",
       "expected_exit_code" => 0,
@@ -58,7 +60,8 @@ module Verification
         raise ContractError.new("private-inventory", "E_PRIVATE_CHAPTER_COUNT", "catalog count differs from the private contract")
       end
       validate_source_inventory!(ids)
-      ids.sort.map { |chapter_id| load_chapter(chapter_id) }
+      public_inputs = load_public_input_closures!(ids)
+      ids.sort.map { |chapter_id| load_chapter(chapter_id, public_inputs.fetch(chapter_id)) }
     end
 
     private
@@ -113,7 +116,7 @@ module Verification
       raise ContractError.new("private-inventory", "E_PRIVATE_SOURCE_ROOT", "private source root is missing")
     end
 
-    def load_chapter(chapter_id)
+    def load_chapter(chapter_id, public_inputs)
       chapter_root = File.join(absolute_source_root, chapter_id)
       ignored = contract.fetch("ignored_generated_names").to_set
       files = []
@@ -131,8 +134,74 @@ module Verification
         root: chapter_root,
         verify_relative: verify.fetch("relative"),
         inputs: files.freeze,
-        cache_tool_ids: detect_cache_tools(files).freeze
+        public_inputs: public_inputs.freeze,
+        cache_tool_ids: detect_cache_tools(files + public_inputs).freeze
       )
+    end
+
+    def load_public_input_closures!(ids)
+      path = contract.fetch("public_input_closure_path")
+      bytes, = guard.read_contract(path)
+      if bytes.match?(PRIVATE_CANARY) || bytes.include?("solutions-private/") || bytes.include?("sources/private/")
+        raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_LEAK", "public input closure inventory contains a private marker")
+      end
+      data = StrictYaml.safe_load(bytes.force_encoding(Encoding::UTF_8), label: path)
+      unless data.is_a?(Hash)
+        raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_ROOT", "public input closure inventory must be a mapping")
+      end
+      validate_public_closure_schema!(data, path)
+
+      recipes = data.fetch("recipes")
+      chapter_ids = recipes.map { |recipe| recipe.fetch("chapter_id") }
+      unless data.fetch("recipe_count") == recipes.length && recipes.length == ids.length && chapter_ids == ids.sort && chapter_ids.uniq.length == chapter_ids.length
+        raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_INVENTORY", "public input closures must exactly match the sorted catalog recipe inventory")
+      end
+
+      recipes.to_h do |recipe|
+        chapter_id = recipe.fetch("chapter_id")
+        inputs = recipe.fetch("inputs")
+        paths = inputs.map { |input| input.fetch("path") }
+        unless paths == paths.sort && paths.uniq.length == paths.length
+          raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_ORDER", "public closure inputs must be sorted and unique", path: chapter_id)
+        end
+        loaded = inputs.map do |input|
+          relative = input.fetch("path")
+          guard.validate_public_path!(relative)
+          owner = relative.split("/").fetch(2)
+          unless owner == chapter_id
+            raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_OWNER", "public closure input must belong to the same chapter", path: chapter_id)
+          end
+          input_bytes, stat = guard.read_public_input(
+            relative,
+            expected_sha256: input.fetch("sha256"),
+            expected_mode: input.fetch("mode")
+          )
+          input.merge(
+            "relative" => relative,
+            "bytes" => input_bytes,
+            "size_bytes" => input_bytes.bytesize,
+            "mode" => format("%04o", stat.mode & 0o777)
+          )
+        end
+        [chapter_id, loaded]
+      end
+    rescue Psych::Exception, StrictYaml::DuplicateKeyError, StrictYaml::UnsupportedKeyError => e
+      raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_YAML", e.message.lines.first.to_s.strip)
+    end
+
+    def validate_public_closure_schema!(data, instance_path)
+      schema_bytes, = guard.read_contract(PRIVATE_CLOSURE_SCHEMA_PATH)
+      schema = StrictJson.parse(schema_bytes)
+      evaluator = ExecutableJsonSchema.new(schema, PRIVATE_CLOSURE_SCHEMA_PATH)
+      unless evaluator.definition_errors.empty?
+        raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_SCHEMA_DEFINITION", evaluator.definition_errors.first)
+      end
+      errors = evaluator.validate(data)
+      return if errors.empty?
+
+      raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_SCHEMA", errors.first, path: instance_path)
+    rescue JSON::ParserError, StrictJson::DuplicateMemberError => e
+      raise ContractError.new("private-closure", "E_PRIVATE_CLOSURE_SCHEMA_PARSE", e.message.lines.first.to_s.strip)
     end
 
     def walk(directory, relative_directory, ignored, files)

@@ -28,7 +28,10 @@
     "responsibility": { "type": "string", "minLength": 12 },
     "volume": { "type": "string", "pattern": "^[0-9]{2}$" },
     "order": { "type": "integer", "minimum": 1 },
-    "level": { "enum": ["L1", "L2", "L2+", "L3", "L1-L2"] },
+    "level": {
+      "description": "Encyclopedia reference depth. Route exit mastery is declared separately as required_mastery and does not truncate this chapter's reference content.",
+      "enum": ["L1", "L2", "L2+", "L3", "L1-L2"]
+    },
     "status": { "enum": ["planned", "drafting", "review", "verified"] },
     "path": {
       "type": "string",

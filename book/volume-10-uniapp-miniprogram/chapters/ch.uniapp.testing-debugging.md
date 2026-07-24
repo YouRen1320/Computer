@@ -14,8 +14,10 @@ prerequisites:
 - ch.uniapp.template-components
 - ch.uniapp.network-auth-storage
 version_surfaces:
-- uni-app
-- wechat-miniprogram
+- uni-app-cli-vue3
+- uni-app-mp-weixin-compiler
+- wechat-miniprogram-base-library
+- wechat-developer-tools
 - vitest
 route_tags:
 - zero-base

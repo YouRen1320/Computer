@@ -15,7 +15,7 @@ prerequisites:
 - ch.ir.hybrid-rerank
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - pydantic-2
 - pytest
 route_tags:
@@ -261,7 +261,7 @@ refusal_ok    = answerability state matches regression label
 
 单元测试不应依赖网络模型的可用性、价格和随机变化。替身要在合同层真实：接收与生产适配器相同的结构，返回合法结构或明确故障，并记录有效请求。它不能被描述成“模型表现”。集成测试再用锁定的模型 ID、参数、提示版本和小样本，结果单独保存。
 
-`model-api` 在版本表中是 conceptual：提供商的模型、端点和 SDK 必须逐实验记录。教材没有 API key、没有发请求，因此所有真实模型正确率、token 消耗、限流和延迟均未验证。
+`openai-api` 在版本表中是 conceptual：OpenAI 模型快照、端点和 SDK 必须逐实验记录，且不能外推为提供商中立协议。教材没有 API key、没有发请求，因此所有真实模型正确率、token 消耗、限流和延迟均未验证。
 
 ## 12. 四种典型故障
 

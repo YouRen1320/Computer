@@ -15,8 +15,8 @@ prerequisites:
 - ch.js.object-model
 - ch.web.forms-validation
 version_surfaces:
-- browser
-- browser-devtools
+- chrome-stable
+- chrome-devtools
 - html-living-standard
 route_tags:
 - zero-base

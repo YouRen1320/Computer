@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: '0840ae52f6eefa12b4d9bab4b0f61d025119b58aee96eeb5e8fd767c0f4399ac'
+generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -738,7 +738,7 @@ chapters:
     - manual-check
     oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
   version_surfaces:
-  - zsh
+  - zsh-5.9
   - macos-26
   outcomes:
   - id: explain
@@ -800,7 +800,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.environment-tool-resolution.md
   recommended_after:
   - ch.foundations.cli-streams-exit-codes
-  spec_digest: ba87e1af663e2d5fea35a65ff9c3bf088e459014ef2735e03ec6ab700dc18cfb
+  spec_digest: 5e0559df3ac122ef2286e523426981c0f8df9a5f0df3879a8ab40342f4c9b0f4
   route_tags:
   - zero-base
   - accelerated-48
@@ -874,7 +874,8 @@ chapters:
     - manual-check
     oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
   version_surfaces:
-  - toolchains
+  - vscode-stable
+  - intellij-idea-2026.1
   outcomes:
   - id: explain
     kind: concept
@@ -932,7 +933,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md
   recommended_after:
   - ch.foundations.environment-tool-resolution
-  spec_digest: 02e685da9d0d8414f25943d40ebea3ad03f8dc2dfdafb73754f73281f78da50c
+  spec_digest: 30cb1ea9c30eb5b5706ff3ea3c323425932533be93079635a41ecc1f68affa75
   route_tags:
   - zero-base
   - accelerated-48
@@ -1712,7 +1713,9 @@ chapters:
     - assertions
     oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
   version_surfaces:
-  - toolchains
+  - maven-3
+  - pnpm
+  - uv
   outcomes:
   - id: explain
     kind: concept
@@ -1776,7 +1779,7 @@ chapters:
   path: book/volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md
   recommended_after:
   - ch.foundations.testing-oracles
-  spec_digest: 6d6faff031578e4953374913091eca5f8afe48b4e0a30b20288d953644d51da0
+  spec_digest: d5ac18a6c6ff69484bc1a4b6992fdcfa6876bcdc90ca236d1833bca063811a7c
   route_tags:
   - zero-base
   - accelerated-48
@@ -2369,7 +2372,7 @@ chapters:
 - id: ch.java.values-variables-types
   title: 值、变量、基本类型、String、作用域与基本输出
   role: concept
-  responsibility: 教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份
+  responsibility: 教授值在局部作用域中的类型与命名，并完成 String 的基础观察、正规化、分割与拼接，不涉及运算转换或对象身份
   level: L1
   status: drafting
   stable_core: true
@@ -2379,6 +2382,11 @@ chapters:
     topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
   - id: java-variables-scope
     title: 变量与作用域
@@ -2389,6 +2397,11 @@ chapters:
   topics_taught:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -2396,6 +2409,11 @@ chapters:
   topics_used:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -2431,7 +2449,7 @@ chapters:
     artifact_paths:
     - labs/encyclopedia/ch.java.values-variables-types/
     acceptance:
-    - 各变量输出类型和值正确；内外层同名边界可解释；三种非法写法稳定编译失败
+    - 各变量输出类型和值正确；String 的长度、空白判断、正规化、正则分割和拼接边界可重放；内外层同名边界可解释；非法写法与行为故障都有稳定证据
   gate_requirements:
     gate_ids:
     - G1
@@ -2450,13 +2468,18 @@ chapters:
   outcomes:
   - id: explain
     kind: concept
-    text: 在 120 秒内解释值、变量、基本类型、String、作用域与基本输出的职责、适用边界与一个会失败的反例
+    text: 在 120 秒内解释值、变量、基本类型、String 字面量与不可变性、长度与空白、正规化、正则分割、拼接取舍和局部作用域，并给出一个会失败的边界反例
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -2468,13 +2491,18 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 编写打印设备名称、数量、启用状态和局部作用域变量的程序，显式选择 primitive、String 与初始化时机
+    text: 编写设备标签处理程序：保存基本类型与 String，观察 length/isEmpty/isBlank，用 strip 和 Locale.ROOT 做可预测正规化，按正则与 limit 分割，并比较少量 + 与重复 StringBuilder 拼接的责任边界
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -2486,13 +2514,18 @@ chapters:
     verification_mode: command-output-or-manual-calculation
   - id: diagnose
     kind: fault-diagnosis
-    text: 注入局部变量未初始化、作用域外访问和错误类型赋值，读取编译位置后做最小修复
+    text: 注入局部变量未初始化、作用域外访问和错误类型赋值的编译故障，再注入丢弃 strip/toUpperCase 返回值、把 split 参数误当字面文本和丢失尾部空列的行为故障，从编译日志或输出差异定位并做最小修复
     covers_topic_groups:
     - java-values-types
     - java-variables-scope
     covers_topics:
     - java.primitive-types
     - java.string-value
+    - java.string-literal-immutability
+    - java.string-length-empty-blank
+    - java.string-normalization
+    - java.string-split-regex
+    - java.string-concatenation-builder
     - java.default-vs-local-initialization
     - java.variable-declaration
     - java.assignment
@@ -2507,7 +2540,7 @@ chapters:
   path: book/volume-01-java-language/chapters/ch.java.values-variables-types.md
   recommended_after:
   - ch.java.program-structure
-  spec_digest: 62e46d85979d0d91eb0de6706436484b15922433fdaa97aaa15ffa75b770f771
+  spec_digest: 6398e34eb46eef7ab1d8f78fb7ccf237759271bef3e8668e8714498572055e9b
   route_tags:
   - zero-base
   - accelerated-48
@@ -3677,7 +3710,7 @@ chapters:
 - id: ch.java-oop.references-null-identity
   title: 引用、对象身份、null 与内存心智模型
   role: concept
-  responsibility: 区分值、引用、对象身份与空引用，不把示意图等同于 JVM 真实物理布局
+  responsibility: 区分值、引用、对象身份与空引用，明确 String 的身份/内容相等与 null/空/空白文本边界，不把示意图等同于 JVM 真实物理布局
   level: L1
   status: drafting
   stable_core: true
@@ -3688,24 +3721,30 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
   - id: java-null-model
     title: null 与内存边界
     topics:
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
   topics_taught:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   topics_used:
   - java.reference-value
   - java.object-identity
   - java.aliasing
+  - java.string-identity-content-equality
   - java.null-reference
+  - java.null-vs-empty-string
   - java.null-dereference
   - java.stack-heap-mental-model
   prerequisites:
@@ -3750,7 +3789,7 @@ chapters:
   outcomes:
   - id: explain
     kind: concept
-    text: 在 120 秒内解释引用、对象身份、null 与内存心智模型的职责、适用边界与一个会失败的反例
+    text: 在 120 秒内解释引用、对象身份、String 的 ==/内容相等、null/空字符串/空白字符串与内存心智模型的边界，并给出一个会失败的反例
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -3758,7 +3797,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:
@@ -3769,7 +3810,7 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，画出赋值前后别名与身份变化并打印验证，并生成记录输入、操作与结果的验证报告
+    text: 完成该章的独立构建任务：用两个引用指向同一设备对象、另一个等值对象和 null，对比 String 的身份与内容相等，区分 null、空与空白文本，画出赋值前后别名与身份变化，打印验证并生成一页引用与文本边界验证报告
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -3777,7 +3818,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:
@@ -3788,7 +3831,7 @@ chapters:
     verification_mode: command-output-or-manual-calculation
   - id: diagnose
     kind: fault-diagnosis
-    text: 注入把 == 当值相等和未判 null 解引用的故障，区分身份判断与空引用异常后修复
+    text: 注入把 String 的 == 当内容相等、把 null 当空字符串和未判 null 解引用的故障，区分身份、内容、缺失与空白语义后最小修复
     covers_topic_groups:
     - java-reference-model
     - java-null-model
@@ -3796,7 +3839,9 @@ chapters:
     - java.reference-value
     - java.object-identity
     - java.aliasing
+    - java.string-identity-content-equality
     - java.null-reference
+    - java.null-vs-empty-string
     - java.null-dereference
     - java.stack-heap-mental-model
     uses_capabilities:
@@ -3809,7 +3854,7 @@ chapters:
   order: 1
   path: book/volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md
   recommended_after: []
-  spec_digest: d81835b033580047d89829cb5f7d270b0927e98007c8b75ff72ce5edd794665c
+  spec_digest: 4b941fe3b1cdf4b6c773076953172e19f594698d37ad67c80897562b02e61470
   route_tags:
   - zero-base
   - accelerated-48
@@ -7911,7 +7956,9 @@ chapters:
   version_surfaces:
   - jdk-25
   - maven-3
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-java
   outcomes:
   - id: explain
     kind: concept
@@ -7978,7 +8025,7 @@ chapters:
   path: book/volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md
   recommended_after:
   - ch.java-engineering.testing-test-doubles
-  spec_digest: cbed047c7a7381350dbb43c447367642a88ab144ab028d11442ee2bbc9afd0b8
+  spec_digest: 208d685193663f86488e25c14b7d0f3cb6f1925cc32272c072802aa222165019
   route_tags:
   - zero-base
   - accelerated-48
@@ -10195,7 +10242,8 @@ chapters:
   version_surfaces:
   - jdk-25
   - maven-3
-  - jdbc
+  - jdbc-api-jdk-25
+  - pgjdbc
   - postgresql-18
   outcomes:
   - id: explain
@@ -10269,7 +10317,7 @@ chapters:
   path: book/volume-04-data-postgresql/chapters/ch.data.jdbc.md
   recommended_after:
   - ch.data.schema-migrations
-  spec_digest: f21b851127d92336f5bd58379f74b73f87808fef5a413514c5ec86eeaa838709
+  spec_digest: 5a8cc2ed375607dc96ea21ae45bcb5d41581f1f3814f881a30150b8abeabc672
   route_tags:
   - zero-base
   - accelerated-48
@@ -10512,7 +10560,7 @@ chapters:
     oracle: 语言级自动化测试覆盖成功、边界和故障路径，修复后必须重跑原测试集
   version_surfaces:
   - jdk-25
-  - jakarta-ee
+  - jakarta-servlet-6.1
   - maven-3
   outcomes:
   - id: explain
@@ -10576,7 +10624,7 @@ chapters:
   order: 1
   path: book/volume-05-spring-backend/chapters/ch.spring.servlet-request-lifecycle.md
   recommended_after: []
-  spec_digest: a5629323eb92e225c3e2680e40cd4b1ddcf034cc44951a48b93135b5dffc7027
+  spec_digest: 461e4b0780e2eea2c1c410c9201ebfe5af30cab5f7083e6babba8c6611d79d3a
   route_tags:
   - zero-base
   - accelerated-48
@@ -11253,7 +11301,7 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jakarta-ee
+  - jakarta-servlet-6.1
   - jdk-25
   outcomes:
   - id: explain
@@ -11321,7 +11369,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.mvc-routing-binding.md
   recommended_after:
   - ch.spring.boot-autoconfiguration
-  spec_digest: 43e49e887ff2aeda0ddf79ad8a17932db57ed2bf0516cc844b08fa558a3898a0
+  spec_digest: cf3eac282a623c0269f66dbc24591de205565c2d03b12c6b23b52ee4694007aa
   route_tags:
   - zero-base
   - accelerated-48
@@ -11551,7 +11599,7 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jakarta-ee
+  - jakarta-validation-3.1
   - jdk-25
   outcomes:
   - id: explain
@@ -11616,7 +11664,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.validation.md
   recommended_after:
   - ch.spring.dto-json-content-negotiation
-  spec_digest: 72f4ddea1a6de18bfe0ba10dc78cd23321760e91fdcb466a078d307f8c540555
+  spec_digest: 4914d388b1fa8ccfb89c93c4a315502aeacc099b81b255b8de736c6db52a26a0
   route_tags:
   - zero-base
   - accelerated-48
@@ -12007,7 +12055,8 @@ chapters:
   version_surfaces:
   - spring-boot-4.1
   - spring-framework-7
-  - jdbc
+  - jdbc-api-jdk-25
+  - pgjdbc
   - flyway
   - postgresql-18
   outcomes:
@@ -12076,7 +12125,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.datasource-pooling.md
   recommended_after:
   - ch.architecture.domain-modeling
-  spec_digest: cb7b1bd737712419f6431540beb5322a5e56bba3e84b002ce061bc29d2aff447
+  spec_digest: 46b44e8c8ce3d32ea48a3f539e2b1afb18e1f3265c375ae5aa92a98ae9020b76
   route_tags:
   - zero-base
   - accelerated-48
@@ -13103,7 +13152,9 @@ chapters:
     oracle: 真实框架或依赖边界由可重复集成测试验证，负向用例能定位首个失败层
   version_surfaces:
   - spring-boot-4.1
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-java
   - testcontainers
   outcomes:
   - id: explain
@@ -13165,7 +13216,7 @@ chapters:
   path: book/volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md
   recommended_after:
   - ch.spring.openapi-contracts
-  spec_digest: 0b6ad9d937c4fcac4afee50cab2f63c7acbed12d931d0f9f3b03100fd760bf93
+  spec_digest: 78265a1ce2ede7e44f420c74dfed28d47a6e568385394ec48e98d7f223a23bbe
   route_tags:
   - zero-base
   - accelerated-48
@@ -14885,7 +14936,8 @@ chapters:
     - failure-rerun
     oracle: 系统、安全或可靠性场景含可重复故障注入、跨边界预言、修复与原验证重跑
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
   - spring-security
   outcomes:
   - id: explain
@@ -14953,7 +15005,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.security.audit-events-privacy.md
   recommended_after:
   - ch.security.multitenancy-data-isolation
-  spec_digest: 25e9764bd2bd5aee094fb44c1b8d4660284272702e712957066a11bf24d38746
+  spec_digest: 86d8b2fbaf9d3c2797849483bf8ceeff06ee0f7edc8c5f97392e82112b1af452
   route_tags:
   - zero-base
   - accelerated-48
@@ -15953,7 +16005,8 @@ chapters:
     - failure-rerun
     oracle: 系统、安全或可靠性场景含可重复故障注入、跨边界预言、修复与原验证重跑
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
   - spring-boot-4.1
   outcomes:
   - id: explain
@@ -16027,7 +16080,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md
   recommended_after:
   - ch.architecture.modular-monolith
-  spec_digest: a53ed885990b9d09a29f646de05b09e5a209ce53eabc23c84e59bddd4ef15911
+  spec_digest: 66884043cedb098a230b1ee89d545c2aa197362d8819e0c98a0954f4057c6eba
   route_tags:
   - zero-base
   - accelerated-48
@@ -16110,8 +16163,8 @@ chapters:
     - command-exit
     oracle: 同一测试页面的请求瀑布、DOM 结构和渲染阶段能由保存的 HAR、截图与时间线重复核对。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - html-living-standard
   - css
   outcomes:
@@ -16176,7 +16229,7 @@ chapters:
   order: 1
   path: book/volume-07-web-platform/chapters/ch.web.browser-render-devtools.md
   recommended_after: []
-  spec_digest: a411baa0286fc2bff148e1203eaf7597ec2c847a9abd07172ff43531c09655f7
+  spec_digest: 8d62fc3221cfd1b77d43765817131054bb8d49436be81919a7e9ff2abfb15148
   route_tags:
   - zero-base
   - accelerated-48
@@ -16263,8 +16316,8 @@ chapters:
     - header-assertions
     oracle: 固定的同源/跨源请求矩阵应得到确定的 Cookie、CORS 与缓存命中结果，并可由响应头和浏览器控制台复核。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -16334,7 +16387,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md
   recommended_after:
   - ch.web.browser-render-devtools
-  spec_digest: e19e888e505a26ccfab3798499c0c4d6b35a8e8701486826cbfacdc5af805a51
+  spec_digest: a427ed34b4f849f5ed7dcbd972997d454ffe8bd32fd77e7044fe1dcbafb6e0b6
   route_tags:
   - zero-base
   - accelerated-48
@@ -16420,8 +16473,8 @@ chapters:
     oracle: HTML 校验器无结构错误，DOM 检查与文档大纲能逐项对应预期的 landmark、标题层级和元数据。
   version_surfaces:
   - html-living-standard
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -16485,7 +16538,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.semantic-html.md
   recommended_after:
   - ch.web.origin-cookie-cache
-  spec_digest: de153ea4161e554efb90f1173eb92322ee46d35a6ba80117e511d49ed0184a3c
+  spec_digest: 8ec3184a6220fc11fbf4758fa4b857806e960a51aba4c7f7496390fd6564f729
   route_tags:
   - zero-base
   - accelerated-48
@@ -16586,8 +16639,8 @@ chapters:
     oracle: 合法、缺失、格式错误与重复提交输入在浏览器校验状态和实际请求负载中得到确定且可重复的结果。
   version_surfaces:
   - html-living-standard
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -16663,7 +16716,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.forms-validation.md
   recommended_after:
   - ch.web.semantic-html
-  spec_digest: 3ff99ee8f1a5d50b2d47ac6417284736d905549a0dea1eee434e4d462f15a4a6
+  spec_digest: 88729a7e8678e66d202f856ba61861d3ff00cd18099388947b629ed1c058f8b6
   route_tags:
   - zero-base
   - accelerated-48
@@ -16749,8 +16802,8 @@ chapters:
     oracle: 不同视口和资源可用性下，浏览器选择的候选、替代文本和失败回退与预先记录的矩阵一致。
   version_surfaces:
   - html-living-standard
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -16814,7 +16867,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.media-assets.md
   recommended_after:
   - ch.web.forms-validation
-  spec_digest: 590033dbc98ed10a23a8062ad04d8768c4797c6a7c7fefd34f7ccdf3edd1a55b
+  spec_digest: a943459a34117c63a60844e2beb726720b660c84d705886234e01eccd135b121
   route_tags:
   - zero-base
   - accelerated-48
@@ -16903,8 +16956,8 @@ chapters:
     oracle: 仅用键盘即可完成任务，焦点顺序、可访问名称和动态错误提示与逐项检查表一致。
   version_surfaces:
   - html-living-standard
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -16974,7 +17027,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.web.accessibility-interaction.md
   recommended_after:
   - ch.web.media-assets
-  spec_digest: d50f375f7cd9907560f613bd3c8c4c087fab4a04376bb9f918f6cf6b220e6ffe
+  spec_digest: 8416e3ba503d2b2b3ab92c3e3bc7aa395399dd7188823f3ae671fc4f900c8801
   route_tags:
   - zero-base
   - accelerated-48
@@ -17059,8 +17112,8 @@ chapters:
     oracle: 给定冲突规则时，手算结果与浏览器 computed style 一致，移除规则后差异可预测。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17121,7 +17174,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.cascade.md
   recommended_after:
   - ch.web.accessibility-interaction
-  spec_digest: febd09fed84885ab5ca88e4bae83dbe17726db944a824a4bded379fe5ee7b354
+  spec_digest: ae7bf759a09f89ef9307b1c12da470b809278f371745b720fa830baf2f00d344
   route_tags:
   - zero-base
   - accelerated-48
@@ -17211,8 +17264,8 @@ chapters:
     oracle: 给定尺寸与定位规则时，手算外部尺寸、包含块和遮挡顺序与 DevTools 盒模型及截图一致。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17282,7 +17335,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.box-position.md
   recommended_after:
   - ch.css.cascade
-  spec_digest: 4b029a4e2d3d8af6a33ca5f87b37965d2350e807d25f1beee101f4462a96602c
+  spec_digest: 586780639e8229e7dc861f4cf5b4b8b4db5dfb1f6edcfca5fbc12fbc7f6a4fa5
   route_tags:
   - zero-base
   - accelerated-48
@@ -17370,8 +17423,8 @@ chapters:
     oracle: 不同内容长度和容器宽度下，主轴尺寸、换行和对齐结果与预先声明的布局矩阵一致。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17441,7 +17494,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.flexbox.md
   recommended_after:
   - ch.css.box-position
-  spec_digest: 52593e81de496f1bd97968f0824e6fb0d73d8cd84e4906ed29416ff16e8a0916
+  spec_digest: 664f449c1a01e390335eb459f3defb72e6a75a5416fd165d58607831788d3422
   route_tags:
   - zero-base
   - accelerated-48
@@ -17529,8 +17582,8 @@ chapters:
     oracle: 固定内容与视口矩阵下，轨道尺寸、区域位置和自动放置顺序与截图基线及 DevTools 网格叠层一致。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17600,7 +17653,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.grid.md
   recommended_after:
   - ch.css.flexbox
-  spec_digest: bca134ec47f312ac980e8066d66838290a8a446a869495c48b14ac8046097233
+  spec_digest: 1487945f5c670a3adaf607a591a21fb361564c0007a30d96a8263ada91b8c641
   route_tags:
   - zero-base
   - accelerated-48
@@ -17711,8 +17764,8 @@ chapters:
   version_surfaces:
   - css
   - html-living-standard
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17788,7 +17841,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.responsive-typography.md
   recommended_after:
   - ch.css.grid
-  spec_digest: e4c2eadd4cf725f93fa4f3fa90a2fb49c95dc99f73ea580d2b5873e3aa07df42
+  spec_digest: 2e52f7adf2b63fdb4bc5be198a6eda347e3821d54379fc9bbb7952ecaafbdc10
   route_tags:
   - zero-base
   - accelerated-48
@@ -17872,8 +17925,8 @@ chapters:
     oracle: 亮色、暗色、缺失 token 与局部覆盖场景中的计算值和对比度均符合预设表格。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -17934,7 +17987,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.theme-variables.md
   recommended_after:
   - ch.css.responsive-typography
-  spec_digest: 9f5248096790b1b5928e1c847371d22f4f2d76c473f2fa916ea3706734ed0f2b
+  spec_digest: 4f108246b0df890568b430016b96eb5e8bf714cfc0daa70fd43305d854111458
   route_tags:
   - zero-base
   - accelerated-48
@@ -18027,8 +18080,8 @@ chapters:
     oracle: 普通与 prefers-reduced-motion 场景下，状态转换、焦点和合成时间线与声明的动效合同一致。
   version_surfaces:
   - css
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -18092,7 +18145,7 @@ chapters:
   path: book/volume-07-web-platform/chapters/ch.css.motion-compositing.md
   recommended_after:
   - ch.css.theme-variables
-  spec_digest: e7205b738233f1cae819e69e7f79b3dd2c2e526912072f1a9e717651f24ffced
+  spec_digest: 111d8bd0a489e6362d585dfa51f818b0dc7dd94503c84d0d8defe2a63e395718
   route_tags:
   - zero-base
   - accelerated-48
@@ -19604,8 +19657,8 @@ chapters:
     - mutation-assertions
     oracle: 给定初始 DOM 和操作序列，节点数量、顺序、文本、属性和语义结构与预期快照一致。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - html-living-standard
   outcomes:
   - id: explain
@@ -19673,7 +19726,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.dom-mutation.md
   recommended_after:
   - ch.js.testing-debugging
-  spec_digest: f9f6a20b3d279072024ab5b4e6ee3170eb30fb1457416af41134331e0cdc6b8d
+  spec_digest: 4d4cec72e629fc3fd4046da6e780046466f78db7b716db6dfa1c1998091d4622
   route_tags:
   - zero-base
   - accelerated-48
@@ -19781,8 +19834,8 @@ chapters:
     - dom-assertions
     oracle: 捕获/冒泡顺序、委托目标、默认提交和取消行为与固定事件追踪表及请求负载一致。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - html-living-standard
   outcomes:
   - id: explain
@@ -19859,7 +19912,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.events-forms.md
   recommended_after:
   - ch.js.dom-mutation
-  spec_digest: 66925ba512b694bf845a446ebef3a9c7991ac9d2cffd5eac5fe88230f56383b0
+  spec_digest: fd6a13924ee81a42c979c5cd957f8ae00e08f4abadf4900c6c1bd17a6f2f013a
   route_tags:
   - zero-base
   - accelerated-48
@@ -19946,7 +19999,7 @@ chapters:
     oracle: 同步、任务、微任务和 await 的输出顺序与手工队列追踪逐项一致，异常传播路径可重复。
   version_surfaces:
   - node-24-lts
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -20016,7 +20069,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.event-loop.md
   recommended_after:
   - ch.js.events-forms
-  spec_digest: 7b71c6e3a447a5f4abe0ecf26afee310da3270ee100f339a368f98ca8d191ff8
+  spec_digest: a3be84f5542fc72d8e8e79b48b40b0b93c7afaf997a6605be74b01b48abf1b5e
   route_tags:
   - zero-base
   - accelerated-48
@@ -20127,8 +20180,8 @@ chapters:
     - injected-delay
     oracle: 成功、HTTP 错误、解析错误、超时、取消、重试上限和乱序响应均由确定性测试证明，旧响应不会覆盖新状态。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - node-24-lts
   - vitest
   outcomes:
@@ -20209,7 +20262,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md
   recommended_after:
   - ch.js.event-loop
-  spec_digest: a40404da52dcd4c85b1e2b62dc17b9b2a0c3e47af680c670be9463e044c7850e
+  spec_digest: f0118a34f9622838dd8d34372e7ba464f7688dd46d4e72913ee8a72b55085e3c
   route_tags:
   - zero-base
   - accelerated-48
@@ -20317,8 +20370,8 @@ chapters:
     - before-after-budget
     oracle: 同一交互负载的优化前后 trace 显示长任务、layout 次数或保留对象按预算下降，功能与无障碍行为不回退。
   version_surfaces:
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   outcomes:
   - id: explain
     kind: concept
@@ -20391,7 +20444,7 @@ chapters:
   path: book/volume-08-javascript-typescript/chapters/ch.js.browser-performance.md
   recommended_after:
   - ch.js.fetch-cancellation-race
-  spec_digest: b95b9e6ea0b089bfd61ebeb3104d009e5ba6bff3b7ba4a93e9ad885e26034514
+  spec_digest: 1632ba6eef4cc14816d9e3ca7037030d3e0fefd7803338f666c6b1a4831762ec
   route_tags:
   - zero-base
   - accelerated-48
@@ -21304,7 +21357,7 @@ chapters:
   - vue-3
   - vite
   - typescript
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -21371,7 +21424,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.template-directives.md
   recommended_after:
   - ch.vue.vite-sfc
-  spec_digest: a1273385b9ad14dc76cc9ae4cd4e08fa01d64dd72d8c7ced322cb6bb4010a99b
+  spec_digest: 38903a440cfec9a70c8780a48da9805d68a14d6b8b0a8d9131fe8e2cd1f42b50
   route_tags:
   - zero-base
   - accelerated-48
@@ -21484,7 +21537,7 @@ chapters:
   - vue-3
   - vite
   - typescript
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -21563,7 +21616,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.forms-vmodel.md
   recommended_after:
   - ch.vue.template-directives
-  spec_digest: '087baa9afdebec4f2886185a5879222204516bdbf1ac43f5288bc13ff98877be'
+  spec_digest: 0d4a8d3d00cc1e865f8e5e8cbe3a5f7ae2559ba38f1e7fe2e389bfe4c0ae70aa
   route_tags:
   - zero-base
   - accelerated-48
@@ -21651,7 +21704,7 @@ chapters:
   - vue-3
   - vite
   - typescript
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -21715,7 +21768,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.reactivity.md
   recommended_after:
   - ch.vue.forms-vmodel
-  spec_digest: d7789006cdb69eceb34991370c5ce60342203f77c486ae5b1fcfba7da51d17a5
+  spec_digest: b7fc2ab40a46bfd7862ecd68118cd9fa4e682a1b1ccd88178dd9446a5204794c
   route_tags:
   - zero-base
   - accelerated-48
@@ -21831,7 +21884,7 @@ chapters:
   - vue-3
   - vite
   - typescript
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -21910,7 +21963,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.effects-lifecycle.md
   recommended_after:
   - ch.vue.reactivity
-  spec_digest: 2b20099a9282f28b959ef0b6f96abbe1cae2ac5700017919e9e88175915c14c0
+  spec_digest: 92e62334c1605e53ca349c267146a3b9e609cd21280d27d9f9d4f287e122d470
   route_tags:
   - zero-base
   - accelerated-48
@@ -22001,7 +22054,7 @@ chapters:
   - vue-3
   - vite
   - typescript
-  - browser
+  - chrome-stable
   outcomes:
   - id: explain
     kind: concept
@@ -22071,7 +22124,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md
   recommended_after:
   - ch.vue.effects-lifecycle
-  spec_digest: c2213370f30560069831a21511a249e1cb6f9b88d62181eb1b2f31f0effe0790
+  spec_digest: fd839fabab8d243c04bf0c169687774051ba45e79977350901d8dfe138071a2c
   route_tags:
   - zero-base
   - accelerated-48
@@ -23172,8 +23225,8 @@ chapters:
     oracle: 打开/关闭弹层、校验错误、异步完成和路由切换后，焦点目标、键盘路径与动态提示逐项符合检查表。
   version_surfaces:
   - vue-3
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - vitest
   outcomes:
   - id: explain
@@ -23244,7 +23297,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.accessibility.md
   recommended_after:
   - ch.vue.component-testing
-  spec_digest: 85d15934473c8eb90662449ffdd51c3f763e0c584d25610f8ce760b364478de5
+  spec_digest: 3591802463502fcf06febbb7de32c40262508e64771461d00f7d0822313e0223
   route_tags:
   - zero-base
   - accelerated-48
@@ -23336,8 +23389,8 @@ chapters:
   version_surfaces:
   - vue-3
   - vite
-  - browser
-  - browser-devtools
+  - chrome-stable
+  - chrome-devtools
   - vitest
   - playwright
   outcomes:
@@ -23412,7 +23465,7 @@ chapters:
   path: book/volume-09-vue-nuxt/chapters/ch.vue.performance.md
   recommended_after:
   - ch.vue.accessibility
-  spec_digest: 8f79a98ee0433b777cc8c0ef284a0bbf849fd218952784ddc99c5130aa31dbb3
+  spec_digest: 46db94b18c09b1b5e992277a8dec6ee3d34680a89bb01e7168b05f56517771d8
   route_tags:
   - zero-base
   - accelerated-48
@@ -23663,7 +23716,8 @@ chapters:
     - host-log
     oracle: 启动、前后台切换、页面进入/离开和配置错误时的回调顺序与宿主日志、页面栈和预期轨迹一致。
   version_surfaces:
-  - wechat-miniprogram
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -23729,7 +23783,7 @@ chapters:
   order: 1
   path: book/volume-10-uniapp-miniprogram/chapters/ch.miniapp.runtime.md
   recommended_after: []
-  spec_digest: 62adbc061a94da511d1e05a6d3f8fedd89699970f5aa521767854e4986504f82
+  spec_digest: dd61b4310fde14a6c3be86a91698154a488e5a13cb84f979fbe24f8e79ad5a68
   route_tags:
   - zero-base
   - accelerated-48
@@ -23824,8 +23878,10 @@ chapters:
     - route-matrix
     oracle: 开发与生产构建均生成目标产物；首页、列表、详情的直接进入和参数导航与 pages 配置及页面栈矩阵一致。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - vue-3
   - vite
   - node-24-lts
@@ -23896,7 +23952,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.toolchain-pages.md
   recommended_after:
   - ch.miniapp.runtime
-  spec_digest: eed6c1824a6882497ff394b7a75d2436b9a888ea08f7ccddc3b7bed6f73ad680
+  spec_digest: 4dfa674c2b322197c1786b93a6e42378fa05b443e1dfa6b9ec5fd25e44b18f80
   route_tags:
   - zero-base
   - accelerated-48
@@ -23994,8 +24050,10 @@ chapters:
     - host-event-log
     oracle: 同一组件在 H5 与小程序目标的文本、事件、表单值和关键样式与差异清单一致，非支持特性明确失败。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - vue-3
   outcomes:
   - id: explain
@@ -24066,7 +24124,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.template-components.md
   recommended_after:
   - ch.uniapp.toolchain-pages
-  spec_digest: 8ee396f7ae026794b66a948bddc895297f833ebb419ebdd9b40cd6fb5ef25ce5
+  spec_digest: a45c6675e1f38096e6d6b7d628f8689b074604678f661269043f687c0fe65a97
   route_tags:
   - zero-base
   - accelerated-48
@@ -24164,8 +24222,10 @@ chapters:
     - expired-credential-fixture
     oracle: 开发/测试环境、成功、超时、HTTP 错误、过期凭据和损坏存储场景映射到确定状态，敏感值不出现在日志。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -24238,7 +24298,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.network-auth-storage.md
   recommended_after:
   - ch.uniapp.template-components
-  spec_digest: 9e1c99f2889e98083ed7b0352e4dc7c1d04fe59054df475b66aa04a666f2f85a
+  spec_digest: e65f0c2f46767e58e74bdb98063bf115b97e492a6ab68660705d5f7f318394a0
   route_tags:
   - zero-base
   - accelerated-48
@@ -24327,8 +24387,10 @@ chapters:
     - fallback-assertion
     oracle: 至少两个目标分别编译并执行对应分支；支持、拒绝和无能力场景均命中预期适配器或降级 UI，不出现死分支。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - vue-3
   outcomes:
   - id: explain
@@ -24402,7 +24464,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.platform-conditional.md
   recommended_after:
   - ch.uniapp.network-auth-storage
-  spec_digest: 7dd0aa84a53f40978180107dd18abef5ee0e652812b9be68ff11233cd05126f0
+  spec_digest: 92ec66e2fa79b3ea7d23475f015192289c84a7377a9721c7040d93c9e750b930
   route_tags:
   - zero-base
   - accelerated-48
@@ -24503,8 +24565,10 @@ chapters:
     - upload-fault-injection
     oracle: 首次授权、拒绝、永久拒绝、取消、无设备能力和成功场景均进入确定状态；失败后可恢复且不重复弹窗。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -24580,7 +24644,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.device-capabilities.md
   recommended_after:
   - ch.uniapp.platform-conditional
-  spec_digest: c633587fff9752c77ead4ff145b45a649a2e17aa68ea537fc64ab916268ffb61
+  spec_digest: 1c9702f9a73c288b83abf8f608b1edf6fa683da056c9114c511e38915608f7d3
   route_tags:
   - zero-base
   - accelerated-48
@@ -24680,8 +24744,10 @@ chapters:
     - device-repro
     oracle: 同一故障能由自动化测试或最小真机复现包稳定重现；日志标明目标、版本、环境和首个可信失败证据。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - vitest
   outcomes:
   - id: explain
@@ -24755,7 +24821,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.testing-debugging.md
   recommended_after:
   - ch.uniapp.device-capabilities
-  spec_digest: 26e66c5869186f7b456e02a4cc15fa0377916606641301c22f1f4ac2c4bc1581
+  spec_digest: 01e4b26cb79626b699beeb1e806e6e46c8236e53e3d42eb155ab3a77940a4bc0
   route_tags:
   - zero-base
   - accelerated-48
@@ -24845,8 +24911,10 @@ chapters:
     - regression-suite
     oracle: 主包/分包大小和冷启动指标达到预算；清缓存、缓存升级和弱网场景功能正确且回归测试不退化。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -24916,7 +24984,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.packages-performance.md
   recommended_after:
   - ch.uniapp.testing-debugging
-  spec_digest: 62d5d881de61ace8a0bf189b65432ed81de68ebe952378b9406d8f1a31919a89
+  spec_digest: 543f22ba87943ce8cc605d3f0e99b659780a60dbf825019bcec4657e01ecbd7b
   route_tags:
   - zero-base
   - accelerated-48
@@ -25028,8 +25096,10 @@ chapters:
     - conflict-fixture
     oracle: 断网创建、进程重启、重复重放、401、409 和毒消息场景中，每个业务命令至多生效一次，队列状态和人工处置可追踪。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -25105,7 +25175,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.offline-idempotency.md
   recommended_after:
   - ch.uniapp.packages-performance
-  spec_digest: 48d7dbb74cf5901593cda1998a34e0e969527d69c02e28d3550401e2371ebe12
+  spec_digest: 457cb7a2c86e225e5f284b1715e2bcbc7744bf0e0c725430cce6fdd7b38d4cef
   route_tags:
   - zero-base
   - accelerated-48
@@ -25202,8 +25272,10 @@ chapters:
     - negative-device-test
     oracle: 每项敏感数据和权限都有目的、来源、保留、删除和审核页面证据；拒绝权限后核心非敏感流程仍可使用。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -25273,7 +25345,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.privacy-review.md
   recommended_after:
   - ch.uniapp.offline-idempotency
-  spec_digest: eea8357a326bab1372b5016e1988e436d4395bc8d135b75553afa940f3c40b06
+  spec_digest: 70008e3c24ebdcfbf9351ffca601a118dc91c8c51bda413458678678e4a597fd
   route_tags:
   - zero-base
   - accelerated-48
@@ -25370,8 +25442,10 @@ chapters:
     - rollback-drill
     oracle: 同一 commit 可生成带版本证据的体验版；灰度错误可关联版本并在回退演练后恢复，监控不含敏感原值。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   outcomes:
   - id: explain
     kind: concept
@@ -25441,7 +25515,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md
   recommended_after:
   - ch.uniapp.privacy-review
-  spec_digest: 9ba931662e5083437a1c782c1a81bfa9f24601cfc599a5e8b50b3677c78af8df
+  spec_digest: 7c576b96b49227087b18044e240207baa8b615e4a6220b0637bb851e53c62955
   route_tags:
   - zero-base
   - accelerated-48
@@ -25549,8 +25623,10 @@ chapters:
     - release-evidence-review
     oracle: 扫码到提交、权限拒绝、上传失败、断网重放、重复点击、状态刷新和版本回退场景均满足 FactoryCare API 与 UI 合同。
   version_surfaces:
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - vue-3
   outcomes:
   - id: explain
@@ -25624,7 +25700,7 @@ chapters:
   path: book/volume-10-uniapp-miniprogram/chapters/ch.uniapp.factorycare-reporter.md
   recommended_after:
   - ch.uniapp.release-monitoring
-  spec_digest: 8ca9b95e48ab28688077542db935307b0e98b0a8d1359a3a6247804d1c55b232
+  spec_digest: fbc2c402dafcb9c59c9ebfa7f8aa4649aaddd95ab869572391269c75a393ab6f
   route_tags:
   - zero-base
   - accelerated-48
@@ -34393,7 +34469,9 @@ chapters:
   - numpy
   - pandas
   - pytorch-stable
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-python
   outcomes:
   - id: explain
     kind: concept
@@ -34460,7 +34538,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md
   recommended_after:
   - ch.pytorch.inference
-  spec_digest: 3f17449bcd5b177f407b0d6abe588b8e96d965f5f7f386a5539974d35c1c5374
+  spec_digest: 9befa7b5615d4c272b57166b69fd54b7f93b3dc299d57cf9c9a0695218a3f4d9
   route_tags:
   - zero-base
   - accelerated-48
@@ -34727,7 +34805,7 @@ chapters:
     oracle: 固定 Mock 请求产生确定消息和成本计算；真实 smoke 记录模型、请求 ID 和实际 usage，HTTP/提供方错误进入独立路径。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - pytest
   outcomes:
   - id: explain
@@ -34801,7 +34879,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md
   recommended_after:
   - ch.llm.model-foundations
-  spec_digest: 1ba37c4cd130278d0703ad0b02c2762fdf0917e1bf826e750755eea9ba5f2bd7
+  spec_digest: '033648cd252c799c996b886d9c486a0dcb3e04f27e2365905dde95a8f579512c'
   route_tags:
   - zero-base
   - accelerated-48
@@ -34897,7 +34975,7 @@ chapters:
     oracle: 只有完全通过 Schema 的结果可进入业务函数；每类非法响应产生结构化、可定位且不含敏感原文的错误。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - pydantic-2
   - pytest
   outcomes:
@@ -34966,7 +35044,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.structured-output.md
   recommended_after:
   - ch.llm.api-prompts-cost
-  spec_digest: 29d7d122b5f0eea10d993cc39c4e4b63fd0ff7c6ad6af5b20a5c6c48efb8a9e5
+  spec_digest: a290c646b07d1cf95338b8360a1950f77fbe73878854393b22796e443aa9aabc
   route_tags:
   - zero-base
   - accelerated-48
@@ -35063,7 +35141,7 @@ chapters:
     oracle: 每种故障在预算内结束且任务无泄漏；部分输出有明确状态，只有可重试错误按上限退避，取消不触发降级副作用。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - pytest
   outcomes:
   - id: explain
@@ -35134,7 +35212,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md
   recommended_after:
   - ch.llm.structured-output
-  spec_digest: 817ad98177cb7bbc7fa4c99acf626d66fdd575a1c3a2f4f79909cac98288e8b9
+  spec_digest: 1ab111a8dbafd6cfc908ac4549e55d4f3937c93725c49ce3abd4916889fec43f
   route_tags:
   - zero-base
   - accelerated-48
@@ -35245,7 +35323,7 @@ chapters:
     oracle: 未列入白名单、参数非法、越权或未确认调用均不执行；批准的重复副作用仅生效一次且审计链完整。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - pydantic-2
   - pytest
   outcomes:
@@ -35320,7 +35398,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.tool-calling.md
   recommended_after:
   - ch.llm.streaming-resilience
-  spec_digest: aa5fc9272f27e48e2e4a552ab57e574f81e0cade44c52bd39c7d51bbfedfb5b1
+  spec_digest: 6dbcaad8da3e183aa0a1b6505d88b14e4a8968b128943b08492cbf9ce1571c9e
   route_tags:
   - zero-base
   - accelerated-48
@@ -35576,7 +35654,7 @@ chapters:
     oracle: 黄金文档 chunk 边界稳定且均可回溯父文档；Embedding 维度与模型版本一致，失败批次可从检查点续跑不重复写入。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - numpy
   - pytest
   outcomes:
@@ -35648,7 +35726,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.chunking-embeddings.md
   recommended_after:
   - ch.rag.ingestion-metadata
-  spec_digest: 76288bba3e6e7c4afdcb681be32712c990b5d8963bfc323db76836d206a2de11
+  spec_digest: 0f09ec0647da94f7dda3afcd087cf8addbb64bac3f5f5f2ddbb89040a7d38f5a
   route_tags:
   - zero-base
   - accelerated-48
@@ -36428,7 +36506,7 @@ chapters:
     oracle: 每个事实可追溯到上下文具体区间；证据不足稳定拒答，检索失败、生成错误与引用错误分别计数。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - pydantic-2
   - pytest
   outcomes:
@@ -36500,7 +36578,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.citations-evaluation.md
   recommended_after:
   - ch.ir.hybrid-rerank
-  spec_digest: fff3217328c31f3ab4d2e10d0723a90a0424b18f7172d0f6768cbca590aee3ba
+  spec_digest: 656be58ae4e34f655cd3b5a4d6f0a61cf788cacf21d21e6620ca819640fd3211
   route_tags:
   - zero-base
   - accelerated-48
@@ -36614,10 +36692,12 @@ chapters:
     oracle: 任何跨租户候选在进入模型前即被排除；注入不能扩大工具权限，日志/trace 不含原始 PII，安全回归可重复。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - postgresql-18
   - pgvector
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-python
   - pytest
   outcomes:
   - id: explain
@@ -36697,7 +36777,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md
   recommended_after:
   - ch.rag.citations-evaluation
-  spec_digest: 2a028e1f9934148fb59306c40c45decc2b152785ac69645df5d9956220db21c5
+  spec_digest: 3d3ee5dfb2591bd6beda4049fd9ff32c30c4b349f032ae3d9f007e9a2def118b
   route_tags:
   - zero-base
   - accelerated-48
@@ -36794,7 +36874,7 @@ chapters:
     oracle: 两种实现对黄金输入输出和错误分类等价；LangChain 版本可替换且业务 Schema、授权和评估不依赖内部对象。
   version_surfaces:
   - python-3.14
-  - model-api
+  - openai-api
   - langchain
   - pytest
   outcomes:
@@ -36866,7 +36946,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.agent.langchain.md
   recommended_after:
   - ch.rag.security-observability
-  spec_digest: 91e1d299991e68875d3cf44f75235527f09d2f7f8c7eb1001a355b48a43b9fe1
+  spec_digest: 3343208cb9884457bb48bfba17f3a5b8746ba081abe24a7662ee3c649e0e888a
   route_tags:
   - zero-base
   - accelerated-48
@@ -37150,7 +37230,7 @@ chapters:
   - mcp
   - langgraph
   - langchain
-  - model-api
+  - openai-api
   - pytest
   outcomes:
   - id: explain
@@ -37227,7 +37307,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md
   recommended_after:
   - ch.agent.langgraph
-  spec_digest: 10eb50c8c49a0725490b2132b8a8e19875c6fd6e36379647077d4b2be88e86de
+  spec_digest: 6df5f647ab97e3739b8eebe4d23da1f0669c7b52e833feee377890fc0a30df33
   route_tags:
   - zero-base
   - accelerated-48
@@ -38128,7 +38208,7 @@ chapters:
     - artifact-retention-check
     oracle: 成功提交全部门禁通过；分别注入编译、单测、E2E 和依赖错误时流水线停止在对应阶段并保留可下载证据。
   version_surfaces:
-  - ci
+  - github-actions-hosted-runner
   - git
   outcomes:
   - id: explain
@@ -38199,7 +38279,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md
   recommended_after:
   - ch.ops.nginx-tls
-  spec_digest: 41201068c7b34ea49aff1ed22d56d241f0cf543283d1f6d2e9c74828f5c888fc
+  spec_digest: 6f3d480955d638047458c1e255f771e9a07297f42d42f83d24e64d0c70f32bb8
   route_tags:
   - zero-base
   - accelerated-48
@@ -38301,7 +38381,7 @@ chapters:
     - proxy-end-to-end-smoke
     oracle: 构建、测试和发布环境解析到相同 digest；发布清单可追溯源码与门禁，TLS/静态/API smoke 全部指向该制品。
   version_surfaces:
-  - ci
+  - github-actions-hosted-runner
   - git
   - docker
   - docker-compose
@@ -38382,7 +38462,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.artifacts-promotion.md
   recommended_after:
   - ch.release.ci-quality
-  spec_digest: beb9f55bbf513740fb085756a19061137a8e7c524aac9871a36f78956ca37d0c
+  spec_digest: b438bb2fd423ac3e07c84a6b7ad83c546387deac1a1ea01012bfa31eb36387e8
   route_tags:
   - zero-base
   - accelerated-48
@@ -38488,7 +38568,7 @@ chapters:
     - rotation-drill
     oracle: 已知 canary secret 在仓库、制品和日志扫描中均被阻断；轮换后旧凭据失效，新部署可用且发布清单链接完整 SBOM。
   version_surfaces:
-  - ci
+  - github-actions-hosted-runner
   - git
   - docker
   - ubuntu-server-26.04
@@ -38564,7 +38644,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.config-secrets-supply-chain.md
   recommended_after:
   - ch.release.artifacts-promotion
-  spec_digest: 54ffb7598fa96496dc6ea1de8ddab3dec14132e0e2545846706414fb2013966a
+  spec_digest: 325272763bd1884d362e834f0e043d7b12a2004e16f7b5fb5ea15a29e58156df
   route_tags:
   - zero-base
   - accelerated-48
@@ -38659,7 +38739,9 @@ chapters:
     - log-schema-audit
     oracle: 单次请求可用同一 ID 串联各层；依赖正常、启动中、不可用和退化时健康状态符合矩阵，日志字段无敏感值。
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   - docker
   - docker-compose
   - nginx
@@ -38733,7 +38815,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.logs-health.md
   recommended_after:
   - ch.ops.config-secrets-supply-chain
-  spec_digest: ba0942d242f2e4ef67d56c9856ceadc2bbe2d6960d44655a613efb9576999fba
+  spec_digest: 45f74edf30dd354edb6d366aa3a95cbf4f7c4dcbedf09a86a6dac3b1acb752ec
   route_tags:
   - zero-base
   - accelerated-48
@@ -38819,7 +38901,9 @@ chapters:
     - burn-rate-simulation
     oracle: 注入故障使预期 SLI/错误预算变化并触发对应告警；trace 指向首个慢/错 span，正常波动不产生持续噪声。
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   - docker
   - docker-compose
   - ubuntu-server-26.04
@@ -38889,7 +38973,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.metrics-traces-slo.md
   recommended_after:
   - ch.ops.logs-health
-  spec_digest: 1cf3f8f39e69a6fe787e604718c4532a552d5f263ca3a0547440c00a53296b26
+  spec_digest: e4f5b3b392890df5ea418965b2eead946a914e13a156310d0bbb69e989173458
   route_tags:
   - zero-base
   - accelerated-48
@@ -39172,7 +39256,9 @@ chapters:
     - before-after-regression
     oracle: 负载生成器有余量，吞吐与尾延迟随并发曲线可解释；修复只在同一模型和数据下比较且功能门禁仍通过。
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   - postgresql-18
   - docker
   - ubuntu-server-26.04
@@ -39245,7 +39331,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.capacity-performance.md
   recommended_after:
   - ch.ops.backup-recovery
-  spec_digest: 3bbbf48f1d6a5c6cefea23d63e9d1291f201b9cfaadc473f262b3b82e5f817a3
+  spec_digest: 91fe59aa99715d7a31a5bfe1fe6d326c36215f3ba94b830178f43e441c8de1dd
   route_tags:
   - zero-base
   - accelerated-48
@@ -39351,13 +39437,15 @@ chapters:
     - migration-failure-drill
     oracle: expand 阶段新旧版本均通过契约测试；故障 canary 在阈值内停止并恢复流量，数据库状态由已验证前向修复收敛。
   version_surfaces:
-  - ci
+  - github-actions-hosted-runner
   - docker
   - docker-compose
   - nginx
   - postgresql-18
   - flyway
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   - ubuntu-server-26.04
   outcomes:
   - id: explain
@@ -39431,7 +39519,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md
   recommended_after:
   - ch.ops.capacity-performance
-  spec_digest: 3d81149fafe1089c1941c3189eacfad05f84d57218be1e491b2153779a824b1b
+  spec_digest: 2540eb5d00c61511a00afdfdb3eb041b2f3c953f8b153e45506fe76fb2e80057
   route_tags:
   - zero-base
   - accelerated-48
@@ -39533,7 +39621,9 @@ chapters:
     - corrective-action-regression
     oracle: 演练在声明 RTO 内恢复且数据损失不超过 RPO；时间线可由日志复核，每项改进有负责人、期限、验证和回归测试。
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   - postgresql-18
   - docker
   - docker-compose
@@ -39614,7 +39704,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.incident-dr.md
   recommended_after:
   - ch.release.deployment-migrations
-  spec_digest: 5339f3cdbc72b41f24b9d6440d3a1b957f891227d2459bccc3af5dcf5598dd3f
+  spec_digest: dd3d77da1b3930418a0df35ef5001f784da427adbe01b93f319e43602ad98564
   route_tags:
   - zero-base
   - accelerated-48
@@ -39702,7 +39792,9 @@ chapters:
     - failure-mode-walkthrough
     oracle: 每个组件可追溯到需求或约束；容量数字单位可复算，故障模式对应探测/缓解/恢复，ADR 明确被拒方案与触发条件。
   version_surfaces:
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-collector
   outcomes:
   - id: explain
     kind: concept
@@ -39775,7 +39867,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md
   recommended_after:
   - ch.ops.incident-dr
-  spec_digest: d9ff9d31d3acdd9cd1a4ec29e7c336f116a8713e5fed05d3c7b7eb89d20f7977
+  spec_digest: 68880e5cb8acd72a350e62900c931d8f8bc164c29a3f62355c2c72934048a6d5
   route_tags:
   - zero-base
   - accelerated-48
@@ -39953,7 +40045,7 @@ chapters:
     - release-rollback-drill
     oracle: 版本化验收清单全部通过；多客户端共享同一后端合同，跨租户零泄漏，AI 降级不影响核心流程，故障发布在 RTO/RPO 内恢复。
   version_surfaces:
-  - ci
+  - github-actions-hosted-runner
   - git
   - docker
   - docker-compose
@@ -39961,13 +40053,19 @@ chapters:
   - postgresql-18
   - spring-boot-4.1
   - vue-3
-  - uni-app
-  - wechat-miniprogram
+  - uni-app-cli-vue3
+  - uni-app-mp-weixin-compiler
+  - wechat-miniprogram-base-library
+  - wechat-developer-tools
   - flutter-stable
   - python-3.14
-  - model-api
+  - openai-api
   - mcp
-  - observability
+  - opentelemetry-specification
+  - opentelemetry-semantic-conventions
+  - opentelemetry-java
+  - opentelemetry-python
+  - opentelemetry-collector
   - ubuntu-server-26.04
   outcomes:
   - id: explain
@@ -40083,7 +40181,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md
   recommended_after:
   - ch.architecture.system-design
-  spec_digest: 571a3a577ee3d3de5b741bdc917e641d37424ee35019f49a604aa2daf9e651bc
+  spec_digest: c9d055426d75a54fdf1734983ac61735a62006035d4e395e36b21ea019474479
   route_tags:
   - zero-base
   - accelerated-48

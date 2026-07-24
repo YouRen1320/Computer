@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/site-publication-manifest-v3.schema.json",
+  "title": "FactoryCare P2 generated-site schema v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "site_id",
+    "edition",
+    "deterministic",
+    "generated_by",
+    "digest_algorithms",
+    "input_digests",
+    "input_counts",
+    "inputs",
+    "outputs",
+    "chapter_count",
+    "publishable_count",
+    "counts_by_status",
+    "registry_entry_count",
+    "registry_reviewed_at"
+  ],
+  "properties": {
+    "schema_version": { "const": 3 },
+    "site_id": { "type": "string", "minLength": 1 },
+    "edition": { "type": "string", "minLength": 1 },
+    "deterministic": { "const": true },
+    "generated_by": { "const": "scripts/build-book.rb" },
+    "digest_algorithms": { "$ref": "#/$defs/digest_algorithms" },
+    "input_digests": { "$ref": "#/$defs/input_digests" },
+    "input_counts": { "$ref": "#/$defs/input_counts" },
+    "inputs": { "$ref": "#/$defs/categorized_inputs" },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["README.md", "catalog.json", "navigation.json", "search-index.json"],
+      "properties": {
+        "README.md": { "$ref": "#/$defs/sha256" },
+        "catalog.json": { "$ref": "#/$defs/sha256" },
+        "navigation.json": { "$ref": "#/$defs/sha256" },
+        "search-index.json": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "chapter_count": { "type": "integer", "minimum": 0 },
+    "publishable_count": { "type": "integer", "minimum": 0 },
+    "counts_by_status": { "$ref": "#/$defs/status_counts" },
+    "registry_entry_count": { "type": "integer", "minimum": 0 },
+    "registry_reviewed_at": { "type": "string", "format": "date" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "repository_path": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._/-]*$"
+    },
+    "digest_algorithms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "total"],
+      "properties": {
+        "category": { "const": "sha256-path-nul-content-sha256-nul-v1" },
+        "total": { "const": "sha256-category-nul-digest-nul-v1" }
+      }
+    },
+    "input_digests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "audit_security", "build_control", "total"],
+      "properties": {
+        "content": { "$ref": "#/$defs/sha256" },
+        "audit_security": { "$ref": "#/$defs/sha256" },
+        "build_control": { "$ref": "#/$defs/sha256" },
+        "total": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "input_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "audit_security", "build_control", "total"],
+      "properties": {
+        "content": { "type": "integer", "minimum": 0 },
+        "audit_security": { "type": "integer", "minimum": 0 },
+        "build_control": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "input_map": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/sha256" }
+    },
+    "categorized_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "audit_security", "build_control"],
+      "properties": {
+        "content": { "$ref": "#/$defs/input_map" },
+        "audit_security": { "$ref": "#/$defs/input_map" },
+        "build_control": { "$ref": "#/$defs/input_map" }
+      }
+    },
+    "status_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planned", "drafting", "review", "verified"],
+      "properties": {
+        "planned": { "type": "integer", "minimum": 0 },
+        "drafting": { "type": "integer", "minimum": 0 },
+        "review": { "type": "integer", "minimum": 0 },
+        "verified": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "string_array": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "text",
+        "covers_topic_groups",
+        "covers_topics",
+        "uses_capabilities",
+        "evidence_kind",
+        "verification_mode"
+      ],
+      "properties": {
+        "id": { "enum": ["explain", "build", "diagnose"] },
+        "kind": { "enum": ["concept", "independent-build", "fault-diagnosis"] },
+        "text": { "type": "string", "minLength": 1 },
+        "covers_topic_groups": { "$ref": "#/$defs/string_array" },
+        "covers_topics": { "$ref": "#/$defs/string_array" },
+        "uses_capabilities": { "$ref": "#/$defs/string_array" },
+        "evidence_kind": { "type": "string", "minLength": 1 },
+        "verification_mode": { "type": "string", "minLength": 1 }
+      }
+    },
+    "catalog_chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "title", "responsibility", "volume", "order", "level", "status",
+        "prerequisites", "outcomes", "route_tags", "stable_core", "version_surfaces",
+        "path", "publishable"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "responsibility": { "type": "string", "minLength": 1 },
+        "volume": { "type": "string", "pattern": "^[0-9]{2}$" },
+        "order": { "type": "integer", "minimum": 1 },
+        "level": { "enum": ["L1", "L2", "L2+", "L3", "L1-L2"] },
+        "status": { "enum": ["planned", "drafting", "review", "verified"] },
+        "prerequisites": { "$ref": "#/$defs/string_array" },
+        "outcomes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/outcome" }
+        },
+        "route_tags": { "$ref": "#/$defs/string_array" },
+        "stable_core": { "type": "boolean" },
+        "version_surfaces": { "$ref": "#/$defs/string_array" },
+        "path": { "$ref": "#/$defs/repository_path" },
+        "publishable": { "type": "boolean" }
+      }
+    },
+    "navigation_chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "order", "level", "status", "path", "publishable"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "order": { "type": "integer", "minimum": 1 },
+        "level": { "enum": ["L1", "L2", "L2+", "L3", "L1-L2"] },
+        "status": { "enum": ["planned", "drafting", "review", "verified"] },
+        "path": { "$ref": "#/$defs/repository_path" },
+        "publishable": { "type": "boolean" }
+      }
+    },
+    "catalog_volume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "chapters"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-9]{2}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "chapters": { "type": "array", "items": { "$ref": "#/$defs/catalog_chapter" } }
+      }
+    },
+    "navigation_volume": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "chapters"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-9]{2}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "chapters": { "type": "array", "items": { "$ref": "#/$defs/navigation_chapter" } }
+      }
+    },
+    "catalog_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "site_id", "title", "edition", "language", "input_digests",
+        "chapter_count", "publishable_count", "counts_by_status", "volumes"
+      ],
+      "properties": {
+        "schema_version": { "const": 3 },
+        "site_id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "edition": { "type": "string", "minLength": 1 },
+        "language": { "const": "zh-CN" },
+        "input_digests": { "$ref": "#/$defs/input_digests" },
+        "chapter_count": { "type": "integer", "minimum": 0 },
+        "publishable_count": { "type": "integer", "minimum": 0 },
+        "counts_by_status": { "$ref": "#/$defs/status_counts" },
+        "volumes": { "type": "array", "items": { "$ref": "#/$defs/catalog_volume" } }
+      }
+    },
+    "navigation_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "edition", "input_digests", "volumes"],
+      "properties": {
+        "schema_version": { "const": 3 },
+        "edition": { "type": "string", "minLength": 1 },
+        "input_digests": { "$ref": "#/$defs/input_digests" },
+        "volumes": { "type": "array", "items": { "$ref": "#/$defs/navigation_volume" } }
+      }
+    },
+    "search_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "volume", "status", "path", "route_tags", "headings", "summary"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "volume": { "type": "string", "pattern": "^[0-9]{2}$" },
+        "status": { "enum": ["verified"] },
+        "path": { "$ref": "#/$defs/repository_path" },
+        "route_tags": { "$ref": "#/$defs/string_array" },
+        "headings": { "$ref": "#/$defs/string_array" },
+        "summary": { "type": "string" }
+      }
+    },
+    "search_document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "site_id", "edition", "input_digests", "record_count", "records"],
+      "properties": {
+        "schema_version": { "const": 3 },
+        "site_id": { "type": "string", "minLength": 1 },
+        "edition": { "type": "string", "minLength": 1 },
+        "input_digests": { "$ref": "#/$defs/input_digests" },
+        "record_count": { "type": "integer", "minimum": 0 },
+        "records": { "type": "array", "items": { "$ref": "#/$defs/search_record" } }
+      }
+    }
+  }
+}

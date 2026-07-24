@@ -676,7 +676,7 @@ chapters:
     - manual-check
     oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
   version_surfaces:
-  - zsh
+  - zsh-5.9
   - macos-26
   outcomes:
   - id: explain
@@ -801,7 +801,8 @@ chapters:
     - manual-check
     oracle: 给定固定输入、命令或图示，输出与退出状态可重复观察并与手算预期逐项核对
   version_surfaces:
-  - toolchains
+  - vscode-stable
+  - intellij-idea-2026.1
   outcomes:
   - id: explain
     kind: concept
@@ -1575,7 +1576,9 @@ chapters:
     - assertions
     oracle: 成功、边界与非法输入都有明确 expected/actual，任一偏差会产生可定位的失败证据
   version_surfaces:
-  - toolchains
+  - maven-3
+  - pnpm
+  - uv
   outcomes:
   - id: explain
     kind: concept

@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: '0840ae52f6eefa12b4d9bab4b0f61d025119b58aee96eeb5e8fd767c0f4399ac'
+generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
 edition: 2026.2-draft
 route_id: factorycare-project
 route_kind: project
@@ -13,6 +13,8 @@ artifact_policy:
   lifecycle: produced-during-study
   prepopulation: forbidden
   absence_before_stage: expected
+gate_registry_id: factorycare-project-stage-gates
+acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
 stages:
 - id: fc-01-foundation
   title: 工程底座与可运行骨架
@@ -63,10 +65,28 @@ stages:
     path: evidence/factorycare/01-foundation/decision-record.md
     acceptance: 可从空环境复现 可重复启动骨架、版本与构建证据、初始关系模型，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/01-foundation/run.log
-  - evidence/factorycare/01-foundation/tests/
+  - evidence/factorycare/01-foundation/run/
+  - evidence/factorycare/01-foundation/negative/
+  - evidence/factorycare/01-foundation/decision-record.md
   - evidence/factorycare/01-foundation/teach-back.md
-  stage_gate_id: fc-stage-01
+  stage_gate:
+    id: fc-stage-01
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-API-001
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 工具链版本漂移
+    - 密钥误提交
+    - 构建成功但测试未执行
+    artifact_paths:
+    - evidence/factorycare/01-foundation/vertical-slice/
+    - evidence/factorycare/01-foundation/decision-record.md
 - id: fc-02-users
   title: 用户、认证与租户入口
   required_capabilities:
@@ -167,10 +187,44 @@ stages:
     path: evidence/factorycare/02-users/security-tests/
     acceptance: 可从空环境复现 用户登录退出、默认拒绝授权、租户上下文入口，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/02-users/run.log
-  - evidence/factorycare/02-users/tests/
+  - evidence/factorycare/02-users/run/
+  - evidence/factorycare/02-users/negative/
+  - evidence/factorycare/02-users/decision-record.md
   - evidence/factorycare/02-users/teach-back.md
-  stage_gate_id: fc-stage-02
+  stage_gate:
+    id: fc-stage-02
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-AUTH-001
+    - FC-AUTH-002
+    - FC-AUTH-003
+    - FC-AUTH-004
+    - FC-TEN-001
+    - FC-TEN-002
+    - FC-RBAC-001
+    - FC-RBAC-002
+    - FC-RBAC-003
+    - FC-RBAC-004
+    - FC-RBAC-005
+    - FC-RBAC-006
+    - FC-ORG-001
+    - FC-TEAM-001
+    - FC-TEAM-002
+    - FC-MEM-001
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 错误密码
+    - 会话固定
+    - 未认证访问
+    - 越权访问
+    artifact_paths:
+    - evidence/factorycare/02-users/vertical-slice/
+    - evidence/factorycare/02-users/security-tests/
 - id: fc-03-devices
   title: 设备台账、停用与持久化
   required_capabilities:
@@ -253,10 +307,44 @@ stages:
     path: evidence/factorycare/03-devices/integration-tests/
     acceptance: 可从空环境复现 设备建档、设备停用规则、数据迁移与集成测试，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/03-devices/run.log
-  - evidence/factorycare/03-devices/tests/
+  - evidence/factorycare/03-devices/run/
+  - evidence/factorycare/03-devices/negative/
+  - evidence/factorycare/03-devices/decision-record.md
   - evidence/factorycare/03-devices/teach-back.md
-  stage_gate_id: fc-stage-03
+  stage_gate:
+    id: fc-stage-03
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-ASSET-001
+    - FC-ASSET-002
+    - FC-ASSET-003
+    - FC-ASSET-004
+    - FC-QR-001
+    - FC-QR-002
+    - FC-QR-003
+    - FC-QR-004
+    - FC-REPORT-001
+    - FC-REPORT-002
+    - FC-REPORT-003
+    - FC-REPORT-004
+    - FC-REPORT-005
+    - FC-FILE-001
+    - FC-FILE-002
+    - FC-FILE-003
+    - FC-FILE-005
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 重复设备标识
+    - 已停用设备被分配
+    - 迁移中断
+    artifact_paths:
+    - evidence/factorycare/03-devices/vertical-slice/
+    - evidence/factorycare/03-devices/integration-tests/
 - id: fc-04-work-orders
   title: 工单创建、分配、状态与管理端
   required_capabilities:
@@ -372,10 +460,42 @@ stages:
     path: evidence/factorycare/04-work-orders/race-tests/
     acceptance: 可从空环境复现 工单创建与分配、合法状态迁移、管理端列表与详情，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/04-work-orders/run.log
-  - evidence/factorycare/04-work-orders/tests/
+  - evidence/factorycare/04-work-orders/run/
+  - evidence/factorycare/04-work-orders/negative/
+  - evidence/factorycare/04-work-orders/decision-record.md
   - evidence/factorycare/04-work-orders/teach-back.md
-  stage_gate_id: fc-stage-04
+  stage_gate:
+    id: fc-stage-04
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-WO-001
+    - FC-WO-002
+    - FC-WO-003
+    - FC-WO-004
+    - FC-WO-005
+    - FC-WO-006
+    - FC-WO-007
+    - FC-WO-008
+    - FC-WO-009
+    - FC-WO-010
+    - FC-WO-011
+    - FC-WO-012
+    - FC-WO-013
+    - FC-WO-014
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 非法状态跳转
+    - 重复提交
+    - 过期响应覆盖新状态
+    - 跨租户工单访问
+    artifact_paths:
+    - evidence/factorycare/04-work-orders/vertical-slice/
+    - evidence/factorycare/04-work-orders/race-tests/
 - id: fc-05-sla-events
   title: SLA、缓存、事件与消息
   required_capabilities:
@@ -487,10 +607,44 @@ stages:
     path: evidence/factorycare/05-sla-events/message-tests/
     acceptance: 可从空环境复现 SLA 计算、Outbox 发布、消费幂等、可观察告警，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/05-sla-events/run.log
-  - evidence/factorycare/05-sla-events/tests/
+  - evidence/factorycare/05-sla-events/run/
+  - evidence/factorycare/05-sla-events/negative/
+  - evidence/factorycare/05-sla-events/decision-record.md
   - evidence/factorycare/05-sla-events/teach-back.md
-  stage_gate_id: fc-stage-05
+  stage_gate:
+    id: fc-stage-05
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-SLA-001
+    - FC-SLA-002
+    - FC-REP-001
+    - FC-REP-002
+    - FC-REP-003
+    - FC-REP-004
+    - FC-EVT-001
+    - FC-EVT-002
+    - FC-EVT-003
+    - FC-AUD-001
+    - FC-AUD-002
+    - FC-CACHE-001
+    - FC-CACHE-002
+    - FC-CACHE-003
+    - FC-OBS-001
+    - FC-OBS-002
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 重复消息
+    - 乱序消息
+    - 缓存陈旧
+    - 告警静默
+    artifact_paths:
+    - evidence/factorycare/05-sla-events/vertical-slice/
+    - evidence/factorycare/05-sla-events/message-tests/
 - id: fc-06-multiclient
   title: Vue、uni-app 与 Flutter 多端协作
   required_capabilities:
@@ -655,10 +809,33 @@ stages:
     path: evidence/factorycare/06-multiclient/contract-tests/
     acceptance: 可从空环境复现 管理端工单流、uni-app 报修端、Flutter 技师端、跨端契约证据，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/06-multiclient/run.log
-  - evidence/factorycare/06-multiclient/tests/
+  - evidence/factorycare/06-multiclient/run/
+  - evidence/factorycare/06-multiclient/negative/
+  - evidence/factorycare/06-multiclient/decision-record.md
   - evidence/factorycare/06-multiclient/teach-back.md
-  stage_gate_id: fc-stage-06
+  stage_gate:
+    id: fc-stage-06
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-WEB-001
+    - FC-WEB-002
+    - FC-MOB-001
+    - FC-MOB-002
+    - FC-MOB-003
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 离线重复重放
+    - 权限拒绝
+    - 页面销毁后更新
+    - 跨端字段漂移
+    artifact_paths:
+    - evidence/factorycare/06-multiclient/vertical-slices/
+    - evidence/factorycare/06-multiclient/contract-tests/
 - id: fc-07-ai
   title: AI 知识检索与 Agent 审批
   required_capabilities:
@@ -807,7 +984,7 @@ stages:
   - 人工审批 Agent
   negative_scenarios:
   - 提示注入
-  - ACL 绕过
+  - ACL绕过
   - 无依据回答
   - 工具参数越权
   project_artifacts:
@@ -818,10 +995,48 @@ stages:
     path: evidence/factorycare/07-ai/evaluations/
     acceptance: 可从空环境复现 知识摄取、有引用检索回答、权限过滤、人工审批 Agent，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/07-ai/run.log
-  - evidence/factorycare/07-ai/tests/
+  - evidence/factorycare/07-ai/run/
+  - evidence/factorycare/07-ai/negative/
+  - evidence/factorycare/07-ai/decision-record.md
   - evidence/factorycare/07-ai/teach-back.md
-  stage_gate_id: fc-stage-07
+  stage_gate:
+    id: fc-stage-07
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-AI-001
+    - FC-AI-002
+    - FC-AI-003
+    - FC-AI-004
+    - FC-AI-005
+    - FC-AI-006
+    - FC-AI-007
+    - FC-AI-008
+    - FC-AI-009
+    - FC-AI-010
+    - FC-AI-011
+    - FC-AI-012
+    - FC-AI-013
+    - FC-KNOW-001
+    - FC-KNOW-002
+    - FC-KNOW-003
+    - FC-KNOW-004
+    - FC-KNOW-005
+    - FC-KNOW-006
+    - FC-FILE-004
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 提示注入
+    - ACL绕过
+    - 无依据回答
+    - 工具参数越权
+    artifact_paths:
+    - evidence/factorycare/07-ai/vertical-slice/
+    - evidence/factorycare/07-ai/evaluations/
 - id: fc-08-deploy
   title: 部署、恢复与端到端验收
   required_capabilities:
@@ -1046,7 +1261,29 @@ stages:
     path: evidence/factorycare/08-deploy/recovery-drill/
     acceptance: 可从空环境复现 生产拓扑、可回滚部署、恢复演练、端到端验收报告，并保留成功与负向路径证据
   evidence_paths:
-  - evidence/factorycare/08-deploy/run.log
-  - evidence/factorycare/08-deploy/tests/
+  - evidence/factorycare/08-deploy/run/
+  - evidence/factorycare/08-deploy/negative/
+  - evidence/factorycare/08-deploy/decision-record.md
   - evidence/factorycare/08-deploy/teach-back.md
-  stage_gate_id: fc-stage-08
+  stage_gate:
+    id: fc-stage-08
+    acceptance_catalog_path: factorycare-design/testing/acceptance-catalog.md
+    primary_acceptance_ids:
+    - FC-RES-001
+    - FC-RES-002
+    - FC-RES-003
+    - FC-AUD-003
+    secondary_acceptance_ids: []
+    required_evidence_kinds:
+    - runnable-slice
+    - negative-path
+    - decision-record
+    - teach-back
+    negative_scenarios:
+    - 部署后迁移失败
+    - 备份不可恢复
+    - 代理配置错误
+    - 关键告警缺失
+    artifact_paths:
+    - evidence/factorycare/08-deploy/release/
+    - evidence/factorycare/08-deploy/recovery-drill/

@@ -13,7 +13,9 @@ catalog: "../../../curriculum/catalog.yml"
 prerequisites:
 - ch.ops.capacity-performance
 version_surfaces:
-- observability
+- opentelemetry-specification
+- opentelemetry-semantic-conventions
+- opentelemetry-collector
 route_tags:
 - zero-base
 - accelerated-48

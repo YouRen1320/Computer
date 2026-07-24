@@ -13,7 +13,15 @@ module Publication
   TOOLCHAIN_SCHEMA = "schemas/publication-toolchain.schema.json"
   PLAN_SCHEMA = "schemas/publication-plan.schema.json"
   OUTPUT_SCHEMA = "schemas/publication-output-manifest.schema.json"
-  SCHEMA_PATHS = [PROFILE_SCHEMA, ARTIFACT_SCHEMA, TOOLCHAIN_SCHEMA, PLAN_SCHEMA, OUTPUT_SCHEMA].freeze
+  P2_MANIFEST_SCHEMA = "schemas/site-publication-manifest-v3.schema.json"
+  SCHEMA_PATHS = [
+    PROFILE_SCHEMA,
+    ARTIFACT_SCHEMA,
+    TOOLCHAIN_SCHEMA,
+    PLAN_SCHEMA,
+    OUTPUT_SCHEMA,
+    P2_MANIFEST_SCHEMA
+  ].freeze
   P3_GOLD_IDS = %w[
     ch.java.platform-toolchain
     ch.java.program-structure

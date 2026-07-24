@@ -3,7 +3,7 @@ schema_version: 2
 edition: 2026.2-draft
 id: ch.java.values-variables-types
 title: 值、变量、基本类型、String、作用域与基本输出
-responsibility: 教授值在局部作用域中的类型与命名，并用固定输出观察结果，不涉及运算转换或对象身份
+responsibility: 教授值在局部作用域中的类型与命名，并完成 String 的基础观察、正规化、分割与拼接，不涉及运算转换或对象身份
 volume: '01'
 order: 3
 level: L1
@@ -23,13 +23,18 @@ stable_core: true
 outcomes:
 - id: explain
   kind: concept
-  text: 在 120 秒内解释值、变量、基本类型、String、作用域与基本输出的职责、适用边界与一个会失败的反例
+  text: 在 120 秒内解释值、变量、基本类型、String 字面量与不可变性、长度与空白、正规化、正则分割、拼接取舍和局部作用域，并给出一个会失败的边界反例
   covers_topic_groups:
   - java-values-types
   - java-variables-scope
   covers_topics:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -41,13 +46,18 @@ outcomes:
   verification_mode: oral-explanation
 - id: build
   kind: independent-build
-  text: 编写打印设备名称、数量、启用状态和局部作用域变量的程序，显式选择 primitive、String 与初始化时机
+  text: 编写设备标签处理程序：保存基本类型与 String，观察 length/isEmpty/isBlank，用 strip 和 Locale.ROOT 做可预测正规化，按正则与 limit 分割，并比较少量 + 与重复 StringBuilder 拼接的责任边界
   covers_topic_groups:
   - java-values-types
   - java-variables-scope
   covers_topics:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -59,13 +69,18 @@ outcomes:
   verification_mode: command-output-or-manual-calculation
 - id: diagnose
   kind: fault-diagnosis
-  text: 注入局部变量未初始化、作用域外访问和错误类型赋值，读取编译位置后做最小修复
+  text: 注入局部变量未初始化、作用域外访问和错误类型赋值的编译故障，再注入丢弃 strip/toUpperCase 返回值、把 split 参数误当字面文本和丢失尾部空列的行为故障，从编译日志或输出差异定位并做最小修复
   covers_topic_groups:
   - java-values-types
   - java-variables-scope
   covers_topics:
   - java.primitive-types
   - java.string-value
+  - java.string-literal-immutability
+  - java.string-length-empty-blank
+  - java.string-normalization
+  - java.string-split-regex
+  - java.string-concatenation-builder
   - java.default-vs-local-initialization
   - java.variable-declaration
   - java.assignment
@@ -96,9 +111,9 @@ outcomes:
 
 不是“看懂示例”，而是完成三类可观察证据：
 
-1. **解释**：在 120 秒内说清值、类型、变量、初始化、赋值和作用域的关系；能说出 `String` 不是基本类型，以及一个局部变量会编译失败的反例。
-2. **构建**：独立写一个控制台程序，保存并输出设备名称、工单数量、启用状态和一个只在局部代码块内可见的值。
-3. **诊断**：让局部变量未初始化、越过作用域或收到错误类型的值，找到 `javac` 报告的文件、行及插入符位置（某些构建包装日志还会给出数字列）和原因，再做最小修复。
+1. **解释**：在 120 秒内说清值、类型、变量、初始化、赋值和作用域的关系；能说出 `String` 不是基本类型、为什么它不可变，以及长度、空与空白、正规化、分割和拼接各自在解决什么问题。
+2. **构建**：独立写一个控制台程序，保存并输出设备基本值，把外部标签做 `strip` 和大小写正规化，按正则分割并用 `StringBuilder` 组装汇总。
+3. **诊断**：既能从 `javac` 日志定位未初始化、越过作用域和类型错误，也能从输出差异定位“丢弃不可变方法的返回值”、“把 `split` 参数当普通文本”和“丢失尾部空列”。
 
 对应工件：
 
@@ -291,7 +306,7 @@ double temperatureCelsius = 36.5;
 
 初学者容易把每个小数字都写成 `byte` 或 `short`。实际业务代码中，普通计数优先考虑语义清晰和生态兼容，常用 `int`；只有协议、文件格式、内存密集数据或明确边界才需要特别小的类型。类型选择先表达业务约束，再做有证据的性能优化。
 
-## 7. `String`：本章把它当作不可变文本值使用
+## 7. `String`：不可变文本的基础操作
 
 `String` 不是第 9 种基本类型。它是 `java.lang.String` 类所表示的引用类型。Java 对字符串字面量提供了特殊语法，所以它看起来和基本类型很接近：
 
@@ -299,7 +314,7 @@ double temperatureCelsius = 36.5;
 String deviceName = "空压机-01";
 ```
 
-本章只使用下面三条稳定规则：
+本章使用下面三条稳定规则：
 
 - 双引号包围的是字符串字面量，得到 `String` 文本；
 - `String` 创建后内容不可变；
@@ -310,7 +325,96 @@ String statusText = "待确认";
 statusText = "运行中";
 ```
 
-这不表示把“待确认”三个字改造成了“运行中”。这里只能得出变量被重新赋值。至于引用保存什么、字符串池如何工作、`==` 与 `equals`、对象身份和 `null`，全部留给 Java OOP 卷，避免用不完整的引用模型制造错误直觉。
+这不表示把“待确认”三个字改造成了“运行中”。这里只能得出变量被重新赋值。至于引用保存什么、字符串池如何工作、`==` 与 `equals`、对象身份和 `null`，留给 [《引用、对象身份、null 与内存心智模型》](../../volume-02-java-objects/chapters/ch.java-oop.references-null-identity.md)。
+
+### 7.1 `length()`、`isEmpty()` 与 `isBlank()` 不是同一个问题
+
+```java
+String empty = "";
+String blank = " \t";
+String label = "PUMP-01";
+
+System.out.println(empty.length());  // 0
+System.out.println(empty.isEmpty()); // true
+System.out.println(blank.isEmpty()); // false：里面有空白字符
+System.out.println(blank.isBlank()); // true：只含空白
+System.out.println(label.length());  // 7
+```
+
+- `length()` 返回 UTF-16 代码单元数，不承诺等于用户眼中的“字符个数”；Emoji 等文本可能占多个代码单元。
+- `isEmpty()` 只问长度是否为 `0`。
+- `isBlank()` 问文本是否为空，或只包含 Unicode 空白字符。
+
+“缺失”、“空文本”和“只有空白”是三种语义。本章先区分后两者；`null` 所表示的缺失边界在引用章中教授。
+
+### 7.2 正规化方法返回新结果
+
+```java
+String raw = "  pump-a  ";
+String normalized = raw.strip().toUpperCase(java.util.Locale.ROOT);
+
+System.out.println("[" + raw + "]");        // [  pump-a  ]
+System.out.println(normalized);             // PUMP-A
+```
+
+`strip()` 去掉首尾 Unicode 空白；与历史更早、按较窄字符范围处理的 `trim()` 不完全等价。对设备编码、状态码这类机器键做大小写正规化时，明确使用 `Locale.ROOT`，避免运行机区域设置改变结果。面向用户的显示文本不应无条件改大写；先定义业务契约。
+
+不可变性的直接故障是丢弃返回值：
+
+```java
+String code = "  pump-a  ";
+code.strip();
+code.toUpperCase(java.util.Locale.ROOT);
+System.out.println("[" + code + "]"); // 仍然有空格且仍是小写
+```
+
+这段能编译、能运行，却违反功能预期。因此诊断不能只搜索 `ERROR`；还要对比预期与实际输出。
+
+### 7.3 `split` 的参数是正则表达式
+
+```java
+String route = "PUMP.01.";
+String[] fields = route.split("\\.", -1);
+
+System.out.println(fields.length); // 3
+System.out.println(fields[0]);     // PUMP
+System.out.println(fields[1]);     // 01
+System.out.println(fields[2].isEmpty()); // true
+```
+
+这里有两个独立边界：
+
+1. `split` 接收正则，正则中的 `.` 表示“任意字符”，不是字面句点。Java 字符串中要写 `"\\."` 才把正则 `\.` 交给引擎。
+2. 单参数 `split(regex)` 等价于 limit 为 `0`，会丢弃尾部空片段。需要保存 CSV 列或协议末尾空值时，使用负 limit，例如 `-1`。
+
+完整正则语法不在本章展开，但你必须知道该 API 的输入契约，否则会把“运行成功但分列错误”当成网络或数据问题。
+
+### 7.4 少量 `+` 与重复 `StringBuilder`
+
+拼接少量已知片段时，`+` 直接且易读：
+
+```java
+String display = "device=" + normalized + ", enabled=" + true;
+```
+
+在循环中根据不定数量片段反复组装时，使用一个 `StringBuilder`，最后调用 `toString()`：
+
+```java
+StringBuilder summary = new StringBuilder();
+for (String field : fields) {
+    if (!summary.isEmpty()) {
+        summary.append('|');
+    }
+    summary.append(field.isEmpty() ? "<empty>" : field);
+}
+String result = summary.toString();
+```
+
+`StringBuilder` 是可变对象；本章只学会识别“重复拼接的单一建造器”这个用途。对象身份、可变共享、并发安全和微性能测量后续再学。不要把每个三段文本都机械改成 builder，也不要在没有测量时声称它“一定更快”。
+
+### 7.5 本章的 String 责任边界
+
+本章已覆盖：字面量、不可变性、长度、空/空白、`strip`、区域无关大小写、正则分割、limit 与拼接取舍。引用身份、内容相等、`null` 以及字符串池必须使用完整引用模型解释，不在这里偷跑。
 
 ## 8. 局部变量必须在读取前明确赋值
 
@@ -452,11 +556,14 @@ mvn clean package
 java -cp target/classes com.factorycare.learning.DeviceSnapshot
 ```
 
-运行前先打开 [`DeviceSnapshot.java`](../../../examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/DeviceSnapshot.java)，逐行写下预测：
+运行前先打开 [`DeviceSnapshot.java`](../../../examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/DeviceSnapshot.java) 和 [`StringFoundations.java`](../../../examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/StringFoundations.java)，逐行写下预测：
 
 - 每个变量的类型和值；
 - `statusText` 第二次赋值后打印哪段文本；
 - 两个独立代码块能否分别声明 `displaySection`；
+- 原始标签、`strip` 后标签和 `Locale.ROOT` 大写后标签分别是什么；
+- `split("\\.", -1)` 为什么保留最后一个空片段；
+- builder 的最终汇总文本是什么；
 - 哪些输出会留在同一行，哪些会结束当前行。
 
 再把实际输出与 [`expected-output.txt`](../../../examples/encyclopedia/ch.java.values-variables-types/expected-output.txt)逐行比较。只看 `BUILD SUCCESS` 不够：构建成功证明源码通过了编译，不证明输出符合预期。
@@ -488,7 +595,12 @@ javac --release 25 diagnostics/UninitializedLocal.java
 5. 最小修复是否只改变导致错误的规则；
 6. 修复后重新编译并运行，是否出现新的证据。
 
-实验的 `verify.sh` 会确认 JDK 25 的 `java`、`javac` 与 Maven 运行时一致，正例输出完全匹配，并逐个核对四个诊断文件的预期错误类别和源码文件名。脚本能拒绝“碰巧以另一种原因失败”，但不会替你解释语言规则或设计最小修复。
+实验的 `verify.sh` 会确认 JDK 25 的 `java`、`javac` 与 Maven 运行时一致，正例输出完全匹配，逐个核对四个编译诊断文件，并重放两个能编译但结果错误的 String 行为故障：
+
+- [`DiscardedNormalization.java`](../../../labs/encyclopedia/ch.java.values-variables-types/behavior-failures/DiscardedNormalization.java) 丢弃 `strip` 和 `toUpperCase` 返回值；
+- [`RegexSplitBoundary.java`](../../../labs/encyclopedia/ch.java.values-variables-types/behavior-failures/RegexSplitBoundary.java) 把 `.` 当字面分隔符，并用默认 limit 丢失尾部空片段。
+
+脚本能拒绝“碰巧以另一种原因失败”，但不会替你解释语言规则或设计最小修复。
 
 ## 13. 与 JavaScript / TypeScript 的对照
 
@@ -500,7 +612,7 @@ javac --release 25 diagnostics/UninitializedLocal.java
 | 常用数字 | `byte/short/int/long/float/double` 各有规则 | JS 常用 `number`，另有 `bigint` | 把所有 Java 数字都当成同一种 `number` |
 | 未初始化局部变量 | 读取前必须明确赋值，否则编译失败 | `let value;` 在 JS 中读取会得到 `undefined`；TS 规则依配置和控制流而异 | 以为 Java 局部 `int` 会自动得到 `0` |
 | 块级名字 | 局部变量有块作用域；不能在重叠作用域重声明同名局部变量 | `let` / `const` 允许内层块遮蔽外层同名变量 | 把 JS 合法的内层 `let count` 原样搬到 Java |
-| 文本 | `String` 是引用类型且不可变 | JS 原始 `string` 也是不可变文本值，但类型模型不同 | 因为都“不可变”就推断对象身份规则也相同 |
+| 文本 | `String` 是引用类型且不可变；`split` 参数是正则 | JS 原始 `string` 也不可变；`split` 接受字符串或 `RegExp` | 直接把 JS 的 `split('.')` 搬到 Java，或丢弃新字符串返回值 |
 | 基本输出 | `System.out.print/println/printf` | `console.log` 等控制台 API | 把学习输出当成生产日志或测试断言 |
 
 对照的目的不是评判谁更好，而是定位迁移规则。每当你想说“这和 JS 一样”，再补一句：**语法相似，但编译器、运行时类型和作用域细节是否真的相同？**
@@ -512,6 +624,8 @@ javac --release 25 diagnostics/UninitializedLocal.java
 ```java
 long deviceId = 100000001L;
 String deviceName = "A区-空压机-01";
+String normalizedDeviceCode = "  pump-a.01  ".strip()
+        .toUpperCase(java.util.Locale.ROOT);
 int openTicketCount = 3;
 boolean enabled = true;
 char zoneCode = 'A';
@@ -519,6 +633,7 @@ char zoneCode = 'A';
 
 - `deviceId`：数字型标识示例。真实系统可能选择数据库自增 `long`、UUID 或业务编码，需由数据模型决定。
 - `deviceName`：供人识别的文本，不应拿来替代稳定 ID。
+- `normalizedDeviceCode`：为机器键建立明确正规化契约；必须保留原始输入或审计需求时，不要只存改写后的文本。
 - `openTicketCount`：一个快照计数，真实值通常来自查询，不能让前端随意提交后当作事实。
 - `enabled`：布尔值只适合真正的二选一语义。若设备有“待启用、启用、停用、报废”等多个状态，应使用受控状态而不是堆叠多个布尔值。
 - `zoneCode`：仅用于演示单个 ASCII 代码单元。真实区域编码通常是 `String` 或专门值类型。
@@ -543,10 +658,10 @@ char zoneCode = 'A';
 进入[实验目录](../../../labs/encyclopedia/ch.java.values-variables-types/README.md)，严格按顺序完成：
 
 1. **预测**：不运行代码，写出目标输出和四个失败文件各自的失败阶段。
-2. **构建**：只看验收契约，在 starter 中填写设备名称、数量、启用状态和内层局部变量。
-3. **观察**：运行公开验证脚本，区分 Maven 构建结果、Java 输出比较和预期编译失败。
-4. **破坏**：亲自复现局部变量未初始化、越界访问和错误类型赋值中的至少三项。
-5. **诊断**：每次只保留一个故障，记录文件、行列、错误类别、原因和最小修复。
+2. **构建**：只看验收契约，在 starter 中填写设备基本值，再完成标签空白检查、正规化、保留尾部空值的分割和 builder 汇总。
+3. **观察**：运行公开验证脚本，区分 Maven 构建结果、Java 输出比较、预期编译失败和“成功运行但功能错误”。
+4. **破坏**：亲自复现局部变量未初始化、越界访问和错误类型赋值中的至少三项，再重放丢弃正规化返回值与 split 正则边界。
+5. **诊断**：每次只保留一个故障，对编译故障记录行列与错误类别，对行为故障记录输入、预期、实际与最小修复。
 6. **变更**：把设备名称和工单数量替换为新的固定值，先更新预期，再改代码；不要整段重新生成。
 7. **关闭 AI**：从空白文件独立写出最小版本，并做 120 秒复述。
 
@@ -562,10 +677,14 @@ char zoneCode = 'A';
 2. 声明、初始化和赋值有什么不同？
 3. 为什么局部 `int` 不能假定为 `0`？字段默认值为什么不能反推局部变量规则？
 4. Java 的 8 种基本类型是什么？`String` 为什么不在其中？
-5. 一个代码块内的局部变量何时进入和离开作用域？
-6. 为什么 Java 的内层块不能重声明仍在作用域中的外层局部变量？
-7. `print`、`println`、`printf` 的最小区别是什么？
-8. 看到 `BUILD SUCCESS` 后为什么还要核对程序输出？
+5. `isEmpty()` 与 `isBlank()` 有什么不同？`length()` 为什么不必然等于用户眼中的字符数？
+6. 为什么 `code.strip();` 可以运行成功却可能没有实现需求？
+7. `split(".")` 和 `split("\\.", -1)` 的输入契约有哪两个差异？
+8. 什么时候用少量 `+`，什么时候用一个 `StringBuilder`？
+9. 一个代码块内的局部变量何时进入和离开作用域？
+10. 为什么 Java 的内层块不能重声明仍在作用域中的外层局部变量？
+11. `print`、`println`、`printf` 的最小区别是什么？
+12. 看到 `BUILD SUCCESS` 后为什么还要核对程序输出？
 
 如果复述中使用了“应该、好像、差不多”，立刻回到对应失败样例，用一次编译或运行证据替换猜测。
 
@@ -597,6 +716,16 @@ enabled = true;
 String statusText = "待确认";
 statusText = "运行中";
 
+// String 基础处理
+String normalized = "  pump-a.01.  ".strip()
+        .toUpperCase(java.util.Locale.ROOT);
+String[] fields = normalized.split("\\.", -1);
+String summary = new StringBuilder()
+        .append(fields[0])
+        .append('|')
+        .append(fields[1])
+        .toString();
+
 // 基本输出
 System.out.print("设备：");
 System.out.println(statusText);
@@ -612,10 +741,12 @@ System.out.printf("工单数=%d, 启用=%b%n", openTicketCount, enabled);
 | `incompatible types` / 不兼容类型 | 右侧值能否交给左侧类型 | 把文本交给整数等 |
 | `already defined` / 已定义 | 同名局部变量作用域是否重叠 | 内层重声明外层局部变量 |
 | `IllegalFormat...` | 这是运行时而非编译错误 | `printf` 格式符和参数不匹配 |
+| 运行成功但原文本未变 | 是否丢弃了 String 方法返回值 | `strip`/`toUpperCase` 不会原地修改 String |
+| 分割段数不符 | 分隔参数是否正则，limit 是否丢尾空 | `.` 未转义或默认 limit 为 0 |
 
 ### 19.3 本章边界
 
-- 会：局部变量、8 种基本类型、文本 `String`、明确赋值、块作用域、基本输出。
+- 会：局部变量、8 种基本类型、String 字面量与不可变性、长度与空白、正规化、正则分割、少量 `+` 与重复 `StringBuilder`、明确赋值、块作用域、基本输出。
 - 暂不会：运算与转换、溢出、输入解析、对象身份、`null`、`final` 完整规则、字段设计、生产日志。
 
 ## 20. 术语表
@@ -630,6 +761,11 @@ System.out.printf("工单数=%d, 启用=%b%n", openTicketCount, enabled);
 | assignment / 赋值 | 把右侧得到的值交给左侧变量 |
 | primitive type / 基本类型 | Java 预定义的 8 种非引用类型 |
 | reference type / 引用类型 | 类、接口、数组等类型；本章只把 `String` 作为文本使用 |
+| immutable / 不可变 | 对已创建的 String 内容不做原地改写；处理方法返回结果 |
+| blank / 空白 | 空文本或只包含 Unicode 空白字符的文本 |
+| normalization / 正规化 | 根据明确契约把多种文本表示转为稳定形式 |
+| regex / 正则表达式 | `split` 用来描述分隔模式的输入语言，不是普通字面文本 |
+| `StringBuilder` | 在一个局部构建过程中可变追加文本，最后产生 String |
 | scope / 作用域 | 一个声明引入的名字可以被引用的源码区域 |
 | definite assignment / 明确赋值 | 编译器证明局部变量在读取前必定已经赋值 |
 | standard output / 标准输出 | `System.out` 所代表的默认输出目的地 |
@@ -644,6 +780,8 @@ System.out.printf("工单数=%d, 启用=%b%n", openTicketCount, enabled);
 - [JLS 25 第 14 章：Blocks, Statements, and Patterns](https://docs.oracle.com/javase/specs/jls/se25/html/jls-14.html#jls-14.4)：局部变量声明语句与初始化。
 - [JLS 25 第 16 章：Definite Assignment](https://docs.oracle.com/javase/specs/jls/se25/html/jls-16.html)：局部变量读取前的明确赋值规则。
 - [Java SE 25 `String`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html)：`String` 表示文本、不可变及 UTF-16 边界。
+- [Java SE 25 `StringBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/StringBuilder.html)：可变字符序列、`append` 与 `toString` 边界。
+- [Java SE 25 `Locale.ROOT`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Locale.html#ROOT)：区域无关的语言/国家中性 Locale，用于机器键大小写正规化。
 - [Java SE 25 `System`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html)：标准输出 `System.out`。
 - [Java SE 25 `PrintStream`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html)：`print`、`println`、`printf` 的 API 行为。
 

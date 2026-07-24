@@ -19,10 +19,10 @@ class PublicationPlanTest < Minitest::Test
 
       assert_equal first_bytes.b, second_bytes.b
       assert_equal Publication::P3_GOLD_IDS, first.fetch("chapters").map { |chapter| chapter.fetch("id") }
-      assert_equal 54, first.fetch("chapters").sum { |chapter| chapter.fetch("artifacts").length }
-      assert_equal 88, first.fetch("input_count")
-      assert_equal 58, first.fetch("inputs").count { |entry| entry.fetch("scope") == "content" }
-      assert_equal 30, first.fetch("inputs").count { |entry| entry.fetch("scope") == "publisher-contract" }
+      assert_equal 58, first.fetch("chapters").sum { |chapter| chapter.fetch("artifacts").length }
+      assert_equal 93, first.fetch("input_count")
+      assert_equal 62, first.fetch("inputs").count { |entry| entry.fetch("scope") == "content" }
+      assert_equal 31, first.fetch("inputs").count { |entry| entry.fetch("scope") == "publisher-contract" }
       assert_equal 10, first.fetch("planned_outputs").length
       assert_equal false, first.fetch("distribution_allowed")
       assert_equal "internal-preview", first.fetch("publication_mode")
@@ -35,6 +35,13 @@ class PublicationPlanTest < Minitest::Test
       Publication::PlanBuilder::IMPLEMENTATION_INPUTS.each { |path| assert_includes paths, path }
       refute_match(%r{/Users/|solutions-private/|sources/private/}, first_bytes)
       refute_match(Publication::PRIVATE_CANARY_PATTERN, first_bytes)
+      assert_equal 3, first.fetch("p2_baseline").fetch("manifest_schema_version")
+      assert_equal %w[audit_security build_control content total],
+                   first.fetch("p2_baseline").fetch("input_digests").keys.sort
+      refute first.fetch("p2_baseline").key?("input_digest")
+      tool_ids = first.fetch("tool_requirements").map { |tool| tool.fetch("id") }
+      assert_includes tool_ids, "weasyprint"
+      assert_includes tool_ids, "typst"
     end
   end
 
@@ -118,6 +125,24 @@ class PublicationPlanTest < Minitest::Test
     with_publication_fixture do |root|
       FileUtils.rm_f(root.join("site/generated/search-index.json"))
       assert_contract_code("E_P2_OUTPUT_MISSING") { fixture_builder(root).build }
+    end
+  end
+
+  def test_rejects_p2_schema_v2_and_nonrecomputable_v3_digest
+    with_publication_fixture do |root|
+      path = root.join("site/generated/publication-manifest.json")
+      manifest = JSON.parse(File.read(path, encoding: "UTF-8"))
+      manifest["schema_version"] = 2
+      File.binwrite(path, JSON.pretty_generate(manifest) + "\n")
+      assert_contract_code("E_SCHEMA_INSTANCE") { fixture_builder(root).build }
+    end
+
+    with_publication_fixture do |root|
+      path = root.join("site/generated/publication-manifest.json")
+      manifest = JSON.parse(File.read(path, encoding: "UTF-8"))
+      manifest.fetch("input_digests")["total"] = "0" * 64
+      File.binwrite(path, JSON.pretty_generate(manifest) + "\n")
+      assert_contract_code("E_P2_MANIFEST_DIGEST") { fixture_builder(root).build }
     end
   end
 

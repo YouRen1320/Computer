@@ -15,7 +15,7 @@ prerequisites:
 - ch.python.asyncio-cancellation
 version_surfaces:
 - python-3.14
-- model-api
+- openai-api
 - pytest
 route_tags:
 - zero-base

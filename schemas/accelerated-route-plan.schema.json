@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/accelerated-route-plan.schema.json",
+  "title": "FactoryCare accelerated 48-module route plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "edition",
+    "route_id",
+    "route_kind",
+    "module_count",
+    "ownership_policy",
+    "mastery_policy",
+    "module_defaults",
+    "modules"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "edition": { "type": "string", "minLength": 1 },
+    "route_id": { "const": "accelerated-48" },
+    "route_kind": { "const": "accelerated" },
+    "module_count": { "const": 48 },
+    "ownership_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "every_active_chapter_has_one_primary_owner",
+        "support_closure_may_repeat",
+        "unanchored_tail_owner",
+        "chapter_roles"
+      ],
+      "properties": {
+        "strategy": { "const": "ordered-anchor-boundaries" },
+        "every_active_chapter_has_one_primary_owner": { "const": true },
+        "support_closure_may_repeat": { "const": true },
+        "unanchored_tail_owner": { "const": "m48" },
+        "chapter_roles": {
+          "const": ["teach", "practice", "diagnose", "refresh", "support"]
+        }
+      }
+    },
+    "mastery_policy": { "$ref": "#/$defs/mastery_policy" },
+    "module_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["diagnostic_policy", "waiver_policy", "retest_policy"],
+      "properties": {
+        "diagnostic_policy": { "type": "object" },
+        "waiver_policy": { "type": "object" },
+        "retest_policy": { "type": "object" }
+      }
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 48,
+      "maxItems": 48,
+      "items": { "$ref": "#/$defs/module" }
+    }
+  },
+  "$defs": {
+    "mastery_level": {
+      "enum": ["L1-L2", "L2", "L2+", "L3"]
+    },
+    "l1_l2_evidence": {
+      "const": ["timed-teach-back", "guided-experiment", "boundary-diagnosis"]
+    },
+    "l2_evidence": {
+      "const": ["timed-teach-back", "runnable-artifact", "boundary-test"]
+    },
+    "l2_plus_evidence": {
+      "const": ["timed-teach-back", "runnable-artifact", "fault-diagnosis", "requirement-change"]
+    },
+    "l3_evidence": {
+      "const": ["timed-teach-back", "independent-build", "fault-diagnosis", "requirement-change", "tradeoff-defense"]
+    },
+    "mastery_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_depth_source",
+        "route_required_mastery_field",
+        "profiles",
+        "required_assignments"
+      ],
+      "properties": {
+        "reference_depth_source": { "const": "curriculum/catalog.yml#/chapters/*/level" },
+        "route_required_mastery_field": { "const": "required_mastery" },
+        "profiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["L1-L2", "L2", "L2+", "L3"],
+          "properties": {
+            "L1-L2": { "$ref": "#/$defs/l1_l2_evidence" },
+            "L2": { "$ref": "#/$defs/l2_evidence" },
+            "L2+": { "$ref": "#/$defs/l2_plus_evidence" },
+            "L3": { "$ref": "#/$defs/l3_evidence" }
+          }
+        },
+        "required_assignments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["machine_learning", "artificial_intelligence"],
+          "properties": {
+            "machine_learning": {
+              "const": {
+                "modules": ["m37", "m38", "m39"],
+                "required_mastery": "L1-L2"
+              }
+            },
+            "artificial_intelligence": {
+              "const": {
+                "modules": ["m40", "m41", "m42", "m43", "m44"],
+                "required_mastery": "L2+"
+              }
+            }
+          }
+        }
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "required_mastery",
+        "evidence_requirements",
+        "required_capabilities",
+        "anchor_chapter_ids"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^m(?:0[1-9]|[1-3][0-9]|4[0-8])$" },
+        "title": { "type": "string", "minLength": 1 },
+        "required_mastery": { "$ref": "#/$defs/mastery_level" },
+        "evidence_requirements": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "required_capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "anchor_chapter_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^ch\\.[a-z0-9.-]+$" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "required_mastery": { "const": "L1-L2" } } },
+          "then": { "properties": { "evidence_requirements": { "$ref": "#/$defs/l1_l2_evidence" } } }
+        },
+        {
+          "if": { "properties": { "required_mastery": { "const": "L2" } } },
+          "then": { "properties": { "evidence_requirements": { "$ref": "#/$defs/l2_evidence" } } }
+        },
+        {
+          "if": { "properties": { "required_mastery": { "const": "L2+" } } },
+          "then": { "properties": { "evidence_requirements": { "$ref": "#/$defs/l2_plus_evidence" } } }
+        },
+        {
+          "if": { "properties": { "required_mastery": { "const": "L3" } } },
+          "then": { "properties": { "evidence_requirements": { "$ref": "#/$defs/l3_evidence" } } }
+        }
+      ]
+    }
+  }
+}

@@ -5,7 +5,7 @@
 ## 合同边界
 
 - `manifests/<chapter-id>.yml` 逐文件声明公共输入、SHA-256、模式、工具版本、固定命令、精确退出码、可观察预言和完整输出增量。
-- evidence 同时锁定 schema、固定 CLI 与 Runner/路径/原子写入实现的完整本地加载闭包，避免只锁教材输入却遗漏验证器版本。公开与内部 Runner 各固定 11 项控制面文件。
+- evidence 同时锁定 schema、固定 CLI 与 Runner/路径/原子写入实现的完整本地加载闭包，避免只锁教材输入却遗漏验证器版本。公开 Runner 固定 11 项控制面文件；内部 Runner 因额外锁定公开输入闭包 schema 与清单而固定 13 项。
 - 每个 recipe 都复制到独立系统临时目录。Runner 不从 manifest 接受任意解释器、绝对路径或 shell 命令字符串。
 - 每个工具探针和 recipe 都有单命令超时。命令在独立进程组中运行；超时后先向整个进程组发送 `TERM`，宽限期后仍存活则发送 `KILL`，并回收主进程。超时是合同失败，不会写入新 evidence。
 - evidence 的 `environment.runner_runtime` 记录实际 Ruby engine、version、patchlevel、platform 与 description；`execution_policy` 记录此次 Runner 真正采用的 `timeout_seconds` 和 `termination_grace_seconds`。因此“同机固定工具环境可重复”包含执行验证器自身，而不是只记录被测工具。
@@ -85,6 +85,17 @@ ruby scripts/generate-verification-manifests.rb --check
 ruby scripts/run-private-verification.rb --check
 ```
 
+每个私有 recipe 都必须在 `verification/private-public-input-closures.yml` 中有且仅有
+一条按 chapter ID 排序的记录；不需要公开依赖时显式使用空 `inputs`。非空记录只能
+声明同章 `examples/encyclopedia`、`labs/encyclopedia` 或
+`exercises/encyclopedia` 下的普通文件，并逐项锁定相对路径、SHA-256 与 mode。
+schema 拒绝未知字段和任意仓库路径；加载器还会拒绝跨章所有权、缺失、摘要/mode
+漂移、symlink、特殊文件及任何私有标记。
+
+执行时 Runner 为每章建立最小临时 repository：只复制该章私有 recipe 输入和该条
+记录明确声明的公开输入，不复制整个仓库，也不改写现有私有脚本。执行前后的快照覆盖
+这两类输入；任何修改或删除都会失败，未声明的仓库文件在临时副本中不可见。
+
 执行全部私有答案时使用同一套超时和固定缓存策略：
 
 ```bash
@@ -95,7 +106,7 @@ export FACTORYCARE_UV_CACHE_DIR="$HOME/.cache/uv"
 ruby scripts/run-private-verification.rb --timeout 300
 ```
 
-内部证据只写入被 Git 忽略的 `verification/private-evidence/last-run/evidence.json`。它只包含公开 chapter ID、退出码、计数和摘要；不包含 `solutions-private/` 路径、私有文件名、stdout/stderr 原文或本机绝对路径。答案在干净临时副本中运行，原有输入被修改或删除会失败；新增构建输出只记录不透明集合摘要。该内部合同证明“当前私有入口在本机固定环境下返回 0”，不等同于 255 章公共 D5 manifest，也不声明教学质量或跨平台通过。
+内部证据只写入被 Git 忽略的 `verification/private-evidence/last-run/evidence.json`。它只包含公开 chapter ID、退出码、私有/公开输入计数及集合摘要；不会列出闭包路径，也不包含 `solutions-private/` 路径、私有文件名、输入内容、stdout/stderr 原文或本机绝对路径。答案在上述最小干净副本中运行；新增构建输出只记录不透明集合摘要。该内部合同证明“当前私有入口在本机固定环境下返回 0”，不等同于 255 章公共 D5 manifest，也不声明教学质量或跨平台通过。
 
 全端点审计把三个公开端点各运行两份独立 fresh copy，私有解析运行一份：
 
@@ -144,6 +155,23 @@ fresh HOME 根部产生的 `.dartServer` 仅进入独立 runtime-scratch 通道�
 ## 当前未验证
 
 - 其余 251 章还没有 D5 final manifest；覆盖硬门会逐章报告而不是静默放行；
-- 私有答案已有独立 internal-only 合同与 Runner，但本次基础设施变更没有宣称 255 个答案已完成一次全量执行；其内部 evidence 不可分发，也不计入公共 D5 覆盖；
+- 私有答案的独立 internal-only 合同已完成 255/255 一次全量 clean-copy 执行；最后一次成功 evidence 仅留在 Git 忽略的 `verification/private-evidence/last-run/`，不可分发，也不计入公共 D5 覆盖或人工教学批准；
 - Linux、Windows、其他 JDK/工具 patch 与网络断开环境未执行；
 - HTML、EPUB、PDF 的人工版式、键盘、读屏和零基础读者任务不属于本 Runner。
+
+## 255 章完成定义盘点
+
+`scripts/audit-encyclopedia-definition-of-done.rb` 为 255 章生成独立的结构化完成定义报告。
+每章固定检查目录条目、正文、三类 outcome、四类验证入口、final manifest，以及七类人工门和
+最终语义批准。状态只允许 `present`、`missing`、`human-review-required` 与
+`not-applicable`；最后一种必须附具体理由。报告把章节按 catalog 顺序稳定分成 42 个
+6–7 章人工复核批次，符合每批 5–8 章的审查边界。
+
+```bash
+ruby scripts/audit-encyclopedia-definition-of-done.rb \
+  --output records/encyclopedia/evidence/machine/definition-of-done-2026-07-24.json
+```
+
+该命令在任何章节仍缺结构项或人工批准时有意返回非零，即使报告已成功写出。结构项全绿只表示
+声明的文件和机器合同存在；它不等于技术正确、教学有效、无障碍合规、学习者掌握或正式发布批准。
+报告也不会修改章节状态、final manifest 或学习进度。

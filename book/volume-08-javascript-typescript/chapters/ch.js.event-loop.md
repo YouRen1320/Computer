@@ -14,7 +14,7 @@ prerequisites:
 - ch.js.scope-closures
 version_surfaces:
 - node-24-lts
-- browser
+- chrome-stable
 route_tags:
 - zero-base
 - accelerated-48

@@ -17,7 +17,8 @@ prerequisites:
 version_surfaces:
 - spring-boot-4.1
 - spring-framework-7
-- jdbc
+- jdbc-api-jdk-25
+- pgjdbc
 - flyway
 - postgresql-18
 route_tags:

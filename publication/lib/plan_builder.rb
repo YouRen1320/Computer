@@ -50,6 +50,7 @@ module Publication
       "poppler" => { "state" => "deferred", "required_from" => "R3", "command" => %w[pdfinfo -v] },
       "python" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[dpy --version] },
       "ruby" => { "state" => "observed-current", "required_from" => "R1-A", "command" => %w[ruby -v] },
+      "typst" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[typst --version] },
       "verapdf" => { "state" => "deferred", "required_from" => "R3", "command" => %w[verapdf --version] },
       "weasyprint" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[weasyprint --version] }
     }.freeze
@@ -92,6 +93,8 @@ module Publication
       end
       p2_manifest_bytes = snapshot_bytes(P2_MANIFEST_PATH)
       p2_manifest = StrictJson.parse(p2_manifest_bytes)
+      loader.validate_value!(p2_manifest, P2_MANIFEST_SCHEMA, P2_MANIFEST_PATH)
+      validate_p2_manifest_semantics!(p2_manifest)
       plan = {
         "schema_version" => 1,
         "plan_id" => "publication-plan.#{profile.fetch('profile_id')}",
@@ -118,7 +121,10 @@ module Publication
         "p2_baseline" => {
           "manifest_path" => P2_MANIFEST_PATH,
           "manifest_sha256" => Canonical.sha256(p2_manifest_bytes),
-          "input_digest" => fetch_sha256(p2_manifest, "input_digest", P2_MANIFEST_PATH),
+          "manifest_schema_version" => p2_manifest.fetch("schema_version"),
+          "digest_algorithms" => p2_manifest.fetch("digest_algorithms"),
+          "input_digests" => p2_manifest.fetch("input_digests"),
+          "input_counts" => p2_manifest.fetch("input_counts"),
           "file_count" => P2_FILE_SET.length
         },
         "toolchain_lock" => path_digest(profile.fetch("toolchain_lock")),
@@ -187,6 +193,43 @@ module Publication
       P2_FILE_SET.each { |name| read_exact("#{relative_root}/#{name}") }
     rescue Errno::ENOENT
       raise ContractError.new("catalog-validation", "E_P2_OUTPUT_MISSING", "P2 output root is missing", path: relative_root)
+    end
+
+    def validate_p2_manifest_semantics!(manifest)
+      if manifest.key?("input_digest")
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_LEGACY", "P2 schema v3 forbids legacy input_digest", path: P2_MANIFEST_PATH)
+      end
+      algorithms = manifest.fetch("digest_algorithms")
+      unless algorithms == {
+        "category" => EncyclopediaInputSet::CATEGORY_DIGEST_ALGORITHM,
+        "total" => EncyclopediaInputSet::TOTAL_DIGEST_ALGORITHM
+      }
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_ALGORITHM", "P2 digest algorithms differ from schema v3", path: P2_MANIFEST_PATH)
+      end
+
+      inputs = manifest.fetch("inputs")
+      unless inputs.keys == EncyclopediaInputSet::CATEGORY_ORDER
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_CATEGORIES", "P2 input categories are missing, reordered or unexpected", path: P2_MANIFEST_PATH)
+      end
+      paths = inputs.values.flat_map(&:keys)
+      if paths.uniq.length != paths.length
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_OVERLAP", "P2 input categories overlap", path: P2_MANIFEST_PATH)
+      end
+
+      expected_counts = EncyclopediaInputSet::CATEGORY_ORDER.to_h { |category| [category, inputs.fetch(category).length] }
+                                                       .merge("total" => paths.length)
+      unless manifest.fetch("input_counts") == expected_counts
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_COUNTS", "P2 input counts do not match categorized inputs", path: P2_MANIFEST_PATH)
+      end
+
+      category_digests = EncyclopediaInputSet.category_digests(inputs)
+      expected_digests = category_digests.merge("total" => EncyclopediaInputSet.total_digest(category_digests))
+      unless manifest.fetch("input_digests") == expected_digests
+        raise ContractError.new("catalog-validation", "E_P2_MANIFEST_DIGEST", "P2 input digests are not recomputable from categorized inputs", path: P2_MANIFEST_PATH)
+      end
+      true
+    rescue KeyError => e
+      raise ContractError.new("catalog-validation", "E_P2_MANIFEST", "P2 schema v3 field is missing (#{e.key})", path: P2_MANIFEST_PATH)
     end
 
     def default_p2_check
@@ -574,13 +617,6 @@ module Publication
       return unless PRIVATE_CANARY_PATTERN.match?(bytes)
 
       raise ContractError.new("inventory", "E_PRIVATE_CANARY", "public input contains a private canary", path: path)
-    end
-
-    def fetch_sha256(object, key, path)
-      value = object[key]
-      return value if value.is_a?(String) && /\A[0-9a-f]{64}\z/.match?(value)
-
-      raise ContractError.new("catalog-validation", "E_P2_MANIFEST", "P2 manifest #{key} is missing or invalid", path: path)
     end
 
     def duplicate_value(values)
