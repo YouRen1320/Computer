@@ -8,6 +8,15 @@ require_relative "test_helper"
 class PublicationRendererTest < Minitest::Test
   include PublicationFixture
 
+  def test_gold_screen_css_reflows_code_and_tables_without_scroll_regions
+    css = File.read(PublicationFixture::ROOT.join("publication/styles/p3-gold-screen.css"))
+
+    refute_match(/overflow-x:\s*auto/, css)
+    assert_match(/table-layout:\s*fixed/, css)
+    assert_match(/code\.sourceCode span\s*\{\s*color:\s*inherit;/, css)
+    assert_match(/body\s*\{[^}]*overflow-wrap:\s*anywhere;/m, css)
+  end
+
   class FakeCommandRunner
     attr_reader :calls
 
@@ -318,6 +327,39 @@ class PublicationRendererTest < Minitest::Test
 
       assert_equal first, second
     end
+  end
+
+  def test_gold_epub_metadata_uses_a_nonempty_calendar_date
+    renderer = Publication::Renderer.new(PublicationFixture::ROOT.to_s, command_runner: FakeCommandRunner.new)
+    plan = {
+      "source_date_epoch" => 1_784_160_000,
+      "notice" => { "text" => "internal", "robots" => "noindex,nofollow" },
+      "language" => "zh-CN",
+      "edition" => "2026.2-draft"
+    }
+
+    metadata = renderer.send(:canonical_metadata, plan)
+
+    assert_equal "2026-07-16", metadata.fetch("date").fetch("c")
+  end
+
+  def test_gold_epub_metadata_describes_accessibility_without_claiming_conformance
+    renderer = Publication::Renderer.allocate
+    plan = {
+      "source_date_epoch" => Time.utc(2026, 7, 16).to_i,
+      "notice" => { "text" => "内部候选", "robots" => "noindex,nofollow,noarchive" },
+      "edition" => "2026.07",
+      "language" => "zh-CN"
+    }
+
+    metadata = renderer.send(:canonical_metadata, plan)
+    summary = metadata.fetch("accessibilitySummary").fetch("c")
+
+    assert_includes summary, "尚未完成独立人工检查"
+    refute metadata.key?("conformsTo")
+    refute metadata.key?("certifiedBy")
+    refute metadata.key?("certifierCredential")
+    refute metadata.key?("certifierReport")
   end
 
   private

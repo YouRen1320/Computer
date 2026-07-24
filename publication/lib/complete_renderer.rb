@@ -680,10 +680,13 @@ module Publication
     end
 
     def canonical_metadata(plan, title)
-      timestamp = Time.at(plan.fetch("source_date_epoch")).utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+      publication_date = Time.at(plan.fetch("source_date_epoch")).utc.strftime("%Y-%m-%d")
       notice = plan.fetch("notice").fetch("text")
       {
-        "date" => meta_string(timestamp),
+        "accessibilitySummary" => meta_string(
+          "本 EPUB 提供结构化目录、标题层级和可重排文本；尚未完成独立人工检查、阅读系统或屏幕阅读器测试，也未取得无障碍合规认证。自动化检查结果不能替代人工验证。"
+        ),
+        "date" => meta_string(publication_date),
         "description" => meta_string(notice),
         "identifier" => meta_string("urn:factorycare:publication:internal-complete:#{plan.fetch('edition')}"),
         "lang" => meta_string(plan.fetch("language")),

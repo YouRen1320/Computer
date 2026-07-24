@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "digest"
 require "fileutils"
 require "json"
 require "open3"
@@ -257,6 +258,7 @@ module Publication
       unless status.success?
         raise ContractError.new("inventory", "E_GIT_INVENTORY", "git tracked inventory failed: #{stderr.lines.first.to_s.strip}")
       end
+      object_format = git_object_format!
       chapter_ids = chapters.map { |chapter| chapter.fetch("id") }.to_set
       records = stdout.split("\0").reject(&:empty?).map do |line|
         metadata, path = line.split("\t", 2)
@@ -275,6 +277,14 @@ module Publication
           raise ContractError.new("inventory", "E_COMPANION_OWNER", "tracked companion has no selected chapter owner", path: path)
         end
         bytes = read_companion!(path)
+        unless git_blob_oid(bytes, object_format) == blob
+          raise ContractError.new(
+            "inventory",
+            "E_COMPANION_INDEX_DRIFT",
+            "tracked companion bytes differ from the Git index; stage or restore the file before building",
+            path: path
+          )
+        end
         reject_canary!(bytes, path)
         snapshot!(path, bytes)
         {
@@ -291,7 +301,29 @@ module Publication
       if collision
         raise ContractError.new("inventory", "E_PATH_CASE_COLLISION", "case-folded companion paths collide", path: collision.first.fetch("path"))
       end
+      repeat_stdout, repeat_stderr, repeat_status = Open3.capture3("git", "-C", root, "ls-files", "-s", "-z", "--", *roots)
+      unless repeat_status.success?
+        raise ContractError.new("inventory", "E_GIT_INVENTORY", "Git tracked inventory recheck failed: #{repeat_stderr.lines.first.to_s.strip}")
+      end
+      unless repeat_stdout == stdout
+        raise ContractError.new("inventory", "E_COMPANION_INDEX_CHANGED", "Git companion index changed while the publication plan was being built")
+      end
       records.sort_by { |record| record.fetch("path") }
+    end
+
+    def git_object_format!
+      stdout, stderr, status = Open3.capture3("git", "-C", root, "rev-parse", "--show-object-format")
+      format = stdout.strip
+      unless status.success? && %w[sha1 sha256].include?(format)
+        detail = status.success? ? format : stderr.lines.first.to_s.strip
+        raise ContractError.new("inventory", "E_GIT_OBJECT_FORMAT", "unsupported or unavailable Git object format: #{detail}")
+      end
+      format
+    end
+
+    def git_blob_oid(bytes, object_format)
+      payload = "blob #{bytes.bytesize}\0".b + bytes.b
+      object_format == "sha256" ? Digest::SHA256.hexdigest(payload) : Digest::SHA1.hexdigest(payload)
     end
 
     def validate_companion_path!(path, roots)

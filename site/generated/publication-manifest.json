@@ -3,7 +3,7 @@
   "site_id": "factorycare-encyclopedia",
   "edition": "2026.2-draft",
   "deterministic": true,
-  "input_digest": "3e990064c325a38ee50a9f7459930ded369fd33998ad974efd670904f4cc3d72",
+  "input_digest": "da6b1ed40c57aaf02d094145aa043dfb593bbbea94df691bb2b3c582e460d48d",
   "input_count": 339,
   "inputs": {
     "ASSESSMENTS.md": "aabd5ce73dfa8aa8a9b2835cad1df43c06bb70844dc8a58187603d73d338c2a2",
@@ -229,12 +229,12 @@
     "book/volume-12-python-data/chapters/ch.python.testing-logging-debug.md": "12409265715905b06db5b55ff7556647df83367c695541ce2d2c3ec088c2f306",
     "book/volume-12-python-data/chapters/ch.python.typing-foundations.md": "41a9c56ff9cc88a26f7321927dd49a0ac438c0936aa6b5b1118d26ef4360f1cb",
     "book/volume-13-ml-pytorch/README.md": "4d028df1f29b257925e85c0913d3e78f45ef4cf8ccc782dc2cfeddeee04bfeee",
-    "book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md": "10b9b2425e90f1cbe7c09226266c76cf120e9f52bd85a092d266d27e4d2d61a4",
+    "book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md": "e55dd09da48be72449ee37d0acbfe06aa2ebe088e3741f400cf6e3a9b938feb9",
     "book/volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md": "37a6f859dfd1b44d0b8ad919d14d4f3472c9f4dbc8506324035d9ebcf512b953",
     "book/volume-13-ml-pytorch/chapters/ch.math.gradients.md": "2a0c04bf0151772426a9e7f570287aa7d783cd099758ad2eebf0abb52e210967",
     "book/volume-13-ml-pytorch/chapters/ch.math.linear-algebra.md": "095d1d8c1088dc62b8b5f18ea1510c46712d2817c7942e443fa3babb78232d62",
     "book/volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md": "21c23c0c46b166b2650c47ad543a63a06f43910052ac56d75b1959e85d605031",
-    "book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md": "b69418947fea2243452646292a0dd36449e0fa83a28f4f6f30af8658f82411b2",
+    "book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md": "a5036948600ae4ec9ce46c829eb9672d2a8851e83fa072c2e9ce1cbf13006278",
     "book/volume-13-ml-pytorch/chapters/ch.ml.metrics-validation.md": "7ddc112e381dea31b8b4b80330522eaf98479e96b8606499ee2f12572f6bef86",
     "book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md": "6569386639405fb90095a1294b553e102ebb09f84f0dfa4ddf1a193fb7733283",
     "book/volume-13-ml-pytorch/chapters/ch.ml.neural-networks.md": "50751ab9ddd8af5417a31100ff2f69d70924acba2c0431b073797b14207e6001",
@@ -347,10 +347,10 @@
     "versions/registry.yml": "d4311d0f62a0b326e7b1a4154da30dc461a9dea43b39b1f9cd11d2cef4d7a772"
   },
   "outputs": {
-    "catalog.json": "d16b6ae7ecbea1cfe5da35fc8b3816132c1c7a58b33369e2bf6c0e6075f4179f",
-    "navigation.json": "761bfbd4a83daee86e87a820506e7a378c8f0e1fb1a4fae0545b2c3287784114",
-    "search-index.json": "b5f726f0282411bb8613b635e5a97ce7642240184aeb25fbcfaca72d14a86f5e",
-    "README.md": "0cf29ea8a0e8575ffbd2feaf70e12e0cc3690f24216d461f7360cbc6f556bbb7"
+    "catalog.json": "fbe0450a58191f251b47fb3d742d86d07abb655f443be88f5b84503453c878f2",
+    "navigation.json": "d9c322b1f1cb5c62644434777f2cdffbbe4d5e8d5f5998dda0709583a383d98e",
+    "search-index.json": "1deafc7413694cce985e174092424b938840986355c11e3bb40e2b438ce7f76e",
+    "README.md": "2e1303a4fdc37fde6b20ae22bb9d26e66dfc2838a6163786904a2bac64968466"
   },
   "chapter_count": 255,
   "publishable_count": 0,

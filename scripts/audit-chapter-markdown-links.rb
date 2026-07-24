@@ -275,8 +275,8 @@ module ChapterMarkdownLinkAudit
         "failed_items" => failed_items.map { |item| compact_issue(item) },
         "links" => link_documents,
         "replay_commands" => {
-          "structure_only" => "ruby scripts/audit-chapter-markdown-links.rb --mode structure-only --checked-at #{checked_date} --root . --output /tmp/factorycare-chapter-links-structure.json --pretty",
-          "live" => "ruby scripts/audit-chapter-markdown-links.rb --mode live --checked-at #{checked_date} --root . --output /tmp/factorycare-chapter-links-live.json --pretty"
+          "structure_only" => "ruby scripts/audit-chapter-markdown-links.rb --mode structure-only --checked-at #{checked_date} --root . --output /tmp/factorycare-chapter-links-structure.json --pretty --workers #{workers} --per-host #{per_host_limit} --connect-timeout #{connect_timeout} --max-time #{max_time}",
+          "live" => "ruby scripts/audit-chapter-markdown-links.rb --mode live --checked-at #{checked_date} --root . --output /tmp/factorycare-chapter-links-live.json --pretty --workers #{workers} --per-host #{per_host_limit} --connect-timeout #{connect_timeout} --max-time #{max_time}"
         },
         "evidence_boundary" => "Structure-only mode proves deterministic extraction and HTTPS target syntax only. Live mode records one bounded read-only observation per exact target. HTTP 200/206 does not prove source authority, citation entailment, page meaning, content truth, or future availability. HTTP 202 and the explicit network-transport curl allowlist are transport-inconclusive and require human review; 401/403/405/416/429 also require human review. Certificate failures, HTTPS downgrade, unknown nonzero curl exits, and other non-accepted HTTP statuses remain failures. Manual-review results are never auto-passed."
       }

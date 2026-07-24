@@ -10,11 +10,12 @@
 | --- | --- | --- |
 | curriculum / global | `passed` | 结构、路线、先修、重复与直接 HTTPS 来源存在性通过机器门；不证明内容真理或可学性 |
 | version reachability | `passed` | 62/62 注册来源在检查时可达；可达不等于版本选择或正文事实正确 |
-| live links | `needs-review` | 0 个硬失败，但 10 个唯一目标仍需人工判断 |
+| live links | `needs-review` | 0 个硬失败，但 12 个唯一目标仍需人工判断 |
 | endpoint audit | `passed-machine-observation` | 1,020/1,020 本机机器观察通过；不等于 255 份 final verification manifest |
 | exercise / candidate | `observed-unreviewed` | 机器观察已生成，禁止在人工确认前晋升 |
 | formal verification | `execution-succeeded-coverage-incomplete` | 4/255 份 final manifest 的 12 个 recipe 成功；仍缺 251 章 |
 | P8 publication | `internal-candidate-built-not-released` | 255 章 HTML、EPUB、PDF 内部候选已构建；未通过正式发行门 |
+| publication accessibility | `machine-findings-observed` | 278 个 HTML 自动扫描无 finding；18 份 EPUB 机器检查无 finding；18 份 PDF 仅 1 份通过 PDF/UA-1 机器验证 |
 | formal P9 | `incomplete` | 人工门与独立门未关闭 |
 
 `PROGRESS.md` 未被本轮修改；课程建设和机器运行结果没有冒充用户学习进度。
@@ -100,15 +101,15 @@ FactoryCare 路线在合同中明确为 `selective`，205/255 是设计结果；
 
 ### 章节 Markdown 链接
 
-`chapter-live-links-2026-07-24.json` 的 SHA-256 为 `ff0e4c93c42109cf4ad1488480cd0714fbd6794b0b34fe7aa1a0bf75f1e3c8fe`。审计统计：
+`chapter-live-links-2026-07-24.json` 已在最终正文修订后重新执行，SHA-256 为 `b9065150462915cdaeed56e6d916362bcc24fdc98fde24e304d0289bd33a8526`。审计统计：
 
 - Markdown HTTPS 出现次数：1,493；
 - 唯一目标：1,138；
-- 机器通过：1,128；
-- 人工复核：10；
+- 机器通过：1,126；
+- 人工复核：12；
 - 硬失败：0。
 
-其中 3 个传输结果为 inconclusive，已包含在人工复核边界中。由于仍有 10 个唯一目标需要判断，分系统状态必须保持 `needs-review`，不能因为硬失败为 0 就改写为完全通过。
+其中 5 个传输结果为 inconclusive，已包含在人工复核边界中。由于仍有 12 个唯一目标需要判断，分系统状态必须保持 `needs-review`，不能因为硬失败为 0 就改写为完全通过。该审计的冻结范围是 Markdown link/image destination；裸 HTTPS 文本与 autolink 尚未纳入此 v1 口径，不能把 1,138 个目标描述为章节全部 URL。
 
 ## 全端点机器观察
 
@@ -183,6 +184,8 @@ marker 缺失是需要人工确认或规范化的机械缺口，不是 endpoint 
 
 覆盖硬门按设计返回非零：255 章中只有 4 章具有 final manifest，`missing_final_manifest_count=251`。这不是 12 个现有 recipe 的执行失败，而是正式覆盖不完整；因此分系统只能写作 `execution-succeeded-coverage-incomplete`，正式 P9 不能完成。
 
+独立的私有答案 Runner 只读 inventory check 已通过 255 章 / 255 recipe，但本轮完整 clean-copy 执行在首个受影响章节以 `E_PRIVATE_EXIT` fail closed，且没有写入 `verification/private-evidence/last-run/evidence.json`。原仓入口可返回 0，而 clean copy 未包含入口引用的公共验证器；静态检查共发现 16 个私有入口含父目录引用。因此这属于私有执行输入闭包缺陷，不是缓存基础设施失败，也不能描述为 255 份私有答案已经通过。
+
 ## P8 内部完整出版候选
 
 ### 冻结输入与 fail-closed 重建
@@ -193,17 +196,30 @@ marker 缺失是需要人工确认或规范化的机械缺口，不是 endpoint 
 
 | 工件 | SHA-256 |
 | --- | --- |
-| publication plan v2 | `97533c6904bccb5c9cdcae6eb4c0ce3a97147192e4069ffc2c396bdb49098486` |
-| output manifest v2 | `e5599c21cc4af8a4ae66954b3a65892eb1bab4e7d5597218a73ed5956d534671` |
-| whole HTML | `9586191669b71de0dbd55eb7ea1a3100447bd5afb284c8aac8f506afeffac978` |
-| whole EPUB | `ac21a9351130531fabf41935fdcfd07e43e53171d8022b0eb171066e694a9044` |
-| whole PDF | `2d7b87db49cba9c01e17698880c5b7eec29faf61099c0381e3741e992e03af06` |
+| publication plan v2 | `d9206502d42d9e38e682a5dc7aeea10a24e3ce8180100a7a250233e7ebe1f574` |
+| output manifest v2 | `ec0d96356648d07d47b62062c60c171e034be576d096060fe17aea1454a0ea3a` |
+| whole HTML | `fa78042779a504344424c7be469d336b779464beff9a62112baef3bde7f2893e` |
+| whole EPUB | `122bc21e25f70424c3d5655d6ed78a3762a81fc3e34e8cdedba49066fe33d660` |
+| whole PDF | `c300851412bbef80549670f7dad3ffdfb9c44301255ebaa63a8b4dc4008cc071` |
 
-output manifest 的 `build_status` 为 `succeeded`，枚举 344 个输出、记录 324 条命令。whole PDF 为 3,102 页、A4、PDF 1.7、`Tagged: yes`；检测到的字体均嵌入、子集化并带 Unicode 映射。whole EPUB 的 ZIP 完整性检查无错误。
+output manifest 的 `build_status` 为 `succeeded`，枚举 344 个输出、记录 324 条命令；`build_input_digest` 为 `b8d804d0f59e86f11f449e456e9940abba1cdc2299285574e61775fdb0050c54`，`output_set_digest` 为 `a61e7f3b27dc8f4a295ddbfc2e6eb520c494b1f12f2ac498990ff1eda0c20364`。whole PDF 为 3,099 页、A4、PDF 1.7、`Tagged: yes`；检测到的字体均嵌入、子集化并带 Unicode 映射。whole EPUB 的 ZIP 完整性检查无错误。
 
-AI 机器视觉只抽查了 whole PDF 第 1、2、1,551、3,101、3,102 页，以及 volume 15 PDF 第 1、2 页；这些页面未观察到明显裁切、重叠、乱码或不可读字形。这个结论只是有限页的 AI 图像检查，**不是人工版式、阅读顺序、键盘、焦点或读屏验收**。`Tagged: yes` 也不等于 PDF/UA 合规。
+AI 机器视觉重新抽查了当前 whole PDF 第 1、2、1,550、3,098、3,099 页，以及 volume 15 PDF 第 1、2 页；这些页面未观察到明显裁切、重叠、乱码或不可读字形。末页只有内部候选警示，大量留白是当前排版结果。这个结论只是有限页的 AI 图像检查，**不是人工版式、阅读顺序、键盘、焦点或读屏验收**。`Tagged: yes` 也不等于 PDF/UA 合规。
 
 该工件的可见标识和 profile 均为内部候选，`visibility=internal`、`distribution_allowed=false`。它没有公开发布，也不得被描述成最终出版物。
+
+### 出版无障碍机器观察
+
+本轮重新对当前冻结字节执行原子机器检查，不沿用正文修订前的旧报告。单一进程先记录 18 份 PDF 及两份 output manifest 的 SHA-256/大小，执行 veraPDF，再次读取并要求扫描前后完全一致，同时逐项匹配 manifest；任何漂移都会使审计失败。规范化摘要 `build/factorycare-p9-verapdf-rescan-summary.json` 的 SHA-256 为 `c0710fb34dc64903fb1e4924aa73e87bea4cb6871915a795eb833dafdb7e7da1`，原始报告 SHA-256 为 `da4cd05f43e549a34d076754a401182b4069445d69fcfbf0362ab0021d13c2bb`。P8 的每个目标还与上述 output manifest 逐一比对，P3 PDF 则与其独立 output manifest 比对：
+
+- axe-core 4.12.1：P8 273/273 个 HTML（255 章、16 卷、整书与索引）在固定 WCAG 2.0/2.1/2.2 A/AA tags 下为 0 violation、0 incomplete；P3 的 5/5 个 HTML 也为 0 violation、0 incomplete。自动零 finding 不是 WCAG 认证。
+- EPUBCheck 5.3.0 `--failonwarnings`：P3 1 份 + P8 17 份，18/18 的 fatal/error/warning 均为 0。
+- Ace 1.4.6：18/18 根 outcome 为 `pass`；严格只统计同时含 `earl:test` 与 `earl:result` 的叶子 assertion，failure 为 0。Ace 通过不是 EPUB Accessibility 认证。
+- veraPDF 1.30.0 PDF/UA-1：18 个 job 均正常结束，其中 1 份合规、17 份不合规；共 17 条 failed rule、273 个 failed check，全部为 ISO 14289-1:2014 7.18.5 test 1：链接注释位于 `NonStruct`/artifact，而非 `Link` 标签。
+
+为避免用版本号猜测，本轮另在临时环境使用 WeasyPrint 69.0 重建一份已知失败分卷。原 21 个链接失败未解除，反而新增 2 个 Apple Color Emoji 字形宽度失败，因此保留 WeasyPrint 68.1，不删除可点击链接来换取虚假绿灯。
+
+上述原始工具报告目前位于被 Git 忽略的 `build/` 或临时目录；它们是当前机器观察，还不是经独立 schema、工具身份和脱敏规范化约束的可发行证据包。PDF/UA 机器失败、人工辅助技术验收与稳定证据管线都仍是 P9 未完成项。
 
 ## 学习入口、资产与真实进度边界
 
@@ -211,6 +227,7 @@ AI 机器视觉只抽查了 whole PDF 第 1、2、1,551、3,101、3,102 页，�
 - Week 00—48 共 49 个兼容周入口；Week 00—08 共 9 个 `concepts.md` 适配页；
 - 最终学习资产校验：1,371 个 Markdown 文件、6,196 项检查；
 - FactoryCare 设计校验：1,360 项检查、6 个事件 schema、2 份 OpenAPI；
+- P9 在临时副本中使用 Playwright 1.60.0 + Chromium 148 真实运行登录→查询→打开工单路径，1/1 通过、无重试；两个 API 由 `page.route(...).fulfill(...)` stub，因此只证明真实浏览器中的前端交互，不证明真实后端、认证、数据库或部署联调；
 - progress detector：Week 00 `进行中`、49 行、0 error、0 warning；
 - `PROGRESS.md` 的 Git diff 为空，本轮没有写入学习时长、成绩、完成日期或周状态；
 - `evidence/factorycare/**` 没有被预填。真实 FactoryCare 应由学习者在课程推进中实现并生成证据。
@@ -221,14 +238,15 @@ AI 机器视觉只抽查了 whole PDF 第 1、2、1,551、3,101、3,102 页，�
 
 1. 真正零基础读者按固定任务完成导航、前置补救、复述、运行、修改和诊断，并记录提示、卡点、误解、用时、修订与复测；
 2. 与生成者分离的独立内容审查，核对事实、来源蕴含、概念边界和教学梯度；
-3. 对 10 个 live-link 目标作人工判断；
-4. 在目标浏览器和阅读器中完成人工版式、键盘、焦点、阅读顺序与读屏检查；
-5. 运行 EPUBCheck、Ace、veraPDF，并完成 PDF/UA 专项评估；
+3. 对 12 个 live-link 目标作人工判断；
+4. 在目标浏览器和阅读器中完成人工版式、键盘、焦点、阅读顺序、深色主题、缩放/重排与 VoiceOver/读屏检查；
+5. 修复并重新验证 PDF/UA 链接标签失败，完成人工辅助技术专项评估，并建立绑定工具身份与最终工件的稳定 P9 证据管线；
 6. 由独立执行方或另一平台按声明环境重新构建并比对结果；
-7. 对 251 个 candidate 逐章确认输入闭包、命令、工具版本、expected-red 预言和输出集合，再决定是否晋升为 final manifest；
-8. 由学习者真实构建 FactoryCare，并提交可复核的运行、测试、修改、调试、验收与讲解证据。
+7. 对 251 个 candidate 逐章确认输入闭包、命令、工具版本、expected-red 预言和输出集合，再决定是否晋升为 final manifest。
 
 任何一项都不能由本报告作者自审、AI 视觉或文件存在性代替。
+
+学习者未来真实构建 FactoryCare、产生 `evidence/factorycare/**` 下的运行、修改、调试、验收和复述证据，属于学习执行门，**不是课程建设 P9 的阻断项**。学习开始前这些路径不存在是正确状态。
 
 ## 兼容折中、已知不兼容与回滚
 

@@ -10,6 +10,15 @@ require_relative "../../publication/lib/complete_renderer"
 class CompletePublicationV2Test < Minitest::Test
   include PublicationFixture
 
+  def test_complete_screen_css_reflows_code_and_tables_without_scroll_regions
+    css = File.read(PublicationFixture::ROOT.join("publication/styles/internal-complete-screen.css"))
+
+    refute_match(/overflow-x:\s*auto/, css)
+    assert_match(/table-layout:\s*fixed/, css)
+    assert_match(/code\.sourceCode span\s*\{\s*color:\s*inherit;/, css)
+    assert_match(/body\s*\{[^}]*overflow-wrap:\s*anywhere;/m, css)
+  end
+
   def test_production_plan_is_deterministic_and_covers_the_complete_catalog
     builder = Publication::CompletePlanBuilder.new(PublicationFixture::ROOT.to_s)
     first = builder.build
@@ -65,6 +74,27 @@ class CompletePublicationV2Test < Minitest::Test
 
       records = builder.send(:tracked_companions!, profile, chapters)
       assert_equal ["examples/encyclopedia/ch.fixture/tracked.txt"], records.map { |record| record.fetch("path") }
+    end
+  end
+
+  def test_git_inventory_rejects_working_tree_bytes_that_differ_from_the_index
+    with_companion_git_fixture do |root, builder, profile, chapters|
+      path = "examples/encyclopedia/ch.fixture/tracked.txt"
+      absolute = root.join(path)
+      File.binwrite(absolute, "indexed\n")
+      git!(root, "add", path)
+      File.binwrite(absolute, "working-tree-only\n")
+
+      assert_contract_code("E_COMPANION_INDEX_DRIFT") do
+        builder.send(:tracked_companions!, profile, chapters)
+      end
+
+      git!(root, "add", path)
+      record = builder.send(:tracked_companions!, profile, chapters).fetch(0)
+      stdout, stderr, status = Open3.capture3("git", "-C", root.to_s, "hash-object", "--", path)
+      assert status.success?, stderr
+      assert_equal stdout.strip, record.fetch("git_blob")
+      assert_equal Digest::SHA256.hexdigest("working-tree-only\n"), record.fetch("sha256")
     end
   end
 
@@ -136,6 +166,39 @@ class CompletePublicationV2Test < Minitest::Test
 
     unsafe = { "blocks" => [{ "t" => "RawBlock", "c" => ["html", "<img src='https://example.invalid/x'>"] }] }
     assert_contract_code("E_UNSAFE_RAW_HTML") { renderer.send(:normalize_raw_html_literals!, unsafe) }
+  end
+
+  def test_complete_epub_metadata_uses_a_nonempty_calendar_date
+    renderer = Publication::CompleteRenderer.new(PublicationFixture::ROOT.to_s)
+    plan = {
+      "source_date_epoch" => 1_784_160_000,
+      "notice" => { "text" => "internal", "robots" => "noindex,nofollow" },
+      "language" => "zh-CN",
+      "edition" => "2026.2-draft"
+    }
+
+    metadata = renderer.send(:canonical_metadata, plan, "title")
+
+    assert_equal "2026-07-16", metadata.fetch("date").fetch("c")
+  end
+
+  def test_complete_epub_metadata_describes_accessibility_without_claiming_conformance
+    renderer = Publication::CompleteRenderer.allocate
+    plan = {
+      "source_date_epoch" => Time.utc(2026, 7, 16).to_i,
+      "notice" => { "text" => "内部候选", "robots" => "noindex,nofollow,noarchive" },
+      "edition" => "2026.07",
+      "language" => "zh-CN"
+    }
+
+    metadata = renderer.send(:canonical_metadata, plan, "title")
+    summary = metadata.fetch("accessibilitySummary").fetch("c")
+
+    assert_includes summary, "尚未完成独立人工检查"
+    refute metadata.key?("conformsTo")
+    refute metadata.key?("certifiedBy")
+    refute metadata.key?("certifierCredential")
+    refute metadata.key?("certifierReport")
   end
 
   def test_existing_production_tree_passes_the_full_non_mutating_gate

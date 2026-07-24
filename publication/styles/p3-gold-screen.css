@@ -8,6 +8,7 @@ body {
   max-width: 76rem;
   margin: 0 auto;
   padding: 0 1.25rem 3rem;
+  overflow-wrap: anywhere;
   color: #172033;
   background: #ffffff;
 }
@@ -67,11 +68,21 @@ samp {
 }
 
 pre {
-  overflow-x: auto;
+  overflow-x: visible;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
   padding: 1rem;
   border: 1px solid #d5dbea;
   border-radius: 0.4rem;
   background: #f7f8fa;
+}
+
+code.sourceCode span {
+  color: inherit;
+}
+
+code {
+  overflow-wrap: anywhere;
 }
 
 h3 code {
@@ -79,14 +90,15 @@ h3 code {
 }
 
 table {
-  display: block;
+  width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  table-layout: fixed;
   border-collapse: collapse;
 }
 
 th,
 td {
+  overflow-wrap: anywhere;
   padding: 0.55rem 0.7rem;
   border: 1px solid #aeb9cc;
   vertical-align: top;

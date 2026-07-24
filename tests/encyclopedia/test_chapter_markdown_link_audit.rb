@@ -97,6 +97,7 @@ class ChapterMarkdownLinkAuditTest < Minitest::Test
     assert_equal 127, report.dig("summary", "host_count")
     assert_equal 0, report.dig("summary", "structure_invalid_count")
     assert_equal({ "not-probed" => 1_138 }, report.fetch("outcome_counts"))
+    assert_includes report.dig("replay_commands", "live"), "--workers 8 --per-host 2 --connect-timeout 10 --max-time 25"
   end
 
   def test_extraction_excludes_non_markdown_and_masked_regions_and_deduplicates_targets

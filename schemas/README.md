@@ -52,7 +52,7 @@ manifest 章节的完整静态输入闭包、生成时工具探针、双运行�
 
 私有解析只允许位于 `solutions-private/encyclopedia/<chapter-id>/`，发布构建和 manifest 会显式排除整个 `solutions-private/` 子树。这只证明构建隔离，不证明 Git 历史或仓库存储隔离。开发权威仓保持私有；若建立公共发行入口，必须使用不携带 `solutions-private` 历史的新公共发行仓。历史重写不能撤回第三方已经取得的副本。
 
-P3 黄金样章的阶段门另要求正式 HTML/EPUB/PDF 预览和至少一轮符合 P3-R0 定义的编程零基础读者试读。当前只验证了章节代码/JDK 的 macOS arm64 + Temurin 25.0.3 基线；正式出版构建仅为 `smoke_observed`，浏览器/阅读器/辅助技术为 `not_evaluated`，必须由 R2/R3 产生各自证据。P3 完成时四章只进入 `review`；Windows、Linux、其他 JDK 和阅读系统是明确披露的 P4 follow-up，不能写成已验证。
+P3-R0 历史方案把正式 HTML/EPUB/PDF 预览、七类审查和至少一轮编程零基础读者试读设为 P3 阶段门。2026-07-16 后续确认的 content-first 策略只改变执行时点：P3—P8 完成直接相关的 schema、边界、代码和构建自动检查后可继续内容生产，全面人工版式/无障碍、独立复审、零基础试读和跨平台证据统一在 P9 闭环。延期不等于通过：四章在这些证据完整前仍保持 `drafting`，不能进入公开发行；正式边界以 [`CONTENT-FIRST-EXECUTION.md`](../records/encyclopedia/CONTENT-FIRST-EXECUTION.md) 和 P9 审计为准。
 
 P8 的内部完整出版使用独立 v2 合同：`publication-profile-v2.schema.json` 把选择固定为
 catalog 全部 255 章与 16 卷；`publication-plan-v2.schema.json` 约束章节、卷、Git 已

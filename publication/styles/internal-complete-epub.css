@@ -1,7 +1,14 @@
 body { font-family: sans-serif; line-height: 1.6; }
 .publication-notice { margin: 1em 0; padding: 0.75em; border: 0.08em solid currentColor; font-weight: bold; }
 h1, h2, h3, h4 { line-height: 1.25; page-break-after: avoid; }
-pre { overflow-x: auto; padding: 0.75em; border: 0.05em solid currentColor; white-space: pre-wrap; }
+pre,
+div.sourceCode { overflow: visible; overflow-wrap: anywhere; }
+pre { padding: 0.75em; border: 0.05em solid currentColor; white-space: pre-wrap; }
+pre > code.sourceCode { white-space: pre-wrap; overflow-wrap: anywhere; }
+pre > code.sourceCode > span { display: inline; }
 h3 code { overflow-wrap: anywhere; }
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: 0.35em; border: 0.05em solid currentColor; vertical-align: top; }
+
+/* Reader themes own contrast; Pandoc's fixed Skylighting palette does not. */
+code.sourceCode span { color: inherit; }
