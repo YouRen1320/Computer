@@ -80,6 +80,14 @@ outcomes:
 ---
 # IP、DNS、端口、TCP 与 TLS 分层
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《stdin、stdout、stderr、管道与退出码》](ch.foundations.cli-streams-exit-codes.md)：独立完成地址与名称、传输与加密前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 当浏览器显示“无法访问”、终端显示“连接失败”、前端只抛出一个 `NetworkError` 时，最没有帮助的结论是“网络坏了”。“网络”并不是一个开关，而是一条由多个阶段组成的链：输入的名称要先得到地址，地址与端口组成连接目标，TCP 要建立传输通道，TLS 还要协商加密参数并核验对端身份。任何一步失败，后面的步骤通常都没有执行。
 
 本章建立从名称解析到加密传输的诊断模型。我们会看到 IP、DNS、端口、TCP 与 TLS 各自回答什么问题，如何留下可重放证据，以及为什么不能用某一层的成功替另一层背书。本章故意停在 TLS：握手成功以后应用发送什么请求、状态码表示什么，属于下一章 HTTP 语义。

@@ -25,7 +25,7 @@ public final class PropagationLab {
     public static class WorkOrderService {
         private final JdbcTemplate jdbc; private final AuditService audit; private final List<String> published;
         WorkOrderService(JdbcTemplate jdbc, AuditService audit, List<String> published) { this.jdbc = jdbc; this.audit = audit; this.published = published; }
-        private void work(String id) { jdbc.update("insert into work_order(id,status) values(?,'OPEN')", id); }
+        private void work(String id) { jdbc.update("insert into work_order(id,status) values(?,'CREATED')", id); }
         @Transactional public void success(String id) { work(id); audit.required(id); afterCommit(id); }
         @Transactional public void requiredThenFail(String id) { work(id); audit.required(id); throw new IllegalStateException("outer failed"); }
         @Transactional public void requiresNewThenFail(String id) { work(id); audit.requiresNew(id); throw new IllegalStateException("outer failed"); }

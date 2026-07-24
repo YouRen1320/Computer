@@ -1,4 +1,4 @@
-export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 // Data source: concrete HTTP/fake implementations satisfy this replaceable boundary.
 export interface WorkOrderRepository {

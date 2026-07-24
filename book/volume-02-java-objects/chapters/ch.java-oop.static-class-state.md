@@ -75,6 +75,14 @@ outcomes:
 ---
 # static、类成员与共享状态
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《封装、访问控制与包边界》](ch.java-oop.encapsulation-packages.md)：独立完成类级成员、共享状态边界前，必须先具备「封装、访问控制与包边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文、实验和验证器可用于学习，但运行成功不等于已经独立掌握，也不会自动修改 **PROGRESS.md**。
 
 前几章里的每个 `Device` 对象都有自己的编码和状态：泵的状态改变，不应让阀门同步改变。但程序还需要另一类成员，例如所有工单共享的编号前缀、无需创建对象就能执行的文本判断、从输入参数创建对象的命名入口。Java 用 `static` 表示成员属于**类本身**，不用 `static` 的字段和普通方法属于**某个实例**。

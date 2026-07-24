@@ -85,6 +85,14 @@ outcomes:
 ---
 # Composable、依赖注入与模块边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Props、事件、Slot 与组件 v-model》](ch.vue.components-contracts.md)：需要先区分显式 Props/emit 合同与跨层注入的适用范围。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件可供学习和作者自检，但不能证明学习者已经完成无 AI 独立构建、限时复述或故障诊断，也不会自动更新 `PROGRESS.md`。
 
 组件变短不等于逻辑已经有边界。把请求、筛选状态和事件监听从组件复制进 `helpers.ts`，若调用者仍共享模块级 `ref`、不知道谁终止请求、直接依赖一个具体 HTTP 客户端，那只是移动了代码。Composable 的价值是给一组有状态逻辑命名，并把输入、输出、所有权、生命周期和失败语义变成可观察合同。
@@ -208,7 +216,7 @@ export function useWorkOrderQuery() {
 }
 ```
 
-两个面板会返回同一 ref 身份。左侧把状态改成 `COMPLETED`，右侧立即变化，即使产品从未定义共享筛选。这就是 `implicit-global-state`：它可能在单实例测试里全绿，只有同时挂载两个消费者才暴露。
+两个面板会返回同一 ref 身份。左侧把状态改成 `RESOLVED`，右侧立即变化，即使产品从未定义共享筛选。这就是 `implicit-global-state`：它可能在单实例测试里全绿，只有同时挂载两个消费者才暴露。
 
 正确的 per-call state 在函数体内创建：
 
@@ -348,8 +356,8 @@ WorkOrderQueryPanel.vue
 同时挂载两个真实消费者，而不是分别创建后比较快照：
 
 1. 两个面板初始 `CREATED`；
-2. 左侧 select 改为 `COMPLETED`；
-3. 左侧 DOM 为 `COMPLETED`，右侧仍为 `CREATED`；
+2. 左侧 select 改为 `RESOLVED`；
+3. 左侧 DOM 为 `RESOLVED`，右侧仍为 `CREATED`；
 4. repository trace 出现左侧新查询，右侧没有隐式状态变化；
 5. ref 身份不同。
 
@@ -384,9 +392,9 @@ fake 应保存每次 status、signal、resolve handle 和活跃计数。它不�
 诊断报告使用固定格式：
 
 ```text
-场景：两个面板同时挂载，左侧改 COMPLETED
-期望：left=COMPLETED，right=CREATED
-实际：两者均 COMPLETED
+场景：两个面板同时挂载，左侧改 RESOLVED
+期望：left=RESOLVED，right=CREATED
+实际：两者均 RESOLVED
 第一可信证据：left.status === right.status 为 true
 根因：status ref 声明在模块作用域
 修复：ref 移入 useWorkOrderQuery 函数体

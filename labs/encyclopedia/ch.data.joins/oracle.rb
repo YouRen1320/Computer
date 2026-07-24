@@ -11,7 +11,7 @@ end
 
 sql = File.read(File.join(ROOT, "query.sql"))
 check(sql.include?("LEFT JOIN factorycare.work_order AS w"), "LEFT JOIN")
-check(sql.include?("ON w.device_id = d.device_id\n AND w.status = 'OPEN'"), "OPEN belongs in ON")
+check(sql.include?("ON w.device_id = d.device_id\n AND w.status = 'CREATED'"), "CREATED belongs in ON")
 check(sql.scan("COUNT(w.work_order_id) AS work_order_count").length == 2, "right-key counts")
 check(sql.include?("HAVING COUNT(w.work_order_id) >= 2"), "HAVING threshold")
 scenarios = JSON.parse(File.read(File.join(ROOT, "scenarios.json")))
@@ -27,9 +27,9 @@ all_left_rows = devices.sum do |device|
   [1, orders.count { |order| order["device_id"] == device["device_id"] }].max
 end
 on_open_rows = devices.sum do |device|
-  [1, orders.count { |order| order["device_id"] == device["device_id"] && order["status"] == "OPEN" }].max
+  [1, orders.count { |order| order["device_id"] == device["device_id"] && order["status"] == "CREATED" }].max
 end
-where_open_rows = orders.count { |order| order["status"] == "OPEN" && devices.any? { |device| device["device_id"] == order["device_id"] } }
+where_open_rows = orders.count { |order| order["status"] == "CREATED" && devices.any? { |device| device["device_id"] == order["device_id"] } }
 correct_counts = technicians.map do |technician|
   [technician["technician_id"], orders.count { |order| order["technician_id"] == technician["technician_id"] }]
 end

@@ -58,11 +58,11 @@ describe('parent-child state matrix', () => {
 
   it('lets the board own filtering after the child event', async () => {
     const wrapper = mount(ContractBoard)
-    await wrapper.get('[data-testid="filter"]').setValue('COMPLETED')
+    await wrapper.get('[data-testid="filter"]').setValue('RESOLVED')
     expect(wrapper.findAll('article')).toHaveLength(1)
     expect(wrapper.get('article').attributes('data-order-id')).toBe('WO-2')
     const evidence = JSON.parse(wrapper.get('[data-testid="evidence"]').text())
-    expect(evidence.filter).toBe('COMPLETED')
+    expect(evidence.filter).toBe('RESOLVED')
   })
 
   it('updates parent selection and passes selected state back down', async () => {
@@ -90,8 +90,8 @@ describe('parent-child state matrix', () => {
   it('detects nested Prop mutation because parent data changes without an event', async () => {
     const parentOrder = ref({ ...ordersFixture[0] })
     const wrapper = mount(MutatingStatusEditor, { props: { order: parentOrder.value } })
-    await wrapper.get('select').setValue('COMPLETED')
-    expect(parentOrder.value.status).toBe('COMPLETED')
+    await wrapper.get('select').setValue('RESOLVED')
+    expect(parentOrder.value.status).toBe('RESOLVED')
     // Mapping: ignore native input/change bubbling and assert the missing component contract.
     expect(wrapper.emitted('request-status-change')).toBeUndefined()
     expect(wrapper.emitted('update:modelValue')).toBeUndefined()
@@ -105,8 +105,8 @@ describe('parent-child state matrix', () => {
         'onUpdate:modelValue': (next: Status) => { parentStatus = next },
       },
     })
-    await wrapper.get('select').setValue('COMPLETED')
-    expect(wrapper.emitted('status-change')).toEqual([['COMPLETED']])
+    await wrapper.get('select').setValue('RESOLVED')
+    expect(wrapper.emitted('status-change')).toEqual([['RESOLVED']])
     expect(wrapper.emitted('update:modelValue')).toBeUndefined()
     expect(parentStatus).toBe('CREATED')
   })

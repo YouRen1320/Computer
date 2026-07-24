@@ -101,6 +101,16 @@ outcomes:
 ---
 # 表单、v-model、修饰符与校验边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《插值、绑定、事件、条件与列表指令》](ch.vue.template-directives.md)：v-model 是模板绑定与事件更新的受控组合，必须先理解指令和渲染条件。
+- [《表单控件、提交语义与原生校验》](../../volume-07-web-platform/chapters/ch.web.forms-validation.md)：Vue 表单增强必须保留 label、控件、提交和原生约束语义。
+- [《词法作用域、闭包与函数状态》](../../volume-08-javascript-typescript/chapters/ch.js.scope-closures.md)：模板处理器会捕获组件状态，需能解释函数与词法环境的关系。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与配套工件可用于学习和作者自检，但不能证明学习者已经完成无 AI 独立构建、故障诊断或限时复述，也不会自动更新 `PROGRESS.md`。
 
 模板章节解决了“状态怎样投影为 DOM”，这一章处理相反方向：用户在原生控件中输入、选择或取消选择时，DOM 的 `value`/`checked` 怎样回到 Vue 状态；提交时，哪些状态才允许进入请求负载；服务器拒绝后，错误又应放到哪里。`v-model` 不是一个神秘的表单对象，也不是校验器。它是针对控件种类约定好的一组属性绑定与事件监听，让一个 JavaScript 状态成为界面的来源。

@@ -75,6 +75,14 @@ outcomes:
 ---
 # 注释、标识符、字面量、语句、代码块、class、main 与 package
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《JDK、JVM、源码、class 文件、编译与运行》](ch.java.platform-toolchain.md)：独立完成词法与语句、程序结构前，必须先具备「JDK、JVM、源码、class 文件、编译与运行」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 本章第一次把一份 Java 源文件当成“有语法层级的程序”阅读。目标不是背诵一串关键字，而是能从任意最小程序中找到每一层边界，能自己写出同样的骨架，也能根据 `javac` 的第一条可信错误定位结构故障。
 
 本章版本基线为 **JDK 25**，官方资料复核日期为 **2026-07-16**。注释、标识符、字面量、语句、代码块、普通编译单元、class 和 package 的核心规则属于稳定语言规则。JDK 25 也支持更简化的源文件形式；本路线仍从显式 package、class 和传统 main 开始，因为真实 Java 项目、测试和后续 Spring 代码都需要你看懂这些边界。

@@ -91,6 +91,15 @@ outcomes:
 
 # 运行时 Schema、类型边界与 TypeScript 质量工具链
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《interface、type、联合、unknown、never 与收窄》](ch.ts.modeling-narrowing.md)：Schema 解析结果需要以 unknown 收窄和判别联合表达成功/失败。
+- [《Fetch、AbortController、超时、重试与竞态》](ch.js.fetch-cancellation-race.md)：网络响应是典型不可信边界，需能区分传输、状态、解析和 Schema 失败。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > TypeScript 只检查编译时能看到的代码。HTTP 响应、localStorage、环境变量、postMessage、文件和第三方 SDK 在运行时仍是未知输入。进入可信业务区域前必须校验；校验成功后再让类型系统继续保护程序。
 
 ## 1. 类型声明不是运行时证据

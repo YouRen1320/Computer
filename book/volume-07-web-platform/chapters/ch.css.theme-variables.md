@@ -79,6 +79,14 @@ outcomes:
 ---
 # 颜色、主题与 CSS 自定义属性
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《CSS 语法、选择器、层叠、优先级与继承》](ch.css.cascade.md)：自定义属性的继承、覆盖和回退完全依赖层叠计算，必须先能解释最终值来源。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件以静态源码合同、主题矩阵和不透明 sRGB 对比度计算建立离线证据；绿灯不等于真实浏览器 computed style、Windows 强制颜色、宽色域、背景图、屏幕阅读器或人工视觉已验证。易变事实已于 **2026-07-17** 对照 W3C CSS Custom Properties Level 1、CSS Color 4、CSS Color Adjustment 1、Media Queries 5 与 WCAG 2.2 一手规范核验。
 
 主题不是“把页面背景换成黑色”，自定义属性也不是脱离层叠的全局常量。本章建立一条可以解释、测量和故障定位的链：原始颜色经过语义 token 命名，在确定的作用域中由层叠和继承选出 computed value，再由 `var()` 替换到普通属性；作者亮暗主题、显式用户覆盖与强制颜色分别改变这条链的不同环节；最终必须以具体前景/背景/状态色对验证对比度。

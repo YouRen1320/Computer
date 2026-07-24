@@ -16,7 +16,7 @@ java -cp "$CLASSES_DIR" AssociativeCollectionsOracle > "$BUILD_DIR/lab.out"
 grep -Fqx 'report.input=PUMP-01,FAN-02,PUMP-01' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.unique=PUMP-01,FAN-02' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.counts=pump:2,fan:1' "$BUILD_DIR/lab.out"
-grep -Fqx 'report.equalKey=hit:OPEN' "$BUILD_DIR/lab.out"
+grep -Fqx 'report.equalKey=hit:ACTIVE' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.missing=contains:false,get:null' "$BUILD_DIR/lab.out"
 grep -Fqx 'assertions=20 passed' "$BUILD_DIR/lab.out"
 

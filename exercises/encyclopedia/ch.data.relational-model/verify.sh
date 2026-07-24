@@ -12,3 +12,4 @@ fi
 
 grep -F "answer-error=work order row meaning" "$TMP_ROOT/actual.out" >/dev/null
 echo "RELATIONAL EXERCISE STARTER EXPECTED FAILURE"
+exit 41

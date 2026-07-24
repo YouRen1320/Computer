@@ -86,6 +86,16 @@ outcomes:
 ---
 # Repository 边界与 Spring MyBatis 适配
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《数据源、连接池、事务资源与迁移启动顺序》](ch.spring.datasource-pooling.md)：独立完成Repository 边界、MyBatis 适配前，必须先具备「数据源、连接池、事务资源与迁移启动顺序」已经验证的知识与失败边界
+- [《MyBatis 映射、参数绑定、结果映射与动态 SQL》](../../volume-04-data-postgresql/chapters/ch.data.mybatis-core.md)：独立完成Repository 边界、MyBatis 适配前，必须先具备「MyBatis 映射、参数绑定、结果映射与动态 SQL」已经验证的知识与失败边界
+- [《实体、值对象、聚合、不变量与边界》](ch.architecture.domain-modeling.md)：独立完成Repository 边界、MyBatis 适配前，必须先具备「实体、值对象、聚合、不变量与边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件是教材证据，不自动更新 `PROGRESS.md`，也不代表 PostgreSQL 生产环境已经验证。
 
 Repository 不是 SQL 文件的别名，而是应用层使用的持久化端口。MyBatis Mapper 是数据库适配器内部的映射机制。把两者分开，应用用例只看“工单是否存在、保存是否成功、版本是否冲突”，不会看到表名、行 DTO、`SqlSession` 或数据库异常。

@@ -83,6 +83,16 @@ outcomes:
 ---
 # 索引、查询计划、EXPLAIN 与性能证据
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《SELECT、投影、过滤、NULL、排序与分页》](ch.data.select-rowsets.md)：独立完成索引结构与选择、计划与测量前，必须先具备「SELECT、投影、过滤、NULL、排序与分页」已经验证的知识与失败边界
+- [《CREATE/ALTER、主外键、唯一、检查与非空约束》](ch.data.ddl-constraints.md)：独立完成索引结构与选择、计划与测量前，必须先具备「CREATE/ALTER、主外键、唯一、检查与非空约束」已经验证的知识与失败边界
+- [《预期值、测试预言、断言、AAA 与测试层级》](../../volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md)：独立完成索引结构与选择、计划与测量前，必须先具备「预期值、测试预言、断言、AAA 与测试层级」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。稳定核心是“结果正确性不变，以可重复数据、计划和资源读数证明优化”；PostgreSQL **18** 的索引与 `EXPLAIN` 语义于 **2026-07-17** 按官方文档核对。本机没有 PostgreSQL server/`psql`，配套资产使用固定数据分布和离线 oracle 检查实验合同。离线 PASS 不证明 PostgreSQL 实际选择了某个计划，也不证明真实延迟改善。
 
 ## 1. 索引不是“加速按钮”，而是一项有成本的访问路径
@@ -129,7 +139,7 @@ FactoryCare 运维调度页需要取最近的未完成工单：
 ```sql
 SELECT work_order_id, status, created_at, device_id, priority
 FROM factorycare.work_order
-WHERE status = 'OPEN'
+WHERE status = 'CREATED'
   AND created_at >= TIMESTAMPTZ '2026-06-01 00:00:00+08'
   AND created_at <  TIMESTAMPTZ '2026-07-01 00:00:00+08'
 ORDER BY created_at DESC, work_order_id DESC
@@ -138,7 +148,7 @@ LIMIT 50;
 
 这条查询的合同包含：
 
-- 等值条件 `status = 'OPEN'`；
+- 等值条件 `status = 'CREATED'`；
 - 时间半开区间，避免月底精度漏洞；
 - `created_at DESC, work_order_id DESC` 的确定性排序；
 - `LIMIT 50`；
@@ -155,7 +165,7 @@ CREATE TABLE factorycare.work_order (
   device_id bigint NOT NULL,
   assigned_to bigint,
   status text NOT NULL CHECK (
-    status IN ('OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED')
+    status IN ('CREATED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED')
   ),
   priority smallint NOT NULL CHECK (priority BETWEEN 1 AND 5),
   created_at timestamptz NOT NULL,
@@ -167,8 +177,8 @@ CREATE TABLE factorycare.work_order (
 
 | status | 行数 | 比例 | 含义 |
 | --- | ---: | ---: | --- |
-| DONE | 85,000 | 85% | 历史完成工单 |
-| OPEN | 8,000 | 8% | 等待调度 |
+| CLOSED | 85,000 | 85% | 历史完成工单 |
+| CREATED | 8,000 | 8% | 等待调度 |
 | IN_PROGRESS | 5,000 | 5% | 正在维修 |
 | CANCELLED | 2,000 | 2% | 已取消 |
 
@@ -193,7 +203,7 @@ ON factorycare.work_order (created_at);
 选择性 = 符合条件的行数 / 总行数
 ```
 
-在固定夹具中，`status = 'DONE'` 的选择性为 0.85，`status = 'OPEN'` 为 0.08。低比例通常更可能从索引获益，但这不是阈值定律。行宽、物理相关性、缓存、返回列、排序、LIMIT、随机页成本和数据页数量都会参与成本估算。
+在固定夹具中，`status = 'CLOSED'` 的选择性为 0.85，`status = 'CREATED'` 为 0.08。低比例通常更可能从索引获益，但这不是阈值定律。行宽、物理相关性、缓存、返回列、排序、LIMIT、随机页成本和数据页数量都会参与成本估算。
 
 规划器不会每次完整计数，而是使用 `ANALYZE` 写入的近似统计。`pg_stats` 中常见信息包括空值比例、不同值估计、最常见值及频率、直方图。若估算 50 行而实际 20,000 行，首先检查统计、参数与列相关性，而不是立即强制某个扫描节点。
 
@@ -213,7 +223,7 @@ CREATE INDEX work_order_status_idx
 ON factorycare.work_order (status);
 ```
 
-状态只有四种。查占 85% 的 `DONE` 时，索引需要返回绝大多数行，通常没有减少足够工作。即便查 `OPEN`，它也不能直接满足时间排序与时间范围。是否保留必须由真实工作负载证明，不能因为 DDL 成功就算完成。
+状态只有四种。查占 85% 的 `CLOSED` 时，索引需要返回绝大多数行，通常没有减少足够工作。即便查 `CREATED`，它也不能直接满足时间排序与时间范围。是否保留必须由真实工作负载证明，不能因为 DDL 成功就算完成。
 
 ## 4. 复合 B-tree：列顺序由查询形状决定
 
@@ -261,12 +271,12 @@ INCLUDE (device_id, priority);
 CREATE INDEX work_order_active_created_id_idx
 ON factorycare.work_order (created_at DESC, work_order_id DESC)
 INCLUDE (status, device_id, priority)
-WHERE status IN ('OPEN', 'IN_PROGRESS');
+WHERE status IN ('CREATED', 'IN_PROGRESS');
 ```
 
-它不保存 `DONE` 和 `CANCELLED`，可能更小，相关写入维护也更少。但部分索引能被使用的关键不是“人觉得意思一样”，而是规划时查询条件必须能推出索引谓词。
+它不保存 `CLOSED` 和 `CANCELLED`，可能更小，相关写入维护也更少。但部分索引能被使用的关键不是“人觉得意思一样”，而是规划时查询条件必须能推出索引谓词。
 
-固定查询 `status = 'OPEN'` 能推出 `status IN ('OPEN','IN_PROGRESS')`。下面的查询不能：
+固定查询 `status = 'CREATED'` 能推出 `status IN ('CREATED','IN_PROGRESS')`。下面的查询不能：
 
 ```sql
 SELECT ...
@@ -410,7 +420,7 @@ DROP INDEX factorycare.work_order_status_created_id_idx;
 
 ### 故障 A：低选择性单列索引
 
-注入：只建 `(status)`，然后用 `status='DONE'` 查询 85% 数据。
+注入：只建 `(status)`，然后用 `status='CLOSED'` 查询 85% 数据。
 
 错误结论：“没有 Index Scan，所以 PostgreSQL 忽略了我的优化。”
 
@@ -434,7 +444,7 @@ DROP INDEX factorycare.work_order_status_created_id_idx;
 
 ```sql
 WHERE date(created_at) = DATE '2026-06-15'
-  AND status = 'OPEN'
+  AND status = 'CREATED'
 ```
 
 普通 `created_at` B-tree 不一定能把 `date(created_at)` 当同一个搜索键。优先把查询改写为可索引的半开时间范围：

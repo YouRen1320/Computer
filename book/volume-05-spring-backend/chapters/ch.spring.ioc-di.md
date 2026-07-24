@@ -80,6 +80,15 @@ outcomes:
 ---
 # IoC、构造器注入与依赖反转
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《接口、抽象类、多态与动态分派》](../../volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md)：独立完成控制反转、构造器注入前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+- [《Maven 最小项目、JUnit、断言与失败日志》](../../volume-01-java-language/chapters/ch.java.maven-junit-smoke.md)：独立完成控制反转、构造器注入前，必须先具备「Maven 最小项目、JUnit、断言与失败日志」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和工件是作者级学习材料，不自动更新 `PROGRESS.md`，也不代表学习者已经掌握 Spring 或通过阶段门。
 
 一个应用服务往往依赖仓储、通知、时钟和外部客户端。最直接的写法是在服务内部 `new` 具体实现，但这让高层业务决定低层技术、隐藏替换点，并使测试不得不启动真实基础设施。依赖注入让对象声明“我需要什么”，组合根或容器负责“给它哪一个实现”；控制反转描述对象创建与装配控制权从业务对象移到外部。

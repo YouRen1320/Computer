@@ -88,6 +88,14 @@ outcomes:
 ---
 # Flexbox 一维布局
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《盒模型、display、定位与层叠上下文》](ch.css.box-position.md)：Flex 项尺寸、溢出和包含块仍遵循盒模型，必须先能解释元素外部尺寸。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件以固定容器宽度、item 基准尺寸、flex factors、gap、换行和顺序矩阵建立离线证据；离线绿灯不等于真实浏览器的 Flex 算法、computed style、键盘顺序或视觉差分已验证。易变事实已于 **2026-07-17** 对照 W3C CSS Flexible Box Layout Level 1、CSS Box Alignment Level 3 与 CSS Box Sizing Level 3 一手规范核验。
 
 Flexbox 解决的是“沿一条主轴排列一组项目，并在空间变化时伸缩、换行和对齐”。工具栏、按钮组、水平元数据、纵向卡片内部结构都是典型问题。它可以换成多行，但各行分别分配主轴空间，行与行之间没有共享列轨道；如果任务要求第二行的字段与第一行列线对齐，应该进入 Grid，而不是给每项手写宽度模拟二维网格。

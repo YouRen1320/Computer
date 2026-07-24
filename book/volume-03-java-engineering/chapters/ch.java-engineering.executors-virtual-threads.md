@@ -77,6 +77,14 @@ outcomes:
 ---
 # Executor、Future、取消与虚拟线程
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《线程、Java 内存模型、同步与锁》](ch.java-engineering.threads-jmm.md)：独立完成任务与结果、取消与虚拟线程前，必须先具备「线程、Java 内存模型、同步与锁」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套 Java 25 oracle 只使用内存中的合成 FactoryCare 工单，以 latch、barrier 和 semaphore 固定并发条件；它不连接真实外部服务，不把调度概率、精确耗时或长期挂起当证据。官方资料复核日期为 **2026-07-17**。零基础试读、生产负载测试、具体数据库驱动取消能力和全书回归尚未验证，因此不能晋升为 `verified`，也不会修改 `PROGRESS.md`。
 
 上一章直接创建 `Thread`，让你看见线程生命周期、共享状态和 Java 内存模型。真实业务通常更关心“有一项维修查询要执行”，而不是“亲自管理第几个线程”。`Executor` 把任务提交与执行策略分离；`ExecutorService` 再提供结果、批量调用和关闭；`Future` 表示一次异步计算的结果协议。超时只限制等待，取消只是协作请求，关闭执行器也要等待任务响应。虚拟线程让大量等待型任务可以保持简单的同步代码，但不让 CPU 变快、不扩容数据库连接，也不修复竞态。

@@ -1765,8 +1765,8 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 完成该章的独立构建任务：为 NEW→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 工单定义转换表、guard、事件和基于业务时钟的
-      SLA deadline
+    text: 完成该章的独立构建任务：设计并实现 DemoTicket 教学投影的 CREATED→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 状态图、Java 类、guard、单元测试和基于业务时钟的
+      SLA deadline，并说明它与 FactoryCare 唯一 12 状态合同的映射和缺失边界
     covers_topic_groups:
     - architecture-state-machine
     - architecture-sla-time

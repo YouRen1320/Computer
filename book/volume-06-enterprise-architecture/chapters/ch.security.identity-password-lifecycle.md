@@ -78,6 +78,15 @@ outcomes:
 ---
 # 身份、密码哈希、凭据生命周期与恢复边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《正则、BigDecimal、日期时间、UUID 与业务值》](../../volume-02-java-objects/chapters/ch.java-oop.business-value-types.md)：独立完成身份与密码、凭据生命周期前，必须先具备「正则、BigDecimal、日期时间、UUID 与业务值」已经验证的知识与失败边界
+- [《API 资源、错误、版本、分页、缓存与幂等语义》](../../volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md)：独立完成身份与密码、凭据生命周期前，必须先具备「API 资源、错误、版本、分页、缓存与幂等语义」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套代码是纯离线、虚构数据上的生命周期模型，不是 FactoryCare 生产登录组件。仓库源代码中的训练口令、Token 与 pepper 都显式标记为 synthetic；验证输出不会打印它们，也不得替换成真实秘密。
 
 安全认证不是“有一张 users 表再比较字符串”。身份、账号、认证器、凭据和会话有不同生命周期；注册、验证、登录、改密、重置、MFA 变更、冻结、撤销和管理员恢复都是高风险状态迁移。只保护登录入口，却允许重置 Token 重放或客服绕过 MFA，攻击者会选择更弱的恢复路径。

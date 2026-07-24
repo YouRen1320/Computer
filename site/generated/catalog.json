@@ -4,12 +4,12 @@
   "title": "FactoryCare 编程百科全书",
   "edition": "2026.2-draft",
   "language": "zh-CN",
-  "input_digest": "2b4eeb90a5eefab272d753e3362075437892fb0532e29081a387e468ab1fc0a6",
+  "input_digest": "b383e5a6c4623dcdaa1864ba6b395074b8ff34389a67e53e52ad25c7f8002c76",
   "chapter_count": 255,
   "publishable_count": 0,
   "counts_by_status": {
-    "planned": 87,
-    "drafting": 168,
+    "planned": 0,
+    "drafting": 255,
     "review": 0,
     "verified": 0
   },
@@ -10196,7 +10196,7 @@
             {
               "id": "build",
               "kind": "independent-build",
-              "text": "完成该章的独立构建任务：为 NEW→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 工单定义转换表、guard、事件和基于业务时钟的 SLA deadline",
+              "text": "完成该章的独立构建任务：设计并实现 DemoTicket 教学投影的 CREATED→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 状态图、Java 类、guard、单元测试和基于业务时钟的 SLA deadline，并说明它与 FactoryCare 唯一 12 状态合同的映射和缺失边界",
               "covers_topic_groups": [
                 "architecture-state-machine",
                 "architecture-sla-time"
@@ -17094,7 +17094,7 @@
           "volume": "11",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.dependencies-build-packages"
           ],
@@ -17192,7 +17192,7 @@
           "volume": "11",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.toolchain"
           ],
@@ -17293,7 +17293,7 @@
           "volume": "11",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.types-null-safety"
           ],
@@ -17394,7 +17394,7 @@
           "volume": "11",
           "order": 4,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.control-functions"
           ],
@@ -17498,7 +17498,7 @@
           "volume": "11",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.collections-patterns"
           ],
@@ -17608,7 +17608,7 @@
           "volume": "11",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.oop-generics"
           ],
@@ -17706,7 +17706,7 @@
           "volume": "11",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.exceptions-resources"
           ],
@@ -17807,7 +17807,7 @@
           "volume": "11",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.future-cancellation"
           ],
@@ -17916,7 +17916,7 @@
           "volume": "11",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.exceptions-resources"
           ],
@@ -18023,7 +18023,7 @@
           "volume": "11",
           "order": 10,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.oop-generics"
           ],
@@ -18125,7 +18125,7 @@
           "volume": "11",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.toolchain-project"
           ],
@@ -18230,7 +18230,7 @@
           "volume": "11",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.widget-tree",
             "ch.web.accessibility-interaction"
@@ -18339,7 +18339,7 @@
           "volume": "11",
           "order": 13,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.layout-accessibility",
             "ch.dart.future-cancellation"
@@ -18454,7 +18454,7 @@
           "volume": "11",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.state-lifecycle"
           ],
@@ -18559,7 +18559,7 @@
           "volume": "11",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.navigation-forms"
           ],
@@ -18664,7 +18664,7 @@
           "volume": "11",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.state-lifecycle",
             "ch.architecture.idempotency-concurrency"
@@ -18782,7 +18782,7 @@
           "volume": "11",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.network-storage-offline",
             "ch.security.untrusted-input-xss-ssrf"
@@ -18900,7 +18900,7 @@
           "volume": "11",
           "order": 18,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.dart.testing-lints",
             "ch.flutter.architecture-state"
@@ -19012,7 +19012,7 @@
           "volume": "11",
           "order": 19,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.flutter.testing-performance"
           ],
@@ -19126,7 +19126,7 @@
           "volume": "12",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.dependencies-build-packages"
           ],
@@ -19225,7 +19225,7 @@
           "volume": "12",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.runtime-uv"
           ],
@@ -19326,7 +19326,7 @@
           "volume": "12",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.syntax-values-io"
           ],
@@ -19427,7 +19427,7 @@
           "volume": "12",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.control-flow"
           ],
@@ -19528,7 +19528,7 @@
           "volume": "12",
           "order": 5,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.functions-scope"
           ],
@@ -19638,7 +19638,7 @@
           "volume": "12",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.collections"
           ],
@@ -19740,7 +19740,7 @@
           "volume": "12",
           "order": 7,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.typing-foundations"
           ],
@@ -19842,7 +19842,7 @@
           "volume": "12",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.modules-packages"
           ],
@@ -19949,7 +19949,7 @@
           "volume": "12",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.typing-foundations"
           ],
@@ -20053,7 +20053,7 @@
           "volume": "12",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.classes-dataclass"
           ],
@@ -20159,7 +20159,7 @@
           "volume": "12",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.classes-dataclass",
             "ch.python.files-json-time"
@@ -20270,7 +20270,7 @@
           "volume": "12",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.exceptions-context"
           ],
@@ -20376,7 +20376,7 @@
           "volume": "12",
           "order": 13,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.exceptions-context"
           ],
@@ -20491,7 +20491,7 @@
           "volume": "12",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.exceptions-context"
           ],
@@ -20601,7 +20601,7 @@
           "volume": "12",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.exceptions-context"
           ],
@@ -20710,7 +20710,7 @@
           "volume": "12",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.pydantic-validation",
             "ch.foundations.http-curl"
@@ -20822,7 +20822,7 @@
           "volume": "12",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.testing-logging-debug",
             "ch.python.asyncio-cancellation",
@@ -20945,7 +20945,7 @@
           "volume": "12",
           "order": 18,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.collections"
           ],
@@ -21051,7 +21051,7 @@
           "volume": "12",
           "order": 19,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.files-json-time",
             "ch.data.numpy"
@@ -21171,7 +21171,7 @@
           "volume": "13",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
 
           ],
@@ -21269,7 +21269,7 @@
           "volume": "13",
           "order": 2,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.algebra-units"
           ],
@@ -21367,7 +21367,7 @@
           "volume": "13",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.functions-graphs"
           ],
@@ -21466,7 +21466,7 @@
           "volume": "13",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.functions-graphs"
           ],
@@ -21568,7 +21568,7 @@
           "volume": "13",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.linear-algebra"
           ],
@@ -21670,7 +21670,7 @@
           "volume": "13",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.probability-statistics",
             "ch.data.pandas"
@@ -21775,7 +21775,7 @@
           "volume": "13",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ml.problem-data-split"
           ],
@@ -21879,7 +21879,7 @@
           "volume": "13",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.linear-algebra",
             "ch.ml.preprocessing-features"
@@ -21987,7 +21987,7 @@
           "volume": "13",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.linear-algebra",
             "ch.ml.preprocessing-features"
@@ -22094,7 +22094,7 @@
           "volume": "13",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ml.supervised-learning"
           ],
@@ -22204,7 +22204,7 @@
           "volume": "13",
           "order": 11,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.math.probability-statistics",
             "ch.math.gradients"
@@ -22307,7 +22307,7 @@
           "volume": "13",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ml.neural-networks"
           ],
@@ -22412,7 +22412,7 @@
           "volume": "13",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ml.neural-networks",
             "ch.ml.metrics-validation",
@@ -22527,7 +22527,7 @@
           "volume": "13",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.pytorch.foundations"
           ],
@@ -22629,7 +22629,7 @@
           "volume": "13",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.pytorch.training"
           ],
@@ -22734,7 +22734,7 @@
           "volume": "13",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.pytorch.inference"
           ],
@@ -22844,7 +22844,7 @@
           "volume": "14",
           "order": 1,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ml.attention-sequences",
             "ch.python.collections"
@@ -22946,7 +22946,7 @@
           "volume": "14",
           "order": 2,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.model-foundations",
             "ch.pytorch.foundations",
@@ -23057,7 +23057,7 @@
           "volume": "14",
           "order": 3,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.api-prompts-cost",
             "ch.python.pydantic-validation"
@@ -23162,7 +23162,7 @@
           "volume": "14",
           "order": 4,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.api-prompts-cost",
             "ch.python.asyncio-cancellation"
@@ -23269,7 +23269,7 @@
           "volume": "14",
           "order": 5,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.structured-output",
             "ch.llm.streaming-resilience",
@@ -23381,7 +23381,7 @@
           "volume": "14",
           "order": 6,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.exceptions-context",
             "ch.llm.api-prompts-cost"
@@ -23488,7 +23488,7 @@
           "volume": "14",
           "order": 7,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.rag.ingestion-metadata"
           ],
@@ -23595,7 +23595,7 @@
           "volume": "14",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.python.collections",
             "ch.math.functions-graphs"
@@ -23698,7 +23698,7 @@
           "volume": "14",
           "order": 9,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ir.lexical-retrieval",
             "ch.math.probability-statistics"
@@ -23805,7 +23805,7 @@
           "volume": "14",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.rag.chunking-embeddings",
             "ch.data.indexes-explain"
@@ -23917,7 +23917,7 @@
           "volume": "14",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ir.evaluation",
             "ch.ir.dense-pgvector"
@@ -24029,7 +24029,7 @@
           "volume": "14",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.structured-output",
             "ch.ir.hybrid-rerank"
@@ -24137,7 +24137,7 @@
           "volume": "14",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.tool-calling",
             "ch.rag.citations-evaluation",
@@ -24257,7 +24257,7 @@
           "volume": "14",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.streaming-resilience",
             "ch.rag.citations-evaluation"
@@ -24365,7 +24365,7 @@
           "volume": "14",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.llm.tool-calling",
             "ch.agent.langchain"
@@ -24473,7 +24473,7 @@
           "volume": "14",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.agent.langgraph",
             "ch.rag.security-observability",
@@ -24596,7 +24596,7 @@
           "volume": "15",
           "order": 1,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.cli-streams-exit-codes"
           ],
@@ -24698,7 +24698,7 @@
           "volume": "15",
           "order": 2,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.linux-services",
             "ch.foundations.http-curl"
@@ -24807,7 +24807,7 @@
           "volume": "15",
           "order": 3,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.network-diagnostics",
             "ch.foundations.docker-basics"
@@ -24911,7 +24911,7 @@
           "volume": "15",
           "order": 4,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.docker-production"
           ],
@@ -25015,7 +25015,7 @@
           "volume": "15",
           "order": 5,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.compose-services"
           ],
@@ -25123,7 +25123,7 @@
           "volume": "15",
           "order": 6,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.foundations.git-collaboration-security",
             "ch.foundations.dependencies-build-packages"
@@ -25229,7 +25229,7 @@
           "volume": "15",
           "order": 7,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.nginx-tls",
             "ch.release.ci-quality"
@@ -25345,7 +25345,7 @@
           "volume": "15",
           "order": 8,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.docker-production",
             "ch.release.ci-quality",
@@ -25456,7 +25456,7 @@
           "volume": "15",
           "order": 9,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.compose-services",
             "ch.architecture.observability-slo"
@@ -25565,7 +25565,7 @@
           "volume": "15",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.logs-health"
           ],
@@ -25669,7 +25669,7 @@
           "volume": "15",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.compose-services",
             "ch.data.transactions-locking",
@@ -25778,7 +25778,7 @@
           "volume": "15",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.metrics-traces-slo",
             "ch.ops.backup-recovery",
@@ -25887,7 +25887,7 @@
           "volume": "15",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.release.artifacts-promotion",
             "ch.ops.backup-recovery",
@@ -26003,7 +26003,7 @@
           "volume": "15",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.metrics-traces-slo",
             "ch.release.deployment-migrations"
@@ -26119,7 +26119,7 @@
           "volume": "15",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.capacity-performance"
           ],
@@ -26226,7 +26226,7 @@
           "volume": "15",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.ops.incident-dr",
             "ch.architecture.system-design",
@@ -26396,7 +26396,7 @@
           "volume": "15",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "prerequisites": [
             "ch.release.factorycare-acceptance",
             "ch.foundations.ai-assisted-verification",

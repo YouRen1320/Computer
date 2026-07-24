@@ -78,6 +78,15 @@ outcomes:
 ---
 # Origin、SameSite、CORS 与 CSRF
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Cookie、Session、认证状态与固定攻击模型》](ch.security.cookie-session-model.md)：独立完成Origin 与 CORS、SameSite 与 CSRF前，必须先具备「Cookie、Session、认证状态与固定攻击模型」已经验证的知识与失败边界
+- [《安全目标、资产、信任边界与威胁建模》](ch.security.threat-model-trust-boundaries.md)：独立完成Origin 与 CORS、SameSite 与 CSRF前，必须先具备「安全目标、资产、信任边界与威胁建模」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产只计算合成 HTTP 请求/响应和内存副作用，不监听端口、不发网络请求、不打开浏览器、不接触真实 Cookie/Token。模型通过只说明明示的浏览器边界不变量成立，不代表真实部署已防御所有跨站攻击。
 
 浏览器安全里最容易混淆的三句话是：“跨域被浏览器拦了，所以接口安全”“开 CORS 就能调通，也就授权了”“Cookie 有 SameSite，所以不用 CSRF Token”。三句都把不同层混在一起。

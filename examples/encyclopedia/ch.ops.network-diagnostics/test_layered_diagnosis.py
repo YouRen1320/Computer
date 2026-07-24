@@ -16,6 +16,12 @@ class LayeredDiagnosisTest(unittest.TestCase):
         self.assertEqual("http-upstream", earliest_failure(ProbeEvidence(True, True, True, 502)))
         self.assertEqual("none", earliest_failure(ProbeEvidence(True, True, True, 204)))
 
+    def test_proxy_selection_and_sni_hostname_have_explicit_evidence(self) -> None:
+        intercepted = ProbeEvidence(True, False, False, None, proxy_selected=True, proxy_ok=False)
+        self.assertEqual("proxy", earliest_failure(intercepted))
+        hostname_mismatch = ProbeEvidence(True, True, True, None, tls_hostname_ok=False)
+        self.assertEqual("tls-hostname", earliest_failure(hostname_mismatch))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -86,6 +86,15 @@ outcomes:
 ---
 # DOM 树、查询、创建、更新与删除
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《数组、对象、Map、Set 与不可变更新》](ch.js.collections.md)：节点列表、数据映射和批量更新需要集合迭代与不可变输入边界。
+- [《语义 HTML、文档结构与元数据》](../../volume-07-web-platform/chapters/ch.web.semantic-html.md)：DOM 变更必须保持正确的文档结构和原生元素语义。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 HTML 源码经过解析后成为节点树；JavaScript 查询和修改的是当前 DOM，不是源文件字符串。选择器少一个 `#` 可能得到 `null`，循环读取 live collection 时删除节点可能跳项，把 `checked="false"` 当作 false 会得到相反状态，而把工单描述拼进 `innerHTML` 可能把数据解释为标签。DOM 代码的可靠性来自结构预言：每次操作后，节点数量、顺序、文本、属性/property 与语义父子关系都必须可检查。
 
 本章只处理已知结构上的查询、遍历、创建、更新与删除。事件传播、表单提交、异步请求和框架虚拟 DOM 留给后续章节。FactoryCare DOM 是服务端快照的展示，不决定工单能否迁移状态。

@@ -10,7 +10,7 @@ public final class InMemoryWorkOrderQuery implements WorkOrderQuery {
     public Optional<String> find(long id, String tenantId) {
         calls.incrementAndGet();
         if (id == 42 && "tenant-a".equals(tenantId)) {
-            return Optional.of("WO-42:OPEN");
+            return Optional.of("WO-42:CREATED");
         }
         return Optional.empty();
     }

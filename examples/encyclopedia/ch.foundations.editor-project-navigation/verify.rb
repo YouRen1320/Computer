@@ -41,6 +41,21 @@ Dir.mktmpdir("factorycare-editor-example-") do |directory|
   root = temp.join("sample-project")
   FileUtils.cp_r(SOURCE, root, preserve: false)
 
+  # `target/` is intentionally ignored by Git. Recreate the derived candidate
+  # only inside the disposable copy so the fixture remains reproducible.
+  generated = root.join("target/generated-sources/com/factorycare/navigation/DeviceStatusFormatter.java")
+  generated.dirname.mkpath
+  generated.write(<<~JAVA)
+    package com.factorycare.navigation;
+
+    final class DeviceStatusFormatter {
+        // DERIVED_DO_NOT_EDIT: generated navigation decoy
+        static String formatStatus(String status) {
+            return "generated=" + status;
+        }
+    }
+  JAVA
+
   expected_files = [
     ".factorycare-root",
     "src/main/java/com/factorycare/navigation/DeviceStatusFormatter.java",

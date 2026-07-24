@@ -12,3 +12,4 @@ fi
 
 grep -F "plan-error=missing -X" "$TMP_ROOT/actual.out" >/dev/null
 echo "PSQL EXERCISE STARTER EXPECTED FAILURE"
+exit 41

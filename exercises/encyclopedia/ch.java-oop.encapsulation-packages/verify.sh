@@ -23,6 +23,7 @@ direct_status=$?
 set -e
 if [[ $direct_status -eq 0 ]]; then
   echo "STARTER EXPECTED FAILURE reason=public-field-still-accessible; complete TODO"
+  exit 41
 else
   grep -Fq "compiler.err.report.access: status, private, com.factorycare.device.domain.Device" "$BUILD_DIR/direct.err"
   echo "EXERCISE PASS assertions=8 expected_compile_failures=1 java=$JAVA_VERSION"

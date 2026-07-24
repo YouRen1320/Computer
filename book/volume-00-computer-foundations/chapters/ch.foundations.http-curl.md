@@ -80,6 +80,14 @@ outcomes:
 ---
 # HTTP 报文、方法、状态码、Header、Body 与 curl
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《IP、DNS、端口、TCP 与 TLS 分层》](ch.foundations.network-layers.md)：独立完成HTTP 报文、curl 验证前，必须先具备「IP、DNS、端口、TCP 与 TLS 分层」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 上一章走到 TLS 为止：名称已经解析，TCP 已连接，必要时加密通道也已建立。但“通道能用”不等于“请求正确”，更不等于“业务成功”。HTTP 解决的是另一组问题：客户端想对哪个目标做什么，携带哪些元数据与内容；服务器如何用状态码、响应字段和内容表达处理结果。
 
 本章不依赖 Spring、浏览器、Vue 或具体后端框架。我们直接阅读 HTTP 请求与响应，用 curl 把 Header、Body、状态码、耗时、stderr 和进程退出码分开保存。这样，看到“失败”时可以回答两个独立问题：是否收到了 HTTP 响应？若收到了，响应表达的是成功、客户端错误还是服务端错误？

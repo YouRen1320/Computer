@@ -47,10 +47,10 @@ tools:
   state: observed-current
   required_from: R2
   command:
-  - python3
+  - dpy
   - --version
   expected_version_prefix: Python 3.14.3
-  note: 仅记录当前 WeasyPrint 相关 Python 表面；R2 必须锁定实际解释器与依赖
+  note: 记录实际运行 WeasyPrint 确定性入口的文档工具箱 Python；入口还会拒绝 WeasyPrint/pydyf 版本漂移
 - id: ruby
   state: observed-current
   required_from: R1-A

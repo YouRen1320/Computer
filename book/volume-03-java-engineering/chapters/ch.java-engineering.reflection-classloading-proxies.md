@@ -82,6 +82,15 @@ outcomes:
 ---
 # 反射、类加载边界与动态代理
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《注解声明、目标、保留策略与元数据》](ch.java-engineering.annotations-metadata.md)：独立完成反射与类加载、动态代理前，必须先具备「注解声明、目标、保留策略与元数据」已经验证的知识与失败边界
+- [《字节流、字符流、资源所有权与 try-with-resources》](ch.java-engineering.io-resource-lifecycle.md)：独立完成反射与类加载、动态代理前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和工件是作者级学习材料与可重复验证，不自动更新 `PROGRESS.md`，也不代表学习者已经独立通过阶段门。
 
 普通 Java 代码在编译时直接写出类型和方法；反射则在运行时拿到 `Class`、`Method`、`Field` 等元数据，再检查或调用未知类型。类加载器决定同一串二进制名称最终由哪份字节定义，JDK 动态代理则为一组接口在运行时生成代理类，把每次调用交给 `InvocationHandler`。三者共同支撑注解驱动框架、插件发现、序列化和横切行为，也共同放大访问、异常、类身份与安全风险。

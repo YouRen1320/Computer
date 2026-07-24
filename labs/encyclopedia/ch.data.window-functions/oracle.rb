@@ -42,9 +42,9 @@ rows.group_by { |row| row["technician"] }.sort.each do |technician, partition|
   ordered = partition.sort_by { |row| [row["created_at"], row["id"]] }
   completed = 0
   ordered.each_with_index do |row, index|
-    completed += 1 if row["status"] == "DONE"
+    completed += 1 if row["status"] == "CLOSED"
     correct << [technician, row["id"], index + 1, completed]
-    peer_total = ordered.count { |candidate| candidate["status"] == "DONE" && candidate["created_at"] <= row["created_at"] }
+    peer_total = ordered.count { |candidate| candidate["status"] == "CLOSED" && candidate["created_at"] <= row["created_at"] }
     default_range << [technician, row["id"], peer_total]
   end
   partition.group_by { |row| row["created_at"] }.each_value do |peers|

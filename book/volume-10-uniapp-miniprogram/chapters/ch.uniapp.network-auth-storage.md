@@ -92,6 +92,15 @@ outcomes:
 ---
 # 网络、认证、存储与多环境配置
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《uni-app 工具链、页面、路由与项目结构》](ch.uniapp.toolchain-pages.md)：请求与配置需要在可构建的小程序目标中验证。
+- [《Spring Security 登录、退出、密码编码与 Session 防护》](../../volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md)：客户端登录态、会话过期和未认证响应必须服从服务端已验证的认证合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产使用纯 TypeScript/JavaScript 风格状态模型与 Node.js 假服务器验证环境矩阵、HTTP 映射、过期凭据、日志脱敏和损坏存储；它没有访问真实微信请求域名、OIDC Provider、平台安全存储或 FactoryCare 服务。因此，绿灯不能证明 TLS、域名白名单、PKCE 回调、真实 token 轮换和真机存储安全已经通过。
 
 移动端“请求失败”至少可能来自六层：构建时选错环境、微信域名白名单拒绝、DNS/TLS/超时等传输错误、服务器 HTTP 错误、认证过期，以及本地缓存损坏。若把它们都映射成“网络异常”，用户无法恢复，开发者也会在错误层排查。本章建立一个小而明确的 API 客户端：只允许预注册环境，区分传输与 HTTP，凭据有状态和期限，存储有版本与损坏策略，日志永不出现敏感值。

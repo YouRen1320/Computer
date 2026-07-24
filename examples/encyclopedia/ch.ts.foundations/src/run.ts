@@ -10,7 +10,7 @@ const orders: {
   status: string;
   assignee?: string;
 }[] = [
-  { id: "WO-1", status: "OPEN", assignee: "Lin" },
+  { id: "WO-1", status: "CREATED", assignee: "Lin" },
   { id: "WO-2", status: "CLOSED" }
 ];
 
@@ -20,6 +20,6 @@ const labels = summarizeOrders(
 );
 
 console.log("labels=" + labels.join("|"));
-console.log("transition=" + describeTransition(["OPEN", "CLOSED"]));
+console.log("transition=" + describeTransition(["CREATED", "CLOSED"]));
 console.log("numeric=" + normalizeNumericId(17));
 console.log("TYPESCRIPT_FOUNDATIONS_PASS");

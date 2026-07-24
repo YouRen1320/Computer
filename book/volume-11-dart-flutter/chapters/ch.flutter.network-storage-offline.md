@@ -98,10 +98,17 @@ outcomes:
   - architecture.idempotency-consistency
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 17bdfc4dc88ff543cb06dadae8f7ecfc4dabd4a0a3ef6053db3003e36a2fd129
 ---
 # 网络取消、安全存储、缓存与离线队列
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《状态、生命周期、mounted、Key 与异步更新》](ch.flutter.state-lifecycle.md)：请求和队列结果只能由仍存活的状态所有者提交到 UI。
+- [《幂等键、乐观并发、重复提交与重放》](../../volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md)：离线重放的幂等键、重复响应和冲突由服务端一致性合同约束。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 一次“提交工单”可能经历断网、超时、页面销毁、进程被杀、重新登录与重复重放。可靠客户端不能只写一个 `await http.post(...)`。它必须把网络工作、凭据、缓存和待执行命令分别建模，并与服务端约定重复请求的语义。本章从零建立这些合同；示例不绑定某个 HTTP、数据库或安全存储插件。
 

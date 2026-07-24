@@ -90,6 +90,15 @@ outcomes:
 
 # 结构化输出、Schema 与运行时校验
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《模型 API、消息、提示、Token 与成本》](ch.llm.api-prompts-cost.md)：结构化响应仍是模型 API 请求，必须继承模型、消息和错误合同。
+- [《Pydantic 模型、校验、序列化与错误》](../../volume-12-python-data/chapters/ch.python.pydantic-validation.md)：Schema 建模、严格校验与错误定位需要 Pydantic 2 能力。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 模型生成的是概率性输出，业务程序需要的是有字段、类型、范围和版本的值。结构化输出的任务不是让JSON“看起来整齐”，而是建立从供应商响应到可信业务输入的门：先判断响应是否完成、是否拒绝，再解析JSON，再按版本化Schema校验，只有全部通过的对象才进入业务函数。解析失败不是一个默认高优先级工单，缺字段也不是“让程序猜一下”。
 
 本章先讲供应商无关的Schema合同，再标注截至2026-07-24的OpenAI Structured Outputs具体表面。示例使用Pydantic 2和本地fixture，不调用真实模型。供应商宣称的Schema遵循能力能够减少格式失败，却不会替应用完成响应状态判断、版本迁移、业务授权、敏感数据处理和领域不变量校验。

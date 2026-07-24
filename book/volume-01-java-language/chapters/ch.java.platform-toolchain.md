@@ -81,6 +81,14 @@ outcomes:
 ---
 # JDK、JVM、源码、class 文件、编译与运行
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：独立完成Java 平台组成、编译运行链前，必须先具备「依赖、包管理、构建生命周期与可重复性」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 本章先解决一个很实际的问题：你写下的 `ToolchainSmoke.java` 只是文本，为什么计算机最后能打印一行结果？中间究竟是谁读源码、谁生成文件、谁启动进程？如果命令失败，怎样判断错误发生在“编译前”“编译时”还是“运行时”？
 
 这一条运行链是后续所有 Java 学习的地基。先看懂它，再学变量、分支、类和 Spring，遇到红色日志时才不会只能把整段错误交给 AI 猜。

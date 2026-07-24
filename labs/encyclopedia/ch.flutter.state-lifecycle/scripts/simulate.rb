@@ -28,4 +28,14 @@ oracle = data.fetch("oracle")
 abort "visible result drift" unless visible == oracle.fetch("visible_items")
 abort "commit drift" unless committed == oracle.fetch("committed_operations")
 abort "ignore drift" unless ignored == oracle.fetch("ignored_operations")
-puts "PASS: latest request wins and stale completion cannot overwrite it"
+
+identity = data.fetch("list_identity")
+state_by_key = identity.fetch("before").to_h do |item|
+  [item.fetch("key"), item.fetch("local_state")]
+end
+reordered = identity.fetch("reordered_keys").map do |key|
+  { "key" => key, "local_state" => state_by_key.fetch(key) }
+end
+abort "stable-key state drift after reorder" unless reordered == identity.fetch("oracle")
+
+puts "PASS: latest request wins; stable keys keep local state with the business item"

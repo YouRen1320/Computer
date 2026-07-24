@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: d063db1777fb8ab1c3e68aeb3d705537816c50d7f49eb2b8268246bb5f729443
+generated_spec_digest: 558c2404ef63a5640d3b72b4feb13590911ccfeff046d3d59930bf3930839e3a
 edition: 2026.2-draft
 catalog_id: factorycare-encyclopedia
 canonical: true
@@ -15058,7 +15058,7 @@ chapters:
     verification_mode: oral-explanation
   - id: build
     kind: independent-build
-    text: 完成该章的独立构建任务：为 NEW→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 工单定义转换表、guard、事件和基于业务时钟的 SLA deadline
+    text: 完成该章的独立构建任务：设计并实现 DemoTicket 教学投影的 CREATED→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 状态图、Java 类、guard、单元测试和基于业务时钟的 SLA deadline，并说明它与 FactoryCare 唯一 12 状态合同的映射和缺失边界
     covers_topic_groups:
     - architecture-state-machine
     - architecture-sla-time
@@ -15097,7 +15097,7 @@ chapters:
   path: book/volume-06-enterprise-architecture/chapters/ch.architecture.workflow-state-sla.md
   recommended_after:
   - ch.security.audit-events-privacy
-  spec_digest: aacc460b3f274c778d24e20d7827afa0dde35a0fe84e58b3370133035d9d4607
+  spec_digest: 27ef16d3d1a50ee81409e5595d52733f52286012c0fe35cd47f0ff5c7ded96c7
   route_tags:
   - zero-base
   - accelerated-48
@@ -25635,7 +25635,7 @@ chapters:
   role: foundation
   responsibility: 建立 Dart SDK、dart CLI、pubspec、依赖锁定和源码入口的可重复运行链，不在本章教授语言类型或 Flutter。
   level: L1
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: dart-sdk-cli
@@ -25772,7 +25772,7 @@ chapters:
   order: 1
   path: book/volume-11-dart-flutter/chapters/ch.dart.toolchain.md
   recommended_after: []
-  spec_digest: '0978158092ac2cc419395fe3c16ae427ff65de81a86f25973794d0daffab24ff'
+  spec_digest: 924382e42d07fc5e5b87f5002448ff4e9481c108447237a5ad40622bd291745d
   route_tags:
   - zero-base
   - accelerated-48
@@ -25783,7 +25783,7 @@ chapters:
   role: foundation
   responsibility: 建立 Dart 值、变量、静态类型、类型推断、运算和 sound null safety 模型，不提前使用集合、类或异步。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-values-types
@@ -25927,7 +25927,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.types-null-safety.md
   recommended_after:
   - ch.dart.toolchain
-  spec_digest: b64d9b360c9e66e4bdd672652422fc1be8391234d6f37f4214c33fd405045a90
+  spec_digest: 8565419fd86788fd91c40de8bc5d94972669c6aa436eace701f0f5ebce849503
   route_tags:
   - zero-base
   - accelerated-48
@@ -25938,7 +25938,7 @@ chapters:
   role: foundation
   responsibility: 用分支、模式化 switch、有界循环和函数合同表达同步规则，不在本章引入集合高阶操作或类。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-control-flow
@@ -26078,7 +26078,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.control-functions.md
   recommended_after:
   - ch.dart.types-null-safety
-  spec_digest: d1d105e4480f640b5e865129ac45161937dbfabedb20fe05ad96f31e69c9841b
+  spec_digest: 60bc5f1989f4bb11a5ec388a41ce09bb8b9dc25393c3283dbfa05a32a0c04c11
   route_tags:
   - zero-base
   - accelerated-48
@@ -26089,7 +26089,7 @@ chapters:
   role: foundation
   responsibility: 选择 List/Map/Set/record 表达顺序、映射、唯一性与多值结果，并用模式匹配安全解构，不引入类继承。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-collections
@@ -26235,7 +26235,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.collections-patterns.md
   recommended_after:
   - ch.dart.control-functions
-  spec_digest: c6ff180935ce499c46eb6e156369370e2e16147be0893d313f446e0a0940cc39
+  spec_digest: aa7acc71bf083929c27992f688709999e922adcc147460647d1f18cd030c39de
   route_tags:
   - zero-base
   - accelerated-48
@@ -26246,7 +26246,7 @@ chapters:
   role: concept
   responsibility: 用类、构造器、封装、接口/组合、泛型、mixin 和 extension 建立对象边界，整合前置类型与集合能力但不教授异步。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-object-model
@@ -26402,7 +26402,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.oop-generics.md
   recommended_after:
   - ch.dart.collections-patterns
-  spec_digest: ddc1dbee56784204468cd1e5706a1880eb4bb24f1335717c8b8ad2868b967dcd
+  spec_digest: 9fddb5b5044204eb6b7ba751564c8f6644d7c0b93639645160f0856e58cde118
   route_tags:
   - zero-base
   - accelerated-48
@@ -26413,7 +26413,7 @@ chapters:
   role: concept
   responsibility: 区分可预期业务失败与异常，定义抛出/转换/捕获边界并用 finally 释放资源，不吞错、不在本章引入 Future。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-error-contract
@@ -26552,7 +26552,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.exceptions-resources.md
   recommended_after:
   - ch.dart.oop-generics
-  spec_digest: c92fc82a7a9de3c825b1cfad822361e0bec4f256621ab255385dc149d2384da1
+  spec_digest: 54e39b0557fde3e4e6a5b0da1caf6217675725cb13263c10f88593655e228acc
   route_tags:
   - zero-base
   - accelerated-48
@@ -26563,7 +26563,7 @@ chapters:
   role: concept
   responsibility: 解释 Future 完成/失败、async/await 恢复、超时和协作式取消，明确丢弃结果不等于取消底层工作，不教授 Stream。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-future-async
@@ -26706,7 +26706,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.future-cancellation.md
   recommended_after:
   - ch.dart.exceptions-resources
-  spec_digest: fe050cbe3c6e55408cf99b8269d9ad95de71ed453fa4e51b03d854eb0ab61461
+  spec_digest: f5eb2386543bf6fe9f84b3af019b4b0e7c58c6bd1d7d69e4f960b611225d3b35
   route_tags:
   - zero-base
   - accelerated-48
@@ -26717,7 +26717,7 @@ chapters:
   role: concept
   responsibility: 处理单订阅/广播 Stream、订阅取消、事件速率和 Isolate 消息边界，区分并发事件流与 CPU 隔离，不承诺不存在的通用背压。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: dart-stream-lifecycle
@@ -26875,7 +26875,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.streams-isolates.md
   recommended_after:
   - ch.dart.future-cancellation
-  spec_digest: 8f5eb7471b6795c430ae6bfc80bc296ca1aa29997fe78086a57f3b06739756c1
+  spec_digest: ed3d78825fc48af9d6dce0f7acf5dec5bd77e9aa28025713565a6f35b1b38056
   route_tags:
   - zero-base
   - accelerated-48
@@ -26885,7 +26885,7 @@ chapters:
   role: practice
   responsibility: 用 dart test、可信断言、可控替身和静态分析验证同步/异常合同，组合 format/analyze/test 门禁，不在本章测试 Flutter Widget。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: dart-unit-testing
@@ -27039,7 +27039,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.dart.testing-lints.md
   recommended_after:
   - ch.dart.streams-isolates
-  spec_digest: 8178320cb1defed6050d7dd9a902239d197686e1285d023670c903d664aa91c7
+  spec_digest: 8ffdc12a59bb6820d4afb636af6edad9351e3b01346454ff55ea46d724718b5c
   route_tags:
   - zero-base
   - accelerated-48
@@ -27050,7 +27050,7 @@ chapters:
   role: practice
   responsibility: 建立 Flutter SDK、项目目录、目标设备、run/build、hot reload/restart 与 DevTools 观察链，不在本章教授 Widget 组合。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-sdk-project
@@ -27193,7 +27193,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.toolchain-project.md
   recommended_after:
   - ch.dart.testing-lints
-  spec_digest: 1e6f420a103bb20b7327d2fd0c879e2c585ac0d9c32b0ec2965a94dfd8129145
+  spec_digest: 3ad373787a2d1529bfa4e041ca84bec12b87992494612313bc0c7d5f52dc5e2b
   route_tags:
   - zero-base
   - accelerated-48
@@ -27204,7 +27204,7 @@ chapters:
   role: practice
   responsibility: 用 MaterialApp、Stateless/Stateful Widget、组合和 BuildContext 构建可解释 Widget 树，整合工具链与 Dart 对象能力，不提前教授复杂布局或异步生命周期。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-widget-composition
@@ -27352,7 +27352,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.widget-tree.md
   recommended_after:
   - ch.flutter.toolchain-project
-  spec_digest: 15e4e7068ea712230c15c49e0758f88e8fc5860749d65ad5e5146f562d7d79db
+  spec_digest: 68f2943669f0289f7388fcbbf9837e172cd36cc692356762c5040c2ce64d93a8
   route_tags:
   - zero-base
   - accelerated-48
@@ -27363,7 +27363,7 @@ chapters:
   role: practice
   responsibility: 按 constraints-down/sizes-up 建立 Row/Column/Flex/Stack/滚动布局，适配尺寸和文本缩放，并落实语义、键盘/触控与减少动效。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-constraint-layout
@@ -27527,7 +27527,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.layout-accessibility.md
   recommended_after:
   - ch.flutter.widget-tree
-  spec_digest: c644b85fe44da0619e53ed8ea2ab9164a843469302238ab20f32eb411f58b683
+  spec_digest: d5dade4008d3b7a1bf32ec35d0cbf755c697d05c444194713427084882f496ee
   route_tags:
   - zero-base
   - accelerated-48
@@ -27538,7 +27538,7 @@ chapters:
   role: practice
   responsibility: 管理 State 生命周期、本地状态、mounted、Key 和异步回调所有权，保证销毁后不更新 UI，并明确 mounted 不能取消请求。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-state-lifecycle
@@ -27709,7 +27709,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.state-lifecycle.md
   recommended_after:
   - ch.flutter.layout-accessibility
-  spec_digest: 7676dc6d9147f725c09b6f73618127a5500ac33ac1b24c1fe0aa6d6c220e8148
+  spec_digest: 73db1c71a0b5bcc13a26b53b039d9b9a489ac7757bbe9101e4d18db2159bed0b
   route_tags:
   - zero-base
   - accelerated-48
@@ -27720,7 +27720,7 @@ chapters:
   role: practice
   responsibility: 建立页面路由、参数、返回结果、表单状态和校验合同，处理深链接与返回栈，不在本章选择全局状态库。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-navigation
@@ -27872,7 +27872,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.navigation-forms.md
   recommended_after:
   - ch.flutter.state-lifecycle
-  spec_digest: 52f36bf28185c6a0b2a908cbe4f89de539db18f7129669d3e1a33743f18495e5
+  spec_digest: b15c68f8e2b71f406b88cfb1f41a13f61a5f4675489471dbb34cab11aa5885f7
   route_tags:
   - zero-base
   - accelerated-48
@@ -27883,7 +27883,7 @@ chapters:
   role: practice
   responsibility: 按 presentation/application/domain/data 划分依赖方向，为本地、共享与服务端状态选择所有者和可替换接口，不绑定单一状态管理品牌。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-layer-boundary
@@ -28032,7 +28032,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.architecture-state.md
   recommended_after:
   - ch.flutter.navigation-forms
-  spec_digest: 5a42bf59bd52a6ea2b2a45f2f1d49f51664b52ddfaab49dce1df3dbb3ce78942
+  spec_digest: 75c9740dd5ec54fbbd3afa736db647d8c604c11a02d7cbffea205aa91a3715d2
   route_tags:
   - zero-base
   - accelerated-48
@@ -28043,7 +28043,7 @@ chapters:
   role: practice
   responsibility: 在 Flutter 中实现可取消 HTTP、认证安全存储、版本化缓存和幂等离线队列，复用服务端幂等合同而不依赖 uni-app 实现。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-network-storage
@@ -28220,7 +28220,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.network-storage-offline.md
   recommended_after:
   - ch.flutter.architecture-state
-  spec_digest: 17bdfc4dc88ff543cb06dadae8f7ecfc4dabd4a0a3ef6053db3003e36a2fd129
+  spec_digest: 0be6ccf7182fa4e2cea385545d17ae93ce9e5d6e1f7cec0bd75e0d9ee5c96a97
   route_tags:
   - zero-base
   - accelerated-48
@@ -28231,7 +28231,7 @@ chapters:
   role: practice
   responsibility: 通过插件与平台通道使用相机、扫码和定位，显式建模授权、拒绝、取消和不可用路径，不把平台异常泄漏为任意字符串。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-device-permission
@@ -28408,7 +28408,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.device-apis.md
   recommended_after:
   - ch.flutter.network-storage-offline
-  spec_digest: 1cac3c66efb06a255e6f9c2478f1c998ae0828cd63f132727c63025f29a7c554
+  spec_digest: ffead2b42996c89a5d593199bb43dbfffb311c0c9dc51094a8f86b5687027fed
   route_tags:
   - zero-base
   - accelerated-48
@@ -28419,7 +28419,7 @@ chapters:
   role: practice
   responsibility: 组合 Dart 单元、Widget、集成和 Golden 测试保护行为，用 DevTools 定位重建、掉帧和内存保留，控制 Golden 与设备差异。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-test-levels
@@ -28588,7 +28588,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.testing-performance.md
   recommended_after:
   - ch.flutter.device-apis
-  spec_digest: ec50dd1f5752289956529468947f6040e978b746d9df3c30f189d9b34e034588
+  spec_digest: 0a03716b052b48b50efadcaf131b0a688948938591793d00dc121b61905747fd
   route_tags:
   - zero-base
   - accelerated-48
@@ -28599,7 +28599,7 @@ chapters:
   role: practice
   responsibility: 生成可追溯 Android/iOS 制品，管理签名与环境配置，保存符号并验证崩溃监控和回退，不在本章教授通用 CI。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: flutter-build-sign-release
@@ -28755,7 +28755,7 @@ chapters:
   path: book/volume-11-dart-flutter/chapters/ch.flutter.release-monitoring.md
   recommended_after:
   - ch.flutter.testing-performance
-  spec_digest: 8970e035634a75ff13a1733841a85374a8177974f1e1d70c0504b25c81c796e0
+  spec_digest: 47bf2fad7000c3c2c8946547f4efd61fda1fa46423dc33424dc92dfd8272c3ed
   route_tags:
   - zero-base
   - accelerated-48
@@ -28766,7 +28766,7 @@ chapters:
   role: foundation
   responsibility: 建立 CPython、uv、虚拟环境、pyproject 与锁文件的可重复运行链，区分解释器、环境和包来源，不教授 Python 语法。
   level: L1
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: python-runtime-environment
@@ -28904,7 +28904,7 @@ chapters:
   order: 1
   path: book/volume-12-python-data/chapters/ch.python.runtime-uv.md
   recommended_after: []
-  spec_digest: fe11c4fc0bf622a9c7f32f6f23f858d1acef7f01b44fc4229733473dbde8caec
+  spec_digest: 2b44fe8ac2430e2cbc0e8cff138108eccdf923f4b45a3a4080fd5e192cfc82af
   route_tags:
   - zero-base
   - accelerated-48
@@ -28915,7 +28915,7 @@ chapters:
   role: foundation
   responsibility: 教会读者按缩进读取 Python 语句，用名称绑定、基础对象、表达式、print/input 和类型观察验证程序，不提前使用条件或函数。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-syntax-bindings
@@ -29059,7 +29059,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.syntax-values-io.md
   recommended_after:
   - ch.python.runtime-uv
-  spec_digest: bfc5313e51203e51325d10510e7cb7482590bfa1c6d2346ca1dcd740577934aa
+  spec_digest: 51cf034fd9d726bbb1aa6730bda17a15c44bb09cbb3f3343519b3d720eb39a4d
   route_tags:
   - zero-base
   - accelerated-48
@@ -29070,7 +29070,7 @@ chapters:
   role: foundation
   responsibility: 用布尔条件、if/elif/else、for/while、range 和 break/continue 表达选择与重复，不使用函数或推导式隐藏控制流程。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-branching
@@ -29211,7 +29211,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.control-flow.md
   recommended_after:
   - ch.python.syntax-values-io
-  spec_digest: fb9a870329e0fecb3577a6cc76533b372182a465f048332c306a67e1ee702b3d
+  spec_digest: 99f0d607a7d13206e2a7b69b386a0f4e3d4fa17d124027dca179d026a488fa31
   route_tags:
   - zero-base
   - accelerated-48
@@ -29222,7 +29222,7 @@ chapters:
   role: foundation
   responsibility: 用函数、位置/关键字参数、默认值、返回和 LEGB 作用域封装单一规则，不引入装饰器、生成器或类。
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-function-contract
@@ -29362,7 +29362,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.functions-scope.md
   recommended_after:
   - ch.python.control-flow
-  spec_digest: 6b01bbfcb8b96a5edf61bedd2ea8ce7c871689c61de43617e6b2c9dbf36df8b5
+  spec_digest: f4828b50427dd62998572fed84885d5658c8672e8111173ddace4eebc1112fcf
   route_tags:
   - zero-base
   - accelerated-48
@@ -29373,7 +29373,7 @@ chapters:
   role: foundation
   responsibility: 选择 list/tuple/dict/set 表达顺序、不可变记录、映射和唯一性，用切片、遍历和可读推导式转换数据，整合 Python 基础语言能力。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-core-collections
@@ -29531,7 +29531,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.collections.md
   recommended_after:
   - ch.python.functions-scope
-  spec_digest: 19efa4e4380e037704ec12be6747baf89ae1607a269dea837669817ada1b6854
+  spec_digest: 5ac99d27f5e81a63324748a385d333ada61e04e4dd716af528d4750c6d6f70c5
   route_tags:
   - zero-base
   - accelerated-48
@@ -29542,7 +29542,7 @@ chapters:
   role: concept
   responsibility: 为函数和集合边界添加基础类型标注、联合和 Optional，并用类型检查器定位静态错误，明确标注不是运行时校验。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: python-type-annotations
@@ -29687,7 +29687,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.typing-foundations.md
   recommended_after:
   - ch.python.collections
-  spec_digest: 4b46d9cacae5978c5b10fbb04b4f0fb42f5245324a116ce38df7adeb346a4a2e
+  spec_digest: da9f30fc4d1419fd1396adc2a7f2350d4e8ddd1ad40da3ef5282402bb18379a7
   route_tags:
   - zero-base
   - accelerated-48
@@ -29698,7 +29698,7 @@ chapters:
   role: foundation
   responsibility: 用模块、包、绝对/相对导入和 main 入口组织代码，解释导入执行与循环导入，不在本章读写文件。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-module-import
@@ -29843,7 +29843,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.modules-packages.md
   recommended_after:
   - ch.python.typing-foundations
-  spec_digest: d238a05780f7429e097cef6dddbb0d64f9193757228202bc65e0052466d74deb
+  spec_digest: 466f721f18890938779576d7153b30adf278839d5bf96bb646ec4b494730f3f1
   route_tags:
   - zero-base
   - accelerated-48
@@ -29854,7 +29854,7 @@ chapters:
   role: concept
   responsibility: 用 pathlib 和显式编码读写文本/JSON，执行原子写入并规范化时区感知时间，不在本章定义异常转换策略。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-files-json
@@ -30010,7 +30010,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.files-json-time.md
   recommended_after:
   - ch.python.modules-packages
-  spec_digest: 7d8b1afe34eaaa652c8b51db43b82c645192503d426325bf7fa18b01a5fb1a3e
+  spec_digest: 45b00e6e115480fb95f89f90c89772ee8c9ba210b00fb3f623eadc485e1fe18a
   route_tags:
   - zero-base
   - accelerated-48
@@ -30021,7 +30021,7 @@ chapters:
   role: concept
   responsibility: 用类、构造、封装、dataclass 和 enum 表达具有不变量的数据对象，理解方法解析和组合边界，不提前教授 Protocol 或泛型。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-class-model
@@ -30172,7 +30172,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.classes-dataclass.md
   recommended_after:
   - ch.python.files-json-time
-  spec_digest: dd290164ed4a8130617610e5d39be31fc3272cb57ccd8229157f0ea38800af6b
+  spec_digest: 55f2067b0febf0aabf03d9288d1c2a0fb624de53996242785c96336d1a8023ca
   route_tags:
   - zero-base
   - accelerated-48
@@ -30183,7 +30183,7 @@ chapters:
   role: concept
   responsibility: 用 TypeVar/泛型、Protocol 和 Callable 表达可替换依赖与输入输出关系，整合 Python 语言、类型和对象能力，不依赖继承注册。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-generics-callable
@@ -30335,7 +30335,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.protocol-generics.md
   recommended_after:
   - ch.python.classes-dataclass
-  spec_digest: cb4acd76fe6c695568c3b9c0e3508827886dcdb12126a43052b5c2d3e2c47a89
+  spec_digest: 2398e332366e3d08b0794bf42933418a73089a908f87ecc021b5d579ad729045
   route_tags:
   - zero-base
   - accelerated-48
@@ -30345,7 +30345,7 @@ chapters:
   role: concept
   responsibility: 区分业务失败与异常，定义抛出、转换、链式和清理边界，并用 with/contextmanager 保证文件等资源释放，整合 IO 与错误能力。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-exception-contract
@@ -30512,7 +30512,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.exceptions-context.md
   recommended_after:
   - ch.python.protocol-generics
-  spec_digest: c1cf79c915850657963cbc24e0b8c10bf693221030670f7cd6ffbd64bddb8881
+  spec_digest: 3a35286dd0656d1a83f472ad2397abaa50d4355afe00b34b231904be59dbb505
   route_tags:
   - zero-base
   - accelerated-48
@@ -30523,7 +30523,7 @@ chapters:
   role: concept
   responsibility: 解释 iterable/iterator/generator 的惰性与一次性消费，并用保持元数据的装饰器包装函数合同，不把装饰器作为隐藏依赖容器。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-iterator-generator
@@ -30677,7 +30677,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.iterators-decorators.md
   recommended_after:
   - ch.python.exceptions-context
-  spec_digest: 215e5ffed3bb388af91ba8f137f0108e115b6f0b1db8b9546241b43bc4aa203e
+  spec_digest: a84f291faaf06b54337df44bb8ee765b1ff6d60ac9c98f2410707044c97960e9
   route_tags:
   - zero-base
   - accelerated-48
@@ -30687,7 +30687,7 @@ chapters:
   role: practice
   responsibility: 用 pytest、fixture、参数化和受控替身建立可信单元测试，并用结构化日志、调试器和 traceback 定位失败，不提前教授 asyncio 测试。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: python-pytest
@@ -30852,7 +30852,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.testing-logging-debug.md
   recommended_after:
   - ch.python.iterators-decorators
-  spec_digest: 9d34038cd13fc1a43e623bfd6b9040f758bf7dabe129ad92e5b912995fc61ea0
+  spec_digest: e396956cf99277dad11cd95b55fea1e789448e6dffa2df9a3b1bfa0cd2c8171b
   route_tags:
   - zero-base
   - accelerated-48
@@ -30863,7 +30863,7 @@ chapters:
   role: concept
   responsibility: 解释 coroutine、event loop、Task、TaskGroup、超时和取消传播，保证子任务有所有者且取消后执行清理，不把线程阻塞代码直接放入事件循环。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: python-asyncio-task
@@ -31022,7 +31022,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.asyncio-cancellation.md
   recommended_after:
   - ch.python.testing-logging-debug
-  spec_digest: 2a2415ca5d2a0edc148a95a88d162afcde2e0af6d9945bef74d537da6c607c91
+  spec_digest: 98f8ddcd4c5d272b009be697ec2227960931a3fc7a9826bd307996a934d16b04
   route_tags:
   - zero-base
   - accelerated-48
@@ -31033,7 +31033,7 @@ chapters:
   role: practice
   responsibility: 用 Pydantic 模型在不可信输入边界执行类型转换、字段/模型校验、序列化和稳定错误映射，区分 Python 类型标注与运行时验证。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: pydantic-model-validation
@@ -31189,7 +31189,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.python.pydantic-validation.md
   recommended_after:
   - ch.python.asyncio-cancellation
-  spec_digest: 894d26da0fc7fd7871c9a1a4db436857ecda65f26aa0135047667aa0aacf6b63
+  spec_digest: 6482bd1c44dde3e82a441041c897b7ab53e47c744712da0cabda7298ae686625
   route_tags:
   - zero-base
   - accelerated-48
@@ -31200,7 +31200,7 @@ chapters:
   role: practice
   responsibility: 用 FastAPI 建立路由、参数/Body、依赖、状态码和错误合同，理解 sync/async 处理边界，不在本章接入完整认证。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: fastapi-routing-dependency
@@ -31365,7 +31365,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.fastapi.web-foundations.md
   recommended_after:
   - ch.python.pydantic-validation
-  spec_digest: 64f8a2b7489c1c5b1f687f1c9573526ee425fe91b0cffe8de856f994079e3a41
+  spec_digest: 82f263b5974ae3605a05b6efa714b7d5daeaa5b3272bd03fbbd8217e7091f168
   route_tags:
   - zero-base
   - accelerated-48
@@ -31376,7 +31376,7 @@ chapters:
   role: practice
   responsibility: 集成认证/授权依赖、异步测试和 OpenAPI 合同，覆盖未认证、越权与错误 Schema，不重教通用身份或 Web 威胁模型。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: fastapi-security-testing
@@ -31573,7 +31573,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.fastapi.security-testing-openapi.md
   recommended_after:
   - ch.fastapi.web-foundations
-  spec_digest: 969b46560b4da302657c0a659f41ceab2d980e25875fe795e6f9cd701ebdf9df
+  spec_digest: cf74f158e6e08025ca6f07231182acea1da1334e87eb6f7f3fd7e34c761b2bb1
   route_tags:
   - zero-base
   - accelerated-48
@@ -31584,7 +31584,7 @@ chapters:
   role: practice
   responsibility: 用 ndarray、dtype、shape、轴、切片、广播和向量化处理数值数据，识别 view/copy 与数值稳定边界，不在本章做表格业务清洗。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: numpy-array-shape
@@ -31737,7 +31737,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.data.numpy.md
   recommended_after:
   - ch.fastapi.security-testing-openapi
-  spec_digest: 20c144e6263ea6a6dac2121bf415da8d9849f5197fdb4aad2a14dfa650bc3b51
+  spec_digest: 538d18038d3b0df8593fd1e034020fcd2e6b44aa257b5ccef96f32d028e2cfdc
   route_tags:
   - zero-base
   - accelerated-48
@@ -31748,7 +31748,7 @@ chapters:
   role: practice
   responsibility: 用 Series/DataFrame、索引、缺失值、groupby、merge 和类型转换清洗表格数据，整合 Python 与 NumPy 能力，防止静默行数膨胀。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: pandas-frame-clean
@@ -31918,7 +31918,7 @@ chapters:
   path: book/volume-12-python-data/chapters/ch.data.pandas.md
   recommended_after:
   - ch.data.numpy
-  spec_digest: dcf8337de4c9043b49e9ac5982caeaa7539405907b52a1f683a99f791af37628
+  spec_digest: 940658b54f2030e34d4db69d24f8023f729fce6a724bf473ba477779e1f2dfbf
   route_tags:
   - zero-base
   - accelerated-48
@@ -31929,7 +31929,7 @@ chapters:
   role: foundation
   responsibility: 建立从数量、比例和单位到代数式与一元方程的可验证计算基础，只处理确定性标量关系，不提前引入函数图像或概率。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: math-quantities-units
@@ -32052,7 +32052,7 @@ chapters:
   order: 1
   path: book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md
   recommended_after: []
-  spec_digest: fc9e09d364357436f52489792e34aeb908712f914e5dfbe62f6a9716f48156a7
+  spec_digest: 0e65ae6fad3af3d61454c403caa629f7e5247605c326281b7381e2c6332bf7bc
   route_tags:
   - zero-base
   - accelerated-48
@@ -32063,7 +32063,7 @@ chapters:
   role: foundation
   responsibility: 把输入输出关系表示为函数、表格、公式和图像，并用斜率、指数、对数与求和解释变化，不教授矩阵或导数。
   level: L1-L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: math-function-representations
@@ -32200,7 +32200,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md
   recommended_after:
   - ch.math.algebra-units
-  spec_digest: 86dc52d25d5f5aa283e9ff8d2d18688072d3b891a0e7444d0cdf4968b49a9be9
+  spec_digest: bf7c5a79dcec57f20f10ac004b87a7b1d0c2996f32e1921b89b799c67ed786fc
   route_tags:
   - zero-base
   - accelerated-48
@@ -32211,7 +32211,7 @@ chapters:
   role: concept
   responsibility: 用向量、矩阵和张量表达批量数值数据，验证形状、点积、矩阵乘法与线性变换，不引入梯度或框架自动求导。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: math-vector-matrix
@@ -32350,7 +32350,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.math.linear-algebra.md
   recommended_after:
   - ch.math.functions-graphs
-  spec_digest: 6d1d948f414dd43c4990b0e70f19e292c4a2003efe7209cac4074b5b27c7bdfc
+  spec_digest: 82935b57568ddb969f88ad6f0ffb0df92f016889c87d280ff7097b5ea5b26945
   route_tags:
   - zero-base
   - accelerated-48
@@ -32361,7 +32361,7 @@ chapters:
   role: concept
   responsibility: 用概率空间、描述统计、条件概率和常见分布量化不确定性与样本差异，不把相关性解释为因果。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: math-probability-distribution
@@ -32504,7 +32504,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md
   recommended_after:
   - ch.math.linear-algebra
-  spec_digest: d5bda2beaaec3ad1bc85ec6c8a9222d5b49c1b2f3382844da5f3a4f36d396525
+  spec_digest: 2fb594d5cd9c83ffe5f7a3d270a71d44c70e39f12c647914a6dc884ecdab594f
   route_tags:
   - zero-base
   - accelerated-48
@@ -32515,7 +32515,7 @@ chapters:
   role: concept
   responsibility: 把导数与梯度解释为局部变化率，用链式法则和有限差分验证优化方向，不教授具体深度学习框架。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: math-derivative-gradient
@@ -32658,7 +32658,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.math.gradients.md
   recommended_after:
   - ch.math.probability-statistics
-  spec_digest: 9191c768bef784fb3aa31153590ff3de92fd3eff11d9c12dc012fad0389ef8db
+  spec_digest: 37d90cd4b509b7eb949ad1b1a97082d3da149d5dc656a9d0a70b48a73e7d9cd0
   route_tags:
   - zero-base
   - accelerated-48
@@ -32669,7 +32669,7 @@ chapters:
   role: concept
   responsibility: 把业务目标转换为监督信号、样本单位和离线实验合同，建立训练/验证/测试划分并识别泄漏，不选择具体模型。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-problem-contract
@@ -32823,7 +32823,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.problem-data-split.md
   recommended_after:
   - ch.math.gradients
-  spec_digest: ed6bf2848079d7bca5d112b2a0d015267b0ae6915b433d72312fe93533df6c19
+  spec_digest: 22524437b0efac5680959d1c68f419acc76bec584f9d59e69bff2568c66e6b7c
   route_tags:
   - zero-base
   - accelerated-48
@@ -32834,7 +32834,7 @@ chapters:
   role: practice
   responsibility: 在训练折内拟合清洗、编码、缩放和特征步骤并封装可复现 Pipeline，不在本章比较模型优劣。
   level: L2
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ml-clean-encode
@@ -32979,7 +32979,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.preprocessing-features.md
   recommended_after:
   - ch.ml.problem-data-split
-  spec_digest: 34edfb4a916b141daeb53dbe917629b8bbadac8cb6f6480ab5ffe7524c286c11
+  spec_digest: e1f8d07d0669168a0c113c56910900b08bd5fdd2a54805cc69582b4914f6784e
   route_tags:
   - zero-base
   - accelerated-48
@@ -32990,7 +32990,7 @@ chapters:
   role: concept
   responsibility: 用回归和分类模型学习有标签映射，解释损失、正则化与决策边界，不把训练分数当作泛化结论。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-regression
@@ -33148,7 +33148,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.supervised-learning.md
   recommended_after:
   - ch.ml.preprocessing-features
-  spec_digest: 01ebec6a72a2a7fab2f1707e806ca0f01ece8cca9eb031ad9f5ed38ddb6aa835
+  spec_digest: d720e25a67d42b69822ff0fdf2ac2a7c1d88c2f2120951c1e0fbc8bcf9e1d705
   route_tags:
   - zero-base
   - accelerated-48
@@ -33159,7 +33159,7 @@ chapters:
   role: concept
   responsibility: 使用聚类与降维探索无标签结构，区分算法目标、可视化和业务解释，不把簇编号当真实类别。
   level: L2
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-clustering
@@ -33317,7 +33317,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.unsupervised-learning.md
   recommended_after:
   - ch.ml.supervised-learning
-  spec_digest: 51bd981745661728e8971ba336ed25606b8fe214f3bbe2a00e4296a09c8f2222
+  spec_digest: ce5a77b7d44cda0df21350eb475d8a4ca0a8e6ed22cd890d650962ee38497f22
   route_tags:
   - zero-base
   - accelerated-48
@@ -33327,7 +33327,7 @@ chapters:
   role: synthesis
   responsibility: 根据业务代价选择回归/分类指标，用基线、交叉验证和分组误差分析形成可信模型结论，不教授神经网络。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   scope_exception:
     reason: 本章是经典机器学习 capability 的唯一教师，必须把指标选择、验证设计与误差分析保持在同一可判定实验中。
@@ -33484,7 +33484,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.metrics-validation.md
   recommended_after:
   - ch.ml.unsupervised-learning
-  spec_digest: 0c2e5f592b28cf9fd462eccb3b41d778e0b3bb478a6a76e311226cd9f778bcd5
+  spec_digest: 5c6714cc3fdf269ca49c51de39e714b8fb2ad565a51725b92544010e74f1dc3b
   route_tags:
   - zero-base
   - accelerated-48
@@ -33495,7 +33495,7 @@ chapters:
   role: concept
   responsibility: 从线性单元构造前馈神经网络，手算前向、损失和反向传播，解释优化器作用，不依赖 PyTorch API。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-neural-forward
@@ -33647,7 +33647,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.neural-networks.md
   recommended_after:
   - ch.ml.metrics-validation
-  spec_digest: 75184cd3f8493e7502699198d61fa428751cdc22a541669bec4bd331e97f2ada
+  spec_digest: e9f31ccf7215364ffef1bd7b29e34c367243bf546177023a80acc68662403411
   route_tags:
   - zero-base
   - accelerated-48
@@ -33658,7 +33658,7 @@ chapters:
   role: concept
   responsibility: 用序列位置、Softmax 和 Q/K/V 矩阵解释自注意力与 Transformer 数据流，只建立模型心智桥，不训练大模型。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-sequence-attention
@@ -33805,7 +33805,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md
   recommended_after:
   - ch.ml.neural-networks
-  spec_digest: 9523f17dfee50e56da66853288b2cbe3b5133fedfaffb9f4dbf609bae5d6d0c8
+  spec_digest: 7d43592bf2a2508487284f6fd4b65d52380b798ad78c2b1d5fd1e3b8ae94ee9c
   route_tags:
   - zero-base
   - accelerated-48
@@ -33816,7 +33816,7 @@ chapters:
   role: practice
   responsibility: 把神经网络数学映射到 PyTorch Tensor、Dataset、Module 和 Autograd 合同，区分数据、参数、梯度和设备，不实现完整训练流程。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: pytorch-tensor-data
@@ -33991,7 +33991,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.pytorch.foundations.md
   recommended_after:
   - ch.ml.attention-sequences
-  spec_digest: 1e2ae2f1d751e7cdd724ae3cc0ebaa6d47a6d2b27e1e30ce52bd410bc1392f60
+  spec_digest: 1c23b317be493b92cd6954309a63ae905e67baf527fa25059fb6fac994b465ee
   route_tags:
   - zero-base
   - accelerated-48
@@ -34002,7 +34002,7 @@ chapters:
   role: practice
   responsibility: 实现可复现的 PyTorch 训练与验证循环，识别欠拟合和过拟合并保存检查点，不把测试集用于调参。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: pytorch-training-loop
@@ -34146,7 +34146,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.pytorch.training.md
   recommended_after:
   - ch.pytorch.foundations
-  spec_digest: 83e30ea8dcef817f49a6a274771c55114a92a70c9c3ed898411e2edf73fc023b
+  spec_digest: ab0227a0f7e6fdf7132a862d6ac0e480af5bb2e3115251206811978155588e17
   route_tags:
   - zero-base
   - accelerated-48
@@ -34156,7 +34156,7 @@ chapters:
   role: practice
   responsibility: 把训练产物转换为版本化、可批处理和可服务的推理合同，验证预处理一致性、无梯度模式和错误输入，不部署生产服务。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: pytorch-model-artifact
@@ -34304,7 +34304,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.pytorch.inference.md
   recommended_after:
   - ch.pytorch.training
-  spec_digest: 35bbc320cfd7202d0e6558cffef13f3c62619d14d0c2e991b3d1ecbf6c88248d
+  spec_digest: 8d3fc0f7fedb90abede25ce1a06484c4c144f1b56a79c4fa7f29b46a6983c867
   route_tags:
   - zero-base
   - accelerated-48
@@ -34314,7 +34314,7 @@ chapters:
   role: synthesis
   responsibility: 为上线模型定义输入、性能和公平性监控及人工兜底边界，区分漂移信号与真实质量，不在本章实施部署平台。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ml-monitoring-drift
@@ -34460,7 +34460,7 @@ chapters:
   path: book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md
   recommended_after:
   - ch.pytorch.inference
-  spec_digest: 06e8f35da4b3d4f61431d368771212842b4d857313dbe33f755cde3dd0364d75
+  spec_digest: 3f17449bcd5b177f407b0d6abe588b8e96d965f5f7f386a5539974d35c1c5374
   route_tags:
   - zero-base
   - accelerated-48
@@ -34470,7 +34470,7 @@ chapters:
   role: concept
   responsibility: 建立 Token、上下文窗口、Embedding 和 Transformer 推理的数据流心智模型，区分训练与生成，不调用供应商 API。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: llm-token-context
@@ -34620,7 +34620,7 @@ chapters:
   order: 1
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.model-foundations.md
   recommended_after: []
-  spec_digest: 2388860d5ddfc5270786b515d7d1f529c37fccacb98e45da099a661ce7ea1d47
+  spec_digest: ac04a207b7cf3e70ba8c5bb8fc8917bd74fe0a1c04ec0aac67dfa42e6af5be1f
   route_tags:
   - zero-base
   - accelerated-48
@@ -34631,7 +34631,7 @@ chapters:
   role: practice
   responsibility: 通过官方 SDK 调用模型 API，建立消息、模型、Token、延迟、成本和提供方错误合同，不把提示技巧当业务正确性证明。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: llm-api-contract
@@ -34801,7 +34801,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md
   recommended_after:
   - ch.llm.model-foundations
-  spec_digest: f4c0828dc1da813be44c32b1fa9dff0828d8f650478344051035c87db047cc9b
+  spec_digest: 1ba37c4cd130278d0703ad0b02c2762fdf0917e1bf826e750755eea9ba5f2bd7
   route_tags:
   - zero-base
   - accelerated-48
@@ -34812,7 +34812,7 @@ chapters:
   role: practice
   responsibility: 把模型文本约束为版本化 Schema 并用运行时校验拒绝缺失、越界和额外字段，不允许校验失败结果进入业务层。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: llm-structured-schema
@@ -34966,7 +34966,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.structured-output.md
   recommended_after:
   - ch.llm.api-prompts-cost
-  spec_digest: 15e9fd50b01608e574c41b90ad60cc239579d5c9a79386d9e83a79991bc4d27e
+  spec_digest: 29d7d122b5f0eea10d993cc39c4e4b63fd0ff7c6ad6af5b20a5c6c48efb8a9e5
   route_tags:
   - zero-base
   - accelerated-48
@@ -34977,7 +34977,7 @@ chapters:
   role: practice
   responsibility: 为模型流式响应实现有界超时、取消、可重试分类和降级，区分部分输出与完整承诺，不重复提交副作用。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: llm-stream-state
@@ -35134,7 +35134,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md
   recommended_after:
   - ch.llm.structured-output
-  spec_digest: 4bf7b6535f3533441265869694629e34f7ef8e7e1c6db634e287a8dc24819a3e
+  spec_digest: 817ad98177cb7bbc7fa4c99acf626d66fdd575a1c3a2f4f79909cac98288e8b9
   route_tags:
   - zero-base
   - accelerated-48
@@ -35145,7 +35145,7 @@ chapters:
   role: synthesis
   responsibility: 把模型提出的工具意图视为不可信输入，经白名单、Schema、授权和人工确认后执行，隔离读操作与高风险副作用。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   scope_exception:
     reason: 本章是结构化输出与工具调用 capability 的唯一教师，参数合同和信任边界必须在同一红队实验中验证。
@@ -35320,7 +35320,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.llm.tool-calling.md
   recommended_after:
   - ch.llm.streaming-resilience
-  spec_digest: 484dc13aaa64bcfd630992b49a5ab9be88645640e312b5617c02439ca35731dc
+  spec_digest: aa5fc9272f27e48e2e4a552ab57e574f81e0cade44c52bd39c7d51bbfedfb5b1
   route_tags:
   - zero-base
   - accelerated-48
@@ -35331,7 +35331,7 @@ chapters:
   role: practice
   responsibility: 把异构文档转换为可追溯规范文本与权限元数据，保存来源、版本、哈希和解析错误，不在本章切块或向量化。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: rag-document-normalization
@@ -35488,7 +35488,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.ingestion-metadata.md
   recommended_after:
   - ch.llm.tool-calling
-  spec_digest: '037809843915501223e9e61dde83001de90b6697c9c4c463e14b9d3ccca3e6dd'
+  spec_digest: 6d6ef99e43470bef7d59570e346ee7377364e42e556af0096b6c06746fcf9e31
   route_tags:
   - zero-base
   - accelerated-48
@@ -35499,7 +35499,7 @@ chapters:
   role: practice
   responsibility: 根据文档结构和检索目标生成可追溯 chunk，批量计算 Embedding 并处理维度、重试和版本，不选择检索索引。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: rag-chunking
@@ -35648,7 +35648,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.chunking-embeddings.md
   recommended_after:
   - ch.rag.ingestion-metadata
-  spec_digest: c6a14b2ccd94d99a90b2a93466ed5c90705b6b16fc3565b225da18cebe90ccc6
+  spec_digest: 76288bba3e6e7c4afdcb681be32712c990b5d8963bfc323db76836d206a2de11
   route_tags:
   - zero-base
   - accelerated-48
@@ -35659,7 +35659,7 @@ chapters:
   role: concept
   responsibility: 从分词和倒排表推导 TF-IDF/BM25 稀疏检索得分，解释词频、文档频率和长度归一化，不调用向量数据库。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ir-index-terms
@@ -35811,7 +35811,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.ir.lexical-retrieval.md
   recommended_after:
   - ch.rag.chunking-embeddings
-  spec_digest: 6a76dbbd420c1008c61ba6aa368c0f159993891b1ff2cc0e3be89cad2079f01d
+  spec_digest: aebf1399b470ebc2f0f3ec9265bb1e1a071f81b91d0a8cea6944cee43926c71a
   route_tags:
   - zero-base
   - accelerated-48
@@ -35822,7 +35822,7 @@ chapters:
   role: concept
   responsibility: 建立冻结查询集和相关性判断，计算检索 Precision、Recall、MRR 与 nDCG 并分析切片，不用生成答案掩盖检索缺陷。
   level: L2+
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ir-judgment-dataset
@@ -35979,7 +35979,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.ir.evaluation.md
   recommended_after:
   - ch.ir.lexical-retrieval
-  spec_digest: 55c50966bc001729b28d68b5e8f92cc0d597b2ca7e7abb59c8a7b67bd20beb7d
+  spec_digest: 9f16d47264ab6519aab1d5747b36dc1a64aed6f0365f94a15d09f421e7cd1ba2
   route_tags:
   - zero-base
   - accelerated-48
@@ -35990,7 +35990,7 @@ chapters:
   role: practice
   responsibility: 在 PostgreSQL/pgvector 中持久化版本化向量并比较精确与近似检索、距离度量和索引计划，不混合不同 Embedding 空间。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ir-vector-distance
@@ -36153,7 +36153,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.ir.dense-pgvector.md
   recommended_after:
   - ch.ir.evaluation
-  spec_digest: b03389db585a8096675a4a375d92505ab079f3928636722ef4159d300f84a771
+  spec_digest: aea0e49b5457a4cf3126d4db04cea4d82df6a7f60eea3298f2e181bba14f4337
   route_tags:
   - zero-base
   - accelerated-48
@@ -36164,7 +36164,7 @@ chapters:
   role: synthesis
   responsibility: 融合词法与向量候选并用可解释规则或重排模型排序，在冻结评估集上证明增益和代价，不直接生成答案。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   scope_exception:
     reason: 本章是 RAG 摄取检索 capability 的唯一教师，候选融合、重排和消融评估不可拆开授予能力。
@@ -36331,7 +36331,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.ir.hybrid-rerank.md
   recommended_after:
   - ch.ir.dense-pgvector
-  spec_digest: 233d784021c62045d8421420f5e91168e4e8fe0b401fca5b6d3aa68cc9a8e56f
+  spec_digest: 658906f21bdcf14db326998d71cfa577a22db2afbb987eeb1e225fda8de14282
   route_tags:
   - zero-base
   - accelerated-48
@@ -36342,7 +36342,7 @@ chapters:
   role: synthesis
   responsibility: 把检索证据与生成答案绑定为可核验引用，分别评估检索、回答和引用一致性，允许证据不足时拒答。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: rag-answer-citation
@@ -36500,7 +36500,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.citations-evaluation.md
   recommended_after:
   - ch.ir.hybrid-rerank
-  spec_digest: f1e035e69299830d6fd71fdeaa7d6e2b01a3603f7762921409c50576b094e6be
+  spec_digest: fff3217328c31f3ab4d2e10d0723a90a0424b18f7172d0f6768cbca590aee3ba
   route_tags:
   - zero-base
   - accelerated-48
@@ -36511,7 +36511,7 @@ chapters:
   role: synthesis
   responsibility: 把 RAG 摄取、检索、生成和工具链路纳入租户/资源授权、注入防护、PII 最小化和可观测性，不以提示词替代访问控制。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   scope_exception:
     reason: 本章是 RAG 评估安全 capability 的唯一教师，ACL、租户隔离、PII 与 trace 必须作为一个系统门禁验证。
@@ -36697,7 +36697,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md
   recommended_after:
   - ch.rag.citations-evaluation
-  spec_digest: e4655ffc8be45631950e8bda85ff0f4569a93cf89d1fb323d277da0e9c151a21
+  spec_digest: 2a028e1f9934148fb59306c40c45decc2b152785ac69645df5d9956220db21c5
   route_tags:
   - zero-base
   - accelerated-48
@@ -36708,7 +36708,7 @@ chapters:
   role: practice
   responsibility: 在先掌握官方 SDK 后，用 LangChain 组合模型、提示、解析器和 Retriever，并通过直接 SDK 对照识别抽象收益与泄漏。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: agent-langchain-components
@@ -36866,7 +36866,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.agent.langchain.md
   recommended_after:
   - ch.rag.security-observability
-  spec_digest: 01e167c5b30416f8b1834432d7f6f233e98b69b919416a1934baf067e6ccfe1c
+  spec_digest: 91e1d299991e68875d3cf44f75235527f09d2f7f8c7eb1001a355b48a43b9fe1
   route_tags:
   - zero-base
   - accelerated-48
@@ -36877,7 +36877,7 @@ chapters:
   role: practice
   responsibility: 用显式状态图建模多步 Agent 的节点、边、检查点、恢复和人工审批，使重试可恢复且副作用不重复。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: agent-graph-state
@@ -37035,7 +37035,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.agent.langgraph.md
   recommended_after:
   - ch.agent.langchain
-  spec_digest: de12253000a953a5b13bb823cf74192b7e4137e8ae1a5a3f488d5a18f8d5a819
+  spec_digest: d3bcb77024aa942885ed35de01f114e05541292318e78fcf0c791a5c1c11f8ae
   route_tags:
   - zero-base
   - accelerated-48
@@ -37046,7 +37046,7 @@ chapters:
   role: synthesis
   responsibility: 以 MCP 协议定义受控工具与资源边界，比较 Agent/确定性工作流及 Java/Python 职责，只有无法用普通代码表达时才引入自主循环。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   scope_exception:
     reason: 本章是 Agent 图与 MCP capability 的唯一教师，协议、执行预算和 Java/Python 权威边界必须联合验收。
@@ -37227,7 +37227,7 @@ chapters:
   path: book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md
   recommended_after:
   - ch.agent.langgraph
-  spec_digest: 3dd174908571195b727abef613b5b02747fc3af733a63b4adbc0cd4f7df09b94
+  spec_digest: 10eb50c8c49a0725490b2132b8a8e19875c6fd6e36379647077d4b2be88e86de
   route_tags:
   - zero-base
   - accelerated-48
@@ -37238,7 +37238,7 @@ chapters:
   role: practice
   responsibility: 在固定 Ubuntu Server 基线中管理用户、文件权限、进程、信号和 systemd 服务，区分可移植 Linux 原理与发行版实现，不教授网络诊断。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ops-linux-identity-files
@@ -37380,7 +37380,7 @@ chapters:
   order: 1
   path: book/volume-15-production-factorycare/chapters/ch.ops.linux-services.md
   recommended_after: []
-  spec_digest: 15bfe3a3f0ad4baf7c9c1c363876fecb939573958540e452ccca751a9a6ae92a
+  spec_digest: c05d72419ed19f8b710031ff90beef6262a156d19a999abfad2dbdcb86a5b2d5
   route_tags:
   - zero-base
   - accelerated-48
@@ -37391,7 +37391,7 @@ chapters:
   role: practice
   responsibility: 按名称解析、路由、监听端口、TCP、TLS、代理和 HTTP 层次定位网络故障，优先收集证据而非反复重启服务。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ops-network-path
@@ -37551,7 +37551,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.network-diagnostics.md
   recommended_after:
   - ch.ops.linux-services
-  spec_digest: 13645491b66785e3914ac2a23982c3870fcc631e2368da6c7b146cbf67e8fc2e
+  spec_digest: 82fce6d26635a420d3091eefb499e93128e72e4624e69d8bad23c7763e29aab6
   route_tags:
   - zero-base
   - accelerated-48
@@ -37562,7 +37562,7 @@ chapters:
   role: practice
   responsibility: 把应用构建为最小、非 root、不可变且可复现的容器镜像，明确进程、文件系统、卷和网络边界，不编排多服务。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-container-image
@@ -37715,7 +37715,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.docker-production.md
   recommended_after:
   - ch.ops.network-diagnostics
-  spec_digest: bb88f5958d2383492e2662fee8707429c9c4d22ee18cf28f9f7e528cd143a2d6
+  spec_digest: 9ab6dc737c84e4e768b995ffd02b9b551b491f934f01748d8b4268b514d0630d
   route_tags:
   - zero-base
   - accelerated-48
@@ -37726,7 +37726,7 @@ chapters:
   role: practice
   responsibility: 用 Compose 声明应用、数据库和代理的网络、卷、配置和健康合同，区分启动顺序与真正就绪，不把 Compose 当生产编排器。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-compose-topology
@@ -37871,7 +37871,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.compose-services.md
   recommended_after:
   - ch.ops.docker-production
-  spec_digest: 6fa422ebf5e157d23ce30faae9dc28635ea9e5535576fbc0ab65f4b16d709b8e
+  spec_digest: 5149a85e974aa0d706f294d72dea86d1c39d2c2bd84acbc8bdae0d15b7839767
   route_tags:
   - zero-base
   - accelerated-48
@@ -37882,7 +37882,7 @@ chapters:
   role: practice
   responsibility: 使用 Nginx 终止 TLS、托管版本化静态资源并代理 API，正确传递客户端和关联信息，不承担应用授权。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-nginx-proxy
@@ -38032,7 +38032,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.nginx-tls.md
   recommended_after:
   - ch.ops.compose-services
-  spec_digest: d7adb0feb66af2bc87f7c3583e0d15a8458dac6136c5d05f6f1e2a64fc1b4932
+  spec_digest: 46bde193a6812954ed0517c7d93ab80822e7c3c66400ad0e148c2dc566b769f7
   route_tags:
   - zero-base
   - accelerated-48
@@ -38043,7 +38043,7 @@ chapters:
   role: practice
   responsibility: 把格式、静态检查、单元/集成/安全测试和构建组织为可重复 CI 门禁，保存失败证据且禁止失败后继续发布。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: release-ci-pipeline
@@ -38199,7 +38199,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md
   recommended_after:
   - ch.ops.nginx-tls
-  spec_digest: f3dc3ffe638089f19dcfd05b4488d5466714489a7f7c47b34b4f4ed56f7b59d9
+  spec_digest: 41201068c7b34ea49aff1ed22d56d241f0cf543283d1f6d2e9c74828f5c888fc
   route_tags:
   - zero-base
   - accelerated-48
@@ -38210,7 +38210,7 @@ chapters:
   role: synthesis
   responsibility: 一次构建并以 digest、SBOM、测试证据和来源元数据晋级同一制品，通过 Compose/Nginx smoke 验证容器到代理的交付链，不按环境重编译。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   scope_exception:
     reason: 本章是容器、代理与交付制品 capability 的唯一教师，制品身份、Compose 拓扑、Nginx smoke 与晋级必须联合验证。
@@ -38382,7 +38382,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.artifacts-promotion.md
   recommended_after:
   - ch.release.ci-quality
-  spec_digest: 298bcd81065c952d4f7a24649be28ee5a9281b74978fa747ced5e93189b2b862
+  spec_digest: beb9f55bbf513740fb085756a19061137a8e7c524aac9871a36f78956ca37d0c
   route_tags:
   - zero-base
   - accelerated-48
@@ -38393,7 +38393,7 @@ chapters:
   role: synthesis
   responsibility: 分离代码、非敏感配置与密钥，校验依赖来源和 SBOM，建立轮换与泄漏响应，不把任何 secret 写入镜像、仓库或日志。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-config-secret
@@ -38564,7 +38564,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.config-secrets-supply-chain.md
   recommended_after:
   - ch.release.artifacts-promotion
-  spec_digest: 4f2cb2e123c34f305e8558e336fae3422643da11c722e1246b92aff3bd0864d3
+  spec_digest: 54ffb7598fa96496dc6ea1de8ddab3dec14132e0e2545846706414fb2013966a
   route_tags:
   - zero-base
   - accelerated-48
@@ -38574,7 +38574,7 @@ chapters:
   role: practice
   responsibility: 用结构化日志、关联 ID 和分层健康检查暴露系统状态，区分存活、就绪和依赖退化，不记录敏感业务正文。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-structured-logging
@@ -38733,7 +38733,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.logs-health.md
   recommended_after:
   - ch.ops.config-secrets-supply-chain
-  spec_digest: 8332af4a8fb3319381950067027790aadde46524c5cdf798122c424df0bd522b
+  spec_digest: ba0942d242f2e4ef67d56c9856ceadc2bbe2d6960d44655a613efb9576999fba
   route_tags:
   - zero-base
   - accelerated-48
@@ -38744,7 +38744,7 @@ chapters:
   role: synthesis
   responsibility: 从用户可感知目标定义 SLI/SLO，使用低基数指标和分布式 trace 诊断错误与延迟，以燃尽率告警控制噪声。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-metrics-traces
@@ -38889,7 +38889,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.metrics-traces-slo.md
   recommended_after:
   - ch.ops.logs-health
-  spec_digest: 6694ce538bdb28e396b476f059504260134d32a754cd61e1ed4ac5963349e9c1
+  spec_digest: 1cf3f8f39e69a6fe787e604718c4532a552d5f263ca3a0547440c00a53296b26
   route_tags:
   - zero-base
   - accelerated-48
@@ -38900,7 +38900,7 @@ chapters:
   role: practice
   responsibility: 根据业务 RPO/RTO 设计 PostgreSQL 备份、校验、保留和恢复演练，用恢复后的业务不变量证明备份可用。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: ops-backup-policy
@@ -39067,7 +39067,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.backup-recovery.md
   recommended_after:
   - ch.ops.metrics-traces-slo
-  spec_digest: 17cd45a0f418e78e540351f9240bb35f05b5596cc906108e636ebe2ee9509461
+  spec_digest: 6ec9437ab3b6ab877fd6b4a99b6f361eed6affe8abfaa9bff314944d202fe938
   route_tags:
   - zero-base
   - accelerated-48
@@ -39078,7 +39078,7 @@ chapters:
   role: synthesis
   responsibility: 从业务峰值和增长假设建立负载模型，使用受控性能测试、指标、trace 与查询计划定位瓶颈，不以单机最高 QPS 代替容量结论。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: ops-capacity-model
@@ -39245,7 +39245,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.capacity-performance.md
   recommended_after:
   - ch.ops.backup-recovery
-  spec_digest: 1ba59836ddeb7e940edb769fe8ea097acea9d1f5bd5da302a9032bfe339dd128
+  spec_digest: 3bbbf48f1d6a5c6cefea23d63e9d1291f201b9cfaadc473f262b3b82e5f817a3
   route_tags:
   - zero-base
   - accelerated-48
@@ -39256,7 +39256,7 @@ chapters:
   role: synthesis
   responsibility: 以不可变制品和 expand-contract 数据迁移执行可观测部署，分别定义应用回滚与数据库前向修复，不承诺不可逆迁移可一键回滚。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: release-deployment-strategy
@@ -39431,7 +39431,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md
   recommended_after:
   - ch.ops.capacity-performance
-  spec_digest: d1c4a8b3357909470f534dc935ba4802259023d7e3c355fbfa2d1b73ada7df24
+  spec_digest: 3d81149fafe1089c1941c3189eacfad05f84d57218be1e491b2153779a824b1b
   route_tags:
   - zero-base
   - accelerated-48
@@ -39442,7 +39442,7 @@ chapters:
   role: synthesis
   responsibility: 用严重度、角色、时间线和证据组织事故响应，执行已演练恢复/部署决策并把复盘行动转为可验证工程门禁。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   scope_exception:
     reason: 本章是恢复与部署 capability 的唯一教师，事故指挥、灾难恢复、发布处置和复盘改进必须在同一演练闭环验收。
@@ -39614,7 +39614,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.ops.incident-dr.md
   recommended_after:
   - ch.release.deployment-migrations
-  spec_digest: 5d99278d98b0fbb153ff59d4fbbc0b14560d567f2b87cff5dc4dcafe443e126e
+  spec_digest: 5339f3cdbc72b41f24b9d6440d3a1b957f891227d2459bccc3af5dcf5598dd3f
   route_tags:
   - zero-base
   - accelerated-48
@@ -39625,7 +39625,7 @@ chapters:
   role: synthesis
   responsibility: 从功能/非功能需求、数据与流量约束推导边界、容量、可靠性和一致性方案，明确取舍和演进路径，不把技术清单当设计。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: architecture-requirements-boundaries
@@ -39775,7 +39775,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md
   recommended_after:
   - ch.ops.incident-dr
-  spec_digest: 4e5cee3c00c6af997475657ae0e406a950e359af5d91a805a548dcb984d69d80
+  spec_digest: d9ff9d31d3acdd9cd1a4ec29e7c336f116a8713e5fed05d3c7b7eb89d20f7977
   route_tags:
   - zero-base
   - accelerated-48
@@ -39786,7 +39786,7 @@ chapters:
   role: project
   responsibility: 在路线门禁集中验收 FactoryCare 的 Web、小程序、Flutter、Java 后端、Python/AI 和生产交付，证明安全隔离、故障恢复与可回滚发布。
   level: L3
-  status: planned
+  status: drafting
   stable_core: false
   topic_groups:
   - id: factorycare-business-e2e
@@ -40083,7 +40083,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md
   recommended_after:
   - ch.architecture.system-design
-  spec_digest: 966ca718cf7ddb6c4ae1a6c8f2a1aa8fbe920c69ee07c323552cafc93abcf0cc
+  spec_digest: 571a3a577ee3d3de5b741bdc917e641d37424ee35019f49a604aa2daf9e651bc
   route_tags:
   - zero-base
   - accelerated-48
@@ -40094,7 +40094,7 @@ chapters:
   role: review
   responsibility: 把真实可验证的学习和项目证据整理为作品集、岗位匹配叙事与面试复盘，准确区分本人贡献、AI 辅助和未验证部分，不包装虚假经历。
   level: L3
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
   - id: portfolio-evidence-story
@@ -40262,7 +40262,7 @@ chapters:
   path: book/volume-15-production-factorycare/chapters/ch.portfolio.interview.md
   recommended_after:
   - ch.release.factorycare-acceptance
-  spec_digest: 7894e354dea288fcb490948cb7446f1668936b5e48399c87ff2dda1481cc5bff
+  spec_digest: d0424697aab89c9d5e665f85dd007cd24025d33baa225057414fdc593bccf4dc
   route_tags:
   - zero-base
   - accelerated-48

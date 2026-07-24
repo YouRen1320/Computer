@@ -43,6 +43,23 @@ class BM25Index:
         df = len(self.postings.get(term, {}))
         return math.log(1 + (self.n - df + 0.5) / (df + 0.5))
 
+    def tfidf_contributions(self, query: str, doc_id: str) -> tuple[tuple[str, int, int, float], ...]:
+        """Explain raw-TF × log(N/df) contributions for one document."""
+        if doc_id not in self.terms:
+            raise KeyError(doc_id)
+        pieces: list[tuple[str, int, int, float]] = []
+        for term in dict.fromkeys(tokenize(query)):
+            posting = self.postings.get(term, {})
+            tf = posting.get(doc_id, 0)
+            if not tf:
+                continue
+            df = len(posting)
+            pieces.append((term, tf, df, tf * math.log(self.n / df)))
+        return tuple(pieces)
+
+    def tfidf_score(self, query: str, doc_id: str) -> float:
+        return sum(piece[3] for piece in self.tfidf_contributions(query, doc_id))
+
     def search(self, query: str, limit: int = 5) -> list[Hit]:
         if limit <= 0:
             raise ValueError("limit must be positive")

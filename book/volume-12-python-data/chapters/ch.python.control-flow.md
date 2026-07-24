@@ -18,6 +18,7 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
+- factorycare-project
 stable_core: true
 outcomes:
 - id: explain
@@ -80,6 +81,14 @@ outcomes:
 ---
 
 # 条件、循环与控制转移
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《语句、变量、对象、表达式与基础输入输出》](ch.python.syntax-values-io.md)：条件和循环需要已验证的值、名称、表达式及输入转换。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 程序默认从上到下执行。条件让它在互斥路径中选择，循环让一段代码有界重复，`break`/`continue` 改变当前循环的下一步。本章故意不用函数和推导式，要求你逐轮画出名称、条件和累计结果。
 

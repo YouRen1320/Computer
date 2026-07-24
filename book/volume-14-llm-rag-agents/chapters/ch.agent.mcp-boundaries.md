@@ -101,6 +101,16 @@ outcomes:
 
 # MCP、Agent 模式/反模式与 Java/Python 职责边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《LangGraph 状态、检查点、恢复与人工审批》](ch.agent.langgraph.md)：有状态 Agent 的检查点、审批和恢复是 MCP 编排的执行基础。
+- [《提示注入、ACL、PII、日志与可观测性》](ch.rag.security-observability.md)：Agent 必须在 RAG 安全、租户隔离和可观测回归通过后接入知识与工具。
+- [《pytest、fixture、Mock、日志与调试证据》](../../volume-12-python-data/chapters/ch.python.testing-logging-debug.md)：跨进程协议、工具替身和失败分类需要成熟 Python 测试与诊断能力。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 MCP（Model Context Protocol）定义应用怎样发现和调用外部工具、读取资源、使用提示等能力。它是协议边界，不是权限系统、Agent 智能、业务事务或服务部署方案。一个工具能被模型发现，不代表模型有权调用；一次 tools/call 返回文本，也不代表业务写入成功。
 
 本章根据 2026-07-24 官方当前协议版本 2025-11-25，实际使用 MCP Python SDK 1.28.1 的 FastMCP、ClientSession 与内存传输，再由 LangGraph 1.2.9 运行一个有预算的只读流程。没有开 socket、没有 OAuth、没有模型、没有真实 Java/数据库，所以网络安全和生产授权未验证。

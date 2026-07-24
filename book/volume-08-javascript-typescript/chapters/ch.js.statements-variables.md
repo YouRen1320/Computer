@@ -84,6 +84,14 @@ outcomes:
 ---
 # 源码、语句、变量、表达式、输出与最小预言
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《JavaScript 运行时、Node、pnpm 与 ESM》](ch.js.runtime-esm.md)：语言实验必须先有可复现的运行时、模块入口和命令退出证据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 程序最小的可验证故事不是“写了一段看起来像代码的文本”，而是：运行时按确定顺序读取源码，执行声明与赋值，状态发生可解释的变化，观察点输出与事先写下的预言完全一致。只要这条故事说不清，增加分支、循环、函数或框架只会让猜测藏得更深。
 
 本章故意把世界缩小到一条直线：一个 ESM 源文件，从上到下，只含注释、`const`/`let` 声明、赋值和 `console.log` 输出。不提前讲分支、循环和函数抽象。你会用“纸面状态表 → stdout 预言 → 实际运行 → 退出码”的闭环证明自己真正理解每一行，而不是靠反复运行碰答案。
@@ -453,7 +461,7 @@ currentStatus = "ASSIGNED";
 console.log(`after=${currentStatus}`);
 ```
 
-它能教会绑定、赋值和顺序，却不能批准真实状态迁移。FactoryCare 的正式 12 状态模型、角色权限、并发检查、持久化事务和审计记录由领域契约与 Java 后端负责。前端或 Node 脚本不能通过写 `currentStatus = "COMPLETED"` 越过这些规则。
+它能教会绑定、赋值和顺序，却不能批准真实状态迁移。FactoryCare 的正式 12 状态模型、角色权限、并发检查、持久化事务和审计记录由领域契约与 Java 后端负责。前端或 Node 脚本不能通过写 `currentStatus = "RESOLVED"` 越过这些规则。
 
 这正是本章的反例：如果用户没有权限完成工单，或数据库中的版本已被另一位工程师更新，顺序赋值脚本无法解决冲突。需要后端状态机、鉴权、并发控制和 API 错误处理。把教学状态称为 `currentStatus` 而不是 `authoritativeStatus`，并在注释中说明数据来源，可以减少误用。
 

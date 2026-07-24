@@ -80,6 +80,14 @@ outcomes:
 ---
 # Actuator、健康、就绪、指标与安全暴露
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Spring 测试切片、上下文测试与 Testcontainers》](ch.spring.testing-testcontainers.md)：独立完成健康与就绪、指标与暴露前，必须先具备「Spring 测试切片、上下文测试与 Testcontainers」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。健康端点返回 UP 不等于业务正确、所有依赖正常或用户请求必然成功；指标存在也不等于已经建立 SLO 与告警。
 
 本章基线为 Spring Boot 4.1.0、Spring Framework 7.0.8、Micrometer 1.17.0、Testcontainers 2.0.5、PostgreSQL 18、JDK 25 与 Maven 3.9.16。版本事实复核于 2026-07-17；Boot 4.1.0 依赖管理固定 Micrometer 1.17.0 与 Testcontainers 2.0.5。

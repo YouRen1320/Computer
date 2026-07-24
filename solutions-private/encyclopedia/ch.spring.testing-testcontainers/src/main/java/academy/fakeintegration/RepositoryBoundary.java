@@ -23,7 +23,7 @@ public final class RepositoryBoundary {
         var dataSource = new DriverManagerDataSource("jdbc:h2:mem:solution" + System.nanoTime() + ";DB_CLOSE_DELAY=-1");
         var jdbc = new JdbcTemplate(dataSource);
         jdbc.execute("create table work_order(tenant_id varchar(32),id varchar(32),status varchar(16),primary key(tenant_id,id))");
-        jdbc.update("insert into work_order values('tenant-a','wo-1','OPEN')");
+        jdbc.update("insert into work_order values('tenant-a','wo-1','CREATED')");
         return new JdbcWorkOrders(jdbc);
     }
 }

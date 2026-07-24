@@ -6,4 +6,4 @@
 ./verify.sh
 ```
 
-起始代码必须稳定失败，首个标记为 `JUMP_STATE_ACCEPTED`。不要删除负向断言。这里的 CLOSED 终态只属于缩小教学模型；FactoryCare 项目保留合法 `CLOSED → REOPENED`。
+起始代码必须稳定失败，首个标记为 `JUMP_STATE_ACCEPTED`。不要删除负向断言。`DemoTicketStatus` 是教学投影：五个同名值映射 FactoryCare canonical 状态，但省略其余七个状态和真实重开边；这里的 CLOSED 终态不能冒充 FactoryCare `WorkOrder` 规则，正式项目保留合法 `CLOSED → REOPENED`。

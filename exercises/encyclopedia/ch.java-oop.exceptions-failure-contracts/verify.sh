@@ -33,3 +33,4 @@ echo "STARTER EXPECTED FAILURE status=$challenge_status reason=input-misclassifi
 echo "EXPECTED_FAILURE SwallowedFailure status=$swallow_status evidence=empty-catch-null"
 echo "EXPECTED_COMPILE_FAILURE UnhandledCheckedFailure status=$checked_status evidence=catch-or-declare"
 echo "EXERCISE CHECK PASS expected_failures=3 java=$JAVA_VERSION"
+exit 41

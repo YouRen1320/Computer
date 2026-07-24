@@ -5,12 +5,12 @@ import type { Filter, Order } from '../src/resource-loader'
 const fixtures: Record<Filter, Order[]> = {
   ALL: [
     { id: 'WO-1', title: '主轴过热', status: 'CREATED' },
-    { id: 'WO-2', title: '滤芯更换', status: 'COMPLETED' },
+    { id: 'WO-2', title: '滤芯更换', status: 'RESOLVED' },
   ],
   CREATED: [{ id: 'WO-1', title: '主轴过热', status: 'CREATED' }],
-  COMPLETED: [{ id: 'WO-2', title: '滤芯更换', status: 'COMPLETED' }],
+  RESOLVED: [{ id: 'WO-2', title: '滤芯更换', status: 'RESOLVED' }],
 }
-const latency: Record<Filter, number> = { ALL: 40, CREATED: 10, COMPLETED: 25 }
+const latency: Record<Filter, number> = { ALL: 40, CREATED: 10, RESOLVED: 25 }
 
 // Data source: this fault still uses one filter, but it fails to retire previous runs.
 const filter = ref<Filter>('ALL')
@@ -39,7 +39,7 @@ defineExpose({ getTrace: () => [...trace], activeResources: () => active })
     <select id="fault-filter" v-model="filter">
       <option value="ALL">全部</option>
       <option value="CREATED">已创建</option>
-      <option value="COMPLETED">已完成</option>
+      <option value="RESOLVED">已完成</option>
     </select>
     <p data-testid="fault-result">{{ orders.map(order => order.id).join(',') }}</p>
   </section>

@@ -11,7 +11,7 @@ import { createWorkOrderStats, observeIdentityBoundaries, type WorkOrder } from 
 
 const initialOrders: WorkOrder[] = [
   { id: 'WO-1', title: '主轴过热', status: 'CREATED', priority: 'HIGH' },
-  { id: 'WO-2', title: '更换滤芯', status: 'COMPLETED', priority: 'LOW' },
+  { id: 'WO-2', title: '更换滤芯', status: 'RESOLVED', priority: 'LOW' },
 ]
 
 describe('reactivity observations', () => {
@@ -35,7 +35,7 @@ describe('reactivity observations', () => {
   it('does not invalidate open count for an unrelated filter write', () => {
     const stats = createWorkOrderStats(initialOrders)
     expect(stats.openCount.value).toBe(1)
-    stats.setStatusFilter('COMPLETED')
+    stats.setStatusFilter('RESOLVED')
     expect(stats.openCount.value).toBe(1)
     expect(stats.evaluationCounts().open).toBe(1)
     expect(stats.visibleOrders.value.map(order => order.id)).toEqual(['WO-2'])
@@ -60,8 +60,8 @@ describe('reactivity observations', () => {
     const stats = createWorkOrderStats(initialOrders)
     expect(isReadonly(stats.orders)).toBe(true)
     expect(isReadonly(stats.filter)).toBe(true)
-    stats.setStatusFilter('COMPLETED')
-    expect(stats.filter.status).toBe('COMPLETED')
+    stats.setStatusFilter('RESOLVED')
+    expect(stats.filter.status).toBe('RESOLVED')
   })
 
   it('updates computed DOM results after source commands', async () => {

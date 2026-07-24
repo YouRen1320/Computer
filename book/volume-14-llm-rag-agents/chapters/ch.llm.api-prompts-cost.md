@@ -95,6 +95,16 @@ outcomes:
 
 # 模型 API、消息、提示、Token 与成本
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Transformer、Token、上下文与 Embedding 心智模型》](ch.llm.model-foundations.md)：API 参数、上下文和生成结果必须用模型心智模型解释。
+- [《Tensor、Dataset、Module 与 Autograd》](../../volume-13-ml-pytorch/chapters/ch.pytorch.foundations.md)：模型 API 能力要求已理解神经网络推理、张量和模型边界，而非把服务视为魔法。
+- [《HTTP 报文、方法、状态码、Header、Body 与 curl》](../../volume-00-computer-foundations/chapters/ch.foundations.http-curl.md)：必须先能区分 HTTP 状态、认证、限流、超时和业务输出。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 模型API不是“把一句话发给聪明机器”这么简单，而是一条跨越业务代码、HTTP、供应商网关、模型推理与计费系统的远程调用链。本章从零建立这条链的工程合同：凭证从哪里来，消息怎样组装，模型标识为何必须显式，提示怎样版本化，Token和成本以什么证据计算，延迟怎样分解，401、429、超时与模型回答怎样分流。提示写得漂亮只能改善概率分布，不能代替权限、校验、事务或测试。
 
 本章同时坚持两层边界。供应商无关层保存消息、请求、用量、错误、预算和追踪等稳定概念；OpenAI Responses API等具体字段属于截至2026-07-24核对过的版本表面。示例和实验全部使用本地Fake，不访问网络、不读取真实密钥、不产生真实账单。只有在学习者主动配置受限测试项目、获准联网并保存脱敏证据后，真实smoke才能另行成立。

@@ -86,6 +86,14 @@ outcomes:
 ---
 # Router、导航、布局与页面边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Props、事件、Slot 与组件 v-model》](ch.vue.components-contracts.md)：页面、布局和 route-view 都是具有输入输出与生命周期边界的组件。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件可用于学习和作者自检，但不能证明学习者已经完成无 AI 独立构建、故障诊断或限时复述，也不会自动改变 `PROGRESS.md`。
 
 SPA 里把组件放进菜单并不等于建立页面。页面必须有可复制、可刷新、可前进后退的 URL；URL 要映射到确定的布局和组件树；参数变化要刷新正确数据；取消与重定向要有可判断结果。Vue Router 负责客户端 URL 与组件树的协调，但它不能证明调用者有权读取服务端工单。
@@ -178,7 +186,7 @@ props: route => ({
 })
 ```
 
-`route.query.status` 可能缺失、数组或未知文本。本章仅接受 `CREATED`、`IN_PROGRESS`、`COMPLETED`，否则映射 `ALL`；测试用明确的 `UNKNOWN` 表示非法输入，不把它当成业务状态。真正请求 API 前仍需后端校验。
+`route.query.status` 可能缺失、数组或未知文本。本章仅接受 `CREATED`、`IN_PROGRESS`、`RESOLVED`，否则映射 `ALL`；测试用明确的 `UNKNOWN` 表示非法输入，不把它当成业务状态。真正请求 API 前仍需后端校验。
 
 ### 4.1 props 解耦页面与 Router
 

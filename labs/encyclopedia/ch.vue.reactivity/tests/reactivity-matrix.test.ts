@@ -11,7 +11,7 @@ import { createStatsModel, observeDestructuring, observeProxyIdentity, type Work
 
 const seed: WorkOrder[] = [
   { id: 'WO-1', title: '主轴过热', status: 'CREATED', priority: 'HIGH' },
-  { id: 'WO-2', title: '滤芯更换', status: 'COMPLETED', priority: 'LOW' },
+  { id: 'WO-2', title: '滤芯更换', status: 'RESOLVED', priority: 'LOW' },
   { id: 'WO-3', title: '电机异响', status: 'IN_PROGRESS', priority: 'CRITICAL' },
 ]
 
@@ -45,7 +45,7 @@ describe('reactivity state transition matrix', () => {
     const model = createStatsModel(seed)
     expect(model.openCount.value).toBe(2)
     expect(model.visibleOrders.value).toHaveLength(3)
-    model.setFilter('COMPLETED')
+    model.setFilter('RESOLVED')
     expect(model.openCount.value).toBe(2)
     expect(model.evaluations().open).toBe(1)
     expect(model.visibleOrders.value.map(order => order.id)).toEqual(['WO-2'])
@@ -71,7 +71,7 @@ describe('reactivity state transition matrix', () => {
   it('rejects consumer writes through the readonly filter view', () => {
     const model = createStatsModel(seed)
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
-    ;(model.filterView as { status: string }).status = 'COMPLETED'
+    ;(model.filterView as { status: string }).status = 'RESOLVED'
     expect(model.filterView.status).toBe('ALL')
     expect(warn).toHaveBeenCalled()
     warn.mockRestore()

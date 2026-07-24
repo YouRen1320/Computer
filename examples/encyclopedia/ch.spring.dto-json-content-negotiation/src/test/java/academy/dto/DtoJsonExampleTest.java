@@ -51,7 +51,7 @@ class DtoJsonExampleTest {
     @Test
     void responseMapperPublishesOnlyTheFiveContractFields() {
         var domain = new DtoFixtures.WorkOrder(42, "ASSET-7", "pump vibration", HIGH,
-                "OPEN", new BigDecimal("999.99"), "secret-token");
+                "CREATED", new BigDecimal("999.99"), "secret-token");
         var node = mapper.valueToTree(DtoFixtures.toResponse(domain));
         assertEquals(Set.of("id", "assetId", "description", "priority", "status"),
                 Set.copyOf(node.propertyNames()));
@@ -72,7 +72,7 @@ class DtoJsonExampleTest {
                 .andReturn();
         var response = mapper.readTree(result.getResponse().getContentAsString());
         assertEquals(42, response.get("id").asInt());
-        assertEquals("OPEN", response.get("status").asText());
+        assertEquals("CREATED", response.get("status").asText());
         assertEquals(1, useCase.callCount());
     }
 

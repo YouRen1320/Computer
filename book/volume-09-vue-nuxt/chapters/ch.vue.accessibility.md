@@ -90,6 +90,15 @@ outcomes:
 ---
 # Vue 组件无障碍、焦点恢复与动态提示
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Props、事件、Slot 与组件 v-model》](ch.vue.components-contracts.md)：焦点和动态状态必须落在清楚的组件所有权与事件合同中。
+- [《无障碍、键盘、焦点与屏幕阅读器》](../../volume-07-web-platform/chapters/ch.web.accessibility-interaction.md)：Vue 只能实现既有键盘、名称、焦点和屏幕阅读器原则，不能重定义无障碍基线。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文、happy-dom 测试、静态语义检查和 Vite 构建可用于学习与作者自检，但不能替代真实浏览器可访问性树、键盘人工漫游、系统屏幕阅读器播报、缩放或视觉对比度验证。官方 Vue 与 W3C/WAI 资料复核日为 **2026-07-17**。本轮没有启动真实浏览器、VoiceOver/NVDA/JAWS，也没有做人工视觉检查，因此所有浏览器、AT 与人工视觉结论明确为 **UNVERIFIED**，且不修改 `PROGRESS.md`。
 
 Vue 不会自动破坏无障碍，也不会自动补齐它。真正的风险来自动态更新：`v-if` 移走了当前焦点；Teleport 把弹层搬到 `body` 后，查询和所有权仍按原组件假设；路由内容替换，却没有告诉键盘与屏幕阅读器“上下文已变”；保存成功只改变绿色图标，错误只出现在视觉卡片；Escape 被父层快捷键吞掉；弹层关闭后焦点落到 `body`。

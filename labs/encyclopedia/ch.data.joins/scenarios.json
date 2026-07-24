@@ -1,5 +1,5 @@
 [
   {"id": "cartesian", "broken": "FROM device AS d, work_order AS w", "prediction": "4 * 4 = 16 rows"},
-  {"id": "left-filter-in-where", "broken": "LEFT JOIN work_order w ON w.device_id=d.device_id WHERE w.status='OPEN'", "prediction": "D-03 is removed"},
+  {"id": "left-filter-in-where", "broken": "LEFT JOIN work_order w ON w.device_id=d.device_id WHERE w.status='CREATED'", "prediction": "D-03 is removed"},
   {"id": "count-star", "broken": "COUNT(*) after technician LEFT JOIN", "prediction": "T-03 is incorrectly counted as 1"}
 ]

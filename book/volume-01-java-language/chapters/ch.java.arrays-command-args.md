@@ -81,6 +81,14 @@ outcomes:
 ---
 # 数组、二维数组、查找与命令行参数
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《for、while、计数、累积与哨兵循环》](ch.java.loops.md)：独立完成数组与索引、遍历与参数前，必须先具备「for、while、计数、累积与哨兵循环」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文与配套程序可以试读、运行和修改，但脚本通过不代表学习者已经掌握，也不会自动更新 `PROGRESS.md`。
 
 上一章的循环能把一段动作重复 N 次，但数据仍散落在多个变量里。如果 FactoryCare 一次拿到五个工单优先级，继续写 `priority1`、`priority2`、`priority3` 会让遍历、查找和边界检查迅速失控。**数组**把一组同类型值放进一个固定长度、按位置访问的容器；循环负责移动位置，数组负责保存每个位置的值。

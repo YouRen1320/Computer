@@ -86,6 +86,14 @@ outcomes:
 
 # Flutter SDK、项目结构、run、hot reload 与 DevTools
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类、泛型、mixin、extension 与对象边界》](ch.dart.oop-generics.md)：Flutter 源码大量使用类、泛型、mixin 和 extension，需先能导航类型边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章建立的是一条可重复的开发链：你能回答“正在使用哪套 Flutter/Dart、代码在哪个平台运行、一次命令经过了哪些阶段、改动后为什么该 reload、restart 或完整重建、出现故障先看哪份证据”。Widget 如何组合留到下一章。
 
 ## 1. 先把 Flutter 看成一条工具链

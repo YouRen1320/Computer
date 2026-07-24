@@ -74,6 +74,14 @@ outcomes:
 ---
 # 数值、文本、日期函数与 CASE
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《SELECT、投影、过滤、NULL、排序与分页》](ch.data.select-rowsets.md)：独立完成标量函数、CASE 与转换前，必须先具备「SELECT、投影、过滤、NULL、排序与分页」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。当前机器没有可用的 `psql` 或 PostgreSQL server，Docker daemon 也未运行；配套资产使用固定 CSV、静态 SQL 契约与 Ruby 标准库 oracle。它能核对固定输入的逐行结果、NULL/时区/转换失败预言和函数边界，**不能证明真实 PostgreSQL 的函数重载、类型解析、IANA 时区库或表达式索引已经执行**。
 
 ## 1. 本章解决什么问题

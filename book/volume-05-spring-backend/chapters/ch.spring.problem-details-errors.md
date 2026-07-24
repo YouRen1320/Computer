@@ -83,6 +83,14 @@ outcomes:
 ---
 # 异常映射、Problem Details 与稳定错误契约
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Bean Validation、字段规则与跨字段规则》](ch.spring.validation.md)：独立完成异常映射、Problem Details 契约前，必须先具备「Bean Validation、字段规则与跨字段规则」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文与工件提供教材证据，不自动更新 `PROGRESS.md`，也不代表学习者已经通过 Week 10。
 
 程序内部需要足够详细的失败证据，HTTP 客户端却只应得到稳定、可行动且不泄密的错误合同。异常映射层负责把这两种需求分开：选择正确状态码，构造 RFC 9457 Problem Details，并把 trace 与完整 cause 留在服务端。

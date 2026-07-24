@@ -4,7 +4,7 @@ import { createWorkOrderStats, type WorkOrder } from './work-order-stats'
 // Data source: fixed records let the cache and DOM transition table be reproduced exactly.
 const initialOrders: WorkOrder[] = [
   { id: 'WO-1', title: '主轴过热', status: 'CREATED', priority: 'HIGH' },
-  { id: 'WO-2', title: '更换滤芯', status: 'COMPLETED', priority: 'LOW' },
+  { id: 'WO-2', title: '更换滤芯', status: 'RESOLVED', priority: 'LOW' },
 ]
 
 const {
@@ -26,7 +26,7 @@ function addOpenOrder() {
     <p data-testid="open-count">开放：{{ openCount }}</p>
     <p data-testid="visible-count">当前列表：{{ visibleOrders.length }}</p>
     <button type="button" @click="addOpenOrder">加入开放工单</button>
-    <button type="button" @click="setStatusFilter('COMPLETED')">只看已完成</button>
+    <button type="button" @click="setStatusFilter('RESOLVED')">只看已完成</button>
     <ul>
       <li v-for="order in visibleOrders" :key="order.id">{{ order.title }}</li>
     </ul>

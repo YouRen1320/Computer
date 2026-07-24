@@ -32,13 +32,13 @@ public final class JsonMappingChallenge {
 
     public static void main(String[] args) throws Exception {
         String base = """
-                {"schemaVersion":1,"id":"WO-机泵-101","status":"OPEN",
+                {"schemaVersion":1,"id":"WO-机泵-101","status":"CREATED",
                  "openedAt":"2026-07-16T01:30:00Z","amount":10.50,"assignee":null}
                 """;
         JsonSupport.WorkOrderJsonMapper.WorkOrder order = JsonSupport.WorkOrderJsonMapper.fromJson(
                 base, JsonSupport.WorkOrderJsonMapper.UnknownFieldPolicy.REJECT);
         equal("WO-机泵-101", order.id(), "id");
-        equal(JsonSupport.WorkOrderJsonMapper.Status.OPEN, order.status(), "status");
+        equal(JsonSupport.WorkOrderJsonMapper.Status.CREATED, order.status(), "status");
         equal(Instant.parse("2026-07-16T01:30:00Z"), order.openedAt(), "time");
         equal(new BigDecimal("10.50"), order.amount(), "amount");
         equal(2, order.amount().scale(), "scale");
@@ -60,7 +60,7 @@ public final class JsonMappingChallenge {
         check(rejects(unknown, "UNKNOWN_FIELD:future"), "strict unknown");
         equal("WO-机泵-101", JsonSupport.WorkOrderJsonMapper.fromJson(
                 unknown, JsonSupport.WorkOrderJsonMapper.UnknownFieldPolicy.IGNORE).id(), "lenient");
-        check(rejects(base.replace("\"status\":\"OPEN\"", "\"status\":\"PAUSED\""),
+        check(rejects(base.replace("\"status\":\"CREATED\"", "\"status\":\"PAUSED\""),
                 "INVALID_ENUM:status"), "enum");
         check(rejects(base.replace("10.50", "10.500"), "INVALID_AMOUNT:amount"), "scale failure");
 

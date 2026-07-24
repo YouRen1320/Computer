@@ -10,7 +10,7 @@
   "composite_candidate": {
     "ddl": "(status, created_at DESC, work_order_id DESC) INCLUDE (device_id, priority)",
     "nodes": ["Limit", "Index Scan"],
-    "index_condition": ["status=OPEN", "created_at>=lower", "created_at<upper"],
+    "index_condition": ["status=CREATED", "created_at>=lower", "created_at<upper"],
     "returned_rows": 50,
     "shared_blocks": 84,
     "result_fingerprint_equal": true,
@@ -18,7 +18,7 @@
   },
   "low_selectivity_candidate": {
     "ddl": "(status)",
-    "query": "status=DONE",
+    "query": "status=CLOSED",
     "matched_rows": 85000,
     "selectivity": 0.85,
     "baseline_shared_blocks": 1725,

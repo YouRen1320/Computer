@@ -51,7 +51,7 @@ public final class DtoFixtures {
                     request.assetId(),
                     request.description(),
                     request.priority(),
-                    "OPEN",
+                    "CREATED",
                     new BigDecimal("999.99"),
                     "never-publish-this-token");
         }

@@ -85,6 +85,14 @@ outcomes:
 ---
 # RabbitMQ、投递语义、重试、死信与幂等消费
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《领域事件、Outbox 与提交一致性》](ch.architecture.domain-events-outbox.md)：独立完成消息投递、重试与失败前，必须先具备「领域事件、Outbox 与提交一致性」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产用 JDK 25 的离线 broker/consumer 状态机合成路由、确认、重投、有限退避、DLQ 与幂等消费，可以证明协议预言；它不启动 RabbitMQ、Docker、Spring AMQP、PostgreSQL 或真实网络，不能证明 publisher confirm、channel、quorum queue、DLX 安全性和进程崩溃窗口已经在生产组合中关闭。
 
 RabbitMQ 能把生产者与消费者在时间、进程和部署上解耦，却不能把分布式故障变成“每条消息恰好执行一次”。发布者可能不知道 broker 是否已经接受，消费者可能在业务提交后、ack 前崩溃，broker 可能把未确认 delivery 重新交给另一个实例。可靠设计的目标不是消灭这些不确定性，而是用 outbox、publisher confirm、手动 ack、有限重试、死信与消费者幂等，把不确定性变成可观察、可重放、不会重复业务副作用的合同。

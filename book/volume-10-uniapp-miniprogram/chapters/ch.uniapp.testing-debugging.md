@@ -93,6 +93,15 @@ outcomes:
 ---
 # 单元/组件测试、Mock、真机和网络调试
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《uni-app 模板、组件、表单与 Vue 差异》](ch.uniapp.template-components.md)：组件测试需要明确模板、事件、表单和组件合同。
+- [《网络、认证、存储与多环境配置》](ch.uniapp.network-auth-storage.md)：网络、认证和存储错误是宿主调试的核心负例。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产用 Node.js 验证测试分层、异步时序、宿主 Mock 合同和最小复现清单；没有安装 DCloud 测试插件、Vitest、微信开发者工具，也没有连接真机。离线绿灯不能证明真实页面渲染、基础库行为、网络面板、source map 或设备权限已经通过。
 
 测试的目的不是“让 BUILD SUCCESS 出现”，而是对具体风险提供能失败的判据。uni-app 同一份源码会经过编译器、Vue 运行时、平台运行时、设备和网络，因此没有一种测试能证明全部层。纯函数测试快而稳定，却看不到宿主差异；开发者工具能看到目标产物，却仍可能与真机不同；真机截图有现实性，却可能无法复现和自动回归。本章建立分层证据链。
@@ -486,6 +495,13 @@ console 出现“success”不等于测试验证了结果。自动化应读取�
 
 ## 20. 事实来源与未验证范围
 
-本章易变事实于 2026-07-17 对照 DCloud 官方 uni-app(x) 自动化测试快速开始、CLI 项目说明、测试 API 与插件说明。官方资料描述了 `program`/页面/元素控制、测试文件、多个目标配置以及开发者工具/remote 等能力；依赖版本和支持矩阵会变化，应以目标项目当前官方文档为准。Vitest 仅作为纯函数/普通 Vue 层的可选工具表面，不把它冒充 DCloud 目标自动化。
+本章易变事实于 2026-07-24 对照 DCloud 官方 uni-app(x) 自动化测试快速开始、测试 API、CLI 项目与 HBuilderX CLI 页面。官方资料描述了 `program`/页面/元素控制、测试文件和多个目标配置；依赖版本和支持矩阵会变化，应以目标项目当前官方文档为准。Vitest 仅作为纯函数/普通 Vue 层的可选工具表面，不把它冒充 DCloud 目标自动化。
+
+直接来源：
+
+- DCloud，[uni-app(x) 自动化测试快速开始](https://uniapp.dcloud.net.cn/worktile/auto/quick-start.html)：测试能力、平台矩阵、工程结构与用例约定。
+- DCloud，[Uni 测试框架 API](https://uniapp.dcloud.net.cn/worktile/auto/api.html)：`program`、页面、元素、截图与 Mock 表面。
+- DCloud，[CLI 项目运行自动化测试](https://uniapp.dcloud.net.cn/worktile/auto/uniapp-cli-project.html)：CLI 工程依赖、配置与运行入口。
+- DCloud，[使用 HBuilderX CLI 运行自动化测试](https://uniapp.dcloud.net.cn/worktile/auto/hbuilderx-cli-uniapp-test.html)：命令行目标与插件依赖边界。
 
 当前未验证：真实 Vitest/Vue Test Utils、DCloud 自动化插件、微信开发者工具 CLI、remote 真机、网络面板、source map 符号化、H5 浏览器、相机/定位/上传和 FactoryCare 服务。配套资产只验证证据模型。

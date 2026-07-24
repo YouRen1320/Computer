@@ -117,7 +117,7 @@ export function createPolicyServer({ subjects, orders }) {
       if (!order) return { status: 404, code: 'NOT_FOUND' }
       const allowed = subject.capabilities.includes('work-order.delete')
         && subject.tenantId === order.tenantId
-        && order.status !== 'COMPLETED'
+        && order.status !== 'RESOLVED'
       return allowed
         ? { status: 204, code: 'DELETED' }
         : { status: 403, code: 'FORBIDDEN' }

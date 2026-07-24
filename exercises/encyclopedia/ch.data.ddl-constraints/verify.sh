@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.sql" >"$TMP_ROOT/actual.out" 2>&1; then
 fi
 grep -F "answer-error=work_order foreign key must reference device primary key" "$TMP_ROOT/actual.out" >/dev/null
 echo "DDL CONSTRAINTS EXERCISE STARTER EXPECTED FAILURE"
+exit 41

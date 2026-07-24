@@ -29,6 +29,7 @@ elif [[ "$actual_empty" == "$starter_empty" && "$actual_many" == "$starter_many"
   cat "$BUILD_DIR/empty.out"
   cat "$BUILD_DIR/many.out"
   echo "EXERCISE CHECK mode=starter-pending expected-mismatches=4"
+  exit 41
 else
   echo "UNRECOGNIZED OUTPUT: neither fixed starter nor solved contract" >&2
   cat "$BUILD_DIR/empty.out" >&2

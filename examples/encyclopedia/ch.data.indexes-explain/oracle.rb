@@ -15,7 +15,7 @@ schema = File.read(File.join(ROOT, "schema.sql"))
 dataset = workload.fetch("dataset")
 counts = dataset.fetch("status_counts")
 check(counts.values.sum == dataset.fetch("rows"), "status distribution sum")
-check(counts == {"DONE" => 85000, "OPEN" => 8000, "IN_PROGRESS" => 5000, "CANCELLED" => 2000}, "fixed distribution")
+check(counts == {"CLOSED" => 85000, "CREATED" => 8000, "IN_PROGRESS" => 5000, "CANCELLED" => 2000}, "fixed distribution")
 
 query = workload.fetch("query")
 check(query.fetch("order") == ["created_at DESC", "work_order_id DESC"], "deterministic order")
@@ -42,7 +42,7 @@ check(rejected.fetch("decision") == "REJECT" && rejected.fetch("rollback").start
   check(schema.include?(token.gsub("\\", "")), "schema contract #{token}")
 end
 
-puts "dataset=100000|DONE=85000|OPEN=8000|IN_PROGRESS=5000|CANCELLED=2000"
+puts "dataset=100000|CLOSED=85000|CREATED=8000|IN_PROGRESS=5000|CANCELLED=2000"
 puts "result-contract=rows:50|fingerprint-equal:PASS"
 puts "composite-index=KEEP|shared-blocks=#{baseline.fetch("shared_blocks")}->#{candidate.fetch("shared_blocks")}"
 puts "low-selectivity-index=REJECT|selectivity=#{format("%.2f", rejected.fetch("selectivity"))}"

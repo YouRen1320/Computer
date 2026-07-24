@@ -90,6 +90,16 @@ outcomes:
 ---
 # JSON 数据边界、对象映射与未知字段处理
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Path、Files、缓冲、字符集与原子文件操作》](ch.java-engineering.nio-files-charsets.md)：独立完成JSON 形状与映射、边界与兼容前，必须先具备「Path、Files、缓冲、字符集与原子文件操作」已经验证的知识与失败边界
+- [《enum、record、sealed 与受限类型建模》](../../volume-02-java-objects/chapters/ch.java-oop.enum-record-sealed.md)：独立完成JSON 形状与映射、边界与兼容前，必须先具备「enum、record、sealed 与受限类型建模」已经验证的知识与失败边界
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](ch.java-engineering.maven-reproducible-builds.md)：独立完成JSON 形状与映射、边界与兼容前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。Java 25 离线 oracle 证明的是本章固定 WorkOrder 形状、UTF-8 文件与故障合同；它不是通用 JSON 库认证。P9 零基础试读、人工版式/无障碍检查、独立全面审查、Maven 全集成和全书回归尚未执行，因此不能晋升为 `verified`，也不会修改 `PROGRESS.md`。
 
 JSON 看起来像 JavaScript 对象，却只是跨边界的文本数据模型。`{"amount":0.1}` 不自带货币、精度或舍入规则；`"2026-07-16T09:30:00"` 不自带时区；缺少 `assignee` 与 `"assignee":null` 可能代表不同业务动作；新增 `priorityLabel` 对旧消费者可能安全，也可能触发严格校验失败。若直接把外部 JSON 当领域对象，协议变化、无效值和攻击输入就会穿透系统。
@@ -119,9 +129,9 @@ RFC 8259 定义四类原始值：string、number、boolean、null，以及两类
 
 object 的名称是 string，值可以是任意 JSON value。协议中写 `"priority":4` 与 `"priority":"4"` 是不同类型，不能依赖 mapper 随意把字符串强制成数字。`true` 与 `"true"` 也不同。宽松 coercion 虽能兼容某些历史输入，却会让拼写和类型漂移静默通过；是否允许必须显式配置并测试。
 
-object 名称应唯一。重复键如 `{"status":"OPEN","status":"CLOSED"}` 在不同实现中可能保留第一项、最后一项、全部或直接拒绝，互操作性差。边界最佳实践是拒绝重复键，避免攻击者利用代理、日志和业务解析器理解不同。配套教学 codec 会把重复字段作为语法/形状错误。
+object 名称应唯一。重复键如 `{"status":"CREATED","status":"CLOSED"}` 在不同实现中可能保留第一项、最后一项、全部或直接拒绝，互操作性差。边界最佳实践是拒绝重复键，避免攻击者利用代理、日志和业务解析器理解不同。配套教学 codec 会把重复字段作为语法/形状错误。
 
-object 成员顺序通常不属于语义。`{"id":"WO-101","status":"OPEN"}` 与顺序相反的 object 在语义上相同；字节串、缩进和转义形式也可不同。array 顺序则属于语义，工单事件时间线不能任意重排。测试 round trip 应比较映射后的结构与类型，不要求输出字节和输入完全相等，除非另有签名或规范化合同。
+object 成员顺序通常不属于语义。`{"id":"WO-101","status":"CREATED"}` 与顺序相反的 object 在语义上相同；字节串、缩进和转义形式也可不同。array 顺序则属于语义，工单事件时间线不能任意重排。测试 round trip 应比较映射后的结构与类型，不要求输出字节和输入完全相等，除非另有签名或规范化合同。
 
 ## 3. 从字节到领域对象：五道边界不能揉成一个异常
 
@@ -197,7 +207,7 @@ JSON number 语法不规定所有实现都支持任意精度。金额若先读�
 
 ## 10. enum 与受限字符串：失败、兼容和大小写都要明确
 
-Java enum 能限制 `OPEN`、`IN_PROGRESS`、`CLOSED`，比任意 String 更安全。默认 `valueOf` 区分大小写；是否允许 `open` 是协议决策。宽松转大写可能接受拼写，却也改变签名和审计原文。本章严格接受 canonical token。
+Java enum 能限制 `CREATED`、`IN_PROGRESS`、`CLOSED`，比任意 String 更安全。默认 `valueOf` 区分大小写；是否允许 `open` 是协议决策。宽松转大写可能接受拼写，却也改变签名和审计原文。本章严格接受 canonical token。
 
 新增 enum 值通常是兼容风险。生产者认为 additive，旧消费者却无法理解。方案包括版本协商、旧消费者明确 UNKNOWN 分支、生产者在兼容窗口不发送新值或升级消费者先行。每种都需要发布顺序和回滚计划，不应只给 mapper 加 `default` 吞掉。
 

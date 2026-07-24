@@ -13,7 +13,7 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$CLASSES_DIR"
 javac --release 25 -Xlint:all -Werror -d "$CLASSES_DIR" "$ROOT_DIR"/src/*.java "$ROOT_DIR"/failures/*.java
 java -cp "$CLASSES_DIR" JsonMappingOracle "$BUILD_DIR/roundtrip.json" > "$BUILD_DIR/lab.out"
-grep -Fqx 'report.roundtrip=WO-机泵-101,OPEN,1234.50' "$BUILD_DIR/lab.out"
+grep -Fqx 'report.roundtrip=WO-机泵-101,CREATED,1234.50' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.presence=missing:MISSING,null:EXPLICIT_NULL,value:VALUE' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.unknown=strict:UNKNOWN_FIELD:priorityLabel,lenient:WO-101' "$BUILD_DIR/lab.out"
 grep -Fqx 'report.file=utf8:true' "$BUILD_DIR/lab.out"

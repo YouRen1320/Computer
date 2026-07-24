@@ -22,4 +22,5 @@ if [[ $status -eq 0 ]]; then
 else
   grep -Fq "CHALLENGE_FAILURE" "$BUILD_DIR/challenge.err"
   echo "STARTER EXPECTED FAILURE status=$status; complete TODO 1..3"
+  exit 41
 fi

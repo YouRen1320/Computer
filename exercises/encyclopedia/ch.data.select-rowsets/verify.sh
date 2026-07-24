@@ -12,3 +12,4 @@ fi
 
 grep -F "answer-error=NULL must be tested with IS NULL" "$TMP_ROOT/actual.out" >/dev/null
 echo "SELECT ROWSETS EXERCISE STARTER EXPECTED FAILURE"
+exit 41

@@ -91,6 +91,16 @@ outcomes:
 ---
 # 作品集、技术表达、岗位映射与面试复盘
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《FactoryCare 端到端验收与可回滚发布》](ch.release.factorycare-acceptance.md)：作品集中的架构、安全、AI 和发布主张必须由完整验收证据支撑。
+- [《AI 协作、隐私、补丁审查与可证伪验证》](../../volume-00-computer-foundations/chapters/ch.foundations.ai-assisted-verification.md)：AI 生成内容必须经过预测、验证、故障注入和本人复述后才能作为能力主张。
+- [《学习证据、掌握标准与间隔复习》](../../volume-00-computer-foundations/chapters/ch.foundations.learning-evidence.md)：简历与面试主张必须回链到按日保存的预测、命令、失败、修复和复述证据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 作品集不是把项目截图排列得漂亮，也不是把技术名词堆满简历。它是一组可验证的能力主张：你解决了什么问题，负责哪一段边界，为什么选择这种设计，遇到什么失败，怎样定位和修复，最后用什么证据证明结果。面试则是对这些主张进行限时复述和追问验证。两者的共同底层是证据，而不是包装。
 
 AI 时代，写出代码的成本下降，理解和负责结果的门槛反而更清晰。候选人可以使用 Codex、Claude 或其他工具，但必须能说明输入约束、审查过程、失败注入、测试判据和本人决策。说“全部是 AI 写的”既没有解释能力，也不能证明工程结果；说“全部由本人独立完成”而隐藏工具和团队贡献同样不准确。更有价值的表达是：AI 生成了哪些候选实现，本人如何限定边界、验证、发现错误、修改并承担最终结论。

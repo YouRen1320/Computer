@@ -78,6 +78,14 @@ outcomes:
 ---
 # 异常分类、传播、捕获、转换与失败契约
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《接口、抽象类、多态与动态分派》](ch.java-oop.interfaces-polymorphism.md)：独立完成异常模型、捕获与转换前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与验证工件可以用于学习和作者自检，但不代表学习者已经独立通过 G1，也不会自动修改 `PROGRESS.md`。
 
 方法通常通过 return 交付结果，但有些执行无法产生承诺的正常结果：输入违反前置条件、目标工单冲突、下层存储不可用、程序访问了越界索引。Java 用异常把控制从失败点转移到能够处理该类型的 catch，沿途保留消息、堆栈、cause 和 suppressed 异常。异常不是“任何不满意结果”的同义词，而是一份方法如何失败的契约。

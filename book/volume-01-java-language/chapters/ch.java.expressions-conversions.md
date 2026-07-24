@@ -75,6 +75,14 @@ outcomes:
 ---
 # 运算符、表达式、类型转换、溢出与整数分金额
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《值、变量、基本类型、String、作用域与基本输出》](ch.java.values-variables-types.md)：独立完成运算与表达式、转换与数值边界前，必须先具备「值、变量、基本类型、String、作用域与基本输出」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文、正例、实验和公开练习已经可以用于试读与技术复核，但尚未通过独立评审，不能据此把学习进度标记为完成。
 
 你已经会声明变量，也知道 `int quantity = 3;` 中的类型、变量和值分别是什么。现在要回答下一层问题：程序怎样把单价和数量算成总额？为什么 `5 / 2` 得到的不是 `2.5`？为什么把一个 `int` 结果放进 `long` 变量仍可能已经溢出？为什么 `false && dangerousExpression` 可以安全跳过右侧，而看起来相似的 `false & dangerousExpression` 却可能抛异常？

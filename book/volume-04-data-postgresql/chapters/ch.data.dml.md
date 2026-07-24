@@ -78,6 +78,14 @@ outcomes:
 ---
 # INSERT、UPDATE、DELETE、UPSERT 与 RETURNING
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《SELECT、投影、过滤、NULL、排序与分页》](ch.data.select-rowsets.md)：独立完成增改删、冲突与返回前，必须先具备「SELECT、投影、过滤、NULL、排序与分页」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 核对。本机没有 PostgreSQL server 或 `psql`；配套资产使用固定 CSV、静态 SQL 合同和 Ruby 2.6 兼容状态机。离线 PASS 能证明固定写入预言、危险语句拦截和红绿答案，**不能证明 PostgreSQL 已解析或执行这些语句，也不能证明锁、触发器或并发行为**。
 
 ## 1. DML 的核心不是“语句成功”，而是“恰好改了该改的行”

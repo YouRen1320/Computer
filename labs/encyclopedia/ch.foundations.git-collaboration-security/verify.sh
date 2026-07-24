@@ -1,5 +1,6 @@
-#!/bin/zsh -f
-set -eu
-
-SCRIPT_DIR=${0:A:h}
-exec /usr/bin/ruby --disable-gems "$SCRIPT_DIR/verify.rb"
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+/usr/bin/ruby --disable-gems ../../../examples/encyclopedia/ch.foundations.git-collaboration-security/verify.rb
+test -s git-evidence.txt
+test -s worksheet.md

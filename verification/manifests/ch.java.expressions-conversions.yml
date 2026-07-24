@@ -1,0 +1,96 @@
+schema_version: 1
+manifest_id: verification.ch.java.expressions-conversions
+chapter_id: ch.java.expressions-conversions
+edition: 2026.2-draft
+visibility: internal-evidence
+digest_algorithm: sha256-path-nul-bytes-nul-v1
+input_count: 12
+input_set_sha256: cd6c751b177cdd0dc3f03f5afacf8d556a5fcc93e58476cc95a1334bcafbaef3
+inputs:
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/failures/NarrowingCompileError.java.txt, sha256: 896e3b3bf2dc23605c503fca3446083ba2bb0cdcd3a0bc5da649943f5efdcda8, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/src/CheckedOverflowFailure.java, sha256: 57534fe19ef5f30d2cfa101b3832e869578f8b4a110c4288c18a55e713cdd367, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/src/DivisionByZeroFailure.java, sha256: 459a9057a7c5f5b56e2b37a950e51fb3967903c3d80585bf74be864cc3851172, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/src/EagerBooleanFailure.java, sha256: 50d667472f134be0249b42e729a3e43ff5d59d65adcbbadb4c400324863d1304, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/src/ExpressionsDemo.java, sha256: 703fa267ac0541a1bd1dc9eb59c05ff543966d17edd5fc3a457921d212c0e236, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.expressions-conversions/verify.sh, sha256: f3ff187df9a9c22beb3673ae551133f1f1af7d118067aceb76958c496e706e7d, mode: "0755"}
+  - {path: exercises/encyclopedia/ch.java.expressions-conversions/src/MoneyChallenge.java, sha256: e6f3c48dcbfc69134c68c339627d9579b907ba811c0903cc4dd72737b6eb20f6, mode: "0644"}
+  - {path: exercises/encyclopedia/ch.java.expressions-conversions/verify.sh, sha256: 58c3ac7bd2d3b3797154db3072235f7073ab7afe6ec827f6ba5e64d80db02532, mode: "0755"}
+  - {path: labs/encyclopedia/ch.java.expressions-conversions/src/MoneyLab.java, sha256: bfcbd71b9929505228c32281b6695174f0981d454988121232fa8e6a1b43fe8a, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.expressions-conversions/src/MoneyLabTest.java, sha256: 080ba28b208bbbda03ad31c28669c5c7aeea392b07f66ab6f9faecf30c7c08c9, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.expressions-conversions/src/MoneyOverflowProbe.java, sha256: 5a2cc51996e01048e54b6c298f86ab3e88e7bf78197f4bf1f59a9f30feab3a29, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.expressions-conversions/verify.sh, sha256: 9bb25d7db1b8a4566d9cdd4b3d49719ff3515df8db4ecf95cc342c2636c953c7, mode: "0755"}
+tools:
+  - {id: bash, version_argv: [bash, --version], expected_version: "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)"}
+  - {id: java, version_argv: [java, -version], expected_version: "openjdk version \"25.0.3\" 2026-04-21 LTS"}
+  - {id: javac, version_argv: [javac, -version], expected_version: "javac 25.0.3"}
+recipes:
+  - id: expressions-example
+    role: example
+    input_paths:
+      - examples/encyclopedia/ch.java.expressions-conversions/failures/NarrowingCompileError.java.txt
+      - examples/encyclopedia/ch.java.expressions-conversions/src/CheckedOverflowFailure.java
+      - examples/encyclopedia/ch.java.expressions-conversions/src/DivisionByZeroFailure.java
+      - examples/encyclopedia/ch.java.expressions-conversions/src/EagerBooleanFailure.java
+      - examples/encyclopedia/ch.java.expressions-conversions/src/ExpressionsDemo.java
+      - examples/encyclopedia/ch.java.expressions-conversions/verify.sh
+    workdir: examples/encyclopedia/ch.java.expressions-conversions
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac]
+    expected_exit_code: 0
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "EXPECTED_FAILURE", count: 4}
+      - {stream: stdout, literal: "EXAMPLES PASS", count: 1}
+    declared_outputs:
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build, kind: directory}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/CheckedOverflowFailure.err, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/DivisionByZeroFailure.err, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/EagerBooleanFailure.err, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/NarrowingCompileError.err, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/NarrowingCompileError.java, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/NarrowingCompileError.out, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/classes, kind: directory}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/classes/CheckedOverflowFailure.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/classes/DivisionByZeroFailure.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/classes/EagerBooleanFailure.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/classes/ExpressionsDemo.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.expressions-conversions/build/demo.out, kind: file}
+  - id: expressions-exercise
+    role: exercise
+    input_paths:
+      - exercises/encyclopedia/ch.java.expressions-conversions/src/MoneyChallenge.java
+      - exercises/encyclopedia/ch.java.expressions-conversions/verify.sh
+    workdir: exercises/encyclopedia/ch.java.expressions-conversions
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac]
+    expected_exit_code: 41
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "EXPECTED_RED: replace the starter placeholders", count: 1}
+    declared_outputs: []
+  - id: expressions-lab
+    role: lab
+    input_paths:
+      - labs/encyclopedia/ch.java.expressions-conversions/src/MoneyLab.java
+      - labs/encyclopedia/ch.java.expressions-conversions/src/MoneyLabTest.java
+      - labs/encyclopedia/ch.java.expressions-conversions/src/MoneyOverflowProbe.java
+      - labs/encyclopedia/ch.java.expressions-conversions/verify.sh
+    workdir: labs/encyclopedia/ch.java.expressions-conversions
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac]
+    expected_exit_code: 0
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "assertions=8 passed", count: 1}
+      - {stream: stdout, literal: "EXPECTED_FAILURE MoneyOverflowProbe", count: 1}
+      - {stream: stdout, literal: "LAB PASS normal=5997 zero=0", count: 1}
+    declared_outputs:
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build, kind: directory}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/classes, kind: directory}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/classes/MoneyLab.class, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/classes/MoneyLabTest.class, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/classes/MoneyOverflowProbe.class, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/lab.out, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/overflow.err, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/overflow.out, kind: file}
+      - {path: labs/encyclopedia/ch.java.expressions-conversions/build/test.out, kind: file}

@@ -78,6 +78,15 @@ outcomes:
 ---
 # 窗口、分区、排序与分析函数
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《INNER/OUTER JOIN、关系基数与重复行》](ch.data.joins.md)：独立完成窗口定义、分析函数前，必须先具备「INNER/OUTER JOIN、关系基数与重复行」已经验证的知识与失败边界
+- [《子查询、CTE 与集合拆解》](ch.data.subqueries-cte.md)：独立完成窗口定义、分析函数前，必须先具备「子查询、CTE 与集合拆解」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。本机没有 PostgreSQL server 或 `psql`；配套资产用固定 CSV、静态 SQL 契约和 Ruby 2.6 兼容 oracle。离线 PASS 能证明手算行集和故障预言，**不能证明 PostgreSQL 已解析查询、执行时间达标或采用某个计划**。
 
 ## 1. 既保留明细，又回答“在组内哪里”
@@ -123,12 +132,12 @@ FROM / JOIN / WHERE 形成可信明细行集
 
 | 工单 | 技师 | 创建时间 UTC | 状态 |
 | --- | --- | --- | --- |
-| W-01 | T-01 | 2026-07-01 09:00 | OPEN |
-| W-02 | T-01 | 2026-07-01 09:00 | DONE |
-| W-03 | T-01 | 2026-07-01 10:00 | DONE |
-| W-04 | T-02 | 2026-07-01 08:00 | DONE |
-| W-05 | T-02 | 2026-07-01 09:30 | OPEN |
-| W-06 | T-02 | 2026-07-01 09:30 | DONE |
+| W-01 | T-01 | 2026-07-01 09:00 | CREATED |
+| W-02 | T-01 | 2026-07-01 09:00 | CLOSED |
+| W-03 | T-01 | 2026-07-01 10:00 | CLOSED |
+| W-04 | T-02 | 2026-07-01 08:00 | CLOSED |
+| W-05 | T-02 | 2026-07-01 09:30 | CREATED |
+| W-06 | T-02 | 2026-07-01 09:30 | CLOSED |
 
 两个技师各三行。W-01/W-02 时间并列，W-05/W-06 也并列，这是故意设计的故障放大器。业务规定同一时间按 `work_order_id` 升序，因此完整顺序为：
 
@@ -333,16 +342,16 @@ T-02: W-04 previous=NULL, W-05 since_previous=1h30m, W-06 since_previous=0
 
 ## 9. 累计聚合：聚合函数加 OVER
 
-把 DONE 映射为 1，其他状态映射为 0：
+把 CLOSED 映射为 1，其他状态映射为 0：
 
 ```sql
-CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END
+CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END
 ```
 
 逐行累计：
 
 ```sql
-SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER (
+SUM(CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END) OVER (
   PARTITION BY w.technician_id
   ORDER BY w.created_at, w.work_order_id
   ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
@@ -354,17 +363,17 @@ SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER (
 也可写计数：
 
 ```sql
-COUNT(*) FILTER (WHERE w.status = 'DONE') OVER (...)
+COUNT(*) FILTER (WHERE w.status = 'CLOSED') OVER (...)
 ```
 
-两种都能表达固定任务；选择团队更容易读懂的形式。不要用 `COUNT(status)` 统计完成状态，因为它数的是所有非 NULL 状态，不只 DONE。
+两种都能表达固定任务；选择团队更容易读懂的形式。不要用 `COUNT(status)` 统计完成状态，因为它数的是所有非 NULL 状态，不只 CLOSED。
 
 ## 10. 默认 frame 为什么在并列处“提前跳”
 
 最危险的省略不是语法错误，而是查询成功却语义不合预期：
 
 ```sql
-SUM(CASE WHEN status = 'DONE' THEN 1 ELSE 0 END) OVER (
+SUM(CASE WHEN status = 'CLOSED' THEN 1 ELSE 0 END) OVER (
   PARTITION BY technician_id
   ORDER BY created_at
 )
@@ -372,7 +381,7 @@ SUM(CASE WHEN status = 'DONE' THEN 1 ELSE 0 END) OVER (
 
 有窗口 ORDER BY 而未写 frame 时，PostgreSQL 默认是从分区开头到当前行的最后一个 peer；等价理解为 `RANGE UNBOUNDED PRECEDING` 到当前 peer group。[窗口表达式语法](https://www.postgresql.org/docs/18/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS)说明默认 frame 会包含与当前行在窗口排序上相等的 peers。
 
-T-01 的 W-01 OPEN 与 W-02 DONE 同在 09:00。对 W-01 而言，默认 frame 已经包含 W-02，因此 W-01 的累计完成数会显示 1；业务手算的逐条序列却要求 0。T-02 的 W-05 也会提前看见同时间的 W-06，使累计从 1 跳到 2。
+T-01 的 W-01 CREATED 与 W-02 CLOSED 同在 09:00。对 W-01 而言，默认 frame 已经包含 W-02，因此 W-01 的累计完成数会显示 1；业务手算的逐条序列却要求 0。T-02 的 W-05 也会提前看见同时间的 W-06，使累计从 1 跳到 2。
 
 这不是 SUM 算错，而是 frame 与业务问题不同。
 
@@ -440,7 +449,7 @@ SELECT
     PARTITION BY w.technician_id
     ORDER BY w.created_at, w.work_order_id
   ) - w.created_at AS until_next,
-  SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER (
+  SUM(CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END) OVER (
     PARTITION BY w.technician_id
     ORDER BY w.created_at, w.work_order_id
     ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
@@ -473,7 +482,7 @@ ORDER BY w.technician_id, w.created_at, w.work_order_id;
 1. 输出行数 6 等于输入明细行数 6；
 2. T-01 与 T-02 都从 seq=1 开始且连续到 3；
 3. 每个 previous/next 与同一分区稳定顺序相邻；
-4. `completed_so_far` 每次只增加 0 或 1，最终都等于各技师 DONE 总数 2。
+4. `completed_so_far` 每次只增加 0 或 1，最终都等于各技师 CLOSED 总数 2。
 
 如果连接技师表只是为了显示姓名，应先证明 `technician_id` 在技师表唯一。否则一对多重复会破坏第一个不变量。
 
@@ -487,7 +496,7 @@ SELECT
   ROW_NUMBER() OVER ordered AS technician_sequence,
   LAG(w.work_order_id) OVER ordered AS previous_work_order_id,
   LEAD(w.work_order_id) OVER ordered AS next_work_order_id,
-  SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER running AS completed_so_far
+  SUM(CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END) OVER running AS completed_so_far
 FROM factorycare.work_order AS w
 WINDOW
   ordered AS (
@@ -538,16 +547,16 @@ ORDER BY technician_id, technician_sequence;
 
 ## 16. 窗口看到 WHERE 之后的行
 
-假设先筛 `WHERE status = 'DONE'`，再计算 `lag`：前一行含义变成“前一张已完成工单”，而不是“前一张工单”。这是合法但不同的问题。
+假设先筛 `WHERE status = 'CLOSED'`，再计算 `lag`：前一行含义变成“前一张已完成工单”，而不是“前一张工单”。这是合法但不同的问题。
 
 两个需求要分开：
 
 ```text
-需求 A：所有工单序列中，这张 DONE 前一张是什么？
-  → 先对全部工单做 lag，再在外层筛 DONE
+需求 A：所有工单序列中，这张 CLOSED 前一张是什么？
+  → 先对全部工单做 lag，再在外层筛 CLOSED
 
-需求 B：DONE 子序列中，上一张 DONE 是什么？
-  → 内层 WHERE 先筛 DONE，再做 lag
+需求 B：CLOSED 子序列中，上一张 CLOSED 是什么？
+  → 内层 WHERE 先筛 CLOSED，再做 lag
 ```
 
 如果结果不符合直觉，先记录窗口输入行数和 ID 列表。窗口不会看见已被 WHERE 删除的行，也不会自动回到原表找邻居。
@@ -615,7 +624,7 @@ ROW_NUMBER() OVER (PARTITION BY technician_id ORDER BY created_at, work_order_id
 
 ### 故障三：默认 frame 累计突跳
 
-症状：W-01 尚为 OPEN，累计却已经是 1；W-05 也提前包含 W-06。
+症状：W-01 尚为 CREATED，累计却已经是 1；W-05 也提前包含 W-06。
 
 第一证据：并列组第一行的默认累计与显式 ROWS 累计对照。不要只看分区最终总数，因为两者最终都可能是 2。
 
@@ -660,7 +669,7 @@ ROW_NUMBER() OVER (PARTITION BY technician_id ORDER BY created_at, work_order_id
 | 只写窗口 ORDER BY | 不保证最终展示顺序 | 另写最终 ORDER BY |
 | WHERE 中直接用 row_number | 查询阶段不允许 | 子查询/CTE 后外层筛 |
 | JOIN 复制后再做窗口 | 窗口基于错误粒度 | 先修基数并断言唯一 |
-| `COUNT(status)` 当 DONE 数 | 数所有非 NULL 状态 | CASE/SUM 或 FILTER |
+| `COUNT(status)` 当 CLOSED 数 | 数所有非 NULL 状态 | CASE/SUM 或 FILTER |
 | 用 `DISTINCT` 清窗口重复 | 窗口列使行不同 | 在窗口前修输入关系 |
 | 改成 DESC 却不重审 lag | 相邻方向含义反转 | 明确时间方向并重算预言 |
 | 把 NULL lag 改 0 | 混淆“无前一行”与零间隔 | 保留 NULL 或用明确业务默认 |
@@ -676,7 +685,7 @@ ROW_NUMBER() OVER (PARTITION BY technician_id ORDER BY created_at, work_order_id
 
 ## 24. 120 秒复述模板
 
-> 窗口函数在不折叠明细行的前提下计算组内分析值。PARTITION BY 决定独立分区，窗口 ORDER BY 决定组内先后，frame 决定当前计算可见的行。row_number 给每行编号，rank/dense_rank 表达并列名次，lag/lead 读取排序后的相邻行，聚合函数加 OVER 可做运行累计。反例是只按 created_at 排序并省略 frame：并列时间没有稳定先后，PostgreSQL 默认 frame 还会包含当前 peers，导致第一条 OPEN 工单提前看到同时间 DONE。逐行累计应使用稳定唯一 tiebreaker 与显式 ROWS frame。窗口只处理它收到的行，不能修复错误 JOIN；筛窗口结果要加外层查询。
+> 窗口函数在不折叠明细行的前提下计算组内分析值。PARTITION BY 决定独立分区，窗口 ORDER BY 决定组内先后，frame 决定当前计算可见的行。row_number 给每行编号，rank/dense_rank 表达并列名次，lag/lead 读取排序后的相邻行，聚合函数加 OVER 可做运行累计。反例是只按 created_at 排序并省略 frame：并列时间没有稳定先后，PostgreSQL 默认 frame 还会包含当前 peers，导致第一条 CREATED 工单提前看到同时间 CLOSED。逐行累计应使用稳定唯一 tiebreaker 与显式 ROWS frame。窗口只处理它收到的行，不能修复错误 JOIN；筛窗口结果要加外层查询。
 
 复述后必须能回答：
 

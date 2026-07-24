@@ -78,10 +78,16 @@ outcomes:
   - mobile.dart-language
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: c92fc82a7a9de3c825b1cfad822361e0bec4f256621ab255385dc149d2384da1
 ---
 # 异常、资源所有权与错误建模
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类、泛型、mixin、extension 与对象边界》](ch.dart.oop-generics.md)：自定义异常、结果类型和可替换资源接口需要已验证对象与泛型模型。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 失败不可避免，混乱可以避免。本章把失败分成可预期业务结果与异常路径，规定在哪里抛出、捕获、转换和记录，并把“谁打开资源，谁保证关闭”写成可测试合同。全部示例保持同步；Future、异步 close 与取消放到后续章节。
 

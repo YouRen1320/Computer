@@ -88,10 +88,16 @@ outcomes:
   - mobile.flutter-layout-lifecycle
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 8970e035634a75ff13a1733841a85374a8177974f1e1d70c0504b25c81c796e0
 ---
 # 构建、签名、发布、符号与崩溃监控
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Widget/集成/Golden 测试、性能与内存分析》](ch.flutter.testing-performance.md)：发布前需要完整测试与性能证据，监控也需能重现并定位真实失败。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 发布不是执行一次 `flutter build`，也不是在商店后台点“提交”。一个可负责的发布必须回答：制品来自哪个 commit、使用什么 SDK 与依赖、面向哪个环境、由什么身份签名、如何找到对应符号、崩溃能否关联到该版本、出现问题怎样停止扩散和恢复。本章建立 Android/iOS 发布候选的证据链；它不伪造证书、商店账号、真机制品或监控平台结果。
 

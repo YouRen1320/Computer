@@ -88,6 +88,14 @@ outcomes:
 ---
 # Origin、同源、Cookie、缓存与 CORS 浏览器模型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《浏览器请求、解析、渲染与 DevTools 观察》](ch.web.browser-render-devtools.md)：Origin、Cookie 与缓存行为需要在已理解的导航和渲染管线中观察，避免把浏览器策略误当成服务器故障。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产用固定 URL、Cookie、CORS 与 HTTP cache 头构造离线请求矩阵，验证决策规则和红绿灯；它不启动真实 HTTPS、图形浏览器、代理/CDN、身份 Provider 或 FactoryCare 登录。浏览器策略会随版本与隐私机制演进，生产 cookie 属性、CORS allowlist 和缓存策略尚须在锁定部署拓扑后做真实浏览器与服务端安全测试。
 
 浏览器收到页面后，不允许任意页面读取任意网站的响应，也不会把所有 Cookie 发给所有 URL，更不会永远从网络重新下载相同资源。它用 Origin 隔离脚本读取，用 Cookie 的 host/domain、path、Secure、SameSite、过期等条件决定附带，用 Fetch credentials mode 决定跨源凭据行为，用 CORS 响应头决定跨源响应能否共享给脚本，再用 HTTP cache 规则判断能否复用或验证旧响应。

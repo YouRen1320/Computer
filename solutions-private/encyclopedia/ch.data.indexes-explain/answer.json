@@ -1,5 +1,5 @@
 {
-  "dataset": {"rows":100000,"status_counts":{"DONE":85000,"OPEN":8000,"IN_PROGRESS":5000,"CANCELLED":2000}},
+  "dataset": {"rows":100000,"status_counts":{"CLOSED":85000,"CREATED":8000,"IN_PROGRESS":5000,"CANCELLED":2000}},
   "result": {"before_fingerprint":"dispatch-v1","after_fingerprint":"dispatch-v1"},
   "candidate": {
     "index_columns":["status","created_at DESC","work_order_id DESC"],

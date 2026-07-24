@@ -90,6 +90,16 @@ outcomes:
 ---
 # 数据源、连接池、事务资源与迁移启动顺序
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Spring Boot、Starter、自动配置与应用启动》](ch.spring.boot-autoconfiguration.md)：独立完成DataSource 与连接池、事务资源与启动前，必须先具备「Spring Boot、Starter、自动配置与应用启动」已经验证的知识与失败边界
+- [《DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界》](../../volume-04-data-postgresql/chapters/ch.data.jdbc.md)：独立完成DataSource 与连接池、事务资源与启动前，必须先具备「DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界」已经验证的知识与失败边界
+- [《Flyway、版本迁移、向前修复与数据演进》](../../volume-04-data-postgresql/chapters/ch.data.schema-migrations.md)：独立完成DataSource 与连接池、事务资源与启动前，必须先具备「Flyway、版本迁移、向前修复与数据演进」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件是教材证据，不自动更新 `PROGRESS.md`，也不代表 PostgreSQL 生产环境已经就绪。
 
 数据库连接是昂贵且有上限的外部资源。Spring Boot 可以配置 DataSource 并选择连接池，Spring JDBC 可以把连接绑定到事务上下文，Flyway 可以在启动阶段迁移 schema；但这些能力只有在借还、容量、顺序和健康语义明确时才组成可靠边界。

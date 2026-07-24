@@ -94,6 +94,14 @@ outcomes:
 
 # Nuxt SSR、SSG、水合与服务端数据获取
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Props、事件、Slot 与组件 v-model》](ch.vue.components-contracts.md)：服务端渲染的基本单位仍是有确定输入输出的 Vue 组件。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > Nuxt 不只是“带文件路由的 Vue”。同一份组件代码可能先在服务器生成 HTML，再在浏览器水合并接管交互。你必须知道代码在哪个运行时执行、数据如何进入 payload、初始 HTML 与客户端第一次渲染为何必须一致。
 
 ## 1. 一次页面访问经历了什么

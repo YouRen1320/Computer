@@ -56,7 +56,7 @@ class DtoJsonLabTest {
 
     @Test
     void responseFieldWhitelistExcludesBothInternalFields() {
-        var domain = new DtoFixtures.WorkOrder(42, "A", "D", HIGH, "OPEN",
+        var domain = new DtoFixtures.WorkOrder(42, "A", "D", HIGH, "CREATED",
                 new BigDecimal("900.00"), "token");
         var node = mapper.valueToTree(DtoFixtures.toResponse(domain));
         assertEquals(Set.of("id", "assetId", "description", "priority", "status"),
@@ -133,7 +133,7 @@ class DtoJsonLabTest {
         var requestFields = Set.copyOf(mapper.valueToTree(
                 new DtoFixtures.CreateWorkOrderRequest("A", "D", HIGH)).propertyNames());
         var responseFields = Set.copyOf(mapper.valueToTree(
-                new DtoFixtures.WorkOrderResponse(42, "A", "D", HIGH, "OPEN")).propertyNames());
+                new DtoFixtures.WorkOrderResponse(42, "A", "D", HIGH, "CREATED")).propertyNames());
         assertFalse(requestFields.contains("id"));
         assertFalse(requestFields.contains("status"));
         assertEquals(Set.of("id", "assetId", "description", "priority", "status"), responseFields);

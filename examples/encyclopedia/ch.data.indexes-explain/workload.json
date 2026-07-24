@@ -2,8 +2,8 @@
   "dataset": {
     "rows": 100000,
     "status_counts": {
-      "DONE": 85000,
-      "OPEN": 8000,
+      "CLOSED": 85000,
+      "CREATED": 8000,
       "IN_PROGRESS": 5000,
       "CANCELLED": 2000
     },
@@ -11,7 +11,7 @@
   },
   "query": {
     "id": "dispatch-open-june",
-    "equal": "status=OPEN",
+    "equal": "status=CREATED",
     "range": "2026-06-01T00:00:00+08/2026-07-01T00:00:00+08",
     "order": ["created_at DESC", "work_order_id DESC"],
     "limit": 50

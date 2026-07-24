@@ -89,10 +89,16 @@ outcomes:
   - python.io-errors
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 894d26da0fc7fd7871c9a1a4db436857ecda65f26aa0135047667aa0aacf6b63
 ---
 # Pydantic 模型、校验、序列化与错误
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、上下文管理器与资源清理》](ch.python.exceptions-context.md)：ValidationError 需要在稳定异常映射边界中转化。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > Python 类型标注主要帮助人、编辑器和静态检查器理解代码；它不会自动阻止运行时收到错误数据。Pydantic 的职责，是在 JSON、消息、配置和外部服务响应等不可信边界，把输入解析成满足声明的 Python 对象，或者产生结构化的 `ValidationError`。它不是数据库、权限系统，也不是 FactoryCare 业务真相的所有者。
 

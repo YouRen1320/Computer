@@ -74,6 +74,12 @@ outcomes:
 ---
 # 数据库、schema、表、行、键与关系模型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+本章无编程先修。零基础读者可以直接从本章开始，并按正文中的预测、操作、验证和复述步骤建立第一份学习证据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文以稳定的关系模型为核心，并用 PostgreSQL 18.4 的官方术语核对数据库、schema、表和约束边界；复核日期为 **2026-07-17**。配套 oracle 只读取仓库内固定 CSV/JSON，不安装 PostgreSQL、不连接任何数据库，也不执行 DDL。自动检查通过不等于零基础试读、人工审查或真实数据库验证完成，因此本章不能晋升为 `verified`。
 
 ## 1. 为什么先学“数据是什么”，而不是先背 SQL

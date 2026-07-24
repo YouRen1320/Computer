@@ -86,6 +86,15 @@ outcomes:
 ---
 # 审计事件、敏感字段、追踪责任与隐私最小化
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《租户上下文、数据权限与跨租户隔离测试》](ch.security.multitenancy-data-isolation.md)：独立完成审计事件、隐私与敏感字段前，必须先具备「租户上下文、数据权限与跨租户隔离测试」已经验证的知识与失败边界
+- [《结构化日志、线程转储、JFR 与 JVM 故障诊断》](../../volume-03-java-engineering/chapters/ch.java-engineering.logging-jvm-diagnostics.md)：独立完成审计事件、隐私与敏感字段前，必须先具备「结构化日志、线程转储、JFR 与 JVM 故障诊断」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产只在内存中构造合成事件并检查字段允许列表、结果语义、租户查询和追加写，不启动日志后端、OpenTelemetry、Spring、数据库、对象存储或导出任务。局部绿灯不能证明存储防篡改、事务原子性、保留/删除、访问控制或法律合规。
 
 审计的目标不是“把能看到的都记下来”，而是在事故调查、权限治理和业务争议时，用最少必要数据回答：哪个可信主体，在什么租户和时间，尝试或完成了什么动作，作用于哪个目标，结果是什么，能通过哪个 trace 关联技术证据。记录过少无法归责；记录密码、Token、完整联系人和业务正文又把日志系统变成新的泄密数据库。

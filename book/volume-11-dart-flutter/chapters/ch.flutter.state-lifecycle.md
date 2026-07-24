@@ -99,6 +99,15 @@ outcomes:
 
 # 状态、生命周期、mounted、Key 与异步更新
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《约束布局、响应式、渲染与无障碍》](ch.flutter.layout-accessibility.md)：布局和可访问状态必须在 setState/Key 变化后保持一致。
+- [《Future、async/await、超时与取消协议》](ch.dart.future-cancellation.md)：mounted 只防止销毁后 UI 更新，真正取消 Future 工作需要正式取消协议。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章解决三个经常混在一起的问题：State 何时存在、什么变化应该触发重建、异步工作在页面离开后由谁负责。最重要的结论先写在前面：`mounted` 只是“这个 State 当前是否还挂在树中”的布尔信号；它能阻止销毁后更新 UI，但不能阻止重复请求，也不能取消正在进行的网络、计时器、订阅或计算。
 
 ## 1. 状态到底是什么

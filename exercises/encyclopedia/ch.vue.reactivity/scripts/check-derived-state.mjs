@@ -11,12 +11,12 @@ const derivesFromOrders = /orders\.value[\s\S]*?filter\s*\(/.test(source)
 // Mapping: simulate the fixed transition table from one open order to three total orders.
 const ordersAfterAdd = [
   { status: 'CREATED' },
-  { status: 'COMPLETED' },
+  { status: 'RESOLVED' },
   { status: 'IN_PROGRESS' },
 ]
 const initialCopiedCount = 1
 const observedCount = usesComputed && !keepsCopiedRef && derivesFromOrders
-  ? ordersAfterAdd.filter(order => order.status !== 'COMPLETED').length
+  ? ordersAfterAdd.filter(order => order.status !== 'RESOLVED').length
   : initialCopiedCount
 
 if (observedCount !== 2) {

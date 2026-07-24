@@ -5,7 +5,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = w.device_id
-    AND w.status = 'DONE'
+    AND w.status = 'CLOSED'
 )
 ORDER BY d.device_id;
 
@@ -16,7 +16,7 @@ WITH unfinished_devices AS (
     SELECT 1
     FROM factorycare.work_order AS w
     WHERE w.device_id = w.device_id
-      AND w.status = 'DONE'
+      AND w.status = 'CLOSED'
   )
 ),
 category_counts AS (

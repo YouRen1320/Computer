@@ -83,6 +83,14 @@ outcomes:
 ---
 # 配置属性、Profile、环境覆盖与敏感配置
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Bean 注册、生命周期、作用域与销毁》](ch.spring.beans-lifecycle-scopes.md)：独立完成配置来源与绑定、Profile 与敏感值前，必须先具备「Bean 注册、生命周期、作用域与销毁」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件只提供教材证据，不自动更新 PROGRESS.md，也不表示学习者已经完成 Week 09/10。
 
 同一份应用代码需要在本地、测试和生产使用不同地址、超时与凭据。把这些值写死在 Java 类里会迫使每个环境重新编译，也会让秘密进入仓库。Spring Environment 汇总多个 PropertySource，Spring Boot 再提供 config data、宽松名称绑定、类型转换和 ConfigurationProperties 校验。

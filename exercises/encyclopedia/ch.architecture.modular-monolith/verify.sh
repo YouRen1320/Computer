@@ -7,8 +7,19 @@ case "$(javac -version 2>&1)" in "javac 25"|"javac 25."*) ;; *) echo "EXPECTED j
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR/classes"
 javac --release 25 -Xlint:all -Werror -d "$BUILD_DIR/classes" "$ROOT_DIR/src/ModularMonolithChallenge.java"
-if java -cp "$BUILD_DIR/classes" ModularMonolithChallenge > "$BUILD_DIR/starter.log" 2>&1; then echo "STARTER UNEXPECTEDLY PASSED" >&2; exit 1; fi
-grep -Fq 'INTERNAL_PACKAGE_EXPOSED' "$BUILD_DIR/starter.log"
-test "$(rg -c 'TODO' "$ROOT_DIR/src/ModularMonolithChallenge.java")" -eq 8
-echo "starter=expected-failure first=INTERNAL_PACKAGE_EXPOSED todos=8"
-echo "EXERCISE READY jdk=25 mode=offline"
+if java -cp "$BUILD_DIR/classes" ModularMonolithChallenge > "$BUILD_DIR/starter.log" 2>&1; then
+  echo "STARTER UNEXPECTEDLY PASSED" >&2
+  exit 42
+fi
+if ! grep -Fq 'INTERNAL_PACKAGE_EXPOSED' "$BUILD_DIR/starter.log"; then
+  cat "$BUILD_DIR/starter.log" >&2
+  echo "STARTER FAILURE MARKER MISMATCH expected=INTERNAL_PACKAGE_EXPOSED" >&2
+  exit 43
+fi
+todo_count="$(grep -c 'TODO' "$ROOT_DIR/src/ModularMonolithChallenge.java" || true)"
+if [[ "$todo_count" != "8" ]]; then
+  echo "STARTER TODO COUNT MISMATCH expected=8 actual=${todo_count:-0}" >&2
+  exit 44
+fi
+echo "EXPECTED_RED first=INTERNAL_PACKAGE_EXPOSED todos=8 jdk=25 mode=offline"
+exit 41

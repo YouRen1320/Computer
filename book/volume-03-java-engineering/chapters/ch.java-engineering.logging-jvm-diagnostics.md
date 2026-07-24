@@ -87,6 +87,15 @@ outcomes:
 ---
 # 结构化日志、线程转储、JFR 与 JVM 故障诊断
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](ch.java-engineering.maven-reproducible-builds.md)：独立完成结构化日志、JVM 诊断前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+- [《线程、Java 内存模型、同步与锁》](ch.java-engineering.threads-jmm.md)：独立完成结构化日志、JVM 诊断前，必须先具备「线程、Java 内存模型、同步与锁」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文与离线夹具可以训练证据阅读，但不能替代目标环境授权、现场采样与容量基线，也不会自动修改 `PROGRESS.md`。
 
 日志与 JVM 工具的共同目标不是“多打印一点”，而是把故障假设变成可检验的证据。用户说“系统卡了”只是症状；一条 WARN、一次线程快照或一段 GC 日志也只是观测。可靠诊断要建立时间窗、请求关联、线程/锁关系、资源趋势和对照基线，再说明证据能支持什么、不能支持什么。

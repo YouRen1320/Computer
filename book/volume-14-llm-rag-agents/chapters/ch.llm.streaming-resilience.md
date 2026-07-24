@@ -91,6 +91,15 @@ outcomes:
 
 # 流式输出、重试、超时、取消与降级
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《模型 API、消息、提示、Token 与成本》](ch.llm.api-prompts-cost.md)：流式传输仍需沿用模型 API 的认证、usage 和提供方错误分类。
+- [《asyncio、Task、超时、取消与结构化并发边界》](../../volume-12-python-data/chapters/ch.python.asyncio-cancellation.md)：流迭代、超时与取消必须基于结构化异步任务和清理合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 流式响应让用户更早看到内容，却把一次“返回字符串”的调用变成事件协议和状态机。第一段文字出现只表示收到部分输出；连接关闭不自动表示完成；取消界面不自动停止后台任务；重试读取可能重复模型费用，重试工具调用更可能重复副作用。本章把这些隐含风险变成显式合同。
 
 稳定核心是：按事件类型处理、部分与完成分离、超时有总预算、重试只覆盖可重试且安全的阶段、取消向下传播、降级是可观测策略、所有副作用拥有幂等边界。OpenAI Responses API当前的SSE事件名作为版本表面单独说明。实验使用本地异步生成器，不访问网络，也不声称验证真实首Token延迟或服务端取消。

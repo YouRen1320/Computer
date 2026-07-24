@@ -4,7 +4,7 @@ import java.util.Set;
 public final class AuthorizationPolicyExample {
     private enum Role { REPORTER, TECHNICIAN, DISPATCHER, TENANT_ADMIN, UNKNOWN }
     private enum Action { READ, ASSIGN, CLOSE, UNKNOWN }
-    private enum State { OPEN, VERIFIED, CLOSED }
+    private enum State { CREATED, VERIFIED, CLOSED }
 
     private record Subject(
             String membershipId,
@@ -76,8 +76,8 @@ public final class AuthorizationPolicyExample {
         Subject unknown = new Subject("MEMBER-UNKNOWN", "TENANT-A", "ORG-A", Role.UNKNOWN,
                 Set.of(Action.READ), true);
         WorkOrder owned = new WorkOrder("TENANT-A", "ORG-A", "MEMBER-OWNER", "MEMBER-TECH", State.VERIFIED);
-        WorkOrder anotherOwner = new WorkOrder("TENANT-A", "ORG-A", "MEMBER-OTHER", "MEMBER-OTHER-TECH", State.OPEN);
-        WorkOrder outsideScope = new WorkOrder("TENANT-A", "ORG-B", "MEMBER-OTHER", "MEMBER-OTHER-TECH", State.OPEN);
+        WorkOrder anotherOwner = new WorkOrder("TENANT-A", "ORG-A", "MEMBER-OTHER", "MEMBER-OTHER-TECH", State.CREATED);
+        WorkOrder outsideScope = new WorkOrder("TENANT-A", "ORG-B", "MEMBER-OTHER", "MEMBER-OTHER-TECH", State.CREATED);
 
         System.out.println("owner_read=" + authorize(owner, Action.READ, owned).status());
         System.out.println("other_owner_read=" + authorize(owner, Action.READ, anotherOwner).status());

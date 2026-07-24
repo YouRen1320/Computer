@@ -66,6 +66,17 @@ def audit(packet: dict[str, Any]) -> list[str]:
         if traces - requirement_ids:
             errors.append(f"component {component.get('id')} references an unknown requirement")
 
+    consistency_models: set[str] = set()
+    for decision in packet.get("consistency_decisions", []):
+        decision_id = decision.get("id")
+        for field in ("scope", "model", "tradeoff", "failure_behavior"):
+            if not decision.get(field):
+                errors.append(f"consistency decision {decision_id} lacks {field}")
+        if decision.get("model"):
+            consistency_models.add(decision["model"])
+    if not {"strong", "eventual"}.issubset(consistency_models):
+        errors.append("consistency decisions must compare strong and eventual models")
+
     assumptions = packet.get("capacity_assumptions", {})
     required_units = {
         "organizations": "count",
@@ -124,6 +135,6 @@ if __name__ == "__main__":
     problems = audit(design)
     if problems:
         raise SystemExit("\n".join(problems))
-    print("PASS assumptions, context, traceability, capacity, failure modes, SLO and ADR gates")
+    print("PASS context, traceability, consistency tradeoffs, capacity, failure modes, SLO and ADR gates")
     print(json.dumps(capacity(design), ensure_ascii=False, sort_keys=True))
     print("UNVERIFIED real users, production traffic, database plans, host sizing, network throughput and live failure behavior")

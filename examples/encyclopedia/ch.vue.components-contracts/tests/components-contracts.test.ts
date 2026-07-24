@@ -18,8 +18,8 @@ describe('component contracts', () => {
 
   it('emits the status editor component v-model payload', async () => {
     const wrapper = mount(WorkOrderStatusEditor, { props: { modelValue: 'CREATED' } })
-    await wrapper.get('select').setValue('COMPLETED')
-    expect(wrapper.emitted('update:modelValue')).toEqual([['COMPLETED']])
+    await wrapper.get('select').setValue('RESOLVED')
+    expect(wrapper.emitted('update:modelValue')).toEqual([['RESOLVED']])
     expect(wrapper.props('modelValue')).toBe('CREATED')
   })
 
@@ -56,13 +56,13 @@ describe('component contracts', () => {
 
   it('lets the board own filter and selection transitions', async () => {
     const wrapper = mount(WorkOrderBoard)
-    await wrapper.get('[data-testid="filter-editor"]').setValue('COMPLETED')
+    await wrapper.get('[data-testid="filter-editor"]').setValue('RESOLVED')
     expect(wrapper.findAll('article')).toHaveLength(1)
     expect(wrapper.get('article').attributes('data-order-id')).toBe('WO-2')
     await wrapper.get('article button').trigger('click')
     expect(wrapper.get('[data-testid="selected"]').text()).toBe('已选择：WO-2')
     const evidence = JSON.parse(wrapper.get('[data-testid="parent-evidence"]').text())
-    expect(evidence).toMatchObject({ filter: 'COMPLETED', selectedOrderId: 'WO-2' })
+    expect(evidence).toMatchObject({ filter: 'RESOLVED', selectedOrderId: 'WO-2' })
   })
 
   it('updates the parent source before passing the next status prop down', async () => {

@@ -88,6 +88,14 @@ outcomes:
 ---
 # Grid 二维布局
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《盒模型、display、定位与层叠上下文》](ch.css.box-position.md)：Grid 轨道最终分配的是盒模型尺寸，必须先能解释包含块、溢出和定位边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件以固定 content box、显式/隐式轨道、网格线、区域和自动放置矩阵建立离线证据；离线绿灯不等于真实浏览器的 track sizing、DevTools Grid overlay、截图或视觉差分已验证。易变事实已于 **2026-07-17** 对照 W3C CSS Grid Layout Level 1/2、CSS Box Alignment Level 3 与 CSS Box Sizing Level 3 一手规范核验。
 
 Grid 解决“行与列同时形成约束”的二维布局。工单列表、筛选区和详情区需要共享列线、明确区域与跨行/跨列放置时，Grid 能直接表达结构；Flexbox 多行的每条 line 独立伸缩，无法天然让第二行与第一行共享列轨。反过来，只有一组按钮沿一条轴分配空间时，用 Grid 建很多行列会把简单一维问题过度结构化。

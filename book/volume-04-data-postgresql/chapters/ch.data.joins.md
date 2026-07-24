@@ -80,6 +80,14 @@ outcomes:
 ---
 # INNER/OUTER JOIN、关系基数与重复行
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《聚合、GROUP BY 与 HAVING》](ch.data.aggregates.md)：独立完成连接类型、基数与重复前，必须先具备「聚合、GROUP BY 与 HAVING」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。当前机器没有 PostgreSQL server 或 `psql`，配套资产只用固定 CSV 和 Ruby 2.6 兼容 oracle。它能证明样例键匹配、行数与 NULL 扩展预言，**不能证明真实 PostgreSQL 已解析 SQL、执行外连接或选择某个连接算法**。
 
 ## 1. JOIN 解决什么问题
@@ -137,10 +145,10 @@ JOIN 在查询时按关系键组合这些事实。它不是“把表永久合并
 
 | work_order_id | device_id | technician_id | status |
 | --- | --- | --- | --- |
-| W-01 | D-01 | T-01 | OPEN |
+| W-01 | D-01 | T-01 | CREATED |
 | W-02 | D-01 | T-02 | CLOSED |
-| W-03 | D-02 | T-01 | OPEN |
-| W-04 | D-04 | NULL | OPEN |
+| W-03 | D-02 | T-01 | CREATED |
+| W-04 | D-04 | NULL | CREATED |
 
 ### technician
 
@@ -185,7 +193,7 @@ ON 可以同时包含键和“哪些右侧行算匹配”的规则：
 ```sql
 LEFT JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
- AND w.status = 'OPEN'
+ AND w.status = 'CREATED'
 ```
 
 这样每台设备仍由 LEFT 保留，只是关闭工单不算右侧匹配。
@@ -381,18 +389,18 @@ ORDER BY d.device_id, w.work_order_id;
 五行预言：
 
 ```text
-D-01 | pump       | W-01 | OPEN   | T-01 | Mei
+D-01 | pump       | W-01 | CREATED   | T-01 | Mei
 D-01 | pump       | W-02 | CLOSED | T-02 | Arun
-D-02 | compressor | W-03 | OPEN   | T-01 | Mei
+D-02 | compressor | W-03 | CREATED   | T-01 | Mei
 D-03 | sensor     | NULL | NULL   | NULL | NULL
-D-04 | valve      | W-04 | OPEN   | NULL | NULL
+D-04 | valve      | W-04 | CREATED   | NULL | NULL
 ```
 
 第一处 LEFT 保留无工单设备；第二处 LEFT 保留未分配技师工单。若第二处改 INNER，W-04 和其设备明细会从组合结果消失。
 
 ## 14. ON 与 WHERE：外连接最常见陷阱
 
-需求：“列出所有设备及其 OPEN 工单，没有 OPEN 工单的设备也保留。”
+需求：“列出所有设备及其 CREATED 工单，没有 CREATED 工单的设备也保留。”
 
 正确：
 
@@ -400,7 +408,7 @@ D-04 | valve      | W-04 | OPEN   | NULL | NULL
 FROM factorycare.device AS d
 LEFT JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
- AND w.status = 'OPEN'
+ AND w.status = 'CREATED'
 ```
 
 结果每台设备至少一行；D-03 右侧 NULL。
@@ -411,12 +419,12 @@ LEFT JOIN factorycare.work_order AS w
 FROM factorycare.device AS d
 LEFT JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
-WHERE w.status = 'OPEN'
+WHERE w.status = 'CREATED'
 ```
 
 LEFT 先为 D-03 生成 w.status=NULL，随后 WHERE 的比较为 UNKNOWN，D-03 被删除。对该条件而言结果表现得像 INNER。
 
-不是所有右表条件都必须放 ON。若需求本来就是“只看确实有 OPEN 工单的设备”，WHERE 可以正确。位置取决于是否保留无匹配主体。
+不是所有右表条件都必须放 ON。若需求本来就是“只看确实有 CREATED 工单的设备”，WHERE 可以正确。位置取决于是否保留无匹配主体。
 
 ## 15. 漏 ON 与笛卡尔积
 
@@ -575,7 +583,7 @@ oracle 独立按 CSV 键构造结果，不是 SQL 引擎。它验证固定基数
 9. LEFT 分组数右侧匹配要 COUNT(right.id)，不用 COUNT(*)；
 10. DISTINCT 不能修复错误键或掩盖真实多个工单；
 11. USING 合并同名键列，NATURAL 会随 schema 漂移；
-12. 失败反例是 D-03 在 LEFT 后因 WHERE w.status='OPEN' 被错误删除。
+12. 失败反例是 D-03 在 LEFT 后因 WHERE w.status='CREATED' 被错误删除。
 
 ## 23. 官方依据与未验证边界
 

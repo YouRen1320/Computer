@@ -95,6 +95,16 @@ outcomes:
 ---
 # DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](../../volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md)：独立完成JDBC 查询与资源、事务与错误前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+- [《字节流、字符流、资源所有权与 try-with-resources》](../../volume-03-java-engineering/chapters/ch.java-engineering.io-resource-lifecycle.md)：独立完成JDBC 查询与资源、事务与错误前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+- [《ACID、隔离级别、锁、死锁与重试边界》](ch.data.transactions-locking.md)：独立完成JDBC 查询与资源、事务与错误前，必须先具备「ACID、隔离级别、锁、死锁与重试边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。稳定核心是资源所有权、参数与 SQL 结构分离、显式映射和事务失败边界；JDK **25** JDBC API、当前 pgJDBC 文档及 PostgreSQL **18** SQLSTATE 于 **2026-07-17** 核对。本机未运行 Java/pgJDBC/PostgreSQL 集成，资产以接口合同和离线状态机验证。离线 PASS 不证明驱动类型转换、网络、资源归还或数据库事务已真实发生。
 
 ## 1. JDBC 是 Java 与数据库之间的显式协议
@@ -265,7 +275,7 @@ try (Statement statement = connection.createStatement();
 输入：
 
 ```text
-OPEN' OR '1'='1
+CREATED' OR '1'='1
 ```
 
 拼接后引号和 OR 变成 SQL 语法，查询结构被改变。正确：
@@ -470,7 +480,7 @@ attempt 2:
 
 ### 故障 A：字符串拼 SQL
 
-输入 `OPEN' OR '1'='1` 让查询返回所有状态。第一证据是最终 SQL 结构包含输入，而不是参数槽。修复 PreparedStatement，并断言恶意输入只作为一个值、返回 0 行。
+输入 `CREATED' OR '1'='1` 让查询返回所有状态。第一证据是最终 SQL 结构包含输入，而不是参数槽。修复 PreparedStatement，并断言恶意输入只作为一个值、返回 0 行。
 
 ### 故障 B：漏 close
 
@@ -505,8 +515,8 @@ attempt 2:
 | --- | --- | --- |
 | 正常查询 | 已存在 ID | 字段和类型完整映射，资源关闭 |
 | 空查询 | 不存在 ID | `Optional.empty()`，不是 null/异常 |
-| nullable 列 | OPEN 工单 | assignedTo 为 null，不是 0 |
-| 注入字符 | `OPEN' OR '1'='1` | SQL 结构不变，0 行 |
+| nullable 列 | CREATED 工单 | assignedTo 为 null，不是 0 |
+| 注入字符 | `CREATED' OR '1'='1` | SQL 结构不变，0 行 |
 | 乐观更新成功 | 正确 version | changed=1，commit |
 | 乐观冲突 | 旧 version | changed=0，显式冲突 |
 | history 失败 | 重复 commandId | rollback，工单未改变 |

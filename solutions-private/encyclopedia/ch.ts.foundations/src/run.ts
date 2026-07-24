@@ -11,5 +11,5 @@ const labels = formatOwners(
 
 // Console output is the executable oracle; the library module stays side-effect free.
 console.log("labels=" + labels.join("|"));
-console.log("transition=" + transitionText(["OPEN", "CLOSED"]));
+console.log("transition=" + transitionText(["CREATED", "CLOSED"]));
 console.log("PRIVATE_TYPESCRIPT_SOLUTION_PASS");

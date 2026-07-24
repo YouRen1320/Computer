@@ -10,7 +10,7 @@
 | NOT EXISTS 右集合含 NULL |  |  |  |
 | w.device_id=w.device_id |  |  |  |
 | 正确 unfinished_devices |  |  |  |
-| DONE 版 unfinished_devices |  |  |  |
+| CLOSED 版 unfinished_devices |  |  |  |
 | category_counts |  |  |  |
 | 扁平版与 CTE 版 |  |  |  |
 

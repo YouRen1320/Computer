@@ -5,7 +5,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = d.device_id
-    AND w.status IN ('OPEN', 'IN_PROGRESS')
+    AND w.status IN ('CREATED', 'IN_PROGRESS')
 )
 ORDER BY d.device_id;
 
@@ -27,7 +27,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = d.device_id
-    AND w.status IN ('OPEN', 'IN_PROGRESS')
+    AND w.status IN ('CREATED', 'IN_PROGRESS')
 )
 GROUP BY d.category
 HAVING COUNT(*) >= 2
@@ -41,7 +41,7 @@ WITH unfinished_devices AS (
     SELECT 1
     FROM factorycare.work_order AS w
     WHERE w.device_id = d.device_id
-      AND w.status IN ('OPEN', 'IN_PROGRESS')
+      AND w.status IN ('CREATED', 'IN_PROGRESS')
   )
 ),
 category_counts AS (

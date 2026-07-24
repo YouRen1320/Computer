@@ -14,7 +14,7 @@ describe('FactoryCare API boundary', () => {
   it.each([
     null,
     { id: 'WO-9', priority: 5 },
-    { id: 'WO-9', status: 'DONE', priority: 5 },
+    { id: 'WO-9', status: 'NOT_A_STATE', priority: 5 },
     { id: 'WO-9', status: 'ASSIGNED', priority: '5' },
     { id: 'WO-9', status: 'ASSIGNED', priority: 5, internalCost: 10 },
   ])('rejects invalid fixture %#', (payload) => {
@@ -29,4 +29,3 @@ describe('FactoryCare API boundary', () => {
     ])
   })
 })
-

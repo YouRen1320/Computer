@@ -90,6 +90,14 @@ outcomes:
 ---
 # 需求、边界、容量、可靠性与系统设计取舍
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《容量、负载模型、性能测试与瓶颈证据》](ch.ops.capacity-performance.md)：容量方案必须来自负载模型、尾延迟与瓶颈证据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章唯一职责：从功能需求、质量属性、数据与流量约束推导系统边界、容量、可靠性和一致性方案，写清取舍与演进路径。架构图不是把 Java、Redis、Kafka、微服务、Kubernetes 和 AI 图标连起来；每个组件都必须能追溯到需求或约束。
 
 ## 1. 学习结果与证据边界

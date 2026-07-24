@@ -50,3 +50,6 @@ echo "EXPECTED_FAILURE ConnectionRefusedFailure status=$b evidence=tcp-connect"
 echo "EXPECTED_FAILURE ReadTimeoutFailure status=$c evidence=read-deadline"
 echo "EXPECTED_FAILURE SocketLeakFailure status=$d evidence=resource-owner"
 echo "EXERCISE CHECK PASS mode=$mode expected_failures=$((starter_failures + 4)) java=$JAVA_VERSION"
+if [[ "$mode" == "starter" ]]; then
+    exit 41
+fi

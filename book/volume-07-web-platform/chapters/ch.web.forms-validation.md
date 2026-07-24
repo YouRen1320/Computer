@@ -96,6 +96,15 @@ outcomes:
 ---
 # 表单控件、提交语义与原生校验
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《语义 HTML、文档结构与元数据》](ch.web.semantic-html.md)：表单必须嵌入正确的文档结构并复用原生元素语义。
+- [《Origin、同源、Cookie、缓存与 CORS 浏览器模型》](ch.web.origin-cookie-cache.md)：提交目标、Origin、Cookie 和浏览器策略会影响表单请求，必须能区分客户端约束与网络边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件用静态 HTML、固定提交矩阵和 Ruby 标准库离线 oracle 训练 label、name/value、编码与服务端复核边界；离线绿灯不等于真实浏览器约束 UI、网络请求、文件上传或 FactoryCare API 已通过。易变事实已于 **2026-07-17** 对照 WHATWG HTML Living Standard 与 W3C WAI/WCAG 一手资料核验，提交证据时仍须记录目标浏览器版本。
 
 表单是用户意图变成 HTTP 请求的边界。一个输入框不仅有外观：它属于某个 form，有供人理解的 label，有供请求使用的 name，有当前 value，有类型与约束；提交时浏览器构造“成功控件”的条目列表，再按 method、action、enctype 和 submitter 形成导航请求。原生约束校验可以在普通交互提交前阻止明显缺失或格式错误，却无法阻止攻击者绕过浏览器，也无法保证业务规则、权限、幂等或文件安全。
@@ -255,8 +264,8 @@ GET 适合安全、可书签的查询。表单条目通常进入目标 URL query
 ```text
 action=/search, method=get
 name=q value=泵
-name=status value=OPEN
-→ /search?q=%E6%B3%B5&status=OPEN （具体序列化按标准编码）
+name=status value=CREATED
+→ /search?q=%E6%B3%B5&status=CREATED （具体序列化按标准编码）
 ```
 
 不要手拼 query 再与表单自动 query 混用而不测试；URL 编码不是“把空格换成 +”这一条规则的全部。

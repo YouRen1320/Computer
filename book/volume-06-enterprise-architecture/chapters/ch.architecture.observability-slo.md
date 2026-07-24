@@ -93,6 +93,16 @@ outcomes:
 ---
 # 日志、指标、追踪、SLO 与告警闭环
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Actuator、健康、就绪、指标与安全暴露》](../../volume-05-spring-backend/chapters/ch.spring.actuator-health-metrics.md)：独立完成日志、指标、追踪与健康、SLO 与告警前，必须先具备「Actuator、健康、就绪、指标与安全暴露」已经验证的知识与失败边界
+- [《模块化单体、结构测试与拆分信号》](ch.architecture.modular-monolith.md)：独立完成日志、指标、追踪与健康、SLO 与告警前，必须先具备「模块化单体、结构测试与拆分信号」已经验证的知识与失败边界
+- [《审计事件、敏感字段、追踪责任与隐私最小化》](ch.security.audit-events-privacy.md)：独立完成日志、指标、追踪与健康、SLO 与告警前，必须先具备「审计事件、敏感字段、追踪责任与隐私最小化」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产使用合成 JSON 和 Ruby 标准库离线验证相关性、标签基数、health、SLI、错误预算与持续告警，不启动 Spring Boot、OpenTelemetry Collector、Prometheus、日志平台、追踪后端或真实依赖。局部绿灯只能证明这里声明的规则能够重放，不能证明生产部署已经达到 SLO。
 
 系统“有日志”“有监控页面”并不等于可观测，更不等于可靠。可观测性是借助系统向外暴露的信号，回答内部发生了什么；可靠性是用户在约定时间内得到正确服务的程度。前者帮助测量和诊断，后者必须用面向用户的目标定义。日志数量、CPU 曲线、绿色 health、trace 数量和告警条数都只是证据，不是可靠性的替身。

@@ -8,7 +8,7 @@ public final class MutableKeyContractFailure {
     public static void main(String[] args) {
         Map<MutableKey, String> map = new HashMap<>();
         MutableKey key = new MutableKey(1);
-        map.put(key, "OPEN");
+        map.put(key, "ACTIVE");
         key.bucket = 2;
         if (!map.containsKey(key)) {
             throw new IllegalStateException("LOST_HASH_KEY");

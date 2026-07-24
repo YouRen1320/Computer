@@ -85,10 +85,16 @@ outcomes:
   - mobile.flutter-layout-lifecycle
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 52f36bf28185c6a0b2a908cbe4f89de539db18f7129669d3e1a33743f18495e5
 ---
 # 导航、路由、表单与页面契约
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《状态、生命周期、mounted、Key 与异步更新》](ch.flutter.state-lifecycle.md)：路由进入/退出、controller 清理和表单状态身份依赖生命周期与 Key。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 页面不是互相随意跳转的 Widget 集合。路由有可输入参数、可返回结果、返回栈与恢复语义；表单有草稿、校验、提交、放弃和资源清理语义。本章先建立这些合同，不选择全局状态管理品牌，也不把深链接可达误写成已完成系统配置。
 

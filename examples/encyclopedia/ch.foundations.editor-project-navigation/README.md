@@ -1,6 +1,6 @@
 # 示例：用路径角色和符号关系导航
 
-`sample-project/` 是一个故意很小的 FactoryCare Java 目录模型。它同时包含生产源码、测试引用与 `target/generated-sources/` 中的同名派生文件，目的是训练导航，不是提前教授 Java 语法或调试器。
+`sample-project/` 是一个故意很小的 FactoryCare Java 目录模型。它包含生产源码和测试引用；验证器把它复制到一次性目录后，再创建 Git 会忽略的 `target/generated-sources/` 同名派生文件。这样既能训练生成物边界，也不会依赖一个无法可靠提交的 `target/` 文件。
 
 先阅读项目树并预测：
 

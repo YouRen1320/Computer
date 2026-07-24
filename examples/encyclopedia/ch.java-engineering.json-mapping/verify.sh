@@ -14,7 +14,7 @@ mkdir -p "$CLASSES_DIR"
 javac --release 25 -Xlint:all -Werror -d "$CLASSES_DIR" "$ROOT_DIR"/src/*.java
 java -cp "$CLASSES_DIR" JsonMappingDemo "$BUILD_DIR/work-order.json" > "$BUILD_DIR/demo.out"
 printf '%s\n' \
-  'json={"schemaVersion":1,"id":"WO-机泵-101","status":"OPEN","openedAt":"2026-07-16T01:30:00Z","amount":1234.50,"assignee":null}' \
+  'json={"schemaVersion":1,"id":"WO-机泵-101","status":"CREATED","openedAt":"2026-07-16T01:30:00Z","amount":1234.50,"assignee":null}' \
   'roundtrip.equal=true' \
   'assignee.presence=EXPLICIT_NULL' \
   'unknown.lenient.id=WO-机泵-101' \

@@ -88,6 +88,15 @@ outcomes:
 ---
 # Controller、路由、参数绑定与状态码
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《HTTP 请求生命周期、Servlet 与线程边界》](ch.spring.servlet-request-lifecycle.md)：独立完成Controller 与路由、参数绑定与响应前，必须先具备「HTTP 请求生命周期、Servlet 与线程边界」已经验证的知识与失败边界
+- [《Spring Boot、Starter、自动配置与应用启动》](ch.spring.boot-autoconfiguration.md)：独立完成Controller 与路由、参数绑定与响应前，必须先具备「Spring Boot、Starter、自动配置与应用启动」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件只提供教材证据，不自动更新 `PROGRESS.md`，也不表示学习者已完成 Week 10。
 
 HTTP 请求进入 Servlet 容器后，Spring MVC 需要选择唯一 handler，把 path、query 和 header 转换为 Java 参数，再把处理结果变成明确的 HTTP status、header 与 body。Controller 是入站适配器，不是业务规则和持久化细节的集合。
@@ -213,7 +222,7 @@ ResponseEntity<String> detail(@PathVariable long id) { ... }
 
 ## 19. 多值参数
 
-同名 query 可能出现多次，例如 `status=OPEN&status=ASSIGNED`。绑定到 `List<String>` 能保留多个值，绑定到单值可能丢失调用者意图。
+同名 query 可能出现多次，例如 `status=CREATED&status=ASSIGNED`。绑定到 `List<String>` 能保留多个值，绑定到单值可能丢失调用者意图。
 
 是否允许重复、顺序是否重要、空集合如何解释，都应在 API 合同中说明。不要让容器默认行为替代业务选择。
 

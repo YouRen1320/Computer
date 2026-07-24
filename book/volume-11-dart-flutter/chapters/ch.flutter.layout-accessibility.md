@@ -93,6 +93,15 @@ outcomes:
 
 # 约束布局、响应式、渲染与无障碍
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《MaterialApp、基础 Widget、Widget 树与 BuildContext》](ch.flutter.widget-tree.md)：布局 Widget 和语义节点必须位于可解释的 Widget/Element/Context 树中。
+- [《无障碍、键盘、焦点与屏幕阅读器》](../../volume-07-web-platform/chapters/ch.web.accessibility-interaction.md)：键盘、焦点、可访问名称和减少动效原则可迁移到 Flutter 平台实现。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > Flutter 布局的核心不是记住每个 Widget 参数，而是沿树追踪合同：父节点把约束传给子节点，子节点在约束内选择尺寸，父节点决定子节点位置。布局“看起来没问题”也不等于可用；窄屏、长文本、文本放大、RTL、键盘、触控和读屏语义都必须进入验收矩阵。
 
 ## 1. BoxConstraints：先问“允许多大”

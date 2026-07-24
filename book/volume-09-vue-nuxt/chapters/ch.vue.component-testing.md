@@ -100,6 +100,14 @@ outcomes:
 ---
 # 组件测试、Mock、异步断言与端到端边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《服务端状态、加载、错误、取消与竞态》](ch.vue.server-state.md)：异步断言需要覆盖加载、错误、取消和竞态，而非只测静态渲染。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文、Vitest 工件、Vite 构建和 Playwright 规格可用于学习与作者自检，但不能证明学习者已经无 AI 独立完成，也不能把 happy-dom 或静态规格检查当成真实浏览器结果。官方 Vue、Vue Test Utils、Vitest 与 Playwright 文档复核日为 **2026-07-17**。本轮没有安装或启动 Playwright 浏览器，因此登录到打开工单的真实浏览器路径明确为 **UNVERIFIED**，也不修改 `PROGRESS.md`。
 
 组件测试的价值不是“Vue 文件能 mount”，而是用较低成本证明一个组件向用户和父组件承诺的行为：给定 props 与边界响应，它渲染什么可见状态；用户通过什么可访问控件行动；组件发出什么最小事件；异步完成、失败、重试与乱序时，公共结果是否稳定。E2E 则在真实浏览器中证明少量跨层关键路径，例如登录、加载工单、打开详情。两者不是高低级替代关系，而是回答不同问题。

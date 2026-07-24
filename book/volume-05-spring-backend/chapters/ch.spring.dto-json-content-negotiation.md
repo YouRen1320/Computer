@@ -84,6 +84,15 @@ outcomes:
 ---
 # DTO、JSON、内容协商与兼容边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Controller、路由、参数绑定与状态码》](ch.spring.mvc-routing-binding.md)：独立完成DTO 与 JSON、内容协商与兼容前，必须先具备「Controller、路由、参数绑定与状态码」已经验证的知识与失败边界
+- [《JSON 数据边界、对象映射与未知字段处理》](../../volume-03-java-engineering/chapters/ch.java-engineering.json-mapping.md)：独立完成DTO 与 JSON、内容协商与兼容前，必须先具备「JSON 数据边界、对象映射与未知字段处理」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件是教材证据，不自动更新 `PROGRESS.md`，也不代表学习者已通过 Week 10。
 
 Controller 不应把领域对象直接暴露到网络。API 需要独立 DTO 来固定允许输入、输出字段和媒体类型；Spring MVC 再根据 `Content-Type` 与 `Accept` 选择消息转换器，把 JSON 字节和 Java DTO 相互转换。
@@ -397,7 +406,7 @@ JSON parser 防止语法错误，不负责授权。客户端提交 `assigneeId` 
 
 ## 50. FactoryCare 创建案例
 
-端点 `POST /work-orders` consumes/produces `application/json`。请求只含 assetId、description、priority；fake use case 返回带服务端 id 和 OPEN 状态的领域结果；response mapper输出公开字段。
+端点 `POST /work-orders` consumes/produces `application/json`。请求只含 assetId、description、priority；fake use case 返回带服务端 id 和 CREATED 状态的领域结果；response mapper输出公开字段。
 
 实验分别验证正常 201 JSON、text/plain 415、Accept XML 406、畸形 JSON 400、内部字段不泄露与未知字段策略。
 

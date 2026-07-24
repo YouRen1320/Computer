@@ -86,6 +86,15 @@ outcomes:
 ---
 # Flyway、版本迁移、向前修复与数据演进
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《ACID、隔离级别、锁、死锁与重试边界》](ch.data.transactions-locking.md)：独立完成版本迁移、安全演进前，必须先具备「ACID、隔离级别、锁、死锁与重试边界」已经验证的知识与失败边界
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：独立完成版本迁移、安全演进前，必须先具备「依赖、包管理、构建生命周期与可重复性」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。稳定核心是“数据库变更有顺序、有历史、有验证、可由旧状态安全演进”；Flyway 当前官方语义与 PostgreSQL **18** DDL 于 **2026-07-17** 核对。本机未安装/运行真实 Flyway 与 PostgreSQL，资产用文件、checksum 清单和状态机验证迁移合同。离线 PASS 不证明真实锁、事务性 DDL、Flyway history 或容器升级测试已执行。
 
 ## 1. Schema 不是一份静态 SQL，而是一条状态演进链

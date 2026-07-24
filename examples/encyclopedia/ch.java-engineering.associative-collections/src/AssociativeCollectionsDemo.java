@@ -36,7 +36,7 @@ public final class AssociativeCollectionsDemo {
         Map<DeviceId, String> stateById = new HashMap<>();
         DeviceId stored = new DeviceId("PUMP-01");
         DeviceId equivalentLookup = new DeviceId("PUMP-01");
-        stateById.put(stored, "OPEN");
+        stateById.put(stored, "ACTIVE");
         System.out.println("map.equalKey.hit=" + stateById.containsKey(equivalentLookup));
         System.out.println("map.equalKey.state=" + stateById.get(equivalentLookup));
         DeviceId missing = new DeviceId("VALVE-99");

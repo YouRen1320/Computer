@@ -48,3 +48,6 @@ echo "EXPECTED_FAILURE DirectOverwriteFailure status=$overwrite_status evidence=
 echo "EXPECTED_FAILURE RelativeBaseFailure status=$base_status evidence=wrong-anchor"
 echo "EXPECTED_FAILURE SymlinkEscapeFailure status=$link_status evidence=real-path-escape"
 echo "EXERCISE CHECK PASS mode=$challenge_mode expected_failures=$((challenge_failures + 3)) java=$JAVA_VERSION"
+if [[ "$challenge_mode" == "starter" ]]; then
+    exit 41
+fi

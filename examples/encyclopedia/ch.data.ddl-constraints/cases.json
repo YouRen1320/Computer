@@ -1,9 +1,9 @@
 [
   {"id":"valid-device","table":"device","row":{"device_id":"D-01","serial_number":"SN-001","display_name":"East Pump","status":"ACTIVE","version":1},"expected":"ACCEPT"},
-  {"id":"valid-order","table":"work_order","row":{"work_order_id":"W-01","device_id":"D-01","summary":"Inspect vibration","status":"OPEN"},"expected":"ACCEPT"},
-  {"id":"orphan","table":"work_order","row":{"work_order_id":"W-99","device_id":"D-99","summary":"Orphan","status":"OPEN"},"expected":"work_order_device_fk"},
+  {"id":"valid-order","table":"work_order","row":{"work_order_id":"W-01","device_id":"D-01","summary":"Inspect vibration","status":"CREATED"},"expected":"ACCEPT"},
+  {"id":"orphan","table":"work_order","row":{"work_order_id":"W-99","device_id":"D-99","summary":"Orphan","status":"CREATED"},"expected":"work_order_device_fk"},
   {"id":"duplicate-serial","table":"device","row":{"device_id":"D-02","serial_number":"SN-001","display_name":"Duplicate","status":"ACTIVE","version":1},"expected":"device_serial_number_key"},
   {"id":"invalid-device-status","table":"device","row":{"device_id":"D-03","serial_number":"SN-003","display_name":"Bad state","status":"BROKEN","version":1},"expected":"device_status_check"},
   {"id":"invalid-order-status","table":"work_order","row":{"work_order_id":"W-02","device_id":"D-01","summary":"Bad state","status":"UNKNOWN"},"expected":"work_order_status_check"},
-  {"id":"null-summary","table":"work_order","row":{"work_order_id":"W-03","device_id":"D-01","summary":null,"status":"OPEN"},"expected":"work_order_summary_not_null"}
+  {"id":"null-summary","table":"work_order","row":{"work_order_id":"W-03","device_id":"D-01","summary":null,"status":"CREATED"},"expected":"work_order_summary_not_null"}
 ]

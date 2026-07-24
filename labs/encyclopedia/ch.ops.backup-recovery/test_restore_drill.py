@@ -30,6 +30,16 @@ class RestoreDrillFaultTest(unittest.TestCase):
         errors = audit(record)
         self.assertEqual(4, len(errors))
 
+    def test_retention_identity_and_expiry_are_enforced(self) -> None:
+        missing_policy = dict(GOOD_RECORD, retention_policy_id="")
+        self.assertTrue(any("identity" in item for item in audit(missing_policy)))
+        expired = dict(
+            GOOD_RECORD,
+            restore_requested_at="2026-09-01T00:00:00+00:00",
+            delete_after="2026-08-28T12:00:00+00:00",
+        )
+        self.assertTrue(any("expired" in item for item in audit(expired)))
+
 
 if __name__ == "__main__":
     unittest.main()

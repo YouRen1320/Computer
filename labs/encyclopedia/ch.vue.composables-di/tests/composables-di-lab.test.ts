@@ -16,8 +16,8 @@ describe('composable and DI fault matrix', () => {
   it('detects module-level ref pollution as the first shared-state evidence', () => {
     const left = useFaultySharedQueryState()
     const right = useFaultySharedQueryState()
-    left.setStatus('COMPLETED')
-    expect(right.status.value).toBe('COMPLETED')
+    left.setStatus('RESOLVED')
+    expect(right.status.value).toBe('RESOLVED')
     expect(left.status).toBe(right.status)
     left.setStatus('CREATED')
   })
@@ -28,8 +28,8 @@ describe('composable and DI fault matrix', () => {
       useWorkOrderQuery(createImmediateRepository(fixtureOrders)),
       useWorkOrderQuery(createImmediateRepository(fixtureOrders)),
     ])!
-    left.setStatus('COMPLETED')
-    expect(left.status.value).toBe('COMPLETED')
+    left.setStatus('RESOLVED')
+    expect(left.status.value).toBe('RESOLVED')
     expect(right.status.value).toBe('CREATED')
     expect(left.status).not.toBe(right.status)
     scope.stop()
@@ -71,8 +71,8 @@ describe('composable and DI fault matrix', () => {
   })
 
   it('substitutes repositories without changing the query return shape', async () => {
-    const callsA: Array<'CREATED' | 'IN_PROGRESS' | 'COMPLETED'> = []
-    const callsB: Array<'CREATED' | 'IN_PROGRESS' | 'COMPLETED'> = []
+    const callsA: Array<'CREATED' | 'IN_PROGRESS' | 'RESOLVED'> = []
+    const callsB: Array<'CREATED' | 'IN_PROGRESS' | 'RESOLVED'> = []
     const scope = effectScope()
     const [a, b] = scope.run(() => [
       useWorkOrderQuery(createImmediateRepository(fixtureOrders, callsA)),

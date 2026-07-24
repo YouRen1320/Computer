@@ -39,7 +39,7 @@ def order_violation(row, orders, devices)
   return "work_order_device_id_not_null" if row["device_id"].nil?
   return "work_order_summary_not_null" if row["summary"].nil?
   return "work_order_status_not_null" if row["status"].nil?
-  return "work_order_status_check" unless %w[OPEN IN_PROGRESS DONE CANCELLED].include?(row["status"])
+  return "work_order_status_check" unless %w[CREATED IN_PROGRESS CLOSED CANCELLED].include?(row["status"])
   return "work_order_device_fk" unless devices.any? { |item| item["device_id"] == row["device_id"] }
   nil
 end

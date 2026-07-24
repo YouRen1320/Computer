@@ -10,7 +10,7 @@ public final class RepositoryBoundary {
     public record WorkOrder(String tenantId, String id, String status) {}
     public interface WorkOrders { Optional<WorkOrder> find(String tenantId, String id); int sqlExecutions(); }
     public static final class FakeWorkOrders implements WorkOrders {
-        public Optional<WorkOrder> find(String tenantId, String id) { return Optional.of(new WorkOrder(tenantId, id, "OPEN")); }
+        public Optional<WorkOrder> find(String tenantId, String id) { return Optional.of(new WorkOrder(tenantId, id, "CREATED")); }
         public int sqlExecutions() { return 0; }
     }
     public static final class JdbcWorkOrders implements WorkOrders {

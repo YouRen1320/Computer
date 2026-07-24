@@ -86,6 +86,14 @@ outcomes:
 
 # 基础类型标注、联合、容器类型与类型检查器
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《list、tuple、dict、set 与推导式》](ch.python.collections.md)：容器标注和联合收窄需要真实 list/dict/set 合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > Python 是动态语言：对象在运行时带类型，名称可以在不同时刻绑定到不同类型的对象。类型标注为开发工具提供静态合同，但解释器默认不会因为参数标了 `int` 就拒绝字符串。本章同时运行解释器和真实类型检查器，要求你能区分“静态检查通过”“程序成功执行”“不可信输入已校验”三种完全不同的证据。
 
 ## 1. 动态类型不等于没有类型

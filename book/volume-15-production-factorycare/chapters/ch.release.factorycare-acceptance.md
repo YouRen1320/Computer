@@ -153,6 +153,20 @@ outcomes:
 ---
 # FactoryCare 端到端验收与可回滚发布
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《事故响应、灾难恢复、复盘与改进闭环》](ch.ops.incident-dr.md)：总验收必须证明事故响应、恢复和改进闭环，而非只验证快乐路径。
+- [《需求、边界、容量、可靠性与系统设计取舍》](ch.architecture.system-design.md)：端到端范围、容量、可靠性与取舍必须有统一系统设计基线。
+- [《组件测试、Mock、异步断言与端到端边界》](../../volume-09-vue-nuxt/chapters/ch.vue.component-testing.md)：Web 客户端必须具备组件、集成与浏览器级回归证据。
+- [《构建、版本、灰度、发布与监控》](../../volume-10-uniapp-miniprogram/chapters/ch.uniapp.release-monitoring.md)：小程序必须完成平台权限、包体、真机和发布验证。
+- [《Widget/集成/Golden 测试、性能与内存分析》](../../volume-11-dart-flutter/chapters/ch.flutter.testing-performance.md)：Flutter 客户端必须具备测试、无障碍和设备路径证据。
+- [《相机、扫码、定位、权限与平台通道》](../../volume-11-dart-flutter/chapters/ch.flutter.device-apis.md)：三客户端验收包含扫码、拍照和定位，必须直接复用已验证的 Flutter 权限与平台通道合同。
+- [《MCP、Agent 模式/反模式与 Java/Python 职责边界》](../../volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md)：AI/Agent 只能在已验证 RAG 安全、MCP 和 Java 权威边界内验收。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 一个系统能在开发者电脑上打开，不等于它已经可以交付。端到端验收要回答的是一组更严格的问题：三个客户端是否遵守同一份后端合同；工单状态是否只能按业务规则迁移；租户甲是否在任何路径都看不到租户乙的数据；AI 不可用时核心维修流程是否仍可运行；发布失败后能否恢复到已知状态；所有结论是否都有可复查的制品、命令、日志和判据。
 
 本章是 FactoryCare 路线的总门禁。它不再逐项教授 Vue、uni-app、Flutter、Spring Boot、PostgreSQL、RAG、Docker 或 Nginx，而是把前面已经学过的能力组合成一条可证伪的交付链。组合并不意味着“启动所有服务然后点一点页面”，而是先冻结验收对象和规则，再以成功、边界、失败和恢复四类证据证明系统行为。

@@ -7,7 +7,7 @@ end
 sql = File.read(File.join(__dir__, "answer.sql"))
 check(sql.scan("w.device_id = d.device_id").length == 2, "correlated predicates")
 check(!sql.include?("w.device_id = w.device_id"), "no self-comparison")
-check(sql.scan("w.status IN ('OPEN', 'IN_PROGRESS')").length == 2, "unfinished status set")
+check(sql.scan("w.status IN ('CREATED', 'IN_PROGRESS')").length == 2, "unfinished status set")
 check(sql.include?("WITH unfinished_devices AS ("), "first CTE")
 check(sql.include?("category_counts AS ("), "second CTE")
 check(sql.include?("FROM unfinished_devices\n  GROUP BY category"), "CTE data flow")

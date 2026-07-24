@@ -104,6 +104,16 @@ outcomes:
 
 # 提示注入、ACL、PII、日志与可观测性
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《工具调用、参数验证与信任边界》](ch.llm.tool-calling.md)：工具参数、权限复核和副作用边界是防止注入升级的基础。
+- [《RAG 生成、引用、测试集与端到端评估》](ch.rag.citations-evaluation.md)：安全测试需要可追溯引用和分层端到端评估。
+- [《日志、指标、追踪、SLO 与告警闭环》](../../volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md)：安全与质量诊断需要已验证的日志、指标、链路和 SLO 合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 RAG 同时处理用户输入、外部文档、索引元数据、模型输出和工具结果，这些都可能不可信。system prompt 只能影响模型行为，不能成为访问控制、租户隔离或写入授权。真正的安全边界必须在模型看不到也绕不过的代码、数据库策略和权威服务中执行。
 
 本章用双租户冻结夹具验证候选在进入模型前被授权过滤、文档注入不能扩大工具能力、trace 不含原始邮箱和手机号、缓存身份包含租户/主体/角色。它没有连接 PostgreSQL、pgvector、身份提供商、模型 API 或真实遥测后端，因而不构成生产安全认证。

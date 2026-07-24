@@ -32,3 +32,4 @@ grep -Fq "compiler.err.method.does.not.override.superclass" "$BUILD_DIR/override
 echo "STARTER EXPECTED FAILURE status=$challenge_status reason=equals-hashCode-field-mismatch"
 echo "EXPECTED_COMPILE_FAILURE InvalidOverrideFailure status=$override_status evidence=wrong-equals-signature"
 echo "EXERCISE CHECK PASS expected_failures=2 java=$JAVA_VERSION"
+exit 41

@@ -80,6 +80,14 @@ outcomes:
 ---
 # CSS 语法、选择器、层叠、优先级与继承
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《语义 HTML、文档结构与元数据》](ch.web.semantic-html.md)：选择器必须作用于已能解释的 DOM 与语义结构，才能区分结构问题和样式问题。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件用固定 HTML、CSS、冲突矩阵和离线 oracle 证明一个可审计的层叠子集；离线绿灯不等于真实浏览器的 `computed style` 或视觉差异已经验证。易变事实已于 **2026-07-17** 对照 W3C CSS Syntax Level 3、Selectors Level 4 与 CSS Cascading and Inheritance Level 5/6 一手规范核验。
 
 CSS 最容易被误解成“后写覆盖先写”或“选择器分数大的赢”。这两句话只描述了完整决策树的末端片段。浏览器先解析声明、判断规则是否相关、匹配元素，再比较来源与重要性、层叠上下文/层、优先级和源码顺序；没有胜出声明时，才通过继承或初始值补齐指定值。若不先确定失败阶段，继续加类名、ID 或 `!important` 只会把局部故障变成长期维护问题。

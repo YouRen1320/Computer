@@ -28,6 +28,17 @@ class DesignGateTest(unittest.TestCase):
         self.assertTrue(any("Java business authority" in error for error in errors))
         self.assertTrue(any("durable business authority" in error for error in errors))
 
+    def test_consistency_labels_require_cost_and_failure_behavior(self) -> None:
+        packet = load_packet()
+        packet["consistency_decisions"][1]["tradeoff"] = ""
+        errors = audit(packet)
+        self.assertTrue(any("lacks tradeoff" in error for error in errors))
+
+        packet = load_packet()
+        packet["consistency_decisions"] = [packet["consistency_decisions"][0]]
+        errors = audit(packet)
+        self.assertTrue(any("compare strong and eventual" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

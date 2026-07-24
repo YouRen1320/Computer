@@ -88,6 +88,14 @@ outcomes:
 ---
 # 盒模型、display、定位与层叠上下文
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《CSS 语法、选择器、层叠、优先级与继承》](ch.css.cascade.md)：盒模型和定位的最终值来自层叠后的 computed style，必须先能定位覆盖来源。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件通过固定几何矩阵、HTML/CSS 夹具和离线 oracle 验证手算公式、包含块/层叠树预言与故障记录；离线绿灯不代表真实 DevTools 盒模型、截图或像素差分已经完成。易变事实已于 **2026-07-17** 对照 W3C CSS Box Model Level 4、CSS Display Level 3、CSS Positioned Layout Level 3、CSS Overflow Level 3、CSS Basic UI Level 4、CSS 2.2 与 CSSOM View 一手规范核验。
 
 当一个元素“多出 24px”、绝对定位跑到页面角落、`z-index: 999999` 仍被遮住时，继续调数字通常只会偶然修好当前截图。真正可复现的答案来自三张图：这个元素生成什么盒、尺寸从哪条边算；它参加哪个格式化上下文、以谁为包含块；它属于哪个层叠上下文、在哪个上下文内部绘制。

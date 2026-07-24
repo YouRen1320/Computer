@@ -84,6 +84,14 @@ outcomes:
 ---
 # 泛型、约束、工具类型、映射与条件类型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《interface、type、联合、unknown、never 与收窄》](ch.ts.modeling-narrowing.md)：高级类型必须建立在稳定的联合、收窄和业务模型上，否则只会隐藏边界错误。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 泛型的价值不是“让一个函数接受所有东西”，而是保存输入之间、输入与输出之间的关系。一个 `any` 函数也能接受所有东西，却会丢失键名、字段值和返回结果之间的联系。一个设计良好的泛型 API 则让调用者传入工单和字段列表后，返回值只暴露被选字段；传入不存在的键会在调用点失败；补丁允许修改的字段由模型推导，而不是复制一份容易漂移的字符串名单。
 
 本章从具体工具出发：类型安全字段选择与补丁。由此引入泛型参数、约束、推断、`keyof`、索引访问、内置工具类型、映射类型、条件类型和 `infer`。每增加一层类型表达，都必须回答它保存了什么业务关系、错误是否更靠近调用点、运行时是否仍有对应实现、团队是否能读懂诊断。若答案不清楚，就优先使用较简单的显式类型或函数重载，而不是追求类型体操。
@@ -507,6 +515,8 @@ type Expect<T extends true> = T;
 本章不教授递归模板字面量解析器、任意深度路径类型、品牌类型框架、方差标注、声明文件发布兼容、编译器性能剖析全流程或类型挑战题。它也不把泛型用于运行时授权、数据校验或数据库事务。目标是建立可维护的中阶工具：用约束保存真实关系，用标准工具和一层映射/条件表达机械变换，以正负 fixture 和运行预言约束局部断言，并在复杂度超过收益时主动退回具体类型。
 
 ## 官方参考
+
+资料复核日期为 2026-07-24。本次复核只确认下列官方页面仍直接描述本章使用的泛型、键关系、类型变换与 Node 版本表面；它不是 Node 24、浏览器、编译器性能或真实外部输入的运行验证。
 
 - TypeScript Handbook, [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)：泛型参数、约束、相关类型参数与推断。
 - TypeScript Handbook, [Keyof Type Operator](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html) 与 [Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html)：键和值关系。

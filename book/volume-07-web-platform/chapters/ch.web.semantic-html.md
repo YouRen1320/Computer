@@ -83,6 +83,14 @@ outcomes:
 ---
 # 语义 HTML、文档结构与元数据
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《浏览器请求、解析、渲染与 DevTools 观察》](ch.web.browser-render-devtools.md)：语义元素最终形成 DOM 与可访问树，先理解解析和检查工具才能验证结构而不是只看视觉效果。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件用静态 HTML、固定结构清单和 Ruby 标准库离线检查器训练“源码—DOM 预言—人工大纲”证据链；离线绿灯不是 WHATWG/W3C 在线校验、浏览器可访问树或读屏器实测。易变事实已于 **2026-07-17** 对照 WHATWG HTML Living Standard 与 W3C WAI/WCAG 一手资料核验，具体浏览器版本仍须在提交证据时记录。
 
 一个页面即使只有 `div` 和 `span`，也可能被 CSS 画得很像产品界面；但去掉 CSS、让搜索引擎或辅助技术读取、让另一名开发者维护时，结构就可能消失。语义 HTML 的目标不是“少写 div”或“看起来更高级”，而是选择能表达内容含义的原生元素，使源码、浏览器 DOM、可访问性映射和机器处理者拥有共同线索。

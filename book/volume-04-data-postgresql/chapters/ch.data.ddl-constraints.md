@@ -78,6 +78,14 @@ outcomes:
 ---
 # CREATE/ALTER、主外键、唯一、检查与非空约束
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《PostgreSQL 服务、连接、psql 与脚本执行》](ch.data.postgresql-psql.md)：独立完成结构定义、约束前，必须先具备「PostgreSQL 服务、连接、psql 与脚本执行」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 核对。本机没有 PostgreSQL server 或 `psql`；资产用静态 DDL 合同、固定合法/非法行和 Ruby 2.6 兼容约束 oracle。离线 PASS 能证明模型预言和红绿答案，**不能证明 PostgreSQL 已解析 DDL、取得真实锁或执行实际约束检查**。
 
 ## 1. DDL 把“应当”变成数据库必须执行的不变量
@@ -214,7 +222,7 @@ CREATE TABLE factorycare.work_order (
   CONSTRAINT work_order_pkey
     PRIMARY KEY (work_order_id),
   CONSTRAINT work_order_status_check
-    CHECK (status IN ('OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED')),
+    CHECK (status IN ('CREATED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED')),
   CONSTRAINT work_order_device_fk
     FOREIGN KEY (device_id)
     REFERENCES factorycare.device (device_id)
@@ -366,7 +374,7 @@ VALUES ('D-01', 'SN-001', 'East Pump', 'ACTIVE');
 INSERT INTO factorycare.work_order (
   work_order_id, device_id, summary, status
 )
-VALUES ('W-01', 'D-01', 'Inspect vibration', 'OPEN');
+VALUES ('W-01', 'D-01', 'Inspect vibration', 'CREATED');
 ```
 
 预言矩阵：
@@ -374,7 +382,7 @@ VALUES ('W-01', 'D-01', 'Inspect vibration', 'OPEN');
 | case | 输入 | 预期约束 | 结果 |
 | --- | --- | --- | --- |
 | valid-device | D-01/SN-001/ACTIVE | 全部 | 接受 |
-| valid-order | W-01→D-01/OPEN | 全部 | 接受 |
+| valid-order | W-01→D-01/CREATED | 全部 | 接受 |
 | orphan | W-99→D-99 | work_order_device_fk | 拒绝 |
 | duplicate | D-02/SN-001 | device_serial_number_key | 拒绝 |
 | bad-device-status | BROKEN | device_status_check | 拒绝 |

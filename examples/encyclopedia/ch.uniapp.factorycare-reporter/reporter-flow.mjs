@@ -27,7 +27,8 @@ export function buildCreateCommand({ operationId, idempotencyKey, form, attachme
   }
 }
 
-// 非显然映射：这是报修人文案分组，不创造或回写第十三个领域状态。
+// FACTORYCARE_UI_GROUP: COMPLETED <- VERIFIED|CLOSED。
+// 这是报修人文案分组，不是 WorkOrderStatus，不创造或回写第十三个领域状态。
 export function presentStatus(status) {
   if (!statuses.has(status)) return { group: 'UNKNOWN', action: 'REFRESH_OR_UPGRADE' }
   if (['CREATED', 'TRIAGED', 'ASSIGNED', 'ACCEPTED'].includes(status)) return { group: 'ACCEPTED', action: 'WAIT' }

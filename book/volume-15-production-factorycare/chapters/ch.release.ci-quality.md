@@ -89,6 +89,15 @@ outcomes:
 ---
 # CI 流水线、测试门禁与失败证据
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Git 状态模型、远程协作、冲突与凭据处置》](../../volume-00-computer-foundations/chapters/ch.foundations.git-collaboration-security.md)：CI 触发、提交身份、分支保护和凭据边界依赖 Git 安全能力。
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：可复现安装、锁文件和构建产物是 CI 的输入合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 持续集成（Continuous Integration，CI）把每次候选变更放进一致环境，自动执行格式、静态检查、编译、测试、安全检查与构建，并把结果反馈给团队。它的价值不是出现一个绿色图标，而是让“什么代码允许合并、失败在哪里、用什么证据判断、同一提交能否重现”成为公开合同。
 
 本章用 GitHub Actions 作为 2026 版示例表面，但稳定核心适用于其他 CI：触发器选定源码快照，job 组成有依赖的执行图，门禁只接受所有必需条件，缓存只能优化，制品与报告用于传递和审计，失败必须阻止发布并保留证据。平台权限、工作流语法、官方 action 版本和 runner 镜像会变化，必须查当前官方文档。

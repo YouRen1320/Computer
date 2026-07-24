@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 
@@ -23,6 +24,17 @@ def audit(record: dict[str, Any]) -> list[str]:
         errors.append("restored business invariants failed")
     if record.get("restored_row_hash") != record.get("expected_row_hash"):
         errors.append("restored row hash differs from backup manifest")
+    if not record.get("retention_policy_id"):
+        errors.append("retention policy identity is missing")
+    try:
+        requested_at = datetime.fromisoformat(record["restore_requested_at"])
+        delete_after = datetime.fromisoformat(record["delete_after"])
+        if requested_at.tzinfo is None or delete_after.tzinfo is None:
+            raise ValueError("retention timestamps must include timezone")
+        if requested_at > delete_after:
+            errors.append("backup expired before restore request")
+    except (KeyError, TypeError, ValueError):
+        errors.append("retention timestamps are missing or invalid")
     if record.get("rpo_seconds", float("inf")) > record.get("rpo_objective_seconds", -1):
         errors.append("RPO objective missed")
     if record.get("rto_seconds", float("inf")) > record.get("rto_objective_seconds", -1):
@@ -41,6 +53,9 @@ GOOD_RECORD = {
     "business_invariants_passed": True,
     "expected_row_hash": "sha256:fixture-row-set",
     "restored_row_hash": "sha256:fixture-row-set",
+    "retention_policy_id": "factorycare-daily-35d-v1",
+    "restore_requested_at": "2026-07-24T12:04:00+00:00",
+    "delete_after": "2026-08-28T12:00:00+00:00",
     "rpo_seconds": 180,
     "rpo_objective_seconds": 300,
     "rto_seconds": 420,
@@ -52,5 +67,5 @@ if __name__ == "__main__":
     found = audit(GOOD_RECORD)
     if found:
         raise SystemExit("\n".join(found))
-    print("PASS synthetic isolated restore record, invariant oracle and RPO/RTO objectives")
+    print("PASS synthetic restore record, retention, invariant oracle and RPO/RTO objectives")
     print("UNVERIFIED PostgreSQL, WAL/PITR, pg_verifybackup, real encryption/KMS, storage and production RPO/RTO")

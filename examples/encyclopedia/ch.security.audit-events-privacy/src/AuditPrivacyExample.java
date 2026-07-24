@@ -94,7 +94,7 @@ public final class AuditPrivacyExample {
                 Map.of(DetailField.REASON_CODE, "POLICY-DENY")), false);
         boolean stateChanged = store.append(event("AUD-3", EventType.WORK_ORDER_STATE_CHANGED,
                 "ACTOR-8", "WORK_ORDER_CLOSE", "WORK-10", "TENANT-A", "TRACE-3",
-                Result.SUCCESS, Map.of(DetailField.CHANGE_SUMMARY, "OPEN->CLOSED")), true);
+                Result.SUCCESS, Map.of(DetailField.CHANGE_SUMMARY, "VERIFIED->CLOSED")), true);
         boolean adminChanged = store.append(event("AUD-4", EventType.ADMIN_ROLE_CHANGED,
                 "ACTOR-ADMIN", "ROLE_ASSIGN", "ACTOR-8", "TENANT-B", "TRACE-4",
                 Result.SUCCESS, Map.of(DetailField.REASON_CODE, "APPROVED-CHANGE")), true);

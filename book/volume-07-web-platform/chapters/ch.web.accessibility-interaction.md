@@ -89,6 +89,14 @@ outcomes:
 ---
 # 无障碍、键盘、焦点与屏幕阅读器
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《表单控件、提交语义与原生校验》](ch.web.forms-validation.md)：键盘、名称和错误提示验证需要已有可提交、可校验的原生控件。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件用语义 HTML、少量有意图注释的 JavaScript、键盘步骤、预期可访问树和读屏播报清单建立离线 oracle；离线绿灯不会真的按键、移动系统焦点或启动读屏器。易变事实已于 **2026-07-17** 对照 WHATWG HTML focus、WCAG 2.2、WAI-ARIA APG 与 Accessible Name and Description Computation 一手资料核验。
 
 无障碍不是“给盲人加 aria-label”，也不是发布前跑一次扫描器。用户可能永久、临时或情境性地无法使用鼠标、看清低对比内容、听到声音、理解复杂提示或保持精确动作；同一个人也会在强光、受伤、噪声、放大、语音控制或慢网络中使用系统。工程目标是让关键任务在不同输入和感知方式下**可理解、可操作、可恢复、可验证**。

@@ -82,6 +82,15 @@ outcomes:
 ---
 # PostgreSQL 服务、连接、psql 与脚本执行
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《数据库、schema、表、行、键与关系模型》](ch.data.relational-model.md)：独立完成服务与连接、psql 与脚本前，必须先具备「数据库、schema、表、行、键与关系模型」已经验证的知识与失败边界
+- [《stdin、stdout、stderr、管道与退出码》](../../volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md)：独立完成服务与连接、psql 与脚本前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。命令和行为按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。本机没有 `psql`、`postgres`、`initdb`，Docker daemon 也未运行；因此配套验证采用固定计划、脚本和 transcript 的离线 oracle，不安装软件、不读取凭据、不连接本机或远程数据库。它能验证命令契约和错误分类，不能冒充真实 PostgreSQL 执行证据。
 
 ## 1. 本章解决什么问题

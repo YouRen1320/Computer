@@ -1,6 +1,6 @@
 import { computed, reactive, readonly, ref, toRef } from 'vue'
 
-export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 export type StatusFilter = 'ALL' | WorkOrderStatus
 
 export type WorkOrder = {
@@ -20,7 +20,7 @@ export function createWorkOrderStats(initialOrders: WorkOrder[]) {
   const openCount = computed(() => {
     // Mapping: the counter is a test probe; the returned count remains a pure derivation.
     openEvaluations += 1
-    return orders.value.filter(order => order.status !== 'COMPLETED').length
+    return orders.value.filter(order => order.status !== 'RESOLVED').length
   })
 
   const visibleOrders = computed(() => {

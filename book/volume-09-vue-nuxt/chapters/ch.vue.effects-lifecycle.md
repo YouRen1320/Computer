@@ -101,6 +101,16 @@ outcomes:
 ---
 # watch、effect、生命周期与副作用清理
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《ref、reactive、computed 与响应式边界》](ch.vue.reactivity.md)：watch 源和 effect 依赖来自 ref/reactive/computed，必须先能区分源状态和派生状态。
+- [《表单、v-model、修饰符与校验边界》](ch.vue.forms-vmodel.md)：生命周期副作用最终更新模板和表单状态，需有已验证的 Vue 模板合同。
+- [《Fetch、AbortController、超时、重试与竞态》](../../volume-08-javascript-typescript/chapters/ch.js.fetch-cancellation-race.md)：生命周期 cleanup 独立使用 AbortController 取消请求，必须先掌握请求取消、竞态和陈旧响应防护。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和配套工件可用于学习与作者自检，但不能证明学习者已经完成无 AI 独立构建、故障诊断或限时复述，也不会自动修改 `PROGRESS.md`。
 
 上一章把来源状态与纯派生状态分开；本章只处理剩下的一类工作：状态变化后必须触碰组件外部世界的动作。FactoryCare 工单筛选改变后可能要发请求，挂载后可能订阅更新流，组件离开时必须取消计时器、事件监听和连接。它们共同的危险是：旧工作比新工作晚完成，或者组件已经不存在，回调仍写入当前界面。
@@ -406,7 +416,7 @@ watch(filter, async (next, _previous, onCleanup) => {
 | 2 | 改 CREATED | run2/CREATED | cleanup1 → start2 | 仍 loading |
 | 3 | run2 完成 | 无活动网络 | commit2 → updated | 仅 CREATED 结果 |
 | 4 | 人为让 run1 到期 | 无 | 不得 commit1 | 仍是 CREATED |
-| 5 | 改 COMPLETED 后立即卸载 | run3 后归零 | start3 → cleanup3 → unmounted | 组件移除 |
+| 5 | 改 RESOLVED 后立即卸载 | run3 后归零 | start3 → cleanup3 → unmounted | 组件移除 |
 | 6 | 推进全部计时器 | 0 | 不得新增 commit | 无卸载后写入 |
 
 真实 Vue 可能因批处理产生不同数量的 updated，故 oracle 不应硬编码每一次内部 render；应断言关键偏序：清理在下一 start/旧 commit 之前，最新 commit 在对应 DOM 前后可解释，unmounted 后无业务 commit。对 hook 次数的断言要基于固定、单一状态写入。

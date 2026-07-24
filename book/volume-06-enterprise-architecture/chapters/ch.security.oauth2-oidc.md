@@ -82,6 +82,14 @@ outcomes:
 ---
 # OAuth 2.0 授权流程、OIDC 登录与客户端边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《JWT 验证、Bearer Token 与 Resource Server》](ch.security.jwt-resource-server.md)：独立完成OAuth 2.0 授权、OIDC 身份层前，必须先具备「JWT 验证、Bearer Token 与 Resource Server」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产只用固定时钟和合成事务元数据模拟授权回调，不连接身份提供方、不签发或解析真实 Token、不保存真实 client secret，也不启动 Authorization Server。局部验证通过只能证明流程不变量与负向预言，不能证明某个 Provider、浏览器、系统回调、TLS、密钥轮换或 Spring Security 集成已经正确。
 
 OAuth 2.0 回答的是“一个客户端如何在限定范围内代表资源所有者访问受保护资源”；OpenID Connect（OIDC）在 OAuth 2.0 上增加可互操作的身份认证层，回答“客户端如何确认这次登录的最终用户是谁”。二者经常出现在同一个重定向流程里，却不是同一件事。把 Access Token 当登录资料、把 ID Token 发给业务 API、让浏览器保存 client secret，都会把协议中的边界拆掉。

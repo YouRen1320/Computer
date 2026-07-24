@@ -54,6 +54,18 @@ Dir.mktmpdir("factorycare-editor-lab-") do |directory|
   temp = Pathname(directory)
   root = temp.join("workspace")
   FileUtils.cp_r(SOURCE, root, preserve: false)
+  generated = root.join("target/generated-sources/com/factorycare/navigation/WorkOrderLabel.java")
+  generated.dirname.mkpath
+  generated.write(<<~JAVA)
+    package com.factorycare.navigation;
+
+    final class WorkOrderLabel {
+        // DERIVED_DO_NOT_EDIT: generated navigation decoy
+        static String label(String status) {
+            return "generated-work-order:" + status;
+        }
+    }
+  JAVA
   FileUtils.cp(EVIDENCE, temp.join("navigation-evidence.txt"))
   FileUtils.cp(PROBLEMS, temp.join("problems.txt"))
 
@@ -73,7 +85,7 @@ Dir.mktmpdir("factorycare-editor-lab-") do |directory|
   expect("expected failure boundary: src is not root", root.join("src/.factorycare-root").exist?, false)
 
   source_text = root.join("src/main/java/com/factorycare/navigation/WorkOrderLabel.java").read
-  generated_text = root.join("target/generated-sources/com/factorycare/navigation/WorkOrderLabel.java").read
+  generated_text = generated.read
   expect("source role", source_text.include?("SOURCE_OF_TRUTH"), true)
   expect("generated role", generated_text.include?("DERIVED_DO_NOT_EDIT"), true)
 

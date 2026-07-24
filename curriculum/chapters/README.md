@@ -1,6 +1,6 @@
 # 分卷章节规范输入（Schema v2）
 
-本目录保存 16 个分卷章节清单，是章节语义的规范输入。`catalog.yml`、路线、阶段门、概念图、卷 README 和 `planned` placeholder 都必须由生成器派生，不能在多个文件中重复手工维护。
+本目录保存 16 个分卷章节清单，是章节语义的规范输入。`catalog.yml`、路线、阶段门、概念图、卷 README 和章节元数据都必须由生成器派生，不能在多个文件中重复手工维护。
 
 ## 文件与排序
 
@@ -31,7 +31,7 @@ chapters: []
 | `role` | enum | `foundation\|concept\|practice\|synthesis\|review\|project\|reference`。 |
 | `responsibility` | string | 一句话说明本章唯一职责和明确边界，不能只复述标题。 |
 | `level` | enum | `L1\|L2\|L2+\|L3\|L1-L2`。 |
-| `status` | enum | `planned\|drafting\|review\|verified`。当前架构阶段只能使用 `planned`。 |
+| `status` | enum | `planned\|drafting\|review\|verified`。当前正文均为 `drafting`；只有具备对应人工、独立复审和运行证据后，才可晋升为 `review` 或 `verified`。 |
 | `stable_core` | boolean | 稳定原理为 `true`；以具体版本 API 为主则为 `false`。 |
 | `topic_groups` | array<object> | 普通章最多 2 组；`synthesis/review/project` 最多 4 组。每组含 `id`、`title`、`topics`。 |
 | `topics_taught` | array<string> | 本章正式教授、允许读者随后独立解释/修改/测试/诊断的 topic ID。 |
@@ -78,6 +78,7 @@ prerequisite_rationales:
 - rationale key 与 `prerequisites` 必须一一对应，不能缺少或多出。
 - `capabilities`、`topics`、`outcome_ids` 至少有一项非空。
 - 不允许把“上一章”作为理由；如果另一前置的祖先已经完整提供同一语义，验证器会报告冗余边。
+- 正文 H1 后的“学习前检查”是 catalog 的可点击派生视图，不要手改生成标记内的标题、链接或理由。修改规范输入并重新生成 catalog 后，运行 `ruby scripts/sync-chapter-prerequisites.rb --write`；提交前运行同一脚本的 `--check` 模式。根章节会明确显示“无编程先修”。
 
 ### Capability 与借用样板
 
@@ -162,7 +163,7 @@ verification_mode:
   role: concept
   responsibility: 教会读者用互斥分支和有界循环表达控制流程，不在本章引入集合或异常处理
   level: L1
-  status: planned
+  status: drafting
   stable_core: true
   topic_groups:
     - id: java-branching

@@ -274,7 +274,7 @@ static final class WorkOrderJsonMapper {
     }
 
     enum Status {
-        OPEN,
+        CREATED,
         IN_PROGRESS,
         CLOSED
     }

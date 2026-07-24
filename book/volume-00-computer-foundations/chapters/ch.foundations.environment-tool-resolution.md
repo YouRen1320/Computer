@@ -79,6 +79,14 @@ outcomes:
 ---
 # 环境变量、PATH 与工具版本解析
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《stdin、stdout、stderr、管道与退出码》](ch.foundations.cli-streams-exit-codes.md)：独立完成环境与继承、工具解析前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 同一台电脑上，终端运行 `java -version` 显示一个版本，Maven 的 `mvn -v` 却显示另一个运行时；IDE 项目又使用第三个 JDK。临时设置了 `JAVA_HOME`，直接执行 `java` 仍没有变化；重新打开终端以后，刚才“修好”的配置又消失。这些现象看似随机，其实都可以用进程环境、Shell 命令解析和工具自身启动规则解释。
 
 本章建立一套不靠重装、不靠猜测的诊断方法。环境变量是进程启动上下文中的名字—值映射；父进程在创建子进程时传递一份环境，子进程的修改不会反向改写已经存在的父进程。`PATH` 是其中一个有顺序的目录列表，Shell 用它查找不含斜杠的外部命令名。`JAVA_HOME` 通常只是“某个 JDK 根目录”的信息，它不会自动重写 `PATH`；某些启动器会主动读取它，另一些命令仍由 Shell 按 `PATH` 解析。因此，只看一个变量或一个版本输出不能证明完整来源。

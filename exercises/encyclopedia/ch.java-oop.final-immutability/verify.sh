@@ -30,7 +30,7 @@ if [[ $challenge_status -ne 0 ]]; then
   grep -Fqx "STARTER_MUTATION expectedOriginal=5000 actualOriginal=5750" "$BUILD_DIR/challenge.err"
   echo "EXPECTED_COMPILE_FAILURE FinalReassignmentFailure status=$final_status evidence=final-reassignment"
   echo "STARTER EXPECTED FAILURE status=$challenge_status reason=plus-mutates-original"
-  exit 0
+  exit 41
 fi
 
 grep -Fqx "exercise.assertions=10 passed" "$BUILD_DIR/challenge.out"

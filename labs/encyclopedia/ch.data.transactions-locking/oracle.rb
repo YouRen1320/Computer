@@ -11,7 +11,7 @@ end
 schedule = JSON.parse(File.read(File.join(ROOT, "schedule.json")))
 
 read = schedule.fetch("read_committed")
-check(read.fetch("session_a_reads") == %w[OPEN IN_PROGRESS], "read committed observations")
+check(read.fetch("session_a_reads") == %w[CREATED IN_PROGRESS], "read committed observations")
 check(read.fetch("session_b_commit_between_reads") && read.fetch("expected") == "NONREPEATABLE_READ", "statement snapshots")
 
 wait = schedule.fetch("lock_wait")
@@ -36,7 +36,7 @@ check(deadlock.fetch("attempts") == 2 && deadlock.fetch("final_history_count") =
 check(deadlock.fetch("final_version_increments").values == [1, 1], "single version increments")
 check(schedule.fetch("retriable_sqlstates").sort == %w[40001 40P01], "retriable sqlstates")
 
-puts "read-committed=OPEN->IN_PROGRESS|anomaly=NONREPEATABLE_READ"
+puts "read-committed=CREATED->IN_PROGRESS|anomaly=NONREPEATABLE_READ"
 puts "lock-wait=holder:A|waiter:B|classification=WAIT_NOT_DEADLOCK"
 puts "lost-update=observed:#{lost.fetch("observed")}|expected:#{lost.fetch("expected_without_loss")}|repair=PASS"
 puts "deadlock=cycle:A-B-A|sqlstate:#{deadlock.fetch("sqlstate")}|order-repair=PASS"

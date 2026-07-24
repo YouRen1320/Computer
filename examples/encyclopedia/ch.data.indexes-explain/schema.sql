@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS factorycare.work_order;
 CREATE TABLE factorycare.work_order (
   work_order_id bigint PRIMARY KEY,
   device_id bigint NOT NULL,
-  status text NOT NULL CHECK (status IN ('OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED')),
+  status text NOT NULL CHECK (status IN ('CREATED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED')),
   priority smallint NOT NULL CHECK (priority BETWEEN 1 AND 5),
   created_at timestamptz NOT NULL,
   summary text NOT NULL
@@ -17,8 +17,8 @@ INSERT INTO factorycare.work_order
 SELECT n,
        (n % 5000) + 1,
        CASE
-         WHEN n <= 85000 THEN 'DONE'
-         WHEN n <= 93000 THEN 'OPEN'
+         WHEN n <= 85000 THEN 'CLOSED'
+         WHEN n <= 93000 THEN 'CREATED'
          WHEN n <= 98000 THEN 'IN_PROGRESS'
          ELSE 'CANCELLED'
        END,
@@ -34,7 +34,7 @@ ANALYZE factorycare.work_order;
 EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)
 SELECT work_order_id, status, created_at, device_id, priority
 FROM factorycare.work_order
-WHERE status = 'OPEN'
+WHERE status = 'CREATED'
   AND created_at >= TIMESTAMPTZ '2026-06-01 00:00:00+08'
   AND created_at <  TIMESTAMPTZ '2026-07-01 00:00:00+08'
 ORDER BY created_at DESC, work_order_id DESC
@@ -49,7 +49,7 @@ ANALYZE factorycare.work_order;
 EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)
 SELECT work_order_id, status, created_at, device_id, priority
 FROM factorycare.work_order
-WHERE status = 'OPEN'
+WHERE status = 'CREATED'
   AND created_at >= TIMESTAMPTZ '2026-06-01 00:00:00+08'
   AND created_at <  TIMESTAMPTZ '2026-07-01 00:00:00+08'
 ORDER BY created_at DESC, work_order_id DESC

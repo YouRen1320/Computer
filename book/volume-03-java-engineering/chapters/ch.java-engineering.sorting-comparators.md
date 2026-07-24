@@ -77,6 +77,14 @@ outcomes:
 ---
 # Comparable、Comparator 与稳定排序
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《List、Queue、Deque 与迭代》](ch.java-engineering.sequential-collections.md)：独立完成顺序契约、排序组合前，必须先具备「List、Queue、Deque 与迭代」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。固定 Java 25 oracle 只能证明示例在当前机器满足排序合同；P9 的零基础试读、人工版式/无障碍检查、独立全面审查和全书回归尚未执行，不能因此晋升为 `verified`，也不会修改 `PROGRESS.md`。
 
 “把工单排一下”不是一个完整需求。按优先级排时，高优先级在前还是在后？优先级相同后看创建时间还是 SLA 截止时间？时间也相同怎么办？缺失时间放首、放尾还是拒绝？两条记录比较为 0 时，是否依靠稳定排序保留输入次序？这些问题若不写成合同，同一批数据可能在列表、TreeSet、页面和测试里出现彼此矛盾的结果。

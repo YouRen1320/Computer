@@ -81,6 +81,15 @@ outcomes:
 ---
 # Stream、Collector 与 Optional 边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Set、Map、键相等性与哈希契约》](ch.java-engineering.associative-collections.md)：独立完成Stream 管道、收集与缺失值前，必须先具备「Set、Map、键相等性与哈希契约」已经验证的知识与失败边界
+- [《Lambda、函数式接口与方法引用》](ch.java-engineering.lambdas-functional-interfaces.md)：独立完成Stream 管道、收集与缺失值前，必须先具备「Lambda、函数式接口与方法引用」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。固定 Java 25 oracle 证明的是当前示例在空、单项和多项输入上的合同，以及故障夹具可重放；它没有完成 P9 零基础试读、人工版式/无障碍检查、独立全面审查或全书回归，不能据此晋升为 `verified`，也不会修改 `PROGRESS.md`。
 
 把一个列表写成 `stream().filter(...).map(...).toList()` 很容易，真正困难的是解释它何时执行、哪些操作可能被省略、数据能否保持 encounter order、为什么同一个 Stream 不能再次消费、Collector 怎样在拆分后仍得到相同结果，以及空结果到底应返回空集合、0、异常还是 Optional。若这些边界没有合同，短代码只会把错误压缩到一行。

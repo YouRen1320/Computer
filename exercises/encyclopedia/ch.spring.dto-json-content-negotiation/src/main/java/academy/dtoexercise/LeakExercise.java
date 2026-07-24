@@ -15,7 +15,7 @@ public final class LeakExercise {
             String assigneeToken) {}
 
     public static Object response() {
-        return new WorkOrder(42, "ASSET-7", "pump vibration", "HIGH", "OPEN",
+        return new WorkOrder(42, "ASSET-7", "pump vibration", "HIGH", "CREATED",
                 new BigDecimal("999.99"), "never-publish-this-token");
     }
 }

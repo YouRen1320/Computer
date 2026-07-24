@@ -4,7 +4,7 @@ SELECT
 FROM factorycare.device AS d
 LEFT JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
- AND w.status = 'OPEN'
+ AND w.status = 'CREATED'
 ORDER BY d.device_id, w.work_order_id;
 
 SELECT

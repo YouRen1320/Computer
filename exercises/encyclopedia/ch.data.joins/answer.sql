@@ -6,7 +6,7 @@ SELECT d.device_id, w.work_order_id
 FROM factorycare.device AS d
 LEFT JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
-WHERE w.status = 'OPEN';
+WHERE w.status = 'CREATED';
 
 SELECT t.technician_id, COUNT(*) AS work_order_count
 FROM factorycare.technician AS t

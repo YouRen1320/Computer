@@ -1,4 +1,4 @@
-dataset=100000|DONE=85000|OPEN=8000|IN_PROGRESS=5000|CANCELLED=2000
+dataset=100000|CLOSED=85000|CREATED=8000|IN_PROGRESS=5000|CANCELLED=2000
 result-contract=rows:50|fingerprint-equal:PASS
 composite-index=KEEP|shared-blocks=1725->84
 low-selectivity-index=REJECT|selectivity=0.85

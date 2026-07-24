@@ -19,8 +19,6 @@ route_tags:
 - accelerated-48
 - reference
 - factorycare-project
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: fe050cbe3c6e55408cf99b8269d9ad95de71ed453fa4e51b03d854eb0ab61461
 stable_core: true
 outcomes:
 - id: explain
@@ -85,6 +83,14 @@ outcomes:
   verification_mode: injected-fault-rerun
 ---
 # Future、async/await、超时与取消协议
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、资源所有权与错误建模》](ch.dart.exceptions-resources.md)：Future 失败传播和取消清理必须建立在异常转换与资源所有权上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章状态为 `drafting`。稳定概念按 Dart 语言与 `dart:async` 合同讲解；版本资料于 2026-07-24 对照 Dart 官方文档 3.12.2。本章配套程序实际在本机 Dart 3.9.2 stable、macOS arm64 上运行，因此“3.9.2 绿灯”与“3.12.2 资料核对”是两条证据，不能合并成未执行的版本兼容结论。本章只处理一次性异步结果，不教授 Stream。
 

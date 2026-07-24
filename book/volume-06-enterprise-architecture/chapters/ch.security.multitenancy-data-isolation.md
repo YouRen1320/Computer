@@ -94,6 +94,14 @@ outcomes:
 ---
 # 租户上下文、数据权限与跨租户隔离测试
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《URL/方法授权、RBAC、ABAC 与默认拒绝》](ch.security.authorization-rbac-abac.md)：独立完成租户上下文、数据隔离前，必须先具备「URL/方法授权、RBAC、ABAC 与默认拒绝」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产只用内存中的合成租户、记录、缓存和任务模型验证不变量，不启动 Spring、MyBatis、PostgreSQL、Redis、消息队列或 Testcontainers。局部验证通过只能证明策略预言；不能证明真实 SQL、连接池、事务、RLS、缓存客户端或异步执行器已隔离。
 
 多租户系统让一套应用服务多个相互隔离的客户组织。最大的危险不是页面把租户名显示错，而是租户 A 的主体读到、修改或推断出租户 B 的任何数据。隔离必须贯穿“认证主体 → tenant context → 授权 → Repository → SQL/约束 → 缓存 → 事件/任务 → 对象存储/AI”，任何一跳把 tenant 当可选字段都会形成横向越权。

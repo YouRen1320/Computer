@@ -38,10 +38,22 @@ artifacts:
   media_type: text/x-java-source
   presentation: listing
   target_formats: [html, epub, pdf]
+- artifact_id: example-verifier
+  role: runner-support
+  source_path: examples/encyclopedia/ch.java.values-variables-types/verify.sh
+  media_type: text/x-shellscript
+  presentation: listing
+  target_formats: [html, epub, pdf]
 - artifact_id: exercise-readme
   role: exercise-source
   source_path: exercises/encyclopedia/ch.java.values-variables-types/README.md
   media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: exercise-verifier
+  role: runner-support
+  source_path: exercises/encyclopedia/ch.java.values-variables-types/verify.sh
+  media_type: text/x-shellscript
   presentation: listing
   target_formats: [html, epub, pdf]
 - artifact_id: lab-readme

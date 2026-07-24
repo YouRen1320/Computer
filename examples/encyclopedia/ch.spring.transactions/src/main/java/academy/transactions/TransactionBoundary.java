@@ -18,7 +18,7 @@ public final class TransactionBoundary {
         @Transactional
         public void create(String id, boolean fail) {
             active.add(TransactionSynchronizationManager.isActualTransactionActive());
-            jdbc.update("insert into work_order(id,status) values(?,'OPEN')", id);
+            jdbc.update("insert into work_order(id,status) values(?,'CREATED')", id);
             active.add(TransactionSynchronizationManager.isActualTransactionActive());
             jdbc.update("insert into audit_log(work_order_id,action) values(?,'CREATED')", id);
             if (TransactionSynchronizationManager.isSynchronizationActive()) {

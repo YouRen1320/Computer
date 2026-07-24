@@ -29,3 +29,4 @@ grep -Fq 'OPTIONAL_EMPTY_GET' "$BUILD_DIR/failure.err"
 
 printf 'STARTER EXPECTED FAILURE status=%s reason=PIPELINE_CONTRACT; complete TODO 1..5\n' "$starter_status"
 printf 'CONTRACT FAILURE REPRODUCED status=%s evidence=OPTIONAL_EMPTY_GET\n' "$failure_status"
+exit 41

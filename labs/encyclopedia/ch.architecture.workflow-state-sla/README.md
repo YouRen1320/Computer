@@ -2,7 +2,7 @@
 
 验证器先重放安全基线，再逐个注入七个独立故障：
 
-- `JUMP_ALLOWED`：允许 `NEW → CLOSED` 跳跃；
+- `JUMP_ALLOWED`：允许 `CREATED → CLOSED` 跳跃；
 - `MUTATE_BEFORE_VALIDATE`：验证失败前已修改状态；
 - `GUARD_SKIPPED`：派单不要求 assignee；
 - `TERMINAL_REVIVED`：教学终态被复活；
@@ -14,4 +14,4 @@
 ./verify.sh
 ```
 
-DST fixture 固定为 `America/New_York` 的 2026 年春季跳时，不读取机器默认时区。状态集合仍是缩小教学模型，不替代 FactoryCare 唯一 12 状态或真实数据库事务测试。
+DST fixture 固定为 `America/New_York` 的 2026 年春季跳时，不读取机器默认时区。代码类型明确命名为 `DemoTicket`/`DemoTicketStatus`；五个同名状态映射到 FactoryCare canonical 状态，但省略其余七个状态和真实重开边，因此不替代唯一 12 状态或数据库事务测试。

@@ -88,6 +88,14 @@ outcomes:
 ---
 # Softmax、序列表示、注意力与 Transformer 桥接
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《神经网络、损失、反向传播与优化器》](ch.ml.neural-networks.md)：注意力块仍由参数化层、损失和梯度训练。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 注意力可以被拆成几次线性投影、相似度计算、Softmax 和加权求和。Transformer 则把注意力、前馈网络、残差和归一化组织成可重复的块。本章只建立能逐矩阵验证的桥梁，不训练大模型，不把注意力权重冒充因果解释，也不把框架的高性能内核当作数学定义。
 
 ## 1. 为什么普通固定向量不够

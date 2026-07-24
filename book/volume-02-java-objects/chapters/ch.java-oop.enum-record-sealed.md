@@ -81,6 +81,14 @@ outcomes:
 ---
 # enum、record、sealed 与受限类型建模
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《接口、抽象类、多态与动态分派》](ch.java-oop.interfaces-polymorphism.md)：独立完成枚举与记录、受限层次前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件可用于学习和作者验证，不代表学习者已完成无 AI 构建、诊断或复述，也不会自动修改 `PROGRESS.md`。
 
 许多业务错误不是“算法算错”，而是程序允许表达本不该存在的值。状态写成任意字符串时，`IN_PROGRESS` 少一个 S 仍能进入系统；坐标只是三个散落参数时，调用者会把巷道与货位传反；命令只有一个大接口时，新增类型可能落入默认分支后被静默忽略。Java 提供三种互补的受限建模工具：`enum` 固定一组命名实例，`record` 紧凑表达一组数据组件，`sealed` 限制一个父类型的直接子类型集合。
@@ -240,11 +248,11 @@ enum 构造器不供业务代码 new；常量声明时由语言创建实例。�
 String bucket = switch (status) {
     case CLOSED, CANCELLED -> "TERMINAL";
     case VERIFIED -> "VERIFYING";
-    default -> "OPEN";
+    default -> "ACTIVE";
 };
 ~~~
 
-当业务确实只关心三个分类，default 可表达“其余均开放”。当目标是逐一处理每个状态、并希望新增状态触发编译提醒时，列出全部常量并省略 default 更安全。两种选择对应不同变更契约，不能机械规定永远有或永远没有 default。
+当业务确实只关心三个展示分类，default 可表达“其余均活跃”。`ACTIVE` 是局部展示 bucket，不是新的 `WorkOrderStatus`。当目标是逐一处理每个状态、并希望新增状态触发编译提醒时，列出全部常量并省略 default 更安全。两种选择对应不同变更契约，不能机械规定永远有或永远没有 default。
 
 本章的 sealed 命令处理器要求逐类覆盖，因此故意不写 default，让新增命令暴露为编译失败。
 

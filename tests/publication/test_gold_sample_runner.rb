@@ -28,14 +28,15 @@ class GoldSampleRunnerTest < Minitest::Test
     end
   end
 
-  def test_fixed_catalog_has_ten_recipes_and_eight_physical_script_entries
+  def test_fixed_catalog_has_eleven_recipes_and_nine_physical_script_entries
     recipes = GoldSampleVerification::Catalog::RECIPES
 
-    assert_equal 10, recipes.length
-    assert_equal 8, recipes.map(&:script_entry).compact.uniq.length
+    assert_equal 11, recipes.length
+    assert_equal 9, recipes.map(&:script_entry).compact.uniq.length
     assert_equal :values_example, recipes.find { |recipe| recipe.id == "java-values-types-example" }.executor
-    assert_equal ["java-values-types-starter"], recipes.select { |recipe| recipe.expected_exit != 0 }.map(&:id)
-    assert_equal 1, recipes.find { |recipe| recipe.id == "java-values-types-starter" }.expected_exit
+    assert_equal ["java-values-types-exercise"], recipes.select { |recipe| recipe.expected_exit != 0 }.map(&:id)
+    assert_equal 0, recipes.find { |recipe| recipe.id == "java-values-types-starter" }.expected_exit
+    assert_equal 41, recipes.find { |recipe| recipe.id == "java-values-types-exercise" }.expected_exit
   end
 
   def test_values_example_uses_fixed_maven_and_two_exact_output_oracles

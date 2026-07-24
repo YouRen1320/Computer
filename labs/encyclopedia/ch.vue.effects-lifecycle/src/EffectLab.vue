@@ -75,7 +75,7 @@ defineExpose({
     <select id="lab-filter" v-model="filter">
       <option value="ALL">全部</option>
       <option value="CREATED">已创建</option>
-      <option value="COMPLETED">已完成</option>
+      <option value="RESOLVED">已完成</option>
     </select>
     <p ref="label" data-testid="label">筛选：{{ filter }}</p>
     <p data-testid="feedback" role="status" aria-live="polite">{{ feedback }}</p>

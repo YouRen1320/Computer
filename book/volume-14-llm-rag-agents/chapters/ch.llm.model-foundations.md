@@ -86,6 +86,15 @@ outcomes:
 
 # Transformer、Token、上下文与 Embedding 心智模型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Softmax、序列表示、注意力与 Transformer 桥接》](../../volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md)：Transformer 数据流必须建立在序列、注意力和形状合同之上。
+- [《list、tuple、dict、set 与推导式》](../../volume-12-python-data/chapters/ch.python.collections.md)：分词预算、消息序列和采样实验需要已验证的 Python 容器、迭代与计数能力。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 大型语言模型可以先理解为一个“根据已有token序列，计算下一个token概率分布”的参数化函数。它不是数据库，不会因为一句提示就实时学习，也不保证输出事实正确。Transformer让序列中的位置通过注意力交换信息；Tokenizer把文本映射为token ID；Embedding把离散ID映射为向量；模型反复预测并采样，最终把token解码成文本。
 
 本章不调用任何供应商API，也不比较具体模型。目标是建立稳定心智模型：数据经过哪些阶段、哪些长度受限、随机性在哪里、训练与推理有什么不同。以后使用OpenAI、开源模型或Agent框架时，都可用这条数据流排错。

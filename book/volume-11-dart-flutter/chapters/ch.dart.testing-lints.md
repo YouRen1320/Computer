@@ -19,8 +19,6 @@ route_tags:
 - accelerated-48
 - reference
 - factorycare-project
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 8178320cb1defed6050d7dd9a902239d197686e1285d023670c903d664aa91c7
 stable_core: false
 outcomes:
 - id: explain
@@ -91,6 +89,14 @@ outcomes:
   verification_mode: injected-fault-rerun
 ---
 # Dart test、断言、Mock、lint 与包质量
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、资源所有权与错误建模》](ch.dart.exceptions-resources.md)：异常断言和清理验证需要稳定失败契约。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章状态为 `drafting`。截至 2026-07-24，Dart 官方文档基线为 3.12.2，`package:test` 当前为 1.31.2，Dart 团队发布的 `lints` 当前为 6.1.0。配套资产为兼容本机 Dart 3.9.2 固定 `test` 1.31.0 与 `lints` 6.1.0；当前包版本和实际验证版本是两条证据。依赖绿灯不证明 Dart 3.12.2、浏览器或 Flutter Widget 已运行。
 

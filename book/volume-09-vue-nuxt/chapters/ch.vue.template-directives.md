@@ -87,6 +87,14 @@ outcomes:
 ---
 # 插值、绑定、事件、条件与列表指令
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Vite、Vue 应用、SFC 与项目结构》](ch.vue.vite-sfc.md)：模板必须位于可运行 SFC 中，编译错误与浏览器结果需要有稳定观察入口。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和验证工件可以用于学习与作者自检，但不代表学习者已经完成无 AI 独立构建、故障诊断或限时复述，也不会自动修改 `PROGRESS.md`。
 
 上一章让 Vue 根组件成功挂载，本章回答下一个问题：怎样把一组工单数据清楚、安全、可操作地表达为 DOM？模板不是把 JavaScript 字符串拼成 HTML 的便捷写法，而是一种由编译器检查、由 Vue 运行时更新的声明。插值决定文本，`v-bind` 决定属性，`v-on` 连接事件，`v-if`/`v-show` 控制可见结构，`v-for` 展开集合，`key` 告诉更新算法每一项是谁。
@@ -550,7 +558,7 @@ const statusLabels: Record<WorkOrderStatus, string> = {
 <script setup lang="ts">
 import { ref } from 'vue'
 
-type Filter = 'ALL' | 'OPEN'
+type Filter = 'ALL' | 'CREATED'
 
 // 静态工单是本章可复现输入；生产数据以后来自受权 API 适配层。
 const orders = [
@@ -575,7 +583,7 @@ function chooseFilter(next: Filter): void {
       <button type="button" :aria-pressed="activeFilter === 'ALL'" @click="chooseFilter('ALL')">
         全部
       </button>
-      <button type="button" :aria-pressed="activeFilter === 'OPEN'" @click="chooseFilter('OPEN')">
+      <button type="button" :aria-pressed="activeFilter === 'CREATED'" @click="chooseFilter('CREATED')">
         未关闭
       </button>
     </div>

@@ -274,7 +274,7 @@ static final class WorkOrderJsonMapper {
     }
 
     enum Status {
-        OPEN,
+        CREATED,
         IN_PROGRESS,
         CLOSED
     }
@@ -343,7 +343,7 @@ static final class WorkOrderJsonMapper {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(policy, "policy");
         // TODO 1..4: parse fields, enforce unknown policy, convert scalar types, and preserve assignee tri-state.
-        return new WorkOrder(1, "TODO", Status.OPEN, Instant.EPOCH,
+        return new WorkOrder(1, "TODO", Status.CREATED, Instant.EPOCH,
                 BigDecimal.ZERO, OptionalText.missing());
     }
 

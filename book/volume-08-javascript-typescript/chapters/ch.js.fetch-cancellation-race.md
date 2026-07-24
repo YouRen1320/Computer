@@ -101,6 +101,16 @@ outcomes:
 ---
 # Fetch、AbortController、超时、重试与竞态
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、调试、测试预言与 Vitest》](ch.js.testing-debugging.md)：请求竞态和错误路径必须用可信预言、替身与故障注入证明，而非目测。
+- [《事件循环、任务、Promise 与 async/await》](ch.js.event-loop.md)：响应、取消和 timeout handler 的先后由任务与 Promise 调度决定。
+- [《Origin、同源、Cookie、缓存与 CORS 浏览器模型》](../../volume-07-web-platform/chapters/ch.web.origin-cookie-cache.md)：凭据、跨源和缓存行为属于浏览器边界，不能误诊为异步逻辑。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。2026-07-17 已核对 WHATWG Fetch/DOM、Node 24 与 Vitest 官方资料。配套资产使用可控的内存传输和 Node 断言验证稳定异步合同，不访问真实网络；课程项目验收仍应使用 Vitest、故障服务器和目标浏览器。Node 22 本地绿灯不能冒充 Node 24/浏览器行为完全一致。
 
 网络代码最危险的错觉是“最后写的代码会最后返回”。请求完成顺序由网络、缓存、服务端和事件循环共同决定。用户先选 A 再选 B，A 可能更晚返回；如果每个回调都无条件写状态，页面会显示已经过时的 A。取消、超时和请求身份就是用来控制这些不确定性的合同。

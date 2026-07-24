@@ -20,6 +20,7 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
+- factorycare-project
 stable_core: false
 outcomes:
 - id: explain
@@ -97,6 +98,14 @@ outcomes:
 ---
 
 # pytest、fixture、Mock、日志与调试证据
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、上下文管理器与资源清理》](ch.python.exceptions-context.md)：异常断言、traceback 和日志边界依赖稳定失败契约。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 测试不是“运行代码看看有没有报错”，日志也不是“多 print”。可信反馈链先写行为合同和独立 oracle，再用隔离 fixture 驱动成功、边界、失败；故障发生时从 pytest 报告、traceback、结构化日志和调试器逐层取证。本章只覆盖同步代码，异步测试留到下一章。
 

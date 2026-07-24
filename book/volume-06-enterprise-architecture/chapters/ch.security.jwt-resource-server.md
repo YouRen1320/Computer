@@ -86,6 +86,14 @@ outcomes:
 ---
 # JWT 验证、Bearer Token 与 Resource Server
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Spring Security 登录、退出、密码编码与 Session 防护》](ch.security.session-authentication.md)：独立完成JWT 验证、Bearer 与资源服务器前，必须先具备「Spring Security 登录、退出、密码编码与 Session 防护」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套程序不生成真实 JWT、不实现密码学、不下载 JWK、不启动 Authorization Server 或 Resource Server；它只用合成 Token 元数据模拟验证顺序，且不输出完整 Token。通过只能证明策略预言，不能证明密钥、JOSE 库、网络发现、时钟或 Spring Security 集成正确。
 
 JWT 最危险的误解是“能把 payload 解出来，所以 Token 有效”。Base64url 解码只恢复攻击者可写的 JSON；只有在算法和密钥策略确定、签名/密码学操作成功、issuer/audience/时间/类型等 claims 全部验证后，资源服务器才能把 claims 转成认证主体。即使 Token 合法，也不等于当前成员仍启用或拥有任意业务数据范围。

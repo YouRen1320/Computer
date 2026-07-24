@@ -96,6 +96,16 @@ outcomes:
 ---
 # 离线队列、重试、冲突与幂等重放
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《平台 API、条件编译与能力检测》](ch.uniapp.platform-conditional.md)：队列持久化、网络状态和后台执行在不同宿主存在差异，必须先具备平台适配和降级能力。
+- [《分包、启动性能、缓存与资源预算》](ch.uniapp.packages-performance.md)：需要区分静态缓存版本与业务命令队列，复用可靠的本地存储预算。
+- [《幂等键、乐观并发、重复提交与重放》](../../volume-06-enterprise-architecture/chapters/ch.architecture.idempotency-concurrency.md)：客户端重放必须遵守服务端幂等键、并发控制和重复响应语义。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产在内存/JSON 快照中模拟断网、进程重启、重复响应、401、409 和毒消息；没有依赖真实 uni-app storage、后台任务、微信网络监听或 FactoryCare 服务端幂等表。离线绿灯证明状态机模型，不证明目标宿主能在后台可靠执行。
 
 缓存保存“以后可以重新读取的值”；离线队列保存“以后必须尝试执行、且不能重复产生业务效果的命令”。两者不是一回事。把 POST payload 随手塞进 storage 并在联网时循环发送，会造成重复工单、重试风暴、跨用户泄露、旧合同崩溃和队头阻塞。本章从服务端幂等合同出发，设计客户端持久命令与可观察重放。

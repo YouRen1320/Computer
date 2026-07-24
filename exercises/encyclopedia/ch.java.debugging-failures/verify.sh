@@ -15,4 +15,5 @@ else
   grep -Fq "Tests run: 2, Failures: 1, Errors: 0, Skipped: 0" "$BUILD_DIR/maven.log"
   grep -Fq "expected: <45> but was: <75>" "$BUILD_DIR/maven.log"
   echo "EXERCISE STARTER_EXPECTED_FAILURE tests=2 failures=1 expected=45 actual=75"
+  exit 41
 fi

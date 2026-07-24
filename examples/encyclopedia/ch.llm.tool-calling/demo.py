@@ -23,6 +23,6 @@ def dispatch(call: dict, repository: dict[int, dict]) -> dict:
 
 
 result = dispatch({"call_id": "call_local_1", "name": "get_order", "arguments": json.dumps({"order_id": 7})},
-                  {7: {"id": 7, "status": "OPEN"}})
-assert result == {"ok": True, "code": "ok", "call_id": "call_local_1", "data": {"id": 7, "status": "OPEN"}}
+                  {7: {"id": 7, "status": "CREATED"}})
+assert result == {"ok": True, "code": "ok", "call_id": "call_local_1", "data": {"id": 7, "status": "CREATED"}}
 print(result)

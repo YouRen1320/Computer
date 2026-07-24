@@ -99,6 +99,16 @@ outcomes:
 ---
 # 部署、expand-contract、前向修复与回滚
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《制品、来源证明、环境晋级与发布元数据》](ch.release.artifacts-promotion.md)：部署只能选择已通过门禁且 digest 不变的晋级制品。
+- [《备份、恢复、RPO/RTO 与恢复演练》](ch.ops.backup-recovery.md)：数据库变更前必须具备已演练恢复点与明确 RPO/RTO。
+- [《日志、指标、追踪、SLO 与告警闭环》](../../volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md)：canary 门禁、切流量和回滚触发器必须读取已验证的日志、指标、链路与 SLO。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 应用回滚和数据库回滚不是同一件事。容器制品可以把流量切回旧 digest，只要旧应用仍能理解当前 schema 和数据；已经提交的数据迁移可能持锁、重写大量行、被外部系统观察，甚至不可逆。可靠发布不承诺“任何失败都一键回到过去”，而是用不可变制品、兼容窗口、expand/backfill/contract、canary 门禁和前向修复，把每一步变成可停止、可观察、可收敛的状态机。
 
 本章负责从已晋级制品到可观测部署，并把 FactoryCare 工单字段迁移作为综合演练。它不重新构建镜像，不替代备份恢复，不教授 CI 基础，也不让 Python/AI 决定工单最终状态。Java 新旧版本必须共同遵守业务合同；Flyway/PostgreSQL 负责 schema 变更轨迹；部署控制面根据就绪、错误、延迟和迁移状态决定流量。

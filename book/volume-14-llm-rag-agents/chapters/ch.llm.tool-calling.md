@@ -96,6 +96,16 @@ outcomes:
 
 # 工具调用、参数验证与信任边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《结构化输出、Schema 与运行时校验》](ch.llm.structured-output.md)：工具名和参数首先需要严格结构化输出与运行时校验。
+- [《流式输出、重试、超时、取消与降级》](ch.llm.streaming-resilience.md)：工具链路必须处理超时、取消、重试和部分模型输出。
+- [《不可信输入、输出编码、XSS 与 SSRF》](../../volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md)：模型输出与工具返回都属于跨信任边界的不可信数据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 工具调用让模型提出“调用哪个函数、参数是什么”的意图。模型不会因为输出了一个函数名就自动获得服务器权限，也不应直接执行代码。应用才是执行者：它公布有限工具Schema，接收模型提出的调用，把名称和参数视为不可信输入，经过白名单、完整参数校验、主体授权、资源级授权、风险确认与幂等控制后，才调用真实服务。
 
 这条边界是Agent安全的核心。提示词里的“不要越权”只能影响生成概率；strict Schema只能约束形状；tool_choice只能约束模型可提出哪些工具；真正的权限、状态机和数据库事务必须在可信系统执行。本章用FactoryCare的只读工单查询与高风险关闭工单建立端到端合同，并明确Java后端继续拥有业务事实。
@@ -196,7 +206,7 @@ FactoryCare选择Java/Spring作为核心后端，工单、设备、用户、权�
 
 get_order可以通过受认证的内部Java API调用；close_order必须调用Java命令端点。Java从令牌或服务身份建立主体，重新做租户与资源授权，检查工单当前状态和乐观锁版本，并在同一事务处理幂等记录与状态变更。
 
-Python传来的“status=OPEN”只是之前读取的快照。执行时Java重新加载；若已关闭，返回明确冲突或原幂等结果。不要让AI层用缓存事实覆盖数据库。
+Python传来的“status=CREATED”只是之前读取的快照。执行时Java重新加载；若已关闭，返回明确冲突或原幂等结果。不要让AI层用缓存事实覆盖数据库。
 
 这条边界也方便招聘与维护：AI能力可以替换供应商或框架，核心业务合同、审计和数据所有权保持稳定。LangChain等框架以后只做编排工具，不能绕过这条边界。
 

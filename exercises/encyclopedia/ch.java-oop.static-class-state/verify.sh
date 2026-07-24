@@ -30,7 +30,7 @@ if [[ $challenge_status -ne 0 ]]; then
   grep -Fqx "STARTER_ORDER_DEPENDENCY expected=WO-0001 actual=WO-0002" "$BUILD_DIR/challenge.err"
   echo "EXPECTED_COMPILE_FAILURE StaticReadsInstanceFailure status=$static_status evidence=static-context"
   echo "STARTER EXPECTED FAILURE status=$challenge_status reason=shared-static-sequence"
-  exit 0
+  exit 41
 fi
 
 grep -Fqx "exercise.assertions=8 passed" "$BUILD_DIR/challenge.out"

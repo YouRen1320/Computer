@@ -94,6 +94,16 @@ outcomes:
 ---
 # FactoryCare 报修端集成与验收
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《离线队列、重试、冲突与幂等重放》](ch.uniapp.offline-idempotency.md)：弱网提交必须能重放且不重复创建工单。
+- [《构建、版本、灰度、发布与监控》](ch.uniapp.release-monitoring.md)：验收必须对应可追溯目标版本、监控和回退证据。
+- [《服务端状态、加载、错误、取消与竞态》](../../volume-09-vue-nuxt/chapters/ch.vue.server-state.md)：报修状态、加载、错误与竞态复用统一服务端状态合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。它是 uni-app 卷的项目集成章：不重新教授 Vue、网络、权限、上传、离线、幂等或发布基础，而是把前置章节能力按 FactoryCare 已冻结合同组合并验收。配套 Node 资产只验证离线业务模型；只有真实 uni-app 目标产物、测试账号、真机/宿主、FactoryCare API、对象存储和发布记录齐全时，才能声称交付“可安装报修端”。
 
 FactoryCare 报修人的主线看起来很短：扫码、填写、上传、提交、查看进度。但任何一步都可能跨越宿主权限、网络、对象存储、Java 事务、状态机和版本发布。集成章的价值不是再写一遍按钮，而是证明这些边界在成功、边界和故障路径下仍遵守同一个合同。
@@ -299,6 +309,8 @@ CANCELLED → 已取消
 
 这是 UI 映射，不改变领域状态。具体文案应让用户知道下一步和是否需要操作。
 
+配套示例把 `VERIFIED/CLOSED` 映射到名为 `COMPLETED` 的 **UI 展示分组**。`COMPLETED` 不是 `WorkOrderStatus`、不进入 API/数据库，也不能从客户端回写；它只是一条显式的 `VERIFIED|CLOSED → COMPLETED` 展示映射。
+
 ### 9.2 请求竞态
 
 用户从列表快速进入 A、返回、再进入 B，A 的晚响应不能覆盖 B。每次加载拥有 reportId 与 operationId；只有响应仍对应当前页面身份才更新状态。`finally` 中也应只关闭自己那次请求的 loading，避免旧请求把新请求的加载指示提前关掉。
@@ -491,4 +503,12 @@ updatedAt   数据证据时间
 - [FactoryCare 数据模型](../../../factorycare-design/data/data-model.md)
 - [FactoryCare 验收目录](../../../factorycare-design/testing/acceptance-catalog.md)
 
-平台版本资料沿用本卷前置章节，并在实际构建/发布日重新核对 uni-app 与微信小程序官方文档。项目字段、12 状态、附件目的和幂等语义以同一发布候选冻结的 FactoryCare 合同为准。
+平台资料复核日期为 2026-07-24。集成章不能只写“沿用前置章节”，下列官方页面直接支持本章实际使用的平台边界：
+
+- DCloud，[条件编译处理多端差异](https://uniapp.dcloud.net.cn/tutorial/platform.html)：目标专用代码与跨端适配边界。
+- DCloud，[`uni.scanCode`](https://uniapp.dcloud.net.cn/api/system/barcode)：扫码结果、取消/失败和平台兼容表面。
+- DCloud，[`uni.uploadFile`](https://uniapp.dcloud.net.cn/api/request/network-file)：附件上传、UploadTask、进度与取消表面。
+- DCloud，[`uni.getLocation`](https://uniapp.dcloud.net.cn/api/location/location)：可选位置、坐标系、精度和平台配置表面。
+- 微信开放文档，[用户隐私保护指引填写说明](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/)：微信小程序隐私声明表面。
+
+本次只完成项目合同与官方文档核对；没有执行真实 uni-app/微信构建、扫码/定位/上传、平台隐私授权、FactoryCare Java API、对象存储、断网重放、真机 E2E 或发布回退。项目字段、12 状态、附件目的和幂等语义以同一发布候选冻结的 FactoryCare 合同为准，平台行为则必须在实际构建/发布日重新验证。

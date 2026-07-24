@@ -89,6 +89,14 @@ outcomes:
 
 # Compose 多服务、配置、健康检查与依赖
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《镜像层、容器、卷、网络与运行时边界》](ch.ops.docker-production.md)：多服务编排要求每个镜像已具备明确进程、卷、网络和健康边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 Docker Compose把一组容器的服务、网络、卷、配置、秘密、健康和依赖写成声明文件。它解决“如何在一个Compose项目中重复得到同一拓扑”，不自动解决跨主机调度、滚动升级、自动扩缩、分布式存储或高可用控制面。Docker官方也提供单服务器生产使用指南，因此“不把Compose当生产编排器”不是说它永远不能承载生产，而是不能把单主机Compose误当Kubernetes式集群编排能力。
 
 本章围绕FactoryCare的Java API、PostgreSQL和Nginx代理建立最小拓扑。当前本机Docker Compose CLI v2.39.4可执行docker compose config并实际解析归一化fixture；Docker daemon未运行，所以没有启动容器、拉取镜像、观察health、重启或验证volume持久。每项结论都标ACTUAL配置或UNVERIFIED运行。

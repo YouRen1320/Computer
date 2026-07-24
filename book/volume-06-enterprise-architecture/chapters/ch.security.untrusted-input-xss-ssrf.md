@@ -81,6 +81,15 @@ outcomes:
 ---
 # 不可信输入、输出编码、XSS 与 SSRF
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Origin、SameSite、CORS 与 CSRF》](ch.security.origin-cors-csrf.md)：独立完成不可信输入与 XSS、SSRF 与出站控制前，必须先具备「Origin、SameSite、CORS 与 CSRF」已经验证的知识与失败边界
+- [《异常映射、Problem Details 与稳定错误契约》](../../volume-05-spring-backend/chapters/ch.spring.problem-details-errors.md)：独立完成不可信输入与 XSS、SSRF 与出站控制前，必须先具备「异常映射、Problem Details 与稳定错误契约」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套程序只处理合成字符串、`.example.test` URL、预先给定的地址分类和内存状态；它们不解析真实 DNS、不建立 Socket、不发 HTTP 请求，也不包含真实 Cookie、Token、客户数据或内网地址清单。通过这些程序只能证明决策不变量，不代表浏览器、代理、DNS、云平台或生产出站策略已经通过安全测试。
 
 安全缺陷经常不是“少写一条正则”，而是数据跨越信任边界后进入了错误的解释器。工单描述进入浏览器 HTML 解析器，可能从文字变成标签或脚本；用户给出的 URL 进入服务器 HTTP 客户端，可能从普通字段变成对内网的网络能力。防护要从数据流回答三个问题：数据来自哪里，经过哪些转换，最后进入什么危险 sink；控制必须放在最接近该 sink、能够理解其语义的位置。

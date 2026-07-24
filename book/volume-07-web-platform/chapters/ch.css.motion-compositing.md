@@ -83,6 +83,15 @@ outcomes:
 ---
 # 过渡、变换、动画、合成与减少动效
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《盒模型、display、定位与层叠上下文》](ch.css.box-position.md)：transform、定位与层叠上下文相互作用，必须先能判断包含块和遮挡关系。
+- [《无障碍、键盘、焦点与屏幕阅读器》](ch.web.accessibility-interaction.md)：动效不能破坏焦点可见性或忽略减少动效偏好，需先掌握交互无障碍基线。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件以静态 CSS 合同和普通/减少动效状态矩阵建立离线证据；它没有运行浏览器 Performance/Layers、没有测量 layout/paint/composite 时间，也没有完成键盘、屏幕阅读器或前庭敏感用户测试。易变事实已于 **2026-07-17** 对照 W3C CSS Transitions 2、CSS Transforms 1、CSS Animations 1、CSS Will Change 1、Media Queries 5 与 WCAG 2.2 一手规范核验。
 
 好的动效说明“发生了什么”：进入关系、状态变化、空间来源或操作反馈。坏的动效让用户等装饰结束、让焦点消失，或以“用了 transform”伪装成已证明的性能优化。本章把动效当一份状态合同：语义状态先成立，视觉插值随后跟进；普通模式有限而可中断；`prefers-reduced-motion: reduce` 下保留即时、低运动量的反馈；性能结论必须由真实时间线支持。

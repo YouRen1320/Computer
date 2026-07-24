@@ -86,6 +86,15 @@ outcomes:
 ---
 # 词项、倒排索引、TF-IDF 与 BM25
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《list、tuple、dict、set 与推导式》](../../volume-12-python-data/chapters/ch.python.collections.md)：倒排表、计数和排序实现需要 Python 集合与函数能力。
+- [《函数、坐标、图像、斜率、指数、对数与求和》](../../volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md)：IDF 对数、加权求和和评分曲线需要函数基础。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 稀疏检索并不“低级”。当用户输入设备编号、故障码、零件名或一句维修现象时，词法匹配往往是最清楚、最便宜、最容易复算的基线。本章从一张能手工检查的倒排表开始，逐步推到 TF-IDF 与 BM25。范围止于候选检索：不调用向量数据库，不生成回答，也不把索引当成 FactoryCare 的业务真相。
 
 ## 1. 学完到底要会什么

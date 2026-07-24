@@ -1,4 +1,4 @@
-export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 export type WorkOrderSummary = Readonly<{
   id: string

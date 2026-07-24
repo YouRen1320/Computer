@@ -11,7 +11,7 @@ public interface WorkOrderRepository {
 
     record TenantId(String value) { public TenantId { if (value == null || value.isBlank()) throw new IllegalArgumentException("tenantId"); } }
     record WorkOrderId(String value) { public WorkOrderId { if (value == null || value.isBlank()) throw new IllegalArgumentException("workOrderId"); } }
-    enum Status { OPEN, IN_PROGRESS, DONE }
+    enum Status { CREATED, IN_PROGRESS, CLOSED }
     enum UpdateOutcome { UPDATED, NOT_FOUND, VERSION_CONFLICT }
     record WorkOrder(TenantId tenantId, WorkOrderId id, Status status, long version) {
         public WorkOrder { Objects.requireNonNull(tenantId); Objects.requireNonNull(id); Objects.requireNonNull(status); if (version < 0) throw new IllegalArgumentException("version"); }

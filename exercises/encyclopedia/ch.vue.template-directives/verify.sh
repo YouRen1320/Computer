@@ -11,12 +11,22 @@ status=$?
 set -e
 
 if [[ $status -eq 0 ]]; then
-  grep -Fq 'STABLE_WORK_ORDER_KEY_OK expression=order.id node=beta' "$TMP_DIR/out"
+  if ! grep -Fq 'STABLE_WORK_ORDER_KEY_OK expression=order.id node=beta' "$TMP_DIR/out"; then
+    cat "$TMP_DIR/out" >&2
+    echo "SOLVED OUTPUT MARKER MISMATCH" >&2
+    exit 42
+  fi
   echo "EXERCISE PASS identity=stable key=order.id"
 elif [[ $status -eq 8 ]]; then
-  grep -Fq 'EXPECTED_STABLE_WORK_ORDER_KEY expression=index oldB=beta newB=alpha' "$TMP_DIR/err"
-  echo "STARTER EXPECTED FAILURE status=8 reason=index-key-reuses-position-node"
+  if ! grep -Fq 'EXPECTED_STABLE_WORK_ORDER_KEY expression=index oldB=beta newB=alpha' "$TMP_DIR/err"; then
+    cat "$TMP_DIR/err" >&2
+    echo "STARTER FAILURE MARKER MISMATCH status=8" >&2
+    exit 43
+  fi
+  echo "EXPECTED_RED status=8 reason=index-key-reuses-position-node"
+  exit 41
 else
   cat "$TMP_DIR/err" >&2
-  exit "$status"
+  echo "STARTER FAILURE STATUS MISMATCH expected=8 actual=$status" >&2
+  exit 44
 fi

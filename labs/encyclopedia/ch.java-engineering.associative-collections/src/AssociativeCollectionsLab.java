@@ -29,7 +29,7 @@ final class AssociativeCollectionsLab {
     static Map<DeviceId, Device> indexDevices(List<ImportRow> rows) {
         Map<DeviceId, Device> result = new HashMap<>();
         for (ImportRow row : rows) {
-            result.put(row.id(), new Device(row.id(), row.category(), "OPEN"));
+            result.put(row.id(), new Device(row.id(), row.category(), "ACTIVE"));
         }
         return result;
     }

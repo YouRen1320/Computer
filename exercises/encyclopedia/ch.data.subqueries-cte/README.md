@@ -3,7 +3,7 @@
 修复 `answer.sql`：
 
 - 用外层 `d.device_id` 修正相关谓词；
-- 把错误的 DONE 条件改成 OPEN/IN_PROGRESS 未完成集合；
+- 把错误的 CLOSED 条件改成 CREATED/IN_PROGRESS 未完成集合；
 - 保留 `unfinished_devices` 与 `category_counts` 两个可单独检查的 CTE；
 - 最终只输出设备数至少 2 的类别；
 - 不用 NOT IN 处理可能含 NULL 的排除集合。

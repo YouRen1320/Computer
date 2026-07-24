@@ -19,6 +19,7 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
+- factorycare-project
 stable_core: false
 outcomes:
 - id: explain
@@ -81,6 +82,14 @@ outcomes:
 ---
 
 # Python 运行时、uv、虚拟环境与依赖
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：pyproject、uv.lock 与环境同步必须建立在可复现依赖解析和构建制品合同上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章不教变量和 `if`，只建立一条可重复运行链。结束时，你应能回答：shell 找到哪一个 `python`，项目实际由哪一个解释器执行，包安装在哪个环境，`pyproject.toml` 与 `uv.lock` 各自表达什么，以及为何“我电脑能 import”不是项目证据。
 

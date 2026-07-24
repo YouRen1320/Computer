@@ -93,6 +93,16 @@ outcomes:
 ---
 # @Transactional、传播、回滚、隔离与提交后行为
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《应用服务、用例编排与领域边界》](ch.spring.service-use-cases.md)：独立完成事务边界与传播、回滚与提交前，必须先具备「应用服务、用例编排与领域边界」已经验证的知识与失败边界
+- [《切点、通知、代理边界与自调用陷阱》](ch.spring.aop-proxy-model.md)：独立完成事务边界与传播、回滚与提交前，必须先具备「切点、通知、代理边界与自调用陷阱」已经验证的知识与失败边界
+- [《Spring 测试切片、上下文测试与 Testcontainers》](ch.spring.testing-testcontainers.md)：独立完成事务边界与传播、回滚与提交前，必须先具备「Spring 测试切片、上下文测试与 Testcontainers」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。教材和工件是学习证据，不自动更新 `PROGRESS.md`，也不代表 PostgreSQL 生产事务已验证。
 
 事务不是“方法失败就撤销一切”的魔法。Spring 通过代理在方法边界向 transaction manager 请求事务，数据访问组件必须使用同一绑定资源；传播决定加入还是新建，异常规则决定是否回滚，提交后回调发生时数据库已不能再撤回。

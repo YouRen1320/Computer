@@ -99,6 +99,16 @@ outcomes:
 
 # Tensor、Dataset、Module 与 Autograd
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《神经网络、损失、反向传播与优化器》](ch.ml.neural-networks.md)：Module 与 Autograd 只有在已理解前向、损失和反向传播后才可安全使用。
+- [《指标、基线、交叉验证与误差分析》](ch.ml.metrics-validation.md)：框架实验仍需可靠数据划分、基线与评估合同。
+- [《类、对象模型、dataclass 与 enum》](../../volume-12-python-data/chapters/ch.python.classes-dataclass.md)：Dataset 和 Module 的对象状态与继承依赖 Python 类基础。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 前面的数学章节用数组、矩阵和链式法则描述神经网络。本章把这些概念映射到 PyTorch：`Tensor` 保存数值、形状、数据类型和设备；`Dataset` 定义一个样本怎样取得；`DataLoader` 负责抽取与拼批；`nn.Module` 注册子模块和参数并定义前向合同；Autograd 根据实际执行的张量运算构建计算图并求梯度。
 
 本章只完成一次可审查的前向与反向，不实现完整训练循环，不选择超参数，不报告模型效果，也不部署服务。所有工件明确使用 CPU 人工小数据。即使当前机器可能存在其他后端，本章没有实际验证 GPU 或 MPS，因此不会声称这些设备可用、等价或更快。

@@ -19,6 +19,7 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
+- factorycare-project
 stable_core: true
 outcomes:
 - id: explain
@@ -93,6 +94,15 @@ outcomes:
 ---
 
 # 异常、上下文管理器与资源清理
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类、对象模型、dataclass 与 enum》](ch.python.classes-dataclass.md)：自定义异常和资源适配器需要已验证对象模型。
+- [《Path、编码、文件、JSON 与时间数据》](ch.python.files-json-time.md)：资源清理必须针对已正式教授的 Path、文件、编码和 JSON 失败路径，而非借用样板。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 异常不是“所有非理想结果”的同义词。它是一条非本地控制流：当前语句无法按合同继续时，解释器沿调用栈寻找匹配处理器；无处理器就终止当前任务/进程并输出 traceback。正确设计既不吞掉根因，也不把每个业务分支都变异常，还要保证成功和失败时资源都只释放一次。
 

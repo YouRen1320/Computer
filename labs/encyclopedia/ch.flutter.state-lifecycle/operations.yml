@@ -17,3 +17,15 @@ oracle:
   visible_items: [WO-B]
   committed_operations: [B]
   ignored_operations: [A]
+list_identity:
+  before:
+    - key: WO-A
+      local_state: expanded
+    - key: WO-B
+      local_state: collapsed
+  reordered_keys: [WO-B, WO-A]
+  oracle:
+    - key: WO-B
+      local_state: collapsed
+    - key: WO-A
+      local_state: expanded

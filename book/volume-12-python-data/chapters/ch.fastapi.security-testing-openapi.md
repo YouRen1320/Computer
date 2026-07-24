@@ -107,6 +107,17 @@ outcomes:
 
 # FastAPI 安全集成、测试与 OpenAPI 合同
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《pytest、fixture、Mock、日志与调试证据》](ch.python.testing-logging-debug.md)：安全负例和 OpenAPI diff 需要可信 pytest、fixture 和日志证据。
+- [《asyncio、Task、超时、取消与结构化并发边界》](ch.python.asyncio-cancellation.md)：异步客户端、并发依赖和取消需有 Task 所有权模型。
+- [《FastAPI 路由、依赖、请求响应与错误》](ch.fastapi.web-foundations.md)：认证依赖和 OpenAPI 扩展必须建立在路由、模型与错误合同上。
+- [《Spring Security 登录、退出、密码编码与 Session 防护》](../../volume-06-enterprise-architecture/chapters/ch.security.session-authentication.md)：安全依赖和 current principal 必须复用已验证的会话认证合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章不重新教授密码、Session、OIDC、JWT 或通用 Web 威胁模型，而是回答集成问题：已经有可信身份系统时，FastAPI 如何把凭据变成当前主体、怎样在每条受保护路径执行授权、如何用负例矩阵证明失败关闭，以及怎样让 OpenAPI 文档与运行时安全合同保持一致。真实 FactoryCare 的身份与业务授权仍由 Java 负责，Python 不签发自己的第二套用户身份。
 
 ## 1. 认证、当前主体与授权是三步

@@ -41,7 +41,7 @@ outcomes:
   verification_mode: oral-explanation
 - id: build
   kind: independent-build
-  text: 完成该章的独立构建任务：为 NEW→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 工单定义转换表、guard、事件和基于业务时钟的 SLA deadline
+  text: 完成该章的独立构建任务：设计并实现 DemoTicket 教学投影的 CREATED→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED 状态图、Java 类、guard、单元测试和基于业务时钟的 SLA deadline，并说明它与 FactoryCare 唯一 12 状态合同的映射和缺失边界
   covers_topic_groups:
   - architecture-state-machine
   - architecture-sla-time
@@ -78,7 +78,16 @@ outcomes:
 ---
 # 状态机、状态转换、SLA 与超时语义
 
-> 本章状态为 `drafting`。配套资产只用 JDK 25、固定时间和内存合成工单验证语言级不变量，不启动 Spring、数据库、调度器或消息系统。局部绿灯能证明状态表、guard 和时间计算的预言，不能证明生产事务、锁、任务抢占、集群时钟或报表链路已经正确。
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《实体、值对象、聚合、不变量与边界》](../../volume-05-spring-backend/chapters/ch.architecture.domain-modeling.md)：独立完成状态机、SLA 与时间前，必须先具备「实体、值对象、聚合、不变量与边界」已经验证的知识与失败边界
+- [《ACID、隔离级别、锁、死锁与重试边界》](../../volume-04-data-postgresql/chapters/ch.data.transactions-locking.md)：独立完成状态机、SLA 与时间前，必须先具备「ACID、隔离级别、锁、死锁与重试边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
+> 本章状态为 `drafting`。配套资产只用 JDK 25、固定时间和内存合成 `DemoTicket` 验证语言级不变量，不启动 Spring、数据库、调度器或消息系统。局部绿灯能证明教学投影的状态表、guard 和时间计算预言，不能证明 FactoryCare 生产事务、锁、任务抢占、集群时钟或报表链路已经正确。
 
 工单不是一行可以随意改写的字符串。它是一段受规则约束、能说明“如何走到这里”的业务历史。SLA 也不是页面上的红色倒计时，而是某个版本的业务承诺、开始事实、暂停事实和截止事实共同计算出的结果。本章把两者放在一起，是因为每次状态转换都可能启动、暂停、恢复或完成计时；如果状态和时间各自更新，系统会出现“工单已关闭但 SLA 仍计时”或“状态回滚但 deadline 已延长”等矛盾。
 
@@ -107,7 +116,7 @@ outcomes:
 
 状态是系统对聚合当前阶段的受控概括。例如 `ASSIGNED` 表示派单命令已经满足权限与数据条件，assignment 已持久化，相关事务已提交；它不只是界面显示“已派单”。如果只写 `workOrder.status = request.status`，客户端便能跳过接单、处理、验证等规则，把一张刚创建的工单直接改成关闭。
 
-枚举只能限制拼写集合，不能限制转换关系。`enum Status { NEW, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }` 能防止 `"clsoed"`，却不能阻止 `NEW -> CLOSED`。真正的状态机还要回答：
+枚举只能限制拼写集合，不能限制转换关系。`enum DemoTicketStatus { CREATED, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }` 能防止 `"clsoed"`，却不能阻止 `CREATED -> CLOSED`。真正的状态机还要回答：
 
 - 哪个当前状态可以接收哪个命令；
 - 命令成功后进入哪个目标状态；
@@ -124,17 +133,17 @@ outcomes:
 
 ### 2.3 转换表是可审查的合同
 
-本章独立构建采用一个刻意缩小的教学模型：
+本章独立构建采用一个明确命名为 `DemoTicket` 的教学投影：
 
 | 当前状态 | 命令 | 目标状态 | 关键 guard |
 | --- | --- | --- | --- |
-| `NEW` | `ASSIGN` | `ASSIGNED` | assignee 存在且可接单 |
-| `NEW` | `CANCEL` | `CANCELLED` | 原因非空 |
+| `CREATED` | `ASSIGN` | `ASSIGNED` | assignee 存在且可接单 |
+| `CREATED` | `CANCEL` | `CANCELLED` | 原因非空 |
 | `ASSIGNED` | `START` | `IN_PROGRESS` | 当前操作者就是有效 assignee |
 | `ASSIGNED` | `CANCEL` | `CANCELLED` | 有权限且原因非空 |
 | `IN_PROGRESS` | `CLOSE` | `CLOSED` | 解决摘要与检查项齐全 |
 
-在这个教学模型中，`CLOSED` 与 `CANCELLED` 是终态，所有未列边都拒绝。它只服务于 canonical outcome 的 `NEW→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED` 练习，不是 FactoryCare 产品合同。FactoryCare 使用 `CREATED` 而非 `NEW`，并允许 `CLOSED -> REOPENED`，所以绝不能把教学模型的“CLOSED 不可逆”复制到项目代码。
+在这个教学投影中，`CLOSED` 与 `CANCELLED` 是终态，所有未列边都拒绝。五个名称与 FactoryCare 同名状态一一映射，但投影刻意省略 `TRIAGED`、`ACCEPTED`、`PENDING_PARTS`、`PENDING_APPROVAL`、`RESOLVED`、`VERIFIED`、`REOPENED`，并把处理完成简化为直接进入 `CLOSED`。它只服务于 `DemoTicket` 的 `CREATED→ASSIGNED→IN_PROGRESS→CLOSED/CANCELLED` 练习，不是 FactoryCare `WorkOrder` 产品合同；尤其不能把“CLOSED 不可逆”复制到项目代码，因为正式合同允许 `CLOSED -> REOPENED`。
 
 转换表应当能生成参数化测试：表中的每条允许边至少有一个成功用例，状态集合的笛卡尔积减去允许边形成禁止边用例。这样新增状态时测试会主动暴露未决定的关系，而不是等线上请求碰到某个 `default` 分支。
 
@@ -327,7 +336,7 @@ SLA 由 `sla_policy` 与 `sla_clock` 建模。等待备件的暂停/恢复必须
 
 ### 12.1 跳跃状态
 
-症状：`NEW -> CLOSED` 或 `CREATED -> CLOSED` 被接受。先保存请求、当前状态、目标命令、version 和最终行；不要只看 Controller 返回。常见根因是 DTO 暴露 status、枚举校验被当作转换校验，或 switch 默认允许。修复是命令化 API、显式允许表和全禁止边测试。回归必须证明状态、历史与 SLA 均未改变。
+症状：`CREATED -> CLOSED` 或 `CREATED -> CLOSED` 被接受。先保存请求、当前状态、目标命令、version 和最终行；不要只看 Controller 返回。常见根因是 DTO 暴露 status、枚举校验被当作转换校验，或 switch 默认允许。修复是命令化 API、显式允许表和全禁止边测试。回归必须证明状态、历史与 SLA 均未改变。
 
 ### 12.2 “终态复活”或错误禁止重开
 
@@ -349,7 +358,7 @@ SLA 由 `sla_policy` 与 `sla_clock` 建模。等待备件的暂停/恢复必须
 
 独立练习要求修复七个 TODO，起始代码稳定命中 `JUMP_STATE_ACCEPTED`。私有答案必须证明：允许表生效、guard 生效、非法转换保持原状、教学终态不可逆、deadline 可重算、暂停只延长一次、固定 Clock 在边界给出确定超时结论。
 
-实验验收对应 canonical：所有允许/禁止边有表和测试；非法转换不改状态；deadline 可在时区/DST 边界重算；教学模型终态不可逆；故障修复后重跑原断言。把代码跑绿只是证据之一，最终还要能解释为什么 FactoryCare 的 CLOSED 例外不违反这些原则。
+实验验收对应本章 outcome：所有允许/禁止边有表和测试；非法转换不改状态；deadline 可在时区/DST 边界重算；`DemoTicket` 教学终态不可逆；故障修复后重跑原断言。把代码跑绿只是证据之一，最终还要能解释为什么 FactoryCare 的 CLOSED 例外不违反这些原则。
 
 ## 15. 官方来源、项目合同与证据边界
 

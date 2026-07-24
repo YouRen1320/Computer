@@ -22,7 +22,7 @@ public final class LeakExercise {
             String status) {}
 
     public static Object response() {
-        WorkOrder workOrder = new WorkOrder(42, "ASSET-7", "pump vibration", "HIGH", "OPEN",
+        WorkOrder workOrder = new WorkOrder(42, "ASSET-7", "pump vibration", "HIGH", "CREATED",
                 new BigDecimal("999.99"), "never-publish-this-token");
         return new WorkOrderResponse(
                 workOrder.id(),

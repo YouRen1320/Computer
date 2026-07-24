@@ -90,6 +90,14 @@ outcomes:
 ---
 # Props、事件、Slot 与组件 v-model
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《watch、effect、生命周期与副作用清理》](ch.vue.effects-lifecycle.md)：组件资源所有权、清理和更新时序需有生命周期模型。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和工件可用于学习与作者自检，但不能证明学习者已完成无 AI 独立构建、故障诊断或限时复述，也不会自动更新 `PROGRESS.md`。
 
 一个单文件工单页面可以工作，却很难让不同人安全修改。把它切成组件也不自动变好：若卡片直接改父数组、筛选栏发出含糊字符串、状态编辑器自带一份默认值、Slot 依赖不存在的子作用域，数据流会比单文件更难追踪。组件边界的价值不是文件变短，而是公开合同变得有限、可命名、可测试。
@@ -147,7 +155,7 @@ Props 传数据，不授予所有权；emit 报告事实或请求动作，不直
 type WorkOrderCardModel = {
   id: string
   title: string
-  status: 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+  status: 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
 }
 
@@ -171,12 +179,12 @@ Vue Props 是单向下行绑定：父状态更新，子收到新值；子不应�
 
 ```ts
 // 错误：子试图夺取父级 status 所有权
-props.status = 'COMPLETED'
+props.status = 'RESOLVED'
 
 // 正确方向：子发出明确请求，父决定是否更新
 emit('request-status-change', {
   orderId: props.orderId,
-  nextStatus: 'COMPLETED',
+  nextStatus: 'RESOLVED',
 })
 ```
 
@@ -188,7 +196,7 @@ Vue 无法以合理成本阻止子修改对象/数组 Prop 的嵌套属性，因
 
 ```ts
 // 语法能运行，却让父状态在没有事件的情况下改变
-props.order.status = 'COMPLETED'
+props.order.status = 'RESOLVED'
 ```
 
 这类故障可能没有 Prop binding 警告，反而更危险。测试必须冻结输入或比较父状态与事件轨迹：若父状态改变而事件列表为空，第一可信证据已出现。主流做法是子 emit payload，父按 ID 创建更新；除非父子被明确设计为紧耦合且合同写明共享 mutation，本章禁止嵌套改写。
@@ -248,7 +256,7 @@ Vue 3.4+ 推荐 `defineModel()`：
 
 ```vue
 <script setup lang="ts">
-type StatusFilter = 'ALL' | 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+type StatusFilter = 'ALL' | 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 // Data source: this ref is a compiler-backed view of the parent's controlled value.
 const filter = defineModel<StatusFilter>({ required: true })
@@ -392,7 +400,7 @@ UI/UX 检索选择了 Accessible & Ethical 风格作为工件约束：清晰焦�
 
 测试层级从窄到宽：
 
-1. **FilterBar**：给 modelValue=ALL，select 显示 ALL；用户选 OPEN，只 emit 一次 `update:modelValue` 且 payload 精确为 OPEN；Prop 在父更新前仍是 ALL。
+1. **FilterBar**：给 modelValue=ALL，select 显示 ALL；用户选 IN_PROGRESS，只 emit 一次 `update:modelValue` 且 payload 精确为 IN_PROGRESS；Prop 在父更新前仍是 ALL。
 2. **StatusEditor**：同样验证受控值与 update 事件，不把内部 DOM 值当父状态已改变。
 3. **Card Props**：固定 order 渲染标题/状态，selected 控制 aria-pressed；不修改输入对象。
 4. **Card event**：点击只发 `select({ orderId })`，不发送整个 order，不依赖冒泡。

@@ -88,6 +88,14 @@ outcomes:
 ---
 # 事件循环、任务、Promise 与 async/await
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《词法作用域、闭包与函数状态》](ch.js.scope-closures.md)：延迟执行会捕获词法环境，必须先能判断闭包状态的生命周期。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 JavaScript 从上到下读取源码，却不保证所有回调按源码位置连续执行。同步代码先占用当前调用栈；Promise reaction、`queueMicrotask` 与 `await` 的恢复会排入微任务；timer 回调由宿主在未来某次任务机会运行。若只背“Promise 比 setTimeout 快”，稍微改变注册顺序、加入另一个 await 或换到 Node 的 I/O 阶段，就会再次猜错。
 
 本章建立一个可手工追踪的运行模型：区分 ECMAScript 语言的执行上下文、Promise Job 与 async 函数语义，和浏览器/Node 宿主提供的任务与 timer；每个最小实验先写调用栈和队列预测，再运行固定 trace；错误沿同步 throw 或 Promise rejection 传播时，明确由谁 await/return/catch。我们不发网络请求、不设计重试，也不把单线程事件循环等同于整个宿主只有一个线程。

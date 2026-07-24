@@ -92,6 +92,16 @@ outcomes:
 ---
 # 幂等键、乐观并发、重复提交与重放
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《状态机、状态转换、SLA 与超时语义》](ch.architecture.workflow-state-sla.md)：独立完成幂等与重放、并发控制前，必须先具备「状态机、状态转换、SLA 与超时语义」已经验证的知识与失败边界
+- [《@Transactional、传播、回滚、隔离与提交后行为》](../../volume-05-spring-backend/chapters/ch.spring.transactions.md)：独立完成幂等与重放、并发控制前，必须先具备「@Transactional、传播、回滚、隔离与提交后行为」已经验证的知识与失败边界
+- [《线程、Java 内存模型、同步与锁》](../../volume-03-java-engineering/chapters/ch.java-engineering.threads-jmm.md)：独立完成幂等与重放、并发控制前，必须先具备「线程、Java 内存模型、同步与锁」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产以 JDK 25 内存模型和可控并发屏障验证协议预言，不启动 Spring Boot、MyBatis、PostgreSQL 或 Testcontainers。它能证明“同键同请求重放、异请求冲突、过期版本拒绝”的逻辑，不证明真实唯一约束、隔离级别、事务代理、连接池或跨进程故障窗口已经关闭。
 
 用户双击一次、移动端离线重放一次、网关超时自动重试一次，可能产生三个外观相同的请求。与此同时，两名调度员可能都基于 version 7 派同一张工单。前者是“同一意图被重复交付”，后者是“不同意图竞争同一旧状态”。幂等记录解决重复交付，乐观并发解决过期写入；二者必须同时存在，任何一方都不能代替另一方。

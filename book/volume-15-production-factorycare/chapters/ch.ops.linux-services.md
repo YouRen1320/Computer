@@ -85,6 +85,14 @@ outcomes:
 ---
 # Linux 用户、文件、权限、进程与服务
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《stdin、stdout、stderr、管道与退出码》](../../volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md)：进程、管道、退出码和诊断命令依赖可靠 Shell 证据读取能力。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 把程序放到服务器上“能运行一次”，与把它作为长期服务安全地运行，是两件完全不同的事。长期服务要回答：它以谁的身份运行、能读写哪些路径、由谁启动和停止、收到信号如何退出、失败后是否重启、日志到哪里、资源是否受限、出了问题先看什么证据。本章从零建立这一组心智模型，并把它落实为 FactoryCare Java API 的服务合同。
 
 本章固定发行版练习基线为 Ubuntu Server 26.04 LTS。Linux 的用户、组、所有权、权限位、进程、信号等原理具有较强可移植性；用户管理命令、systemd 版本、sudo 实现和默认加固项属于发行版表面，必须按目标机器核验。官方发布说明显示 Ubuntu 26.04 LTS 于 2026 年 4 月发布并获得五年标准安全维护，但“LTS”不等于所有教程命令永远不变。

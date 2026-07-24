@@ -84,6 +84,14 @@ outcomes:
 ---
 # 小程序运行模型、配置、生命周期与宿主边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《stdin、stdout、stderr、管道与退出码》](../../volume-00-computer-foundations/chapters/ch.foundations.cli-streams-exit-codes.md)：小程序 CLI、构建和日志诊断需要先能区分命令、标准流与退出码。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产使用 Node.js 编写的受控宿主模拟器，验证目录、配置、页面栈和生命周期轨迹；它没有启动微信开发者工具，也没有在微信客户端真机运行。因此，离线验证通过只证明模型与工件内部一致，不能证明基础库兼容、渲染效果、网络域名、权限弹窗或发布审核已经通过。
 
 小程序不是“把网页缩小后放进微信”。它是由微信客户端提供宿主、基础库、组件、路由和平台 API 的应用。开发者提交的是代码包与配置，宿主决定何时装载、怎样创建页面、哪些能力可调用以及生命周期何时触发。先理解这个运行模型，后面学习 uni-app 时才不会把编译框架、浏览器和微信宿主混成一层。

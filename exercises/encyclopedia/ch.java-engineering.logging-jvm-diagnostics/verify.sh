@@ -20,7 +20,8 @@ if java -cp "$BUILD_DIR" DiagnosticsChallenge > "$BUILD_DIR/starter.log" 2>&1; t
 fi
 
 grep -Fq 'SECRET_NOT_REDACTED' "$BUILD_DIR/starter.log"
-test "$(rg -c 'TODO' "$ROOT_DIR/src/DiagnosticsChallenge.java")" -eq 4
+test "$(grep -c 'TODO' "$ROOT_DIR/src/DiagnosticsChallenge.java")" -eq 4
 
-printf 'starter=expected-failure first=SECRET_NOT_REDACTED todos=4\n'
+printf 'EXPECTED_RED starter=expected-failure first=SECRET_NOT_REDACTED todos=4\n'
 printf 'EXERCISE READY jdk=25 mode=offline\n'
+exit 41

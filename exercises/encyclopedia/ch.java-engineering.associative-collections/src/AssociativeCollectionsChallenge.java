@@ -33,12 +33,12 @@ public final class AssociativeCollectionsChallenge {
         expectUnsupported(() -> counts.put("valve", 1)); assertions++;
 
         Map<DeviceKey, String> stateById = new HashMap<>();
-        stateById.put(new DeviceKey("PUMP-01", 1), "OPEN");
+        stateById.put(new DeviceKey("PUMP-01", 1), "ACTIVE");
         stateById.put(new DeviceKey("FAN-02", 7), "CLOSED");
         DeviceKey equivalent = new DeviceKey("PUMP-01", 2);
         check(stateById.size() == 2, "index size"); assertions++;
         check(stateById.containsKey(equivalent), "equal key hit"); assertions++;
-        check("OPEN".equals(stateById.get(equivalent)), "equal key value"); assertions++;
+        check("ACTIVE".equals(stateById.get(equivalent)), "equal key value"); assertions++;
         DeviceKey missing = new DeviceKey("VALVE-99", 3);
         check(!stateById.containsKey(missing), "missing contains"); assertions++;
         check(stateById.get(missing) == null, "missing get"); assertions++;

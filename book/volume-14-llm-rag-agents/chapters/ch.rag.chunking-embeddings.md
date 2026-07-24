@@ -91,6 +91,14 @@ outcomes:
 
 # 分块、Embedding、批处理与语料管线
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《文档解析、清洗、权限元数据与可追溯性》](ch.rag.ingestion-metadata.md)：chunk 必须继承已验证的来源、版本、哈希和权限元数据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 规范文档通常太长，无法把整本手册作为每次检索的最小单位。分块把文档转成可检索chunk；Embedding把chunk映射为向量；批处理管线以可恢复、幂等方式完成大量转换。困难不在调用一个API，而在保持语义边界、父文档、ACL、模型版本、维度和处理状态始终一致。
 
 本章不选择全文/向量索引，不评价召回效果。Embedding调用使用Mock或当前官方模型API时必须明确区分；本地模拟向量不能冒充供应商语义质量。

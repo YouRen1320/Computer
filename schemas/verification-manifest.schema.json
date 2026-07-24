@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factorycare.local/schemas/verification-manifest.schema.json",
+  "title": "FactoryCare chapter verification manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "chapter_id",
+    "edition",
+    "visibility",
+    "digest_algorithm",
+    "input_count",
+    "input_set_sha256",
+    "inputs",
+    "tools",
+    "recipes"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^verification\\.ch\\.[a-z0-9]+(?:-[a-z0-9]+)*\\.[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "chapter_id": { "$ref": "#/$defs/chapter_id" },
+    "edition": { "type": "string", "minLength": 1 },
+    "visibility": { "const": "internal-evidence" },
+    "digest_algorithm": { "const": "sha256-path-nul-bytes-nul-v1" },
+    "input_count": { "type": "integer", "minimum": 1 },
+    "input_set_sha256": { "$ref": "#/$defs/sha256" },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/input" }
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/tool" }
+    },
+    "recipes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/recipe" }
+    }
+  },
+  "$defs": {
+    "chapter_id": {
+      "type": "string",
+      "pattern": "^ch\\.[a-z0-9]+(?:-[a-z0-9]+)*\\.[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "repository_path": {
+      "type": "string",
+      "pattern": "^(?:examples|labs|exercises)/encyclopedia/ch\\.[a-z0-9.-]+/[a-zA-Z0-9_][a-zA-Z0-9._-]*(?:/[a-zA-Z0-9_][a-zA-Z0-9._-]*)*$"
+    },
+    "public_root": {
+      "type": "string",
+      "pattern": "^(?:examples|labs|exercises)/encyclopedia/ch\\.[a-z0-9]+(?:-[a-z0-9]+)*\\.[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "mode"],
+      "properties": {
+        "path": { "$ref": "#/$defs/repository_path" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "mode": { "enum": ["0644", "0755"] }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version_argv", "expected_version"],
+      "properties": {
+        "id": { "enum": ["bash", "curl", "dart", "docker", "flutter", "java", "javac", "javap", "maven", "node", "pnpm", "python", "ruby", "uv"] },
+        "version_argv": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "expected_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]{1,240}$"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stream", "literal", "count"],
+      "properties": {
+        "stream": { "enum": ["stdout", "stderr"] },
+        "literal": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]{1,400}$"
+        },
+        "count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind"],
+      "properties": {
+        "path": { "$ref": "#/$defs/repository_path" },
+        "kind": { "enum": ["directory", "file"] }
+      }
+    },
+    "recipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "input_paths",
+        "workdir",
+        "argv",
+        "tool_ids",
+        "expected_exit_code",
+        "stderr_policy",
+        "observations",
+        "declared_outputs"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "role": { "enum": ["example", "lab", "exercise"] },
+        "input_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/repository_path" }
+        },
+        "workdir": { "$ref": "#/$defs/public_root" },
+        "argv": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tool_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["bash", "curl", "dart", "docker", "flutter", "java", "javac", "javap", "maven", "node", "pnpm", "python", "ruby", "uv"] }
+        },
+        "expected_exit_code": { "type": "integer", "minimum": 0 },
+        "stderr_policy": { "enum": ["empty", "allow"] },
+        "observations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/observation" }
+        },
+        "declared_outputs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/output" }
+        }
+      }
+    }
+  }
+}

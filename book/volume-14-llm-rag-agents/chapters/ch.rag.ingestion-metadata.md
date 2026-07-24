@@ -91,6 +91,15 @@ outcomes:
 
 # 文档解析、清洗、权限元数据与可追溯性
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、上下文管理器与资源清理》](../../volume-12-python-data/chapters/ch.python.exceptions-context.md)：解析失败隔离、清理和可追溯错误必须建立在 Python 异常链与上下文管理能力上。
+- [《模型 API、消息、提示、Token 与成本》](ch.llm.api-prompts-cost.md)：后续 RAG 语料合同需要理解模型上下文、成本和数据发送边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 RAG的第一步不是向量化，而是把文档变成可信、可追溯、带权限的规范语料。解析器可能漏页，OCR可能错字，CSV可能编码异常，权限可能在复制正文时丢失。若摄取层把这些问题静默吞掉，后续检索和生成再高级也只是在错误语料上工作。
 
 本章止于“规范文档”。不切块、不计算Embedding、不建索引。输出必须让任何一段未来chunk都能继承来源、版本、哈希和ACL，并能定位解析错误。原文和权限系统仍是事实源；规范语料是可重建派生物。

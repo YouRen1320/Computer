@@ -42,7 +42,7 @@ function open(id: string) { emit('select', { workOrderId: id }) }
     <select id="status" v-model="status">
       <option value="CREATED">待处理</option>
       <option value="IN_PROGRESS">处理中</option>
-      <option value="COMPLETED">已完成</option>
+      <option value="RESOLVED">已完成</option>
     </select>
     <p v-if="loading" role="status">正在查询</p>
     <div v-else-if="error" role="alert"><p>{{ error.message }}</p><button type="button" @click="retry">重试</button></div>

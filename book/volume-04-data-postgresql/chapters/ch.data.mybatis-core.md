@@ -85,6 +85,15 @@ outcomes:
 ---
 # MyBatis 映射、参数绑定、结果映射与动态 SQL
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界》](ch.data.jdbc.md)：独立完成映射与绑定、动态 SQL 边界前，必须先具备「DataSource、PreparedStatement、ResultSet 与 JDBC 事务边界」已经验证的知识与失败边界
+- [《泛型、类型参数、边界与通配符》](../../volume-03-java-engineering/chapters/ch.java-engineering.generics-type-safety.md)：独立完成映射与绑定、动态 SQL 边界前，必须先具备「泛型、类型参数、边界与通配符」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。稳定核心是“SQL 由开发者掌控，值通过参数绑定，查询结果按显式合同映射，动态结构由有限分支生成”。版本事实于 **2026-07-17** 核对：Spring Boot 4 集成线使用 MyBatis Spring Boot Starter **4.1.0** 和 MyBatis-Spring **4.1.0**，底层 SQL mapper 核心仍是 MyBatis **3.5.19**，不是所谓“core MyBatis 4”。本机没有运行 MyBatis/PostgreSQL 集成测试；随章资产验证的是映射合同和故障状态机，不把离线 PASS 冒充真实框架执行。
 
 ## 1. 先建立心智模型：MyBatis 是 SQL mapper，不是 SQL 消除器
@@ -289,7 +298,7 @@ public interface WorkOrderMapper {
 </select>
 ```
 
-`#{id}` 最终成为 JDBC `?`，值通过 PreparedStatement 绑定。输入 `42`、`O'Reilly` 或 `OPEN' OR '1'='1` 只会占据一个参数位置，不会成为 SQL 关键字。类型处理器负责 Java/JDBC 类型转换；可空写入参数必要时显式给出 `jdbcType`：
+`#{id}` 最终成为 JDBC `?`，值通过 PreparedStatement 绑定。输入 `42`、`O'Reilly` 或 `CREATED' OR '1'='1` 只会占据一个参数位置，不会成为 SQL 关键字。类型处理器负责 Java/JDBC 类型转换；可空写入参数必要时显式给出 `jdbcType`：
 
 ```xml
 #{assigneeId,jdbcType=BIGINT}

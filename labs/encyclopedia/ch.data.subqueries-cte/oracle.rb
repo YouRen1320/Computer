@@ -23,14 +23,14 @@ check(scenarios.map { |item| item.fetch("id") } == %w[not-in-null wrong-correlat
 devices = CSV.read(File.join(ROOT, "devices.csv"), headers: true)
 orders = CSV.read(File.join(ROOT, "work_orders.csv"), headers: true)
 exclusions = CSV.read(File.join(ROOT, "exclusions.csv"), headers: true)
-unfinished_statuses = ["OPEN", "IN_PROGRESS"]
+unfinished_statuses = ["CREATED", "IN_PROGRESS"]
 
 correct = devices.select do |device|
   orders.any? { |order| order["device_id"] == device["device_id"] && unfinished_statuses.include?(order["status"]) }
 end
 wrong_correlation = orders.any? { |order| unfinished_statuses.include?(order["status"]) } ? devices : []
 wrong_cte = devices.select do |device|
-  orders.any? { |order| order["device_id"] == device["device_id"] && order["status"] == "DONE" }
+  orders.any? { |order| order["device_id"] == device["device_id"] && order["status"] == "CLOSED" }
 end
 
 empty_right = []

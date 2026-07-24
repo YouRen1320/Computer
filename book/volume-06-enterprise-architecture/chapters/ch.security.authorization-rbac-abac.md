@@ -86,6 +86,15 @@ outcomes:
 ---
 # URL/方法授权、RBAC、ABAC 与默认拒绝
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《JWT 验证、Bearer Token 与 Resource Server》](ch.security.jwt-resource-server.md)：独立完成授权执行点、RBAC 与 ABAC前，必须先具备「JWT 验证、Bearer Token 与 Resource Server」已经验证的知识与失败边界
+- [《@Transactional、传播、回滚、隔离与提交后行为》](../../volume-05-spring-backend/chapters/ch.spring.transactions.md)：独立完成授权执行点、RBAC 与 ABAC前，必须先具备「@Transactional、传播、回滚、隔离与提交后行为」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产以固定的合成主体、工单和策略矩阵模拟授权，不启动 Spring、数据库或 HTTP 服务，也不包含真实租户、用户和 Token。局部验证通过只能证明策略函数、执行点与故障预言，不能证明 AOP 代理、事务、数据库查询、多租户过滤或生产配置已正确。
 
 认证解决“请求主体是谁”，授权解决“这个主体此刻能否对这个具体对象执行这个动作”。一个合法 Token、已登录 Session、管理员样式按钮或难猜 UUID 都不构成授权。授权结论至少要同时考虑主体、动作、对象、关系、数据范围、业务状态与环境，并且必须在服务端每条可达路径执行。

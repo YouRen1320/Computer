@@ -88,7 +88,7 @@ defineExpose({
     <select id="effect-filter" v-model="filter">
       <option value="ALL">全部</option>
       <option value="CREATED">已创建</option>
-      <option value="COMPLETED">已完成</option>
+      <option value="RESOLVED">已完成</option>
     </select>
 
     <p ref="filterLabel" data-testid="filter-label">筛选：{{ filter }}</p>

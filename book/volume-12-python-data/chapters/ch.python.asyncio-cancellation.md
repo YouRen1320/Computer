@@ -90,10 +90,16 @@ outcomes:
   - python.asyncio-cancellation
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 2a2415ca5d2a0edc148a95a88d162afcde2e0af6d9945bef74d537da6c607c91
 ---
 # asyncio、Task、超时、取消与结构化并发边界
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、上下文管理器与资源清理》](ch.python.exceptions-context.md)：Task 失败、取消传播和 finally 清理依赖异常与资源模型。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > `async def` 不会让代码自动并行，`create_task()` 也不是“扔到后台就不管”。asyncio 是一套协作式并发模型：协程在明确的等待点交还控制权，事件循环安排可运行任务，任务失败和取消必须沿所有权传播。本章从零建立 coroutine、event loop、Task、TaskGroup、timeout 和 cleanup 的心智模型，并把“结束后无悬空任务”作为可验证合同。
 

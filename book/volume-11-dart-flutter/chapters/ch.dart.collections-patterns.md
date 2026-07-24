@@ -81,10 +81,16 @@ outcomes:
   uses_capabilities: []
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: c6ff180935ce499c46eb6e156369370e2e16147be0893d313f446e0a0940cc39
 ---
 # List、Map、Set、record、模式与解构
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《条件、循环、函数、参数与返回值》](ch.dart.control-functions.md)：集合遍历、过滤、模式 guard 和空集合边界需要已验证的分支、循环与函数合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章只解决“怎样用集合和数据形状表达问题”。List 表达有顺序的多个值，Map 表达键到值的关联，Set 表达唯一性，record 表达固定形状的多值结果，pattern 负责检查并拆开形状。类、继承与异步留给后续章节。
 

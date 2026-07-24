@@ -92,10 +92,17 @@ outcomes:
   - web.accessibility
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: ec50dd1f5752289956529468947f6040e978b746d9df3c30f189d9b34e034588
 ---
 # Widget/集成/Golden 测试、性能与内存分析
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Dart test、断言、Mock、lint 与包质量》](ch.dart.testing-lints.md)：Widget/集成测试仍依赖可信预言、断言、替身和质量门禁。
+- [《状态管理、模块边界与依赖方向》](ch.flutter.architecture-state.md)：可替换依赖和确定状态转换使测试与性能诊断可控。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > Flutter 应用“能点通”不代表可发布：异步状态可能偶发错序，动画可能让测试永远等待，Golden 可能因字体和 SDK 漂移而误报，debug 模式中的卡顿也不能代表 release。可靠证据需要把测试层级、预言、运行环境和性能基线同时写清。本章不追求测试数量，而是让每个高风险行为拥有最小、稳定、可解释的保护。
 

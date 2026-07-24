@@ -94,6 +94,15 @@ outcomes:
 ---
 # interface、type、联合、unknown、never 与收窄
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类型标注、推断、数组、对象、元组与函数类型》](ch.ts.foundations.md)：接口、联合和收窄复用基础标注、推断与结构类型模型。
+- [《this、原型、class 与对象模型》](ch.js.object-model.md)：运行时收窄必须基于真实对象属性、原型与身份边界，而不是只相信编译时形状。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 TypeScript 能检查“源码怎样使用一个值”，却不会在网络响应到达时替你检查那份值。业务状态若只写成若干可选字段，加载、成功和失败可能被拼成互相矛盾的组合；外部数据若被直接断言成业务对象，检查器会基于一个未经证明的前提继续推理。本章把这两个问题连成一条证据链：先用 `interface`、`type` 和判别联合表达合法状态，再把边界输入保留为 `unknown`，依据 JavaScript 真正执行的检查逐步收窄，最后用 `never` 让新增状态在遗漏处理时产生编译证据。
 
 本章的唯一职责是建模与收窄。它不教授第三方 Schema 库，不把类型声明说成运行时验证，也不以 `any`、宽泛断言或非空断言掩盖模型缺口。配套工件固定 TypeScript 编译器并保存三类证据：合法模型通过严格 `tsc --noEmit`；加入新变体而不处理时在 `never` 位置失败；真假 `unknown` 输入经过真实 guard 后分别进入成功与拒绝路径。这样，“代码看起来类型安全”会被替换为可复现的检查结果。
@@ -481,6 +490,8 @@ JavaScript 调用者或旧缓存仍可传入未知 `status`。在不可信边界
 本章不展开第三方 Schema 库、OpenAPI 代码生成、品牌类型、模板字面量类型、复杂泛型 guard 工厂、跨进程协议演进或安全沙箱。它也不保证手写 guard 足以应对大型攻击面。目标是建立可迁移的最小模型：非法状态尽量不可表达，不可信输入先保持未知，运行检查产生收窄证据，内部联合由 `never` 维护穷尽。运行时 Schema 与完整质量工具链由后续章节负责。
 
 ## 官方参考
+
+资料复核日期为 2026-07-24。本次复核只确认下列官方页面仍直接描述本章使用的收窄、联合与 Node 版本表面；它不是 Node 24、浏览器或真实 HTTP 输入的运行验证。
 
 - TypeScript Handbook, [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)：控制流、`typeof`、真值、等值、`in`、谓词、判别联合与 `never`。
 - TypeScript Handbook, [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)：接口、类型别名、联合与断言的基础边界。

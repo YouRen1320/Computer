@@ -77,6 +77,14 @@ outcomes:
 ---
 # Lambda、函数式接口与方法引用
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《接口、抽象类、多态与动态分派》](../../volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md)：独立完成函数式接口、Lambda 与方法引用前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。固定 Java 25 oracle 只能证明配套示例在当前机器满足本章合同；P9 零基础试读、人工版式与无障碍检查、独立全面审查和全书回归尚未执行，因此不能把本章视为 `verified`，也不会据此修改 `PROGRESS.md`。
 
 普通方法把数据作为参数传入，把数据作为结果返回。很多业务需求还需要把“如何判断”“如何转换”“完成后做什么”交给调用方决定：派单器可以接收不同的工单规则，告警器可以接收不同的通知动作，格式化器可以接收不同的标签生成策略。Java 的 Lambda 不是一种新的独立函数类型，而是用简洁语法创建某个函数式接口的实例。接口给出合同，Lambda 提供那一个抽象行为的实现，变量、参数和返回值则让这段行为像其他对象一样被传递。

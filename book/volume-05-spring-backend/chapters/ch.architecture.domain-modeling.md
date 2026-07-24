@@ -81,6 +81,15 @@ outcomes:
 ---
 # 实体、值对象、聚合、不变量与边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《接口、抽象类、多态与动态分派》](../../volume-02-java-objects/chapters/ch.java-oop.interfaces-polymorphism.md)：独立完成实体与值对象、聚合与不变量前，必须先具备「接口、抽象类、多态与动态分派」已经验证的知识与失败边界
+- [《正则、BigDecimal、日期时间、UUID 与业务值》](../../volume-02-java-objects/chapters/ch.java-oop.business-value-types.md)：独立完成实体与值对象、聚合与不变量前，必须先具备「正则、BigDecimal、日期时间、UUID 与业务值」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文与工件提供教材证据，不自动更新 `PROGRESS.md`，也不代表学习者已经通过 G3。
 
 领域模型不是数据库表的 Java 复印件，而是把业务词汇、身份、状态和规则变成可执行对象。FactoryCare 的 WorkOrder 聚合必须保证：创建后立即合法，只能通过有含义的命令演进，非法转换失败且不改变任何状态。

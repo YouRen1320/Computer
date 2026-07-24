@@ -98,10 +98,17 @@ outcomes:
   - security.web-threat
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 1cac3c66efb06a255e6f9c2478f1c998ae0828cd63f132727c63025f29a7c554
 ---
 # 相机、扫码、定位、权限与平台通道
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《网络取消、安全存储、缓存与离线队列》](ch.flutter.network-storage-offline.md)：设备结果的上传、缓存和失败重试需要稳定网络与存储合同。
+- [《不可信输入、输出编码、XSS 与 SSRF》](../../volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md)：相机、定位、原生通道和外部文件都会处理跨信任边界数据，必须沿用统一的不可信输入与泄露防护。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 手机摄像头、扫码器和定位服务并不是普通函数。它们跨过 Dart、Flutter 引擎、插件、原生系统、硬件和人的授权决定等多条边界。一次调用可能成功，也可能被拒绝、被永久拒绝、被用户取消、被系统中断、遇到没有该硬件的设备，或者在页面已经销毁后才返回。本章的目标不是记住某个插件的调用语法，而是建立一套可替换、可测试、不会泄露平台异常的设备能力合同。
 

@@ -16,7 +16,7 @@ public final class AfterCommitBoundary {
         private final JdbcTemplate jdbc; private final List<String> published;
         CreateService(JdbcTemplate jdbc, List<String> published) { this.jdbc = jdbc; this.published = published; }
         @Transactional public void create(String id, boolean fail) {
-            jdbc.update("insert into work_order(id,status) values(?,'OPEN')", id);
+            jdbc.update("insert into work_order(id,status) values(?,'CREATED')", id);
             published.add(id);
             if (fail) throw new IllegalStateException("audit failed");
         }

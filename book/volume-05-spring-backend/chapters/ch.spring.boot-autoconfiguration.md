@@ -88,6 +88,15 @@ outcomes:
 ---
 # Spring Boot、Starter、自动配置与应用启动
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《配置属性、Profile、环境覆盖与敏感配置》](ch.spring.configuration-profiles.md)：独立完成Boot 启动与 Starter、自动配置前，必须先具备「配置属性、Profile、环境覆盖与敏感配置」已经验证的知识与失败边界
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](../../volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md)：独立完成Boot 启动与 Starter、自动配置前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文与工件是教材证据，不会自动更新 `PROGRESS.md`，也不表示学习者已经完成 Week 09/10。
 
 Spring Framework 提供容器、依赖注入和 Web 等能力；Spring Boot 在其上统一依赖组合、应用启动、外部配置、条件装配和运维惯例。Boot 的价值不是“省掉理解”，而是把常见装配规则编码为可检查、可替换、可测试的配置。

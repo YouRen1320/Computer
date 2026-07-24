@@ -79,6 +79,14 @@ outcomes:
 ---
 # Redis 缓存、TTL、失效、配额与限流
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《幂等键、乐观并发、重复提交与重放》](ch.architecture.idempotency-concurrency.md)：独立完成缓存与失效、配额与限流前，必须先具备「幂等键、乐观并发、重复提交与重放」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产使用 JDK 25 的离线确定性模型合成 Redis 语义，能够证明键作用域、cache-aside 顺序、TTL、失效、热点折叠、固定/滑动窗口和 fail 策略的协议预言；它不启动 Redis、Docker、Spring Boot 或真实网络，不能替代 Redis 8.x 与 Testcontainers 的 T4 集成证据。
 
 设备详情被访问一万次，不等于 PostgreSQL 应执行一万次相同查询；同一个集成方在一秒内提交一万次知识检索，也不等于下游必须照单全收。Redis 可以把重复读取变成快速命中，也可以让多个应用实例共享配额状态。然而它位于网络另一端，会超时、丢键、被驱逐、重启、复制滞后，也会被错误键名污染。正确的目标不是“永远命中”或“绝不超额”，而是让 Redis 帮助系统加速和自我保护，同时让每一种失效都落在预先声明的安全边界内。

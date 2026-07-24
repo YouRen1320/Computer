@@ -83,11 +83,21 @@ outcomes:
 ---
 # ACID、隔离级别、锁、死锁与重试边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《INSERT、UPDATE、DELETE、UPSERT 与 RETURNING》](ch.data.dml.md)：独立完成事务与隔离、锁与死锁前，必须先具备「INSERT、UPDATE、DELETE、UPSERT 与 RETURNING」已经验证的知识与失败边界
+- [《CREATE/ALTER、主外键、唯一、检查与非空约束》](ch.data.ddl-constraints.md)：独立完成事务与隔离、锁与死锁前，必须先具备「CREATE/ALTER、主外键、唯一、检查与非空约束」已经验证的知识与失败边界
+- [《预期值、测试预言、断言、AAA 与测试层级》](../../volume-00-computer-foundations/chapters/ch.foundations.testing-oracles.md)：独立完成事务与隔离、锁与死锁前，必须先具备「预期值、测试预言、断言、AAA 与测试层级」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。事务、锁顺序和整事务重试是稳定核心；PostgreSQL **18** 的隔离、行锁、死锁与 SQLSTATE 于 **2026-07-17** 按官方文档核对。本机没有 PostgreSQL server/`psql`，资产使用确定性调度模型验证状态、回滚、等待图和去重边界。离线 PASS 不证明真实 MVCC、锁等待或死锁检测已经发生。
 
 ## 1. 事务是在声明“一组操作只能整体成立”
 
-FactoryCare 把工单 `W-42` 从 `OPEN` 指派给技师 `T-07` 时，至少有两个数据库事实：
+FactoryCare 把工单 `W-42` 从 `CREATED` 指派给技师 `T-07` 时，至少有两个数据库事实：
 
 1. 工单的状态和负责人改变；
 2. 一条不可缺失的状态历史被记录。
@@ -102,13 +112,13 @@ SET status = 'IN_PROGRESS',
     assigned_to = 7,
     version = version + 1
 WHERE work_order_id = 42
-  AND status = 'OPEN';
+  AND status = 'CREATED';
 
 INSERT INTO factorycare.work_order_history (
   command_id, work_order_id, from_status, to_status, assigned_to
 ) VALUES (
   '01947b2a-7b20-7cc3-98f2-9f4d4a71e801',
-  42, 'OPEN', 'IN_PROGRESS', 7
+  42, 'CREATED', 'IN_PROGRESS', 7
 );
 
 COMMIT;
@@ -141,13 +151,13 @@ COMMIT;
 CREATE TABLE factorycare.work_order (
   work_order_id bigint PRIMARY KEY,
   status text NOT NULL CHECK (
-    status IN ('OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED')
+    status IN ('CREATED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED')
   ),
   assigned_to bigint,
   version bigint NOT NULL DEFAULT 0,
   CHECK (
-    (status = 'OPEN' AND assigned_to IS NULL)
-    OR (status <> 'OPEN' AND assigned_to IS NOT NULL)
+    (status = 'CREATED' AND assigned_to IS NULL)
+    OR (status <> 'CREATED' AND assigned_to IS NOT NULL)
   )
 );
 
@@ -170,8 +180,8 @@ CREATE TABLE factorycare.work_order_history (
 INSERT INTO factorycare.work_order (
   work_order_id, status, assigned_to, version
 ) VALUES
-  (42, 'OPEN', NULL, 0),
-  (43, 'OPEN', NULL, 0);
+  (42, 'CREATED', NULL, 0),
+  (43, 'CREATED', NULL, 0);
 ```
 
 本章只把 history 当数据库内审计事实，不讨论向外部消息系统发布。`command_id UNIQUE` 用于证明同一业务命令不会产生两份历史，但它不能自动让邮件、HTTP 调用或 MQ 发送回滚。
@@ -212,7 +222,7 @@ BEGIN;
 
 UPDATE factorycare.work_order
 SET status = 'IN_PROGRESS', assigned_to = 7, version = version + 1
-WHERE work_order_id = 42 AND status = 'OPEN';
+WHERE work_order_id = 42 AND status = 'CREATED';
 
 INSERT INTO factorycare.work_order_history (...)
 VALUES ('已存在的-command-id', ...); -- unique_violation
@@ -223,7 +233,7 @@ ROLLBACK;
 验证不能只看报错。回滚后必须断言：
 
 ```text
-work_order(42) = OPEN, assigned_to NULL, version 0
+work_order(42) = CREATED, assigned_to NULL, version 0
 该 command_id 的历史总数没有增加
 ```
 
@@ -281,7 +291,7 @@ PostgreSQL 使用多版本并发控制。粗略模型是：更新通常产生新
 ```sql
 BEGIN ISOLATION LEVEL READ COMMITTED;
 SELECT status FROM factorycare.work_order WHERE work_order_id = 42;
--- OPEN
+-- CREATED
 ```
 
 会话 B：

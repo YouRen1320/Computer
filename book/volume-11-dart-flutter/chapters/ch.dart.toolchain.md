@@ -82,6 +82,14 @@ outcomes:
 
 # Dart SDK、CLI、pubspec 与包工具
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：pubspec、锁文件与包解析必须建立在可复现依赖和构建制品合同上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 第一次写 Dart 时，最容易把“编辑器没有红线”“终端能执行 `dart`”“Flutter 能启动”当成同一件事。它们不是同一件事。编辑器可能连接一个 SDK，终端的 `PATH` 可能命中另一个 SDK，Flutter 又自带一份 Dart；旧缓存还可能让缺少声明的依赖暂时可用。于是同一份源码在甲的电脑运行、乙的电脑分析失败，CI 又解析到不同版本。
 
 本章先建立一条可复现工具链：**解析实际工具 → 记录 SDK 版本 → 读取 pubspec → 解析依赖 → 检查格式 → 静态分析 → 运行入口 → 保存退出码和输出**。后续类型、集合、面向对象和 Flutter 都依赖这条链。此处不讲语言类型细节，也不把 Flutter 工程、Android Studio、Xcode 混进纯 Dart 起步实验。

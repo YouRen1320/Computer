@@ -90,6 +90,15 @@ outcomes:
 ---
 # uni-app 模板、组件、表单与 Vue 差异
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《uni-app 工具链、页面、路由与项目结构》](ch.uniapp.toolchain-pages.md)：组件必须在已能构建、运行和导航的目标项目中验证。
+- [《Props、事件、Slot 与组件 v-model》](../../volume-09-vue-nuxt/chapters/ch.vue.components-contracts.md)：uni-app 的模板、表单、事件和 v-model 差异必须建立在已验证的 Vue Props、emit、Slot 与组件 v-model 合同上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产用 Node.js 静态合同检查和纯函数状态机验证模板、事件、表单值及 H5/微信目标差异矩阵；它没有执行真实 DCloud 编译器、浏览器渲染或微信基础库。因此，绿灯不能证明像素、焦点、软键盘、原生组件层级或真机无障碍行为一致。
 
 你已经会 Vue，并不代表把 Web 后台的 `<div><input></div>` 复制到 uni-app 就能跨端。Vue 提供响应式和组件合同，uni-app 编译器把一部分模板、组件、样式和 API 映射到目标平台，最终仍由 H5 浏览器或小程序宿主执行。正确目标不是让所有端内部实现相同，而是为产品需要的文本、事件、表单值与关键样式定义可验证的一致合同，并把不可一致之处写进差异清单。

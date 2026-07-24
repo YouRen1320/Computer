@@ -20,7 +20,7 @@ printf '%s\n' \
   'unique.ids=PUMP-01,FAN-02' \
   'category.counts=pump:2,fan:1' \
   'map.equalKey.hit=true' \
-  'map.equalKey.state=OPEN' \
+  'map.equalKey.state=ACTIVE' \
   'missing.contains=false' \
   'missing.get=null' \
   'sorted.ids=FAN-02,PUMP-01' > "$BUILD_DIR/expected.out"

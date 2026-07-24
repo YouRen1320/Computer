@@ -1,6 +1,6 @@
 {
   "read_committed": {
-    "session_a_reads": ["OPEN", "IN_PROGRESS"],
+    "session_a_reads": ["CREATED", "IN_PROGRESS"],
     "session_b_commit_between_reads": true,
     "expected": "NONREPEATABLE_READ"
   },

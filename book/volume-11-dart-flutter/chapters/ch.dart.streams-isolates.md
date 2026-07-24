@@ -18,8 +18,6 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 8f5eb7471b6795c430ae6bfc80bc296ca1aa29997fe78086a57f3b06739756c1
 stable_core: true
 outcomes:
 - id: explain
@@ -93,6 +91,14 @@ outcomes:
   verification_mode: injected-fault-rerun
 ---
 # Stream、背压边界、Isolate 与并发
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Future、async/await、超时与取消协议》](ch.dart.future-cancellation.md)：Stream 订阅和 Isolate 生命周期延续异步完成、失败、超时与取消合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章状态为 `drafting`。稳定语义于 2026-07-24 对照 Dart 3.12.2 官方文档；配套程序实际在本机 Dart 3.9.2 stable 的 Dart Native VM 上运行。Isolate 的绿灯只覆盖 macOS arm64 本机，不代表 Dart Web、Flutter Web、Android、iOS 或长期 worker 已验证。本章不承诺 Dart Stream 具有跨所有生产者的通用背压。
 

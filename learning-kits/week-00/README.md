@@ -18,7 +18,7 @@
 
 ## 文件导航
 
-1. [系统讲义](./concepts.md)：版本、shell、Java/Maven、可复现与安全。
+1. [权威概念入口](./concepts.md)：转到百科中的版本、shell、Java/Maven、可复现与安全章节。
 2. [实验手册](./labs.md)：环境盘点、烟雾工程、版本冲突和 FactoryCare 准备材料。
 3. [无 AI 考核](./assessment.md)：90 分钟诊断与口述，满分 100。
 4. [独立答案册](./answers.md)：只在提交考核后查看。

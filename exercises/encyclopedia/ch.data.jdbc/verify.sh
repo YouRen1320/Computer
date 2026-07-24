@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.json" >"$TMP_ROOT/actual.out" 2>"$TMP_RO
 fi
 grep -F "answer-error=untrusted value must use a parameter slot" "$TMP_ROOT/error.out" >/dev/null
 echo "starter-status=EXPECTED_RED|reason=string-concatenation"
+exit 41

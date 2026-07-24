@@ -12,7 +12,8 @@ oracle = {
   "mounted_can_guard_post_dispose_set_state" => true,
   "finally_needs_operation_identity_check" => true,
   "dispose_should_release_owned_resources" => true,
-  "stable_key_keeps_state_with_business_item" => true
+  "stable_key_keeps_state_with_business_item" => true,
+  "did_change_dependencies_may_run_more_than_once" => true
 }
 abort "private solution drift" unless answers == oracle
 puts "PASS: private lifecycle solution"

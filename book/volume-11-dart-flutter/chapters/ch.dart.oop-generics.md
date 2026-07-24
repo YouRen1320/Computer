@@ -90,10 +90,16 @@ outcomes:
   - mobile.dart-language
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: ddc1dbee56784204468cd1e5706a1880eb4bb24f1335717c8b8ad2868b967dcd
 ---
 # 类、泛型、mixin、extension 与对象边界
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《List、Map、Set、record、模式与解构》](ch.dart.collections-patterns.md)：泛型容器、record 和集合输入为对象模型提供真实数据合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章把前面学到的类型、可空性、函数、集合和 record 组织成清晰对象边界。目标不是背完所有面向对象术语，而是让非法状态难以产生、实现可以替换、实例互不污染，并让泛型合同在 analyzer 与运行时证据中都可解释。本章只写同步代码，不引入 Future。
 

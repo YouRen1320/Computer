@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 
 type WorkOrder = {
   id: string
-  status: 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+  status: 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 }
 
 export function createStatsModel(initialOrders: WorkOrder[]) {
@@ -10,7 +10,7 @@ export function createStatsModel(initialOrders: WorkOrder[]) {
   const orders = ref(initialOrders.map(order => ({ ...order })))
   const openCount = computed(() =>
     // Mapping: rebuild the read-only count from the current source on invalidation.
-    orders.value.filter(order => order.status !== 'COMPLETED').length,
+    orders.value.filter(order => order.status !== 'RESOLVED').length,
   )
 
   function addOrder(order: WorkOrder) {

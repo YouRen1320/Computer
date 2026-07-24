@@ -15,7 +15,7 @@ SELECT
     PARTITION BY w.technician_id
     ORDER BY w.created_at, w.work_order_id
   ) - w.created_at AS until_next,
-  SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER (
+  SUM(CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END) OVER (
     PARTITION BY w.technician_id
     ORDER BY w.created_at, w.work_order_id
     ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW

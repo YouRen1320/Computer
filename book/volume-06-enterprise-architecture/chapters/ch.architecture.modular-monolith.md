@@ -86,6 +86,14 @@ outcomes:
 ---
 # 模块化单体、结构测试与拆分信号
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《RabbitMQ、投递语义、重试、死信与幂等消费》](ch.distributed.messaging-delivery.md)：独立完成模块边界、结构验证与拆分前，必须先具备「RabbitMQ、投递语义、重试、死信与幂等消费」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产以 JDK 25 离线依赖图和公开/internal 类型模型证明无环、允许依赖、内部包隔离、端口/事件协作及证据化拆分判断；它不启动 Spring Boot、Spring Modulith、PostgreSQL 或 Testcontainers，不能替代 `ApplicationModules.verify()`、`@ApplicationModuleTest`、真实 bean/事务和模块事件集成证据。
 
 单体只描述一个部署单元，并不说明代码是否混乱；模块只描述逻辑边界，也不说明它是否独立部署。模块化单体把多个业务能力组织在一个 Spring Boot 进程和部署物中，用公开 API、internal 包、单向依赖、结构测试与事件保持边界。它保留本地调用、同库事务和简单运维的优势，同时为未来可能的服务拆分准备接缝。目录叫 `modules`、类名带 `Service` 或使用消息事件，都不能把一个部署物自动变成微服务。

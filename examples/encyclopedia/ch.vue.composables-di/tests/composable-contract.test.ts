@@ -21,11 +21,11 @@ describe('useWorkOrderQuery contract', () => {
     const wrapper = mountPanels(controlled.repository)
     await nextTick()
     const panels = wrapper.findAll('section')
-    await panels[0].get('select').setValue('COMPLETED')
-    expect((panels[0].get('select').element as HTMLSelectElement).value).toBe('COMPLETED')
+    await panels[0].get('select').setValue('RESOLVED')
+    expect((panels[0].get('select').element as HTMLSelectElement).value).toBe('RESOLVED')
     expect((panels[1].get('select').element as HTMLSelectElement).value).toBe('CREATED')
     expect(controlled.trace.filter((entry) => entry.event === 'start').map((entry) => entry.status))
-      .toEqual(['CREATED', 'CREATED', 'COMPLETED'])
+      .toEqual(['CREATED', 'CREATED', 'RESOLVED'])
     wrapper.unmount()
     await flushPromises()
   })
@@ -44,8 +44,8 @@ describe('useWorkOrderQuery contract', () => {
   })
 
   it('keeps the panel contract when the injected repository is replaced', async () => {
-    const callsA: Array<'CREATED' | 'IN_PROGRESS' | 'COMPLETED'> = []
-    const callsB: Array<'CREATED' | 'IN_PROGRESS' | 'COMPLETED'> = []
+    const callsA: Array<'CREATED' | 'IN_PROGRESS' | 'RESOLVED'> = []
+    const callsB: Array<'CREATED' | 'IN_PROGRESS' | 'RESOLVED'> = []
     const mountWith = (repository: ReturnType<typeof createImmediateRepository>) => mount(WorkOrderQueryPanel, {
       props: { panelId: 'replaceable' },
       global: { provide: { [workOrderRepositoryKey as symbol]: repository } },
@@ -79,7 +79,7 @@ describe('useWorkOrderQuery contract', () => {
   })
 
   it('reloads the same status without duplicating mutable state', async () => {
-    const calls: Array<'CREATED' | 'IN_PROGRESS' | 'COMPLETED'> = []
+    const calls: Array<'CREATED' | 'IN_PROGRESS' | 'RESOLVED'> = []
     const scope = effectScope()
     const query = scope.run(() => useWorkOrderQuery(createImmediateRepository(demoOrders, calls)))!
     await flushPromises()

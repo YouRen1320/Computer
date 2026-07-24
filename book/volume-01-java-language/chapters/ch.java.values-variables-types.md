@@ -78,6 +78,14 @@ outcomes:
 ---
 # 值、变量、基本类型、String、作用域与基本输出
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《注释、标识符、字面量、语句、代码块、class、main 与 package》](ch.java.program-structure.md)：独立完成值与类型、变量与作用域前，必须先具备「注释、标识符、字面量、语句、代码块、class、main 与 package」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文和工件已经可以用于试读与技术复核，但尚未通过独立评审，不能据此把学习进度标记为完成。
 
 假设 FactoryCare 收到一条设备记录：设备名称是“空压机-01”，当前有 3 张未关闭工单，设备处于启用状态。程序怎样保存这三个值？为什么数量不能写成任意文本？为什么一个在代码块中声明的名字，出了代码块就找不到了？怎样把程序实际保存的内容打印出来，而不是只凭眼睛猜？

@@ -85,6 +85,15 @@ outcomes:
 ---
 # 编译错误、运行异常、断言失败、逻辑错误与断点调试
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Maven 最小项目、JUnit、断言与失败日志》](ch.java.maven-junit-smoke.md)：独立完成Java 失败阶段、断点与调用栈前，必须先具备「Maven 最小项目、JUnit、断言与失败日志」已经验证的知识与失败边界
+- [《编辑器、IDE、项目导航与源码定位》](../../volume-00-computer-foundations/chapters/ch.foundations.editor-project-navigation.md)：独立完成Java 失败阶段、断点与调用栈前，必须先具备「编辑器、IDE、项目导航与源码定位」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套故障是受控教学样例；验证脚本确认故障按预期出现，不代表学习者已经亲自诊断，也不会修改学习进度。
 
 调试不是“看见红字就让 AI 重写”，也不是在所有行打印变量。它是一套缩小不确定性的过程：先稳定复现，判断失败阶段，找到第一处可信的项目证据，提出一个可以证伪的假设，用断点或最小实验复核，只修改一个原因，再让原失败输入和完整测试集由红变绿。

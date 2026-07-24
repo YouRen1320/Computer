@@ -31,3 +31,4 @@ grep -Fq 'WRONG_CHARSET' "$BUILD_DIR/failure.err"
 
 printf 'STARTER EXPECTED FAILURE status=%s reason=JSON_MAPPING_CONTRACT; complete TODO 1..5\n' "$starter_status"
 printf 'CONTRACT FAILURE REPRODUCED status=%s evidence=WRONG_CHARSET\n' "$failure_status"
+exit 41

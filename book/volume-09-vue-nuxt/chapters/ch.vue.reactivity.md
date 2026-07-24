@@ -84,6 +84,14 @@ outcomes:
 ---
 # ref、reactive、computed 与响应式边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Vite、Vue 应用、SFC 与项目结构》](ch.vue.vite-sfc.md)：响应式 API 需要在可运行组件和 DevTools 中观察依赖更新。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和验证工件可以用于学习与作者自检，但不代表学习者已经完成无 AI 独立构建、故障诊断或限时复述，也不会自动修改 `PROGRESS.md`。
 
 一个 FactoryCare 页面可能保存工单数组、当前筛选条件和选中工单 ID，同时显示“开放工单数”“高优先级数”和筛选后的列表。最危险的做法不是少写一个 API，而是把每个显示结果都复制成另一份可变状态：数组改了却忘记改计数，筛选改了却忘记改列表，两个“真相”从此漂移。
@@ -172,11 +180,11 @@ const openCount = ref(2)
 import { reactive } from 'vue'
 
 const filter = reactive({
-  status: 'ALL' as 'ALL' | 'OPEN' | 'DONE',
+  status: 'ALL' as 'ALL' | 'CREATED' | 'CLOSED',
   query: '',
 })
 
-filter.status = 'OPEN'
+filter.status = 'CREATED'
 ```
 
 读写属性不需要 `.value`，但关键身份事实是：代理通常不严格等于原对象。
@@ -196,7 +204,7 @@ console.log(reactive(proxy) === proxy) // 已有代理保持代理身份
 
 ```ts
 let filter = reactive({ status: 'ALL' })
-filter = reactive({ status: 'OPEN' }) // 旧消费者仍可能连接旧代理
+filter = reactive({ status: 'CREATED' }) // 旧消费者仍可能连接旧代理
 ```
 
 需要整体替换的单个值或数组常适合 `ref`；需要稳定对象身份并逐属性修改时适合 `reactive`。这不是绝对风格规则，关键是来源所有权与替换语义保持一致。
@@ -233,7 +241,7 @@ console.log(cells[0].value)
 const filter = reactive({ status: 'ALL' })
 const { status } = filter
 
-filter.status = 'OPEN'
+filter.status = 'CREATED'
 console.log(status) // 仍是 'ALL'
 ```
 
@@ -247,8 +255,8 @@ import { toRef, toRefs } from 'vue'
 const status = toRef(filter, 'status')
 const { query } = toRefs(filter)
 
-filter.status = 'OPEN'
-console.log(status.value) // 'OPEN'
+filter.status = 'CREATED'
+console.log(status.value) // 'CREATED'
 ```
 
 `toRef` 返回与源属性互相连接的 ref；它不是值副本。若只需把当前值传入纯函数，普通解构/读取完全合理。问题不在“禁止解构”，而在代码是否错误地把快照当成持续响应来源。
@@ -263,7 +271,7 @@ console.log(status.value) // 'OPEN'
 const orders = ref<WorkOrder[]>(initialOrders)
 
 const openCount = computed(() =>
-  orders.value.filter(order => order.status !== 'COMPLETED').length,
+  orders.value.filter(order => order.status !== 'RESOLVED').length,
 )
 ```
 
@@ -293,7 +301,7 @@ let evaluations = 0
 
 const openCount = computed(() => {
   evaluations += 1
-  return orders.value.filter(order => order.status !== 'COMPLETED').length
+  return orders.value.filter(order => order.status !== 'RESOLVED').length
 })
 
 console.log(evaluations)      // 0：尚未读取
@@ -330,7 +338,7 @@ Vue 支持带 `get`/`set` 的可写 computed，适合可逆投影，例如姓与
 ```ts
 const orders = ref(initialOrders)
 const openCount = ref(
-  orders.value.filter(order => order.status !== 'COMPLETED').length,
+  orders.value.filter(order => order.status !== 'RESOLVED').length,
 )
 
 function addOrder(order: WorkOrder) {
@@ -341,7 +349,7 @@ function addOrder(order: WorkOrder) {
 
 初始化时两者一致，happy path 截图完全正常。只要出现另一个修改入口——批量替换、状态转换、删除、服务端刷新——就可能忘记同步。给每个入口补赋值只扩大维护成本；根因是两个来源表达同一事实。
 
-修复方向是删除可写计数，让 `computed` 从 orders 推导。验证器应先断言：初始 openCount=1；push 一个开放工单后 orders.length 与 openCount 同步；把某项改成 COMPLETED 后 openCount 下降；替换整个数组后仍正确。只有覆盖多种变化路径，才能证明没有隐藏同步入口。
+修复方向是删除可写计数，让 `computed` 从 orders 推导。验证器应先断言：初始 openCount=1；push 一个开放工单后 orders.length 与 openCount 同步；把某项改成 RESOLVED 后 openCount 下降；替换整个数组后仍正确。只有覆盖多种变化路径，才能证明没有隐藏同步入口。
 
 并非所有看似派生的值都应 computed。用户尚未提交的表单草稿、分页游标、服务端返回的聚合统计可能有独立来源和一致性合同。若后端只返回 `totalCount` 而不返回全量记录，前端无法从当前页精确重建总数，就不能伪装成本地 computed。要先确认信息是否完备。
 
@@ -350,13 +358,13 @@ function addOrder(order: WorkOrder) {
 `readonly()` 返回只读代理。消费者可以读取并继续获得响应式更新，但尝试写入会在开发环境警告并失败：
 
 ```ts
-const source = reactive({ status: 'OPEN' })
+const source = reactive({ status: 'CREATED' })
 const view = readonly(source)
 
-source.status = 'COMPLETED' // 所有者合法更新
-console.log(view.status)    // 'COMPLETED'
+source.status = 'RESOLVED' // 所有者合法更新
+console.log(view.status)    // 'RESOLVED'
 
-// view.status = 'OPEN'     // 消费者不应写
+// view.status = 'CREATED'     // 消费者不应写
 ```
 
 它适合让一个状态拥有者暴露查询视图，减少误写。TypeScript 的 `Readonly` 与运行时 `readonly()` 可以互补：前者提供静态反馈，后者在运行时代理拦截写入。只读通常是深层的；浅层边界另有 API，但需明确理由。
@@ -412,7 +420,7 @@ function createWorkOrderStats(initialOrders: WorkOrder[]) {
 | 2 | 再读 openCount | 不变 | ALL | 1 | 开放 2 |
 | 3 | push 一张开放单，不读 | 4 项 | ALL | 1 | 旧 DOM 等待刷新 |
 | 4 | 读取/渲染 | 4 项 | ALL | 2 | 开放 3 |
-| 5 | filter=COMPLETED | 4 项 | COMPLETED | openCount 不应因无关筛选重算 | 列表只显示完成项 |
+| 5 | filter=RESOLVED | 4 项 | RESOLVED | openCount 不应因无关筛选重算 | 列表只显示完成项 |
 
 实际 computed 可拆成多个 getter，分别记录 `openEvaluations` 与 `visibleEvaluations`，这样能证明依赖精度：只读取 orders 的开放计数不应因为 filter 改变而失效；读取 orders 与 filter 的可见列表应失效。若把整个 `filter` 序列化到 openCount getter 中，即使结果不用它也会建立多余依赖。
 
@@ -422,7 +430,7 @@ DOM 证据需等待 `nextTick()`，然后读取可访问文本或 `data-testid`�
 
 ### 14.1 解构 reactive 后不更新
 
-重现：`const { status } = filter`，修改 `filter.status`，显示仍用局部 `status`。第一可信证据是同一时刻 `filter.status === 'OPEN'` 而 `status === 'ALL'`；这已经证明分叉发生在解构，不必先怀疑渲染队列。修复为直接读 `filter.status` 或 `toRef(filter, 'status')`，再重跑初始和修改步骤。
+重现：`const { status } = filter`，修改 `filter.status`，显示仍用局部 `status`。第一可信证据是同一时刻 `filter.status === 'CREATED'` 而 `status === 'ALL'`；这已经证明分叉发生在解构，不必先怀疑渲染队列。修复为直接读 `filter.status` 或 `toRef(filter, 'status')`，再重跑初始和修改步骤。
 
 ### 14.2 写只读 computed
 

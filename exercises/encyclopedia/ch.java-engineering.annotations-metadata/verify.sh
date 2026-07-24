@@ -29,7 +29,7 @@ set -e
 if [ "$compile_status" -ne 0 ]; then
     grep -Eq 'not repeatable|duplicate annotation|not applicable|containing annotation' build/compile.err
     echo "STARTER EXPECTED FAILURE status=compile-$compile_status; complete TODO 1..4"
-    exit 0
+    exit 41
 fi
 
 set +e
@@ -40,7 +40,7 @@ set -e
 if [ "$run_status" -ne 0 ]; then
     grep -q 'METADATA_CONTRACT' build/challenge.err
     echo "STARTER EXPECTED FAILURE status=runtime-$run_status; finish retention/inheritance contract"
-    exit 0
+    exit 41
 fi
 
 cmp expected.out build/challenge.out

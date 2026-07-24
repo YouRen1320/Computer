@@ -95,6 +95,15 @@ outcomes:
 ---
 # 向量检索、pgvector、索引与距离
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《分块、Embedding、批处理与语料管线》](ch.rag.chunking-embeddings.md)：向量行必须继承 chunk、模型、维度、来源和权限合同。
+- [《索引、查询计划、EXPLAIN 与性能证据》](../../volume-04-data-postgresql/chapters/ch.data.indexes-explain.md)：近似索引选择和计划解释需要数据库索引能力。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 向量检索把“查询与文档的接近程度”转换为距离排序，但距离只有在同一个 Embedding 空间内才有意义。本章建立 PostgreSQL/pgvector 的数据与验证合同：先用手算证明距离，再用精确搜索做 oracle，最后才评估近似索引。没有真实服务、真实 `EXPLAIN` 和逐查询 recall/延迟证据时，不能声称 pgvector 已验证。
 
 ## 1. 向量检索解决什么、不解决什么

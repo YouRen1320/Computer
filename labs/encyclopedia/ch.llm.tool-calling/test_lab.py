@@ -76,7 +76,7 @@ def dispatch(call: dict, *, principal: Principal, repo: JavaRepositoryBoundary,
 
 
 def fixture():
-    return JavaRepositoryBoundary({7: {"id": 7, "status": "OPEN"}, 9: {"id": 9, "status": "OPEN"}}), Principal(3, frozenset({7}), frozenset({7})), []
+    return JavaRepositoryBoundary({7: {"id": 7, "status": "CREATED"}, 9: {"id": 9, "status": "CREATED"}}), Principal(3, frozenset({7}), frozenset({7})), []
 
 
 def test_unknown_and_invalid_never_execute() -> None:

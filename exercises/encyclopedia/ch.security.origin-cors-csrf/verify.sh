@@ -12,9 +12,17 @@ mkdir -p "$BUILD_DIR/classes"
 javac --release 25 -Xlint:all -Werror -d "$BUILD_DIR/classes" "$ROOT_DIR/src/OriginCorsCsrfChallenge.java"
 if java -cp "$BUILD_DIR/classes" OriginCorsCsrfChallenge > "$BUILD_DIR/starter.log" 2>&1; then
     echo "STARTER UNEXPECTEDLY PASSED" >&2
-    exit 1
+    exit 42
 fi
-grep -Fq 'ORIGIN_SUFFIX_BYPASS' "$BUILD_DIR/starter.log"
-test "$(rg -c 'TODO' "$ROOT_DIR/src/OriginCorsCsrfChallenge.java")" -eq 6
-echo "starter=expected-failure first=ORIGIN_SUFFIX_BYPASS todos=6"
-echo "EXERCISE READY jdk=25 mode=offline"
+if ! grep -Fq 'ORIGIN_SUFFIX_BYPASS' "$BUILD_DIR/starter.log"; then
+    cat "$BUILD_DIR/starter.log" >&2
+    echo "STARTER FAILURE MARKER MISMATCH expected=ORIGIN_SUFFIX_BYPASS" >&2
+    exit 43
+fi
+todo_count="$(grep -c 'TODO' "$ROOT_DIR/src/OriginCorsCsrfChallenge.java" || true)"
+if [[ "$todo_count" != "6" ]]; then
+    echo "STARTER TODO COUNT MISMATCH expected=6 actual=${todo_count:-0}" >&2
+    exit 44
+fi
+echo "EXPECTED_RED first=ORIGIN_SUFFIX_BYPASS todos=6 jdk=25 mode=offline"
+exit 41

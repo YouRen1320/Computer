@@ -1,4 +1,4 @@
-export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 // Data source: the exercise keeps the repository as a replaceable port.
 export interface WorkOrderRepository {

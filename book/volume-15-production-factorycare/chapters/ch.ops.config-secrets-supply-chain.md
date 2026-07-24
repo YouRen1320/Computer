@@ -95,6 +95,16 @@ outcomes:
 
 # 配置、密钥、依赖、SBOM 与供应链
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《镜像层、容器、卷、网络与运行时边界》](ch.ops.docker-production.md)：必须识别 Docker 构建层、运行时环境和卷中的密钥泄漏面。
+- [《CI 流水线、测试门禁与失败证据》](ch.release.ci-quality.md)：依赖和密钥检查需要进入受保护 CI 门禁。
+- [《不可信输入、输出编码、XSS 与 SSRF》](../../volume-06-enterprise-architecture/chapters/ch.security.untrusted-input-xss-ssrf.md)：供应链输入、配置值和外部依赖都跨越信任边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 ## 1. 本章到底解决什么问题
 
 一个应用能在开发机运行，不代表它能安全地进入生产。生产交付至少有四条彼此关联、但不能混为一谈的链路：代码决定业务行为；非敏感配置决定同一份代码在某个环境中的可调行为；密钥授予访问外部资源的权限；依赖与制品证据说明“这份程序由什么构成、从哪里来、怎样构建”。只把配置写进环境变量、只运行一次漏洞扫描，或者只生成一份 SBOM，都没有闭合这四条链路。

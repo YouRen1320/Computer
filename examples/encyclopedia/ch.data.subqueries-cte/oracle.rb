@@ -11,7 +11,7 @@ end
 sql = File.read(File.join(ROOT, "query.sql"))
 check(sql.scan("WHERE EXISTS (").length == 3, "three EXISTS predicates")
 check(sql.include?("w.device_id = d.device_id"), "correlated device key")
-check(sql.scan("w.status IN ('OPEN', 'IN_PROGRESS')").length == 3, "unfinished status predicate")
+check(sql.scan("w.status IN ('CREATED', 'IN_PROGRESS')").length == 3, "unfinished status predicate")
 check(sql.include?("SELECT COUNT(*)\n    FROM factorycare.work_order AS w"), "scalar count")
 check(sql.include?("WITH unfinished_devices AS ("), "first CTE")
 check(sql.include?("category_counts AS ("), "second CTE")
@@ -20,7 +20,7 @@ check(sql.include?("WHERE device_count >= 2"), "CTE threshold")
 
 devices = CSV.read(File.join(ROOT, "devices.csv"), headers: true)
 orders = CSV.read(File.join(ROOT, "work_orders.csv"), headers: true)
-unfinished_statuses = ["OPEN", "IN_PROGRESS"]
+unfinished_statuses = ["CREATED", "IN_PROGRESS"]
 
 unfinished = devices.select do |device|
   orders.any? do |order|

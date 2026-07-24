@@ -84,6 +84,15 @@ outcomes:
 ---
 # HTTP 请求生命周期、Servlet 与线程边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《API 资源、错误、版本、分页、缓存与幂等语义》](../../volume-00-computer-foundations/chapters/ch.foundations.api-contract-basics.md)：独立完成Servlet 请求响应、生命周期与线程前，必须先具备「API 资源、错误、版本、分页、缓存与幂等语义」已经验证的知识与失败边界
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](../../volume-03-java-engineering/chapters/ch.java-engineering.maven-reproducible-builds.md)：独立完成Servlet 请求响应、生命周期与线程前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件是作者级教材证据，不自动修改 `PROGRESS.md`，也不代表学习者已经独立通过 G2。
 
 浏览器或 API 客户端发送的是 HTTP 报文，Java 方法收到的却是 `HttpServletRequest`，写回的是 `HttpServletResponse`。中间的 Servlet 容器负责监听连接、解析协议、选择 Web 应用和映射、建立请求响应对象、调用 Filter 链与目标 Servlet、提交响应并回收本次请求资源。理解这条链，才能判断一个 400、500、空 body、串请求数据或“响应已提交”究竟发生在哪一层。

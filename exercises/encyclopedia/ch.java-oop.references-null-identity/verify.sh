@@ -23,4 +23,5 @@ if [[ $status -eq 0 ]]; then
 else
   grep -Eq "CHALLENGE_FAILURE peer must have equivalent state|NullPointerException" "$BUILD_DIR/challenge.err"
   echo "STARTER EXPECTED FAILURE status=$status; complete TODO 1 and TODO 2"
+  exit 41
 fi

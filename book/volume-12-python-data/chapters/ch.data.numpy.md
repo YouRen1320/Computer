@@ -89,6 +89,14 @@ outcomes:
 ---
 # NumPy 数组、形状、广播与向量化
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《list、tuple、dict、set 与推导式》](ch.python.collections.md)：ndarray 与 Python list/嵌套集合的行为、引用和迭代边界必须先能比较。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。截至 2026-07-24，NumPy 官方当前稳定线是 2.5.0，支持 Python 3.12—3.14；本仓库配套资产实际在本机 Python 3.14.3、NumPy 2.4.4 上运行，未安装 pytest。资产使用 `numpy.testing` 与普通断言验证稳定核心，不能冒充 NumPy 2.5.0、pytest、其他 CPU/BLAS、自由线程构建或 GPU 的实测证据。
 
 Python list 是通用对象容器，可以同时放整数、字符串和字典；NumPy `ndarray` 为同质、固定形状的多维数据提供紧凑内存与批量运算。优势来自更明确的限制：元素共享 dtype，形状是规则矩形，许多运算由编译实现一次处理整块数据。限制也带来新风险：固定宽度整数会溢出，切片可能共享底层内存，广播会在 shape 兼容时静默扩大计算，浮点数不满足精确十进制直觉。

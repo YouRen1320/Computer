@@ -87,8 +87,14 @@ module GoldSampleVerification
         id: "java-values-types-starter",
         script_entry: "labs/encyclopedia/ch.java.values-variables-types/verify.sh",
         copies: [copy("labs/encyclopedia/ch.java.values-variables-types")],
+        run_script: "workspace/verify.sh"
+      ),
+      recipe(
+        id: "java-values-types-exercise",
+        script_entry: "exercises/encyclopedia/ch.java.values-variables-types/verify.sh",
+        copies: [copy("exercises/encyclopedia/ch.java.values-variables-types")],
         run_script: "workspace/verify.sh",
-        expected_exit: 1
+        expected_exit: 41
       ),
       recipe(
         id: "java-values-types-private-solution",

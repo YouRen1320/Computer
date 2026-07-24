@@ -3,12 +3,10 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_FILE="$ROOT_DIR/.verify.log"
-MAVEN_VERSION="$(mvn -v 2>&1)"
-JAVA_VERSION="$(java -version 2>&1 | head -n 1)"
+SENTINEL="EXPECTED_FRESH_PROTOTYPE"
+EXPECTED_TESTS=3
 
-case "$MAVEN_VERSION" in *"Apache Maven 3.9.16"*"Java version: 25."*) ;; *) echo "EXPECTED Maven 3.9.16 on JDK 25" >&2; exit 2 ;; esac
-case "$JAVA_VERSION" in *'version "25.'*|*'version "25"'*) ;; *) echo "EXPECTED java 25" >&2; exit 2 ;; esac
-
+case "$(mvn -v 2>&1)" in *"Apache Maven 3.9.16"*"Java version: 25."*) ;; *) echo "EXPECTED Maven 3.9.16 on JDK 25" >&2; exit 2 ;; esac
 cd "$ROOT_DIR"
 rm -f "$LOG_FILE"
 set +e
@@ -16,21 +14,19 @@ mvn --offline --batch-mode --no-transfer-progress clean test >"$LOG_FILE" 2>&1
 STATUS=$?
 set -e
 
-if [ "$STATUS" -eq 0 ]; then
-    rm -f "$LOG_FILE"
-    printf 'tests=3 failures=0 errors=0 skipped=0\n'
-    printf 'EXERCISE PASS state=completed spring-framework=7.0.8 maven=3.9.16 jdk=25 mode=offline\n'
-    exit 0
+if [[ $STATUS -eq 0 ]]; then
+  echo "STARTER UNEXPECTEDLY PASSED sentinel=$SENTINEL" >&2
+  exit 42
 fi
-
-if grep -Rqs 'EXPECTED_FRESH_PROTOTYPE' "$ROOT_DIR/target/surefire-reports" "$LOG_FILE"; then
-    rm -f "$LOG_FILE"
-    printf 'sentinel=EXPECTED_FRESH_PROTOTYPE\n'
-    printf 'EXERCISE PASS state=expected-red spring-framework=7.0.8 maven=3.9.16 jdk=25 mode=offline\n'
-    exit 0
+if [[ $STATUS -ne 1 ]] || ! grep -Fq "Tests run: $EXPECTED_TESTS, Failures: 1, Errors: 0, Skipped: 0" "$LOG_FILE"; then
+  cat "$LOG_FILE" >&2
+  echo "STARTER FAILURE SHAPE MISMATCH expected=tests:$EXPECTED_TESTS/failures:1/errors:0/skipped:0 actual_exit=$STATUS" >&2
+  exit 43
 fi
-
-cat "$LOG_FILE" >&2
-rm -f "$LOG_FILE"
-echo "UNEXPECTED EXERCISE FAILURE" >&2
-exit "$STATUS"
+if ! grep -Fq "$SENTINEL" "$LOG_FILE"; then
+  cat "$LOG_FILE" >&2
+  echo "STARTER FAILURE MARKER MISMATCH expected=$SENTINEL" >&2
+  exit 44
+fi
+echo "EXPECTED_RED first=$SENTINEL tests=$EXPECTED_TESTS failures=1 errors=0 skipped=0 mode=offline"
+exit 41

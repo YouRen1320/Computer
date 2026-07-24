@@ -99,6 +99,15 @@ outcomes:
 ---
 # 事故响应、灾难恢复、复盘与改进闭环
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《指标、链路、SLI/SLO、告警与噪声》](ch.ops.metrics-traces-slo.md)：事故发现、范围和恢复判断必须以 SLI/SLO、告警和 trace 为证据。
+- [《部署、expand-contract、前向修复与回滚》](ch.release.deployment-migrations.md)：发布事故需要可回滚应用、前向修复数据库和明确切流量门禁。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章唯一职责：用严重度、角色、时间线和证据组织事故响应，执行已演练恢复/部署决策，并把复盘行动转为可验证工程门禁。它不把一次静态脚本通过包装成真实灾备能力，也不把“赶快恢复”当成破坏证据和覆盖数据的授权。
 
 ## 1. 学完以后，你应当真正会什么

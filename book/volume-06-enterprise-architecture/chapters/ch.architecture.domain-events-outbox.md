@@ -87,6 +87,14 @@ outcomes:
 ---
 # 领域事件、Outbox 与提交一致性
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《幂等键、乐观并发、重复提交与重放》](ch.architecture.idempotency-concurrency.md)：独立完成领域事件、Outbox 一致性前，必须先具备「幂等键、乐观并发、重复提交与重放」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产以 JDK 25 的离线事务快照、队列领取和幂等消费模型证明“业务与 outbox 同提交/同回滚、崩溃可重复但不静默丢失、eventId 稳定、版本可解析”的协议预言；它不启动 Spring Boot、MyBatis、PostgreSQL、Testcontainers 或消息代理，因此不证明真实 JDBC 连接、事务代理、行锁、隔离级别、进程崩溃和网络确认窗口已经关闭。
 
 FactoryCare 的工单从 `RESOLVED` 变成 `CLOSED` 后，报表要更新，知识模块可以生成待审核草稿，通知可以提醒相关人员。最直接的实现是先提交工单，再调用这些组件；然而进程可能在提交后、调用前崩溃。反过来，若先发消息再提交，消费者可能看见最终回滚的“幽灵关闭”。Outbox 的核心思想很朴素：把“稍后需要投递的已发生事实”先作为一行数据，与业务状态写进同一个 PostgreSQL 本地事务。事务成功，两行都在；事务失败，两行都不在。随后独立 relay 反复投递，接受重复并靠消费者幂等吸收。

@@ -22,7 +22,7 @@ class MissingWorkOrderExerciseTest {
     void existingResourceIsSuccessful() throws Exception {
         mvc.perform(get("/work-orders/42").header("X-Tenant-Id", "tenant-a"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("WO-42:OPEN"));
+                .andExpect(content().string("WO-42:CREATED"));
     }
 
     @Test

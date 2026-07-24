@@ -97,6 +97,15 @@ outcomes:
 ---
 # Pandas 表格、缺失值、连接与数据清洗
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Path、编码、文件、JSON 与时间数据》](ch.python.files-json-time.md)：表格摄取需要正确处理路径、编码、JSON/CSV 时间数据。
+- [《NumPy 数组、形状、广播与向量化》](ch.data.numpy.md)：Pandas 的 dtype、shape、向量化和缺失值与 NumPy 数组模型相连。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。截至 2026-07-24，pandas 官方当前稳定线为 3.0.4；本仓库资产实际在 Python 3.14.3、pandas 3.0.2、NumPy 2.4.4 上运行，未安装 pytest。正文说明 pandas 3.0 默认字符串 dtype 与 Copy-on-Write 语义，资产只证明本机内存 DataFrame 合同，没有验证 3.0.4 patch、PyArrow 后端、数据库、Excel 引擎、分布式执行或真实生产数据。
 
 表格数据很少天然干净。设备编号可能有前后空格，关闭时长可能是字符串，空值可能写成空串、`NULL` 或真正缺失，设备维表可能重复主键。pandas 让开发者用 Series、DataFrame、向量化清洗、groupby 和 merge 快速处理这些问题，也会让错误在没有异常时悄悄扩大：字符串列推断漂移、链式赋值没有生效、`count` 忽略缺失、多对多 merge 把五行变成几十行。
@@ -543,7 +552,7 @@ orders = pd.DataFrame(
         "device_id": ["D-1", "D-2", "D-2", "D-9"],
         "technician_id": ["T-1", " T-1 ", pd.NA, "T-2"],
         "duration_raw": ["30", "bad", "45", " 60 "],
-        "status": ["CLOSED", "CLOSED", "OPEN", "CLOSED"],
+        "status": ["CLOSED", "CLOSED", "CREATED", "CLOSED"],
     }
 )
 ```

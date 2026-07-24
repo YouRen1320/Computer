@@ -12,3 +12,4 @@ fi
 
 grep -F "answer-error=timezone must be converted before truncation and date cast" "$TMP_ROOT/actual.out" >/dev/null
 echo "SCALAR FUNCTIONS EXERCISE STARTER EXPECTED FAILURE"
+exit 41

@@ -1,0 +1,426 @@
+schema_version: 1
+source_edition: 2026.1
+target_edition: 2026.2-draft
+policy: thin-adapter
+rollback_tag: pre-encyclopedia-2026-07-16
+weeks:
+  - week: 0
+    title: 环境、基线、Git 与项目约束
+    chapter_ids:
+      - ch.foundations.learning-evidence
+      - ch.foundations.files-paths-encoding
+      - ch.foundations.terminal-shell
+      - ch.foundations.computer-process-model
+      - ch.foundations.cli-streams-exit-codes
+      - ch.foundations.environment-tool-resolution
+      - ch.foundations.editor-project-navigation
+      - ch.foundations.git-collaboration-security
+      - ch.foundations.network-layers
+      - ch.foundations.http-curl
+      - ch.foundations.api-contract-basics
+      - ch.foundations.testing-oracles
+      - ch.foundations.dependencies-build-packages
+      - ch.foundations.docker-basics
+      - ch.foundations.ai-assisted-verification
+  - week: 1
+    title: Java 程序结构、控制台 I/O、类型、运算、方法与 JUnit
+    chapter_ids:
+      - ch.java.platform-toolchain
+      - ch.java.program-structure
+      - ch.java.values-variables-types
+      - ch.java.expressions-conversions
+      - ch.java.console-input-validation
+      - ch.java.methods
+      - ch.java.maven-junit-smoke
+      - ch.java.debugging-failures
+  - week: 2
+    title: String、null、数组、条件、循环与方法设计
+    chapter_ids:
+      - ch.java.branching
+      - ch.java.loops
+      - ch.java.arrays-command-args
+      - ch.java.console-input-validation
+      - ch.java.methods
+      - ch.java-oop.references-null-identity
+  - week: 3
+    title: 类、对象、构造器、封装、static 与 final
+    chapter_ids:
+      - ch.java-oop.classes-objects
+      - ch.java-oop.constructors-invariants
+      - ch.java-oop.encapsulation-packages
+      - ch.java-oop.static-class-state
+      - ch.java-oop.final-immutability
+  - week: 4
+    title: 继承、接口、抽象、多态、组合、record 与 enum
+    chapter_ids:
+      - ch.java-oop.inheritance-composition
+      - ch.java-oop.interfaces-polymorphism
+      - ch.java-oop.enum-record-sealed
+      - ch.java-oop.object-contracts
+      - ch.java-oop.business-value-types
+  - week: 5
+    title: 集合、泛型与 equals/hashCode
+    chapter_ids:
+      - ch.java-engineering.generics-type-safety
+      - ch.java-engineering.sequential-collections
+      - ch.java-engineering.associative-collections
+      - ch.java-engineering.sorting-comparators
+      - ch.java-engineering.complexity-algorithms
+      - ch.java-oop.object-contracts
+  - week: 6
+    title: 异常、I/O、时间与 JSON
+    chapter_ids:
+      - ch.java-oop.exceptions-failure-contracts
+      - ch.java-engineering.io-resource-lifecycle
+      - ch.java-engineering.nio-files-charsets
+      - ch.java-engineering.json-mapping
+  - week: 7
+    title: Lambda、Stream 与 Optional
+    chapter_ids:
+      - ch.java-engineering.lambdas-functional-interfaces
+      - ch.java-engineering.functional-pipelines
+  - week: 8
+    title: 并发、虚拟线程、JVM 与 Java 阶段考核
+    chapter_ids:
+      - ch.java-engineering.threads-jmm
+      - ch.java-engineering.executors-virtual-threads
+      - ch.java-engineering.logging-jvm-diagnostics
+  - week: 9
+    title: Maven 与 Spring Core
+    chapter_ids:
+      - ch.java-engineering.maven-reproducible-builds
+      - ch.spring.servlet-request-lifecycle
+      - ch.spring.ioc-di
+      - ch.spring.beans-lifecycle-scopes
+      - ch.spring.configuration-profiles
+      - ch.spring.boot-autoconfiguration
+  - week: 10
+    title: Spring Boot Web、REST、DTO、校验与错误
+    chapter_ids:
+      - ch.spring.mvc-routing-binding
+      - ch.spring.dto-json-content-negotiation
+      - ch.spring.validation
+      - ch.spring.problem-details-errors
+      - ch.spring.service-use-cases
+  - week: 11
+    title: Java 测试体系、Testcontainers 与 OpenAPI
+    chapter_ids:
+      - ch.java-engineering.testing-test-doubles
+      - ch.spring.testing-testcontainers
+      - ch.spring.openapi-contracts
+      - ch.spring.actuator-health-metrics
+  - week: 12
+    title: SQL 语法、查询、聚合、JOIN 与数据修改
+    chapter_ids:
+      - ch.data.relational-model
+      - ch.data.postgresql-psql
+      - ch.data.select-rowsets
+      - ch.data.scalar-functions
+      - ch.data.aggregates
+      - ch.data.joins
+      - ch.data.subqueries-cte
+      - ch.data.window-functions
+      - ch.data.dml
+  - week: 13
+    title: PostgreSQL 关系建模、约束与迁移
+    chapter_ids:
+      - ch.data.relational-model
+      - ch.data.ddl-constraints
+      - ch.data.normalization-modeling
+      - ch.data.postgresql-types
+      - ch.data.schema-migrations
+  - week: 14
+    title: 索引、执行计划、事务隔离与锁
+    chapter_ids:
+      - ch.data.indexes-explain
+      - ch.data.transactions-locking
+  - week: 15
+    title: MyBatis、Flyway、持久化垂直切片与阶段考核
+    chapter_ids:
+      - ch.data.jdbc
+      - ch.data.mybatis-core
+      - ch.data.schema-migrations
+      - ch.spring.datasource-pooling
+      - ch.spring.mybatis-repositories
+      - ch.spring.transactions
+  - week: 16
+    title: Spring Security、Session、JWT 与 OIDC
+    chapter_ids:
+      - ch.security.threat-model-trust-boundaries
+      - ch.security.identity-password-lifecycle
+      - ch.security.cookie-session-model
+      - ch.security.origin-cors-csrf
+      - ch.security.untrusted-input-xss-ssrf
+      - ch.security.spring-security-architecture
+      - ch.security.session-authentication
+      - ch.security.jwt-resource-server
+      - ch.security.oauth2-oidc
+  - week: 17
+    title: RBAC、多租户、数据权限与审计
+    chapter_ids:
+      - ch.security.authorization-rbac-abac
+      - ch.security.multitenancy-data-isolation
+      - ch.security.audit-events-privacy
+  - week: 18
+    title: 领域模型、工单状态机、SLA 与乐观锁
+    chapter_ids:
+      - ch.architecture.domain-modeling
+      - ch.architecture.workflow-state-sla
+      - ch.architecture.idempotency-concurrency
+  - week: 19
+    title: Redis、缓存、幂等、限流与一致性
+    chapter_ids:
+      - ch.distributed.redis-cache-rate-limit
+      - ch.architecture.idempotency-concurrency
+  - week: 20
+    title: 异步、领域事件、Outbox 与 RabbitMQ 概念
+    chapter_ids:
+      - ch.architecture.domain-events-outbox
+      - ch.distributed.messaging-delivery
+  - week: 21
+    title: 模块化单体、Spring Modulith 与阶段考核
+    chapter_ids:
+      - ch.architecture.modular-monolith
+      - ch.architecture.observability-slo
+  - week: 22
+    title: HTML、表单、可访问性与 CSS 布局基础
+    chapter_ids:
+      - ch.web.browser-render-devtools
+      - ch.web.origin-cookie-cache
+      - ch.web.semantic-html
+      - ch.web.forms-validation
+      - ch.web.media-assets
+      - ch.web.accessibility-interaction
+      - ch.css.cascade
+      - ch.css.box-position
+      - ch.css.flexbox
+      - ch.css.grid
+      - ch.css.responsive-typography
+  - week: 23
+    title: JavaScript 值、作用域、函数、对象、原型与模块
+    chapter_ids:
+      - ch.js.runtime-esm
+      - ch.js.statements-variables
+      - ch.js.values-operators
+      - ch.js.control-flow
+      - ch.js.functions
+      - ch.js.scope-closures
+      - ch.js.collections
+      - ch.js.object-model
+  - week: 24
+    title: DOM、事件循环、Promise、Fetch、取消与浏览器安全
+    chapter_ids:
+      - ch.js.dom-mutation
+      - ch.js.events-forms
+      - ch.js.event-loop
+      - ch.js.fetch-cancellation-race
+      - ch.js.browser-performance
+      - ch.web.origin-cookie-cache
+      - ch.security.origin-cors-csrf
+      - ch.security.untrusted-input-xss-ssrf
+  - week: 25
+    title: TypeScript 类型系统、泛型、收窄与运行时边界
+    chapter_ids:
+      - ch.ts.foundations
+      - ch.ts.modeling-narrowing
+      - ch.ts.generics-utilities
+      - ch.ts.runtime-boundaries
+  - week: 26
+    title: Vue3 SFC、模板、响应式、组件、生命周期与 Composable
+    chapter_ids:
+      - ch.vue.vite-sfc
+      - ch.vue.template-directives
+      - ch.vue.forms-vmodel
+      - ch.vue.reactivity
+      - ch.vue.effects-lifecycle
+      - ch.vue.components-contracts
+      - ch.vue.composables-di
+  - week: 27
+    title: Vite、Router、Pinia、服务端状态与企业后台
+    chapter_ids:
+      - ch.vue.router-navigation
+      - ch.vue.pinia-state
+      - ch.vue.server-state
+      - ch.vue.auth-permissions
+      - ch.vue.component-testing
+  - week: 28
+    title: Nuxt 4、SSR/CSR/SSG、Hydration、认证与部署
+    chapter_ids:
+      - ch.nuxt.rendering-hydration
+      - ch.vue.auth-permissions
+      - ch.vue.performance
+      - ch.vue.accessibility
+  - week: 29
+    title: Web 测试、SSE、错误恢复、性能与阶段考核
+    chapter_ids:
+      - ch.vue.component-testing
+      - ch.vue.server-state
+      - ch.vue.accessibility
+      - ch.vue.performance
+      - ch.js.browser-performance
+  - week: 30
+    title: uni-app 运行模型与扫码报修
+    chapter_ids:
+      - ch.miniapp.runtime
+      - ch.uniapp.toolchain-pages
+      - ch.uniapp.template-components
+      - ch.uniapp.network-auth-storage
+      - ch.uniapp.factorycare-reporter
+  - week: 31
+    title: uni-app 真机、权限、上传、缓存与发布
+    chapter_ids:
+      - ch.uniapp.platform-conditional
+      - ch.uniapp.device-capabilities
+      - ch.uniapp.testing-debugging
+      - ch.uniapp.packages-performance
+      - ch.uniapp.offline-idempotency
+      - ch.uniapp.privacy-review
+      - ch.uniapp.release-monitoring
+  - week: 32
+    title: Dart 语法、类型、空安全、控制流、函数与集合
+    chapter_ids:
+      - ch.dart.toolchain
+      - ch.dart.types-null-safety
+      - ch.dart.control-functions
+      - ch.dart.collections-patterns
+  - week: 33
+    title: Dart 类、泛型、异常、Future、Stream 与测试
+    chapter_ids:
+      - ch.dart.oop-generics
+      - ch.dart.exceptions-resources
+      - ch.dart.future-cancellation
+      - ch.dart.streams-isolates
+      - ch.dart.testing-lints
+  - week: 34
+    title: Flutter Widget、布局、导航、表单与状态
+    chapter_ids:
+      - ch.flutter.toolchain-project
+      - ch.flutter.widget-tree
+      - ch.flutter.layout-accessibility
+      - ch.flutter.state-lifecycle
+      - ch.flutter.navigation-forms
+      - ch.flutter.architecture-state
+  - week: 35
+    title: Flutter 架构、API、离线、设备能力、测试与构建
+    chapter_ids:
+      - ch.flutter.architecture-state
+      - ch.flutter.network-storage-offline
+      - ch.flutter.device-apis
+      - ch.flutter.testing-performance
+      - ch.flutter.release-monitoring
+  - week: 36
+    title: Python 语法、类型、控制流、集合、函数与模块
+    chapter_ids:
+      - ch.python.runtime-uv
+      - ch.python.syntax-values-io
+      - ch.python.control-flow
+      - ch.python.functions-scope
+      - ch.python.collections
+      - ch.python.typing-foundations
+      - ch.python.modules-packages
+  - week: 37
+    title: Python 类、数据模型、异常、文件、typing、pytest 与 uv
+    chapter_ids:
+      - ch.python.files-json-time
+      - ch.python.classes-dataclass
+      - ch.python.protocol-generics
+      - ch.python.exceptions-context
+      - ch.python.iterators-decorators
+      - ch.python.testing-logging-debug
+  - week: 38
+    title: Python async、FastAPI、Pydantic、配置、日志与服务测试
+    chapter_ids:
+      - ch.python.asyncio-cancellation
+      - ch.python.pydantic-validation
+      - ch.fastapi.web-foundations
+      - ch.fastapi.security-testing-openapi
+  - week: 39
+    title: 机器学习、深度学习与 PyTorch 概念
+    chapter_ids:
+      - ch.math.algebra-units
+      - ch.math.functions-graphs
+      - ch.math.linear-algebra
+      - ch.math.probability-statistics
+      - ch.math.gradients
+      - ch.ml.problem-data-split
+      - ch.ml.preprocessing-features
+      - ch.ml.supervised-learning
+      - ch.ml.unsupervised-learning
+      - ch.ml.metrics-validation
+      - ch.ml.neural-networks
+      - ch.ml.attention-sequences
+      - ch.pytorch.foundations
+      - ch.pytorch.training
+      - ch.pytorch.inference
+      - ch.ml.monitoring-ethics
+  - week: 40
+    title: 模型 API、结构化输出、流与工具调用
+    chapter_ids:
+      - ch.llm.model-foundations
+      - ch.llm.api-prompts-cost
+      - ch.llm.structured-output
+      - ch.llm.streaming-resilience
+      - ch.llm.tool-calling
+  - week: 41
+    title: 文档管线、pgvector、混合检索与带引用 RAG
+    chapter_ids:
+      - ch.rag.ingestion-metadata
+      - ch.rag.chunking-embeddings
+      - ch.ir.lexical-retrieval
+      - ch.ir.evaluation
+      - ch.ir.dense-pgvector
+      - ch.ir.hybrid-rerank
+      - ch.rag.citations-evaluation
+  - week: 42
+    title: RAG 评估、安全、成本、降级与观测
+    chapter_ids:
+      - ch.rag.citations-evaluation
+      - ch.rag.security-observability
+      - ch.llm.api-prompts-cost
+      - ch.llm.streaming-resilience
+  - week: 43
+    title: LangChain、LangGraph、HITL、MCP 与阶段考核
+    chapter_ids:
+      - ch.agent.langchain
+      - ch.agent.langgraph
+      - ch.agent.mcp-boundaries
+  - week: 44
+    title: Java、Python、Web、App、小程序契约联调
+    chapter_ids:
+      - ch.architecture.system-design
+      - ch.release.factorycare-acceptance
+      - ch.spring.openapi-contracts
+      - ch.ts.runtime-boundaries
+      - ch.fastapi.security-testing-openapi
+  - week: 45
+    title: Linux、Docker、Nginx/TLS 与 CI/CD
+    chapter_ids:
+      - ch.ops.linux-services
+      - ch.ops.network-diagnostics
+      - ch.ops.docker-production
+      - ch.ops.compose-services
+      - ch.ops.nginx-tls
+      - ch.release.ci-quality
+      - ch.release.artifacts-promotion
+  - week: 46
+    title: 可观测、备份恢复、性能、安全与故障演练
+    chapter_ids:
+      - ch.ops.config-secrets-supply-chain
+      - ch.ops.logs-health
+      - ch.ops.metrics-traces-slo
+      - ch.ops.backup-recovery
+      - ch.ops.capacity-performance
+      - ch.release.deployment-migrations
+      - ch.ops.incident-dr
+  - week: 47
+    title: 作品集、系统设计、项目表达与模拟面试
+    chapter_ids:
+      - ch.architecture.system-design
+      - ch.portfolio.interview
+  - week: 48
+    title: 发布候选、最终考核与下一阶段
+    chapter_ids:
+      - ch.release.factorycare-acceptance
+      - ch.release.artifacts-promotion
+      - ch.release.deployment-migrations
+      - ch.portfolio.interview

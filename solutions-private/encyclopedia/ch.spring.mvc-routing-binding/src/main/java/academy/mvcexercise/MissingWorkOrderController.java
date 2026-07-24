@@ -16,7 +16,7 @@ public final class MissingWorkOrderController {
             @PathVariable("id") long id,
             @RequestHeader("X-Tenant-Id") String tenantId) {
         if (id == 42 && "tenant-a".equals(tenantId)) {
-            return ResponseEntity.ok("WO-42:OPEN");
+            return ResponseEntity.ok("WO-42:CREATED");
         }
         return ResponseEntity.notFound().build();
     }

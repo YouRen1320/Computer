@@ -30,3 +30,4 @@ grep -Fq 'HIDDEN_SIDE_EFFECT' "$BUILD_DIR/failure.err"
 
 printf 'STARTER EXPECTED FAILURE status=%s reason=BEHAVIOR_CONTRACT; complete TODO 1..4\n' "$starter_status"
 printf 'CONTRACT FAILURE REPRODUCED status=%s evidence=HIDDEN_SIDE_EFFECT\n' "$failure_status"
+exit 41

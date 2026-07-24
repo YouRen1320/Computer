@@ -92,6 +92,15 @@ outcomes:
 
 # LangChain 组件、直接 SDK 对照与边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《流式输出、重试、超时、取消与降级》](ch.llm.streaming-resilience.md)：Runnable 流式执行必须正确传播超时、取消和重试。
+- [《RAG 生成、引用、测试集与端到端评估》](ch.rag.citations-evaluation.md)：Retriever 链输出仍要满足引用与端到端评估。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 LangChain 解决的是组件组合和统一调用接口，不替你定义业务合同。最稳妥的学习顺序是先用模型提供商官方 SDK 完成一个最小请求：明确模型、参数、超时、结构化输出、错误和取消；然后用 LangChain 实现完全相同的流程，比较“有效请求”和可观察行为。只有对照相等，框架抽象才是可审查的便利，而不是隐藏变化。
 
 本章实际使用 LangChain 1.3.14 与 langchain-core 1.5.0 的 Runnable、PromptTemplate、JsonOutputParser 和 callback 接口，但模型 SDK、Retriever 和授权服务均是本地受控替身，没有在线 API。版本号是 2026-07-24 隔离安装事实，不代表仓库锁文件或未来安装会得到相同 patch。

@@ -5,7 +5,7 @@ import java.time.ZoneId;
 
 /** Replays one state-machine or SLA-clock failure at a time. */
 public final class WorkflowStateSlaFaultLab {
-    private enum Status { NEW, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }
+    private enum DemoTicketStatus { CREATED, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }
     private enum FaultMode {
         NORMAL,
         JUMP_ALLOWED,
@@ -17,11 +17,11 @@ public final class WorkflowStateSlaFaultLab {
         PAUSE_DOUBLE_COUNT
     }
 
-    private static final class WorkOrder {
-        private Status status = Status.NEW;
+    private static final class DemoTicket {
+        private DemoTicketStatus status = DemoTicketStatus.CREATED;
 
-        boolean transition(Status target, String assignee, String reason, FaultMode fault) {
-            Status before = status;
+        boolean transition(DemoTicketStatus target, String assignee, String reason, FaultMode fault) {
+            DemoTicketStatus before = status;
             if (fault == FaultMode.MUTATE_BEFORE_VALIDATE) {
                 status = target;
             }
@@ -32,37 +32,37 @@ public final class WorkflowStateSlaFaultLab {
             return true;
         }
 
-        Status status() {
+        DemoTicketStatus status() {
             return status;
         }
     }
 
     private WorkflowStateSlaFaultLab() { }
 
-    private static boolean allowed(Status from, Status to, FaultMode fault) {
-        if (fault == FaultMode.JUMP_ALLOWED && from == Status.NEW && to == Status.CLOSED) {
+    private static boolean allowed(DemoTicketStatus from, DemoTicketStatus to, FaultMode fault) {
+        if (fault == FaultMode.JUMP_ALLOWED && from == DemoTicketStatus.CREATED && to == DemoTicketStatus.CLOSED) {
             return true;
         }
-        if (fault == FaultMode.TERMINAL_REVIVED && from == Status.CLOSED && to == Status.IN_PROGRESS) {
+        if (fault == FaultMode.TERMINAL_REVIVED && from == DemoTicketStatus.CLOSED && to == DemoTicketStatus.IN_PROGRESS) {
             return true;
         }
         return switch (from) {
-            case NEW -> to == Status.ASSIGNED || to == Status.CANCELLED;
-            case ASSIGNED -> to == Status.IN_PROGRESS || to == Status.CANCELLED;
-            case IN_PROGRESS -> to == Status.CLOSED;
+            case CREATED -> to == DemoTicketStatus.ASSIGNED || to == DemoTicketStatus.CANCELLED;
+            case ASSIGNED -> to == DemoTicketStatus.IN_PROGRESS || to == DemoTicketStatus.CANCELLED;
+            case IN_PROGRESS -> to == DemoTicketStatus.CLOSED;
             case CLOSED, CANCELLED -> false;
         };
     }
 
     private static boolean guardSatisfied(
-            Status target, String assignee, String reason, FaultMode fault) {
+            DemoTicketStatus target, String assignee, String reason, FaultMode fault) {
         if (fault == FaultMode.GUARD_SKIPPED) {
             return true;
         }
         return switch (target) {
             case ASSIGNED, IN_PROGRESS -> assignee != null && !assignee.isBlank();
             case CLOSED, CANCELLED -> reason != null && !reason.isBlank();
-            case NEW -> false;
+            case CREATED -> false;
         };
     }
 
@@ -88,31 +88,31 @@ public final class WorkflowStateSlaFaultLab {
                 : deadline.plus(paused);
     }
 
-    private static WorkOrder closed(FaultMode fault) {
-        WorkOrder workOrder = new WorkOrder();
-        workOrder.transition(Status.ASSIGNED, "TECH-7", "", fault);
-        workOrder.transition(Status.IN_PROGRESS, "TECH-7", "", fault);
-        workOrder.transition(Status.CLOSED, "TECH-7", "RESOLVED", fault);
-        return workOrder;
+    private static DemoTicket closed(FaultMode fault) {
+        DemoTicket demoTicket = new DemoTicket();
+        demoTicket.transition(DemoTicketStatus.ASSIGNED, "TECH-7", "", fault);
+        demoTicket.transition(DemoTicketStatus.IN_PROGRESS, "TECH-7", "", fault);
+        demoTicket.transition(DemoTicketStatus.CLOSED, "TECH-7", "RESOLVED", fault);
+        return demoTicket;
     }
 
     private static String injectedOutcome(FaultMode fault) {
         Instant fixed = Instant.parse("2026-07-17T08:00:00Z");
         return switch (fault) {
             case JUMP_ALLOWED -> {
-                WorkOrder item = new WorkOrder();
-                yield item.transition(Status.CLOSED, "TECH-7", "RESOLVED", fault)
+                DemoTicket item = new DemoTicket();
+                yield item.transition(DemoTicketStatus.CLOSED, "TECH-7", "RESOLVED", fault)
                         ? "JUMP_STATE_ACCEPTED" : "FAULT_NOT_EXPOSED";
             }
             case MUTATE_BEFORE_VALIDATE -> {
-                WorkOrder item = new WorkOrder();
-                item.transition(Status.CLOSED, "TECH-7", "RESOLVED", fault);
-                yield item.status() == Status.CLOSED
+                DemoTicket item = new DemoTicket();
+                item.transition(DemoTicketStatus.CLOSED, "TECH-7", "RESOLVED", fault);
+                yield item.status() == DemoTicketStatus.CLOSED
                         ? "INVALID_TRANSITION_MUTATED_STATE" : "FAULT_NOT_EXPOSED";
             }
-            case GUARD_SKIPPED -> new WorkOrder().transition(Status.ASSIGNED, "", "", fault)
+            case GUARD_SKIPPED -> new DemoTicket().transition(DemoTicketStatus.ASSIGNED, "", "", fault)
                     ? "MISSING_GUARD_ACCEPTED" : "FAULT_NOT_EXPOSED";
-            case TERMINAL_REVIVED -> closed(fault).transition(Status.IN_PROGRESS, "TECH-7", "", fault)
+            case TERMINAL_REVIVED -> closed(fault).transition(DemoTicketStatus.IN_PROGRESS, "TECH-7", "", fault)
                     ? "TERMINAL_STATE_REVIVED" : "FAULT_NOT_EXPOSED";
             case SYSTEM_CLOCK -> !sampledNow(Clock.fixed(fixed, ZoneId.of("UTC")), fault).equals(fixed)
                     ? "SYSTEM_CLOCK_DRIFTED" : "FAULT_NOT_EXPOSED";
@@ -140,17 +140,17 @@ public final class WorkflowStateSlaFaultLab {
             return;
         }
 
-        boolean edges = allowed(Status.NEW, Status.ASSIGNED, fault)
-                && allowed(Status.ASSIGNED, Status.IN_PROGRESS, fault)
-                && allowed(Status.IN_PROGRESS, Status.CLOSED, fault)
-                && !allowed(Status.NEW, Status.CLOSED, fault);
-        WorkOrder invalid = new WorkOrder();
-        boolean unchanged = !invalid.transition(Status.CLOSED, "TECH-7", "RESOLVED", fault)
-                && invalid.status() == Status.NEW;
-        boolean guards = !new WorkOrder().transition(Status.ASSIGNED, "", "", fault);
-        WorkOrder terminalItem = closed(fault);
-        boolean terminal = !terminalItem.transition(Status.IN_PROGRESS, "TECH-7", "", fault)
-                && terminalItem.status() == Status.CLOSED;
+        boolean edges = allowed(DemoTicketStatus.CREATED, DemoTicketStatus.ASSIGNED, fault)
+                && allowed(DemoTicketStatus.ASSIGNED, DemoTicketStatus.IN_PROGRESS, fault)
+                && allowed(DemoTicketStatus.IN_PROGRESS, DemoTicketStatus.CLOSED, fault)
+                && !allowed(DemoTicketStatus.CREATED, DemoTicketStatus.CLOSED, fault);
+        DemoTicket invalid = new DemoTicket();
+        boolean unchanged = !invalid.transition(DemoTicketStatus.CLOSED, "TECH-7", "RESOLVED", fault)
+                && invalid.status() == DemoTicketStatus.CREATED;
+        boolean guards = !new DemoTicket().transition(DemoTicketStatus.ASSIGNED, "", "", fault);
+        DemoTicket terminalItem = closed(fault);
+        boolean terminal = !terminalItem.transition(DemoTicketStatus.IN_PROGRESS, "TECH-7", "", fault)
+                && terminalItem.status() == DemoTicketStatus.CLOSED;
 
         Instant fixed = Instant.parse("2026-07-17T08:00:00Z");
         boolean clockStable = sampledNow(Clock.fixed(fixed, ZoneId.of("UTC")), fault).equals(fixed);

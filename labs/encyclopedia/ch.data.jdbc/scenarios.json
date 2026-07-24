@@ -1,7 +1,7 @@
 [
   {
     "id":"string-concatenation",
-    "input":"OPEN' OR '1'='1",
+    "input":"CREATED' OR '1'='1",
     "sql_mode":"concatenated",
     "structure_changed":true,
     "returned_rows":3,

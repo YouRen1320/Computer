@@ -78,6 +78,14 @@ outcomes:
 ---
 # 封装、访问控制与包边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《构造器、初始化顺序与对象不变量》](ch.java-oop.constructors-invariants.md)：独立完成封装与访问控制、包与依赖边界前，必须先具备「构造器、初始化顺序与对象不变量」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。教材、实验和验证器可以使用，但自动输出不能代替独立解释，也不会自动改变 **PROGRESS.md**。
 
 上一章让构造器保证设备一出生就有合法编码、名称和状态，但如果任何调用者都能直接写 **device.status = "WHATEVER"**，不变量会在创建后的第一秒被破坏。构造器只守住入口，封装要守住对象整个可观察生命周期。

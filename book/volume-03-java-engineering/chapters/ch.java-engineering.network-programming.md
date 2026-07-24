@@ -81,6 +81,15 @@ outcomes:
 ---
 # Socket、Datagram、URL/HttpClient 与超时
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《HTTP 报文、方法、状态码、Header、Body 与 curl》](../../volume-00-computer-foundations/chapters/ch.foundations.http-curl.md)：独立完成Socket 与 Datagram、URL 与 HttpClient前，必须先具备「HTTP 报文、方法、状态码、Header、Body 与 curl」已经验证的知识与失败边界
+- [《字节流、字符流、资源所有权与 try-with-resources》](ch.java-engineering.io-resource-lifecycle.md)：独立完成Socket 与 Datagram、URL 与 HttpClient前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和工件是作者级学习材料与可重复验证，不自动改动 `PROGRESS.md`，也不代表学习者已经独立通过阶段门。
 
 网络调用不是“把 URL 交给库就结束”。客户端要把名称解析成地址，选择端口和传输协议，建立连接，定义消息边界，设置超时，完整读取响应，并在成功或失败时释放资源。任何一层都可能独立失败：名称无法解析、端口拒绝、连接建立后对端不发数据、UDP 报文截断、HTTP 返回非 2xx，或 TLS 身份验证不通过。

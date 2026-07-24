@@ -82,6 +82,14 @@ outcomes:
 ---
 # JavaScript 运行时、Node、pnpm 与 ESM
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《依赖、包管理、构建生命周期与可重复性》](../../volume-00-computer-foundations/chapters/ch.foundations.dependencies-build-packages.md)：package、依赖、锁文件和构建生命周期复用通用依赖与可重复构建模型。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 把一个以 `.js` 结尾的文件双击、交给浏览器，或者在终端输入 `node app.js`，得到的结果可能完全不同。原因不是“JavaScript 有好几种语法”，而是同一门语言会被不同宿主装进不同的运行环境。语言规定怎样写模块和表达式；浏览器提供网页、DOM 与网络页面生命周期；Node 提供进程、文件系统和命令行入口；pnpm 管理项目依赖与锁文件；`package.json` 声明项目边界；ESM 则把多个源文件连接成一个可执行的模块图。
 
 本章只建立这条最小运行链。你会从空目录得到两个互相导入的 ESM 模块，保存工具路径、版本、标准输出和退出码，并学会沿着证据定位失败。控制流、函数、对象模型与 TypeScript 都留给后续章节。示例里偶尔出现的 `const` 只当作固定外壳使用；下一章才会系统解释它。

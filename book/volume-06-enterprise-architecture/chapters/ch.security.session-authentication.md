@@ -87,6 +87,15 @@ outcomes:
 ---
 # Spring Security 登录、退出、密码编码与 Session 防护
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《FilterChain、SecurityContext、默认拒绝与异常链》](ch.security.spring-security-architecture.md)：独立完成登录与密码、退出与 Session 防护前，必须先具备「FilterChain、SecurityContext、默认拒绝与异常链」已经验证的知识与失败边界
+- [《Spring 测试切片、上下文测试与 Testcontainers》](../../volume-05-spring-backend/chapters/ch.spring.testing-testcontainers.md)：独立完成登录与密码、退出与 Session 防护前，必须先具备「Spring 测试切片、上下文测试与 Testcontainers」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套代码只模拟密码记录元数据、固定时钟、一次性恢复授权和内存 Session，不计算或输出真实密码哈希、不启动 Spring/数据库/邮件服务，也不包含真实账号、Cookie 或恢复 Token。通过只能证明生命周期不变量；真实 `PasswordEncoder`、Servlet 容器、Session store 与 Testcontainers 集成仍需目标版本测试。
 
 认证不是“用户名密码相等就返回成功”。一个完整 Session 认证生命周期从密码输入开始，经过安全存储与比较、统一失败、登录成功后的 Session ID 轮换、SecurityContext 保存、CSRF 保护、超时、并发会话策略、改密/恢复后的全局撤销，最后到服务端登出失效。只修其中一个点，旧凭据或旧 Session 仍可能绕过新规则。

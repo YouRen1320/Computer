@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.json" >"$TMP_ROOT/actual.out" 2>"$TMP_RO
 fi
 grep -F "answer-error=all transactions must lock in the same order" "$TMP_ROOT/error.out" >/dev/null
 echo "starter-status=EXPECTED_RED|reason=opposite-lock-order"
+exit 41

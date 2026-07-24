@@ -85,10 +85,16 @@ outcomes:
   - mobile.dart-language
   evidence_kind: failure-log-fix-rerun
   verification_mode: injected-fault-rerun
-generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 5a42bf59bd52a6ea2b2a45f2f1d49f51664b52ddfaab49dce1df3dbb3ce78942
 ---
 # 状态管理、模块边界与依赖方向
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《导航、路由、表单与页面契约》](ch.flutter.navigation-forms.md)：页面参数、表单草稿和跨页结果提供真实状态所有权案例。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 架构不是“选 Riverpod、Bloc、Provider 还是别的包”，也不是把文件夹命名为 `clean_architecture`。架构真正回答的是：每段代码负责什么，谁可以依赖谁，状态由谁拥有，外部系统如何被替换，以及失败时第一份可信证据在哪里。本章以 FactoryCare 工单列表为贯穿案例，先建立不绑定品牌的合同，再讨论 Flutter 如何把状态呈现为 Widget。
 

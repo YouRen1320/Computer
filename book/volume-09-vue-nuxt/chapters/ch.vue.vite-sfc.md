@@ -89,6 +89,15 @@ outcomes:
 ---
 # Vite、Vue 应用、SFC 与项目结构
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类型标注、推断、数组、对象、元组与函数类型》](../../volume-08-javascript-typescript/chapters/ch.ts.foundations.md)：SFC 脚本中的基础值、函数和对象形状需要能读懂 TypeScript 编译错误。
+- [《CSS 语法、选择器、层叠、优先级与继承》](../../volume-07-web-platform/chapters/ch.css.cascade.md)：SFC style 仍遵循标准层叠和选择器规则，scoped 只改变选择器边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和配套工件可以用于学习与作者自检，但不能证明学习者已经完成独立构建、故障诊断或限时复述，也不会自动修改 `PROGRESS.md`。
 
 打开一个 Vue 页面，看见的是按钮、标题和卡片；真正让它出现的却是一条从 HTML 入口、ES 模块、Vue 应用实例、根组件到浏览器 DOM 的链。Vite 在开发时提供模块服务器和热更新，在构建时把源码转成可部署工件；Vue 把组件描述变成可更新的界面；单文件组件把一个组件的模板、脚本和样式放进同一个 `.vue` 文件。三者职责相邻，却不是同一个东西。

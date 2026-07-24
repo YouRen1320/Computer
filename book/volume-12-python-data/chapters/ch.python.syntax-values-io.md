@@ -18,6 +18,7 @@ route_tags:
 - zero-base
 - accelerated-48
 - reference
+- factorycare-project
 stable_core: true
 outcomes:
 - id: explain
@@ -83,6 +84,14 @@ outcomes:
 ---
 
 # 语句、变量、对象、表达式与基础输入输出
+
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Python 运行时、uv、虚拟环境与依赖》](ch.python.runtime-uv.md)：语法与 IO 实验必须在可复现解释器和模块入口中运行。
+<!-- END GENERATED LEARNING PREREQUISITES -->
 
 > 本章把 Python 程序缩小到最基本的执行模型：解释器按顺序读取语句，表达式产生值，名称绑定到对象，`input` 从标准输入读取文本，`print` 把可观察结果写到标准输出。暂不使用 `if`、循环、函数或集合，让每一步都能手工预测。
 

@@ -30,9 +30,11 @@ schema v2 使用语义 ID `ch.<domain>.<slug>`。front matter 必须逐字对齐
 
 `review` 与 `verified` 必须分别声明 `examples`、`labs`、`exercises` 和 `solutions_private` 四组非空工件。每一项只能位于对应的 `*/encyclopedia/<chapter-id>/` 子树；文件必须是非空白普通文件，目录必须至少含一个非隐藏、非空白普通文件，任何层级的符号链接和越界路径都会被拒绝。两种状态的正文都不能含占位标记，必须至少有两个 H2，且规范化正文不少于 200 个字符；`verified` 还必须满足全部发布门，并且硬前置的传递闭包已全部 `verified`。
 
-P3-R1-A 已把出版控制面实现为独立 sidecar：`publication-profile.schema.json` 固定 profile、状态和不可分发预览边界，schema v1 只接受 P3 `internal-preview`；`public-artifact-manifest.schema.json` 配合四份逐章 manifest 显式列出 47 个公共工件；`publication-toolchain.schema.json` 记录观察与延期工具，实际工具 ID、命令、阶段和状态另由 Ruby allowlist 固定；`publication-plan.schema.json` 显式投影资源策略与内部通知，并约束不含正文、绝对路径和私有 canary 的确定性计划；`publication-output-manifest.schema.json` 预定义 R2 输出契约，但 R1-A 尚未生成实例。sidecar 输出只位于被忽略的 `build/publication/<profile-id>/`，P2 五个生成文件保持逐字节不变。
+P3-R1-A 已把出版控制面实现为独立 sidecar：`publication-profile.schema.json` 固定 profile、状态和不可分发预览边界，schema v1 只接受 P3 `internal-preview`；`public-artifact-manifest.schema.json` 配合四份逐章 manifest 显式列出 54 个公共工件；`publication-toolchain.schema.json` 记录观察与延期工具，实际工具 ID、命令、阶段和状态另由 Ruby allowlist 固定；`publication-plan.schema.json` 显式投影资源策略与内部通知，并约束不含正文、绝对路径和私有 canary 的确定性计划；`publication-output-manifest.schema.json` 预定义 R2 输出契约，但 R1-A 尚未生成实例。sidecar 输出只位于被忽略的 `build/publication/<profile-id>/`，P2 五个生成文件保持逐字节不变。
 
 R1-A 还不是完整 D5 生命周期门：`review/verified` 的 verification manifest、干净临时目录统一 Runner、测试数量/预期失败/未声明输出校验，以及 `edition.status` 枚举与 phase/status 合法组合属于 R1-B；HTML/EPUB/PDF 实体属于 R2；P2 的递归公共输入与双摘要迁移仍须在四章晋升 `review` 前单独完成。因此当前四章继续为 `drafting`，不能用 sidecar plan 或自动化测试手工绕过状态门。
+
+`verification-manifest.schema.json` 定义 P9 D5 的章级机器验证合同。manifest 逐文件锁定 SHA-256 与模式，命令只能在独立临时副本中通过固定解释器执行，并声明工具版本、精确退出码、输出观察和完整文件系统增量。统一 Runner 对绝对路径、私有目录、符号链接、输入漂移、工具漂移、输入修改和未声明输出 fail-closed；成功证据通过 staging/rename 原子替换 `verification/evidence/last-run/`。它不提供 OS 级网络或文件系统沙箱，也不把机器通过自动解释为人工教学、无障碍、跨平台或正式发布证据。
 
 七个门是 `technical`、`pedagogical`、`code`、`security`、`accessibility`、`version_sources` 和 `publication_navigation`。最后一门还必须分别给出链接、键盘/语义和实际渲染审查覆盖；键盘/语义确实不适用时仍需证据和具体理由。所有门及版本证据只能引用 `records/encyclopedia/evidence/<chapter-id>/` 下的真实非空白普通文件。作者和 reviewer 去除 Unicode 空白并做 NFKC+casefold 后都至少两字符，且不能相同。
 

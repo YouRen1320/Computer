@@ -8,6 +8,6 @@
 | D-03 的 NULL 扩展 |  |  |
 | W-04 未分配技师 |  |  |
 | 漏 ON 行数 |  |  |
-| OPEN 条件放 ON / WHERE 行数 |  |  |
+| CREATED 条件放 ON / WHERE 行数 |  |  |
 | T-03 COUNT(*) / COUNT(w.id) |  |  |
 | HAVING >=2 的技师 |  |  |

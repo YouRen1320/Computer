@@ -28,100 +28,55 @@ end
 required_root_files = %w[
   README.md SPRINT_SCOPE.md LEARNING_PLAN.md TECH_STACK.md PROJECT_SPEC.md
   ASSESSMENTS.md AI_WORKFLOW.md JOB_SEARCH.md CONCEPT_MAP.md PROGRESS.md
-  learning-kits/README.md job-market/README.md factorycare-design/README.md
+  book/README.md learning-kits/README.md job-market/README.md factorycare-design/README.md
+  curriculum/compatibility/legacy-weeks.yml
 ].freeze
 
 required_root_files.each do |relative|
   check.call(ROOT.join(relative).file?, "missing required entry: #{relative}")
 end
 
-# The authoritative roadmap must contain one correctly numbered plan for Week 00—48.
-(0..48).each do |number|
+# Week pages are compatibility adapters. Canonical teaching depth lives in the
+# catalog and chapter bodies, so this validator checks the mapping instead of
+# requiring a second copy of goals, concepts and acceptance text in `weeks/`.
+legacy_mapping = YAML.safe_load(
+  ROOT.join("curriculum/compatibility/legacy-weeks.yml").read(encoding: "UTF-8"),
+  aliases: false
+)
+catalog = YAML.safe_load(ROOT.join("curriculum/catalog.yml").read(encoding: "UTF-8"), aliases: false)
+chapters_by_id = catalog.fetch("chapters").to_h { |chapter| [chapter.fetch("id"), chapter] }
+mapped_weeks = legacy_mapping.fetch("weeks")
+check.call(mapped_weeks.map { |week| week.fetch("week") } == (0..48).to_a,
+           "legacy week mapping must contain Week 00—48 exactly once and in order")
+
+mapped_weeks.each do |mapping|
+  number = mapping.fetch("week")
   week = format("%02d", number)
   path = ROOT.join("weeks", "week-#{week}.md")
-  check.call(path.file? && path.size.positive?, "missing or empty weekly plan: weeks/week-#{week}.md")
-  next unless path.file?
-
-  first_line = path.each_line(encoding: "UTF-8").first.to_s.strip
-  check.call(first_line.match?(/^# 第 0*#{number} 周：/),
-             "weekly plan heading does not match Week #{week}: #{first_line.inspect}")
-end
-
-# Every learning week must remain a teachable loop, not a technology-name checklist.
-# Heading styles differ between the rewritten foundation weeks and retained project weeks,
-# so the checks intentionally accept both numbered and unnumbered variants.
-weekly_sections = {
-  "learning goals" => /^##(?:\s+\d+\.)?\s*(?:本周)?(?:学习)?目标/m,
-  "tasks" => /^##(?:\s+\d+\.)?\s*(?:课次与时间|时间与任务|任务分配|任务)/m,
-  "acceptance" => /^##(?:\s+\d+\.)?\s*(?:交付物与验收|验收|验收标准)/m,
-  "non-goals" => /^##(?:\s+\d+\.)?\s*(?:本周)?(?:明确不做|非目标)/m
-}.freeze
-
-(1..48).each do |number|
-  week = format("%02d", number)
-  path = ROOT.join("weeks", "week-#{week}.md")
+  check.call(path.file? && path.size.positive?, "missing or empty week adapter: weeks/week-#{week}.md")
   next unless path.file?
 
   source = path.read(encoding: "UTF-8")
-  weekly_sections.each do |label, pattern|
-    check.call(source.match?(pattern), "Week #{week} lacks a recognizable #{label} section")
-  end
-  check.call(source.match?(/无\s*AI/i), "Week #{week} lacks an explicit no-AI practice or assessment")
-  check.call(source.include?("FactoryCare"), "Week #{week} is not connected to the FactoryCare project")
-end
-
-# Language foundations are protected by semantic anchors. These checks do not prove
-# teaching quality, but they stop future schedule edits from silently skipping the basics.
-foundation_anchors = {
-  1 => ["main", "System.out", "Scanner", "基本类型", "方法", "JUnit"],
-  2 => ["String", "null", "数组", "if", "switch", "for", "while"],
-  3 => ["类", "对象", "构造器", "封装", "static", "final"],
-  4 => ["继承", "接口", "抽象类", "多态", "组合", "record", "enum"],
-  5 => ["集合", "泛型", "List", "Set", "Map", "equals", "hashCode"],
-  6 => ["异常", "try-with-resources", "Path", "文件", "Instant", "JSON"],
-  7 => ["Lambda", "Stream", "Optional"],
-  8 => ["线程", "ExecutorService", "CompletableFuture", "虚拟线程", "JVM"],
-  12 => ["SELECT", "WHERE", "NULL", "JOIN", "GROUP BY", "HAVING", "CTE", "窗口函数", "INSERT", "UPDATE", "DELETE", "SQL 注入"],
-  22 => ["HTML", "语义", "表单", "可访问性", "CSS", "盒模型", "Flex", "Grid", "响应式"],
-  23 => ["JavaScript", "类型", "作用域", "闭包", "函数", "this", "对象", "原型", "模块"],
-  24 => ["DOM", "事件", "事件循环", "Promise", "Fetch", "AbortController", "浏览器安全"],
-  25 => ["TypeScript", "联合", "收窄", "泛型", "unknown", "null", "tsconfig", "运行时"],
-  26 => ["Vue 3", "SFC", "ref", "reactive", "computed", "watch", "组件", "生命周期", "Composable"],
-  27 => ["Vite", "Router", "Pinia", "服务端状态", "Element Plus"],
-  28 => ["Nuxt 4", "CSR", "SSR", "SSG", "Hydration", "数据获取"],
-  29 => ["Vitest", "Vue Testing Library", "Playwright", "SSE", "错误恢复"],
-  30 => ["uni-app", "Vue 3", "条件编译", "网络", "认证", "扫码"],
-  31 => ["uni-app", "真机", "上传", "权限", "缓存", "推送", "支付", "发布"],
-  32 => ["Dart", "类型", "空安全", "控制流", "函数", "List", "Map", "测试"],
-  33 => ["Dart", "类", "泛型", "异常", "Future", "Stream", "isolate", "测试"],
-  34 => ["Flutter", "Widget", "Element", "RenderObject", "生命周期", "布局", "BuildContext", "Key", "导航", "表单", "状态"],
-  35 => ["Flutter", "API", "认证", "离线", "幂等", "冲突", "扫码", "拍照", "构建"],
-  36 => ["Python", "类型", "字符串", "I/O", "list", "tuple", "dict", "set", "if", "for", "while", "函数", "模块"],
-  37 => ["Python", "class", "dataclass", "异常", "文件", "iterator", "generator", "typing", "pytest", "uv"],
-  38 => ["Python", "async", "FastAPI", "Pydantic", "配置", "日志", "服务测试"],
-  39 => ["机器学习", "深度学习", "PyTorch", "数据泄漏", "训练", "推理", "评估"],
-  40 => ["模型API", "结构化输出", "流式", "工具调用", "prompt", "超时"],
-  41 => ["RAG", "解析", "切块", "embedding", "全文检索", "向量检索", "引用", "ACL"],
-  42 => ["评估", "重排", "安全", "成本", "可观测", "提示注入"],
-  43 => ["Agent", "工作流", "状态", "工具", "LangGraph", "MCP", "HITL"]
-}.freeze
-
-foundation_anchors.each do |number, anchors|
-  week = format("%02d", number)
-  path = ROOT.join("weeks", "week-#{week}.md")
-  next unless path.file?
-
-  source = path.read(encoding: "UTF-8")
-  anchors.each do |anchor|
-    check.call(source.downcase.include?(anchor.downcase), "Week #{week} foundation anchor missing: #{anchor}")
+  check.call(source.include?("generated by scripts/sync-legacy-learning-entry.rb"),
+             "Week #{week} is not a generated compatibility adapter")
+  check.call(source.match?(/^# Week #{week} 兼容入口：/),
+             "Week #{week} adapter heading is incorrect")
+  check.call(source.include?("PROGRESS.md") && source.include?("curriculum/catalog.yml"),
+             "Week #{week} adapter does not preserve progress/catalog authority boundaries")
+  ids = mapping.fetch("chapter_ids")
+  check.call(!ids.empty? && ids.uniq == ids, "Week #{week} chapter mapping is empty or duplicated")
+  ids.each do |id|
+    chapter = chapters_by_id[id]
+    check.call(!chapter.nil?, "Week #{week} references unknown canonical chapter #{id}")
+    check.call(source.include?("(`#{id}`)"), "Week #{week} adapter omits canonical chapter #{id}")
   end
 end
 
 weeks_readme = ROOT.join("weeks", "README.md")
 if weeks_readme.file?
   source = weeks_readme.read(encoding: "UTF-8")
-  check.call(source.include?("恢复求职") && source.match?(/(?:不阻塞|不计入.*验收|不是.*前置)/),
-             "weeks/README.md lacks the paused-job-search non-blocking rule")
+  check.call(source.include?("默认课程入口已经迁移") && source.include?("PROGRESS.md"),
+             "weeks/README.md lacks the canonical-entry and progress boundary")
 end
 
 # Every teaching week has exactly the six intentional files and non-empty content.
@@ -236,6 +191,7 @@ end
 
 run.call("FactoryCare design", "ruby", "factorycare-design/scripts/validate-design.rb")
 run.call("Nanchang job snapshot", "python3", "job-market/scripts/validate.py")
+run.call("Legacy learning adapters", "ruby", "scripts/sync-legacy-learning-entry.rb", "--check")
 
 quick_validate = SKILL_CREATOR.join("scripts/quick_validate.py")
 check.call(SKILL.join("SKILL.md").file?, "missing learning coach Skill: #{SKILL}")

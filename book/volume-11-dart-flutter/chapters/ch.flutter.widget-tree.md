@@ -89,6 +89,14 @@ outcomes:
 
 # MaterialApp、基础 Widget、Widget 树与 BuildContext
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Flutter SDK、项目结构、run、hot reload 与 DevTools》](ch.flutter.toolchain-project.md)：Widget 树必须在稳定目标和 DevTools 中构建、重载与检查。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > Flutter UI 的基本方法不是“命令式地创建一个按钮后再修改它”，而是根据当前配置和状态描述一棵 Widget 树。框架把新描述与既有运行时元素协调，更新真正参与布局、绘制和交互的对象。本章先把这套身份模型讲清楚，再写工单详情骨架。
 
 ## 1. 从入口到第一棵 Widget 树

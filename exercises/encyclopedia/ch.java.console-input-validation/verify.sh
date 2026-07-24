@@ -2,6 +2,17 @@
 set -euo pipefail
 export LC_ALL=C LANG=C
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SUBMISSION_FILE="$ROOT_DIR/submission.md"
+if [[ ! -f "$SUBMISSION_FILE" ]]; then
+  echo "EXPECTED_RED submission.md is missing; record the six-case prediction and rewrite evidence" >&2
+  exit 41
+fi
+for heading in "## 六例预测" "## 重写说明"; do
+  if ! grep -Fq "$heading" "$SUBMISSION_FILE"; then
+    echo "EXPECTED_RED submission.md is missing section: $heading" >&2
+    exit 41
+  fi
+done
 BUILD_DIR="$ROOT_DIR/build"
 CLASSES_DIR="$BUILD_DIR/classes"
 rm -rf "$BUILD_DIR"

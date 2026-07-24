@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.json" >"$TMP_ROOT/actual.out" 2>&1; then
 fi
 grep -F "answer-error=technician fact needs its own relation" "$TMP_ROOT/actual.out" >/dev/null
 echo "NORMALIZATION EXERCISE STARTER EXPECTED FAILURE"
+exit 41

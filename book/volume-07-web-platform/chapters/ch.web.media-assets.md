@@ -82,6 +82,14 @@ outcomes:
 ---
 # 图片、响应式资源、音视频与资源边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《语义 HTML、文档结构与元数据》](ch.web.semantic-html.md)：媒体元素的替代内容、figure 关系和文档语义依赖已验证的 HTML 结构。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套工件使用静态 HTML、SVG、WebVTT、资源清单和浏览器观察矩阵建立离线证据；离线绿灯只证明声明与预言一致，不下载或解码真实照片/视频，也不证明目标浏览器会选择某个候选。易变事实已于 **2026-07-17** 对照 WHATWG HTML Living Standard、W3C WAI Images/Audio and Video 与 WebVTT 一手资料核验。
 
 网页媒体不是“把文件路径塞进标签”。一张图先要回答它在当前上下文中表达什么，再决定 `alt`、`figure`、候选集合和格式；浏览器会把 `srcset`、`sizes`、视口、像素密度、格式支持和自身策略组合，选出实际 URL；服务器又必须用正确状态、MIME、缓存与授权交付。视频还要有用户可操作 controls、字幕/文字稿和可达的失败回退。

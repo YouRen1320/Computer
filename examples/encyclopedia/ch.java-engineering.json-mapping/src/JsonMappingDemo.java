@@ -13,7 +13,7 @@ public final class JsonMappingDemo {
         JsonSupport.WorkOrderJsonMapper.WorkOrder order = new JsonSupport.WorkOrderJsonMapper.WorkOrder(
                 1,
                 "WO-机泵-101",
-                JsonSupport.WorkOrderJsonMapper.Status.OPEN,
+                JsonSupport.WorkOrderJsonMapper.Status.CREATED,
                 Instant.parse("2026-07-16T01:30:00Z"),
                 new BigDecimal("1234.50"),
                 JsonSupport.WorkOrderJsonMapper.OptionalText.explicitNull());

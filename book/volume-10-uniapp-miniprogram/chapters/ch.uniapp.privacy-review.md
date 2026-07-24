@@ -89,6 +89,15 @@ outcomes:
 ---
 # 隐私、安全、平台声明与审核证据
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《上传、扫码、定位、权限与失败路径》](ch.uniapp.device-capabilities.md)：隐私声明必须与实际扫码、相机、位置和上传权限路径逐项一致。
+- [《单元/组件测试、Mock、真机和网络调试》](ch.uniapp.testing-debugging.md)：审核材料需要可复现真机路径、日志和失败截图，而非文字声明。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`，属于工程教材而非法律意见。适用义务取决于组织、业务、数据、用户、地区和最新法规/平台规则，应由有权决策的法务、隐私与安全人员确认。配套资产只检查声明—代码—证据的一致性和日志脱敏，不访问微信公众平台、不提交审核，也不证明实际合规。
 
 “隐私指引已填写”不等于应用安全；“系统弹窗点了允许”也不等于可以无限使用数据。真实保护来自目的和最小化、明确数据流、受控权限时机、服务端授权、传输/存储保护、日志脱敏、保留/删除和可验证拒绝路径。平台材料是这些事实的一种声明，应与运行时一致，而不是为了审核临时写文案。
@@ -418,7 +427,15 @@ AI 可以找 API、生成数据流草案和日志扫描器，但可能使用旧�
 
 ## 26. 事实来源与未验证范围
 
-法律原则于 2026-07-17 对照中国人大网《中华人民共和国个人信息保护法》及国家网信办个人信息保护政策法规问答；平台表面参考微信小程序当前用户隐私保护指引/相关接口与 DCloud/腾讯官方资料。平台流程和接口会变化，上线前必须重新核对微信开放文档和公众平台实际配置。本章避免把任何法律基础、同意形式或保留期替项目作最终决定。
+法律原则与平台资料于 2026-07-24 对照下列官方一手页面。平台流程和接口会变化，上线前必须重新核对微信开放文档和公众平台实际配置。本章避免把任何法律基础、同意形式或保留期替项目作最终决定。
+
+直接来源：
+
+- 中国网信网转引中国人大网，[《中华人民共和国个人信息保护法》](https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm)：目的明确、影响最小、最小范围、公开透明与敏感个人信息等法律文本。
+- 国家互联网信息办公室，[个人信息保护政策法规问答（2026 年 1 月）](https://www.cac.gov.cn/2026-01/09/c_1769688003183197.htm)：个人信息、敏感个人信息与保护责任的官方解释材料。
+- 微信开放文档，[用户隐私保护指引填写说明](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/)：小程序平台声明表面；后台实际配置仍须按发布候选核验。
+- 微信开放文档，[`wx.getPrivacySetting`](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/privacy/wx.getPrivacySetting.html) 与 [`wx.requirePrivacyAuthorize`](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/privacy/wx.requirePrivacyAuthorize.html)：隐私授权状态与触发接口表面。
+- DCloud，[`uni.authorize`](https://uniapp.dcloud.net.cn/api/other/authorize.html)：uni-app 对小程序授权 scope 与失败/恢复关系的文档表面。
 
 当前未验证：FactoryCare 实际主体/隐私政策、处理法律基础、微信后台声明、隐私接口、第三方 SDK、服务端/对象存储/日志数据流、删除/备份、跨境、未成年人、影响评估、真实设备与审核。任何绿灯都不是法律结论。
 

@@ -17,8 +17,13 @@ trap cleanup EXIT
 wait_for_url() {
   local url="$1"
   local output="$2"
-  for _ in {1..50}; do
+  local server_pid="$3"
+  # Parallel encyclopedia audits can make the first Vite transform exceed five
+  # seconds. Keep a bounded readiness window while still failing immediately if
+  # the owning dev/preview process exits instead of becoming healthy.
+  for _ in {1..150}; do
     if curl -fsS "$url" >"$output" 2>/dev/null; then return 0; fi
+    kill -0 "$server_pid" 2>/dev/null || return 1
     sleep 0.1
   done
   return 1
@@ -31,8 +36,8 @@ node scripts/check-entry.mjs >"$TMP_DIR/entry.log"
 
 pnpm exec vite --host 127.0.0.1 --port 43191 --strictPort >"$TMP_DIR/dev.log" 2>&1 &
 DEV_PID=$!
-wait_for_url 'http://127.0.0.1:43191/' "$TMP_DIR/dev-index.html"
-wait_for_url 'http://127.0.0.1:43191/src/App.vue' "$TMP_DIR/dev-app.js"
+wait_for_url 'http://127.0.0.1:43191/' "$TMP_DIR/dev-index.html" "$DEV_PID"
+wait_for_url 'http://127.0.0.1:43191/src/App.vue' "$TMP_DIR/dev-app.js" "$DEV_PID"
 grep -Fq 'FactoryCare Vite 三链实验' "$TMP_DIR/dev-index.html"
 grep -Fq 'FACTORYCARE_VITE_CHAIN_OK' "$TMP_DIR/dev-app.js"
 kill "$DEV_PID"
@@ -46,7 +51,7 @@ rg -q 'FACTORYCARE_VITE_CHAIN_OK' "$TMP_DIR/dist/assets"
 
 pnpm exec vite preview --host 127.0.0.1 --port 43192 --strictPort --outDir "$TMP_DIR/dist" >"$TMP_DIR/preview.log" 2>&1 &
 PREVIEW_PID=$!
-wait_for_url 'http://127.0.0.1:43192/' "$TMP_DIR/preview-index.html"
+wait_for_url 'http://127.0.0.1:43192/' "$TMP_DIR/preview-index.html" "$PREVIEW_PID"
 grep -Fq 'FactoryCare Vite 三链实验' "$TMP_DIR/preview-index.html"
 kill "$PREVIEW_PID"
 wait "$PREVIEW_PID" 2>/dev/null || true

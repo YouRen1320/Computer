@@ -30,3 +30,4 @@ grep -Fq 'LOST_UPDATE expected=2 actual=1' "$BUILD_DIR/failure.err"
 
 printf 'STARTER EXPECTED FAILURE status=%s reason=COUNTER_CONTRACT; complete TODO 1..4\n' "$starter_status"
 printf 'CONTRACT FAILURE REPRODUCED status=%s evidence=LOST_UPDATE\n' "$failure_status"
+exit 41

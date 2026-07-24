@@ -17,7 +17,7 @@ set -e
 if [[ $challenge_status -ne 0 ]]; then
     grep -Fq 'AssertionError' "$BUILD_DIR/challenge.err"
     printf 'STARTER EXPECTED FAILURE status=%s reason=collection-contract; complete TODO 1..4\n' "$challenge_status"
-    exit 0
+    exit 41
 fi
 
 grep -Fqx 'exercise.assertions=12 passed' "$BUILD_DIR/challenge.out"

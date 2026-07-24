@@ -83,6 +83,14 @@ outcomes:
 ---
 # 应用服务、用例编排与领域边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Repository 边界与 Spring MyBatis 适配》](ch.spring.mybatis-repositories.md)：独立完成应用服务、分层边界前，必须先具备「Repository 边界与 Spring MyBatis 适配」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。教材和工件是学习证据，不自动更新 `PROGRESS.md`，也不代表 FactoryCare 生产事务已经验证。
 
 一次“派单”不是 Controller 改一列：它要识别可信租户与操作者，加载工单，调用聚合规则，保存版本变化，追加核心审计与 outbox，并返回稳定结果。应用服务负责让这些参与者按一个用例意图协作；领域对象负责决定派单是否合法；Repository 负责持久化；Controller 只翻译 HTTP。

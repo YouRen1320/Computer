@@ -30,4 +30,5 @@ else
   [[ $challenge_status -eq 8 ]]
   grep -Fqx "STARTER_EXHAUSTIVENESS_FAILURE command=CloseCommand actual=UNSUPPORTED" "$BUILD_DIR/challenge.err"
   echo "STARTER EXPECTED FAILURE status=$challenge_status reason=default-hides-close-command"
+  exit 41
 fi

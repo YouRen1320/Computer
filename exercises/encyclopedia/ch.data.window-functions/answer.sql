@@ -13,7 +13,7 @@ SELECT
   LEAD(w.created_at) OVER (
     ORDER BY w.created_at
   ) - w.created_at AS until_next,
-  SUM(CASE WHEN w.status = 'DONE' THEN 1 ELSE 0 END) OVER (
+  SUM(CASE WHEN w.status = 'CLOSED' THEN 1 ELSE 0 END) OVER (
     ORDER BY w.created_at
   ) AS completed_so_far
 FROM factorycare.work_order AS w

@@ -86,6 +86,14 @@ outcomes:
 ---
 # 类型标注、推断、数组、对象、元组与函数类型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《数组、对象、Map、Set 与不可变更新》](ch.js.collections.md)：数组和对象形状的类型描述必须基于已理解的运行时数据结构。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 TypeScript 不会把 JavaScript 变成另一套运行时。它在程序运行前读取源码，依据标注、推断和编译选项检查值的使用方式，再输出仍由 JavaScript 引擎执行的代码。类型标注在输出中被擦除；浏览器、Node、HTTP 客户端和数据库不会因为函数参数写了 number 就自动拒绝字符串。理解这一点，才能把“编译期证据”和“运行时证据”放在正确边界。
 
 本章建立最小模型：什么时候写类型标注，什么时候依赖推断；如何描述基本值、数组、对象、元组和函数签名；可选与只读属性各自保证什么；TypeScript 如何按对象成员判断兼容；怎样阅读第一个编译器诊断；以及怎样用 tsc --noEmit、故意失败的类型样例与移除类型后的运行对照保存证据。本章不提前教授 interface、type 别名、联合建模、unknown 收窄、never 或高级泛型，它们由后续章节承担。
@@ -248,7 +256,7 @@ readonly id 表示通过这个类型观察对象时不能重新赋值 id；assig
 // extra 字段不妨碍这个已有变量满足 renderSummary 需要的成员形状。
 const rowFromCache = {
   id: "WO-9",
-  status: "OPEN",
+  status: "CREATED",
   assignee: "Lin",
   cachedAt: 1700000000
 };
@@ -289,15 +297,15 @@ function upperOwner(order: { assignee?: string }): string {
 
 ~~~ts
 // 第零位是旧状态，第一位是新状态；位置映射是这个元组的合同。
-const transition: readonly [string, string] = ["OPEN", "CLOSED"];
+const transition: readonly [string, string] = ["CREATED", "CLOSED"];
 const before = transition[0];
 const after = transition[1];
 ~~~
 
 元组在 JavaScript 运行时仍是数组，没有专属运行表示。类型擦除后，运行时不会阻止 push，也不会给位置自动命名。若位置超过两三项、含义难记或需要跨边界传输，对象通常更清楚：
 
-    ["WO-1", "OPEN", 3, true]       // 位置含义难以审计
-    { id: "WO-1", status: "OPEN", attempts: 3, urgent: true }
+    ["WO-1", "CREATED", 3, true]       // 位置含义难以审计
+    { id: "WO-1", status: "CREATED", attempts: 3, urgent: true }
 
 选择元组不是为了少打字，而是因为固定位置本身就是协议。配套练习只使用短元组，不提前引入可变元组与泛型操作。
 

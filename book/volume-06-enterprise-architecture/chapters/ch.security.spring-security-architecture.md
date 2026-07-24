@@ -83,6 +83,14 @@ outcomes:
 ---
 # FilterChain、SecurityContext、默认拒绝与异常链
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《不可信输入、输出编码、XSS 与 SSRF》](ch.security.untrusted-input-xss-ssrf.md)：独立完成过滤链与上下文、默认拒绝与异常前，必须先具备「不可信输入、输出编码、XSS 与 SSRF」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套代码用纯 JDK 模拟匹配、上下文、授权和异常翻译，不启动 Servlet 容器、不下载 Spring 依赖、不实现登录/JWT/OIDC，也不接触真实凭据。模型能证明顺序与状态不变量，不能替代 Spring Boot 4.1 管理版本上的真实 `SecurityFilterChain` 集成测试。
 
 Spring Security 不是 Controller 上的一条注解，也不是“登录成功后放个用户对象”。在 Servlet 应用中，它首先是一组按顺序运行的 Filter：选择一条安全链，加载当前请求的安全上下文，尝试认证，执行 CSRF 等攻击防护，授权请求，把安全异常翻译成 HTTP 响应，最后清理请求线程上的上下文。任何一步错位，都可能让请求绕过、误报 401/403 或把上一请求身份泄到下一请求。

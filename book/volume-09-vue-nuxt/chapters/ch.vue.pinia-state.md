@@ -91,6 +91,14 @@ outcomes:
 
 # Pinia 与客户端状态所有权
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Props、事件、Slot 与组件 v-model》](ch.vue.components-contracts.md)：只有先掌握显式组件合同，才能判断何时跨组件共享状态而不绕过数据流。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章解决的不是“怎样把所有变量放进 Pinia”，而是“谁应当拥有一份状态”。只有在多个组件或页面确实需要共同读取、修改并遵守同一套生命周期规则时，Pinia 才是合适的所有者。
 
 ## 1. 先从问题开始：共享不等于全局

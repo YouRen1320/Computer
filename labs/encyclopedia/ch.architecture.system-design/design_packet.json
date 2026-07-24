@@ -29,6 +29,22 @@
     {"id": "python-ai-derived-service", "requirement_ids": ["QA-3"]},
     {"id": "observability-pipeline", "requirement_ids": ["QA-1", "QA-2"]}
   ],
+  "consistency_decisions": [
+    {
+      "id": "CD-1-authoritative-write",
+      "scope": "authorized work-order state and audit history",
+      "model": "strong",
+      "tradeoff": "one PostgreSQL transaction preserves invariants but adds coordination latency and makes database availability part of the write path",
+      "failure_behavior": "fail the write without acknowledging success; retry only through the idempotency contract"
+    },
+    {
+      "id": "CD-2-ai-suggestion",
+      "scope": "rebuildable AI suggestion and retrieval index",
+      "model": "eventual",
+      "tradeoff": "asynchronous rebuild isolates the core workflow but suggestions may be stale until the derived consumer catches up",
+      "failure_behavior": "show suggestions as unavailable or stale while Java/PostgreSQL business facts remain authoritative"
+    }
+  ],
   "capacity_assumptions": {
     "organizations": 120,
     "technicians_per_organization": 25,

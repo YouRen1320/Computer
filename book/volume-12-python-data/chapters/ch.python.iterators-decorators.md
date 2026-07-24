@@ -90,6 +90,14 @@ outcomes:
 
 # 迭代器、生成器、惰性计算与装饰器
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常、上下文管理器与资源清理》](ch.python.exceptions-context.md)：生成器关闭和 wrapper 失败必须遵守资源与异常边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > for 循环背后是迭代协议；生成器把“产生下一项”的状态暂停在 `yield`，因此可以惰性处理大数据，也带来一次性消费、关闭和资源所有权问题。装饰器则在定义时用一个可调用对象替换另一个。本章把两种“看似魔法”的语法还原为普通协议与调用顺序。
 
 ## 1. Iterable 与 Iterator

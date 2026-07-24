@@ -1,0 +1,113 @@
+schema_version: 1
+manifest_id: verification.ch.java.values-variables-types
+chapter_id: ch.java.values-variables-types
+edition: 2026.2-draft
+visibility: internal-evidence
+digest_algorithm: sha256-path-nul-bytes-nul-v1
+input_count: 14
+input_set_sha256: 54679e4b18ca32ead7573a5d626799463dc69d3ed366da7b0281c34dcbc0a3b6
+inputs:
+  - {path: examples/encyclopedia/ch.java.values-variables-types/expected-output.txt, sha256: d898bc001e3e1bce39bf3929d9a4213d8239cc463edf02f133ee080800425cce, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.values-variables-types/pom.xml, sha256: fb85ef271495598e838eefafd460cecd32e22d6fb0c2ad31d7262248dd92bb2e, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/DeviceSnapshot.java, sha256: f1565fee35684bb921ee137e3bb077c6c2f2b2b272f9e80d11bc2441c6087466, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/FieldDefaultBoundary.java, sha256: 3f4b6ef68ac6601e3326512b6860a2dcf44c5efc9059d4d154715306d0852b53, mode: "0644"}
+  - {path: examples/encyclopedia/ch.java.values-variables-types/verify.sh, sha256: 7d24e788db6d5934fc67e686e551c7827a9bf8916965402ffb0825b2c8c83b23, mode: "0755"}
+  - {path: exercises/encyclopedia/ch.java.values-variables-types/verify.sh, sha256: 334949fb0792fa5317ae607f38bc3185e09bf71a41d326ac34bf597113a24ab8, mode: "0755"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/OutOfScope.java, sha256: 9ee2a069f02dd28f9496dd93945686475129a76748e5746899a5e5d60bde7b2f, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/OverlappingLocalName.java, sha256: cfcda7013082d4684d5298bbb42f290cd36e5de17a4181848928607755cf8324, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/UninitializedLocal.java, sha256: 1d4d8bb9e31c826ec1d6c6038f62ef1ad6996d4081bbd20cbf433d3b712eb481, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/diagnostics/WrongTypeAssignment.java, sha256: b959f824d7adb111d77fab9276e047e42f540b3c74bfce8924c0f797a6ddd38c, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/expected-output.txt, sha256: 4d122808374467e2550f22fe5e41f1db0dc1d5e01234b0288db1276ea913d257, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/starter/pom.xml, sha256: 78019518e2a92baace5f79858e5abb26013fe027f2933c187d47088424f57a3c, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/starter/src/main/java/com/factorycare/learning/DeviceStatusCard.java, sha256: 8a194163ca4f164ed0b2a8389281b926780fe4abe8f69c903afa4eaf50534aab, mode: "0644"}
+  - {path: labs/encyclopedia/ch.java.values-variables-types/verify.sh, sha256: 1704a7657d7e5876d8591fa2c5e784982d76bd7793c94efb8b51cab03e5f2eed, mode: "0755"}
+tools:
+  - {id: bash, version_argv: [bash, --version], expected_version: "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)"}
+  - {id: java, version_argv: [java, -version], expected_version: "openjdk version \"25.0.3\" 2026-04-21 LTS"}
+  - {id: javac, version_argv: [javac, -version], expected_version: "javac 25.0.3"}
+  - {id: maven, version_argv: [mvn, -v], expected_version: "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)"}
+recipes:
+  - id: values-example
+    role: example
+    input_paths:
+      - examples/encyclopedia/ch.java.values-variables-types/expected-output.txt
+      - examples/encyclopedia/ch.java.values-variables-types/pom.xml
+      - examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/DeviceSnapshot.java
+      - examples/encyclopedia/ch.java.values-variables-types/src/main/java/com/factorycare/learning/FieldDefaultBoundary.java
+      - examples/encyclopedia/ch.java.values-variables-types/verify.sh
+    workdir: examples/encyclopedia/ch.java.values-variables-types
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac, maven]
+    expected_exit_code: 0
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "EXAMPLE_GREEN: Maven build, snapshot output, scope blocks, and field defaults are verified.", count: 1}
+    declared_outputs:
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes/com, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes/com/factorycare, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes/com/factorycare/learning, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes/com/factorycare/learning/DeviceSnapshot.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/classes/com/factorycare/learning/FieldDefaultBoundary.class, kind: file}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/generated-sources, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/generated-sources/annotations, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-archiver, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-archiver/pom.properties, kind: file}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status/maven-compiler-plugin, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status/maven-compiler-plugin/compile, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status/maven-compiler-plugin/compile/default-compile, kind: directory}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst, kind: file}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst, kind: file}
+      - {path: examples/encyclopedia/ch.java.values-variables-types/target/values-variables-types-example-1.0-SNAPSHOT.jar, kind: file}
+  - id: values-exercise
+    role: exercise
+    input_paths:
+      - exercises/encyclopedia/ch.java.values-variables-types/verify.sh
+    workdir: exercises/encyclopedia/ch.java.values-variables-types
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac]
+    expected_exit_code: 41
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "EXPECTED_RED: add submission/src/com/factorycare/learning/InspectionSnapshot.java", count: 1}
+    declared_outputs: []
+  - id: values-lab
+    role: lab
+    input_paths:
+      - labs/encyclopedia/ch.java.values-variables-types/diagnostics/OutOfScope.java
+      - labs/encyclopedia/ch.java.values-variables-types/diagnostics/OverlappingLocalName.java
+      - labs/encyclopedia/ch.java.values-variables-types/diagnostics/UninitializedLocal.java
+      - labs/encyclopedia/ch.java.values-variables-types/diagnostics/WrongTypeAssignment.java
+      - labs/encyclopedia/ch.java.values-variables-types/expected-output.txt
+      - labs/encyclopedia/ch.java.values-variables-types/starter/pom.xml
+      - labs/encyclopedia/ch.java.values-variables-types/starter/src/main/java/com/factorycare/learning/DeviceStatusCard.java
+      - labs/encyclopedia/ch.java.values-variables-types/verify.sh
+    workdir: labs/encyclopedia/ch.java.values-variables-types
+    argv: [bash, verify.sh]
+    tool_ids: [bash, java, javac, maven]
+    expected_exit_code: 0
+    stderr_policy: empty
+    observations:
+      - {stream: stdout, literal: "按预期编译失败", count: 4}
+      - {stream: stdout, literal: "STARTER_INCOMPLETE:", count: 1}
+      - {stream: stdout, literal: "UNVERIFIED:", count: 1}
+    declared_outputs:
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/classes, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/classes/com, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/classes/com/factorycare, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/classes/com/factorycare/learning, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/classes/com/factorycare/learning/DeviceStatusCard.class, kind: file}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/generated-sources, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/generated-sources/annotations, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-archiver, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-archiver/pom.properties, kind: file}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status/maven-compiler-plugin, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status/maven-compiler-plugin/compile, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status/maven-compiler-plugin/compile/default-compile, kind: directory}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst, kind: file}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst, kind: file}
+      - {path: labs/encyclopedia/ch.java.values-variables-types/starter/target/values-variables-types-lab-1.0-SNAPSHOT.jar, kind: file}

@@ -85,6 +85,15 @@ outcomes:
 ---
 # JUnit 参数化、测试设计、测试替身与 Mockito
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Maven 生命周期、依赖范围、插件与可重复构建》](ch.java-engineering.maven-reproducible-builds.md)：独立完成测试设计、测试替身前，必须先具备「Maven 生命周期、依赖范围、插件与可重复构建」已经验证的知识与失败边界
+- [《异常分类、传播、捕获、转换与失败契约》](../../volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md)：独立完成测试设计、测试替身前，必须先具备「异常分类、传播、捕获、转换与失败契约」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文与配套工程可用于学习和局部试运行，但“文件存在”“自动化通过”都不能替代独立讲解、现场改动和故障复现，也不会自动修改 `PROGRESS.md`。
 
 测试不是“给方法配几行断言”，而是把一个可观察命题交给机器反复核验。一个可靠测试必须同时回答：被测对象是什么、前置世界如何建立、动作是什么、可观察结果是什么、哪些真实边界被包含、哪些协作者被替换，以及失败时哪条证据最先说明问题。只会调用 `assertEquals`，却无法解释 fixture、oracle、隔离边界和替身语义，仍然无法设计可维护的测试。

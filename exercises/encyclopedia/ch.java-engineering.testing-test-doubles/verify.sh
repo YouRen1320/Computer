@@ -21,5 +21,6 @@ grep -Fq 'TODO implement in-memory save' \
 grep -Fq 'TODO capture the business message' \
     "$ROOT_DIR/src/test/java/factorycare/challenge/NotificationChallengeTest.java"
 
-printf 'starter=expected-failure todos=fake-save,spy-capture\n'
+printf 'EXPECTED_RED starter=expected-failure todos=fake-save,spy-capture\n'
 printf 'EXERCISE READY maven=3.9.16 jdk=25 mode=offline\n'
+exit 41

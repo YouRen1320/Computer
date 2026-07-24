@@ -23,7 +23,7 @@
 
 | 顺序 | 材料 | 时间 | 证据 |
 | --- | --- | ---: | --- |
-| 1 | [概念讲义](./concepts.md) | 3—4h | 一张 Stream 元素类型变化图 |
+| 1 | [权威概念入口](./concepts.md) | 3—4h | 一张 Stream 元素类型变化图 |
 | 2 | [最小实验与故障注入](./labs.md) | 5—6h | 循环/Stream 对照和失败测试 |
 | 3 | FactoryCare 增量 | 3—4h | 查询、看板统计、稳定排序 |
 | 4 | [面试追问](./interview.md) | 1h | 录音回答 8—10 题 |
@@ -83,7 +83,7 @@
 
 ## 索引
 
-- [概念讲义](./concepts.md)
+- [权威概念入口](./concepts.md)
 - [实验、FactoryCare 增量与故障注入](./labs.md)
 - [无 AI 考核](./assessment.md)
 - [独立答案册](./answers.md)

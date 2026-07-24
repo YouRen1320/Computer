@@ -87,6 +87,14 @@ outcomes:
 ---
 # 类、对象模型、dataclass 与 enum
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《基础类型标注、联合、容器类型与类型检查器》](ch.python.typing-foundations.md)：字段、返回和可空边界需要基础类型标注。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产在当前 Python 3.14 解释器验证对象身份、方法绑定、非法构造、frozen 行为、`default_factory` 隔离和 enum 解析；没有运行第三方静态类型检查器，也没有把模型持久化或映射到 Java API。运行时通过不代表跨服务契约已经验证。
 
 函数适合表达“输入经过计算得到输出”；对象适合表达“一组数据、行为与长期不变量共同拥有一个身份或值”。Python 中类也是对象，实例属性可以动态出现，方法取出时会发生绑定，继承遵循方法解析顺序。灵活性让原型开发很快，也让共享类属性、半合法实例和错误相等语义更容易潜入生产。

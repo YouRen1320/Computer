@@ -29,9 +29,9 @@ ruby scripts/build-publication-plan.rb --profile publication/profiles/p3-gold.ym
 
 三个摘要的集合语义固定如下：
 
-- `content_input_digest`：4 个章节正文 + 47 个显式公共工件，共 51 项；
-- `publisher_input_digest`：schema、builder/profile/toolchain/catalog、P2 基线 manifest、4 份逐章 manifest 和 4 个显式 `.gitignore`，共 21 项；
-- `build_input_digest`：上述两组的无重复并集，共 72 项。
+- `content_input_digest`：4 个章节正文 + 54 个显式公共工件，共 58 项；
+- `publisher_input_digest`：schema、plan/renderer 实现、确定性 PDF 入口、模板、三套 CSS、profile/toolchain/catalog、P2 基线 manifest、4 份逐章 manifest 和 4 个显式 `.gitignore`，共 30 项；
+- `build_input_digest`：上述两组的无重复并集，共 88 项。
 
 三者都使用 `sha256(path + NUL + bytes + NUL)` 的有序集合算法；都不是 D8 将来
 要求的 repository safety/audit digest，也不证明仓库其他文件安全。
@@ -52,10 +52,11 @@ ruby scripts/verify-gold-samples.rb
 ruby scripts/verify-gold-samples.rb --json
 ```
 
-Runner 固定 10 个 recipe 和 8 个物理脚本入口，每个 recipe 都复制到独立临时目录
-执行；Maven 强制使用 offline 模式。`java-values-types-starter` 的退出码 `1` 是预先
-声明的教学失败，只有实际退出码仍为 `1` 才算该 recipe 通过；其余 recipe 期望
-退出码 `0`。`java-values-types-example` 不借用不适用的 lab wrapper，而是执行固定的
+Runner 固定 11 个 recipe 和 9 个物理脚本入口，每个 recipe 都复制到独立临时目录
+执行；Maven 强制使用 offline 模式。`java-values-types-starter` 只验证 lab harness 与可重现诊断，
+因而期望退出码 `0` 并显式保留 learner output 未验证边界；真正的公开练习红灯
+`java-values-types-exercise` 预先声明退出码 `41`。其余 recipe 期望退出码 `0`。
+`java-values-types-example` 不借用不适用的 lab wrapper，而是执行固定的
 Maven 构建和两个精确 stdout 预言机。
 
 该 Runner 是内容生产期的损坏防线，不是 OS 级网络/文件系统沙箱，也不证明没有
@@ -70,26 +71,70 @@ ruby tests/publication/test_atomic_tree_writer.rb
 ruby tests/publication/test_gold_sample_runner.rb
 ```
 
+## P3 黄金样章渲染
+
+R2 当前只实现已冻结的 `p3-gold`，不接受自定义 profile、自由输入路径或 255 章
+整书构建。先生成并检查 sidecar plan，再运行固定入口：
+
+```bash
+ruby scripts/build-publication-plan.rb --profile publication/profiles/p3-gold.yml
+ruby scripts/build-publication-plan.rb --profile publication/profiles/p3-gold.yml --check
+ruby scripts/build-publication.rb
+```
+
+PDF 通过项目内 `publication/lib/deterministic_weasyprint.py` 调用锁定的
+WeasyPrint 68.1 / pydyf 0.12.1。该入口只把带标签表格原本依赖进程内存地址的
+表头标识改为稳定顺序标识，并在依赖版本漂移时拒绝构建。它用于保证当前机器、
+固定工具链下的重复字节，不构成 PDF/UA 合规声明。
+
+渲染器在执行任何工具前重新读取 plan 的 88 个显式输入，逐项核对大小、SHA-256
+和三个集合摘要。Pandoc 只在一个命令中读取四个有序 Markdown 并生成 canonical
+JSON AST；整书 HTML、四个分章 HTML、EPUB 和打印 HTML 都只读取该 AST 或它的
+确定性分章投影，WeasyPrint 只读取打印 HTML。远程图片、远程原始 HTML 资源、
+模板/CSS 中的远程资源、私有 canary、私有路径和本机绝对路径都会在原子提交前失败。
+
+输出先写入同级临时树并校验精确文件集合，成功后才替换
+`build/publication/p3-gold/`。`publication-output-manifest.json` 按既有 schema 记录
+9 个非 manifest 工件；manifest 不把自身列入摘要集合，以避免自引用摘要。
+HTML、EPUB 和 PDF 三种交付格式都标为 `internal-review-candidate`，网络隔离准确记录为
+`not-os-enforced`。构建结果不自动修改章节状态、`PROGRESS.md` 或 P2 五文件契约。
+
+R1-A 的 writer 仍按“仅含 plan”的精确树工作，所以 `--check` 必须在 R2 渲染前
+运行；再次生成 plan 会有意替换掉旧的 ignored 预览树。统一默认入口和 R1/R2
+兼容清理由 P9 的独立迁移决策处理，本实现不提前选择。
+
+R2 回归测试入口是：
+
+```bash
+ruby tests/publication/test_renderer.rb
+```
+
 ## 当前能证明与不能证明的事
 
 R1-A 可以证明 profile/status allowlist、文件所有权、普通文件与 symlink 边界、
 显式文件集合、确定性 plan、可捕获进程内失败时的完整树回滚和 P2 byte-exact
 隔离。这里的完整树替换不是断电级 crash-atomic：两次目录 rename 之间进程若被
 强制终止，可能需要根据保留的 stage/backup 人工恢复；目录 `fsync` 在不支持的
-平台上也是 best effort。它不能证明：
+平台上也是 best effort。R2 进一步证明当前固定环境能从同一 canonical AST 生成
+schema-valid 的内部候选 manifest 与 HTML/EPUB/PDF 实体，但它不能证明：
 
-- HTML、EPUB、PDF 已经生成；
 - 命令在 OS 级文件系统或网络沙箱中运行；
 - WCAG、EPUB Accessibility 或 PDF/UA 合规；
+- PDF 已由独立执行方或跨平台逐字节复现；
+- 浏览器、EPUB/PDF 阅读器或辅助技术互操作已经人工通过；
 - P2 的递归公共输入风险已经迁移；
 - 四个 `drafting` 章节已经达到 `review`。
 
-`publication-output-manifest.schema.json` 是 R2 输出契约的前置定义；R1-A 尚未生成
-该 manifest。它明确记录 `network_policy: forbidden` 只是策略，同时要求
+`publication-output-manifest.schema.json` 是 R2 输出契约；当前固定入口会生成
+符合该 schema 的实例。它明确记录 `network_policy: forbidden` 只是策略，同时要求
 `network_isolation: not-os-enforced`，避免把无网络调用冒充 OS 级断网沙箱。
 
-按内容优先策略，HTML/EPUB/PDF、P2 migration、严格 verification manifest、人工
-检查、零基础试读和独立总审查统一在 P9 收口；延期不表示已经通过。
+当前本机固定工具链下，两个干净目录的连续构建已观察到 AST、HTML、打印 HTML、
+EPUB 和 PDF 逐字节一致。这只能称为**本机字节重复性证据**；在独立执行方按声明环境
+复现之前，仍不能声称 reproducible build 或跨平台可复现。PDF 也仍只是 PDF/UA-1
+候选文件，标签存在、字节稳定或机器检查通过都不能替代完整机器门和人工无障碍评估。
+P2 migration、其余 251 章的完整 verification manifest、人工检查、零基础试读和
+独立总审查仍未关闭；延期不表示已经通过。
 
 此外，集成审计 M1 记录的 `edition.status` 枚举与 phase/status 合法组合门纳入
 R1-B-L 已完成该生命周期门；R1-A 只校验当前 sidecar profile 的章节状态投影，

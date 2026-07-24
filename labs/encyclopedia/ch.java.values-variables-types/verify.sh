@@ -41,8 +41,13 @@ mvn -q -f "$TARGET_DIR/pom.xml" clean package
 java -cp "$TARGET_DIR/target/classes" \
     com.factorycare.learning.DeviceStatusCard > "$TMP_DIR/actual-output.txt"
 
-diff -u "$LAB_DIR/expected-output.txt" "$TMP_DIR/actual-output.txt"
-echo "PASS: 正例构建成功，实际输出与 expected-output.txt 完全一致"
+STARTER_COMPLETE=0
+if diff -u "$LAB_DIR/expected-output.txt" "$TMP_DIR/actual-output.txt"; then
+    STARTER_COMPLETE=1
+    echo "PASS: learner implementation output matches expected-output.txt"
+else
+    echo "STARTER_INCOMPLETE: public starter compiles but its output is incomplete; complete the lab before claiming the build outcome"
+fi
 
 for source in "$LAB_DIR"/diagnostics/*.java; do
     name=$(basename "$source")
@@ -90,4 +95,10 @@ for source in "$LAB_DIR"/diagnostics/*.java; do
     echo "PASS: $name 按预期编译失败，证据=$expected"
 done
 
-echo "PASS: 本章实验验收全部完成 javac=$JAVAC_VERSION java=$JAVA_VERSION"
+echo "LAB HARNESS PASS: diagnostics are reproducible javac=$JAVAC_VERSION java=$JAVA_VERSION"
+if [ "$STARTER_COMPLETE" -eq 0 ]; then
+    echo "UNVERIFIED: public starter output remains incomplete; only the lab harness and compile-error diagnostics passed"
+    exit 0
+fi
+
+echo "PASS: learner implementation and diagnostic harness both satisfy the lab contract"

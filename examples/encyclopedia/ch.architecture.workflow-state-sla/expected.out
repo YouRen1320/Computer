@@ -1,4 +1,4 @@
-allowed_path=NEW>ASSIGNED>IN_PROGRESS>CLOSED
+allowed_path=CREATED>ASSIGNED>IN_PROGRESS>CLOSED
 jump_rejected=true
 guard_rejected=true
 terminal_irreversible=true

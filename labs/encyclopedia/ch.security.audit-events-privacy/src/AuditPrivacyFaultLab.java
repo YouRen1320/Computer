@@ -89,7 +89,7 @@ public final class AuditPrivacyFaultLab {
     private static AuditEvent ordinary(String id, String tenant) {
         return event(id, EventType.WORK_ORDER_STATE_CHANGED, "ACTOR-7", "WORK_ORDER_CLOSE",
                 "WORK-9", tenant, "TRACE-" + id, Result.SUCCESS,
-                Map.of(DetailField.CHANGE_SUMMARY, "OPEN->CLOSED"));
+                Map.of(DetailField.CHANGE_SUMMARY, "VERIFIED->CLOSED"));
     }
 
     private static String injectedOutcome(FaultMode fault) {
@@ -114,7 +114,7 @@ public final class AuditPrivacyFaultLab {
                 store.append(original, true, FaultMode.NORMAL);
                 AuditEvent changed = event("AUD-5", EventType.WORK_ORDER_STATE_CHANGED,
                         "ACTOR-OTHER", "WORK_ORDER_REOPEN", "WORK-9", "TENANT-A", "TRACE-5B",
-                        Result.SUCCESS, Map.of(DetailField.CHANGE_SUMMARY, "CLOSED->OPEN"));
+                        Result.SUCCESS, Map.of(DetailField.CHANGE_SUMMARY, "CLOSED->REOPENED"));
                 yield store.replace("AUD-5", changed, fault)
                         ? "AUDIT_EVENT_OVERWRITTEN" : "FAULT_NOT_EXPOSED";
             }

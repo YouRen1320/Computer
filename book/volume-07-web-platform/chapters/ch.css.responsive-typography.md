@@ -97,6 +97,16 @@ outcomes:
 ---
 # 响应式单位、断点、排版与资源适配
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《图片、响应式资源、音视频与资源边界》](ch.web.media-assets.md)：响应式页面必须能选择合适的图片候选和替代内容，而不是只缩放布局。
+- [《Flexbox 一维布局》](ch.css.flexbox.md)：一维组件在内容变化时的伸缩和换行是响应式组合的基础。
+- [《Grid 二维布局》](ch.css.grid.md)：二维区域和轨道适配是页面级断点策略的基础。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。2026-07-17 已核对 CSS Values and Units、Media Queries、CSS Containment 与 HTML Living Standard。配套离线检查器只验证明确声明的源码合同；它不会计算真实布局、浏览器资源选择、字体指标、缩放结果或视觉差分。真正验收必须在目标浏览器、视口、缩放和网络矩阵中完成。
 
 响应式设计不是给“手机、平板、电脑”各复制一份页面，而是让同一语义内容在可用空间、文字偏好、输入方式和资源条件变化时仍可读、可操作。尺寸只是约束之一；长文本、翻译、放大字号、动态数据和嵌入容器往往比设备名称更能暴露问题。

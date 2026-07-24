@@ -1,6 +1,6 @@
 import type { NavigationFailure, RouteLocationNormalized } from 'vue-router'
 
-export type WorkOrderStatusFilter = 'ALL' | 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatusFilter = 'ALL' | 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 export type NavigationSession = {
   authenticated: boolean
@@ -16,7 +16,7 @@ export type NavigationTrace = Readonly<{
 
 // Mapping: unknown or repeated query values collapse to the explicit safe filter default.
 export function normalizeStatusQuery(value: RouteLocationNormalized['query']['status']): WorkOrderStatusFilter {
-  return value === 'CREATED' || value === 'IN_PROGRESS' || value === 'COMPLETED' ? value : 'ALL'
+  return value === 'CREATED' || value === 'IN_PROGRESS' || value === 'RESOLVED' ? value : 'ALL'
 }
 
 export function toNavigationTrace(

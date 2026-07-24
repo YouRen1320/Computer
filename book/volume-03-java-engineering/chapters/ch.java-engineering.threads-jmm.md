@@ -85,6 +85,15 @@ outcomes:
 ---
 # 线程、Java 内存模型、同步与锁
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《static、类成员与共享状态》](../../volume-02-java-objects/chapters/ch.java-oop.static-class-state.md)：独立完成线程与内存模型、同步与锁前，必须先具备「static、类成员与共享状态」已经验证的知识与失败边界
+- [《字节流、字符流、资源所有权与 try-with-resources》](ch.java-engineering.io-resource-lifecycle.md)：独立完成线程与内存模型、同步与锁前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。Java 25 离线 oracle 通过受控屏障重放错误交错，并高频验证正确计数；它不能证明任意生产并发程序无竞态、死锁或饥饿。P9 零基础试读、人工版式/无障碍检查、独立全面审查和全书回归尚未执行，不能晋升为 `verified`，也不会修改 `PROGRESS.md`。
 
 单线程里，`count++` 看起来就是“加一”。两个线程同时执行时，它至少包含读取、计算、写回，两个线程可能都读到 0，再都写 1，最终丢一次更新。更隐蔽的问题是：线程 A 已写 `ready=true`，线程 B 是否保证看见？某段代码用 `synchronized`，却锁了每次新建的对象，是否真的互斥？答案不能靠“我的机器跑了没错”，而要靠 Java 内存模型定义的可见性、顺序和 happens-before 关系。

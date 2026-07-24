@@ -84,6 +84,14 @@ outcomes:
 ---
 # 浏览器请求、解析、渲染与 DevTools 观察
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《HTTP 报文、方法、状态码、Header、Body 与 curl》](../../volume-00-computer-foundations/chapters/ch.foundations.http-curl.md)：浏览器网络面板中的方法、状态码、Header 与 Body 必须先能用 HTTP 报文和 curl 独立验证。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产用静态 HTML/CSS、合成 HAR/DOM/时间线和离线预言训练证据阅读，不自动启动图形浏览器，也不伪造真实 DevTools 截图。离线绿灯证明输入、阶段和诊断规则一致；真实 Chrome/Firefox/Safari 的网络瀑布、DOM、截图与 Performance 录制仍需人工操作和环境记录。
 
 在地址栏输入 URL 并按回车后，屏幕不会凭空出现页面。浏览器要解析地址、取得主文档、读取响应、解析 HTML、发现依赖资源、构造 DOM 与样式数据、计算几何位置、生成绘制指令、栅格化并合成像素。它还可能重定向、复用缓存、并行下载、边收边解析、暂停解析等待资源或脚本，再因字体、图片、视口和后续变化重新做部分工作。

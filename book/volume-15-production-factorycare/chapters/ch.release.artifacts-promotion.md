@@ -99,6 +99,15 @@ outcomes:
 ---
 # 制品、来源证明、环境晋级与发布元数据
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Nginx、TLS、反向代理与静态资源》](ch.ops.nginx-tls.md)：交付完成标准包括 TLS、静态资源与反向代理 smoke。
+- [《CI 流水线、测试门禁与失败证据》](ch.release.ci-quality.md)：只有通过必需质量门禁的构建才允许生成晋级元数据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 CI全绿之后，还没有回答“测试过的东西是不是最终运行的东西”。如果测试环境构建一次、生产环境再构建一次，即使源码提交相同，也可能因为基础镜像、依赖仓库、时间、构建器或脚本漂移产生不同字节。可靠交付的原则是：一次构建，得到不可变身份；质量证据绑定该身份；随后把同一制品晋级到各环境，只改变环境配置，不重新编译。
 
 本章把Java API镜像、Vue静态站点镜像、Git commit、内容digest、SBOM、来源证明、质量门禁和代理smoke组成发布清单。Docker、Compose、Nginx和GitHub attestations是当前版本表面；稳定核心是内容寻址、来源可追溯、构建与部署分离、环境不重建、验证对象与运行对象一致。

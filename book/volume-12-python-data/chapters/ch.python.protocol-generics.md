@@ -90,6 +90,14 @@ outcomes:
 
 # 泛型、Protocol、Callable 与结构类型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《类、对象模型、dataclass 与 enum》](ch.python.classes-dataclass.md)：结构类型需要能区分类的运行时行为和静态合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 类型不是为了让 Python 变成 Java，而是把“什么输入可以替换、输出与输入有什么关系、组件只依赖哪些能力”写成可检查合同。Python 运行时通常不强制注解；静态类型检查器、IDE 和测试共同提供证据。本章以 Repository 端口为主线，不要求实现类继承某个框架基类。
 
 ## 1. 为什么 `Any` 会丢掉关系
@@ -111,9 +119,11 @@ def first(items: list[Any]) -> Any:
 Python 3.12+ 类型参数语法：
 
 ```python
-def first[T](items: list[T]) -> T:
+def first[T] (items: list[T]) -> T:
     return items[0]
 ```
+
+上例在类型参数 `]` 与参数列表 `(` 之间保留一个合法空格，避免 Markdown 工具把 PEP 695 的函数头误识别为链接；这个空格不改变 Python 语义，复制运行时可以保留。
 
 兼容传统 TypeVar 写法：
 
@@ -140,7 +150,7 @@ def first(items: list[T]) -> T:
 ## 2. 泛型容器与函数
 
 ```python
-def copy_items[T](items: list[T]) -> list[T]:
+def copy_items[T] (items: list[T]) -> list[T]:
     return list(items)
 ```
 
@@ -149,7 +159,7 @@ def copy_items[T](items: list[T]) -> list[T]:
 ### 2.1 多个类型参数
 
 ```python
-def map_value[T, R](value: T, transform: Callable[[T], R]) -> R:
+def map_value[T, R] (value: T, transform: Callable[[T], R]) -> R:
     return transform(value)
 ```
 
@@ -194,7 +204,7 @@ class HasId(Protocol):
     id: int
 
 
-def index_by_id[T: HasId](items: list[T]) -> dict[int, T]:
+def index_by_id[T: HasId] (items: list[T]) -> dict[int, T]:
     return {item.id: item for item in items}
 ```
 
@@ -430,7 +440,7 @@ def load(repo: Any, id: Any) -> Any: ...
 ### 12.3 类型参数彼此独立
 
 ```python
-def choose[T, R](first: T, second: R) -> T: ...
+def choose[T, R] (first: T, second: R) -> T: ...
 ```
 
 若业务要求两参数同类型，应都用 T。不同 TypeVar 表示可不同。

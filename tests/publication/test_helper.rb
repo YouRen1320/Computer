@@ -8,6 +8,7 @@ require "yaml"
 
 require_relative "../../publication/lib/atomic_tree_writer"
 require_relative "../../publication/lib/plan_builder"
+require_relative "../../publication/lib/renderer"
 
 module PublicationFixture
   ROOT = Pathname(__dir__).join("../..").expand_path.freeze
@@ -18,6 +19,8 @@ module PublicationFixture
     "publication/lib",
     "publication/manifests/public-artifacts",
     "publication/profiles/p3-gold.yml",
+    "publication/styles",
+    "publication/templates",
     "publication/toolchain.yml",
     "schemas/public-artifact-manifest.schema.json",
     "schemas/publication-output-manifest.schema.json",
@@ -25,6 +28,9 @@ module PublicationFixture
     "schemas/publication-profile.schema.json",
     "schemas/publication-toolchain.schema.json",
     "scripts/build-publication-plan.rb",
+    "scripts/build-publication.rb",
+    "scripts/lib/chapter_prerequisite_block.rb",
+    "scripts/validate-encyclopedia.rb",
     "site/generated"
   ].freeze
 

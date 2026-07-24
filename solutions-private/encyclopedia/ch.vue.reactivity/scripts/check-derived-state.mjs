@@ -11,11 +11,11 @@ const derivesFromOrders = /orders\.value[\s\S]*?filter\s*\(/.test(source)
 // Mapping: run the same three-order transition as the public checker.
 const ordersAfterAdd = [
   { status: 'CREATED' },
-  { status: 'COMPLETED' },
+  { status: 'RESOLVED' },
   { status: 'IN_PROGRESS' },
 ]
 const observedCount = usesComputed && !keepsCopiedRef && derivesFromOrders
-  ? ordersAfterAdd.filter(order => order.status !== 'COMPLETED').length
+  ? ordersAfterAdd.filter(order => order.status !== 'RESOLVED').length
   : 1
 
 if (observedCount !== 2) {

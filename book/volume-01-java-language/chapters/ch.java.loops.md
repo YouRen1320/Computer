@@ -78,6 +78,14 @@ outcomes:
 ---
 # for、while、计数、累积与哨兵循环
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《布尔逻辑、if/else 与 switch》](ch.java.branching.md)：独立完成循环形式、循环状态与退出前，必须先具备「布尔逻辑、if/else 与 switch」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文和配套工件可以试读、运行与修改，但文件存在或脚本通过不等于学习者已经过关，也不会自动更新学习进度。
 
 前一章解决“这一次走哪条路径”，本章解决“在什么条件下重复走一段路径，以及何时一定停下来”。FactoryCare 可能需要处理编号 1..N 的工单、对剩余数量倒计时、累计已处理数量，或读到一个结束标记后停止。复制粘贴五遍代码只适用于恰好五项；循环把重复规则和变化状态分离。

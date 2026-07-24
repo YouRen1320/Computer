@@ -35,14 +35,14 @@ public final class JsonMappingOracle {
             throw new IllegalArgumentException("expected roundtrip path");
         }
         String base = """
-                {"schemaVersion":1,"id":"WO-机泵-101","status":"OPEN",
+                {"schemaVersion":1,"id":"WO-机泵-101","status":"CREATED",
                  "openedAt":"2026-07-16T01:30:00Z","amount":1234.50,"assignee":null}
                 """;
         JsonSupport.WorkOrderJsonMapper.WorkOrder order = JsonSupport.WorkOrderJsonMapper.fromJson(
                 base, JsonSupport.WorkOrderJsonMapper.UnknownFieldPolicy.REJECT);
         equal(1, order.schemaVersion(), "version");
         equal("WO-机泵-101", order.id(), "id");
-        equal(JsonSupport.WorkOrderJsonMapper.Status.OPEN, order.status(), "status");
+        equal(JsonSupport.WorkOrderJsonMapper.Status.CREATED, order.status(), "status");
         equal(Instant.parse("2026-07-16T01:30:00Z"), order.openedAt(), "instant");
         check(order.amount().compareTo(new BigDecimal("1234.50")) == 0, "amount value");
         equal(2, order.amount().scale(), "amount scale");
@@ -79,7 +79,7 @@ public final class JsonMappingOracle {
 
         check(rejects(base.replace("\"id\":\"WO-机泵-101\",", ""), "MISSING_FIELD:id"),
                 "missing id");
-        check(rejects(base.replace("\"status\":\"OPEN\"", "\"status\":null"), "NULL_REQUIRED:status"),
+        check(rejects(base.replace("\"status\":\"CREATED\"", "\"status\":null"), "NULL_REQUIRED:status"),
                 "null status");
         check(rejects(base.replace("2026-07-16T01:30:00Z", "2026-07-16T09:30:00"),
                 "INVALID_TIME:openedAt"), "invalid time");

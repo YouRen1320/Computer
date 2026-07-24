@@ -94,6 +94,14 @@ outcomes:
 
 # list、tuple、dict、set 与推导式
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《函数、参数、返回值与作用域》](ch.python.functions-scope.md)：集合回调、分组函数和作用域边界依赖函数合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 集合不是“把很多数据装起来”这么简单。选择集合就是选择合同：是否保留顺序、是否允许重复、通过位置还是键查找、是否允许原地修改、元素或键需要满足什么约束。本章从零建立四种核心集合的模型，再用遍历、切片、解包和推导式完成 FactoryCare 派生数据转换。
 
 ## 1. 先按问题选择集合

@@ -24,3 +24,4 @@ fi
 
 printf '%s\n' "$actual"
 echo 'exercise-starter=EXPECTED-FAIL'
+exit 41

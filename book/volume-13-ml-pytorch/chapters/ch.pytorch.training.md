@@ -86,6 +86,14 @@ outcomes:
 
 # 训练循环、复现、过拟合、评估与调参
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Tensor、Dataset、Module 与 Autograd》](ch.pytorch.foundations.md)：必须能正确使用 Tensor、Dataset、Module 与 Autograd。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 一次 forward/backward 只证明梯度路径存在。训练需要反复读取训练批次、清梯度、前向、计算损失、反向和更新参数；每轮之后在独立验证集评估，用验证证据选择检查点和停止时机；所有选择完成后才允许读取一次测试集。本章把这些步骤写成可复现、可恢复、可审查的合同。
 
 本章人工二维点被命名为“玩具工单分类”仅为连接项目语境，不是实际工单数据。损失下降、分类准确或最佳 epoch 都不能解释为真实模型质量。工件只在 CPU、固定小数据和当前隔离版本上验证循环行为，不声称 GPU/MPS 训练、线上延迟或可部署性。

@@ -81,6 +81,14 @@ outcomes:
 ---
 # OpenAPI、契约示例与兼容性检查
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常映射、Problem Details 与稳定错误契约》](ch.spring.problem-details-errors.md)：独立完成OpenAPI 描述、契约校验前，必须先具备「异常映射、Problem Details 与稳定错误契约」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。存在 `/v3/api-docs` 或 Swagger UI 只证明描述能够输出，不自动证明运行响应符合描述，也不自动证明新版本对旧消费者兼容。
 
 本章基线为 Spring Boot 4.1.0、Spring Framework 7.0.8、springdoc-openapi 3.0.3、OpenAPI Specification（OAS）3.2.0、JDK 25 与 Maven 3.9.16。版本事实复核于 2026-07-17：OAS 3.2.0 是最新已发布规范；FactoryCare 设计契约仍明确写 `openapi: 3.1.0`，不能因为规范出了新版本就静默改写。springdoc 3.x 面向 Spring Boot 4，当前稳定版为 3.0.3。

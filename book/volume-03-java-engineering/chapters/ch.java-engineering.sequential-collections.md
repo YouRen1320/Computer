@@ -80,6 +80,14 @@ outcomes:
 ---
 # List、Queue、Deque 与迭代
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《泛型、类型参数、边界与通配符》](ch.java-engineering.generics-type-safety.md)：独立完成List 与迭代、Queue 与 Deque前，必须先具备「泛型、类型参数、边界与通配符」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文和代码用于学习与自动检查；它们尚未经过 P9 的零基础读者试读、人工版式/无障碍检查和全书一致性审查，不能据此宣称章节已 `verified`，也不会修改 `PROGRESS.md`。
 
 一个集合不是“能装很多值的变量”这么简单。保存报修单时，系统可能要保留提交顺序；调度时要让最早进入的任务最先离开；撤销操作时却要让最后一次动作最先恢复。三者都能装多个元素，但它们承诺的**访问方式**不同。若只看具体类名而不先写清业务顺序，代码即使编译也可能稳定地产生错误结果。

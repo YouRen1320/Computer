@@ -22,11 +22,10 @@ describe('WorkOrder runtime boundary', () => {
     ['missing status', (({ status: _status, ...rest }) => rest)(validPayload)],
     ['extra field', { ...validPayload, internalCost: 800 }],
     ['wrong priority type', { ...validPayload, priority: '4' }],
-    ['unknown status', { ...validPayload, status: 'DONE' }],
+    ['unknown status', { ...validPayload, status: 'NOT_A_STATE' }],
   ])('rejects %s', (_name, payload) => {
     const result = parseWorkOrder(payload)
     expect(result.ok).toBe(false)
     if (!result.ok) expect(result.issues.length).toBeGreaterThan(0)
   })
 })
-

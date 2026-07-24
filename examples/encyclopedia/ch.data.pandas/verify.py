@@ -11,7 +11,7 @@ orders = pd.DataFrame(
         "device_id": ["D-1", "D-2", "D-2", "D-9"],
         "technician_id": ["T-1", " T-1 ", pd.NA, "T-2"],
         "duration_raw": ["30", "bad", "45", " 60 "],
-        "status": ["CLOSED", "CLOSED", "OPEN", "CLOSED"],
+        "status": ["CLOSED", "CLOSED", "CREATED", "CLOSED"],
         "closed_at": [
             "2026-07-24T10:00:00+08:00",
             "2026-07-24T02:30:00Z",

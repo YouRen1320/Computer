@@ -62,6 +62,12 @@ artifacts:
   media_type: text/x-java-source
   presentation: listing
   target_formats: [html, epub, pdf]
+- artifact_id: exercise-verifier
+  role: runner-support
+  source_path: exercises/encyclopedia/ch.java.expressions-conversions/verify.sh
+  media_type: text/x-shellscript
+  presentation: listing
+  target_formats: [html, epub, pdf]
 - artifact_id: lab-readme
   role: lab-source
   source_path: labs/encyclopedia/ch.java.expressions-conversions/README.md

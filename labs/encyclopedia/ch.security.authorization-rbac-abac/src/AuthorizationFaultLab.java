@@ -4,7 +4,7 @@ import java.util.Set;
 public final class AuthorizationFaultLab {
     private enum Role { REPORTER, TECHNICIAN, DISPATCHER, UNKNOWN }
     private enum Action { READ, ASSIGN, CLOSE, UNKNOWN }
-    private enum State { OPEN, VERIFIED }
+    private enum State { CREATED, VERIFIED }
     private enum FaultMode {
         NORMAL, UI_ONLY, URL_ONLY, OBJECT_IDOR, ALLOW_UNKNOWN_ROLE,
         ALLOW_UNKNOWN_ACTION, CONFLICT_LAST_ALLOW, TRUST_REQUEST_ATTRIBUTE
@@ -91,11 +91,11 @@ public final class AuthorizationFaultLab {
     }
 
     private static WorkOrder otherOwner() {
-        return new WorkOrder("TENANT-A", "ORG-A", "OTHER", "OTHER-TECH", State.OPEN);
+        return new WorkOrder("TENANT-A", "ORG-A", "OTHER", "OTHER-TECH", State.CREATED);
     }
 
     private static WorkOrder outsideScope() {
-        return new WorkOrder("TENANT-A", "ORG-B", "OTHER", "OTHER-TECH", State.OPEN);
+        return new WorkOrder("TENANT-A", "ORG-B", "OTHER", "OTHER-TECH", State.CREATED);
     }
 
     private static String injectedOutcome(FaultMode fault) {

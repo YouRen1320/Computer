@@ -20,6 +20,7 @@ if [[ "$actual" == "$solved" ]]; then
   echo "EXERCISE CHECK mode=solved contracts=4"
 elif [[ "$actual" == "$starter" ]]; then
   echo "EXERCISE CHECK mode=starter-pending expected-mismatches=4"
+  exit 41
 else
   echo "UNRECOGNIZED OUTPUT: neither fixed starter nor solved contract" >&2
   exit 1

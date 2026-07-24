@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.json" >"$TMP_ROOT/actual.out" 2>"$TMP_RO
 fi
 grep -F "answer-error=applied migration checksum was rewritten" "$TMP_ROOT/error.out" >/dev/null
 echo "starter-status=EXPECTED_RED|reason=applied-checksum-rewritten"
+exit 41

@@ -23,7 +23,7 @@ CREATE TABLE factorycare.work_order (
   status text CONSTRAINT work_order_status_not_null NOT NULL,
   created_at timestamptz DEFAULT CURRENT_TIMESTAMP CONSTRAINT work_order_created_at_not_null NOT NULL,
   CONSTRAINT work_order_pkey PRIMARY KEY (work_order_id),
-  CONSTRAINT work_order_status_check CHECK (status IN ('OPEN', 'IN_PROGRESS', 'DONE', 'CANCELLED')),
+  CONSTRAINT work_order_status_check CHECK (status IN ('CREATED', 'IN_PROGRESS', 'CLOSED', 'CANCELLED')),
   CONSTRAINT work_order_device_fk FOREIGN KEY (device_id)
     REFERENCES factorycare.device (device_id)
     ON DELETE RESTRICT

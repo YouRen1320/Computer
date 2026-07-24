@@ -42,3 +42,6 @@ grep -Fqx "BUFFER_COUNT_IGNORED expectedLength=5 actualLength=8" "$BUILD_DIR/buf
 
 echo "EXPECTED_FAILURE BufferCountFailure status=$buffer_status evidence=read-count-ignored"
 echo "EXERCISE CHECK PASS mode=$challenge_mode expected_failures=$((challenge_failures + 1)) java=$JAVA_VERSION"
+if [[ "$challenge_mode" == "starter" ]]; then
+    exit 41
+fi

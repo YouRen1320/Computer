@@ -30,7 +30,7 @@ class WorkOrderControllerLabTest {
         mvc.perform(get("/work-orders/42").header("X-Tenant-Id", "tenant-a"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("X-Contract", "work-order-detail"))
-                .andExpect(content().string("WO-42:OPEN"));
+                .andExpect(content().string("WO-42:CREATED"));
         assertEquals(1, query.callCount());
     }
 

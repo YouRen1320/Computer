@@ -30,4 +30,5 @@ else
   [[ $challenge_status -eq 9 ]]
   grep -Fqx "STARTER_THIRD_IMPLEMENTATION_FAILURE implementation=RecordingSender reason=type-branch" "$BUILD_DIR/challenge.err"
   echo "STARTER EXPECTED FAILURE status=$challenge_status reason=third-implementation-not-dispatched"
+  exit 41
 fi

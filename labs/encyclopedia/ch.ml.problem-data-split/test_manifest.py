@@ -1,10 +1,11 @@
 import pandas as pd
+import pytest
 
-from manifest import assert_manifest, build_manifest
+from manifest import PROBLEM_CARD, assert_manifest, assert_problem_card, build_manifest
 
 
-def test_grouped_temporal_manifest() -> None:
-    frame = pd.DataFrame(
+def source_frame() -> pd.DataFrame:
+    return pd.DataFrame(
         {
             "sample_id": [11, 12, 13],
             "entity_id": [101, 102, 103],
@@ -20,6 +21,29 @@ def test_grouped_temporal_manifest() -> None:
             ],
         }
     )
-    manifest = build_manifest(frame)
+
+
+def test_grouped_temporal_manifest() -> None:
+    assert_problem_card(PROBLEM_CARD)
+    manifest = build_manifest(source_frame())
     assert manifest["split"].astype(str).tolist() == ["train", "validation", "test"]
-    assert_manifest(manifest)
+    assert_manifest(manifest, {"category", "priority", "age_minutes"})
+
+
+def test_post_outcome_feature_is_rejected() -> None:
+    manifest = build_manifest(source_frame())
+    with pytest.raises(AssertionError, match="leak the target"):
+        assert_manifest(manifest, {"category", "closed_at"})
+
+
+def test_one_entity_cannot_cross_splits() -> None:
+    frame = source_frame()
+    frame.loc[2, "entity_id"] = 101
+    with pytest.raises(AssertionError):
+        assert_manifest(build_manifest(frame), {"category"})
+
+
+def test_problem_card_requires_train_only_preprocessing() -> None:
+    card = dict(PROBLEM_CARD, preprocessing_fit_scope="fit-before-split")
+    with pytest.raises(AssertionError):
+        assert_problem_card(card)

@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue'
 
-export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type WorkOrderStatus = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 
 export type WorkOrderSummary = Readonly<{
   id: string
@@ -19,6 +19,6 @@ export const workOrderRepositoryKey: InjectionKey<WorkOrderRepository> = Symbol(
 export const demoOrders: readonly WorkOrderSummary[] = [
   { id: 'WO-1001', title: '主轴温度异常', status: 'CREATED' },
   { id: 'WO-1002', title: '液压站压力波动', status: 'IN_PROGRESS' },
-  { id: 'WO-1003', title: '输送带防护罩复位', status: 'COMPLETED' },
+  { id: 'WO-1003', title: '输送带防护罩复位', status: 'RESOLVED' },
 ]
 

@@ -81,6 +81,15 @@ outcomes:
 ---
 # 复杂度、搜索、排序与基础数据结构选择
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Set、Map、键相等性与哈希契约》](ch.java-engineering.associative-collections.md)：独立完成复杂度与规模、搜索排序与结构前，必须先具备「Set、Map、键相等性与哈希契约」已经验证的知识与失败边界
+- [《Comparable、Comparator 与稳定排序》](ch.java-engineering.sorting-comparators.md)：独立完成复杂度与规模、搜索排序与结构前，必须先具备「Comparable、Comparator 与稳定排序」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。局部 oracle 只验证固定输入的结果、操作次数和趋势，不等于生产性能证明；P9 的零基础试读、人工版式/无障碍检查、独立全面审查和全仓回归尚未执行，章节不能据此成为 `verified`，也不会修改 `PROGRESS.md`。
 
 程序在 10 条数据上“一瞬间完成”，不代表 100 万条仍可接受。反过来，一段在共享笔记本上偶尔慢 2 毫秒的代码，也不能仅凭一次墙钟读数被判定为算法问题。复杂度提供一种与具体机器分开的语言：先定义输入规模 n，再数核心操作如何随 n 增长，最后结合常数、内存、数据分布和真实测量做选择。

@@ -11,6 +11,8 @@ require "rbconfig"
 require "set"
 require "uri"
 require "yaml"
+require_relative "lib/chapter_prerequisite_block"
+require_relative "lib/factorycare_status_contract"
 
 ROOT = File.expand_path("..", __dir__) unless defined?(ROOT)
 CATALOG_RELATIVE = "curriculum/catalog.yml"
@@ -25,7 +27,7 @@ LEGACY_CHAPTER_ID_PATTERN = /v\d{2}\.c\d{2}\.[a-z0-9-]+/.freeze
 CURRICULUM_GENERATOR = "scripts/generate-curriculum.rb"
 PLANNED_PLACEHOLDER_MARKER = "GENERATED: factorycare-planned-placeholder; safe-to-overwrite: planned-only"
 BASE_CATALOG_FIELDS = %w[
-  id title responsibility volume order level prerequisites outcomes status route_tags stable_core
+  id title responsibility volume order level prerequisites prerequisite_rationales outcomes status route_tags stable_core
   version_surfaces path recommended_after capabilities spec_digest
 ].freeze
 BASE_FRONT_MATTER_FIELDS = %w[
@@ -665,6 +667,9 @@ class EncyclopediaValidator
     validate_canonical_input_set(catalog) if errors.empty?
     site_config = validate_site_config(catalog)
     validate_edition_alignment(registry, catalog, site_config)
+    status_contract = FactoryCareStatusContract.validate(@root)
+    errors.concat(status_contract.fetch(:errors))
+    stats[:factorycare_status_files] = status_contract.fetch(:scanned_files)
     validate_generated if @check_generated && errors.empty?
     report
     errors.empty?
@@ -859,6 +864,9 @@ class EncyclopediaValidator
       return catalog.merge("chapters" => [])
     end
 
+    @chapters_by_id = chapters.select { |chapter| chapter.is_a?(Hash) && chapter["id"].is_a?(String) }
+                              .each_with_object({}) { |chapter, memo| memo[chapter["id"]] = chapter }
+
     registry_entries = registry.fetch("entries", []).select { |entry| entry.is_a?(Hash) && entry["id"].is_a?(String) }
     registry_by_id = registry_entries.each_with_object({}) { |entry, memo| memo[entry["id"]] = entry }
     registry_ids = registry_by_id.keys.to_set
@@ -888,9 +896,20 @@ class EncyclopediaValidator
       errors << "#{CATALOG_RELATIVE}: #{id} has invalid level #{chapter["level"].inspect}" unless ALLOWED_LEVELS.include?(chapter["level"])
       errors << "#{CATALOG_RELATIVE}: #{id} has invalid status #{chapter["status"].inspect}" unless ALLOWED_STATUSES.include?(chapter["status"])
       validate_outcome_contract("#{CATALOG_RELATIVE}: #{id}", catalog_outcomes(chapter), chapter)
-      catalog_prerequisites(chapter).each do |dependency|
+      prerequisites = catalog_prerequisites(chapter)
+      rationales = chapter["prerequisite_rationales"]
+      unless rationales.is_a?(Hash) && rationales.keys.sort == prerequisites.sort
+        errors << "#{CATALOG_RELATIVE}: #{id} prerequisite rationale keys must exactly match prerequisites"
+      end
+      prerequisites.each do |dependency|
         unless dependency.is_a?(String) && dependency.match?(CHAPTER_ID_PATTERN)
           errors << "#{CATALOG_RELATIVE}: #{id} has invalid semantic prerequisite #{dependency.inspect}"
+        end
+        errors << "#{CATALOG_RELATIVE}: #{id} references unknown prerequisite #{dependency}" unless @chapters_by_id.key?(dependency)
+        rationale = rationales.is_a?(Hash) ? rationales[dependency] : nil
+        reason = rationale.is_a?(Hash) ? rationale["reason"] : nil
+        unless reason.is_a?(String) && !reason.strip.empty? && !reason.include?("\n")
+          errors << "#{CATALOG_RELATIVE}: #{id} prerequisite #{dependency} must have a one-line reason"
         end
       end
       recommended_after = chapter["recommended_after"]
@@ -1066,6 +1085,7 @@ class EncyclopediaValidator
     authoring_missing = AUTHORING_FIELDS.reject { |field| metadata.key?(field) }
     errors << "#{relative}: #{status} chapter missing authoring metadata #{authoring_missing.join(", ")}" unless authoring_missing.empty?
     validate_outcome_contract(relative, metadata["outcomes"], chapter) if metadata.key?("outcomes")
+    validate_learning_prerequisite_block(chapter, relative, body)
     return unless %w[review verified].include?(status)
 
     review_missing = REVIEW_FIELDS.reject { |field| metadata.key?(field) }
@@ -1074,6 +1094,30 @@ class EncyclopediaValidator
     validate_review_body(relative, body, status)
   rescue Psych::Exception, StrictYaml::DuplicateKeyError, StrictYaml::UnsupportedKeyError => e
     errors << "#{relative}: invalid front matter YAML: #{e.message.lines.first.to_s.strip}"
+  end
+
+  def validate_learning_prerequisite_block(chapter, relative, body)
+    expected = ChapterPrerequisiteBlock.synchronize(
+      body,
+      chapter: chapter,
+      chapters_by_id: @chapters_by_id
+    )
+    unless expected == body
+      errors << "#{relative}: learning prerequisite block must appear exactly once after the H1 and match catalog titles, links, and reasons"
+    end
+
+    catalog_prerequisites(chapter).each do |dependency_id|
+      dependency = @chapters_by_id[dependency_id]
+      next unless dependency
+
+      link = ChapterPrerequisiteBlock.relative_link(relative, dependency.fetch("path"))
+      resolved = File.expand_path(link, File.dirname(absolute(relative)))
+      unless resolved == absolute(dependency.fetch("path")) && File.file?(resolved)
+        errors << "#{relative}: prerequisite link for #{dependency_id} does not resolve to its catalog chapter"
+      end
+    end
+  rescue ChapterPrerequisiteBlock::ContractError, KeyError => e
+    errors << "#{relative}: invalid learning prerequisite block contract: #{e.message}"
   end
 
   def validate_review_metadata(relative, metadata, chapter, registry_ids, registry_by_id, verified:)
@@ -1338,6 +1382,7 @@ class EncyclopediaValidator
     puts "registry_entries=#{stats.fetch(:registry_entries, 0)}"
     puts "referenced_version_surfaces=#{stats.fetch(:referenced_surfaces, 0)}"
     puts "supplemental_registry_entries=#{stats.fetch(:unreferenced_registry_entries, 0)}"
+    puts "factorycare_status_files=#{stats.fetch(:factorycare_status_files, 0)}"
     puts "generated=#{stats.fetch(:generated, @check_generated ? "missing" : "not-checked") }"
     puts "content_truth=not-asserted"
     warnings.each { |warning| puts "WARN: #{warning}" }

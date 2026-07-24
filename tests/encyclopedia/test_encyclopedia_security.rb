@@ -11,6 +11,7 @@ require "rbconfig"
 require "tmpdir"
 require "yaml"
 require_relative "../../scripts/lib/curriculum_compiler"
+require_relative "../../scripts/lib/chapter_prerequisite_block"
 
 class EncyclopediaSecurityTest < Minitest::Test
   ROOT = Pathname(__dir__).join("../..").expand_path.freeze
@@ -224,7 +225,20 @@ class EncyclopediaSecurityTest < Minitest::Test
   def planned_chapter_context(root)
     catalog = load_yaml(root.join("curriculum/catalog.yml"))
     index = catalog.fetch("chapters").index { |chapter| chapter.fetch("status") == "planned" }
-    raise "fixture catalog lacks a planned chapter" unless index
+    unless index
+      # The production catalog can legitimately reach an all-drafting state.
+      # Build a planned placeholder inside this isolated fixture so the
+      # generator-ownership security contract remains testable without
+      # depending on the repository's current authoring progress.
+      index = 0
+      chapter = catalog.fetch("chapters").fetch(index)
+      volume_spec_path = root.join("curriculum/chapters/volume-#{chapter.fetch("volume")}.yml")
+      volume_spec = load_yaml(volume_spec_path)
+      source_chapter = volume_spec.fetch("chapters").find { |entry| entry.fetch("id") == chapter.fetch("id") }
+      source_chapter["status"] = "planned"
+      write_yaml(volume_spec_path, volume_spec)
+      render_curriculum_outputs(root)
+    end
 
     chapter_context(root, index: index)
   end
@@ -335,6 +349,8 @@ class EncyclopediaSecurityTest < Minitest::Test
     }
     body = <<~MARKDOWN
       # #{chapter.fetch("title")}
+
+      #{ChapterPrerequisiteBlock.render(chapter: chapter, chapters_by_id: catalog.fetch("chapters").to_h { |entry| [entry.fetch("id"), entry] })}
 
       本章正文用于验证发布契约。它明确区分概念、适用边界、反例和可重复证据，并要求读者独立完成任务。这里的文字不是架构声明，也不是用构建成功代替技术正确性的自证。#{"可验证内容需要清晰来源、失败路径和复核记录。" * 5}
 
@@ -724,9 +740,11 @@ class EncyclopediaSecurityTest < Minitest::Test
 
     with_fixture do |root|
       catalog = load_yaml(root.join("curriculum/catalog.yml"))
-      chapter = root.join(catalog.fetch("chapters").first.fetch("path"))
+      chapter_entry = catalog.fetch("chapters").first
+      chapter = root.join(chapter_entry.fetch("path"))
       contents = File.read(chapter, encoding: "UTF-8")
-      contents.sub!("status: planned\n", "status: planned\nstatus: planned\n")
+      status_line = "status: #{chapter_entry.fetch("status")}\n"
+      contents.sub!(status_line, "#{status_line}#{status_line}")
       File.binwrite(chapter, contents)
 
       assert_failed validator(root), /duplicate mapping key "status"/
@@ -973,7 +991,63 @@ class EncyclopediaSecurityTest < Minitest::Test
       result = validator(root)
       assert_failed result, /#{Regexp.escape(context.fetch(:chapter).fetch("id"))} verified hard-prerequisite closure contains non-verified chapters/
       dependency = context.fetch(:chapter).fetch("prerequisites").first
-      assert_match(/#{Regexp.escape(dependency)}\(planned\)/, result.output)
+      dependency_status = load_yaml(root.join("curriculum/catalog.yml")).fetch("chapters")
+        .find { |chapter| chapter.fetch("id") == dependency }.fetch("status")
+      assert_match(/#{Regexp.escape(dependency)}\(#{Regexp.escape(dependency_status)}\)/, result.output)
+    end
+  end
+
+  def test_drafting_chapter_requires_one_canonical_learning_prerequisite_block
+    with_fixture do |root|
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      index = catalog.fetch("chapters").index { |chapter| !chapter.fetch("prerequisites").empty? }
+      context = chapter_context(root, index: index)
+      block_pattern = /^#{Regexp.escape(ChapterPrerequisiteBlock::BEGIN_MARKER)}\n.*?^#{Regexp.escape(ChapterPrerequisiteBlock::END_MARKER)}\n?/m
+      context[:body] = context.fetch(:body).sub(block_pattern, "")
+      save_chapter(root, context)
+
+      assert_failed validator(root), /learning prerequisite block must appear exactly once after the H1/
+    end
+  end
+
+  def test_learning_prerequisite_block_link_and_reason_must_match_catalog
+    with_fixture do |root|
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      index = catalog.fetch("chapters").index { |chapter| !chapter.fetch("prerequisites").empty? }
+      chapter = catalog.fetch("chapters").fetch(index)
+      context = chapter_context(root, index: index)
+      dependency_id = chapter.fetch("prerequisites").first
+      reason = chapter.fetch("prerequisite_rationales").fetch(dependency_id).fetch("reason")
+      context[:body] = context.fetch(:body).sub(reason, "被篡改的先修理由")
+      context[:body] = context.fetch(:body).sub(/\]\([^)]+\.md\)/, "](missing-prerequisite.md)")
+      save_chapter(root, context)
+
+      assert_failed validator(root), /learning prerequisite block must appear exactly once after the H1 and match catalog titles, links, and reasons/
+    end
+  end
+
+  def test_root_chapter_requires_explicit_no_programming_prerequisite_message
+    with_fixture do |root|
+      catalog = load_yaml(root.join("curriculum/catalog.yml"))
+      index = catalog.fetch("chapters").index { |chapter| chapter.fetch("prerequisites").empty? }
+      context = chapter_context(root, index: index)
+      context[:body] = context.fetch(:body).sub(ChapterPrerequisiteBlock::ROOT_MESSAGE, "没有前置要求。")
+      save_chapter(root, context)
+
+      assert_failed validator(root), /learning prerequisite block must appear exactly once after the H1 and match catalog titles, links, and reasons/
+    end
+  end
+
+  def test_catalog_prerequisite_reason_is_mandatory
+    with_fixture do |root|
+      catalog_path = root.join("curriculum/catalog.yml")
+      catalog = load_yaml(catalog_path)
+      chapter = catalog.fetch("chapters").find { |entry| !entry.fetch("prerequisites").empty? }
+      dependency_id = chapter.fetch("prerequisites").first
+      chapter.fetch("prerequisite_rationales").fetch(dependency_id)["reason"] = ""
+      write_yaml(catalog_path, catalog)
+
+      assert_failed validator(root), /prerequisite #{Regexp.escape(dependency_id)} must have a one-line reason/
     end
   end
 

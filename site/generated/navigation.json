@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "edition": "2026.2-draft",
-  "input_digest": "2b4eeb90a5eefab272d753e3362075437892fb0532e29081a387e468ab1fc0a6",
+  "input_digest": "b383e5a6c4623dcdaa1864ba6b395074b8ff34389a67e53e52ad25c7f8002c76",
   "volumes": [
     {
       "id": "00",
@@ -1590,7 +1590,7 @@
           "title": "Dart SDK、CLI、pubspec 与包工具",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.toolchain.md",
           "publishable": false
         },
@@ -1599,7 +1599,7 @@
           "title": "变量、类型、运算符与空安全",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.types-null-safety.md",
           "publishable": false
         },
@@ -1608,7 +1608,7 @@
           "title": "条件、循环、函数、参数与返回值",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.control-functions.md",
           "publishable": false
         },
@@ -1617,7 +1617,7 @@
           "title": "List、Map、Set、record、模式与解构",
           "order": 4,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.collections-patterns.md",
           "publishable": false
         },
@@ -1626,7 +1626,7 @@
           "title": "类、泛型、mixin、extension 与对象边界",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.oop-generics.md",
           "publishable": false
         },
@@ -1635,7 +1635,7 @@
           "title": "异常、资源所有权与错误建模",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.exceptions-resources.md",
           "publishable": false
         },
@@ -1644,7 +1644,7 @@
           "title": "Future、async/await、超时与取消协议",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.future-cancellation.md",
           "publishable": false
         },
@@ -1653,7 +1653,7 @@
           "title": "Stream、背压边界、Isolate 与并发",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.streams-isolates.md",
           "publishable": false
         },
@@ -1662,7 +1662,7 @@
           "title": "Dart test、断言、Mock、lint 与包质量",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.dart.testing-lints.md",
           "publishable": false
         },
@@ -1671,7 +1671,7 @@
           "title": "Flutter SDK、项目结构、run、hot reload 与 DevTools",
           "order": 10,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.toolchain-project.md",
           "publishable": false
         },
@@ -1680,7 +1680,7 @@
           "title": "MaterialApp、基础 Widget、Widget 树与 BuildContext",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.widget-tree.md",
           "publishable": false
         },
@@ -1689,7 +1689,7 @@
           "title": "约束布局、响应式、渲染与无障碍",
           "order": 12,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.layout-accessibility.md",
           "publishable": false
         },
@@ -1698,7 +1698,7 @@
           "title": "状态、生命周期、mounted、Key 与异步更新",
           "order": 13,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.state-lifecycle.md",
           "publishable": false
         },
@@ -1707,7 +1707,7 @@
           "title": "导航、路由、表单与页面契约",
           "order": 14,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.navigation-forms.md",
           "publishable": false
         },
@@ -1716,7 +1716,7 @@
           "title": "状态管理、模块边界与依赖方向",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.architecture-state.md",
           "publishable": false
         },
@@ -1725,7 +1725,7 @@
           "title": "网络取消、安全存储、缓存与离线队列",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.network-storage-offline.md",
           "publishable": false
         },
@@ -1734,7 +1734,7 @@
           "title": "相机、扫码、定位、权限与平台通道",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.device-apis.md",
           "publishable": false
         },
@@ -1743,7 +1743,7 @@
           "title": "Widget/集成/Golden 测试、性能与内存分析",
           "order": 18,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.testing-performance.md",
           "publishable": false
         },
@@ -1752,7 +1752,7 @@
           "title": "构建、签名、发布、符号与崩溃监控",
           "order": 19,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-11-dart-flutter/chapters/ch.flutter.release-monitoring.md",
           "publishable": false
         }
@@ -1767,7 +1767,7 @@
           "title": "Python 运行时、uv、虚拟环境与依赖",
           "order": 1,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.runtime-uv.md",
           "publishable": false
         },
@@ -1776,7 +1776,7 @@
           "title": "语句、变量、对象、表达式与基础输入输出",
           "order": 2,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.syntax-values-io.md",
           "publishable": false
         },
@@ -1785,7 +1785,7 @@
           "title": "条件、循环与控制转移",
           "order": 3,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.control-flow.md",
           "publishable": false
         },
@@ -1794,7 +1794,7 @@
           "title": "函数、参数、返回值与作用域",
           "order": 4,
           "level": "L1",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.functions-scope.md",
           "publishable": false
         },
@@ -1803,7 +1803,7 @@
           "title": "list、tuple、dict、set 与推导式",
           "order": 5,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.collections.md",
           "publishable": false
         },
@@ -1812,7 +1812,7 @@
           "title": "基础类型标注、联合、容器类型与类型检查器",
           "order": 6,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.typing-foundations.md",
           "publishable": false
         },
@@ -1821,7 +1821,7 @@
           "title": "模块、包、导入与项目布局",
           "order": 7,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.modules-packages.md",
           "publishable": false
         },
@@ -1830,7 +1830,7 @@
           "title": "Path、编码、文件、JSON 与时间数据",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.files-json-time.md",
           "publishable": false
         },
@@ -1839,7 +1839,7 @@
           "title": "类、对象模型、dataclass 与 enum",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.classes-dataclass.md",
           "publishable": false
         },
@@ -1848,7 +1848,7 @@
           "title": "泛型、Protocol、Callable 与结构类型",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.protocol-generics.md",
           "publishable": false
         },
@@ -1857,7 +1857,7 @@
           "title": "异常、上下文管理器与资源清理",
           "order": 11,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.exceptions-context.md",
           "publishable": false
         },
@@ -1866,7 +1866,7 @@
           "title": "迭代器、生成器、惰性计算与装饰器",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.iterators-decorators.md",
           "publishable": false
         },
@@ -1875,7 +1875,7 @@
           "title": "pytest、fixture、Mock、日志与调试证据",
           "order": 13,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.testing-logging-debug.md",
           "publishable": false
         },
@@ -1884,7 +1884,7 @@
           "title": "asyncio、Task、超时、取消与结构化并发边界",
           "order": 14,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.asyncio-cancellation.md",
           "publishable": false
         },
@@ -1893,7 +1893,7 @@
           "title": "Pydantic 模型、校验、序列化与错误",
           "order": 15,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.python.pydantic-validation.md",
           "publishable": false
         },
@@ -1902,7 +1902,7 @@
           "title": "FastAPI 路由、依赖、请求响应与错误",
           "order": 16,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.fastapi.web-foundations.md",
           "publishable": false
         },
@@ -1911,7 +1911,7 @@
           "title": "FastAPI 安全集成、测试与 OpenAPI 合同",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.fastapi.security-testing-openapi.md",
           "publishable": false
         },
@@ -1920,7 +1920,7 @@
           "title": "NumPy 数组、形状、广播与向量化",
           "order": 18,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.data.numpy.md",
           "publishable": false
         },
@@ -1929,7 +1929,7 @@
           "title": "Pandas 表格、缺失值、连接与数据清洗",
           "order": 19,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-12-python-data/chapters/ch.data.pandas.md",
           "publishable": false
         }
@@ -1944,7 +1944,7 @@
           "title": "算术、比例、单位、代数式与方程",
           "order": 1,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.math.algebra-units.md",
           "publishable": false
         },
@@ -1953,7 +1953,7 @@
           "title": "函数、坐标、图像、斜率、指数、对数与求和",
           "order": 2,
           "level": "L1-L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.math.functions-graphs.md",
           "publishable": false
         },
@@ -1962,7 +1962,7 @@
           "title": "向量、矩阵、张量、形状与运算",
           "order": 3,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.math.linear-algebra.md",
           "publishable": false
         },
@@ -1971,7 +1971,7 @@
           "title": "概率、统计、分布、期望与方差",
           "order": 4,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md",
           "publishable": false
         },
@@ -1980,7 +1980,7 @@
           "title": "导数、梯度、链式法则与优化",
           "order": 5,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.math.gradients.md",
           "publishable": false
         },
@@ -1989,7 +1989,7 @@
           "title": "问题定义、数据集、划分与数据泄漏",
           "order": 6,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.problem-data-split.md",
           "publishable": false
         },
@@ -1998,7 +1998,7 @@
           "title": "清洗、编码、缩放、特征与 Pipeline",
           "order": 7,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.preprocessing-features.md",
           "publishable": false
         },
@@ -2007,7 +2007,7 @@
           "title": "回归、分类与决策边界",
           "order": 8,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.supervised-learning.md",
           "publishable": false
         },
@@ -2016,7 +2016,7 @@
           "title": "聚类、降维与无监督结果边界",
           "order": 9,
           "level": "L2",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.unsupervised-learning.md",
           "publishable": false
         },
@@ -2025,7 +2025,7 @@
           "title": "指标、基线、交叉验证与误差分析",
           "order": 10,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.metrics-validation.md",
           "publishable": false
         },
@@ -2034,7 +2034,7 @@
           "title": "神经网络、损失、反向传播与优化器",
           "order": 11,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.neural-networks.md",
           "publishable": false
         },
@@ -2043,7 +2043,7 @@
           "title": "Softmax、序列表示、注意力与 Transformer 桥接",
           "order": 12,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.attention-sequences.md",
           "publishable": false
         },
@@ -2052,7 +2052,7 @@
           "title": "Tensor、Dataset、Module 与 Autograd",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.pytorch.foundations.md",
           "publishable": false
         },
@@ -2061,7 +2061,7 @@
           "title": "训练循环、复现、过拟合、评估与调参",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.pytorch.training.md",
           "publishable": false
         },
@@ -2070,7 +2070,7 @@
           "title": "保存、加载、推理、批处理与服务边界",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.pytorch.inference.md",
           "publishable": false
         },
@@ -2079,7 +2079,7 @@
           "title": "漂移、监控、公平性、伦理与使用边界",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-13-ml-pytorch/chapters/ch.ml.monitoring-ethics.md",
           "publishable": false
         }
@@ -2094,7 +2094,7 @@
           "title": "Transformer、Token、上下文与 Embedding 心智模型",
           "order": 1,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.model-foundations.md",
           "publishable": false
         },
@@ -2103,7 +2103,7 @@
           "title": "模型 API、消息、提示、Token 与成本",
           "order": 2,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.api-prompts-cost.md",
           "publishable": false
         },
@@ -2112,7 +2112,7 @@
           "title": "结构化输出、Schema 与运行时校验",
           "order": 3,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.structured-output.md",
           "publishable": false
         },
@@ -2121,7 +2121,7 @@
           "title": "流式输出、重试、超时、取消与降级",
           "order": 4,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.streaming-resilience.md",
           "publishable": false
         },
@@ -2130,7 +2130,7 @@
           "title": "工具调用、参数验证与信任边界",
           "order": 5,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.llm.tool-calling.md",
           "publishable": false
         },
@@ -2139,7 +2139,7 @@
           "title": "文档解析、清洗、权限元数据与可追溯性",
           "order": 6,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.rag.ingestion-metadata.md",
           "publishable": false
         },
@@ -2148,7 +2148,7 @@
           "title": "分块、Embedding、批处理与语料管线",
           "order": 7,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.rag.chunking-embeddings.md",
           "publishable": false
         },
@@ -2157,7 +2157,7 @@
           "title": "词项、倒排索引、TF-IDF 与 BM25",
           "order": 8,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.ir.lexical-retrieval.md",
           "publishable": false
         },
@@ -2166,7 +2166,7 @@
           "title": "固定查询集、相关性标签、Precision、Recall 与排序指标",
           "order": 9,
           "level": "L2+",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.ir.evaluation.md",
           "publishable": false
         },
@@ -2175,7 +2175,7 @@
           "title": "向量检索、pgvector、索引与距离",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.ir.dense-pgvector.md",
           "publishable": false
         },
@@ -2184,7 +2184,7 @@
           "title": "稀疏/稠密混合检索、候选融合与重排",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.ir.hybrid-rerank.md",
           "publishable": false
         },
@@ -2193,7 +2193,7 @@
           "title": "RAG 生成、引用、测试集与端到端评估",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.rag.citations-evaluation.md",
           "publishable": false
         },
@@ -2202,7 +2202,7 @@
           "title": "提示注入、ACL、PII、日志与可观测性",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.rag.security-observability.md",
           "publishable": false
         },
@@ -2211,7 +2211,7 @@
           "title": "LangChain 组件、直接 SDK 对照与边界",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.agent.langchain.md",
           "publishable": false
         },
@@ -2220,7 +2220,7 @@
           "title": "LangGraph 状态、检查点、恢复与人工审批",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.agent.langgraph.md",
           "publishable": false
         },
@@ -2229,7 +2229,7 @@
           "title": "MCP、Agent 模式/反模式与 Java/Python 职责边界",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-14-llm-rag-agents/chapters/ch.agent.mcp-boundaries.md",
           "publishable": false
         }
@@ -2244,7 +2244,7 @@
           "title": "Linux 用户、文件、权限、进程与服务",
           "order": 1,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.linux-services.md",
           "publishable": false
         },
@@ -2253,7 +2253,7 @@
           "title": "DNS、端口、代理、TCP、TLS 与网络诊断",
           "order": 2,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.network-diagnostics.md",
           "publishable": false
         },
@@ -2262,7 +2262,7 @@
           "title": "镜像层、容器、卷、网络与运行时边界",
           "order": 3,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.docker-production.md",
           "publishable": false
         },
@@ -2271,7 +2271,7 @@
           "title": "Compose 多服务、配置、健康检查与依赖",
           "order": 4,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.compose-services.md",
           "publishable": false
         },
@@ -2280,7 +2280,7 @@
           "title": "Nginx、TLS、反向代理与静态资源",
           "order": 5,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.nginx-tls.md",
           "publishable": false
         },
@@ -2289,7 +2289,7 @@
           "title": "CI 流水线、测试门禁与失败证据",
           "order": 6,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.release.ci-quality.md",
           "publishable": false
         },
@@ -2298,7 +2298,7 @@
           "title": "制品、来源证明、环境晋级与发布元数据",
           "order": 7,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.release.artifacts-promotion.md",
           "publishable": false
         },
@@ -2307,7 +2307,7 @@
           "title": "配置、密钥、依赖、SBOM 与供应链",
           "order": 8,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.config-secrets-supply-chain.md",
           "publishable": false
         },
@@ -2316,7 +2316,7 @@
           "title": "结构化日志、关联 ID 与健康检查",
           "order": 9,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.logs-health.md",
           "publishable": false
         },
@@ -2325,7 +2325,7 @@
           "title": "指标、链路、SLI/SLO、告警与噪声",
           "order": 10,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.metrics-traces-slo.md",
           "publishable": false
         },
@@ -2334,7 +2334,7 @@
           "title": "备份、恢复、RPO/RTO 与恢复演练",
           "order": 11,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.backup-recovery.md",
           "publishable": false
         },
@@ -2343,7 +2343,7 @@
           "title": "容量、负载模型、性能测试与瓶颈证据",
           "order": 12,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.capacity-performance.md",
           "publishable": false
         },
@@ -2352,7 +2352,7 @@
           "title": "部署、expand-contract、前向修复与回滚",
           "order": 13,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.release.deployment-migrations.md",
           "publishable": false
         },
@@ -2361,7 +2361,7 @@
           "title": "事故响应、灾难恢复、复盘与改进闭环",
           "order": 14,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.ops.incident-dr.md",
           "publishable": false
         },
@@ -2370,7 +2370,7 @@
           "title": "需求、边界、容量、可靠性与系统设计取舍",
           "order": 15,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.architecture.system-design.md",
           "publishable": false
         },
@@ -2379,7 +2379,7 @@
           "title": "FactoryCare 端到端验收与可回滚发布",
           "order": 16,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.release.factorycare-acceptance.md",
           "publishable": false
         },
@@ -2388,7 +2388,7 @@
           "title": "作品集、技术表达、岗位映射与面试复盘",
           "order": 17,
           "level": "L3",
-          "status": "planned",
+          "status": "drafting",
           "path": "book/volume-15-production-factorycare/chapters/ch.portfolio.interview.md",
           "publishable": false
         }

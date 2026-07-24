@@ -90,6 +90,15 @@ outcomes:
 ---
 # 固定查询集、相关性标签、Precision、Recall 与排序指标
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《词项、倒排索引、TF-IDF 与 BM25》](ch.ir.lexical-retrieval.md)：评估必须作用于可复现的候选列表和词法基线。
+- [《概率、统计、分布、期望与方差》](../../volume-13-ml-pytorch/chapters/ch.math.probability-statistics.md)：指标聚合、抽样误差和切片比较需要统计基础。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > “第一条结果看起来不错”不是检索质量证据。检索评估必须先有独立查询与相关性判断，再冻结数据，用同一批输入比较系统。本章只评价候选排名，不调用生成模型补答案，也不允许生成文本掩盖零召回。
 
 ## 1. 为什么先评检索，再谈 RAG

@@ -14,15 +14,15 @@
     },
     {
       "name": "status-only",
-      "filter": {"status": "OPEN"},
+      "filter": {"status": "CREATED"},
       "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order WHERE status = ? ORDER BY created_at DESC, id DESC",
-      "expected_binds": ["OPEN"]
+      "expected_binds": ["CREATED"]
     },
     {
       "name": "injection-is-a-value",
-      "filter": {"status": "OPEN' OR '1'='1"},
+      "filter": {"status": "CREATED' OR '1'='1"},
       "expected_sql": "SELECT id, work_order_no, title, status, assignee_id, created_at FROM work_order WHERE status = ? ORDER BY created_at DESC, id DESC",
-      "expected_binds": ["OPEN' OR '1'='1"]
+      "expected_binds": ["CREATED' OR '1'='1"]
     },
     {
       "name": "ids-and-ascending-sort",

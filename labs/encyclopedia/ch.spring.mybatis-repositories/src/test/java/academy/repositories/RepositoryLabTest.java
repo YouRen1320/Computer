@@ -25,14 +25,14 @@ class RepositoryLabTest {
 
     @Test void boundaryIsFrameworkFreeAndMapperIsMarked(){assertThat(WorkOrderRepository.class.getAnnotations()).isEmpty();assertThat(WorkOrderMapper.class).hasAnnotation(Mapper.class);}
     @Test void sqlContainsTenantIdAndVersionConditions() throws Exception {Method find=WorkOrderMapper.class.getMethod("find",String.class,String.class);String read=find.getAnnotation(Select.class).value()[0];Method update=WorkOrderMapper.class.getMethod("update",String.class,String.class,long.class,String.class);String write=update.getAnnotation(Update.class).value()[0];assertThat(read).contains("tenant_id=#{tenantId}","id=#{id}");assertThat(write).contains("tenant_id=#{tenantId}","id=#{id}","version=#{expectedVersion}");}
-    @Test void existingRowReconstructsDomain(){var expected=work(tenant,id,Status.OPEN,0);repository.save(expected);assertThat(repository.find(tenant,id)).contains(expected);}
+    @Test void existingRowReconstructsDomain(){var expected=work(tenant,id,Status.CREATED,0);repository.save(expected);assertThat(repository.find(tenant,id)).contains(expected);}
     @Test void missingRowIsEmpty(){assertThat(repository.find(tenant,id)).isEmpty();}
-    @Test void sameIdInAnotherTenantDoesNotLeak(){var other=new TenantId("plant-b");repository.save(work(other,id,Status.OPEN,0));assertThat(repository.find(tenant,id)).isEmpty();assertThat(repository.find(other,id)).isPresent();}
+    @Test void sameIdInAnotherTenantDoesNotLeak(){var other=new TenantId("plant-b");repository.save(work(other,id,Status.CREATED,0));assertThat(repository.find(tenant,id)).isEmpty();assertThat(repository.find(other,id)).isPresent();}
     @Test void savePersistsOneRow(){repository.save(work(tenant,id,Status.IN_PROGRESS,4));assertThat(repository.find(tenant,id).orElseThrow().version()).isEqualTo(4);}
-    @Test void matchingVersionUpdates(){repository.save(work(tenant,id,Status.OPEN,1));assertThat(repository.updateStatus(tenant,id,1,Status.DONE)).isEqualTo(UpdateOutcome.UPDATED);assertThat(repository.find(tenant,id).orElseThrow()).isEqualTo(work(tenant,id,Status.DONE,2));}
-    @Test void staleVersionClassifiesConflict(){repository.save(work(tenant,id,Status.OPEN,1));assertThat(repository.updateStatus(tenant,id,0,Status.DONE)).isEqualTo(UpdateOutcome.VERSION_CONFLICT);}
-    @Test void missingTargetClassifiesNotFound(){assertThat(repository.updateStatus(tenant,id,0,Status.DONE)).isEqualTo(UpdateOutcome.NOT_FOUND);}
+    @Test void matchingVersionUpdates(){repository.save(work(tenant,id,Status.CREATED,1));assertThat(repository.updateStatus(tenant,id,1,Status.CLOSED)).isEqualTo(UpdateOutcome.UPDATED);assertThat(repository.find(tenant,id).orElseThrow()).isEqualTo(work(tenant,id,Status.CLOSED,2));}
+    @Test void staleVersionClassifiesConflict(){repository.save(work(tenant,id,Status.CREATED,1));assertThat(repository.updateStatus(tenant,id,0,Status.CLOSED)).isEqualTo(UpdateOutcome.VERSION_CONFLICT);}
+    @Test void missingTargetClassifiesNotFound(){assertThat(repository.updateStatus(tenant,id,0,Status.CLOSED)).isEqualTo(UpdateOutcome.NOT_FOUND);}
     @Test void databaseExceptionIsTranslated() throws Exception {try(var c=dataSource.getConnection();var s=c.createStatement()){s.execute("drop table work_order");}assertThatThrownBy(()->repository.find(tenant,id)).isInstanceOf(RepositoryUnavailableException.class).hasCauseInstanceOf(org.springframework.dao.DataAccessException.class);}
-    @Test void upperTransactionOwnsRollback(){var tx=new TransactionTemplate(new DataSourceTransactionManager(dataSource));tx.executeWithoutResult(status->{repository.save(work(tenant,id,Status.OPEN,0));status.setRollbackOnly();});assertThat(repository.find(tenant,id)).isEmpty();}
+    @Test void upperTransactionOwnsRollback(){var tx=new TransactionTemplate(new DataSourceTransactionManager(dataSource));tx.executeWithoutResult(status->{repository.save(work(tenant,id,Status.CREATED,0));status.setRollbackOnly();});assertThat(repository.find(tenant,id)).isEmpty();}
     private static WorkOrder work(TenantId t,WorkOrderId i,Status s,long v){return new WorkOrder(t,i,s,v);}
 }

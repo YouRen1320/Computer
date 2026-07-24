@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.sql" >"$TMP_ROOT/actual.out" 2>&1; then
 fi
 grep -F "answer-error=every analytical window must partition by technician" "$TMP_ROOT/actual.out" >/dev/null
 echo "WINDOW FUNCTIONS EXERCISE STARTER EXPECTED FAILURE"
+exit 41

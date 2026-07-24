@@ -11,7 +11,7 @@
   },
   {
     "id": "wrong-cte-intermediate",
-    "broken": "unfinished_devices 使用 w.status = 'DONE'",
+    "broken": "unfinished_devices 使用 w.status = 'CLOSED'",
     "prediction": "第一层错误变为 D-01,D-03；先查中间集即可定位"
   }
 ]

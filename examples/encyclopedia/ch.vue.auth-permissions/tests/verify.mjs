@@ -52,9 +52,9 @@ const server = createPolicyServer({
     admin: { tenantId: 'T1', capabilities: ['work-order.delete'] },
   },
   orders: {
-    'WO-1': { tenantId: 'T1', status: 'OPEN' },
-    'WO-2': { tenantId: 'T2', status: 'OPEN' },
-    'WO-3': { tenantId: 'T1', status: 'COMPLETED' },
+    'WO-1': { tenantId: 'T1', status: 'CREATED' },
+    'WO-2': { tenantId: 'T2', status: 'CREATED' },
+    'WO-3': { tenantId: 'T1', status: 'RESOLVED' },
   },
 })
 assert.equal(server.deleteWorkOrder({ subjectId: null, workOrderId: 'WO-1' }).status, 401)

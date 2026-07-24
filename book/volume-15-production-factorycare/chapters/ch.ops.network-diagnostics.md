@@ -92,6 +92,15 @@ outcomes:
 ---
 # DNS、端口、代理、TCP、TLS 与网络诊断
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Linux 用户、文件、权限、进程与服务》](ch.ops.linux-services.md)：网络诊断需要能识别目标进程、服务状态、日志和权限。
+- [《HTTP 报文、方法、状态码、Header、Body 与 curl》](../../volume-00-computer-foundations/chapters/ch.foundations.http-curl.md)：必须先能读取 HTTP 请求响应、状态码和 curl 传输证据。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 用户说“接口访问不了”，可能是域名没有解析、解析到了错误地址、客户端走了意外代理、目标端口没人监听、防火墙丢包、TCP 被拒绝、TLS 证书不匹配、反向代理找不到上游，或应用已经返回了 HTTP 错误。它们会在浏览器里汇成相似的失败页面，却属于不同阶段。网络诊断的核心不是记更多重启命令，而是沿真实请求路径找到最早失败的合同。
 
 本章以 Ubuntu Server 26.04 为命令基线，建立 DNS→目标地址与路由→监听 socket→TCP→TLS→HTTP→上游应用的分层模型。稳定原理跨 Linux 发行版适用；`ss`、`getent`、`resolvectl`、`dig`、`curl`、`openssl` 的具体版本与输出字段属于版本表面，应在目标主机读取手册。本章不修改业务代码、不教授 Nginx 配置细节，也不把禁用证书校验当修复。

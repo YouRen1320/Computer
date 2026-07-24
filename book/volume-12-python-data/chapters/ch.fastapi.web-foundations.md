@@ -96,6 +96,15 @@ outcomes:
 
 # FastAPI 路由、依赖、请求响应与错误
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Pydantic 模型、校验、序列化与错误》](ch.python.pydantic-validation.md)：请求/响应模型和运行时校验是 FastAPI 合同基础。
+- [《HTTP 报文、方法、状态码、Header、Body 与 curl》](../../volume-00-computer-foundations/chapters/ch.foundations.http-curl.md)：路由、状态码、Header 和 Body 必须能从 HTTP 层独立验证。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > FastAPI 把 HTTP 请求映射到 Python 函数，并借助类型标注、Pydantic 和 OpenAPI 描述输入输出。框架可以自动解析与校验形状，却不会替你定义业务权限、状态机或事实所有权。本章用教学型工单 CRUD 切片学习 Web 合同；在真实 FactoryCare 中，公开客户端仍只调用 Java，Python 只承载内部 AI/可重建派生能力。
 
 ## 1. 从 HTTP 报文到路径操作函数

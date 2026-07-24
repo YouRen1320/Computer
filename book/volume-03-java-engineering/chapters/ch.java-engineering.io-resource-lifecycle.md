@@ -84,6 +84,14 @@ outcomes:
 ---
 # 字节流、字符流、资源所有权与 try-with-resources
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《异常分类、传播、捕获、转换与失败契约》](../../volume-02-java-objects/chapters/ch.java-oop.exceptions-failure-contracts.md)：独立完成字节流与字符流、资源所有权前，必须先具备「异常分类、传播、捕获、转换与失败契约」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件用于学习和作者验证，不代表学习者已独立通过 G1，也不会自动更新 `PROGRESS.md`。
 
 Java 程序读取文件、网络响应或内存数据时，都面对同一类问题：数据按什么单位流动？谁创建资源、谁负责关闭？读取到一半失败时，输入和输出能否确定释放？主体异常与关闭异常同时出现时，哪一个是主失败？如果这些问题只靠“最后记得 close”，资源泄漏和证据丢失迟早发生。

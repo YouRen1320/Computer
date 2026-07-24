@@ -11,12 +11,22 @@ status=$?
 set -e
 
 if [[ $status -eq 0 ]]; then
-  grep -Fq 'ENTRY_CONTRACT_OK' "$TMP_DIR/out"
+  if ! grep -Fq 'ENTRY_CONTRACT_OK' "$TMP_DIR/out"; then
+    cat "$TMP_DIR/out" >&2
+    echo "SOLVED OUTPUT MARKER MISMATCH" >&2
+    exit 42
+  fi
   echo "EXERCISE PASS mount-contract=matched"
 elif [[ $status -eq 8 ]]; then
-  grep -Fq 'EXPECTED_FACTORYCARE_MOUNT_FAILURE host=#factorycare-root selector=#app' "$TMP_DIR/err"
-  echo "STARTER EXPECTED FAILURE status=8 reason=entry-mount-selector-mismatch"
+  if ! grep -Fq 'EXPECTED_FACTORYCARE_MOUNT_FAILURE host=#factorycare-root selector=#app' "$TMP_DIR/err"; then
+    cat "$TMP_DIR/err" >&2
+    echo "STARTER FAILURE MARKER MISMATCH status=8" >&2
+    exit 43
+  fi
+  echo "EXPECTED_RED status=8 reason=entry-mount-selector-mismatch"
+  exit 41
 else
   cat "$TMP_DIR/err" >&2
-  exit "$status"
+  echo "STARTER FAILURE STATUS MISMATCH expected=8 actual=$status" >&2
+  exit 44
 fi

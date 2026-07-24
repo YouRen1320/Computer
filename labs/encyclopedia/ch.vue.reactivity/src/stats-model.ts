@@ -1,6 +1,6 @@
 import { computed, reactive, readonly, ref, toRef } from 'vue'
 
-export type Status = 'CREATED' | 'IN_PROGRESS' | 'COMPLETED'
+export type Status = 'CREATED' | 'IN_PROGRESS' | 'RESOLVED'
 export type Filter = 'ALL' | Status
 
 export type WorkOrder = {
@@ -21,7 +21,7 @@ export function createStatsModel(seed: WorkOrder[]) {
   const openCount = computed(() => {
     // Mapping: derive the count from source status; the counter is observation-only.
     openEvaluations += 1
-    return orders.value.filter(order => order.status !== 'COMPLETED').length
+    return orders.value.filter(order => order.status !== 'RESOLVED').length
   })
 
   const criticalCount = computed(() => {
@@ -45,7 +45,7 @@ export function createStatsModel(seed: WorkOrder[]) {
 
   function completeOrder(id: string) {
     const order = orders.value.find(candidate => candidate.id === id)
-    if (order) order.status = 'COMPLETED'
+    if (order) order.status = 'RESOLVED'
   }
 
   function replaceOrders(next: WorkOrder[]) {

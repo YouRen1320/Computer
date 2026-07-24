@@ -78,6 +78,14 @@ outcomes:
 ---
 # SELECT、投影、过滤、NULL、排序与分页
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《PostgreSQL 服务、连接、psql 与脚本执行》](ch.data.postgresql-psql.md)：独立完成投影与过滤、排序与分页前，必须先具备「PostgreSQL 服务、连接、psql 与脚本执行」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。当前机器没有可用的 `psql` 或 PostgreSQL server，Docker daemon 也未运行；配套资产因此使用固定 CSV、静态 SQL 契约和独立 Ruby oracle。离线 oracle 能证明样例行、三值逻辑预言、分页集合与失败注入可重复，**不能证明 SQL 已被真实 PostgreSQL 解析或执行**。
 
 ## 1. 本章解决什么问题

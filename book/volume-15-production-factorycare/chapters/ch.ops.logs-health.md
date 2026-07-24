@@ -93,6 +93,15 @@ outcomes:
 
 # 结构化日志、关联 ID 与健康检查
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Compose 多服务、配置、健康检查与依赖》](ch.ops.compose-services.md)：健康检查必须作用于真实多服务依赖和启动/重启行为。
+- [《日志、指标、追踪、SLO 与告警闭环》](../../volume-06-enterprise-architecture/chapters/ch.architecture.observability-slo.md)：日志、健康、指标和链路必须共享既有可观测性语义。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 ## 1. 为什么“能看到日志”和“接口返回 200”都不等于可观测
 
 生产故障最令人无助的状态不是完全没有日志，而是日志很多却无法回答三个问题：哪一次请求出了问题、它经过了哪些服务、系统当时是否应该接流量。普通文本日志、随手生成的 request ID 和永远返回 200 的 health 接口，往往制造一种虚假的可观测性。

@@ -6,7 +6,7 @@ end
 
 sql = File.read(File.join(__dir__, "answer.sql"))
 check(!sql.match?(/factorycare\.device AS d\s*,/m), "cartesian")
-check(sql.include?("ON w.device_id = d.device_id\n AND w.status = 'OPEN'"), "ON filter")
+check(sql.include?("ON w.device_id = d.device_id\n AND w.status = 'CREATED'"), "ON filter")
 check(!sql.match?(/WHERE\s+w\.status/m), "WHERE collapse")
 check(sql.scan("COUNT(w.work_order_id) AS work_order_count").length == 2, "right-key count")
 check(sql.scan("GROUP BY t.technician_id, t.display_name").length == 2, "groups")

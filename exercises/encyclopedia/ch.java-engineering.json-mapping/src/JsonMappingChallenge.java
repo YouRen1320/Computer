@@ -6,7 +6,7 @@ public final class JsonMappingChallenge {
 
     public static void main(String[] args) throws Exception {
         String base = """
-                {"schemaVersion":1,"id":"WO-机泵-101","status":"OPEN",
+                {"schemaVersion":1,"id":"WO-机泵-101","status":"CREATED",
                  "openedAt":"2026-07-16T01:30:00Z","amount":10.50,"assignee":null}
                 """;
         JsonSupport.WorkOrderJsonMapper.WorkOrder order = JsonSupport.WorkOrderJsonMapper.fromJson(

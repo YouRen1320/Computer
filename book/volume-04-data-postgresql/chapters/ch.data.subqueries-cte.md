@@ -74,6 +74,14 @@ outcomes:
 ---
 # 子查询、CTE 与集合拆解
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《聚合、GROUP BY 与 HAVING》](ch.data.aggregates.md)：独立完成子查询、公共表表达式前，必须先具备「聚合、GROUP BY 与 HAVING」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。本机没有 PostgreSQL server 或 `psql`；资产用固定 CSV、静态 SQL 契约和 Ruby 2.6 兼容 oracle。离线 PASS 能证明固定集合与错误注入预言，**不能证明 PostgreSQL 已解析查询、折叠 CTE 或采用某个执行计划**。
 
 ## 1. 为什么需要再包一层查询
@@ -126,15 +134,15 @@ D-05 compressor
 工单：
 
 ```text
-W-01 D-01 OPEN
-W-02 D-01 DONE
+W-01 D-01 CREATED
+W-02 D-01 CLOSED
 W-03 D-02 IN_PROGRESS
-W-04 D-03 DONE
-W-05 D-03 DONE
-W-06 D-05 OPEN
+W-04 D-03 CLOSED
+W-05 D-03 CLOSED
+W-06 D-05 CREATED
 ```
 
-未完成状态固定为 `OPEN` 或 `IN_PROGRESS`。因此正确设备集合是 D-01、D-02、D-05；类别计数为 pump=2、compressor=1；门槛至少两台后只剩 pump。
+未完成状态固定为 `CREATED` 或 `IN_PROGRESS`。因此正确设备集合是 D-01、D-02、D-05；类别计数为 pump=2、compressor=1；门槛至少两台后只剩 pump。
 
 另有独立排除夹具包含 D-02 和 NULL，专门证明 NOT IN 的 NULL 边界。它不是生产外键表。
 
@@ -197,7 +205,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = d.device_id
-    AND w.status IN ('OPEN', 'IN_PROGRESS')
+    AND w.status IN ('CREATED', 'IN_PROGRESS')
 )
 ORDER BY d.device_id;
 ```
@@ -230,7 +238,7 @@ w.device_id = d.device_id
 
 ```sql
 WHERE w.device_id = w.device_id
-  AND w.status IN ('OPEN', 'IN_PROGRESS')
+  AND w.status IN ('CREATED', 'IN_PROGRESS')
 ```
 
 条件只比较内层列自身。只要数据库存在任意未完成且 device_id 非 NULL 的工单，所有外层设备的 EXISTS 都可能为 TRUE。固定样例错误返回五台，而正确为三台。
@@ -243,7 +251,7 @@ WHERE w.device_id = w.device_id
 d.device_id IN (
   SELECT w.device_id
   FROM factorycare.work_order AS w
-  WHERE w.status IN ('OPEN', 'IN_PROGRESS')
+  WHERE w.status IN ('CREATED', 'IN_PROGRESS')
 )
 ```
 
@@ -347,7 +355,7 @@ WITH unfinished_devices AS (
     SELECT 1
     FROM factorycare.work_order AS w
     WHERE w.device_id = d.device_id
-      AND w.status IN ('OPEN', 'IN_PROGRESS')
+      AND w.status IN ('CREATED', 'IN_PROGRESS')
   )
 ),
 category_counts AS (
@@ -384,7 +392,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = d.device_id
-    AND w.status IN ('OPEN', 'IN_PROGRESS')
+    AND w.status IN ('CREATED', 'IN_PROGRESS')
 )
 GROUP BY d.category
 HAVING COUNT(*) >= 2
@@ -428,7 +436,7 @@ ORDER BY category;
 注入：
 
 ```sql
-WHERE w.status = 'DONE'
+WHERE w.status = 'CLOSED'
 ```
 
 错误中间集变成 D-01、D-03，最终类别完全不同。若只看最终“某类别计数”，容易误以为 GROUP BY 错；单独运行第一 CTE 立即看到状态规则反了。
@@ -515,7 +523,7 @@ WHERE EXISTS (
   SELECT 1
   FROM factorycare.work_order AS w
   WHERE w.device_id = d.device_id
-    AND w.status IN ('OPEN', 'IN_PROGRESS')
+    AND w.status IN ('CREATED', 'IN_PROGRESS')
 );
 ```
 
@@ -526,10 +534,10 @@ SELECT d.device_id
 FROM factorycare.device AS d
 JOIN factorycare.work_order AS w
   ON w.device_id = d.device_id
-WHERE w.status IN ('OPEN', 'IN_PROGRESS');
+WHERE w.status IN ('CREATED', 'IN_PROGRESS');
 ```
 
-固定夹具恰好每台设备至多一张未完成工单，所以两段查询当前都列出三行；这只是数据巧合。只要给 D-01 再加一张 OPEN，JOIN 会输出两次 D-01，EXISTS 仍输出一次。
+固定夹具恰好每台设备至多一张未完成工单，所以两段查询当前都列出三行；这只是数据巧合。只要给 D-01 再加一张 CREATED，JOIN 会输出两次 D-01，EXISTS 仍输出一次。
 
 不能把外层 `DISTINCT` 当默认修复：
 
@@ -692,7 +700,7 @@ SQL 默认处理多重集合；相同值的两行可以同时存在。因此等�
 
 ### CTE 中间集错误
 
-现象：最终类别不对。先运行 unfinished_devices，发现 DONE/unfinished 状态反了；修复最早错误层，再验证聚合。
+现象：最终类别不对。先运行 unfinished_devices，发现 CLOSED/unfinished 状态反了；修复最早错误层，再验证聚合。
 
 ## 26. 四类离线资产
 

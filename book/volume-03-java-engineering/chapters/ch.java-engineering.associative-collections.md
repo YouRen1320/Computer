@@ -84,6 +84,15 @@ outcomes:
 ---
 # Set、Map、键相等性与哈希契约
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《List、Queue、Deque 与迭代》](ch.java-engineering.sequential-collections.md)：独立完成Set 去重契约、Map 键值契约前，必须先具备「List、Queue、Deque 与迭代」已经验证的知识与失败边界
+- [《equals、hashCode 与 toString 直接契约》](../../volume-02-java-objects/chapters/ch.java-oop.object-contracts.md)：独立完成Set 去重契约、Map 键值契约前，必须先具备「equals、hashCode 与 toString 直接契约」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套自动化只证明固定 Java 25 输入下的集合合同与故障预言；P9 的零基础试读、人工版式/无障碍检查、独立全面审查和全仓回归尚未执行，因此不能把本章称为 `verified`，也不会修改 `PROGRESS.md`。
 
 上一章的 List 能忠实保留 `PUMP-01, PUMP-02, PUMP-01` 三次输入，但它不会回答“这是不是同一台设备”，也不会快速回答“PUMP-02 当前对应哪张工单”。如果每次加入前都遍历 List 查重，或者每次查询都从头扫描，代码可能在小样例中正确，却随着数据规模形成平方级工作。
@@ -267,7 +276,7 @@ List<DeviceId> input = List.of(
 
 Set<DeviceId> unique = new LinkedHashSet<>(input);
 Map<DeviceId, String> states = new HashMap<>();
-states.put(new DeviceId("PUMP-01"), "OPEN");
+states.put(new DeviceId("PUMP-01"), "ACTIVE");
 
 boolean hit = states.containsKey(new DeviceId("PUMP-01"));
 String state = states.get(new DeviceId("PUMP-01"));

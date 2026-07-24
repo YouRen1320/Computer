@@ -77,6 +77,14 @@ outcomes:
 ---
 # equals、hashCode 与 toString 直接契约
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《final、常量与不可变对象》](ch.java-oop.final-immutability.md)：独立完成相等与哈希、对象表示前，必须先具备「final、常量与不可变对象」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与验证工件可用于学习和作者自检，不代表学习者已完成无 AI 构建、诊断或复述，也不会自动修改 `PROGRESS.md`。
 
 两个 `new DeviceId("TENANT-A", "DEV-001")` 是两个不同对象，还是同一个业务值？答案可能同时是：引用身份不同，设备标识值相等。Java 的 `==` 检查引用是否指向同一对象，`equals` 由类型定义“逻辑上相等”；一旦定义值相等，`hashCode` 必须保持相等对象得到相同哈希；`toString` 则给人提供简洁可读的调试表示，同时不能泄露租户、令牌或其他受保护值。

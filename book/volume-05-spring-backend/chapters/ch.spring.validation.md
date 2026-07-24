@@ -84,6 +84,14 @@ outcomes:
 ---
 # Bean Validation、字段规则与跨字段规则
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《DTO、JSON、内容协商与兼容边界》](ch.spring.dto-json-content-negotiation.md)：独立完成字段校验、对象级校验前，必须先具备「DTO、JSON、内容协商与兼容边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文和工件只提供教材证据，不自动更新 `PROGRESS.md`，也不代表学习者已通过 Week 10。
 
 JSON 能成功转换成 DTO，只说明表示可读，不说明输入符合应用契约。Bean Validation 用声明式约束检查字段和对象关系；Spring MVC 在 `@Valid @RequestBody` 边界触发它，并在调用用例前把非法请求变为 400。

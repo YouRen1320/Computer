@@ -36,7 +36,7 @@ rows.group_by { |row| row["technician"] }.sort.each do |technician, partition|
   ordered.each_with_index do |row, index|
     previous = index.zero? ? nil : ordered[index - 1]
     following = index == ordered.length - 1 ? nil : ordered[index + 1]
-    completed += 1 if row["status"] == "DONE"
+    completed += 1 if row["status"] == "CLOSED"
     output << {
       "technician" => technician,
       "id" => row["id"],

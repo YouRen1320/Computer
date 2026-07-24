@@ -77,6 +77,14 @@ outcomes:
 ---
 # Cookie、Session、认证状态与固定攻击模型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《身份、密码哈希、凭据生命周期与恢复边界》](ch.security.identity-password-lifecycle.md)：独立完成Cookie 边界、Session 状态与攻击前，必须先具备「身份、密码哈希、凭据生命周期与恢复边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文描述浏览器 Cookie 与服务端 Session 的安全合同，配套代码只用固定时钟、合成 ID 和内存存储，不启动服务器、不访问公网、不读取浏览器资料，也不实现 FactoryCare 的生产登录流程。
 
 HTTP 请求彼此独立。浏览器第一次请求与下一次请求没有天然“同一个用户”的含义；应用若要保存语言偏好、购物车或认证状态，就必须建立可关联的状态。Cookie 是浏览器按规则保存并随请求发送的少量 name/value；Session 是服务器把一个不透明标识映射到状态记录的机制。二者经常配合，却不是同一个东西。

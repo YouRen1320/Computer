@@ -79,6 +79,14 @@ outcomes:
 ---
 # Bean 注册、生命周期、作用域与销毁
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《IoC、构造器注入与依赖反转》](ch.spring.ioc-di.md)：独立完成Bean 注册与选择、生命周期与作用域前，必须先具备「IoC、构造器注入与依赖反转」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。正文与工件是作者级教材证据，不自动更新 PROGRESS.md，也不表示学习者已经通过 Week 09。
 
 上一章解决“谁依赖谁、由谁装配”，本章继续回答“容器什么时候创建这个对象、同一份定义会产生几个实例、何时初始化、谁负责销毁”。Bean 不是带注解的神秘对象，而是由 Spring 容器依据 BeanDefinition 创建、装配和管理的普通 Java 对象。作用域决定实例可见范围，生命周期决定回调时机，两者都不替业务对象自动提供线程安全。

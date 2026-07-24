@@ -74,6 +74,14 @@ outcomes:
 ---
 # 函数依赖、规范化与关系模式设计
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《CREATE/ALTER、主外键、唯一、检查与非空约束》](ch.data.ddl-constraints.md)：独立完成函数依赖、规范化设计前，必须先具备「CREATE/ALTER、主外键、唯一、检查与非空约束」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。关系理论属于稳定核心；PostgreSQL **18** 的键、唯一与外键语义于 **2026-07-17** 按官方文档核对。本机无 PostgreSQL server/`psql`，资产以固定 CSV 和 Ruby 2.6 兼容 oracle 验证依赖、异常、分解和无损重建；PASS **不证明 PostgreSQL 已执行 DDL/JOIN，也不证明真实性能**。
 
 ## 1. 规范化是在决定“一行代表一个什么事实”
@@ -118,9 +126,9 @@ outcomes:
 
 | work_order_id | device_id | serial_number | device_name | technician_id | technician_name | technician_phone | summary | order_status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| W-01 | D-01 | SN-001 | East Pump | T-01 | Lin | 18800000001 | Inspect vibration | OPEN |
+| W-01 | D-01 | SN-001 | East Pump | T-01 | Lin | 18800000001 | Inspect vibration | CREATED |
 | W-02 | D-01 | SN-001 | East Pump | T-02 | Chen | 18800000002 | Replace seal | IN_PROGRESS |
-| W-03 | D-02 | SN-002 | South Compressor | T-01 | Lin | 18800000001 | Change oil | DONE |
+| W-03 | D-02 | SN-002 | South Compressor | T-01 | Lin | 18800000001 | Change oil | CLOSED |
 
 看起来一行是一张工单，但其中混入三类事实：
 
@@ -521,6 +529,8 @@ W-02 T-02  原事实
 - solutions-private：三表 3NF 模型与同一重建预言。
 
 oracle 是固定关系模型，不是 SQL 引擎。
+
+离线预言机还应固定候选键、外键与重建后的行多重集合；只比较表名或行数，会漏掉重复事实、伪行和属性错配。修改模型后应让同一组输入同时通过结构约束、完整重建与异常重放，避免“查询能跑”被误判为“模型正确”。
 
 ## 25. 120 秒复述
 

@@ -26,7 +26,7 @@ function onStatusChange(event: Event) {
       <select :value="status" data-testid="status" @change="onStatusChange">
         <option value="CREATED">已创建</option>
         <option value="IN_PROGRESS">处理中</option>
-        <option value="COMPLETED">已完成</option>
+        <option value="RESOLVED">已完成</option>
       </select>
     </label>
     <button type="button" data-testid="reload" :disabled="loading" @click="reload">重新查询</button>

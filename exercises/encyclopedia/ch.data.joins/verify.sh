@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.sql" >"$TMP_ROOT/actual.out" 2>&1; then
 fi
 grep -F "answer-error=cartesian source must be replaced by explicit JOIN ON" "$TMP_ROOT/actual.out" >/dev/null
 echo "JOINS EXERCISE STARTER EXPECTED FAILURE"
+exit 41

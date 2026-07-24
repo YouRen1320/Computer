@@ -11,9 +11,17 @@ mkdir -p "$BUILD_DIR/classes"
 javac --release 25 -Xlint:all -Werror -d "$BUILD_DIR/classes" "$ROOT_DIR/src/AuditPrivacyChallenge.java"
 if java -cp "$BUILD_DIR/classes" AuditPrivacyChallenge > "$BUILD_DIR/starter.log" 2>&1; then
   echo "STARTER UNEXPECTEDLY PASSED" >&2
-  exit 1
+  exit 42
 fi
-grep -Fq 'SECRET_FIELD_ACCEPTED' "$BUILD_DIR/starter.log"
-test "$(rg -c 'TODO' "$ROOT_DIR/src/AuditPrivacyChallenge.java")" -eq 7
-echo "starter=expected-failure first=SECRET_FIELD_ACCEPTED todos=7"
-echo "EXERCISE READY jdk=25 mode=offline"
+if ! grep -Fq 'SECRET_FIELD_ACCEPTED' "$BUILD_DIR/starter.log"; then
+  cat "$BUILD_DIR/starter.log" >&2
+  echo "STARTER FAILURE MARKER MISMATCH expected=SECRET_FIELD_ACCEPTED" >&2
+  exit 43
+fi
+todo_count="$(grep -c 'TODO' "$ROOT_DIR/src/AuditPrivacyChallenge.java" || true)"
+if [[ "$todo_count" != "7" ]]; then
+  echo "STARTER TODO COUNT MISMATCH expected=7 actual=${todo_count:-0}" >&2
+  exit 44
+fi
+echo "EXPECTED_RED first=SECRET_FIELD_ACCEPTED todos=7 jdk=25 mode=offline"
+exit 41

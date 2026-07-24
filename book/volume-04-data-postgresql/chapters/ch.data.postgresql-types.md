@@ -74,6 +74,14 @@ outcomes:
 ---
 # UUID、JSONB、数组与 PostgreSQL 类型选择
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《CREATE/ALTER、主外键、唯一、检查与非空约束》](ch.data.ddl-constraints.md)：独立完成UUID 与 JSONB、数组与类型选择前，必须先具备「CREATE/ALTER、主外键、唯一、检查与非空约束」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。PostgreSQL **18** 类型语义于 **2026-07-17** 按官方文档核对。本机没有 PostgreSQL server/`psql`；配套资产以固定值分类、静态 DDL 合同和 Ruby 2.6 兼容 oracle 验证决策边界。离线 PASS **不能证明 PostgreSQL 已解析类型、执行 cast/函数、建立索引或得到某个性能结果**。
 
 ## 1. 选类型是在选择数据库能理解和强制的语义

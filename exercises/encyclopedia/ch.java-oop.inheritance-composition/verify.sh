@@ -30,4 +30,5 @@ else
   [[ $challenge_status -eq 8 ]]
   grep -Fqx "STARTER_SUBSTITUTION_FAILURE input=NORMAL parent=accepted child=rejected" "$BUILD_DIR/challenge.err"
   echo "STARTER EXPECTED FAILURE status=$challenge_status reason=stronger-precondition-and-fake-is-a"
+  exit 41
 fi

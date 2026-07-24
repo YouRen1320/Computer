@@ -82,6 +82,14 @@ outcomes:
 
 # 函数、参数、返回值与作用域
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《条件、循环与控制转移》](ch.python.control-flow.md)：函数体、提前返回和输入边界复用已验证的分支与循环。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 函数把一段流程变成有名字、可调用、可验证的规则。初学者最容易把函数理解成“少复制几行代码的工具”，但工程中的核心价值其实是建立边界：调用者提供哪些输入，函数保证什么结果，哪些名称只在内部存在，哪些副作用会影响外部。本章只讨论函数本身，不提前引入类、装饰器或生成器。
 
 ## 1. 为什么需要函数
@@ -299,7 +307,7 @@ def list_orders(status, *, include_disabled=False):
     ...
 ```
 
-`list_orders("OPEN", True)` 很难读；`include_disabled=True` 明确得多。不要为了炫技给每个函数都加 `/` 和 `*`，应依据 API 可读性与兼容性选择。
+`list_orders("CREATED", True)` 很难读；`include_disabled=True` 明确得多。不要为了炫技给每个函数都加 `/` 和 `*`，应依据 API 可读性与兼容性选择。
 
 ## 6. 可变数量参数：`*args` 与 `**kwargs`
 

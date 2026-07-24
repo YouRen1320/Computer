@@ -14,7 +14,7 @@ grep -A3 '<artifactId>maven-dependency-plugin</artifactId>' "$POM" | grep -Fq '<
 
 if [[ ${#missing[@]} -gt 0 ]]; then
     printf 'STARTER EXPECTED FAILURE missing=%s\n' "$(IFS=,; echo "${missing[*]}")"
-    exit 0
+    exit 41
 fi
 
 MAVEN_VERSION="$(mvn -v 2>&1)"

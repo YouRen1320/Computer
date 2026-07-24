@@ -15,7 +15,7 @@ class DomainLeakExerciseTest {
     void responseKeepsThePublishedPublicFields() {
         var node = mapper.valueToTree(LeakExercise.response());
         assertEquals(42, node.path("id").asInt());
-        assertEquals("OPEN", node.path("status").asString());
+        assertEquals("CREATED", node.path("status").asString());
     }
 
     @Test

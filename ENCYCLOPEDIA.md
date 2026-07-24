@@ -23,7 +23,7 @@
 
 ## 当前状态
 
-百科重建按 P0—P9 推进。旧的 48 周课程在迁移完成前仍可使用；课程工程建设不会自动修改学习进度、学时或测评分数。阶段状态与证据见 [`records/encyclopedia/IMPLEMENTATION-CONTRACT.md`](records/encyclopedia/IMPLEMENTATION-CONTRACT.md)。
+百科重建按 P0—P9 推进。16 卷、255 章正文及配套资产已经进入 `drafting`；旧 48 周长页已迁移为到权威章节的兼容适配层，学习进度、学时和测评分数保持原语义且不会被课程工程自动修改。章节仍未因自动化通过而晋升 `verified`，正式发布还受人工试读、版式和无障碍门禁约束。阶段契约见 [`records/encyclopedia/IMPLEMENTATION-CONTRACT.md`](records/encyclopedia/IMPLEMENTATION-CONTRACT.md)，P9 机器收口结果与尚未关闭的人工门见 [`P9-technical-audit-2026-07-24.md`](records/encyclopedia/reviews/P9-technical-audit-2026-07-24.md)。
 
 自 2026-07-16 起采用[内容优先执行策略](records/encyclopedia/CONTENT-FIRST-EXECUTION.md)：P3—P8 连续建设正文、示例、实验、练习和项目，只保留 schema、链接、边界、编译、运行及已有测试等必要自动检查；独立全面复审、人工版式与无障碍评估、零基础读者试读和全仓回归集中到 P9。延期不代表通过，相关证据完成前章节不得因此晋升 `verified` 或正式公开发布。
 

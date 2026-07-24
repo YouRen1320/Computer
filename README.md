@@ -1,6 +1,6 @@
-# 48 周 AI-First 企业全栈学习工作区
+# FactoryCare 编程百科与 AI-First 全栈学习工作区
 
-这个工作区服务于一个明确目标：用 48 个正式学习周，把已有的 Vue3、TypeScript、Nuxt、Flutter、Python 经历补成一套从语言基础到生产交付都能验证的 Java/Vue 全栈与 AI 应用开发能力。求职线当前暂停，可以在用户明确恢复后重新启用，不阻塞技术主线。
+这个工作区服务于一个明确目标：借助 16 卷、255 章的权威百科教材和一条保留真实进度语义的 48 周执行计划，把已有的 Vue3、TypeScript、Nuxt、Flutter、Python 经历补成一套从语言基础到生产交付都能验证的 Java/Vue 全栈与 AI 应用开发能力。求职线当前暂停，可以在用户明确恢复后重新启用，不阻塞技术主线。
 
 本路线不会因为使用 Codex/Claude 就跳过基础，也不会把“AI 生成后能运行”当成学会。Java、Web/JavaScript/TypeScript、Dart、Python 都按语言基础、运行模型、测试调试、框架和真实项目逐层推进；已有经验只影响练习速度，不删除必备知识。
 
@@ -20,22 +20,23 @@ Java 是业务事实和写操作的中心；Python 只提供 AI 建议、草稿�
 
 ## 从这里开始
 
-1. [当前学习执行方案](./STUDY_EXECUTION.md)：当前起点、48 周日期、每天怎样学和 Week 01 顺序。
-2. [总学习路线](./LEARNING_PLAN.md)：阶段依赖、48 周总览、完成标准与回退节点。
-3. [逐周计划索引](./weeks/README.md)：Week 00—48 的前置、任务、非目标和验收入口。
-4. [阶段考核](./ASSESSMENTS.md)：G0—G8 的编码、口述、排错和项目标准。
-5. [技术栈与版本策略](./TECH_STACK.md)：2026 稳定基线、安装时机和升级规则。
-6. [旗舰项目说明](./PROJECT_SPEC.md)：FactoryCare 多租户设备运维与智能工单平台。
-7. [AI 协作规范](./AI_WORKFLOW.md)：教学、生成、审查、测试与无 AI 验收边界。
-8. [全技术栈概念矩阵](./CONCEPT_MAP.md)：检查语言、框架、数据、工程和面试基础是否遗漏。
-9. [学习进度总表](./PROGRESS.md)：真实状态、证据、阶段门和累计指标。
-10. [求职并行线](./JOB_SEARCH.md)：恢复求职后使用的岗位、简历和投递规则。
+1. [2026.2 编程百科全书](./book/README.md)：16 卷、255 章的唯一权威正文入口；当前可学习、可运行，仍是内部草稿而非正式发行物。
+2. [零基础完整路线](./curriculum/routes/zero-base.yml)：从文件、终端和验证开始，按硬前置连续学习。
+3. [48 模块加速路线](./curriculum/routes/accelerated-48.yml)：已有经验者凭诊断证据压缩讲解，不跳过验收。
+4. [当前学习执行方案](./STUDY_EXECUTION.md)：当前起点、每天怎样学和真实进度怎样衔接百科章节。
+5. [旧 48 周兼容索引](./weeks/README.md)：只保存 `PROGRESS.md` 的 Week 00—48 语义，并映射到权威章节和考核。
+6. [阶段考核](./ASSESSMENTS.md)：G0—G8 的编码、口述、排错和项目标准。
+7. [技术栈与版本策略](./TECH_STACK.md)：2026 稳定基线、安装时机和升级规则。
+8. [旗舰项目说明](./PROJECT_SPEC.md)：FactoryCare 多租户设备运维与智能工单平台。
+9. [AI 协作规范](./AI_WORKFLOW.md)：教学、生成、审查、测试与无 AI 验收边界。
+10. [学习进度总表](./PROGRESS.md)：真实状态、证据、阶段门和累计指标。
+11. [求职并行线](./JOB_SEARCH.md)：恢复求职后使用的岗位、简历和投递规则。
 
 ## 可复用学习资产
 
 | 入口 | 内容 | 证据边界 |
 | --- | --- | --- |
-| [Week 00—08 深度教学包](./learning-kits/README.md) | 讲义、实验、无 AI 考核、独立答案册和面试追问 | 材料存在不等于已经学习或通过 |
+| [Week 00—08 兼容实践包](./learning-kits/README.md) | 百科概念映射、实验、无 AI 考核、独立答案册和面试追问 | 概念正文以百科章节为准；材料存在不等于已经学习或通过 |
 | [南昌岗位市场样本](./job-market/README.md) | 可追溯职位卡、技能频率和检索手册 | 样本不代表整个市场，也会过期 |
 | [FactoryCare 施工前设计](./factorycare-design/README.md) | 数据、OpenAPI、事件、安全、测试、种子数据和 ADR | 候选设计不等于系统已经实现 |
 | [专属学习教练 Skill](/Users/youren/.codex/skills/factorycare-learning-coach/SKILL.md) | 教学、陪练、审查、考试、批改、面试和复盘 | 只按真实证据更新进度 |

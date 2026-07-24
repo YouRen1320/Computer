@@ -88,6 +88,14 @@ outcomes:
 ---
 # 分包、启动性能、缓存与资源预算
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《单元/组件测试、Mock、真机和网络调试》](ch.uniapp.testing-debugging.md)：优化前后需要自动化和真机证据保护行为并测量实际启动。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产分析人工 package report、缓存 envelope 与冷启动样本；它没有执行真实 uni-app/微信构建、上传代码、清理真机缓存或测量设备启动。教材使用项目自定义预算，不把会变化的平台硬限制写成永久事实。真实限制、分包规则和测量 API 必须按目标版本官方文档复核。
 
 性能优化不是“把代码变短”，而是让用户关键路径在明确预算内完成，同时保持正确性。小程序启动涉及主包下载/校验/加载、运行时初始化、首屏脚本和渲染、缓存读取与必要网络。把页面移到分包可能减少主包，却增加首次进入该页面的延迟；预加载可能改善下一页，却消耗弱网流量；缓存可能减少请求，也可能让旧 schema 令应用崩溃。本章用可测预算约束这些取舍。
@@ -483,6 +491,12 @@ AI 可以生成报告解析器、预算门禁和候选拆分，但不能凭代�
 
 ## 22. 事实来源与未验证范围
 
-本章易变事实于 2026-07-17 对照 DCloud 官方 `pages.json` 页面路由/`subPackages`/`preloadRule`、条件编译和编译器资料，并以微信小程序目标为主要发布表面。官方文档说明分包页面相对 root、预载包与网络配置等合同；平台硬限制与优化能力会调整，项目实施时必须对照微信当前官方文档和实际构建报告。
+本章易变事实于 2026-07-24 对照 DCloud 官方 `pages.json` 页面路由/`subPackages`/`preloadRule`、条件编译和编译器资料，并以微信小程序目标为主要发布表面。官方文档说明分包页面相对 root、预载包与网络配置等合同；平台硬限制与优化能力会调整，项目实施时必须对照微信当前官方文档和实际构建报告。
+
+直接来源：
+
+- DCloud，[`pages.json` 页面路由](https://uniapp.dcloud.net.cn/collocation/pages)：`subPackages`、分包路径与 `preloadRule` 配置合同。
+- DCloud，[条件编译处理多端差异](https://uniapp.dcloud.net.cn/tutorial/platform.html)：目标专用代码进入构建产物的规则。
+- DCloud，[什么是编译器](https://uniapp.dcloud.net.cn/tutorial/compiler)：CLI/HBuilderX 编译器归属与版本变化边界。
 
 当前未验证：DCloud/微信真实 package report、平台包大小硬限制、独立分包、真实预载调度、release 构建、设备冷启动、storage 配额、图片/字体解码、弱网和 FactoryCare 资源。配套预算数字全是教学夹具。

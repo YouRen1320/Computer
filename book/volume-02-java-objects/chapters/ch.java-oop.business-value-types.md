@@ -78,6 +78,14 @@ outcomes:
 ---
 # 正则、BigDecimal、日期时间、UUID 与业务值
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《final、常量与不可变对象》](ch.java-oop.final-immutability.md)：独立完成文本与金额值、时间与标识值前，必须先具备「final、常量与不可变对象」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件可以用于学习和作者验证，但不会证明学习者已经独立完成构建、诊断和复述，也不会自动更新 `PROGRESS.md`。
 
 字符串、数字和日期看似足以承载所有输入：工单号可以是 `String`，金额可以是 `double`，预约时间可以是 `LocalDateTime`。问题是这些通用类型允许表达太多无效状态。空字符串也能冒充工单号；`double` 的二进制近似会进入十进制金额；没有时区的本地时间无法唯一定位时间线上的一刻。业务值类型把“数据长什么样、怎样比较、哪些值绝不允许存在”集中在一个不可变边界中。

@@ -9,3 +9,4 @@ if ruby "$ROOT/oracle.rb" "$ROOT/answer.sql" >"$TMP_ROOT/actual.out" 2>&1; then
 fi
 grep -F "answer-error=versioned UPDATE must include device_id and version predicate" "$TMP_ROOT/actual.out" >/dev/null
 echo "DML EXERCISE STARTER EXPECTED FAILURE"
+exit 41

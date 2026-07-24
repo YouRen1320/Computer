@@ -4,7 +4,7 @@ public final class UnknownFieldIgnoredFailure {
 
     public static void main(String[] args) {
         String json = """
-                {"schemaVersion":1,"id":"WO-101","status":"OPEN",
+                {"schemaVersion":1,"id":"WO-101","status":"CREATED",
                  "openedAt":"2026-07-16T01:30:00Z","amount":10.00,"currency":"CNY"}
                 """;
         JsonSupport.WorkOrderJsonMapper.WorkOrder order = JsonSupport.WorkOrderJsonMapper.fromJson(

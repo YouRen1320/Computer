@@ -96,6 +96,16 @@ outcomes:
 ---
 # 事件传播、监听器、表单与默认行为
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《DOM 树、查询、创建、更新与删除》](ch.js.dom-mutation.md)：监听器绑定、委托目标和事件后的 DOM 更新需要可验证的节点模型。
+- [《this、原型、class 与对象模型》](ch.js.object-model.md)：Event、Element 与监听器选项都是具有属性查找和身份语义的对象，必须能区分自有状态、原型行为与引用身份。
+- [《表单控件、提交语义与原生校验》](../../volume-07-web-platform/chapters/ch.web.forms-validation.md)：JavaScript 增强必须建立在正确的原生提交与校验语义上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 一次点击不是“按钮直接调用函数”这么简单。事件先沿事件路径到达目标，再按监听器配置调用回调；回调看到的 `target` 与 `currentTarget` 可能不同；传播结束后，浏览器还可能执行链接导航、复选框切换或表单提交等默认行为。若把这些层混在一起，常见结果是动态按钮没有响应、同一动作执行两次、在错误节点读取 `dataset`，或者 JavaScript 一加载就让原本可用的表单失去提交能力。
 
 本章的目标是用一条可追踪证据链理解并实现事件增强：固定 HTML 先提供可访问、可提交的基础能力；JavaScript 在已知根节点绑定可清理的监听器；事件委托从真实目标解析业务动作；只有当增强路径确实接管提交时才取消默认行为；最终用事件顺序表、FormData 条目和 DOM 状态断言证明结果。网络请求、重试、服务端状态权限与 Vue 组件事件留给后续章节。

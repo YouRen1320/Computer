@@ -4,19 +4,19 @@ import java.time.Instant;
 
 /** Green reference for a reduced workflow and deterministic SLA clock. */
 public final class WorkflowStateSlaChallengeSolution {
-    enum Status { NEW, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }
+    enum DemoTicketStatus { CREATED, ASSIGNED, IN_PROGRESS, CLOSED, CANCELLED }
 
     private WorkflowStateSlaChallengeSolution() { }
 
     public static void main(String[] args) {
-        require(allowed(Status.NEW, Status.ASSIGNED), "VALID_ASSIGN_REJECTED");
-        require(!allowed(Status.NEW, Status.CLOSED), "JUMP_STATE_ACCEPTED");
-        require(guardSatisfied(Status.ASSIGNED, "TECH-7", ""), "VALID_GUARD_REJECTED");
-        require(!guardSatisfied(Status.ASSIGNED, "", ""), "MISSING_GUARD_ACCEPTED");
-        require(invalidPreservesState(Status.NEW, Status.NEW), "INVALID_TRANSITION_MUTATED_STATE");
-        require(!invalidPreservesState(Status.NEW, Status.CLOSED), "MUTATION_NOT_DETECTED");
-        require(terminalImmutable(Status.CLOSED, Status.IN_PROGRESS), "TERMINAL_STATE_REVIVED");
-        require(terminalImmutable(Status.CANCELLED, Status.ASSIGNED), "CANCELLED_STATE_REVIVED");
+        require(allowed(DemoTicketStatus.CREATED, DemoTicketStatus.ASSIGNED), "VALID_ASSIGN_REJECTED");
+        require(!allowed(DemoTicketStatus.CREATED, DemoTicketStatus.CLOSED), "JUMP_STATE_ACCEPTED");
+        require(guardSatisfied(DemoTicketStatus.ASSIGNED, "TECH-7", ""), "VALID_GUARD_REJECTED");
+        require(!guardSatisfied(DemoTicketStatus.ASSIGNED, "", ""), "MISSING_GUARD_ACCEPTED");
+        require(invalidPreservesState(DemoTicketStatus.CREATED, DemoTicketStatus.CREATED), "INVALID_TRANSITION_MUTATED_STATE");
+        require(!invalidPreservesState(DemoTicketStatus.CREATED, DemoTicketStatus.CLOSED), "MUTATION_NOT_DETECTED");
+        require(terminalImmutable(DemoTicketStatus.CLOSED, DemoTicketStatus.IN_PROGRESS), "TERMINAL_STATE_REVIVED");
+        require(terminalImmutable(DemoTicketStatus.CANCELLED, DemoTicketStatus.ASSIGNED), "CANCELLED_STATE_REVIVED");
 
         Instant start = Instant.parse("2026-07-17T08:00:00Z");
         Instant base = deadline(start, Duration.ofHours(4));
@@ -34,29 +34,29 @@ public final class WorkflowStateSlaChallengeSolution {
         System.out.println("EXERCISE PASS jdk=25 mode=offline");
     }
 
-    static boolean allowed(Status from, Status to) {
+    static boolean allowed(DemoTicketStatus from, DemoTicketStatus to) {
         return switch (from) {
-            case NEW -> to == Status.ASSIGNED || to == Status.CANCELLED;
-            case ASSIGNED -> to == Status.IN_PROGRESS || to == Status.CANCELLED;
-            case IN_PROGRESS -> to == Status.CLOSED;
+            case CREATED -> to == DemoTicketStatus.ASSIGNED || to == DemoTicketStatus.CANCELLED;
+            case ASSIGNED -> to == DemoTicketStatus.IN_PROGRESS || to == DemoTicketStatus.CANCELLED;
+            case IN_PROGRESS -> to == DemoTicketStatus.CLOSED;
             case CLOSED, CANCELLED -> false;
         };
     }
 
-    static boolean guardSatisfied(Status target, String assignee, String reason) {
+    static boolean guardSatisfied(DemoTicketStatus target, String assignee, String reason) {
         return switch (target) {
             case ASSIGNED, IN_PROGRESS -> assignee != null && !assignee.isBlank();
             case CLOSED, CANCELLED -> reason != null && !reason.isBlank();
-            case NEW -> false;
+            case CREATED -> false;
         };
     }
 
-    static boolean invalidPreservesState(Status before, Status after) {
+    static boolean invalidPreservesState(DemoTicketStatus before, DemoTicketStatus after) {
         return before == after;
     }
 
-    static boolean terminalImmutable(Status terminal, Status attemptedTarget) {
-        return (terminal == Status.CLOSED || terminal == Status.CANCELLED)
+    static boolean terminalImmutable(DemoTicketStatus terminal, DemoTicketStatus attemptedTarget) {
+        return (terminal == DemoTicketStatus.CLOSED || terminal == DemoTicketStatus.CANCELLED)
                 && terminal != attemptedTarget;
     }
 

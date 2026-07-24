@@ -90,6 +90,15 @@ outcomes:
 ---
 # uni-app 工具链、页面、路由与项目结构
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《小程序运行模型、配置、生命周期与宿主边界》](ch.miniapp.runtime.md)：uni-app 产物仍运行在小程序宿主中，配置和页面生命周期必须与宿主模型对照。
+- [《Vite、Vue 应用、SFC 与项目结构》](../../volume-09-vue-nuxt/chapters/ch.vue.vite-sfc.md)：uni-app 页面使用 Vue SFC 和前端构建链，需先能定位入口、依赖和编译错误。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套资产使用 Node.js 离线检查项目清单、Vue SFC 文件、目标脚本、模拟构建产物和页面栈矩阵；当前没有安装或执行 DCloud 编译器、微信开发者工具，也没有真机运行。因此，离线绿灯不等于 `pnpm build:mp-weixin`、开发者工具导入、页面渲染或目标基础库兼容已经通过。
 
 uni-app 的价值不是把平台差异变没，而是让开发者用一套 Vue 风格源码和统一 API 生成不同目标的工件。源码由工具链处理，生成的微信小程序仍受上一章的微信宿主、配置、页面栈和生命周期约束。能写一个 `.vue` 文件只是起点；就业项目更需要你解释入口在哪里、哪些配置控制页面、构建目标是什么、产物去了哪里，以及白屏到底发生在哪一层。
@@ -327,12 +336,12 @@ package.json + pnpm-lock.yaml 摘要
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 
-const filter = ref('OPEN')
+const filter = ref('CREATED')
 
 onLoad((query) => {
   // 数据来源：路由 query；它是不可信字符串，只映射允许的筛选值。
-  const candidate = String(query?.status ?? 'OPEN')
-  filter.value = ['OPEN', 'CLOSED'].includes(candidate) ? candidate : 'OPEN'
+  const candidate = String(query?.status ?? 'CREATED')
+  filter.value = ['CREATED', 'CLOSED'].includes(candidate) ? candidate : 'CREATED'
 })
 
 function openDetail(id: string) {

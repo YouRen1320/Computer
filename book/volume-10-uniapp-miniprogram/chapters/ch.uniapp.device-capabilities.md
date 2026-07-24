@@ -95,6 +95,15 @@ outcomes:
 ---
 # 上传、扫码、定位、权限与失败路径
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《网络、认证、存储与多环境配置》](ch.uniapp.network-auth-storage.md)：上传和定位上报同时涉及 HTTP、认证和敏感数据边界。
+- [《平台 API、条件编译与能力检测》](ch.uniapp.platform-conditional.md)：设备 API 和权限模型存在平台差异，必须先有适配与降级机制。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。配套代码通过可注入设备端口、权限夹具和假上传服务器验证状态矩阵，不会读取真实相机、相册、定位、系统设置或微信小程序授权，也不会上传真实文件。真机权限提示、平台隐私声明、临时路径、上传域名、TLS、后台定位和审核规则仍需目标版本实测。
 
 设备能力最容易产生“开发工具能用，真机不能用”的错觉。原因不是一个 API 难调用，而是一次用户操作横跨了能力存在、系统权限、宿主授权、用户取消、临时文件、网络上传、服务端校验和业务提交。任何一步都可能失败，而且前一步成功不能推出后一步成功。本章用扫码填单、图片上传和可选定位建立一套确定合同。
@@ -491,6 +500,14 @@ interface MediaPort {
 
 ## 19. 事实来源与未验证范围
 
-本章易变事实于 2026-07-17 对照 uni-app 官方 `uni.uploadFile`、`uni.scanCode`、`uni.getLocation`、图片选择、`uni.authorize` 和 API 总览。官方资料明确描述了 multipart 上传、UploadTask、进度/取消、扫码平台差异与取消回调、定位坐标/精度/平台配置、授权与设置恢复等表面。兼容表、权限 scope、隐私声明和宿主行为会变化，实施时必须重新核对目标版本。
+本章易变事实于 2026-07-24 对照下列 uni-app 官方页面。它们明确描述了 multipart 上传、UploadTask、进度/取消、扫码平台差异与取消回调、定位坐标/精度/平台配置、临时图片和授权表面。兼容表、权限 scope、隐私声明和宿主行为会变化，实施时必须重新核对目标版本。
+
+直接来源：
+
+- DCloud，[`uni.uploadFile`](https://uniapp.dcloud.net.cn/api/request/network-file)：multipart 上传、HTTP 状态、UploadTask、进度与取消。
+- DCloud，[`uni.scanCode`](https://uniapp.dcloud.net.cn/api/system/barcode)：平台兼容、成功结果以及识别失败/用户取消进入失败回调的合同。
+- DCloud，[`uni.getLocation`](https://uniapp.dcloud.net.cn/api/location/location)：坐标、精度、坐标系、平台配置与权限差异。
+- DCloud，[图片 API](https://uniapp.dcloud.net.cn/api/media/image)：选择图片结果与临时文件生命周期。
+- DCloud，[`uni.authorize`](https://uniapp.dcloud.net.cn/api/other/authorize.html)：小程序 scope、拒绝后的失败回调以及与设置 API 的协作。
 
 当前未验证：真实微信授权与设置页、H5 浏览器权限、Android/iOS 系统权限、相机/相册/扫码硬件、地图 key 与坐标转换、上传域名/TLS、真实文件安全扫描、附件草稿协议、后台清理和 FactoryCare 真服务。配套绿灯仅是离线合同证据。

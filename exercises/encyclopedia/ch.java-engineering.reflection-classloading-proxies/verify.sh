@@ -47,3 +47,6 @@ echo "EXPECTED_FAILURE NoInterfaceProxyFailure status=$a evidence=interface-requ
 echo "EXPECTED_FAILURE PrivateAccessFailure status=$b evidence=language-access"
 echo "EXPECTED_FAILURE WrongContextLoaderFailure status=$c evidence=explicit-loader"
 echo "EXERCISE CHECK PASS mode=$mode expected_failures=$((starter_failures + 3)) java=$JAVA_VERSION"
+if [[ "$mode" == "starter" ]]; then
+    exit 41
+fi

@@ -49,5 +49,5 @@ class PostgresContainerLabTest {
             assertThat(context.getBean(JdbcWorkOrders.class).find("tenant-a", "wo-context")).isPresent();
         }
     }
-    private static JdbcWorkOrders.WorkOrder order(String tenant, String id, long version) { return new JdbcWorkOrders.WorkOrder(tenant, id, "OPEN", version); }
+    private static JdbcWorkOrders.WorkOrder order(String tenant, String id, long version) { return new JdbcWorkOrders.WorkOrder(tenant, id, "CREATED", version); }
 }

@@ -19,10 +19,10 @@ class PublicationPlanTest < Minitest::Test
 
       assert_equal first_bytes.b, second_bytes.b
       assert_equal Publication::P3_GOLD_IDS, first.fetch("chapters").map { |chapter| chapter.fetch("id") }
-      assert_equal 47, first.fetch("chapters").sum { |chapter| chapter.fetch("artifacts").length }
-      assert_equal 72, first.fetch("input_count")
-      assert_equal 51, first.fetch("inputs").count { |entry| entry.fetch("scope") == "content" }
-      assert_equal 21, first.fetch("inputs").count { |entry| entry.fetch("scope") == "publisher-contract" }
+      assert_equal 54, first.fetch("chapters").sum { |chapter| chapter.fetch("artifacts").length }
+      assert_equal 88, first.fetch("input_count")
+      assert_equal 58, first.fetch("inputs").count { |entry| entry.fetch("scope") == "content" }
+      assert_equal 30, first.fetch("inputs").count { |entry| entry.fetch("scope") == "publisher-contract" }
       assert_equal 10, first.fetch("planned_outputs").length
       assert_equal false, first.fetch("distribution_allowed")
       assert_equal "internal-preview", first.fetch("publication_mode")
@@ -32,6 +32,7 @@ class PublicationPlanTest < Minitest::Test
 
       paths = first.fetch("inputs").map { |entry| entry.fetch("path") }
       assert_equal paths.uniq.sort, paths.sort
+      Publication::PlanBuilder::IMPLEMENTATION_INPUTS.each { |path| assert_includes paths, path }
       refute_match(%r{/Users/|solutions-private/|sources/private/}, first_bytes)
       refute_match(Publication::PRIVATE_CANARY_PATTERN, first_bytes)
     end

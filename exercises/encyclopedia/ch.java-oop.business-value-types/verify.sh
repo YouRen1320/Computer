@@ -24,3 +24,4 @@ grep -Fqx "LOOSE_REGEX_ACCEPTED input=WO- expected=false actual=true" "$BUILD_DI
 echo "STARTER EXPECTED FAILURE status=$challenge_status reason=double-money-input"
 echo "EXPECTED_FAILURE LooseRegexFailure status=$regex_status evidence=invalid-id-accepted"
 echo "EXERCISE CHECK PASS expected_failures=2 java=$JAVA_VERSION"
+exit 41

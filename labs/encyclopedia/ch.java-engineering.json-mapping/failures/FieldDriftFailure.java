@@ -4,7 +4,7 @@ public final class FieldDriftFailure {
 
     public static void main(String[] args) {
         String json = """
-                {"schemaVersion":1,"id":"WO-101","status":"OPEN",
+                {"schemaVersion":1,"id":"WO-101","status":"CREATED",
                  "opened_at":"2026-07-16T01:30:00Z","amount":10.00}
                 """;
         try {

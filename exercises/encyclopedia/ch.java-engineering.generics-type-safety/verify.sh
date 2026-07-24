@@ -16,7 +16,7 @@ set -e
 if [[ $compile_status -ne 0 ]]; then
     grep -Eqi 'warning|rawtypes|unchecked' "$BUILD_DIR/compile.err"
     printf 'STARTER EXPECTED FAILURE status=%s reason=raw-or-unchecked; complete TODO 1..2\n' "$compile_status"
-    exit 0
+    exit 41
 fi
 
 java -cp "$CLASSES_DIR" GenericBoundaryChallenge > "$BUILD_DIR/challenge.out"

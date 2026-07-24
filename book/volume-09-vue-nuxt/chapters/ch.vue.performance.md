@@ -95,6 +95,14 @@ outcomes:
 
 # 渲染分析、懒加载、错误恢复与性能预算
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《组件测试、Mock、异步断言与端到端边界》](ch.vue.component-testing.md)：优化前后需要组件与浏览器测试保护行为合同。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章不是“背诵若干优化技巧”。你要先用同一场景留下基线，再根据 trace、组件更新和构建产物找到主因，实施最小修复，最后用原场景证明预算达标且功能、错误恢复和无障碍没有回退。
 
 ## 1. 性能优化首先是证据问题

@@ -78,6 +78,14 @@ outcomes:
 ---
 # Path、Files、缓冲、字符集与原子文件操作
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《字节流、字符流、资源所有权与 try-with-resources》](ch.java-engineering.io-resource-lifecycle.md)：独立完成Path 与 Files、编码与原子性前，必须先具备「字节流、字符流、资源所有权与 try-with-resources」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文与工件可用于学习和作者验证，不自动改变 `PROGRESS.md`，也不证明学习者已独立通过阶段门。
 
 上一章解决“流由谁关闭”，却没有解决“路径相对谁解析、文本按什么编码、写到一半如何保护旧文件、遍历会不会跟随符号链接逃出目录”。现代 Java 用 `Path` 表达文件系统位置，用 `Files` 执行操作，用 `Charset` 明确字节与字符转换，并可通过“同目录临时文件 + 原子移动”缩小替换窗口。

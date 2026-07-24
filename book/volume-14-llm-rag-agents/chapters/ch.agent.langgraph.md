@@ -92,6 +92,15 @@ outcomes:
 
 # LangGraph 状态、检查点、恢复与人工审批
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《工具调用、参数验证与信任边界》](ch.llm.tool-calling.md)：图中的工具节点必须继承参数验证、授权、确认和幂等边界。
+- [《LangChain 组件、直接 SDK 对照与边界》](ch.agent.langchain.md)：需要先理解 Runnable 组合及其与直接 SDK 的边界。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 当流程只有固定三步普通函数时，不需要状态图。LangGraph 的价值在于长时间、有状态、可中断、可恢复的编排：每个节点有明确输入输出，边决定下一步，checkpointer 保存线程状态，人工审批能暂停后继续。它不能自动保证业务副作用恰好一次，也不能替代 Java 的状态机和事务。
 
 本章实际使用 LangGraph 1.2.9 的 StateGraph、InMemorySaver、`interrupt()` 和 `Command(resume=...)`。本地 Java authority 是内存幂等替身；它证明同一进程中的 replay 合同，不是持久数据库、分布式事务或生产恢复证据。

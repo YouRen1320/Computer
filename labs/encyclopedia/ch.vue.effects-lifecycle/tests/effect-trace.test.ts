@@ -60,9 +60,9 @@ describe('lifecycle trace and cleanup counter', () => {
   it('records old DOM in pre flush and new DOM in post flush', async () => {
     const wrapper = mount(EffectLab)
     const evidence = wrapper.vm as unknown as EffectEvidence
-    await wrapper.get('#lab-filter').setValue('COMPLETED')
-    expect(evidence.getTrace()).toContain('pre:COMPLETED:筛选：ALL')
-    expect(evidence.getTrace()).toContain('post:COMPLETED:筛选：COMPLETED')
+    await wrapper.get('#lab-filter').setValue('RESOLVED')
+    expect(evidence.getTrace()).toContain('pre:RESOLVED:筛选：ALL')
+    expect(evidence.getTrace()).toContain('post:RESOLVED:筛选：RESOLVED')
   })
 
   it('cleans on unmount and prevents later commits', async () => {

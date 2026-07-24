@@ -97,6 +97,16 @@ outcomes:
 ---
 # 登录态、路由保护、权限 UI 与安全边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Router、导航、布局与页面边界》](ch.vue.router-navigation.md)：受保护页面和返回路径建立在可预测的导航与失败模型上。
+- [《服务端状态、加载、错误、取消与竞态》](ch.vue.server-state.md)：认证 bootstrap、过期和 401/403 都是具有加载、错误和竞态的服务端状态。
+- [《URL/方法授权、RBAC、ABAC 与默认拒绝》](../../volume-06-enterprise-architecture/chapters/ch.security.authorization-rbac-abac.md)：权限 UI 只能反映已定义的 RBAC/ABAC 策略，服务端仍是授权权威。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 **drafting**。正文和离线策略夹具可验证前端状态/导航合同，但不能证明真实 Cookie/Token、TLS、浏览器、身份提供方、后端 Session、RBAC/ABAC、多租户数据权限或审计已经安全。Vue Router、Pinia、HTTP 与 OWASP 官方资料复核日为 **2026-07-17**；配套工件不访问网络、不修改 `PROGRESS.md`。
 
 认证回答“当前请求代表谁”，授权回答“这个主体能否对这个资源执行这个动作”。Vue 前端需要把会话 bootstrap、路由体验、权限提示和 401/403 反馈同步起来，但浏览器里的任何状态都可被用户观察和修改。隐藏按钮只能减少误操作，路由守卫只能阻止正常导航，Pinia 中的角色字符串不能让 API 可信。

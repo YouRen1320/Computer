@@ -74,6 +74,14 @@ outcomes:
 ---
 # 聚合、GROUP BY 与 HAVING
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《SELECT、投影、过滤、NULL、排序与分页》](ch.data.select-rowsets.md)：独立完成聚合计算、分组与组过滤前，必须先具备「SELECT、投影、过滤、NULL、排序与分页」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。语义按 PostgreSQL **18.4** 官方文档于 **2026-07-17** 复核。当前机器没有可用 PostgreSQL server 或 `psql`；配套资产使用固定 CSV、静态 SQL 契约和 Ruby 2.6 兼容 oracle。离线 PASS 能证明样例分组、NULL 与阈值预言一致，**不能证明真实 PostgreSQL 已解析查询、选择相同类型或执行相同计划**。
 
 ## 1. 从“每行一个结果”到“每组一个结果”

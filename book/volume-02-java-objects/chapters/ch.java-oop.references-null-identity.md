@@ -81,6 +81,14 @@ outcomes:
 ---
 # 引用、对象身份、null 与内存心智模型
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《方法、参数传递、返回值、重载与递归边界》](../../volume-01-java-language/chapters/ch.java.methods.md)：独立完成引用与对象、null 与内存边界前，必须先具备「方法、参数传递、返回值、重载与递归边界」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文与工件可以试读和运行，但不能自动证明学习者已经掌握，更不能自动修改 `PROGRESS.md`。
 
 看到 `Device current = ...` 时，初学者很容易把变量、对象和值混成一件事：以为变量就是对象，以为赋值会复制整个对象，以为两个字段相同的对象就是“同一个”，或者以为 `null` 是空字符串。后续的类、集合、Spring Bean、数据库实体和 Flutter 状态管理都会建立在这些概念上；这里若含糊，错误会在更复杂的代码里放大。

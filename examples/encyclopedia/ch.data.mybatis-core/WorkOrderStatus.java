@@ -1,8 +1,8 @@
 package com.factorycare.workorder.persistence;
 
 public enum WorkOrderStatus {
-  OPEN,
+  CREATED,
   ASSIGNED,
   IN_PROGRESS,
-  COMPLETED
+  RESOLVED
 }

@@ -88,6 +88,15 @@ outcomes:
 
 # 镜像层、容器、卷、网络与运行时边界
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《DNS、端口、代理、TCP、TLS 与网络诊断》](ch.ops.network-diagnostics.md)：生产容器的监听地址、容器网络、DNS 和端口故障需要已验证的分层网络诊断能力。
+- [《镜像、容器、卷、端口与容器网络》](../../volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md)：生产镜像建立在已验证的镜像、容器、卷和端口基础操作上。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 容器不是轻量虚拟机，也不是“把项目文件压缩一下”。镜像是按内容组织的只读文件系统与运行配置；容器是在主机内核上运行的隔离进程，加上一层临时可写层、网络命名空间和显式挂载。生产化的目标是让构建输入可追溯、最终镜像最小、进程非root、文件系统尽量不可变、数据离开容器临时层、网络暴露最少，并为信号与健康建立真实证据。
 
 本章只讨论单个Java API镜像和Vue静态制品镜像的边界，不编排多服务。Docker官方当前文档用于核对多阶段构建、digest、构建密钥、USER、挂载和网络事实。示例中的64位重复digest是合成教学值，不能pull；本机只有Docker CLI 28.4.0，Docker daemon未运行，所以本章资产只完成静态源码审计，不声称构建过镜像、启动过容器或验证过PID 1与只读根。

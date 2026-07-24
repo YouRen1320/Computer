@@ -77,6 +77,14 @@ outcomes:
 ---
 # 预期值、测试预言、断言、AAA 与测试层级
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《stdin、stdout、stderr、管道与退出码》](ch.foundations.cli-streams-exit-codes.md)：独立完成预言与断言、测试层级与失败证据前，必须先具备「stdin、stdout、stderr、管道与退出码」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 程序运行并打印了一个数字，并不等于数字正确；构建命令返回 `BUILD SUCCESS`，也不等于业务测试执行过；八个测试全绿，还可能只是八个测试与实现犯了同一个错误。验证的起点不是“有没有绿色图标”，而是先回答：在执行之前，我们凭什么知道什么结果才算对？
 
 这个判定依据叫测试预言（test oracle）。预言把需求、规则或可信事实转成可比较的预期；断言再把预期和实际观察连接起来。测试通过只表示当前观察满足当前预言，不自动证明预言正确、输入覆盖完整或整个系统安全。本章建立这一条证据链，不绑定 JUnit、pytest、RSpec 或其他框架。

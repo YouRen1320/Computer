@@ -32,10 +32,22 @@ artifacts:
   media_type: text/markdown
   presentation: listing
   target_formats: [html, epub, pdf]
+- artifact_id: exercise-verifier
+  role: runner-support
+  source_path: exercises/encyclopedia/ch.java.platform-toolchain/verify.sh
+  media_type: text/x-shellscript
+  presentation: listing
+  target_formats: [html, epub, pdf]
 - artifact_id: lab-readme
   role: lab-source
   source_path: labs/encyclopedia/ch.java.platform-toolchain/README.md
   media_type: text/markdown
+  presentation: listing
+  target_formats: [html, epub, pdf]
+- artifact_id: lab-verifier
+  role: runner-support
+  source_path: labs/encyclopedia/ch.java.platform-toolchain/verify.sh
+  media_type: text/x-shellscript
   presentation: listing
   target_formats: [html, epub, pdf]
 - artifact_id: lab-toolchain-probe

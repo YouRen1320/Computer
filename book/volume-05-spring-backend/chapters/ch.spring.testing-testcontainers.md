@@ -94,6 +94,17 @@ outcomes:
 ---
 # Spring 测试切片、上下文测试与 Testcontainers
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Controller、路由、参数绑定与状态码》](ch.spring.mvc-routing-binding.md)：独立完成测试切片与上下文、真实依赖集成前，必须先具备「Controller、路由、参数绑定与状态码」已经验证的知识与失败边界
+- [《Repository 边界与 Spring MyBatis 适配》](ch.spring.mybatis-repositories.md)：独立完成测试切片与上下文、真实依赖集成前，必须先具备「Repository 边界与 Spring MyBatis 适配」已经验证的知识与失败边界
+- [《JUnit 参数化、测试设计、测试替身与 Mockito》](../../volume-03-java-engineering/chapters/ch.java-engineering.testing-test-doubles.md)：独立完成测试切片与上下文、真实依赖集成前，必须先具备「JUnit 参数化、测试设计、测试替身与 Mockito」已经验证的知识与失败边界
+- [《镜像、容器、卷、端口与容器网络》](../../volume-00-computer-foundations/chapters/ch.foundations.docker-basics.md)：独立完成测试切片与上下文、真实依赖集成前，必须先具备「镜像、容器、卷、端口与容器网络」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。教材和工件是学习证据，不自动更新 `PROGRESS.md`；Docker/PostgreSQL 未实际运行时必须明确标记未验证。
 
 测试的目标不是“启动越多越真实”，而是用最小、稳定的边界回答一个具体问题。Controller 测试回答 HTTP 映射是否正确；Repository 集成回答映射和 SQL 是否适用于真实 PostgreSQL；完整上下文回答关键 Bean 能否一起装配。三者不能互相冒充。

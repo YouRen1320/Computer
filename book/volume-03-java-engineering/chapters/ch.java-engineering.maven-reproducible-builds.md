@@ -83,6 +83,14 @@ outcomes:
 ---
 # Maven 生命周期、依赖范围、插件与可重复构建
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Maven 最小项目、JUnit、断言与失败日志》](../../volume-01-java-language/chapters/ch.java.maven-junit-smoke.md)：独立完成Maven 项目与依赖、生命周期与复现前，必须先具备「Maven 最小项目、JUnit、断言与失败日志」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文、命令和配套工程可用于学习与试运行，但文件存在或验证器通过都不能自动证明学习者已经掌握，也不会自动修改 `PROGRESS.md`。
 
 在最小 Maven 烟雾项目里，你已经见过 `pom.xml`、`src/main/java`、`src/test/java` 和 `mvn test`。当时的目标只是打通“业务代码—测试代码—JUnit—Surefire”这条最短链路。本章把视角从“一条命令能跑”提升到“任何人能解释这次构建到底使用了什么、为什么得到这个产物、换一台受控环境能否得到同样结果”。

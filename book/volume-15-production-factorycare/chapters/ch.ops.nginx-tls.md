@@ -93,6 +93,14 @@ outcomes:
 
 # Nginx、TLS、反向代理与静态资源
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Compose 多服务、配置、健康检查与依赖》](ch.ops.compose-services.md)：Nginx 需要在已验证多服务网络和健康合同上代理上游。
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 Nginx位于客户端与FactoryCare服务之间：选择虚拟主机和location、终止TLS、托管Vue静态文件、把/api/请求转发给Java、设置超时与必要代理头。它不拥有工单权限和业务状态机，也不能因为位于入口就替Java做最终授权。代理层提供传输与路由证据，Java仍从可信认证材料建立用户并检查租户、资源和动作。
 
 本章把配置意图、语法验证、TLS密码学验证和端到端代理行为分层。当前机器没有nginx命令，Docker daemon也离线；资产只做Python静态源码审计和TLS清单一致性检查。fullchain与hostname均为声明fixture，不是证书。任何nginx -t、openssl握手、真实转发头和超时结果都标UNVERIFIED。

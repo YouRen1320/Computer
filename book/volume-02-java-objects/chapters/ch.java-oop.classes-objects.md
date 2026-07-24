@@ -81,6 +81,14 @@ outcomes:
 ---
 # 类、实例、字段与实例方法
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《引用、对象身份、null 与内存心智模型》](ch.java-oop.references-null-identity.md)：独立完成类与实例、实例行为前，必须先具备「引用、对象身份、null 与内存心智模型」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 `drafting`。正文和配套代码可以试读、运行与修改，但不能自动证明学习完成，也不会自动更新 `PROGRESS.md`。
 
 上一章已经建立引用模型：变量保存引用值，对象有身份和状态，多个引用可以成为别名，`null` 不指向对象。现在要回答下一组问题：对象的状态由谁定义？为什么每个设备都有 `code` 与 `status`？为什么 `pump.activate()` 只改变泵实例，而不改变传感器？

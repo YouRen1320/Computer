@@ -78,6 +78,15 @@ outcomes:
 ---
 # 切点、通知、代理边界与自调用陷阱
 
+<!-- BEGIN GENERATED LEARNING PREREQUISITES -->
+## 学习前检查
+
+以下章节是本章的硬前置。开始前，请先完成并验证对应能力：
+
+- [《Bean 注册、生命周期、作用域与销毁》](ch.spring.beans-lifecycle-scopes.md)：独立完成切面与通知、代理边界前，必须先具备「Bean 注册、生命周期、作用域与销毁」已经验证的知识与失败边界
+- [《反射、类加载边界与动态代理》](../../volume-03-java-engineering/chapters/ch.java-engineering.reflection-classloading-proxies.md)：独立完成切面与通知、代理边界前，必须先具备「反射、类加载边界与动态代理」已经验证的知识与失败边界
+<!-- END GENERATED LEARNING PREREQUISITES -->
+
 > 本章状态为 drafting。教材和工件是学习证据，不自动更新 `PROGRESS.md`，也不代表生产切点或开销已经验证。
 
 Spring AOP 的核心不是“注解会自动执行”，而是容器把目标对象包在代理后，调用者先调用代理，代理匹配切点并执行 Advice，再委托目标。只要调用没有经过代理——例如目标对象内部 `this.inner()`——Advice 就没有机会介入。

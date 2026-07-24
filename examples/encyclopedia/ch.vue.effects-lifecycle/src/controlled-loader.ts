@@ -1,24 +1,24 @@
-export type StatusFilter = 'ALL' | 'CREATED' | 'COMPLETED'
+export type StatusFilter = 'ALL' | 'CREATED' | 'RESOLVED'
 
 export type WorkOrderResult = {
   id: string
   title: string
-  status: 'CREATED' | 'COMPLETED'
+  status: 'CREATED' | 'RESOLVED'
 }
 
 const results: Record<StatusFilter, WorkOrderResult[]> = {
   ALL: [
     { id: 'WO-1', title: '主轴过热', status: 'CREATED' },
-    { id: 'WO-2', title: '滤芯更换', status: 'COMPLETED' },
+    { id: 'WO-2', title: '滤芯更换', status: 'RESOLVED' },
   ],
   CREATED: [{ id: 'WO-1', title: '主轴过热', status: 'CREATED' }],
-  COMPLETED: [{ id: 'WO-2', title: '滤芯更换', status: 'COMPLETED' }],
+  RESOLVED: [{ id: 'WO-2', title: '滤芯更换', status: 'RESOLVED' }],
 }
 
 const delays: Record<StatusFilter, number> = {
   ALL: 40,
   CREATED: 10,
-  COMPLETED: 25,
+  RESOLVED: 25,
 }
 
 export function loadOrders(

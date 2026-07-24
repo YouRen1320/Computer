@@ -25,8 +25,17 @@ module Publication
     IMPLEMENTATION_INPUTS = %w[
       publication/lib/atomic_tree_writer.rb
       publication/lib/contract.rb
+      publication/lib/deterministic_weasyprint.py
       publication/lib/plan_builder.rb
+      publication/lib/renderer.rb
+      publication/styles/p3-gold-epub.css
+      publication/styles/p3-gold-print.css
+      publication/styles/p3-gold-screen.css
+      publication/templates/p3-gold.html5
       scripts/build-publication-plan.rb
+      scripts/build-publication.rb
+      scripts/lib/chapter_prerequisite_block.rb
+      scripts/validate-encyclopedia.rb
     ].freeze
     STAGE_ORDER = { "R1-A" => 0, "R1-B" => 1, "R2" => 2, "R3" => 3 }.freeze
     TOOL_POLICIES = {
@@ -39,7 +48,7 @@ module Publication
       "maven" => { "state" => "observed-current", "required_from" => "R1-B", "command" => %w[mvn -v] },
       "pandoc" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[pandoc --version] },
       "poppler" => { "state" => "deferred", "required_from" => "R3", "command" => %w[pdfinfo -v] },
-      "python" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[python3 --version] },
+      "python" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[dpy --version] },
       "ruby" => { "state" => "observed-current", "required_from" => "R1-A", "command" => %w[ruby -v] },
       "verapdf" => { "state" => "deferred", "required_from" => "R3", "command" => %w[verapdf --version] },
       "weasyprint" => { "state" => "observed-current", "required_from" => "R2", "command" => %w[weasyprint --version] }

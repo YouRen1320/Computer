@@ -40,7 +40,7 @@ public final class AssociativeCollectionsOracle {
         AssociativeCollectionsLab.DeviceId equivalent = new AssociativeCollectionsLab.DeviceId("PUMP-01");
         check(index.size() == 2, "index replaces equal key"); assertions++;
         check(index.containsKey(equivalent), "equivalent key hit"); assertions++;
-        check("OPEN".equals(index.get(equivalent).state()), "equivalent key value"); assertions++;
+        check("ACTIVE".equals(index.get(equivalent).state()), "equivalent key value"); assertions++;
 
         AssociativeCollectionsLab.DeviceId missing = new AssociativeCollectionsLab.DeviceId("VALVE-99");
         check(!index.containsKey(missing), "missing contains"); assertions++;
