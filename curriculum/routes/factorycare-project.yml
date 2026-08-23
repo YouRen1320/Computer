@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
+generated_spec_digest: 29d69bc5e74a07db05b381405bc73212e9e67c653ea92893814cde501e83cf03
 edition: 2026.2-draft
 route_id: factorycare-project
 route_kind: project
@@ -750,6 +750,7 @@ stages:
   - ch.js.functions
   - ch.js.scope-closures
   - ch.js.collections
+  - ch.js.object-model
   - ch.js.testing-debugging
   - ch.js.event-loop
   - ch.js.fetch-cancellation-race
@@ -1149,6 +1150,7 @@ stages:
   - ch.js.functions
   - ch.js.scope-closures
   - ch.js.collections
+  - ch.js.object-model
   - ch.js.testing-debugging
   - ch.js.event-loop
   - ch.js.fetch-cancellation-race

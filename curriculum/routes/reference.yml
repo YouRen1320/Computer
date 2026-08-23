@@ -2,7 +2,7 @@
 schema_version: 2
 generated: true
 generated_by: scripts/generate-curriculum.rb
-generated_spec_digest: 76e4062ad498876ec89d4e4aa03ab560c48df00fddc18afb71250b4c0d42d98b
+generated_spec_digest: 29d69bc5e74a07db05b381405bc73212e9e67c653ea92893814cde501e83cf03
 edition: 2026.2-draft
 route_id: reference
 route_kind: reference
@@ -2775,6 +2775,8 @@ chapter_index:
     capabilities:
     - mobile.miniprogram-runtime
     - foundation.shell-command-stream
+    - web.javascript-objects
+    - web.javascript-async-runtime
     versions:
     - wechat-miniprogram-base-library
     - wechat-developer-tools
@@ -4182,10 +4184,8 @@ chapter_index:
     capabilities:
     - python.io-errors
     - ai.llm-model-api
-    - data.numpy-pandas
     versions:
     - python-3.14
-    - pandas
     - pytest
   ch.rag.chunking-embeddings:
     title: 分块、Embedding、批处理与语料管线
