@@ -1,6 +1,9 @@
 # 编程学习工作区
 
-48 周 Java/Vue 全栈 + AI 应用学习计划，搭配 FactoryCare 旗舰项目。
+从零开始的自学工作区：一套 **48 周 Java/Vue 全栈 + AI 应用学习计划**，一本 **16 卷、255 章的编程百科**，以及贯穿全程的旗舰项目 **FactoryCare**（生产设备维保系统）。所有内容原创、中文，配套代码与实验可直接运行。
+
+百科 16 卷覆盖：计算机基础 → Java 语言/对象/工程 → PostgreSQL → Spring 后端 → 企业架构 → Web 平台 → JavaScript/TypeScript → Vue/Nuxt → UniApp 小程序 → Dart/Flutter → Python 数据 → PyTorch 机器学习 → LLM/RAG/Agent → 生产实战（FactoryCare）。
+
 
 ## 每天学习
 
